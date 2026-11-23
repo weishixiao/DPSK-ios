@@ -416,8 +416,18 @@ final class IOSPhoneControl: NSObject, FlutterStreamHandler {
   }
 
   /// Installed applications, as name + bundle identifier pairs.
+  ///
+  /// Resolved through the ObjC runtime: the Runner target's bridging header does
+  /// not import PhoneRunnerSupport, and a build-time reference would couple the
+  /// two targets for one list.
   static func installedApps() -> [[String: String]] {
-    PhoneRunnerSupport.installedApps()
+    guard let type = NSClassFromString("PhoneRunnerSupport") as? NSObject.Type else { return [] }
+    let selector = NSSelectorFromString("installedApps")
+    guard let method = class_getClassMethod(type, selector) else { return [] }
+    typealias Call = @convention(c) (AnyObject, Selector) -> NSArray
+    let implementation = unsafeBitCast(method_getImplementation(method), to: Call.self)
+    let raw = implementation(type, selector) as? [[String: String]]
+    return raw ?? []
   }
 
   func bind(_ bridge: IOSPhoneBridge) { self.bridge = bridge; emit() }

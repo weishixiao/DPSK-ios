@@ -357,12 +357,12 @@
     },
     {
       "source": "runtime/ohos/native/hap-loader/index.cjs",
-      "payload": "node_modules/@DPSK/ohos-native/index.cjs",
+      "payload": "node_modules/@dsh-go/ohos-native/index.cjs",
       "hostFixtureOnly": false
     },
     {
       "source": "runtime/ohos/native/hap-loader/package.json",
-      "payload": "node_modules/@DPSK/ohos-native/package.json",
+      "payload": "node_modules/@dsh-go/ohos-native/package.json",
       "hostFixtureOnly": false
     }
   ],

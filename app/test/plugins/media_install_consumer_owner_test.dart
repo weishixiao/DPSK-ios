@@ -162,7 +162,7 @@ void main() {
         expect(restoredHost.client, same(ac));
         expect(ac.mux.generation, isNot(same(originalGeneration)));
         expect(container.read(activeHostProvider), HostRef.local);
-        recoveredReply.complete(installResult(target: '@DPSK/media', application: 'applied'));
+        recoveredReply.complete(installResult(target: '@dsh-go/media', application: 'applied'));
       }
       if (scenario == 'closed') {
         navigator.pop();
@@ -175,7 +175,7 @@ void main() {
       if (scenario == 'failure') {
         reply.completeError(const DshRemoteException('DENIED', 'controlled installation failure'));
       } else if (scenario != 'recover') {
-        reply.complete(installResult(target: '@DPSK/media', application: 'applied'));
+        reply.complete(installResult(target: '@dsh-go/media', application: 'applied'));
       }
       await tester.pumpAndSettle();
       expect(b.argsOf('pluginManager/installBundle'), isEmpty);

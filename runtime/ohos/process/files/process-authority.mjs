@@ -17,7 +17,7 @@ export function installProcessGrantAuthority() {
   if (attempted) return installed !== undefined;
   attempted = true;
   try {
-    const loaded = require('@DPSK/ohos-native').load('workspace-grants');
+    const loaded = require('@dsh-go/ohos-native').load('workspace-grants');
     const directory = dirname(loaded.path);
     const hostLibrary = join(directory, 'libdsh_host.so');
     if (realpathSync(hostLibrary) !== hostLibrary || !statSync(hostLibrary).isFile()) {

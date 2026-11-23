@@ -68,7 +68,7 @@ A view function's `caps.features` lists what the app asked for in this request, 
 The second argument of a view function, `caps`, says what the app can draw:
 
 ```js
-import { hasComponent, adaptView, localize } from '@DPSK/plugin-kit'
+import { hasComponent, adaptView, localize } from '@dsh-go/plugin-kit'
 
 view: (scope, caps) => {
   const v = buildView(scope)

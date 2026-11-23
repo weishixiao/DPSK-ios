@@ -474,8 +474,8 @@ def assemble(args):
                      'runtime/ohos/licenses/tinyemu-2019-12-21-NOTICES.txt')
         helper = source_runtime / 'native/hap-loader'
         for name in ('index.cjs', 'package.json'):
-            composer.add(helper / name, repo, 'repository', 'node_modules/@DPSK/ohos-native/' + name)
-        composer.add(repo / 'LICENSE', repo, 'repository', 'node_modules/@DPSK/ohos-native/LICENSE')
+            composer.add(helper / name, repo, 'repository', 'node_modules/@dsh-go/ohos-native/' + name)
+        composer.add(repo / 'LICENSE', repo, 'repository', 'node_modules/@dsh-go/ohos-native/LICENSE')
         bridge = repo / 'runtime/bridge/dsh-go-bridge'
         for source in records(bridge / 'lib'):
             destination = source.relative_to(repo).as_posix()

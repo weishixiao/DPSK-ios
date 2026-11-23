@@ -109,7 +109,7 @@ Reading out loud through the speaker, the microphone hears the reading. The app 
 ## Testing
 
 ```js
-import { createTestHost } from '@DPSK/plugin-kit/testing'
+import { createTestHost } from '@dsh-go/plugin-kit/testing'
 const h = createTestHost({ dir, caps: { features: ['audio', 'voice', 'micro', 'overlay'] } })
 apply(h.ctx)
 const { effects } = await h.invoke('read', { context: { message: 'Hello.' }, scope: { sessionId: 's1' } })

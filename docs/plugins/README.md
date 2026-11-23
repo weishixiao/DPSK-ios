@@ -29,7 +29,7 @@ DPSK 的原生界面可以显示 DSH 插件的内容：工具结果画成卡片�
 
 | 件 | 在哪 | 用途 |
 |---|---|---|
-| `@DPSK/plugin-kit` | [`sdk/plugin-kit/`](../../sdk/plugin-kit/) | 类型、组件构造函数、`toolCard()`、`caps` 工具、测试宿主、`check` 命令。零运行时依赖 |
+| `@dsh-go/plugin-kit` | [`sdk/plugin-kit/`](../../sdk/plugin-kit/) | 类型、组件构造函数、`toolCard()`、`caps` 工具、测试宿主、`check` 命令。零运行时依赖 |
 | 原生视图本地预览 | [使用说明](preview.md) | 用 App 的 Flutter 渲染器把视图 JSON 和数据快照画成深浅色 PNG，附诊断 |
 | 示例插件 | [`examples/plugins/`](../../examples/plugins/) | 天气（工具卡）、用量（状态条 + 面板）、快捷（胶囊 + 消息菜单）、朗读（声音 + 开口即停 + 字幕），MIT |
 | 技能 `dsh-go-plugin` | App 自动装进本机引擎的 `$DSH_HOME/skills/` | 让你自己的 agent 写一个本地小插件并自查 |

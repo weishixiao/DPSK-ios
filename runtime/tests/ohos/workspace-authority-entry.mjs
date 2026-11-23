@@ -137,7 +137,7 @@ if (isMainThread) {
         assert.equal(status().leases, 0);
       });
       await check('late env/loader/binding replacement cannot redirect captured authority or Worker native path', async () => {
-        const loader = require('@DPSK/ohos-native'); const originalLoad = loader.load;
+        const loader = require('@dsh-go/ohos-native'); const originalLoad = loader.load;
         const binding = originalLoad('workspace-grants').binding;
         const oldSnapshot = binding.snapshot, oldIssue = binding.issue, oldDirectory = process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR;
         try {

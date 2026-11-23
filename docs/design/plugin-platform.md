@@ -19,7 +19,7 @@
 |---|---|---|---|
 | 已有 DSH 插件，没有界面 | 命令、技能、设置已经是原生 | 不改代码 | 什么都不用做；想要好看的结果，给工具加 `presentationMeta` |
 | 已有 DSH 网页插件 | 座位规划自动处理：原生适配器 → 网页岛 → 「在网页版打开」 | 先不改；想更好再逐项迁 | 在 `package.json` 加 `dshGo`，App 用原生界面，网页版继续用网页界面，互不影响 |
-| 专门给 DPSK 写 | 从零开始 | `dshGo` 协议 | 用 `@DPSK/plugin-kit`，照[从零到市场](../plugins/from-zero.md)走 |
+| 专门给 DPSK 写 | 从零开始 | `dshGo` 协议 | 用 `@dsh-go/plugin-kit`，照[从零到市场](../plugins/from-zero.md)走 |
 
 作者入口是[选一条路](../plugins/choose-path.md)，不用先读完协议。
 

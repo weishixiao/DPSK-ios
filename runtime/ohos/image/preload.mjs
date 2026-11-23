@@ -144,7 +144,7 @@ if (process.platform === 'openharmony') {
   let loadFailure;
   try {
     const require = createRequire(import.meta.url);
-    const binding = require('@DPSK/ohos-native').load('image-codec').binding;
+    const binding = require('@dsh-go/ohos-native').load('image-codec').binding;
     const policy = binding.colorGetterPolicy;
     if (binding.available !== true || binding.fixtureOnly !== false ||
         !['destroy', 'borrow'].includes(policy) || binding.codecIdentity !== BUILD_PREFIX + policy ||

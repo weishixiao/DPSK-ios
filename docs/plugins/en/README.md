@@ -31,7 +31,7 @@ The DPSK app can show a DSH plugin's content with native UI: tool results as car
 
 | Part | Where | For |
 |---|---|---|
-| `@DPSK/plugin-kit` | [`sdk/plugin-kit/`](../../../sdk/plugin-kit/) | Types, component builders, `toolCard()`, `caps` helpers, a test host, the `check` command. Zero runtime dependencies |
+| `@dsh-go/plugin-kit` | [`sdk/plugin-kit/`](../../../sdk/plugin-kit/) | Types, component builders, `toolCard()`, `caps` helpers, a test host, the `check` command. Zero runtime dependencies |
 | Example plugins | [`examples/plugins/`](../../../examples/plugins/) | Weather (tool card), usage (strip + panel), quick (capsules + reply menu + a deferred result), read-aloud (sound + stop on speech + captions). MIT |
 | The `dsh-go-plugin` skill | Installed by the app into the on-device engine's `$DSH_HOME/skills/` | Lets your own agent write a small local plugin and check it |
 

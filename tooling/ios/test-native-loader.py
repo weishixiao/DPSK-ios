@@ -12,7 +12,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-LOADER = 'node_modules/@DPSK/ohos-native/index.cjs'
+LOADER = 'node_modules/@dsh-go/ohos-native/index.cjs'
 spec = importlib.util.spec_from_file_location('specialize_runtime', Path(__file__).with_name('specialize-runtime.py'))
 specializer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(specializer)

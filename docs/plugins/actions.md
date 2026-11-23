@@ -66,7 +66,7 @@ App 从用户点按算起，3 秒内收到的效果才执行，迟到的静默�
 handler 先回一个 `pending`，App 立刻在被点的元素上显示等待状态；真正的结果最多 60 秒后到。
 
 ```js
-import { effects } from '@DPSK/plugin-kit'
+import { effects } from '@dsh-go/plugin-kit'
 
 ctx.dshGo.on('translate', (scope, event) =>
   effects.deferred(async (signal) => ({ insert: await translate(scope.clipboard, signal) }), { label: '正在翻译' }))
@@ -101,7 +101,7 @@ ctx.dshGo.on('translate', (scope) => ({
 SDK 的 `checkEffects` / `checkPending` 就是桥接自己的代码，单测里直接用：
 
 ```js
-import { checkEffects, checkPending } from '@DPSK/plugin-kit'
+import { checkEffects, checkPending } from '@dsh-go/plugin-kit'
 
 checkEffects({ copy: md, toast: '已复制' })
 // → { effects: [{ type: 'copy', … }, { type: 'toast', … }], issues: [], violation: false }
@@ -110,7 +110,7 @@ checkEffects({ open: 'panel:usage' }, { panels: ['usage'] })
 checkPending(result)                                    // 延后请求怎么被读：{ ok, label, timeoutMs, … }
 ```
 
-要连 handler 一起跑，用测试宿主 `createTestHost`（`@DPSK/plugin-kit/testing`）：`await host.invoke('translate', { context: { clipboard } })` 返回 `{ effects, pending?, settled? }`，`await settled` 得到 `{ t: 'done', effects }` 或 `{ t: 'void', reason }`。
+要连 handler 一起跑，用测试宿主 `createTestHost`（`@dsh-go/plugin-kit/testing`）：`await host.invoke('translate', { context: { clipboard } })` 返回 `{ effects, pending?, settled? }`，`await settled` 得到 `{ t: 'done', effects }` 或 `{ t: 'void', reason }`。
 
 ## 选择文件与图片（NA v1.3）
 

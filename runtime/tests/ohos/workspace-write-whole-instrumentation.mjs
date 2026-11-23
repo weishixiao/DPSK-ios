@@ -59,7 +59,7 @@ export function observeWrite(LocalFileSystem, SandboxedFileSystem) {
 // A transparent observation of the real new Native group, installed before
 // the sole production preload captures the five methods. No fabricated result.
 const require = createRequire(join(config.payload, 'package.json'));
-const native = require('@DPSK/ohos-native').load('workspace-grants').binding;
+const native = require('@dsh-go/ohos-native').load('workspace-grants').binding;
 const wholeMethods = ['beginWholeOutput', 'writeWholeOutput', 'closeWholeOutput', 'stepWholeOutput', 'abortWholeOutput'];
 const nativeCalls = [], nativeRestores = [], leaseIds = new Map();
 function nativeInput(method, args) {

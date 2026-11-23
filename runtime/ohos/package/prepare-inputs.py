@@ -103,7 +103,7 @@ def main():
     run('ohos-patches', ['python3', '-I', '-B', str(repo / 'runtime/lib/rtbuild.py'), 'patch-dsh',
         '--prefix', str(output / 'dsh'), '--dsh-version', config['dshVersion'], '--target', 'ohos',
         '--out', str(output / 'patch-results.json'), '--target-report', str(output / 'target-report.json')], repo)
-    helper = output / 'dsh/node_modules/@DPSK/ohos-native'
+    helper = output / 'dsh/node_modules/@dsh-go/ohos-native'
     helper.mkdir(parents=True)
     for filename in ('index.cjs', 'package.json'):
         shutil.copyfile(repo / 'runtime/ohos/native/hap-loader' / filename, helper / filename)

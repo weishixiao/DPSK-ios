@@ -10,7 +10,7 @@ import zipfile
 
 
 SCRIPT = Path(__file__).with_name('embed-engine.sh')
-LOADER = 'files/node_modules/@DPSK/ohos-native/index.cjs'
+LOADER = 'files/node_modules/@dsh-go/ohos-native/index.cjs'
 
 
 class GuestEmbedding(unittest.TestCase):

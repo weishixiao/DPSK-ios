@@ -30,7 +30,7 @@ export function weatherView(value) {
 
 ```js
 import { defineTool } from '@deepseek-ai/dsh-tools'
-import { toolCard } from './tool-card.js'          // 或 @DPSK/plugin-kit 的 toolCard
+import { toolCard } from './tool-card.js'          // 或 @dsh-go/plugin-kit 的 toolCard
 import { weatherView } from './view.js'
 
 ctx.tools.register(defineTool({
@@ -79,7 +79,7 @@ node sdk/plugin-kit/bin/check.mjs . --load            # 插件目录：package.j
 在单测里直接校验视图函数的输出更省事：
 
 ```js
-import { checkView } from '@DPSK/plugin-kit/check'
+import { checkView } from '@dsh-go/plugin-kit/check'
 const result = checkView(weatherView(sample), { budget: 'toolCard' })
 assert.deepEqual(result.issues, [])
 ```

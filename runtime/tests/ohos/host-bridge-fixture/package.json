@@ -1,5 +1,5 @@
 {
-  "name": "DPSK-fixture-host-bridge",
+  "name": "dsh-go-fixture-host-bridge",
   "version": "1.0.0",
   "private": true,
   "type": "module",

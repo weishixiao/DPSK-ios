@@ -68,7 +68,7 @@ v1 golden 仍用原基准，不因 v2 更新；v2 的浅深色、窄屏、大字
 视图函数的第二个参数 `caps` 告诉你 App 能画什么：
 
 ```js
-import { hasComponent, adaptView, localize } from '@DPSK/plugin-kit'
+import { hasComponent, adaptView, localize } from '@dsh-go/plugin-kit'
 
 view: (scope, caps) => {
   const v = buildView(scope)

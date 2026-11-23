@@ -30,7 +30,7 @@ Components and their fields: [Components](components.md).
 
 ```js
 import { defineTool } from '@deepseek-ai/dsh-tools'
-import { toolCard } from './tool-card.js'          // or toolCard from @DPSK/plugin-kit
+import { toolCard } from './tool-card.js'          // or toolCard from @dsh-go/plugin-kit
 import { weatherView } from './view.js'
 
 ctx.tools.register(defineTool({
@@ -79,7 +79,7 @@ node sdk/plugin-kit/bin/check.mjs . --load --lang en      # plugin dir: package.
 In unit tests, check the view function's output directly:
 
 ```js
-import { checkView } from '@DPSK/plugin-kit/check'
+import { checkView } from '@dsh-go/plugin-kit/check'
 const result = checkView(weatherView(sample), { budget: 'toolCard', lang: 'en' })
 assert.deepEqual(result.issues, [])
 ```

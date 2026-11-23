@@ -65,7 +65,7 @@ export function observeWrite(LocalFileSystem, SandboxedFileSystem) {
 }
 
 const require = createRequire(join(config.payload, 'package.json'));
-const native = require('@DPSK/ohos-native').load('workspace-grants').binding;
+const native = require('@dsh-go/ohos-native').load('workspace-grants').binding;
 const methods = ['beginWholeOutput', 'writeWholeOutput', 'closeWholeOutput', 'stepWholeOutput', 'abortWholeOutput'];
 const calls = [], restorers = [], leaseIds = new Map();
 function nativeInput(method, args) {

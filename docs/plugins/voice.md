@@ -109,7 +109,7 @@ ctx.inject(['dshGo'], (ctx) => {
 ## 测
 
 ```js
-import { createTestHost } from '@DPSK/plugin-kit/testing'
+import { createTestHost } from '@dsh-go/plugin-kit/testing'
 const h = createTestHost({ dir, caps: { features: ['audio', 'voice', 'micro', 'overlay'] } })
 apply(h.ctx)
 const { effects } = await h.invoke('read', { context: { message: '你好。' }, scope: { sessionId: 's1' } })

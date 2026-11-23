@@ -1,5 +1,5 @@
 {
-  "name": "@DPSK/ohos-native",
+  "name": "@dsh-go/ohos-native",
   "version": "0.1.0",
   "private": true,
   "type": "commonjs",

@@ -24,11 +24,11 @@ export 'media_catalog.dart';
 
 // ── The plugin ───────────────────────────────────────────────────────────────
 
-/// Package names the media plugin goes by: `@DPSK/media` (the official
+/// Package names the media plugin goes by: `@dsh-go/media` (the official
 /// market's), `@ccchimneyyy/dsh-media` (the personal scope it falls back to,
 /// docs/design/plugin-market.md D1), and `dsh-media` under any scope.
 bool isMediaPluginName(String name) =>
-    name == '@DPSK/media' || name == '@ccchimneyyy/dsh-media' || name == 'dsh-media' || name.endsWith('/dsh-media');
+    name == '@dsh-go/media' || name == '@ccchimneyyy/dsh-media' || name == 'dsh-media' || name.endsWith('/dsh-media');
 
 /// The plugin's settings namespace under its own name; a host may rename the
 /// instance, and the catalogue's metadata finds it anyway

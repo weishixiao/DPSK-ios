@@ -640,7 +640,7 @@ def main():
     g.internal('prepared-inputs', inputs, needs=('tools',))
     g.run('android-targets', lambda: g.py(rt + 'current-android-targets.py', '--baseline', p('android_baseline'), '--candidate', s, '--pristine-prefix', p('android_pristine'), '--out', o / 'targets'), needs=('tools',), timeout=600)
     def native_helpers(_):
-        helper = prefix() / 'node_modules/@DPSK/ohos-native'
+        helper = prefix() / 'node_modules/@dsh-go/ohos-native'
         helper.mkdir(parents=True, exist_ok=True)
         (s / 'node_modules').unlink()
         (s / 'node_modules').symlink_to(prefix() / 'node_modules', target_is_directory=True)

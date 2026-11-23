@@ -49,13 +49,13 @@ void main() {
       expect(sidecar.issues, isEmpty);
       expect(sidecar.generatedAt, DateTime.utc(2026, 10, 30, 12));
       expect(sidecar.plugins.keys, [
-        '@DPSK/media',
-        '@DPSK/translate',
+        '@dsh-go/media',
+        '@dsh-go/translate',
         '@someone/dsh-weather',
         '@acme/dsh-native-helper',
         'dsh-approval-gate',
       ]);
-      final media = sidecar.plugins['@DPSK/media']!;
+      final media = sidecar.plugins['@dsh-go/media']!;
       expect(media.version, '0.2.0');
       expect(media.tier, MarketTier.official);
       expect(media.title!.resolve('zh'), '生图生视频');
@@ -144,15 +144,15 @@ void main() {
       List<String> names(MarketSection s, [String query = '']) => [
         for (final e in marketSection(official, s, MarketFilter(query: query))) e.name,
       ];
-      expect(names(MarketSection.official), ['@DPSK/media', '@DPSK/translate']);
+      expect(names(MarketSection.official), ['@dsh-go/media', '@dsh-go/translate']);
       expect(names(MarketSection.adapted), ['@someone/dsh-weather', '@acme/dsh-native-helper']);
       // Not adapted: only under 全部.
       expect(official.byName['dsh-approval-gate']!.section, isNull);
       // The search box reaches the sidecar's titles too.
       expect(names(MarketSection.adapted, '天气'), ['@someone/dsh-weather']);
       expect(names(MarketSection.official, '天气'), isEmpty);
-      expect(official.byName['@DPSK/media']!.title('en'), 'Images & video');
-      expect(official.byName['@DPSK/media']!.summary(), startsWith('在对话里用即梦'));
+      expect(official.byName['@dsh-go/media']!.title('en'), 'Images & video');
+      expect(official.byName['@dsh-go/media']!.summary(), startsWith('在对话里用即梦'));
     });
 
     test('a sidecar entry for another version is ignored', () {
@@ -173,8 +173,8 @@ void main() {
         'dsh-approval-gate',
         'dsh-pink-skin',
         'dsh-memory-lite',
-        '@DPSK/media',
-        '@DPSK/translate',
+        '@dsh-go/media',
+        '@dsh-go/translate',
         '@someone/dsh-weather',
         '@acme/dsh-native-helper',
       ]);
@@ -199,7 +199,7 @@ void main() {
       };
 
       final full = await fetchOfficialMarket(get: serve(indexOf: index, sidecarOf: sidecar), refresh: true);
-      expect(full.byName['@DPSK/media']!.section, MarketSection.official);
+      expect(full.byName['@dsh-go/media']!.section, MarketSection.official);
       SharedPreferences.setMockInitialValues({});
 
       final unpublished = await fetchOfficialMarket(get: serve(indexOf: () => http(404), sidecarOf: () => http(404)));
@@ -226,9 +226,9 @@ void main() {
     });
 
     test('the install request pins name@version and carries the integrity', () {
-      final media = officialFixtureMarket().byName['@DPSK/media']!;
+      final media = officialFixtureMarket().byName['@dsh-go/media']!;
       final request = marketInstallRequest(media);
-      expect(request.spec, '@DPSK/media@0.2.0');
+      expect(request.spec, '@dsh-go/media@0.2.0');
       expect(request.title, '生图生视频');
       expect(request.integrity?.version, '0.2.0');
       expect(request.integrity?.integrity, media.listing!.integrity);
@@ -239,10 +239,10 @@ void main() {
     test('minApp: shown to older apps but not installable', () {
       final official = officialFixtureMarket();
       final app = AppVersion.tryParse('1.0.2+1')!;
-      expect(marketNeedsApp(official.byName['@DPSK/media']!, app), isNull, reason: 'minApp 1.0.2 == the app');
-      expect(marketNeedsApp(official.byName['@DPSK/translate']!, app), AppVersion.tryParse('9.0.0'));
+      expect(marketNeedsApp(official.byName['@dsh-go/media']!, app), isNull, reason: 'minApp 1.0.2 == the app');
+      expect(marketNeedsApp(official.byName['@dsh-go/translate']!, app), AppVersion.tryParse('9.0.0'));
       expect(marketNeedsApp(official.byName['@acme/dsh-native-helper']!, app), isNull, reason: 'no minApp');
-      expect(marketNeedsApp(official.byName['@DPSK/media']!, AppVersion.tryParse('1.0.1')!), isNotNull);
+      expect(marketNeedsApp(official.byName['@dsh-go/media']!, AppVersion.tryParse('1.0.1')!), isNotNull);
     });
 
     test('a withdrawn version is the installed one, listed in blockedVersions', () {
@@ -414,8 +414,8 @@ void main() {
 
     testWidgets('low risk installs the pinned version straight away, once npm agrees', (tester) async {
       final npm = Completer<String?>();
-      carrier.handlers['pluginManager/installBundle'] = (_) => installResult(target: '@DPSK/media');
-      final media = officialFixtureMarket().byName['@DPSK/media']!;
+      carrier.handlers['pluginManager/installBundle'] = (_) => installResult(target: '@dsh-go/media');
+      final media = officialFixtureMarket().byName['@dsh-go/media']!;
       await pumpScreen(tester, npm: (_, _) => npm.future);
       await openSheet(tester, '生图生视频');
       await tester.tap(sheetButton('安装到本机'));
@@ -427,8 +427,8 @@ void main() {
 
       npm.complete(media.listing!.integrity);
       await tester.pumpAndSettle();
-      expect(npmAsked, [('@DPSK/media', '0.2.0')]);
-      expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@DPSK/media@0.2.0');
+      expect(npmAsked, [('@dsh-go/media', '0.2.0')]);
+      expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@dsh-go/media@0.2.0');
     });
 
     testWidgets('npm reporting another integrity stops the install', (tester) async {
@@ -442,7 +442,7 @@ void main() {
     });
 
     testWidgets('npm not answering: installation stops with a retryable explanation', (tester) async {
-      carrier.handlers['pluginManager/installBundle'] = (_) => installResult(target: '@DPSK/media');
+      carrier.handlers['pluginManager/installBundle'] = (_) => installResult(target: '@dsh-go/media');
       await pumpScreen(tester, npm: (_, _) => null);
       await openSheet(tester, '生图生视频');
       await tester.tap(sheetButton('安装到本机'));

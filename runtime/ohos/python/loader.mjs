@@ -20,7 +20,7 @@ export function loadPythonRuntime({ runtimeRoot, workspaceRoots, temporaryRoot, 
     if (bytes.length !== row.size || createHash('sha256').update(bytes).digest('hex') !== row.sha256) throw new Error('ERR_OHOS_PYTHON_ASSET_HASH');
   }
   if (!paths.has('stdlib.zip') || !paths.has('ca.pem')) throw new Error('ERR_OHOS_PYTHON_ASSET_MISSING');
-  const { path: addon, binding } = createRequire(import.meta.url)('@DPSK/ohos-native').load('python');
+  const { path: addon, binding } = createRequire(import.meta.url)('@dsh-go/ohos-native').load('python');
   if (binding.pythonVersion !== manifest.pythonVersion) throw new Error('ERR_OHOS_PYTHON_VERSION');
   const native = createPythonHost({ addon, home: directory, paths: [join(directory, 'stdlib.zip')],
     roots: [...workspaceRoots, temporaryRoot], readOnly, caFile: join(directory, 'ca.pem') });

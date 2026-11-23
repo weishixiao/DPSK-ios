@@ -2,7 +2,7 @@ import {isMainThread} from 'node:worker_threads';
 import {randomBytes} from 'node:crypto';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
-export function loadGrantBinding(){return require('@DPSK/ohos-native').load('workspace-grants').binding;}
+export function loadGrantBinding(){return require('@dsh-go/ohos-native').load('workspace-grants').binding;}
 const fail=code=>Object.assign(new Error(code),{code});
 // Fixed main preload must call this before any plugin or user Worker admission.
 // Native owner is permanent for this process and cannot be re-bound after death.

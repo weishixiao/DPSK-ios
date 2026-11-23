@@ -1,5 +1,5 @@
 {
-  "name": "@DPSK/ohos-subprocess",
+  "name": "@dsh-go/ohos-subprocess",
   "version": "0.1.0",
   "private": true,
   "type": "module",

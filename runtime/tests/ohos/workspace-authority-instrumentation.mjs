@@ -13,7 +13,7 @@ await import('../../ohos/sim/preload.mjs');
 // owner captures methods. It is not evidence of a real kernel close failure.
 if (config.scenario === 'retirement-fault' && (await import('node:worker_threads')).isMainThread) {
   const { createRequire } = await import('node:module');
-  const binding = createRequire(join(config.payload, 'package.json'))('@DPSK/ohos-native').load('workspace-grants').binding;
+  const binding = createRequire(join(config.payload, 'package.json'))('@dsh-go/ohos-native').load('workspace-grants').binding;
   const retire = binding.retire;
   binding.retire = token => { retire(token); return 0; };
 }

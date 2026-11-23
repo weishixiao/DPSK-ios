@@ -12,7 +12,7 @@ File selection does not require view v2. The manifest's `dshGo.v`, HTTP path and
 
 ```js
 import { createHash } from 'node:crypto'
-import { effects } from '@DPSK/plugin-kit'
+import { effects } from '@dsh-go/plugin-kit'
 
 ctx.dshGo.panel('files', {
   view: (scope, caps) => caps.features?.includes('files')

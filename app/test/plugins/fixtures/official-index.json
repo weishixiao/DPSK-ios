@@ -10,7 +10,7 @@
   },
   "plugins": [
     {
-      "name": "@DPSK/media",
+      "name": "@dsh-go/media",
       "title": { "en": "Images & video", "zh": "生图生视频" },
       "description": { "en": "Generate images and video in chat", "zh": "在对话里生成图片和视频" },
       "author": "DPSK",
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "name": "@DPSK/translate",
+      "name": "@dsh-go/translate",
       "title": { "en": "Live translate", "zh": "同声翻译" },
       "description": { "en": "Translate replies as they stream", "zh": "回复一边生成一边翻译" },
       "author": "DPSK",

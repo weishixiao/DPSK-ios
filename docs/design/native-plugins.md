@@ -352,7 +352,7 @@ output: {
 
 | 件 | 内容 |
 |---|---|
-| `@DPSK/plugin-kit`（npm，TS） | 清单和视图的类型定义；组件构造函数（`metric(...)`、`chart(...)`）；`check` 命令：零依赖，与 App 同源的 JSON Schema，输出和 App 一样的带路径错误，沿用 ui.json `check.mjs` 的做法；`caps` 判断工具函数 |
+| `@dsh-go/plugin-kit`（npm，TS） | 清单和视图的类型定义；组件构造函数（`metric(...)`、`chart(...)`）；`check` 命令：零依赖，与 App 同源的 JSON Schema，输出和 App 一样的带路径错误，沿用 ui.json `check.mjs` 的做法；`caps` 判断工具函数 |
 | 文档（中文，另附英文） | ① 快速开始：给已有插件加一个工具卡，5 分钟；② 插槽参考（§3.3 一表）；③ 组件目录：每个组件一张浅色、深色截图 + 上限；④ 动作与效果；⑤ 主机覆盖与降级（§3.6）；⑥ 设计规则：不能自定义什么、为什么；⑦ 兼容与版本；⑧ 自查清单（署名、上限、不收集密钥） |
 | 示例插件（开源，MIT） | `DPSK-example-usage`：状态条 + 面板 + 推数据；`DPSK-example-quick`：胶囊 + 消息操作 + invoke；`DPSK-example-weather`：只有工具卡，第 0 期 |
 | 调试 | App 插件详情页的「原生界面」一行：显示问题列表、最近一次视图大小、invoke 耗时。第二期的网页版渲染器兼作浏览器里的预览 |

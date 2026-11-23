@@ -12,7 +12,7 @@ NA v1.3 的 `files` 能力让插件在用户点按后打开系统选择器。用
 
 ```js
 import { createHash } from 'node:crypto'
-import { effects } from '@DPSK/plugin-kit'
+import { effects } from '@dsh-go/plugin-kit'
 
 ctx.dshGo.panel('files', {
   view: (scope, caps) => caps.features?.includes('files')

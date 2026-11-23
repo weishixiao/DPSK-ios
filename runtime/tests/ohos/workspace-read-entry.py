@@ -23,8 +23,8 @@ PAYLOAD = [
     'runtime/ohos/process/files/workspace-paths.mjs',
     'node_modules/@deepseek-ai/dsh/lib/bin.js',
     'node_modules/@deepseek-ai/dsh-base/cordis.patch.yml',
-    'node_modules/@DPSK/ohos-native/package.json',
-    'node_modules/@DPSK/ohos-native/index.cjs',
+    'node_modules/@dsh-go/ohos-native/package.json',
+    'node_modules/@dsh-go/ohos-native/index.cjs',
 ] + ['node_modules/@deepseek-ai/' + name + '/lib/index.js' for name in [
     'cordis', 'dsh-session', 'dsh-system-prompt', 'dsh-session-projection',
     'dsh-sandbox-policy', 'dsh-fs-sandbox', 'dsh-fs-local', 'dsh-fs',

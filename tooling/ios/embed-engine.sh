@@ -16,7 +16,7 @@ python3 - "$ENGINE/runtime.zip" <<'PYZIP'
 import sys, zipfile
 try:
     with zipfile.ZipFile(sys.argv[1]) as archive:
-        name = 'files/node_modules/@DPSK/ohos-native/index.cjs'
+        name = 'files/node_modules/@dsh-go/ohos-native/index.cjs'
         if archive.namelist().count(name) != 1:
             raise ValueError('loader member must be unique')
         text = archive.read(name).decode('utf-8')

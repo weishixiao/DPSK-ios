@@ -66,7 +66,7 @@ The app runs effects only if they arrive within 3 s of the tap; late ones are dr
 Return `pending` first: the tapped element shows a waiting state at once, and the real result arrives up to 60 s later.
 
 ```js
-import { effects } from '@DPSK/plugin-kit'
+import { effects } from '@dsh-go/plugin-kit'
 
 ctx.dshGo.on('translate', (scope, event) =>
   effects.deferred(async (signal) => ({ insert: await translate(scope.clipboard, signal) }), { label: 'Translating' }))
@@ -101,7 +101,7 @@ ctx.dshGo.on('translate', (scope) => ({
 `checkEffects` / `checkPending` in the SDK are the bridge's own code:
 
 ```js
-import { checkEffects, checkPending } from '@DPSK/plugin-kit'
+import { checkEffects, checkPending } from '@dsh-go/plugin-kit'
 
 checkEffects({ copy: md, toast: 'Copied' })
 // → { effects: [{ type: 'copy', … }, { type: 'toast', … }], issues: [], violation: false }
@@ -110,7 +110,7 @@ checkEffects({ open: 'panel:usage' }, { panels: ['usage'] })
 checkPending(result)                                    // how a deferred request is read: { ok, label, timeoutMs, … }
 ```
 
-To run handlers too, use the test host (`@DPSK/plugin-kit/testing`): `await host.invoke('translate', { context: { clipboard } })` gives `{ effects, pending?, settled? }`; `await settled` gives `{ t: 'done', effects }` or `{ t: 'void', reason }`.
+To run handlers too, use the test host (`@dsh-go/plugin-kit/testing`): `await host.invoke('translate', { context: { clipboard } })` gives `{ effects, pending?, settled? }`; `await settled` gives `{ t: 'done', effects }` or `{ t: 'void', reason }`.
 
 ## Selecting files and images (NA v1.3)
 

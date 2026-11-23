@@ -6169,7 +6169,6 @@
   "speechCloudNotice": "Your voice is sent to DeepSeek to be recognized. To recognize on the phone, switch to the voice model.",
   "speechCloudNotSetUp": "No cloud recognition service is set up",
   "speechCallTile": "Voice call",
-  "chatAppsTile": "Apps",
   "speechCallSection": "Voice calls",
   "speechCallFooter": "In a call, pause after you speak and it is sent; the answer is read while it is written.",
   "speechCallBargeIn": "Interrupt by speaking",

@@ -23,6 +23,7 @@
   "chatRegeneratedInNewChat": "已在新对话中重新回答",
   "chatOpenedInNewChatReattach": "已在新对话中打开，附件需重新添加",
   "chatOpenedInNewChat": "已在新对话中打开",
+  "chatAppsTile": "应用",
   "chatForkQueuedLeft": "{message}（{left} 条排队消息未能带走）",
   "@chatForkQueuedLeft": {
     "placeholders": {

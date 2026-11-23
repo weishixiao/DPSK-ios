@@ -1,5 +1,5 @@
 // Native plugins v1.2 (docs/design/native-plugins-protocol.md §11) against a running `dsh web` with
-// DPSK-bridge and runtime/tests/fixtures/native-voice (runtime/tests/run-native-tests.sh).
+// dsh-go-bridge and runtime/tests/fixtures/native-voice (runtime/tests/run-native-tests.sh).
 // Node built-ins only.
 //
 //   node runtime/tests/native-capabilities-live.mjs <base-url> <launch-token>
@@ -12,7 +12,7 @@ import { pathToFileURL } from "node:url";
 
 const WS = await import(process.env.DPSK_BRIDGE_LIB
   ? pathToFileURL(`${process.env.DPSK_BRIDGE_LIB.replace(/\/$/, "")}/ws.js`).href
-  : new URL("../bridge/DPSK-bridge/lib/native/ws.js", import.meta.url));
+  : new URL("../bridge/dsh-go-bridge/lib/native/ws.js", import.meta.url));
 const [baseArg, token] = process.argv.slice(2);
 if (!baseArg || !token) {
   console.error("usage: native-capabilities-live.mjs <base-url> <launch-token>");

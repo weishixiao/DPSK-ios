@@ -6,9 +6,9 @@ import {createServer} from 'node:http';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
-import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
-import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
+import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
+import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
+import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
 const prefixArg=process.env.DSH_TEST_PREFIX??process.env.DSH_PREFIX;
 const PKG='micro-manifest-test';
 

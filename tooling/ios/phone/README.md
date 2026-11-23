@@ -26,7 +26,7 @@ CoreDevice by default; XCTest is a separately enabled enhancement.
 See the [native setup contract](../phone-control/UI-CONTRACT.md),
 [backend README](../phone-self-runner/README.md), and the bilingual user guide
 in `docs/guide/`. User-guide changes must be regenerated with
-`python3 app/tool/guide_sync.py` so the bundled `DPSK-guide` skill agrees.
+`python3 app/tool/guide_sync.py` so the bundled `dsh-go-guide` skill agrees.
 
 ## Shared schemas and iOS descriptions
 

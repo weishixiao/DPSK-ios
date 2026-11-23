@@ -7,7 +7,7 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 
 const { createSessionDeletion } = await import(
-  pathToFileURL(resolve(process.env.DSH_SESSION_DELETION_ROUTE ?? 'runtime/bridge/DPSK-bridge/lib/session-deletion.js'))
+  pathToFileURL(resolve(process.env.DSH_SESSION_DELETION_ROUTE ?? 'runtime/bridge/dsh-go-bridge/lib/session-deletion.js'))
 );
 
 const CAP = '/DPSK/v1/sessions/deletion';

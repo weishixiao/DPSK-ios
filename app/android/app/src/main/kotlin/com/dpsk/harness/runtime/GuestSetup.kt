@@ -39,10 +39,10 @@ object GuestSetup {
         |
         |## 界面与技能
         |
-        |- 这个 App 的对话界面是 Flutter 原生界面，不是 Harness Web Client。改 App 自己的样子用 DPSK-ui（ui.json）；给 App 加胶囊、菜单项、状态条、原生面板、工具卡这类功能用 DPSK-plugin；只有用户明确要做 Cordis 插件、或要改 Harness 网页版 / 桌面端时，才用官方 cordis-plugin-development 等技能。
+        |- 这个 App 的对话界面是 Flutter 原生界面，不是 Harness Web Client。改 App 自己的样子用 dsh-go-ui（ui.json）；给 App 加胶囊、菜单项、状态条、原生面板、工具卡这类功能用 dsh-go-plugin；只有用户明确要做 Cordis 插件、或要改 Harness 网页版 / 桌面端时，才用官方 cordis-plugin-development 等技能。
         |- 没点名界面载体时，手机上的默认目标是 DPSK 原生界面；先确定载体再选技能，不要按加载顺序决定。
         |- DPSK 原生插件不是 Cordis bundle：目录在 `${'$'}DSH_HOME/DPSK/plugins/`，安装用 `dsh plugin --profile web add`；官方技能里的「工作区建包 + plugin_manager install_bundle」只用于 Cordis 插件，两套不要混用。
-        |- 用户报障、排查问题、写 bug 反馈时加载 `DPSK-support` 技能：它教你怎么读本机诊断、按症状定位、生成脱敏的 issue 草稿。
+        |- 用户报障、排查问题、写 bug 反馈时加载 `dsh-go-support` 技能：它教你怎么读本机诊断、按症状定位、生成脱敏的 issue 草稿。
         |""").trimMargin()
 
     private val AGENTS_MD_EN = """
@@ -57,10 +57,10 @@ object GuestSetup {
         |
         |## Interface and skills
         |
-        |- This App's chat interface is a native Flutter interface, not Harness Web Client. Use DPSK-ui (ui.json) to change the App's appearance; use DPSK-plugin to add features such as capsules, menu items, status bars, native panels, and tool cards. Use official skills such as cordis-plugin-development only when the user explicitly asks to create a Cordis plugin or change the Harness web or desktop interface.
+        |- This App's chat interface is a native Flutter interface, not Harness Web Client. Use dsh-go-ui (ui.json) to change the App's appearance; use dsh-go-plugin to add features such as capsules, menu items, status bars, native panels, and tool cards. Use official skills such as cordis-plugin-development only when the user explicitly asks to create a Cordis plugin or change the Harness web or desktop interface.
         |- If the user does not specify an interface, the default target on the phone is the DPSK native interface. Identify the interface first, then choose a skill; do not choose based on loading order.
         |- DPSK native plugins are not Cordis bundles: their directory is `${'$'}DSH_HOME/DPSK/plugins/`, and they are installed with `dsh plugin --profile web add`. The official skills' "create a package in the workspace + plugin_manager install_bundle" workflow is only for Cordis plugins; do not mix the two.
-        |- When the user reports an issue, when troubleshooting, or when writing a bug report, load the `DPSK-support` skill: it explains how to read local diagnostics, investigate by symptom, and generate a redacted issue draft.
+        |- When the user reports an issue, when troubleshooting, or when writing a bug report, load the `dsh-go-support` skill: it explains how to read local diagnostics, investigate by symptom, and generate a redacted issue draft.
         |""".trimMargin()
 
     /**
@@ -118,7 +118,7 @@ object GuestSetup {
         |- 新版本提供 `mcp__phone__diagnostics` 时，报障后先自行刷新并按 summary/evidence/appErrors/voice/engine/failure 段读取，无需先读屏、开启手机操控或授予高权限。核对采集时间、refreshed 和错误码；不支持时读已有快照。工具不采系统输入法证据，不替用户外发报告。
         |- 需要更多细节时，再让用户在 设置 → 诊断 里导出诊断包（zip）；它仍受日志数量和大小限制。数据不足就直说，不要凭猜测下结论。
         |- 报告会尝试脱敏，但不能保证没有遗漏。外发前人工检查凭据、路径和设备信息，不把完整报告或秘密原样贴到聊天或 issue 里。
-        |- 完整的排查流程（症状清单、issue 模板、隐私红线）在 `DPSK-support` 技能里；用户报障时加载它再动手。
+        |- 完整的排查流程（症状清单、issue 模板、隐私红线）在 `dsh-go-support` 技能里；用户报障时加载它再动手。
         |""".trimMargin()
 
     private val DIAGNOSTICS_SECTION_EN = """
@@ -130,7 +130,7 @@ object GuestSetup {
         |- When a newer version provides `mcp__phone__diagnostics`, refresh the diagnostics yourself after a problem is reported, then read the summary/evidence/appErrors/voice/engine/failure sections, without first reading the screen, enabling phone control, or obtaining elevated permissions. Check the collection time, refreshed, and error codes; if the tool is not supported, read the existing snapshots. The tool does not collect system input-method evidence or send reports externally on the user's behalf.
         |- If more detail is needed, ask the user to export a diagnostic bundle (zip) from Settings → Diagnostics; it is still subject to limits on log count and size. Say explicitly when the data is insufficient; do not draw conclusions from guesses.
         |- Reports attempt to redact sensitive data, but omissions are still possible. Before sharing externally, have a person check credentials, paths, and device information; do not paste complete reports or secrets verbatim into chat or issues.
-        |- The complete troubleshooting workflow (symptom checklist, issue template, and privacy boundaries) is in the `DPSK-support` skill; load it before starting when the user reports a problem.
+        |- The complete troubleshooting workflow (symptom checklist, issue template, and privacy boundaries) is in the `dsh-go-support` skill; load it before starting when the user reports a problem.
         |""".trimMargin()
 
     // l10n:keep guest path

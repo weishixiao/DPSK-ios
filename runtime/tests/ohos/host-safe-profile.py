@@ -119,7 +119,7 @@ def main():
         assert not any(row.get('id') == key and row.get('disabled') is True for row in rows)
     text = run('actual-safe-dump', [node, *argv[1:argv.index('--host')], '--dump-config'],
         env={**base_env, **captured}, cwd=workspace)
-    for key in ['ohos-subprocess', 'ohos-sandbox', 'ohos-lifecycle', 'ohos-phone', 'ohos-capabilities', 'DPSK-bridge']:
+    for key in ['ohos-subprocess', 'ohos-sandbox', 'ohos-lifecycle', 'ohos-phone', 'ohos-capabilities', 'dsh-go-bridge']:
         assert key in text, key
     assert 'dsh-safe-missing-bundle' not in text
     # Exact original round assertions remain intact. Only its layout, fixed Host

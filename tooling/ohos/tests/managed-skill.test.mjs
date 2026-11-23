@@ -15,10 +15,10 @@ const { OhosManagedSkillStorage } = await import(modules.installerUrl);
 const { ManagedSkillService } = await import(modules.serviceUrl);
 after(async () => { await fs.rm(temp, { recursive:true, force:true }); });
 afterEach(() => { assert.equal(managedSkillIo.opened.size, 0, 'all actual descriptors closed'); managedSkillIo.reset(); });
-const SKILL = '---\n# DPSK:managed\nname: DPSK-ui\n---\n中文 🐳\n';
+const SKILL = '---\n# DPSK:managed\nname: dsh-go-ui\n---\n中文 🐳\n';
 const TOKEN = 'fixture-only';
 const payload = (value='value', skill=SKILL) => new Map([['SKILL.md', skill], ['nested/data.txt', value]]);
-const wire = (root, id='one', files=payload(), generation=1, name='DPSK-ui') => new Map([
+const wire = (root, id='one', files=payload(), generation=1, name='dsh-go-ui') => new Map([
   ['requestId', id], ['expectedRoot', root], ['expectedToken', TOKEN], ['expectedGeneration', generation], ['name', name], ['files', files],
 ]);
 const parsed = (root, ...rest) => { const value=core.ManagedSkillRequest.parse(wire(root,...rest)); assert(value); return value; };
@@ -28,7 +28,7 @@ let serial=0;
 async function fixture() {
   const root=path.join(temp, `中文 ${++serial}/runtime/rootfs`);
   await fs.mkdir(path.join(root,'root/.dsh'), { recursive:true });
-  const directory=path.join(root,'root/.dsh/skills/DPSK-ui');
+  const directory=path.join(root,'root/.dsh/skills/dsh-go-ui');
   return { root, directory, storage:new OhosManagedSkillStorage(root) };
 }
 async function noTemps(directory) {

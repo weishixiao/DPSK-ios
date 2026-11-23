@@ -3,8 +3,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
-import { checkManifest } from '../bridge/DPSK-bridge/lib/native/manifest.js';
-import { parseText, resolveText } from '../bridge/DPSK-bridge/lib/native/util.js';
+import { checkManifest } from '../bridge/dsh-go-bridge/lib/native/manifest.js';
+import { parseText, resolveText } from '../bridge/dsh-go-bridge/lib/native/util.js';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 function render(text, locale) {

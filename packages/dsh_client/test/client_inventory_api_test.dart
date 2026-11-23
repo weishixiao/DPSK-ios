@@ -100,7 +100,7 @@ const _bridge = {
         'order': 40,
         'label': {'en': 'Desktop pet', 'zh': '桌宠'},
       },
-      {'package': 'DPSK-bridge', 'cell': 'general', 'order': -1},
+      {'package': 'dsh-go-bridge', 'cell': 'general', 'order': -1},
       {'cell': 'nameless'},
     ],
     'conversation.input.dock': [
@@ -276,7 +276,7 @@ void main() {
       expect(inventory.packages.keys.last, '@deepseek-ai/dsh-client-ui-chat');
       expect(inventory.isOfficial('@deepseek-ai/dsh-experimental-session-search'), isTrue);
       expect(inventory.isOfficial('dsh-cost-meter'), isFalse);
-      expect(inventory.isOfficial('DPSK-bridge'), isTrue);
+      expect(inventory.isOfficial('dsh-go-bridge'), isTrue);
       expect(inventory.isOfficial('@deepseek-ai/never-heard-of'), isTrue);
       expect(inventory.slots, isNull);
     });

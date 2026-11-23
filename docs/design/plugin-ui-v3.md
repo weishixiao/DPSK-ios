@@ -275,7 +275,7 @@ rc.4 里，插件可以给对话注册一个「View」（和 Chat、Trajectory �
 | 系统通知 | Notification API | 应用内通知（P2 `notify`） | — |
 | 输入框里插字、附图 | `inputActions` | `insert`（已有）、`attach`（P2） | — |
 
-SDK 配套一个检查：`DPSK-plugin-check --from-web <插件目录>` 读出它的网页 slot，逐条给出上表的建议（P2）。
+SDK 配套一个检查：`dsh-go-plugin-check --from-web <插件目录>` 读出它的网页 slot，逐条给出上表的建议（P2）。
 
 ### 3.7 网页岛本身的体验
 
@@ -557,7 +557,7 @@ owner 举的例子里，**已经有的**：列表 `list`、网格 `grid`、标�
 - 效果：`attach`、`open web:`、`open session:`。
 - 组件：`list` 分组 / 前缀图 / 行菜单、`searchField`、`markdown`、`time`、表格列类型。
 - 兼容：genui 交互回传和主机相对图片；`sidebar.footer.action`、`settings.plugins.tab`、`plugins.detail.*` 的整页岛；岛内浮层；岛的只读环境信息；SSH 主机装桥接（hosts.md 已列的第二期）。
-- 作者工具：插件页「创建插件」（照 rc.4：开新对话，把请求和 `DPSK-plugin` 技能放进草稿，不发送）；`check --from-web`。
+- 作者工具：插件页「创建插件」（照 rc.4：开新对话，把请求和 `dsh-go-plugin` 技能放进草稿，不发送）；`check --from-web`。
 - 测试：桥接 `runtime/tests/native-*.mjs` 加协议用例（新 surface、`tools` 归属、`attach` 上限、`notify` 频率）；`runtime/test-host.sh` 真 DSH 端到端；App 侧同 P1 的 golden 与几何口径。
 - 风险：协议面变大（v1 只加可选项，老 App 忽略）；`notify` 的打扰（首次询问 + 频率上限 + 开关）；`tool.card` 交互的归属判断（只信桥接）。粗估 18–22 人日。
 
@@ -582,7 +582,7 @@ owner 举的例子里，**已经有的**：列表 `list`、网格 `grid`、标�
 | `types/schema.d.ts`（`scripts/gen-types.mjs` 生成）、`lib/view.js` | 生成类型；构造函数 `emptyState()`、`gallery()` | 同 |
 | `lib/caps.js` | `adaptView` 的新降级（`gallery` → `grid` + `image`、`emptyState` → `callout`） | 同 |
 | `lib/view-check.js` | 新组件校验，和 Dart 共用对照用例 | 同 |
-| `skill/SKILL.md`（`DPSK-plugin` 技能） | 新组件、`chat.panel`、`accent: "app"` 的写法 | 新 surface |
+| `skill/SKILL.md`（`dsh-go-plugin` 技能） | 新组件、`chat.panel`、`accent: "app"` 的写法 | 新 surface |
 | 示例插件 | 新 `examples/plugins/DPSK-example-album`：聊天页弹层 + 全部功能里一个相册面板，用到 `gallery`、`emptyState`、环形进度、趋势线、`accent: "app"`（图片放 `assets/`，没有图时是空态） | 给 `DPSK-example-quick` 加 `composer.tools` 和 `session.actions`；`DPSK-example-usage` 加 `turn.note` |
 
 ## 8. 需要 owner 定的事

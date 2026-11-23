@@ -8,7 +8,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const runtime = fileURLToPath(new URL('../../', import.meta.url));
-const bridgeSource = join(runtime, 'bridge/DPSK-bridge');
+const bridgeSource = join(runtime, 'bridge/dsh-go-bridge');
 const supported = new Set([0xef53n, 0x58465342n, 0x9123683en]);
 const packages = ['dsh-app-boot', 'dsh-session', 'dsh-session-projection', 'dsh-agent',
   'dsh-system-prompt', 'dsh-llm', 'dsh-tools', 'dsh-tool-executor-native', 'dsh-agent-loop',

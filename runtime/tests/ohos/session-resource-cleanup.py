@@ -63,7 +63,7 @@ def prepare(source, prefix, out):
                     target.joinpath(package.name).symlink_to(package.resolve())
         else:
             target.symlink_to(item.resolve())
-    for member in sorted((source / 'runtime/bridge/DPSK-bridge').rglob('*')):
+    for member in sorted((source / 'runtime/bridge/dsh-go-bridge').rglob('*')):
         if member.is_file():
             copy(member, view / member.relative_to(source), 'exact-shared-bridge-package')
 
@@ -105,7 +105,7 @@ def main():
         'runtime/session-deletion/core.mjs',
         'runtime/lib/rtbuild.py',
     ]]
-    input_paths += sorted(path for path in (source / 'runtime/bridge/DPSK-bridge').rglob('*') if path.is_file())
+    input_paths += sorted(path for path in (source / 'runtime/bridge/dsh-go-bridge').rglob('*') if path.is_file())
     before = {str(path): sha(path) for path in input_paths}
     record = {'startedUTC': utc(), 'source': str(source), 'prefix': str(prefix),
               'scope': 'Actual authenticated bridge, JSONL-v2, Agent/default title and public SDK cleanup; real Linux flock and loopback WS. No device or physical-close SLA.',

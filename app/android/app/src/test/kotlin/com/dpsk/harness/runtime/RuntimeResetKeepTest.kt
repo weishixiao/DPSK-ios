@@ -35,7 +35,7 @@ class RuntimeResetKeepTest {
         write(
             base,
             "rootfs/bin/sh",
-            "rootfs/root/.dsh/DPSK/ui.json",
+            "rootfs/root/.dsh/dsh-go/ui.json",
             "rootfs/root/.dsh/skills/mine/SKILL.md",
             "rootfs/root/.agents/skills/shared/SKILL.md",
             "rootfs/root/.dsh/profiles/web/package.json",
@@ -109,12 +109,12 @@ class RuntimeResetKeepTest {
         retireRuntime(base, retired, keep, ui)
         assertFalse(base.exists())
         assertFalse(retired.exists())
-        assertEquals("ui.json", File(keep, "root/.dsh/DPSK/ui.json").readText())
+        assertEquals("ui.json", File(keep, "root/.dsh/dsh-go/ui.json").readText())
         assertFalse(File(keep, "root/.dsh/profiles").exists())
 
         install()
         assertSettled()
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertEquals("SKILL.md", text("root/.dsh/skills/mine/SKILL.md"))
         assertEquals("SKILL.md", text("root/.agents/skills/shared/SKILL.md"))
         for (gone in listOf("root/.dsh/profiles/web/package.json", "root/.dsh/cordis.patch.yml", "root/.dsh/.env")) {
@@ -129,7 +129,7 @@ class RuntimeResetKeepTest {
         retireRuntime(base, retired, keep, ui + plugins)
         install()
         assertSettled()
-        for (path in listOf("root/.dsh/DPSK/ui.json", "root/.dsh/profiles/web/package.json", "root/.dsh/cordis.patch.yml", "root/.dsh/.env")) {
+        for (path in listOf("root/.dsh/dsh-go/ui.json", "root/.dsh/profiles/web/package.json", "root/.dsh/cordis.patch.yml", "root/.dsh/.env")) {
             assertNotNull(path, text(path))
         }
         assertUserDataGone()
@@ -236,7 +236,7 @@ class RuntimeResetKeepTest {
         assertTrue(Files.isSymbolicLink(File(base, "rootfs/root/.dsh/skills/mine/SKILL.md").toPath()))
         assertNull(text("root/.dsh/skills/mine/SKILL.md"))
         assertEquals("SKILL.md", text("root/.agents/skills/shared/SKILL.md"))
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
     }
 
     @Test fun anAlreadyMissingProotFirstHopDoesNotBlockAnotherKeepReset() {
@@ -320,7 +320,7 @@ class RuntimeResetKeepTest {
         assertTrue(base.renameTo(retired)) // killed right here
         install()
         assertSettled()
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertNull(text("root/.dsh/profiles/web/package.json"))
     }
 
@@ -334,7 +334,7 @@ class RuntimeResetKeepTest {
         assertFalse(retired.exists())
         install()
         assertSettled()
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertEquals("SKILL.md", text("root/.dsh/skills/mine/SKILL.md"))
     }
 
@@ -344,7 +344,7 @@ class RuntimeResetKeepTest {
         assertKeepFailed { retireRuntime(base, retired, keep, ui) }
         assertFalse(base.exists()) // runtime reads as not installed
         assertEquals("SKILL.md", File(retired, "rootfs/root/.agents/skills/shared/SKILL.md").readText())
-        assertEquals("ui.json", File(keep, "root/.dsh/DPSK/ui.json").readText())
+        assertEquals("ui.json", File(keep, "root/.dsh/dsh-go/ui.json").readText())
 
         // Still failing: the install stops before touching anything.
         assertKeepFailed { install() }
@@ -355,7 +355,7 @@ class RuntimeResetKeepTest {
         install()
         assertSettled()
         assertEquals("SKILL.md", text("root/.agents/skills/shared/SKILL.md"))
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
     }
 
     @Test fun aFailedRestorePutsTheFreshCopyBackAndKeepsTheRest() {
@@ -366,7 +366,7 @@ class RuntimeResetKeepTest {
         assertKeepFailed { activateRootfs(base, "r1", keep, sync = {}) }
         // Not installed, nothing lost: what moved is in place, the rest still kept, the fresh copy back.
         assertFalse(File(base, "rootfs.version").exists())
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertEquals("SKILL.md", File(keep, "root/.agents/skills/shared/SKILL.md").readText())
         assertEquals("SKILL.md", text("root/.agents/skills/shipped/SKILL.md"))
 
@@ -374,7 +374,7 @@ class RuntimeResetKeepTest {
         File(keep, "root/.agents").setWritable(true)
         install()
         assertSettled()
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertEquals("SKILL.md", text("root/.agents/skills/shared/SKILL.md"))
         assertNull(text("root/.agents/skills/shipped/SKILL.md"))
     }
@@ -391,7 +391,7 @@ class RuntimeResetKeepTest {
         install(dropKept = true)
         assertSettled()
         assertFalse(File(files, "runtime-keep.dropped").exists())
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertEquals("SKILL.md", text("root/.dsh/skills/mine/SKILL.md"))
         assertNull(text("root/.agents/skills/shared/SKILL.md"))
         assertEquals("SKILL.md", text("root/.agents/skills/shipped/SKILL.md"))
@@ -405,7 +405,7 @@ class RuntimeResetKeepTest {
 
         install(dropKept = true)
         assertSettled()
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertEquals("SKILL.md", text("root/.dsh/skills/mine/SKILL.md"))
         assertNull(text("root/.agents/skills/shared/SKILL.md"))
     }
@@ -415,7 +415,7 @@ class RuntimeResetKeepTest {
         retireRuntime(base, retired, keep, ui + plugins)
         install(dropKept = true)
         assertSettled()
-        for (path in listOf("root/.dsh/DPSK/ui.json", "root/.agents/skills/shared/SKILL.md", "root/.dsh/.env")) {
+        for (path in listOf("root/.dsh/dsh-go/ui.json", "root/.agents/skills/shared/SKILL.md", "root/.dsh/.env")) {
             assertNotNull(path, text(path))
         }
     }
@@ -425,7 +425,7 @@ class RuntimeResetKeepTest {
         retireRuntime(base, retired, keep, ui)
         install()
         // A settle that moved everything and lost its list, then was killed mid-delete.
-        write(retired, "rootfs/root/.dsh/DPSK/ui.json")
+        write(retired, "rootfs/root/.dsh/dsh-go/ui.json")
         settleReset(base, retired, keep)
         assertFalse(retired.exists())
         assertFalse(keep.exists())
@@ -445,7 +445,7 @@ class RuntimeResetKeepTest {
         install()
         assertSettled()
         for (path in listOf(
-            "root/.dsh/DPSK/ui.json", "root/.dsh/skills/mine/SKILL.md", "root/.agents/skills/shared/SKILL.md",
+            "root/.dsh/dsh-go/ui.json", "root/.dsh/skills/mine/SKILL.md", "root/.agents/skills/shared/SKILL.md",
             "root/.dsh/profiles/web/package.json", "root/.dsh/cordis.patch.yml", "root/.dsh/.env",
         )) assertNotNull(path, text(path))
     }
@@ -454,10 +454,10 @@ class RuntimeResetKeepTest {
         installed()
         retireRuntime(base, retired, keep, ui + plugins)
         // The install never ran; a fresh runtime got there some other way and is reset again.
-        write(base, "rootfs/root/.dsh/DPSK/ui.json")
-        File(base, "rootfs/root/.dsh/DPSK/ui.json").writeText("fresh")
+        write(base, "rootfs/root/.dsh/dsh-go/ui.json")
+        File(base, "rootfs/root/.dsh/dsh-go/ui.json").writeText("fresh")
         retireRuntime(base, retired, keep, ui)
-        assertEquals("ui.json", File(keep, "root/.dsh/DPSK/ui.json").readText())
+        assertEquals("ui.json", File(keep, "root/.dsh/dsh-go/ui.json").readText())
         assertFalse(File(keep, "root/.dsh/profiles").exists())
         assertFalse(File(keep, "root/.dsh/.env").exists())
 
@@ -482,7 +482,7 @@ class RuntimeResetKeepTest {
         assertTrue(base.renameTo(retired)) // no list, as from an older build
         settleReset(base, retired, keep)
         assertFalse(retired.exists())
-        assertEquals("ui.json", File(keep, "root/.dsh/DPSK/ui.json").readText())
+        assertEquals("ui.json", File(keep, "root/.dsh/dsh-go/ui.json").readText())
         assertFalse(File(keep, "root/.dsh/profiles").exists())
     }
 
@@ -490,7 +490,7 @@ class RuntimeResetKeepTest {
         installed()
         write(base, "staging/bin/sh")
         activateRootfs(base, "r2", keep, sync = {})
-        assertEquals("ui.json", text("root/.dsh/DPSK/ui.json"))
+        assertEquals("ui.json", text("root/.dsh/dsh-go/ui.json"))
         assertEquals("notes", text("root/workspace/notes"))
         assertEquals("r2", File(base, "rootfs.version").readText())
     }

@@ -91,7 +91,7 @@ def main():
         raise ValueError('npm version differs from the fixed composition recipe')
     for name, source in [('dsh', repo / 'runtime/locks/dsh-0.2.2-rc.1'),
                          ('process', repo / 'runtime/ohos/process'),
-                         ('bridge', repo / 'runtime/bridge/DPSK-bridge')]:
+                         ('bridge', repo / 'runtime/bridge/dsh-go-bridge')]:
         prefix = output / name
         prefix.mkdir()
         for filename in ('package.json', 'package-lock.json'):

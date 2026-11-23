@@ -268,7 +268,7 @@ void main() {
       expect(find.text('没有找到相关设置'), findsOneWidget);
       await tester.tap(find.text('问 AI：「怎么把对话导出成 PDF」'));
       await tester.pumpAndSettle();
-      expect(_container(tester).read(composeInboxProvider).single.text, '/DPSK-guide 怎么把对话导出成 PDF');
+      expect(_container(tester).read(composeInboxProvider).single.text, '/dsh-go-guide 怎么把对话导出成 PDF');
     });
 
     testWidgets('no 问 AI in 网页模式', (tester) async {

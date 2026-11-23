@@ -75,14 +75,14 @@ class BridgeDependencyTests(unittest.TestCase):
         source, files = dependencies.pdf_files(self.prefix)
         composer = composition.Composer(self.root / 'payload')
         for path in files:
-            destination = 'runtime/bridge/DPSK-bridge/node_modules/pdfjs-dist/' + path.relative_to(source).as_posix()
+            destination = 'runtime/bridge/dsh-go-bridge/node_modules/pdfjs-dist/' + path.relative_to(source).as_posix()
             composer.add(path, self.prefix, 'bridge-dependencies', destination)
         self.assertEqual(len(composer.payload), 190)
         names = set(composer.payload)
         for name in ['LICENSE', 'cmaps/LICENSE', 'standard_fonts/LICENSE_FOXIT', 'standard_fonts/LICENSE_LIBERATION']:
-            self.assertIn('runtime/bridge/DPSK-bridge/node_modules/pdfjs-dist/' + name, names)
+            self.assertIn('runtime/bridge/dsh-go-bridge/node_modules/pdfjs-dist/' + name, names)
         for path in files:
-            destination = 'runtime/bridge/DPSK-bridge/node_modules/pdfjs-dist/' + path.relative_to(source).as_posix()
+            destination = 'runtime/bridge/dsh-go-bridge/node_modules/pdfjs-dist/' + path.relative_to(source).as_posix()
             self.assertEqual(composer.payload[destination]['sha256'], hashlib.sha256(path.read_bytes()).hexdigest())
         self.assertFalse(any(name.endswith(('.wasm', '.node', '.map', '.d.ts')) for name in names))
 
@@ -97,7 +97,7 @@ class BridgeDependencyTests(unittest.TestCase):
             shutil.copytree(ROOT / 'runtime' / name, runtime / name, symlinks=True,
                             ignore=shutil.ignore_patterns('node_modules', '__pycache__'))
         before = recipe.recipe_inputs(runtime, '0.2.2-rc.1')
-        bridge = runtime / 'bridge/DPSK-bridge'
+        bridge = runtime / 'bridge/dsh-go-bridge'
         shutil.copytree(self.prefix / 'node_modules', bridge / 'node_modules')
         self.assertEqual(recipe.recipe_inputs(runtime, '0.2.2-rc.1'), before)
         with (bridge / 'package-lock.json').open('a') as lock:

@@ -3061,13 +3061,13 @@
       "reason": "entry-unavailable"
     },
     {
-      "entryId": "DPSK-bridge",
+      "entryId": "dsh-go-bridge",
       "package": null,
       "owner": "overlay",
       "bundle": null,
       "kind": "overlay",
       "source": "unverified",
-      "label": "DPSK-bridge",
+      "label": "dsh-go-bridge",
       "state": "unsupported",
       "configurable": false,
       "writable": false,

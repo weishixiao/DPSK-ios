@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
-import { createCompanionUsage } from '../bridge/DPSK-bridge/lib/companion/usage.js';
-import { createCompanionPromptContext } from '../bridge/DPSK-bridge/lib/companion/prompt-context.js';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
+import { createCompanionUsage } from '../bridge/dsh-go-bridge/lib/companion/usage.js';
+import { createCompanionPromptContext } from '../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
 
 function ledger(limits) {
   const owner = {}, usage = createCompanionUsage({ instanceId: 'boot', now: () => 100, limits });

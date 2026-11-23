@@ -217,7 +217,7 @@ class DeletionVariantTests(unittest.TestCase):
 
     def test_variants_are_generated_without_modifying_shared_or_prepared_inputs(self):
         paths = [ROOT / 'runtime/session-deletion/core.mjs',
-                 ROOT / 'runtime/bridge/DPSK-bridge/lib/session-deletion.js', self.companion]
+                 ROOT / 'runtime/bridge/dsh-go-bridge/lib/session-deletion.js', self.companion]
         before = [path.read_bytes() for path in paths]
         report = composition.deletion_variants(ROOT, self.prefix, self.output)
         self.assertEqual([path.read_bytes() for path in paths], before)
@@ -237,7 +237,7 @@ class DeletionVariantTests(unittest.TestCase):
     def private_repo(self):
         repo = self.root / 'repo'
         for name in ['runtime/session-deletion/core.mjs',
-                     'runtime/bridge/DPSK-bridge/lib/session-deletion.js',
+                     'runtime/bridge/dsh-go-bridge/lib/session-deletion.js',
                      'runtime/lib/rtbuild.py', 'runtime/ohos/package/session-deletion-ohos.diff']:
             target = repo / name
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -278,7 +278,7 @@ class RequiredTests(unittest.TestCase):
         entries = composition.required_entries(self.root)
         self.assertEqual(len(entries), 9)
         self.assertIn('runtime/ohos/phone/index.mjs', entries)
-        self.assertIn('runtime/bridge/DPSK-bridge/lib/index.js', entries)
+        self.assertIn('runtime/bridge/dsh-go-bridge/lib/index.js', entries)
         self.assertIn('runtime/ohos/process/child-process.mjs', entries)
 
     def test_each_missing_manifest_entry_is_rejected(self):

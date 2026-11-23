@@ -8,7 +8,7 @@
 
 ## 既有合同
 
-权威源是 `app/android/app/src/main/kotlin/io/github/dpsk/harness/icons/PictureShortcutPlugin.kt` 和 `app/lib/state/icon_shortcut_state.dart`。
+权威源是 `app/android/app/src/main/kotlin/com/dpsk/harness/icons/PictureShortcutPlugin.kt` 和 `app/lib/state/icon_shortcut_state.dart`。
 
 | 项目 | 保持的行为 |
 |---|---|

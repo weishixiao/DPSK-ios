@@ -428,7 +428,7 @@ export function createNativeRoutes(core, { beginUsage = () => () => {} } = {}) {
       await gate;
       if (entry.settled) return;
       if (!current()) return settle(entry, { t: "void", reason: "cancelled" });
-      core.ctx.logger?.warn?.("DPSK-bridge: deferred %s/%s failed: %s", pkg, id, errorText(error));
+      core.ctx.logger?.warn?.("dsh-go-bridge: deferred %s/%s failed: %s", pkg, id, errorText(error));
       settle(entry, { t: "void", reason: "error" });
     });
     const pending = { id: entry.id, timeoutMs: deferred.timeoutMs };

@@ -52,7 +52,7 @@ Stage 新增完整 `ruleAliasVersion: 1` 与 `ruleAliases: {标准名:{ids:[物�
 
 本地技能已接到三个真实入口：Flutter assets manifest、`extraSkillLoadersProvider`、Kotlin `ManagedSkillRequest.names`。继续使用现有事务安装、引擎代际与用户接管规则：删掉 managed 注释后不覆盖。远程主机只在已有明确安装操作中加载 `loadUiSkillBundle(null, companionAdaptSkillName)` 并交 `UiSkillRemoteInstaller.install(context, host, bundle)`；不能因有发消息权限就后台安装。旧主机缺技能时可选择使用轻量模式；若要在普通技术会话内联，发送同一 `companionAdaptSystem` 与同一 JSON 报告，App 仍校验，不声称技能已安装。
 
-`UiSkillRemoteInstaller` 目前是接口，默认 provider 为 null，本补丁未实现远程安装 UI。主线若通过 relay 提示安装，不能直接复用现有 `uiSkillInstallPrompt(bundle)`：它仍固定 DPSK-ui 的目录和三个文件，会漏掉本技能的 `references/contract.txt`。远程接线须在用户明确的安装操作中传完整 `bundle.name/files` 并验安装结果；已有 `uiSkillShellScript(bundle)` 按 bundle 通用生成 SSH 脚本，但本轮未执行远程安装。
+`UiSkillRemoteInstaller` 目前是接口，默认 provider 为 null，本补丁未实现远程安装 UI。主线若通过 relay 提示安装，不能直接复用现有 `uiSkillInstallPrompt(bundle)`：它仍固定 dsh-go-ui 的目录和三个文件，会漏掉本技能的 `references/contract.txt`。远程接线须在用户明确的安装操作中传完整 `bundle.name/files` 并验安装结果；已有 `uiSkillShellScript(bundle)` 按 bundle 通用生成 SSH 脚本，但本轮未执行远程安装。
 
 ## 5. 验证与仍需主线验收
 

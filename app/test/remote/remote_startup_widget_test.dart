@@ -82,7 +82,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 100));
     final c = ProviderScope.containerOf(tester.element(find.byType(MaterialApp)));
-    expect(c.read(composeInboxProvider).single.text, '/DPSK-guide 怎么连接自己的电脑或服务器？和用本机有什么不同？');
+    expect(c.read(composeInboxProvider).single.text, '/dsh-go-guide 怎么连接自己的电脑或服务器？和用本机有什么不同？');
   });
 
   testWidgets('the startup preference stays out of the way until a remote host exists', (tester) async {

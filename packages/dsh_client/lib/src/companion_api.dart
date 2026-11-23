@@ -1,5 +1,5 @@
 /// 伙伴小屋's state on the Host, through the DPSK bridge
-/// (runtime/bridge/DPSK-bridge/lib/companion/, contract in
+/// (runtime/bridge/dsh-go-bridge/lib/companion/, contract in
 /// docs/design/companion.md):
 ///
 /// * `GET  /DPSK/v1/companion`: identity, versions and her state now;
@@ -16,7 +16,7 @@ library;
 
 import 'carrier.dart';
 import 'connection.dart';
-import 'dpsk_api.dart';
+import 'dsh_go_api.dart';
 import 'errors.dart';
 import 'json.dart';
 import 'models.dart';

@@ -27,7 +27,7 @@ export async function apply(ctx){
    const fiber=e.fiber;await e.update({disabled:true});await fiber.dispose();
    res.writeHead(200,{'content-type':'application/json'});res.end(JSON.stringify({connectionAbsent:ctx.get('connection')===undefined,entryDisabled:e.disabled,entryState:fiber.state,privateProfileDisabled:true}));return;
   }
-  const bridgeEntry=[...ctx.loader.entries()].find(e=>e.options.id==='DPSK-bridge');
+  const bridgeEntry=[...ctx.loader.entries()].find(e=>e.options.id==='dsh-go-bridge');
   const moduleFiles=Object.fromEntries(['@deepseek-ai/dsh-app-boot','@deepseek-ai/dsh-config-editor','@deepseek-ai/dsh-host-webserver'].map(name=>{
    const file=realpathSync(fileURLToPath(import.meta.resolve(name)));return [name,{file,sha256:sha(file)}];
   }));

@@ -6,7 +6,7 @@
 // (x-DPSK-guard: reject), browser cookie -> reaches its handler, cross-site Origin /
 // Sec-Fetch-Site and a rebound Host -> rejected even with the cookie. Then the flows the official
 // client, our WebView and the app's Dart client use (index, static assets, plugin bundles,
-// /api/remote.mux) and, when present, the DPSK-bridge API. --guard bridge expects the bridge's
+// /api/remote.mux) and, when present, the dsh-go-bridge API. --guard bridge expects the bridge's
 // fallback guard (unpatched webserver) instead of the patch, --guard none a bridge with
 // guardRoutes: false on an unpatched webserver (routeGuard must read false); --expect-unguarded inverts the
 // no-credential check to demonstrate the hole on an unpatched build. Node built-ins only.
@@ -156,7 +156,7 @@ const mux = await upgrade("/api/remote.mux", C);
 check(mux.status === 101, `WebSocket /api/remote.mux with cookie (Dart client) -> ${mux.status}`);
 
 if (table.prefix.includes("/DPSK")) {
-  console.log("== DPSK-bridge");
+  console.log("== dsh-go-bridge");
   const capabilitiesAnon = await request("GET", "/DPSK/v1/capabilities");
   check(capabilitiesAnon.status === 401, `capabilities without cookie -> ${capabilitiesAnon.status}`);
   const capabilities = await request("GET", "/DPSK/v1/capabilities", { headers: C });
@@ -177,7 +177,7 @@ if (table.prefix.includes("/DPSK")) {
   const guardOn = expectGuard !== "none";
   check(body.routeGuard === guardOn && body.routeGuardMode === (guardOn ? expectGuard : "off"),
     `inventory routeGuard=${body.routeGuard} (measured), mode=${body.routeGuardMode}`);
-  check(body.packages?.some((p) => p.name === "DPSK-bridge" && p.hasClient), "bridge lists its own browser half");
+  check(body.packages?.some((p) => p.name === "dsh-go-bridge" && p.hasClient), "bridge lists its own browser half");
   check(body.slots === null && body.bootRev === undefined, "no page has reported yet -> slots null, no bootRev (app probes)");
   const report = {
     bootRev: body.currentRev,
@@ -187,7 +187,7 @@ if (table.prefix.includes("/DPSK")) {
       "settings.section": [
         { package: "dsh-pet", cell: "dsh-pet-config", order: 50.4, label: "桌宠配置", priority: 0, active: true },
         { package: null, cell: "mystery", order: 0, priority: 0, active: true },
-        { package: "DPSK-bridge", cell: "mask", order: 0, priority: -1000000007, active: true },
+        { package: "dsh-go-bridge", cell: "mask", order: 0, priority: -1000000007, active: true },
       ],
       "sidebar.right.pane.tab": [
         { package: "dsh-pet", cell: "dsh-pet:panel", order: 0, label: "桌宠", active: true,

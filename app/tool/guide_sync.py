@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Check the user guide against the app, then build the DPSK-guide skill.
+"""Check the user guide against the app, then build the dsh-go-guide skill.
 
-    python3 app/tool/guide_sync.py           # check, then write app/assets/skills/DPSK-guide/
+    python3 app/tool/guide_sync.py           # check, then write app/assets/skills/dsh-go-guide/
     python3 app/tool/guide_sync.py --check   # check only, write nothing; exit 1 on any problem
 
 The guide lives in docs/guide/ (SKILL.md, README.md, zh/*.md, en/*.md) and ships
-as the DPSK-guide skill: the app installs it into the on-device engine
-(lib/ui_config/ui_skill.dart), flat in app/assets/skills/DPSK-guide/ with
+as the dsh-go-guide skill: the app installs it into the on-device engine
+(lib/ui_config/ui_skill.dart), flat in app/assets/skills/dsh-go-guide/ with
 manifest.json mapping each file back to its place. Rules for the pages:
 
 - zh/ and en/ hold the same pages. README.md says `> DPSK <version>`, the
@@ -36,7 +36,7 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-SKILL = 'DPSK-guide'
+SKILL = 'dsh-go-guide'
 LOCALES = ('zh', 'en')
 HARMONY = 'harmony'
 NAV = re.compile(r'^<!-- nav: ([A-Za-z][A-Za-z0-9_]*(?:,[A-Za-z][A-Za-z0-9_]*)*) -->$')

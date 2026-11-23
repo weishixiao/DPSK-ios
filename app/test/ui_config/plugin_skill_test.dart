@@ -1,6 +1,6 @@
-// The DPSK-plugin skill (built from sdk/plugin-kit by scripts/sync-skill.mjs): it loads
+// The dsh-go-plugin skill (built from sdk/plugin-kit by scripts/sync-skill.mjs): it loads
 // from its own asset folder, installs into its own skills folder with the same managed-line
-// rules as DPSK-ui, and the engine-start auto-install puts both skills in place.
+// rules as dsh-go-ui, and the engine-start auto-install puts both skills in place.
 
 import 'dart:io';
 
@@ -50,7 +50,7 @@ void main() {
     expect(isManagedUiSkill(plugin.skillMd), isTrue);
   });
 
-  test('installs into skills/DPSK-plugin, next to DPSK-ui, with the same rules', () async {
+  test('installs into skills/dsh-go-plugin, next to dsh-go-ui, with the same rules', () async {
     expect(await installUiSkill(root, plugin), UiSkillInstallResult.installed);
     for (final MapEntry(key: path, value: text) in plugin.files.entries) {
       expect(File('${dirOf(pluginSkillName).path}/$path').readAsStringSync(), text, reason: path);
@@ -67,7 +67,7 @@ void main() {
 
   test('the SSH script writes the plugin skill into its own folder', () {
     final script = uiSkillShellScript(plugin);
-    expect(script, contains('/skills/DPSK-plugin"'));
+    expect(script, contains('/skills/dsh-go-plugin"'));
     expect(script, contains('"\$d/kit/lib/bridge"'));
   });
 

@@ -1,5 +1,5 @@
 // The app root keeps the skill auto-install alive: once the on-device engine
-// runs, both bundled skills (DPSK-ui, DPSK-plugin) land in its skills
+// runs, both bundled skills (dsh-go-ui, dsh-go-plugin) land in its skills
 // folder, without any page having to ask for them.
 
 import 'dart:io';

@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import {createServer} from 'node:http';
 import {connect} from 'node:net';
 import {test} from 'node:test';
-import {apply} from '../bridge/DPSK-bridge/lib/index.js';
+import {apply} from '../bridge/dsh-go-bridge/lib/index.js';
 import {withSources} from './plugin-config-source-fixture.mjs';
 
 async function fixture(t, {connection = true, guardRoutes = false, rejection, graph, entries} = {}) {
@@ -213,7 +213,7 @@ test('inventory marks an earlier page report stale until the current graph repor
 test('capabilities advertise implemented families independently of service availability', async t => {
   const request = await fixture(t);
   const response = await request('/DPSK/v1/capabilities');
-  const version = JSON.parse(readFileSync(new URL('../bridge/DPSK-bridge/package.json', import.meta.url))).version;
+  const version = JSON.parse(readFileSync(new URL('../bridge/dsh-go-bridge/package.json', import.meta.url))).version;
   assert.equal(response.status, 200);
   assert.deepEqual(response.body, {v: 1, bridge: version, capabilities: [
     'inventory', 'occupancy', 'native-ui', 'native-stream', 'native-media', 'native-files',

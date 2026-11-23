@@ -54,7 +54,7 @@ final class EngineSkills {
 
   private struct Retired: Error {}
 
-  private static let names: Set<String> = ["DPSK-ui", "DPSK-plugin", "DPSK-guide", "DPSK-support"]
+  private static let names: Set<String> = ["dsh-go-ui", "dsh-go-plugin", "dsh-go-guide", "dsh-go-support"]
   private static let maxFiles = 64
   private static let maxFileBytes = 512 * 1024
   private static let maxBytes = 1024 * 1024

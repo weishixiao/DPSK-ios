@@ -4,9 +4,9 @@ import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { NativeCore } from '../bridge/DPSK-bridge/lib/native/core.js';
-import { LIMITS } from '../bridge/DPSK-bridge/lib/native/limits.js';
-import { normalizeScope } from '../bridge/DPSK-bridge/lib/native/util.js';
+import { NativeCore } from '../bridge/dsh-go-bridge/lib/native/core.js';
+import { LIMITS } from '../bridge/dsh-go-bridge/lib/native/limits.js';
+import { normalizeScope } from '../bridge/dsh-go-bridge/lib/native/util.js';
 
 const prefix = resolve(process.env.DSH_PREFIX);
 const { boot } = await import(pathToFileURL(join(prefix, 'node_modules/@deepseek-ai/dsh-app-boot/lib/index.js')));

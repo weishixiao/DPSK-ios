@@ -54,7 +54,7 @@ def main():
         script += "assert.equal(process.version, 'v24.22.1');\n"
         script += "assert.equal(typeof WebAssembly, 'undefined');\n"
         script += 'const bridge = await import(' + json.dumps((target / 'lib/index.js').as_uri()) + ');\n'
-        script += "assert.equal(bridge.name, 'DPSK-bridge'); assert.equal(typeof bridge.apply, 'function');\n"
+        script += "assert.equal(bridge.name, 'dsh-go-bridge'); assert.equal(typeof bridge.apply, 'function');\n"
         script += "console.log(JSON.stringify({status:'PASS_ISOLATED_IMPORT', node:process.version, wasm:typeof WebAssembly, name:bridge.name, apply:typeof bridge.apply}));\n"
         (out / 'probe.mjs').write_text(script)
         environment = {key: os.environ[key] for key in ['PATH'] if key in os.environ}

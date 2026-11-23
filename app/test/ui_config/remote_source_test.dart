@@ -14,7 +14,7 @@ class FakeRemoteHost implements UiRemoteHost {
 
   Set<String> endpoints;
   String? session = 's1';
-  String? skillPath = '/home/u/.dsh-custom/skills/DPSK-ui/SKILL.md';
+  String? skillPath = '/home/u/.dsh-custom/skills/dsh-go-ui/SKILL.md';
   @override
   String? userHome = '/home/u';
 
@@ -100,7 +100,7 @@ class FakeRemoteHost implements UiRemoteHost {
 
 void main() {
   const customPath = '/home/u/.dsh-custom/DPSK/ui.json';
-  const guessedPath = '/home/u/.dsh/DPSK/ui.json';
+  const guessedPath = '/home/u/.dsh/dsh-go/ui.json';
 
   late FakeRemoteHost host;
   late List<UiConfigRead> reads;
@@ -139,10 +139,10 @@ void main() {
   });
 
   test('DSH home from the skill path', () {
-    expect(dshHomeFromSkillPath('/srv/dsh/skills/DPSK-ui/SKILL.md'), '/srv/dsh');
-    expect(dshHomeFromSkillPath('/srv/dsh/skills/DPSK-ui/'), '/srv/dsh');
+    expect(dshHomeFromSkillPath('/srv/dsh/skills/dsh-go-ui/SKILL.md'), '/srv/dsh');
+    expect(dshHomeFromSkillPath('/srv/dsh/skills/dsh-go-ui/'), '/srv/dsh');
     expect(dshHomeFromSkillPath('/srv/dsh/skills/other/SKILL.md'), isNull);
-    expect(dshHomeFromSkillPath('skills/DPSK-ui/SKILL.md'), isNull);
+    expect(dshHomeFromSkillPath('skills/dsh-go-ui/SKILL.md'), isNull);
   });
 
   test('reads the file under the skill\'s DSH home and follows its changes', () async {
@@ -280,7 +280,7 @@ void main() {
       return {
         'skills': [
           {'name': 'other', 'description': '', 'path': '/x/skills/other/SKILL.md'},
-          {'name': 'DPSK-ui', 'description': '', 'path': '/srv/dsh/skills/DPSK-ui/SKILL.md'},
+          {'name': 'dsh-go-ui', 'description': '', 'path': '/srv/dsh/skills/dsh-go-ui/SKILL.md'},
         ],
       };
     };
@@ -296,7 +296,7 @@ void main() {
     expect(remote.supports('workspaceFiles/changes'), isFalse);
     expect(await remote.recentSessionId(), 'new');
     final skill = await remote.skillFile('new');
-    expect(skill, '/srv/dsh/skills/DPSK-ui/SKILL.md');
+    expect(skill, '/srv/dsh/skills/dsh-go-ui/SKILL.md');
     expect(dshHomeFromSkillPath(skill!), '/srv/dsh');
     final page = await remote.read('new', '/srv/dsh/DPSK/ui.json');
     expect(page.text, '{"version": 1}');

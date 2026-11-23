@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {COMPARE_DRAFT_SOURCE_BYTES, compareDraftTexts} from '../bridge/DPSK-bridge/lib/companion/compare-drafts-content.js';
+import {COMPARE_DRAFT_SOURCE_BYTES, compareDraftTexts} from '../bridge/dsh-go-bridge/lib/companion/compare-drafts-content.js';
 
 // Check coverage using the original inputs and returned ranges, independently
 // of the alignment algorithm. Unchanged gaps must be equal; replacing every

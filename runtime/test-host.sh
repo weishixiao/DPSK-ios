@@ -3,7 +3,7 @@
 # Termux proot is a bionic binary). Runs the guest half of manifest.launch.argv (from
 # `/usr/bin/env -i` on) exactly as the app would, then checks: pnpm and its registry plus a
 # real `dsh plugin` add/remove, token line, auth exchange, static health URL, graceful SIGTERM
-# via the pid file, an offline start, and the route guard patch plus DPSK-bridge
+# via the pid file, an offline start, and the route guard patch plus dsh-go-bridge
 # (runtime/tests/route-guard.mjs against every registered route), and the native plugin protocol
 # end to end (runtime/tests/native-bridge.mjs --shipped) and its v1.2 capabilities
 # (runtime/tests/native-capabilities-live.mjs). bwrap has real hard links, so
@@ -156,7 +156,7 @@ ok=0; for _ in $(seq 1 240); do grep -q '^dsh web: http' "$LOG2" && { ok=1; brea
 [[ $ok == 1 ]] && pass "starts and prints the token line without network" || { fail "offline start"; tail -20 "$LOG2"; }
 kill -TERM "$BG" 2>/dev/null || true; wait "$BG" 2>/dev/null || true
 
-echo "== route guard patch and DPSK-bridge (port $((PORT + 1)))"
+echo "== route guard patch and dsh-go-bridge (port $((PORT + 1)))"
 python3 -I - "$ROOT" "$HERE/patches/pins.json" "$MANIFEST" "$HERE" <<'PY' && pass "patched webserver matches pins.json; bridge at /opt/DPSK; overlay loads it" || fail "patch / bridge layout"
 import hashlib, importlib.util, json, os, sys
 root, pins, manifest, runtime = sys.argv[1:5]
@@ -177,8 +177,8 @@ for name in m["dshPatches"]:
 for rel, expected in terminal.items():
     got = hashlib.sha256(open(os.path.join(root, "opt/dsh", rel), "rb").read()).hexdigest()
     assert got == expected, (rel, got)
-assert os.path.isfile(os.path.join(root, "opt/DPSK/DPSK-bridge/lib/client.js"))
-assert "/opt/DPSK/DPSK-bridge/lib/index.js" in open(os.path.join(root, "etc/dsh-app/dsh-web.patch.yml")).read()
+assert os.path.isfile(os.path.join(root, "opt/DPSK/dsh-go-bridge/lib/client.js"))
+assert "/opt/DPSK/dsh-go-bridge/lib/index.js" in open(os.path.join(root, "etc/dsh-app/dsh-web.patch.yml")).read()
 PY
 rm -rf "$ROOT/tmp/route-probe"; mkdir -p "$ROOT/tmp/route-probe"
 cp "$HERE/tests/route-probe/"* "$HERE/tests/route-guard.mjs" "$ROOT/tmp/route-probe/"
@@ -224,7 +224,7 @@ token=""; for _ in $(seq 1 240); do
   [[ -n "$token" ]] && break; kill -0 "$BG" 2>/dev/null || break; sleep 0.5
 done
 if [[ -n "$token" ]]; then
-  run --share-net --setenv DPSK_BRIDGE_LIB /opt/DPSK/DPSK-bridge/lib/native -- \
+  run --share-net --setenv DPSK_BRIDGE_LIB /opt/DPSK/dsh-go-bridge/lib/native -- \
     /opt/node/bin/node /tmp/native-test/native-bridge.mjs "http://127.0.0.1:$NPORT" "$token" --shipped \
     && pass "native plugin protocol: contributions, views, stream, invoke, deferred results, guard, degrade, reload" \
     || fail "native plugin protocol checks (see above)"
@@ -254,7 +254,7 @@ token=""; for _ in $(seq 1 240); do
   [[ -n "$token" ]] && break; kill -0 "$BG" 2>/dev/null || break; sleep 0.5
 done
 if [[ -n "$token" ]]; then
-  run --share-net --setenv DPSK_BRIDGE_LIB /opt/DPSK/DPSK-bridge/lib/native -- \
+  run --share-net --setenv DPSK_BRIDGE_LIB /opt/DPSK/dsh-go-bridge/lib/native -- \
     /opt/node/bin/node /tmp/native-test/native-capabilities-live.mjs "http://127.0.0.1:$VPORT" "$token" \
     && pass "native plugins v1.2: declarations, negotiation, media, micro, capability events, leases" \
     || fail "native plugins v1.2 checks (see above)"

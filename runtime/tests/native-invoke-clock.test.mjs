@@ -7,9 +7,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { performance } from 'node:perf_hooks';
-import { NativeCore } from '../bridge/DPSK-bridge/lib/native/core.js';
-import { createNativeRoutes } from '../bridge/DPSK-bridge/lib/native/routes.js';
-import { effectiveLimits } from '../bridge/DPSK-bridge/lib/native/limits.js';
+import { NativeCore } from '../bridge/dsh-go-bridge/lib/native/core.js';
+import { createNativeRoutes } from '../bridge/dsh-go-bridge/lib/native/routes.js';
+import { effectiveLimits } from '../bridge/dsh-go-bridge/lib/native/limits.js';
 
 const realSetTimeout = setTimeout, realClearTimeout = clearTimeout;
 const WATCHDOG_MS = 5000; // Does not replace the production handler's real 3000 ms deadline.

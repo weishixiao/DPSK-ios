@@ -17,7 +17,7 @@
     },
     "bridge": {
       "type": "string",
-      "description": "DPSK-bridge version"
+      "description": "dsh-go-bridge version"
     },
     "rev": {
       "type": "string",

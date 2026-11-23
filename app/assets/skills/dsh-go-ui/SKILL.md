@@ -1,8 +1,8 @@
 ---
 # DPSK:managed — the DPSK app keeps this skill up to date; delete this line to keep your own edits.
-name: DPSK-ui
+name: dsh-go-ui
 description: DPSK 手机 App 原生界面的配置（$DSH_HOME/DPSK/ui.json）：顶栏按钮、输入框上方的快捷胶囊、新对话建议卡、抽屉分组与排序、密度、隐藏元素、主题和强调色、平板快捷键、插件座位。只改 **DPSK 手机原生界面**；用户要改 Harness 网页版 / 桌面端、做 Cordis 插件或网页插件时，用官方技能，不要用本技能。用户要改 App 本身的样子时先加载它，比如「把顶栏的 XX 换成 YY」「输入框上面加个总结按钮」「新对话页放几个常用问题」「抽屉按创建时间排」「把回合脚注藏掉」「换成暗色 / 黛青」「加个 ctrl+k 打开搜索」。Change how the DPSK phone app's native screens look and behave by editing ui.json; the Harness Web UI / Cordis plugins are the official skills' business.
-whenToUse: The user asks to change the DPSK app (手机 App / 原生界面) itself. Not for the Harness Web UI, Cordis plugins or DSH settings; anything that needs logic or data is a plugin (DPSK-plugin).
+whenToUse: The user asks to change the DPSK app (手机 App / 原生界面) itself. Not for the Harness Web UI, Cordis plugins or DSH settings; anything that needs logic or data is a plugin (dsh-go-plugin).
 ---
 
 # DPSK 界面配置（ui.json）
@@ -16,7 +16,7 @@ DPSK App 会读 `$DSH_HOME/DPSK/ui.json`（`DSH_HOME` 默认 `~/.dsh`），按�
 ## 和官方技能的分工
 
 - **本技能**：改 DPSK 手机 App 的原生界面（ui.json）。
-- **DPSK-plugin**：给手机 App 加胶囊、菜单、状态条、原生面板、工具卡；要逻辑或数据时用它，不用 ui.json。
+- **dsh-go-plugin**：给手机 App 加胶囊、菜单、状态条、原生面板、工具卡；要逻辑或数据时用它，不用 ui.json。
 - **官方 `cordis-plugin-development` 等**：Harness Web UI / 桌面端的插件、装饰、槽位、页面和 MCP；目录在工作区，安装走 `plugin_manager → install_bundle`。
 - 用户没点名界面载体时，手机上默认是 DPSK 原生界面；先确定载体再选技能，不看加载顺序。两套配置（ui.json / Cordis bundle）不要混写，也不要拿官方网页插件的做法套到 App 上。
 
@@ -25,7 +25,7 @@ DPSK App 会读 `$DSH_HOME/DPSK/ui.json`（`DSH_HOME` 默认 `~/.dsh`），按�
 1. 先读现有文件：`cat "$DSH_HOME/DPSK/ui.json"`（没有就新建，目录不存在就 `mkdir -p`）。
 2. 只改用户要求的部分，其他键原样保留。用户之前的配置不要删。
 3. 写回：严格 JSON，UTF-8，不要注释，不要尾逗号，不超过 64 KiB。最好先写临时文件再 `mv` 过去。
-4. 自查：`node "$DSH_HOME/skills/DPSK-ui/scripts/check.mjs"`。输出是 App 解析器的判断，**不是界面生效数**；只有「生效状态」表里已接线的键会改变界面：
+4. 自查：`node "$DSH_HOME/skills/dsh-go-ui/scripts/check.mjs"`。输出是 App 解析器的判断，**不是界面生效数**；只有「生效状态」表里已接线的键会改变界面：
    - `错误 /composer/quickActions/2/action/url：只支持 https 链接`：这一项不生效，其余照常；
    - `忽略`：App 不认识或超出上限的部分；
    - `提示`：已自动修正（比如文字太长被截断），仍然生效；

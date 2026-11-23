@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {getEventListeners} from 'node:events';
 import {test} from 'node:test';
 import vm from 'node:vm';
-import {injectPromiseWithResolvers} from '../bridge/DPSK-bridge/lib/web-promise.js';
+import {injectPromiseWithResolvers} from '../bridge/dsh-go-bridge/lib/web-promise.js';
 
 const nativeAny = AbortSignal.any;
 const listeners = signal => getEventListeners(signal, 'abort').length;

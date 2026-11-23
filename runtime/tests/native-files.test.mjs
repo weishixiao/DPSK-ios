@@ -1,4 +1,4 @@
-// v1.3 selected-file tests for DPSK-bridge (docs/design/native-plugins-protocol.md §12): real HTTP and
+// v1.3 selected-file tests for dsh-go-bridge (docs/design/native-plugins-protocol.md §12): real HTTP and
 // WebSocket through the bridge's apply(), with a fake loader. No DSH needed.
 //   node --test runtime/tests/native-files.test.mjs
 import assert from 'node:assert/strict';
@@ -10,10 +10,10 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { once } from 'node:events';
-import { apply } from '../bridge/DPSK-bridge/lib/index.js';
-import { encodeFrame } from '../bridge/DPSK-bridge/lib/native/ws.js';
-import { parseManifest } from '../bridge/DPSK-bridge/lib/native/manifest.js';
-import { normalize } from '../bridge/DPSK-bridge/lib/native/effects.js';
+import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
+import { encodeFrame } from '../bridge/dsh-go-bridge/lib/native/ws.js';
+import { parseManifest } from '../bridge/dsh-go-bridge/lib/native/manifest.js';
+import { normalize } from '../bridge/dsh-go-bridge/lib/native/effects.js';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { apply as applyFileExample } from '../../examples/plugins/DPSK-example-files/lib/index.js';
@@ -598,7 +598,7 @@ test('panel callback names must be registered own actions, never inherited Objec
 // This one needs the OH ETS fixture's TypeScript, so only the OH gate runs it.
 if (process.env.OHOS_TYPESCRIPT_PREFIX) {
  const {filesFixture,args,owner,until}=await import('./ohos/native-files-fixture.mjs');
- const {truncateChars}=await import('../bridge/DPSK-bridge/lib/native/util.js');
+ const {truncateChars}=await import('../bridge/dsh-go-bridge/lib/native/util.js');
  async function selection(t,name){
   const f=await filesFixture(t), bytes=Buffer.from('synthetic selection bytes'), file=await f.file(name,bytes);
   const result=f.call(f.methods,'pick',args());f.select([file.uri]);const reply=await result.done;

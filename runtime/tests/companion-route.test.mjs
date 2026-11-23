@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
-import { apply } from '../bridge/DPSK-bridge/lib/index.js';
+import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
 
 const ROOT = '/DPSK/v1/companion';
 const AUTH = 'Bearer synthetic-companion-test';

@@ -111,7 +111,7 @@ relay：`/DPSK/*` 是 HTTP 路由，只有本机和 SSH 隧道（`DshHttpCarrier
 
 ### 7.1 实测
 
-r13 运行时（DSH 0.2.1-rc.4 + DPSK-bridge 0.4.0，取自 r13 的 x86_64 rootfs），按 App 的方式启动 `dsh web`：r13 自己的 `dsh-web.patch.yml`，加上语音、登录（`dsh-app-auth`）、消息搜索、手机操控四个 `--patch`。经 `pluginManager` 打开官方的语音输入套件、从本地路径装一个第三方插件（`local-notes`，包名 `DPSK-fixture-local-notes`）后，只读 GET：
+r13 运行时（DSH 0.2.1-rc.4 + dsh-go-bridge 0.4.0，取自 r13 的 x86_64 rootfs），按 App 的方式启动 `dsh web`：r13 自己的 `dsh-web.patch.yml`，加上语音、登录（`dsh-app-auth`）、消息搜索、手机操控四个 `--patch`。经 `pluginManager` 打开官方的语音输入套件、从本地路径装一个第三方插件（`local-notes`，包名 `DPSK-fixture-local-notes`）后，只读 GET：
 
 | | 条目 | 可配置 |
 |---|---|---|

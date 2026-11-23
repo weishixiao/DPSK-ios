@@ -4,7 +4,7 @@
 /// * Tier A, any Host: [PluginsApi.listBundles] plus the boot graph the Host
 ///   injects into its index page as `__DSH_BOOT__` ([parseWebBootGraph]; the
 ///   page is read as text, nothing in it runs).
-/// * Tier B, a Host with the app's `DPSK-bridge` package: its occupancy table
+/// * Tier B, a Host with the app's `dsh-go-bridge` package: its occupancy table
 ///   at `GET /DPSK/v1/inventory` ([BridgeInventory]).
 ///
 /// Both pages are HTTP routes, so over the relay tunnel only the bundle list
@@ -18,7 +18,7 @@ library;
 
 import 'carrier.dart';
 import 'connection.dart';
-import 'dpsk_api.dart';
+import 'dsh_go_api.dart';
 import 'errors.dart';
 import 'json.dart';
 import 'plugins_api.dart';
@@ -186,7 +186,7 @@ String? _jsonObjectAt(String text, int start) {
 
 /// The app's bridge package; its own island-mode placeholders are not
 /// occupants.
-const dshGoBridgePackage = 'DPSK-bridge';
+const dshGoBridgePackage = 'dsh-go-bridge';
 
 /// Path of the bridge's inventory route.
 const bridgeInventoryPath = '/DPSK/v1/inventory';

@@ -41,7 +41,7 @@
 |---|---|---|---|---|
 | A 聊天流式性能 | 甲组 | `refactor/chat-stream-perf` | `app/lib/ui/chat/**`（避让清单除外）、`app/lib/state/chat_state.dart`、`app/lib/state/session_modes.dart`、`packages/dsh_client/lib/src/transcript.dart` | 第一期 |
 | B 依赖方向 + 插件状态拆分 | 甲组 | `refactor/import-direction` | `app/lib/state/**`（A 的三个文件除外）、`app/lib/plugins/**`、`app/lib/ui_config/**`、`app/lib/links/**`（`page_links.dart` 除外）、`docs/architecture.md` | 第一期 |
-| P 运行时 / 桥 / 原生 / CI | 乙组 | 待定 | `runtime/**`（ohos 除外）、`app/android/**`、`tooling/**`、`packages/dsh_client/lib/src/dpsk_api.dart`、`.github/workflows/**`（交补丁，本机合入时处理和酒馆线的冲突） | 第一期 |
+| P 运行时 / 桥 / 原生 / CI | 乙组 | 待定 | `runtime/**`（ohos 除外）、`app/android/**`、`tooling/**`、`packages/dsh_client/lib/src/dsh_go_api.dart`、`.github/workflows/**`（交补丁，本机合入时处理和酒馆线的冲突） | 第一期 |
 | C 前端一致性 | 甲组 | 待定 | `app/lib/ui/common/**`、`app/lib/ui/theme/**` 及各页面的调用点 | 第二期（B 合入后） |
 | D 持久化层 + 离线快照 + 日志落盘 | 甲组 | 待定 | `app/lib/state/**` 的存取部分 | 第二期（B 合入后） |
 | E 聊天控制器 / 聊天页拆分 | 甲组 | 待定 | `chat_state.dart`、`chat_screen.dart` | 第二期（A 合入后） |

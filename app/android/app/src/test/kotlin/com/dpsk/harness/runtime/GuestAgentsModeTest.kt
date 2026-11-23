@@ -180,7 +180,7 @@ class GuestAgentsModeTest {
             val proot = file.readText()
             assertTrue(proot.contains("## 本机诊断"))
             assertTrue(proot.contains("`\$DSH_HOME/dsh-app/diagnostics.md`"))
-            assertTrue(proot.contains("DPSK-support"))
+            assertTrue(proot.contains("dsh-go-support"))
             GuestSetup.writeAgentsMd(root, phoneStorage = false, directEngine = true)
             val direct = file.readText()
             assertTrue(direct.contains("`${root.canonicalPath}/root/.dsh/dsh-app/diagnostics.md`"))

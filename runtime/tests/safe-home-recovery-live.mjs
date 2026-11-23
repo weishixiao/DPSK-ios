@@ -13,7 +13,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 assert(process.env.DSH_PREFIX, 'Set DSH_PREFIX to the prepared runtime.');
 const prefix = resolve(process.env.DSH_PREFIX);
 const repo = fileURLToPath(new URL('../../', import.meta.url));
-const kotlin = process.env.DSH_SAFE_MODE_SOURCE ?? join(repo, 'app/android/app/src/main/kotlin/io/github/weishixiao/dpsk_app/runtime/SafeMode.kt');
+const kotlin = process.env.DSH_SAFE_MODE_SOURCE ?? join(repo, 'app/android/app/src/main/kotlin/com/dpsk/harness/runtime/SafeMode.kt');
 const source = await fs.readFile(kotlin, 'utf8');
 const constants = Object.fromEntries([...source.matchAll(/const val (\w+) = "([^"\n]*)"\s*$/gm)].map(m => [m[1], m[2]]));
 function constant(name, seen = new Set()) {
@@ -94,7 +94,7 @@ try {
   const generated = spawnSync(process.env.PYTHON ?? 'python3', ['-c', py, join(repo, 'runtime/lib/rtbuild.py')], { encoding: 'utf8' });
   assert.equal(generated.status, 0, generated.stderr);
   const appPatch = join(runRoot, 'app.patch.yml');
-  await fs.writeFile(appPatch, generated.stdout.replaceAll('/opt/DPSK/DPSK-bridge', join(repo, 'runtime/bridge/DPSK-bridge')));
+  await fs.writeFile(appPatch, generated.stdout.replaceAll('/opt/DPSK/dsh-go-bridge', join(repo, 'runtime/bridge/dsh-go-bridge')));
   const env = { PATH: `${dirname(process.execPath)}:${join(prefix, 'node_modules/.bin')}:/usr/bin:/bin`, LANG: 'C.UTF-8', HOME: userHome,
     DSH_HOME: originalHome, DSH_TELEMETRY_DISABLED: '1', ...safeEnv, DSH_APP_SAFE_DIR: safeDir, DSH_APP_PATCH: appPatch };
   facts.guestEnvironmentKeys = Object.keys(safeEnv); facts.effectiveHome = env.DSH_HOME;

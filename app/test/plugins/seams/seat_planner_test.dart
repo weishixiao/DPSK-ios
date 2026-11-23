@@ -91,7 +91,7 @@ void main() {
         [
           _o(Slots.settingsSection, '@deepseek-ai/dsh-client-ui-settings-general', cell: 'general'),
           _o(Slots.settingsSection, 'official-by-flag', cell: 'x', official: true),
-          _o(Slots.settingsSection, 'DPSK-bridge', cell: 'general'),
+          _o(Slots.settingsSection, 'dsh-go-bridge', cell: 'general'),
           _o(Slots.bundleConfig, 'dsh-pet', cell: 'dsh-pet'),
           _o(Slots.settingsSection, 'dsh-pet', cell: 'pet'),
           _o(Slots.settingsSection, 'dsh-pet', cell: 'pet', order: 9),

@@ -18,7 +18,7 @@ void main() {
   StreamSubscription<UiConfigRead>? sub;
   Directory? rootfs;
 
-  File config() => File('${root.path}/root/.dsh/DPSK/ui.json');
+  File config() => File('${root.path}/root/.dsh/dsh-go/ui.json');
 
   void start() {
     source = LocalUiConfigSource(

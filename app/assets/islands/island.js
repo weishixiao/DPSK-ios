@@ -168,7 +168,7 @@
     return found.length > 1 ? 'two' : found[0];
   }
 
-  // Whether DPSK-bridge reports another entry of [slot] than this
+  // Whether dsh-go-bridge reports another entry of [slot] than this
   // island's cell under one of [names]: a name that doesn't tell the two
   // apart, even when only one of them is drawn. Without the bridge (or its
   // labels) only the controls on the page are compared.
@@ -851,7 +851,7 @@
     return pressUntilCurrent('panel', row, function () { return allByExactName(sidebar(), 'nav button', names); }, 'main');
   }
 
-  // A right pane tab (rc.4). DPSK-bridge opens it by its type id (our
+  // A right pane tab (rc.4). dsh-go-bridge opens it by its type id (our
   // cell) through the client's own sidebarRight service and answers once
   // that kind is the active tab: that is the identity, and a bridge that
   // can't is not second-guessed by name. Without the bridge's openTab (an
@@ -1137,7 +1137,7 @@
 
   // ---- probe -------------------------------------------------------------------
 
-  // A probe island (no slot shown): load the page so DPSK-bridge's browser
+  // A probe island (no slot shown): load the page so dsh-go-bridge's browser
   // half reports this boot graph's occupancy, then let the app destroy it.
   // The bridge reports on its own shortly after boot; report() only makes
   // it sooner, so neither its absence nor a slow answer holds the probe up.

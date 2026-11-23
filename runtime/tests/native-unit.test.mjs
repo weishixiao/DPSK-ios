@@ -1,4 +1,4 @@
-// Unit tests for the DPSK-bridge native plugin modules (no DSH needed).
+// Unit tests for the dsh-go-bridge native plugin modules (no DSH needed).
 //   node --test runtime/tests/native-unit.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -9,7 +9,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { join } from "node:path";
 import { Duplex } from "node:stream";
 
-const LIB = new URL("../bridge/DPSK-bridge/lib/native/", import.meta.url);
+const LIB = new URL("../bridge/dsh-go-bridge/lib/native/", import.meta.url);
 const { checkManifest, parseManifest, renderPlugin } = await import(new URL("manifest.js", LIB));
 const { checkEffects, normalize, splitPending, validate } = await import(new URL("effects.js", LIB));
 const util = await import(new URL("util.js", LIB));

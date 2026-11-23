@@ -7,9 +7,9 @@ import {syncBuiltinESMExports} from 'node:module';
 import {tmpdir} from 'node:os';
 import {dirname,join} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
-import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
-import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
+import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
+import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
+import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
 const LIMIT=1048576;
 async function fixture(t){
  const dir=await fs.mkdtemp(join(tmpdir(),'native-asset-read-budget-'));

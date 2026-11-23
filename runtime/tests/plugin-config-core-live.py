@@ -18,7 +18,7 @@ for name,target in [('wave10-core-boundary-plugin',third),('wave10-core-media-wr
 (profile/'package.json').write_text(json.dumps({'name':'own-r5-core-profile','version':'1.0.0','private':True,'dependencies':{'wave10-core-boundary-plugin':'1.0.0','wave10-core-media-wrapper':'1.0.0'},'dsh':{'profile':{'bundles':['@deepseek-ai/dsh-base','@deepseek-ai/dsh-web-app','wave10-core-boundary-plugin','wave10-core-media-wrapper','@deepseek-ai/dsh-experimental-session-search']}}}))
 active=private/'active-bridge';active.symlink_to(a.old_bridge.resolve(),target_is_directory=True)
 patches=[{'id':x,'disabled':True} for x in ['session-title-llm','llm-pi-ai','llm-deepseek-account','session-telemetry-otel','web-search-deepseek','web-deepseek-api','web-fetch-http','tool-web']]
-patches += [{'insert':[{'id':'DPSK-bridge','name':str(active/'lib/index.js')},{'id':'r5-core-observer','name':str(observer/'observer.mjs')}]}]
+patches += [{'insert':[{'id':'dsh-go-bridge','name':str(active/'lib/index.js')},{'id':'r5-core-observer','name':str(observer/'observer.mjs')}]}]
 (profile/'cordis.patch.yml').write_text(json.dumps(patches))
 env={k:os.environ[k] for k in ['PATH','LANG','LC_ALL','TMPDIR'] if k in os.environ};env.update({'TZ':'Asia/Shanghai','DSH_HOME':str(home),'DSH_AGENTS_HOME':str(agents),'DSH_TELEMETRY_DISABLED':'1','UV_USE_IO_URING':'0','CORE_FIXTURE_BRIDGE':str(active)})
 base='http://127.0.0.1:'+str(a.port);route='/DPSK/v1/plugin-config';audit=[];snapshots=[];cleanup=[];core=['webserver','connection','credentials','sandbox-policy','fs-sandbox','approval','system-prompt'];old={}
@@ -70,7 +70,7 @@ def before(op,stage,proof):
  save('baseline.json',{'catalogEntries':len(catalog['entries']),'configurable':sum(bool(x['configurable']) for x in catalog['entries']),'coreStatus':{k:v['status'] for k,v in old.items()},'readOnly':True})
 def after(op,stage,proof):
  baseline=snapshot('before-r5-denials');status,catalog=request(op,stage,route);assert status==200;ids={x['entryId'] for x in catalog['entries']}
- assert not (set(core)|{'optional-session-query-sqlite','optional-tool-session-query','DPSK-bridge','r5-core-observer'})&ids,ids
+ assert not (set(core)|{'optional-session-query-sqlite','optional-tool-session-query','dsh-go-bridge','r5-core-observer'})&ids,ids
  assert {'own-config-plugin','dsh-media'}<=ids,ids
  assert all(x['kind']=='plugin' and x['owner'] and x['source']=='external-package' for x in catalog['entries'])
  for id in core+['optional-session-query-sqlite','optional-tool-session-query','r5-core-observer']:

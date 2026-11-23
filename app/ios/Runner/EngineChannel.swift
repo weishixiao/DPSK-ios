@@ -1404,7 +1404,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
         ## 可视化回复（dsh-ui）
 
         - 适合图表或卡片的真实数据可用 dsh-ui 围栏代码块，内容为单个 JSON 对象；普通对话用文字即可。
-        - 已支持的 type 包括 text、metric、chart、compare、steps、callout、options、confirm、stack、row；不知道字段时先查随包 DPSK-ui 技能，不要猜。
+        - 已支持的 type 包括 text、metric、chart、compare、steps、callout、options、confirm、stack、row；不知道字段时先查随包 dsh-go-ui 技能，不要猜。
         - 不在卡片收集密码、密钥或验证码；options/confirm 放在回复末尾，等待用户反馈后再继续。
 
         """

@@ -5,7 +5,7 @@
 // computer on the phone, show the 8-digit code that the person types into the
 // computer's Remote plugin, then receive this phone's own device credentials.
 //
-// Wire: upstream `docs/device-pairing-v1.md` and `docs/DPSK-pairing-integration.md`
+// Wire: upstream `docs/device-pairing-v1.md` and `docs/dsh-go-pairing-integration.md`
 // (plugin 0.6.4 line, `cc9fafd` + `ffefd4f`). Proof vectors:
 // `fixtures/pairing/v1/proof.json` (copied into this package's tests).
 library;

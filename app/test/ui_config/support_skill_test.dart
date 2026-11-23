@@ -1,4 +1,4 @@
-// The DPSK-support skill: troubleshooting playbook + issue draft, reading the
+// The dsh-go-support skill: troubleshooting playbook + issue draft, reading the
 // diagnostics snapshot the app writes into the engine.
 
 import 'package:dpsk_app/ui_config/ui_config.dart';
@@ -11,11 +11,11 @@ void main() {
 
   test('the bundle ships SKILL.md only, managed and parseable', () async {
     final bundle = await loadUiSkillBundle(readAssetFromDisk, supportSkillName);
-    expect(bundle.name, 'DPSK-support');
+    expect(bundle.name, 'dsh-go-support');
     expect(bundle.files.keys, ['SKILL.md']);
     expect(bundle.skillMd.startsWith('---'), isTrue);
     expect(bundle.skillMd, contains('# DPSK:managed'));
-    expect(bundle.skillMd, contains('name: DPSK-support'));
+    expect(bundle.skillMd, contains('name: dsh-go-support'));
   });
 
   test('it points at the diagnostics file and covers the playbook', () async {

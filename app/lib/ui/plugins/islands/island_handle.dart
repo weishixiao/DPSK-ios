@@ -171,7 +171,7 @@ class IslandHandle extends ChangeNotifier {
   /// context for a confirmation and a route).
   Stream<IslandMessage> get requests => _requests.stream;
 
-  /// The launch URL plus what DPSK-bridge picks up at boot: island mode
+  /// The launch URL plus what dsh-go-bridge picks up at boot: island mode
   /// for a list slot whose official entries it masks, or the right-pane tab
   /// to open (never both: masking that slot would empty official tabs too).
   Uri get _loadUrl {

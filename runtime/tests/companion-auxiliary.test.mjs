@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
-import { FULL_PRESET } from '../bridge/DPSK-bridge/lib/companion/prompt-context.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
+import { FULL_PRESET } from '../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
 
 const PATH = '/DPSK/v1/companion/auxiliary';
 const capability = { physicalDispatch: 'fetch-invoked', rawUsage: 'deepseek-messages-cumulative', maxPhysicalRequests: 1, noTools: true };

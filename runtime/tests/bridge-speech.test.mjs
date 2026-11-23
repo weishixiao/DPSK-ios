@@ -5,7 +5,7 @@ import { once } from 'node:events';
 import { createServer, request as httpRequest } from 'node:http';
 import { connect } from 'node:net';
 import { test } from 'node:test';
-import { apply } from '../bridge/DPSK-bridge/lib/index.js';
+import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
 
 const ROOT = '/DPSK/v1/speech';
 const OFFICIAL = 'https://api.deepseek.com';

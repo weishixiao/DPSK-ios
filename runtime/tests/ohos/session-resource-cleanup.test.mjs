@@ -257,7 +257,7 @@ try {
   } } });
   await mount('dsh-host-webserver', { host: '127.0.0.1', port: 0, compression: 'none' });
   await mount('dsh-client-connection', {});
-  const bridgePath = join(view, 'runtime/bridge/DPSK-bridge/lib/index.js');
+  const bridgePath = join(view, 'runtime/bridge/dsh-go-bridge/lib/index.js');
   const bridge = await import(pathToFileURL(bridgePath));
   const bridgeFiber = ctx.plugin(bridge, { persist: false }); await bridgeFiber.await();
   const publicRootUrl = import.meta.resolve('@earendil-works/pi-ai', pathToFileURL(bridgePath).href);

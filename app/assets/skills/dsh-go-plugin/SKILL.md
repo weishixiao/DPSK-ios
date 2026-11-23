@@ -1,8 +1,8 @@
 ---
 # DPSK:managed — the DPSK app keeps this skill up to date; delete this line to keep your own edits.
-name: DPSK-plugin
+name: dsh-go-plugin
 description: 给 DPSK 手机 App 写一个本地小插件，在**手机原生界面**里出现：输入框上方的胶囊、回复长按菜单里的操作、状态条、原生面板、工具结果卡片，还能朗读、开口即停、显示字幕；写完用自带的检查器检查，装进当前主机。用户要给 DPSK App 加需要逻辑或数据的东西时先加载它，比如「输入框上面加个按钮，把剪贴板译成英文」「长按消息加个『存到笔记』」「输入框上方显示今天用了多少」「做个面板看我的待办」「这个工具的结果画成卡片」「加个按钮把回复读出来」。只用于 DPSK 手机原生界面；用户要做 Cordis 插件、改 Harness 网页版 / 桌面端，或明确说的是网页插件时，用官方 cordis-plugin-development 技能，不要用本技能的目录和安装方式。Write a small local DSH plugin that shows up natively in the DPSK phone app; for Cordis / Harness Web UI plugins use the official skill instead.
-whenToUse: The user wants to add something of their own to the DPSK phone app (手机 App / 原生界面) that needs logic or data. For fixed buttons, layout, theme or hiding things use the DPSK-ui skill (ui.json) instead. For Cordis plugins or the Harness Web UI / desktop, use the official cordis-plugin-development skill — different directory and install entry.
+whenToUse: The user wants to add something of their own to the DPSK phone app (手机 App / 原生界面) that needs logic or data. For fixed buttons, layout, theme or hiding things use the dsh-go-ui skill (ui.json) instead. For Cordis plugins or the Harness Web UI / desktop, use the official cordis-plugin-development skill — different directory and install entry.
 ---
 
 # 给 DPSK 写一个本地小插件
@@ -16,7 +16,7 @@ whenToUse: The user wants to add something of their own to the DPSK phone app (�
 | 用户要的 | 用哪个 | 目录 / 安装 |
 |---|---|---|
 | 手机 App 里加胶囊、菜单项、状态条、原生面板、工具结果卡片、朗读 / 字幕 | 本技能 | `$DSH_HOME/DPSK/plugins/<name>/`，`dsh plugin --profile web add <目录>` |
-| 改 DPSK App 自己的样子（顶栏按钮、主题、隐藏元素） | `DPSK-ui`（ui.json） | `$DSH_HOME/DPSK/ui.json` |
+| 改 DPSK App 自己的样子（顶栏按钮、主题、隐藏元素） | `dsh-go-ui`（ui.json） | `$DSH_HOME/DPSK/ui.json` |
 | Cordis / Harness Web UI 插件、装饰、槽位、MCP、页面 | 官方 `cordis-plugin-development` | 工作区建包 + `plugin_manager` → `install_bundle` |
 | Agent 预设、Cordis 组合 | 官方组合类技能 | 官方流程 |
 
@@ -28,7 +28,7 @@ whenToUse: The user wants to add something of their own to the DPSK phone app (�
 
 | 用户要的 | 做法 |
 |---|---|
-| 固定文字的按钮、顶栏按钮、隐藏元素、主题 | 不写插件，用 DPSK-ui 技能改 ui.json |
+| 固定文字的按钮、顶栏按钮、隐藏元素、主题 | 不写插件，用 dsh-go-ui 技能改 ui.json |
 | 按钮要读剪贴板 / 输入框 / 某条回复，或要算点什么 | 本技能：`composer.actions` / `message.actions` + `on(id)` |
 | 一直看得到的一行数字 | 本技能：`composer.strip` + `strip(id)` |
 | 一整页信息 | 本技能：`panels` + `panel(id)` |
@@ -45,14 +45,14 @@ whenToUse: The user wants to add something of their own to the DPSK phone app (�
 1. **建目录**（放在 `$DSH_HOME/DPSK/plugins/` 下，引擎重置时会保留；`DSH_HOME` 默认 `~/.dsh`）：
    ```sh
    P="${DSH_HOME:-$HOME/.dsh}/DPSK/plugins/local-quote"
-   mkdir -p "$(dirname "$P")" && cp -r "${DSH_HOME:-$HOME/.dsh}/skills/DPSK-plugin/template" "$P"
+   mkdir -p "$(dirname "$P")" && cp -r "${DSH_HOME:-$HOME/.dsh}/skills/dsh-go-plugin/template" "$P"
    ```
 2. **改名**：`package.json` 的 `name`、`cordis.patch.yml` 的 `name`、`lib/index.js` 的 `name` 三处一致，用 `local-` 开头，小写字母、数字和 `-`。
 3. **写清单**（`package.json` → `dshGo`，见下表），只声明用得到的；`wants` 只要真读的内容。
 4. **写处理**（`lib/index.js`）：一律写在 `ctx.inject(['dshGo'], (ctx) => { … })` 里。
 5. **自查**，改到没有「错误」为止：
    ```sh
-   node "${DSH_HOME:-$HOME/.dsh}/skills/DPSK-plugin/kit/bin/check.mjs" "$P" --load
+   node "${DSH_HOME:-$HOME/.dsh}/skills/dsh-go-plugin/kit/bin/check.mjs" "$P" --load
    ```
    `--load` 会在隔离环境里加载你的代码：查处理函数在不在、视图函数画出来的视图 App 能不能画。
    `--json` 给机器读；`--lang zh` 指定语言；`--budget toolCard|panel|strip` 按工具卡、面板或状态条检查视图预算；`--app <版本>` 按目标 App 版本判断 `minApp`（不写时按 999.0.0 判断，`minApp` 不会被拦截，检查目标版本时必须写出）；面板位置等较新字段不按版本检查。

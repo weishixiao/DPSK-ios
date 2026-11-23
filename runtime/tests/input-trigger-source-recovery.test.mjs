@@ -85,7 +85,7 @@ test('new slash query restores a failed skill group while commands keep the menu
   const queries = [];
   const f = fixture(t, async (_session, { query }) => {
     queries.push(query);
-    return queries.length === 1 ? first.promise : [{ name: 'DPSK-plugin' }];
+    return queries.length === 1 ? first.promise : [{ name: 'dsh-go-plugin' }];
   });
   f.type('/');
   await settle();
@@ -101,7 +101,7 @@ test('new slash query restores a failed skill group while commands keep the menu
   assert.deepEqual(queries, ['', 'p']);
   assert.equal(f.state().open, true);
   assert.deepEqual(groupNames(f.state()), ['command', 'skill']);
-  assert.deepEqual(itemNames(f.state(), 'skill'), ['DPSK-plugin']);
+  assert.deepEqual(itemNames(f.state(), 'skill'), ['dsh-go-plugin']);
 });
 
 test('recovering a source keeps superseded query results out of the current menu', async t => {
@@ -112,7 +112,7 @@ test('recovering a source keeps superseded query results out of the current menu
     signals.push(signal);
     if (query === '') return first.promise;
     if (query === 'p') return oldQuery.promise;
-    return [{ name: 'DPSK-plugin' }];
+    return [{ name: 'dsh-go-plugin' }];
   });
   f.type('/');
   await settle();
@@ -127,15 +127,15 @@ test('recovering a source keeps superseded query results out of the current menu
   await settle();
   assert.equal(signals[1].aborted, true);
   assert.equal(f.state().hit.query, 'pl');
-  assert.deepEqual(itemNames(f.state(), 'skill'), ['DPSK-plugin']);
-  oldQuery.resolve([{ name: 'DPSK-support' }]);
+  assert.deepEqual(itemNames(f.state(), 'skill'), ['dsh-go-plugin']);
+  oldQuery.resolve([{ name: 'dsh-go-support' }]);
   await settle();
   assert.equal(f.state().hit.query, 'pl');
-  assert.deepEqual(itemNames(f.state(), 'skill'), ['DPSK-plugin']);
+  assert.deepEqual(itemNames(f.state(), 'skill'), ['dsh-go-plugin']);
 });
 
 test('healthy slash query refinement preserves its existing highlighted command', async t => {
-  const f = fixture(t, async () => [{ name: 'DPSK-plugin' }]);
+  const f = fixture(t, async () => [{ name: 'dsh-go-plugin' }]);
   f.type('/');
   await settle();
   f.controller.hover('command', 1);
@@ -150,7 +150,7 @@ test('healthy slash query refinement preserves its existing highlighted command'
 test('an empty remainder still closes the menu and a later input opens a fresh roster', async t => {
   const first = deferred();
   let calls = 0;
-  const f = fixture(t, async () => ++calls === 1 ? first.promise : [{ name: 'DPSK-plugin' }]);
+  const f = fixture(t, async () => ++calls === 1 ? first.promise : [{ name: 'dsh-go-plugin' }]);
   f.type('/zz');
   await settle();
   first.reject(Error('temporary skills/list failure'));
@@ -162,5 +162,5 @@ test('an empty remainder still closes the menu and a later input opens a fresh r
   assert.equal(calls, 2);
   assert.equal(f.state().open, true);
   assert.deepEqual(groupNames(f.state()), ['command', 'skill']);
-  assert.deepEqual(itemNames(f.state(), 'skill'), ['DPSK-plugin']);
+  assert.deepEqual(itemNames(f.state(), 'skill'), ['dsh-go-plugin']);
 });

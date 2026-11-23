@@ -11,7 +11,7 @@ app/ohos/                    鸿蒙 ArkTS 宿主工程（Android 不读）
 packages/dsh_client/         纯 Dart 客户端：HTTP/SSE、mux、会话与删除 API
 packages/dsh_remote/         远程传输：WebRTC / LAN / TURN / 中继
 runtime/                     打补丁的 DSH 引擎运行时
-runtime/bridge/DPSK-bridge/  App ↔ 引擎的 HTTP 桥（/DPSK/v1/*，含会话删除路由）
+runtime/bridge/dsh-go-bridge/  App ↔ 引擎的 HTTP 桥（/DPSK/v1/*，含会话删除路由）
 runtime/patches/             引擎补丁及其 pins.json（补丁与版本钉死，targetSets 分 android / ohos）
 runtime/ohos/                鸿蒙本机引擎：Node 宿主、虚拟进程、生命周期、运行时组成
 sdk/plugin-kit/              插件 SDK

@@ -14,7 +14,7 @@
 
 ```sh
 python3 -I runtime/tests/test_bridge_dependencies.py
-npm ci --prefix runtime/bridge/DPSK-bridge --ignore-scripts --omit=optional --no-audit --no-fund
+npm ci --prefix runtime/bridge/dsh-go-bridge --ignore-scripts --omit=optional --no-audit --no-fund
 node --test runtime/tests/companion-receipt-pdf.test.mjs
 ```
 

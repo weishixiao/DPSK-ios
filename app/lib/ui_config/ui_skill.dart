@@ -1,8 +1,8 @@
-// The DPSK-ui skill that teaches a host's agent to edit ui.json. The files
-// ship in assets/skills/DPSK-ui/ (flat; manifest.json maps each to its place
+// The dsh-go-ui skill that teaches a host's agent to edit ui.json. The files
+// ship in assets/skills/dsh-go-ui/ (flat; manifest.json maps each to its place
 // in the skill folder).
 //
-// - On-device engine: written into `$DSH_HOME/skills/DPSK-ui/` each time the
+// - On-device engine: written into `$DSH_HOME/skills/dsh-go-ui/` each time the
 //   engine comes up. DSH watches that root, so the skill appears without a
 //   restart. The app keeps the folder current while SKILL.md carries the
 //   managed line (a YAML comment inside the front matter — DSH only reads a
@@ -28,24 +28,24 @@ import '../state/android_features.dart' show operatingSystemProvider;
 import '../state/hosts_state.dart';
 import 'ui_config_state.dart';
 
-const uiSkillName = 'DPSK-ui';
-const uiSkillAssetDir = 'assets/skills/DPSK-ui/';
+const uiSkillName = 'dsh-go-ui';
+const uiSkillAssetDir = 'assets/skills/dsh-go-ui/';
 
 /// The second skill the app ships: teaches a host's agent to write a small
 /// local native plugin (sdk/plugin-kit/skill, built into
-/// assets/skills/DPSK-plugin/ by sdk/plugin-kit/scripts/sync-skill.mjs).
+/// assets/skills/dsh-go-plugin/ by sdk/plugin-kit/scripts/sync-skill.mjs).
 /// Installed and kept current exactly like [uiSkillName], in its own folder.
-const pluginSkillName = 'DPSK-plugin';
+const pluginSkillName = 'dsh-go-plugin';
 
 /// The third: the app's own user guide (docs/guide, built into
-/// assets/skills/DPSK-guide/ by tool/guide_sync.py), so the agent can answer
+/// assets/skills/dsh-go-guide/ by tool/guide_sync.py), so the agent can answer
 /// how to use the app. Read-only; installed and kept current the same way.
-const guideSkillName = 'DPSK-guide';
+const guideSkillName = 'dsh-go-guide';
 
 /// The fourth: troubleshooting and bug-report playbook. Reads the diagnostics
 /// snapshot the app writes into the engine (`$DSH_HOME/dsh-app/diagnostics.md`)
 /// and turns a symptom into a redacted environment summary / issue draft.
-const supportSkillName = 'DPSK-support';
+const supportSkillName = 'dsh-go-support';
 
 /// Uses the same report, prompt and checked adapter as companion light mode.
 const companionAdaptSkillName = 'companion-adapt';
@@ -377,7 +377,7 @@ abstract interface class UiSkillRemoteInstaller {
 final uiSkillRemoteInstallerProvider = Provider<UiSkillRemoteInstaller?>((ref) => null);
 
 /// A POSIX `sh` script that writes [bundle] to
-/// `${DSH_HOME:-$HOME/.dsh}/skills/DPSK-ui/` (leaving a folder the person
+/// `${DSH_HOME:-$HOME/.dsh}/skills/dsh-go-ui/` (leaving a folder the person
 /// took over alone) and prints `DSHAPP skill=installed` or
 /// `DSHAPP skill=user-owned`.
 String uiSkillShellScript(UiSkillBundle bundle) {

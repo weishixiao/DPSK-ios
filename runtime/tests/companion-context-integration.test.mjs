@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { once } from 'node:events';
 import { createServer, request as httpRequest } from 'node:http';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
 import { createFixture, requestSystemText } from './fixtures/companion-recall-engine.mjs';
 
 const integration = (name, run) => test(name, {

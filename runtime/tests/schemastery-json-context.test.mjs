@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { createPluginConfig } from '../bridge/DPSK-bridge/lib/plugin-config.js';
+import { createPluginConfig } from '../bridge/dsh-go-bridge/lib/plugin-config.js';
 import { withSources } from './plugin-config-source-fixture.mjs';
 
 assert.ok(process.env.DSH_PREFIX, 'DSH_PREFIX must select the fixed package tree');

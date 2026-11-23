@@ -21,7 +21,7 @@ String? _node() {
 void main() {
   final node = _node();
   final skip = node == null ? 'node is not installed' : null;
-  final checker = '$appDir/assets/skills/DPSK-ui/check.mjs';
+  final checker = '$appDir/assets/skills/dsh-go-ui/check.mjs';
 
   Future<ProcessResult> run(List<String> args, {Map<String, String>? env, String? stdin}) async {
     if (stdin == null) return Process.run(node!, [checker, ...args], environment: env);
@@ -91,9 +91,9 @@ void main() {
     test('finds ui.json from where the skill is installed, or from DSH_HOME', () async {
       final home = Directory.systemTemp.createTempSync('ui-check-home-');
       addTearDown(() => home.deleteSync(recursive: true));
-      final scripts = Directory('${home.path}/skills/DPSK-ui/scripts')..createSync(recursive: true);
+      final scripts = Directory('${home.path}/skills/dsh-go-ui/scripts')..createSync(recursive: true);
       File(checker).copySync('${scripts.path}/check.mjs');
-      File('$appDir/assets/skills/DPSK-ui/schema.json').copySync('${home.path}/skills/DPSK-ui/schema.json');
+      File('$appDir/assets/skills/dsh-go-ui/schema.json').copySync('${home.path}/skills/dsh-go-ui/schema.json');
       Directory('${home.path}/DPSK').createSync();
       File('${home.path}/DPSK/ui.json').writeAsStringSync('{"version": 1, "hide": ["whaleTail"]}');
 

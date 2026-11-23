@@ -237,7 +237,7 @@ void main() {
       expect(bench.results, [false]);
       expect(store.ids, isEmpty, reason: 'asking is not confirming');
       final queued = bench.container.read(composeInboxProvider).single;
-      expect(queued.text, '/DPSK-guide 「本对话都允许」会放行哪些操作？怎么关掉？');
+      expect(queued.text, '/dsh-go-guide 「本对话都允许」会放行哪些操作？怎么关掉？');
     });
 
     testWidgets('only where the guide covers the topic', (tester) async {

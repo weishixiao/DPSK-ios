@@ -55,7 +55,7 @@ struct RuntimeManifest: Codable {
     "node_modules/@deepseek-ai/dsh/lib/bin.js", "runtime/ohos/preload.mjs",
     "runtime/ohos/process/index.mjs", "runtime/ohos/process/sandbox.mjs",
     "runtime/ohos/lifecycle/index.mjs", "runtime/ohos/capabilities/index.mjs",
-    "runtime/bridge/DPSK-bridge/lib/index.js", "runtime/ohos/process/child-process.mjs",
+    "runtime/bridge/dsh-go-bridge/lib/index.js", "runtime/ohos/process/child-process.mjs",
   ]
 
   static func safePath(_ path: String) -> Bool {

@@ -58,7 +58,7 @@
       ]
     },
     "icon": {
-      "description": "A plugin icon name: ui.json's whitelist (app/assets/skills/DPSK-ui/schema.json) plus the native plugin names (app/lib/plugins/native/native_icons.dart). Unknown names draw a default glyph.",
+      "description": "A plugin icon name: ui.json's whitelist (app/assets/skills/dsh-go-ui/schema.json) plus the native plugin names (app/lib/plugins/native/native_icons.dart). Unknown names draw a default glyph.",
       "anyOf": [
         {
           "enum": [

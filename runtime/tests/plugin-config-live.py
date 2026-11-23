@@ -21,7 +21,7 @@ rows=[{'id':x,'disabled':True} for x in ['session-title-llm','llm-pi-ai','llm-de
  {'id':'no-schema','name':'wave10-config-fixture-package/no-schema'},
  {'id':'inactive','name':'wave10-config-fixture-package','disabled':True},
  {'id':'wave10-config-observer','name':str(root/'observer.mjs')},
- {'id':'DPSK-bridge','name':str(here.parent/'bridge/DPSK-bridge/lib/index.js')},
+ {'id':'dsh-go-bridge','name':str(here.parent/'bridge/dsh-go-bridge/lib/index.js')},
  {'id':'route-probe','name':str(here/'route-probe/index.js')},
 ]}]
 (home/'profiles/web/cordis.patch.yml').write_text(json.dumps(rows))

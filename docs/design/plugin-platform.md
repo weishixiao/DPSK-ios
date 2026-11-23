@@ -77,7 +77,7 @@
 
 1. 桥接：`limits.js` 加上限，`manifest.js` 解析和渲染，需要时改 `routes.js`、`core.js`。
 2. SDK：`node scripts/sync-bridge.mjs` 同步解析器；更新 `schema/*.json`、`scripts/types/*.in`、`lib/check.js`、`lib/testing.js`，再跑 `gen-types`、`sync-skill`。
-3. 客户端：`dpsk_api.dart` 解析；`DshGoSurfaces.all` 声明。
+3. 客户端：`dsh_go_api.dart` 解析；`DshGoSurfaces.all` 声明。
 4. App：`native_model.dart`、`native_state.dart` 加 provider，再画界面；`native_plugin_section.dart` 的开关自动出现。
 5. 测试：桥接单测、SDK 测试、App 组件测试，涉及布局的加 golden。
 6. 文档：`docs/plugins/slots.md` 中英文，协议文档，`versions.md` 的兼容说明。

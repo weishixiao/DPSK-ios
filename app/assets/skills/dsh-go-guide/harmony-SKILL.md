@@ -1,8 +1,8 @@
 ---
 # DPSK:managed — the DPSK app keeps this skill up to date; delete this line to keep your own edits.
-name: DPSK-guide
+name: dsh-go-guide
 description: DPSK 手机 App 鸿蒙版自带的使用说明（中文 / English）：功能在哪、怎么用、每个设置的作用、删除或重置会丢什么。用户问 DPSK App 本身怎么用时先加载它，比如「系统操作能做什么」「怎么接入自己的模型」「本机环境能卸载吗」「分享链接怎么删」「酒馆怎么导入角色卡」「子代理和智能体团队在哪」「终端怎么开」「全部功能里有什么」「创意工坊怎么投稿」「宠物不见了」。The DPSK app's own user guide for HarmonyOS — where each feature is, what each setting does, what an action deletes. Covers chat, models, engine and remote hosts, system actions, web mode, pets, companion, workshop, sharing, plugins, tavern, subagents and agent teams, terminal, workspaces, automations and settings.
-whenToUse: The user asks how to use the DPSK app (手机 App) itself. Not for changing the app's layout (DPSK-ui) or writing a plugin (DPSK-plugin).
+whenToUse: The user asks how to use the DPSK app (手机 App) itself. Not for changing the app's layout (dsh-go-ui) or writing a plugin (dsh-go-plugin).
 ---
 
 # DPSK 使用说明（鸿蒙版）

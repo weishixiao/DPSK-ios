@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { createServer, createConnection } from 'node:net';
 import { createServer as createHttpServer } from 'node:http';
 import { EventEmitter, once } from 'node:events';
-import { WsConnection, encodeFrame } from '../bridge/DPSK-bridge/lib/native/ws.js';
-import { NativeCore } from '../bridge/DPSK-bridge/lib/native/core.js';
-import { LIMITS } from '../bridge/DPSK-bridge/lib/native/limits.js';
-import { createNativeRoutes } from '../bridge/DPSK-bridge/lib/native/routes.js';
+import { WsConnection, encodeFrame } from '../bridge/dsh-go-bridge/lib/native/ws.js';
+import { NativeCore } from '../bridge/dsh-go-bridge/lib/native/core.js';
+import { LIMITS } from '../bridge/dsh-go-bridge/lib/native/limits.js';
+import { createNativeRoutes } from '../bridge/dsh-go-bridge/lib/native/routes.js';
 
 function timers(t) {
   t.mock.timers.enable({ apis: ['setTimeout'] });

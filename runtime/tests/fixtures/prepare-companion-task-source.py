@@ -104,7 +104,7 @@ const errorChain=error=>String(error.message??error);
 const SessionSeq=value=>value;
 const assertNever=value=>{throw new Error(String(value));};
 """ + region(sources['dsh-agent-loop'], 'agent') + '\nexport {ReactLoopAgent};\n')
-    bridge = here.parents[2] / 'runtime/bridge/DPSK-bridge/lib/companion'
+    bridge = here.parents[2] / 'runtime/bridge/dsh-go-bridge/lib/companion'
     shutil.copytree(bridge, out / 'companion')
     vendor = bridge.parent / 'vendor'
     if vendor.is_dir():

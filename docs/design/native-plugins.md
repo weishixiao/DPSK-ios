@@ -183,7 +183,7 @@
  ├─ 宿主半侧（Node，可选）：ctx.inject(['dshGo?']) → 视图、数据推送、事件处理
  └─ 工具：output.presentationMeta(args, value) → { "DPSK/view": View }   ← 不经桥接
                 │                                         │
-       DPSK-bridge（宿主，已有）                   对话记录（tool/result.meta）
+       dsh-go-bridge（宿主，已有）                   对话记录（tool/result.meta）
   GET /DPSK/v1/contributions                             │
   GET /DPSK/v1/views/<pkg>/<id>                          │
   WS  /DPSK/v1/stream（数据补丁）                         │
@@ -341,7 +341,7 @@ output: {
 |---|---|---|---|---|
 | **0** | App 读 `meta["DPSK/view"]`，用 `dsh_ui` 画在工具行里（宽松解析、8 KiB 上限、折叠行摘要）；作者文档第一篇「不写 App 代码也能原生显示的东西」（命令、设置 schema、工具摘要规则、技能、`dsh-ui` 围栏、工具 meta 视图）；一个示例工具 | 3–4 | 无 | 本机、SSH、中转三种主机上，同一次工具调用都显示原生卡；重进对话后历史卡还在；网页版显示官方通用卡，不报错 |
 | **1** | 桥接：读清单、`ctx.dshGo` 服务、4 条路由、流、invoke 校验（3–4）。`dsh_client`：清单和流的接口（1–2）。App：贡献状态、动作分派与效果白名单、署名外框、逐插件开关（3–4）。插槽：`composer.actions`、`message.actions`、`composer.strip`，以及 `panel` 接进对话详情页签和全部功能（4–5）。新增 6 种块（2–3）。SDK、校验器、文档、2 个示例（3） | 15–19 | 第 0 期；`composer.actions` 依赖 ui.json 胶囊行先接通 | 两个示例插件在本机引擎上原生显示，点按生效；本机冷启动 300 ms 内拿到清单；没有插件时界面零变化；深浅色和字号跟随；胶囊和面板做对称测量测试 |
-| **2** | `tool.card` 上的 invoke 按钮；输入控件、局部状态、公式（与 dsh-ui 二期合做，4–6）；`turn.note`（2）；`header.actions` + `session.menu`（1–2）；`notify`（1–2）；`pets` 宠物包（2–3）；桥接浏览器半侧的 React 渲染器，同一份声明在 DSH 网页版也显示（4–6）；`DPSK-plugin` 技能（1） | 16–22 | 第一期 | 用量插件的回合尾注滚动无掉帧；同一个插件在网页版和 App 两边显示一致 |
+| **2** | `tool.card` 上的 invoke 按钮；输入控件、局部状态、公式（与 dsh-ui 二期合做，4–6）；`turn.note`（2）；`header.actions` + `session.menu`（1–2）；`notify`（1–2）；`pets` 宠物包（2–3）；桥接浏览器半侧的 React 渲染器，同一份声明在 DSH 网页版也显示（4–6）；`dsh-go-plugin` 技能（1） | 16–22 | 第一期 | 用量插件的回合尾注滚动无掉帧；同一个插件在网页版和 App 两边显示一致 |
 | **3** | 向上游提 Panel surface 提案；dsh-TUI 渲染；中转主机支持（要 ds-harness-remote 放行，或等 std 落地）；`attach` / `play` 效果 | 另估 | 上游 | — |
 
 接缝规格里没做的两项：
@@ -356,13 +356,13 @@ output: {
 | 文档（中文，另附英文） | ① 快速开始：给已有插件加一个工具卡，5 分钟；② 插槽参考（§3.3 一表）；③ 组件目录：每个组件一张浅色、深色截图 + 上限；④ 动作与效果；⑤ 主机覆盖与降级（§3.6）；⑥ 设计规则：不能自定义什么、为什么；⑦ 兼容与版本；⑧ 自查清单（署名、上限、不收集密钥） |
 | 示例插件（开源，MIT） | `DPSK-example-usage`：状态条 + 面板 + 推数据；`DPSK-example-quick`：胶囊 + 消息操作 + invoke；`DPSK-example-weather`：只有工具卡，第 0 期 |
 | 调试 | App 插件详情页的「原生界面」一行：显示问题列表、最近一次视图大小、invoke 耗时。第二期的网页版渲染器兼作浏览器里的预览 |
-| 技能 `DPSK-plugin` | 和 `DPSK-ui` 同样的分发方式：教用户自己的 agent 写一个本地小插件，例如「在输入框加个按钮，把剪贴板译成英文」。写在 `$DSH_HOME` 下按路径加载，用 `check` 自查。声明式格式加上有界目录，正是 LLM 写得稳的形状 |
+| 技能 `dsh-go-plugin` | 和 `dsh-go-ui` 同样的分发方式：教用户自己的 agent 写一个本地小插件，例如「在输入框加个按钮，把剪贴板译成英文」。写在 `$DSH_HOME` 下按路径加载，用 `check` 自查。声明式格式加上有界目录，正是 LLM 写得稳的形状 |
 
 ## 7. 风险与待决
 
 | 风险 | 可能性 | 后果 | 对策 |
 |---|---|---|---|
-| 生态冷启动：没人专门给 DPSK 写适配 | 高 | 协议空转 | 工具卡零成本（一个函数）；第二期起同一份声明在网页版也显示，变成「写一次两边用」；`DPSK-plugin` 技能让用户的 agent 当作者；我们给 dsh-cost-meter、dsh-visualize 这类热门包提适配 PR（先征得作者同意） |
+| 生态冷启动：没人专门给 DPSK 写适配 | 高 | 协议空转 | 工具卡零成本（一个函数）；第二期起同一份声明在网页版也显示，变成「写一次两边用」；`dsh-go-plugin` 技能让用户的 agent 当作者；我们给 dsh-cost-meter、dsh-visualize 这类热门包提适配 PR（先征得作者同意） |
 | 目录不够用，作者要的视觉做不出来 | 中 | 插件仍走网页岛 | 接受。收集需求再加组件；L4 明确不做 |
 | 中转主机只有工具卡 | 确定 | 中转用户看不到面板和按钮 | 文档写明；向 ds-harness-remote 提放行 `/DPSK/*`，或等 std |
 | 协议公开后要长期兼容 | 确定 | 维护负担 | v1 保持小：16 种组件、10 个插槽；先给示例插件和受邀作者用，定型后再写进公开文档 |

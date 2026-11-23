@@ -1,4 +1,4 @@
-// v1.2 capability tests for DPSK-bridge (docs/design/native-plugins-protocol.md §11): real HTTP and
+// v1.2 capability tests for dsh-go-bridge (docs/design/native-plugins-protocol.md §11): real HTTP and
 // WebSocket through the bridge's apply(), with a fake loader. No DSH needed.
 //   node --test runtime/tests/native-capabilities.test.mjs
 import assert from 'node:assert/strict';
@@ -11,13 +11,13 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { once } from 'node:events';
-import { apply } from '../bridge/DPSK-bridge/lib/index.js';
-import { encodeFrame } from '../bridge/DPSK-bridge/lib/native/ws.js';
-import { parseManifest } from '../bridge/DPSK-bridge/lib/native/manifest.js';
-import { normalize } from '../bridge/DPSK-bridge/lib/native/effects.js';
-import { CapabilityRuntime } from '../bridge/DPSK-bridge/lib/native/capability-runtime.js';
-import { microModel } from '../bridge/DPSK-bridge/lib/native/capabilities.js';
-import { LIMITS } from '../bridge/DPSK-bridge/lib/native/limits.js';
+import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
+import { encodeFrame } from '../bridge/dsh-go-bridge/lib/native/ws.js';
+import { parseManifest } from '../bridge/dsh-go-bridge/lib/native/manifest.js';
+import { normalize } from '../bridge/dsh-go-bridge/lib/native/effects.js';
+import { CapabilityRuntime } from '../bridge/dsh-go-bridge/lib/native/capability-runtime.js';
+import { microModel } from '../bridge/dsh-go-bridge/lib/native/capabilities.js';
+import { LIMITS } from '../bridge/dsh-go-bridge/lib/native/limits.js';
 const delay = ms => new Promise(r => setTimeout(r, ms));
 const manifest = { v: 1, capabilities: ['audio', 'voice', 'micro', 'overlay'], contributes: {
   'composer.actions': [{ id: 'go', label: 'Go' }], media: [{ id: 'clip' }], micro: [{ id: 'caption' }], overlays: [{ id: 'captionOverlay', channel: 'caption' }], panels: [{ id: 'panel', title: 'Panel', micro: 'caption' }] } };

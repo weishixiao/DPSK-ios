@@ -6,9 +6,9 @@ import { EventEmitter, once } from 'node:events';
 import { createServer, request } from 'node:http';
 import test from 'node:test';
 import { createSignalsFixture } from './fixtures/companion-signals-engine.mjs';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
-import { createCompanionSignals } from '../bridge/DPSK-bridge/lib/companion/signals.js';
-import { apply as applyBridge } from '../bridge/DPSK-bridge/lib/index.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
+import { createCompanionSignals } from '../bridge/dsh-go-bridge/lib/companion/signals.js';
+import { apply as applyBridge } from '../bridge/dsh-go-bridge/lib/index.js';
 
 const ROOT = '/DPSK/v1/companion/signals';
 const AUTH = 'Bearer synthetic-c760-http';

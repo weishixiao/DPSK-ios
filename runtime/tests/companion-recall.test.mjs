@@ -7,12 +7,12 @@ import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { createCompanionStore } from '../bridge/DPSK-bridge/lib/companion/store.js';
-import { createRecallCoordinator } from '../bridge/DPSK-bridge/lib/companion/recall.js';
-import { createRecallMarkers, RECALL_MARKER_SCHEMA } from '../bridge/DPSK-bridge/lib/companion/recall-markers.js';
-import { validateBind, validateRevoke } from '../bridge/DPSK-bridge/lib/companion/recall-schema.js';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
-import { formatRecallSection, normalizeRecallText, RECALL_SELECTOR, selectRecallContext } from '../bridge/DPSK-bridge/lib/companion/recall-selector.js';
+import { createCompanionStore } from '../bridge/dsh-go-bridge/lib/companion/store.js';
+import { createRecallCoordinator } from '../bridge/dsh-go-bridge/lib/companion/recall.js';
+import { createRecallMarkers, RECALL_MARKER_SCHEMA } from '../bridge/dsh-go-bridge/lib/companion/recall-markers.js';
+import { validateBind, validateRevoke } from '../bridge/dsh-go-bridge/lib/companion/recall-schema.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
+import { formatRecallSection, normalizeRecallText, RECALL_SELECTOR, selectRecallContext } from '../bridge/dsh-go-bridge/lib/companion/recall-selector.js';
 
 // These fixtures exercise the real store/selector/coordinator/marker/HTTP code.
 // Agent lifecycle/provider certification is a controlled adapter boundary here;

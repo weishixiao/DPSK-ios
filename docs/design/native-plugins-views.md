@@ -70,7 +70,7 @@
 | `actions` | `items: [{label, icon?, style?: primary \| plain, action}]` | 按钮组。1–2 个并排等宽，3–4 个竖排。一张视图里至多一个 `primary`，多的按 `plain` 画 |
 | `image` | `src`；`alt?`；`aspect?`（宽 / 高，0.25–4）；`caption?` | 图片。`src` 只收两种：插件自己的资源 `asset:<路径>`（`dshGo.assets` 目录里的 png / jpg / webp / gif，App 拼成 NA 协议 §4.6 的 `/DPSK/v1/assets/<包名>/<路径>` 并带凭据去取），和 ≤ 64 KiB 的 `data:image/{png,jpeg,webp,gif};base64,…`。写了 `aspect` 就先按比例占位，不跳动 |
 
-`icon` 只收 ui.json 的图标名（与 `app/assets/skills/DPSK-ui/schema.json` 的 `icon` 枚举相同，共 43 个）。不认识的名字画默认图标。
+`icon` 只收 ui.json 的图标名（与 `app/assets/skills/dsh-go-ui/schema.json` 的 `icon` 枚举相同，共 43 个）。不认识的名字画默认图标。
 
 ### 2.3 色调白名单
 

@@ -1,5 +1,5 @@
 {
-  "name": "DPSK-plugin",
+  "name": "dsh-go-plugin",
   "files": {
     "SKILL.md": "SKILL.md",
     "template-package.json": "template/package.json",

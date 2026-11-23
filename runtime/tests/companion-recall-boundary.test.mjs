@@ -8,9 +8,9 @@ import * as io from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { setImmediate as nextTask } from 'node:timers/promises';
-import { createRecallMarkers } from '../bridge/DPSK-bridge/lib/companion/recall-markers.js';
-import { createRecallContexts } from '../bridge/DPSK-bridge/lib/companion/recall-context.js';
-import * as fullContext from '../bridge/DPSK-bridge/lib/companion/full-context.js';
+import { createRecallMarkers } from '../bridge/dsh-go-bridge/lib/companion/recall-markers.js';
+import { createRecallContexts } from '../bridge/dsh-go-bridge/lib/companion/recall-context.js';
+import * as fullContext from '../bridge/dsh-go-bridge/lib/companion/full-context.js';
 import { createFixture, loadEngine } from './fixtures/companion-recall-engine.mjs';
 
 test('a failed marker capability probe retries after storage recovery and shares in-flight work', async (t) => {

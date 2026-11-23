@@ -1,6 +1,6 @@
 # 手机操控的悬浮条（灵动岛：小球 · 胶囊 · 卡片 · 后台屏小窗）
 
-DSH 用无障碍服务操作手机时，浮在其他应用上面的控制条，以及贴着屏幕边缘的一圈色带。代码在 `app/android/app/src/main/kotlin/io/github/dpsk/harness/phone/a11y/`：`ControlOverlay.kt`（窗口、确认卡、交还卡、形态之间的编排、拖动、避让键盘和确认卡）、`OverlayCapsule.kt`（胶囊和卡片）、`OverlayBall.kt`（小球）、`OverlayLook.kt`（颜色、图形、标记）、`OverlayScreen.kt`（后台屏小窗）、`EdgeBeam.kt`（边缘色带）、`OverlayModel.kt`、`FoldClock.kt`、`OverlayPrefs.kt` 和 `EdgeBeamModel.kt`（纯 Kotlin 的状态、位置与尺寸，JVM 单测覆盖）。
+DSH 用无障碍服务操作手机时，浮在其他应用上面的控制条，以及贴着屏幕边缘的一圈色带。代码在 `app/android/app/src/main/kotlin/com/dpsk/harness/phone/a11y/`：`ControlOverlay.kt`（窗口、确认卡、交还卡、形态之间的编排、拖动、避让键盘和确认卡）、`OverlayCapsule.kt`（胶囊和卡片）、`OverlayBall.kt`（小球）、`OverlayLook.kt`（颜色、图形、标记）、`OverlayScreen.kt`（后台屏小窗）、`EdgeBeam.kt`（边缘色带）、`OverlayModel.kt`、`FoldClock.kt`、`OverlayPrefs.kt` 和 `EdgeBeamModel.kt`（纯 Kotlin 的状态、位置与尺寸，JVM 单测覆盖）。
 
 ## 0. 结论
 

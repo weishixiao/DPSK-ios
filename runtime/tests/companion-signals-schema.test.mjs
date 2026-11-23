@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { projectRunResult } from '../bridge/DPSK-bridge/lib/companion/signals-schema.js';
+import { projectRunResult } from '../bridge/dsh-go-bridge/lib/companion/signals-schema.js';
 
 const generation = 'c7600000-0000-4000-8000-000000000001';
 const record = () => ({ source: { sessionId: 'session', turn: 1, step: 1, callId: 'call', seq: 5 },

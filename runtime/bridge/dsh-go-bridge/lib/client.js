@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-	id: "DPSK-bridge",
+	id: "dsh-go-bridge",
 	factory: (require) => {
 		// Boot awaits this factory before mounting Markdown, whose file-link parser
 		// calls URL.canParse. Older WebViews have URL but lack that static method.
@@ -28,7 +28,7 @@ window.__ModuleLoader__.load({
 			});
 		}
 		var module = { exports: {} };
-		// DPSK-bridge, browser half (docs/design/plugin-seams.md §5.2, §6.1).
+		// dsh-go-bridge, browser half (docs/design/plugin-seams.md §5.2, §6.1).
 		//
 		// 1. Attribution: a slot entry only records `registrant` (the plugin's exported `name`, or an
 		//    ancestor's when it exports none), so it cannot be traced to a package. When the `slots`
@@ -45,7 +45,7 @@ window.__ModuleLoader__.load({
 		// 4. Right pane tabs: a `sidebar.right.pane.tab(.title)` entry is keyed by a tab type id whose
 		//    name lives in the `sidebarRightTabs` registry, not in the slot. Reports carry that type
 		//    (`tab`, and `label` = its name); `openTab(id)` / `#DPSK-tab=<id>` opens it on screen.
-		const NAME = "DPSK-bridge";
+		const NAME = "dsh-go-bridge";
 		const ORIGINAL = Symbol.for("cordis.original");
 		const MASK_PRIORITY = -1000000007;
 		const REPORT_DELAY_MS = 1200;
@@ -112,7 +112,7 @@ window.__ModuleLoader__.load({
 		function apply(ctx) {
 			// StoredEntry -> package. Kept on the page, so a re-applied bridge (HMR, plugin reload)
 			// still knows the entries stamped by its predecessor.
-			const STAMPS = Symbol.for("DPSK-bridge.stamps");
+			const STAMPS = Symbol.for("dsh-go-bridge.stamps");
 			const stamps = window[STAMPS] || (window[STAMPS] = new WeakMap());
 			const masks = new Map();        // `${slot}\0${cell}` -> { entry?, dispose }
 			const maskedSlots = new Map();  // slot -> disposer
@@ -145,7 +145,7 @@ window.__ModuleLoader__.load({
 				ctx.effect(() => () => {
 					if (target._register !== original) delete target._register;
 					if (wrappedSlots === target) wrappedSlots = undefined;
-				}, "DPSK-bridge: slot attribution");
+				}, "dsh-go-bridge: slot attribution");
 			};
 			wrap(ctx.get("slots"), "late");
 			ctx.on("internal/service", (name, value) => {
@@ -278,7 +278,7 @@ window.__ModuleLoader__.load({
 				if (!registry || registry === tabsWatched || typeof registry.subscribe !== "function") return;
 				tabsWatched = registry;
 				const off = registry.subscribe(schedule);
-				ctx.effect(() => () => off(), "DPSK-bridge: right pane tab names");
+				ctx.effect(() => () => off(), "dsh-go-bridge: right pane tab names");
 			};
 			watchTabs(ctx.get("sidebarRightTabs"));
 			ctx.on("internal/service", (name, value) => {
@@ -333,14 +333,14 @@ window.__ModuleLoader__.load({
 					return () => {
 						cancelled = true;
 					};
-				}, "DPSK-bridge: island tab");
+				}, "dsh-go-bridge: island tab");
 			}
 			ctx.effect(() => {
 				schedule();
 				return () => {
 					if (timer !== undefined) clearTimeout(timer);
 				};
-			}, "DPSK-bridge: occupancy report");
+			}, "dsh-go-bridge: occupancy report");
 
 			const Empty = () => null;
 			const syncMasks = (key) => {
@@ -462,7 +462,7 @@ window.__ModuleLoader__.load({
 					maskedSlots.clear();
 					filters.clear();
 				};
-			}, "DPSK-bridge: island API");
+			}, "dsh-go-bridge: island API");
 		}
 
 		module.exports.name = NAME;

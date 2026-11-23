@@ -8,9 +8,9 @@ import { dirname, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import {
   advanceState, applyEvent, initialState, publicState,
-} from '../bridge/DPSK-bridge/lib/companion/state.js';
-import { MAX_FILE_BYTES, validMemory } from '../bridge/DPSK-bridge/lib/companion/schema.js';
-import { createCompanionStore } from '../bridge/DPSK-bridge/lib/companion/store.js';
+} from '../bridge/dsh-go-bridge/lib/companion/state.js';
+import { MAX_FILE_BYTES, validMemory } from '../bridge/dsh-go-bridge/lib/companion/schema.js';
+import { createCompanionStore } from '../bridge/dsh-go-bridge/lib/companion/store.js';
 
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;

@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
 import {once} from 'node:events';
-import {apply} from '../bridge/DPSK-bridge/lib/index.js';
+import {apply} from '../bridge/dsh-go-bridge/lib/index.js';
 import {withSources} from './plugin-config-source-fixture.mjs';
 const root='/DPSK/v1/plugin-config';
 async function fixture(t,{connection=true,entries=[],addressable=entries}={}){

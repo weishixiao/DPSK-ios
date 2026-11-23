@@ -9,9 +9,9 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {setImmediate as nextTurn} from 'node:timers/promises';
 import {fileURLToPath, pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
-import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
-import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
+import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
+import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
+import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
 
 const cases = [
   'invalid-eager-rejection',

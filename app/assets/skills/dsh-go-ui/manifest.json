@@ -1,5 +1,5 @@
 {
-  "name": "DPSK-ui",
+  "name": "dsh-go-ui",
   "files": {
     "SKILL.md": "SKILL.md",
     "schema.json": "schema.json",

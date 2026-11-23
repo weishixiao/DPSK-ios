@@ -26,8 +26,8 @@
 | 对话 | 文本和语音输入，流式字幕，标记驱动表情和动作，文本节奏带动口型 | `companion_page.dart`、`companion_reply.dart` |
 | 问候 | 按时间和离开多久选一句，不责备 | `companionGreeting` |
 | 素材 | 导入 zip，路径和类型检查，运行库摘要校验，可删除 | `app/lib/companion/companion_pack.dart` |
-| 预设 | `DPSK-companion-full`（完整模式，人设 + 标准预设的全部插件，Pro C410/C411）；只有人设的 `DPSK-companion` 留着不用。桥接随引擎带上；旧主机退回「默认预设 + 人设放进第一条消息」 | `runtime/bridge/DPSK-bridge/cordis.patch.yml` |
-| 状态（第 1 期） | 主机上的心情、精力、亲近度：进门记一次到访，摸头记一次事件；心情好时带一点笑，精力影响动作幅度，越熟越常看着你。问候用主机记下的上次到访时间 | `runtime/bridge/DPSK-bridge/lib/companion/`、`companion_api.dart` |
+| 预设 | `DPSK-companion-full`（完整模式，人设 + 标准预设的全部插件，Pro C410/C411）；只有人设的 `DPSK-companion` 留着不用。桥接随引擎带上；旧主机退回「默认预设 + 人设放进第一条消息」 | `runtime/bridge/dsh-go-bridge/cordis.patch.yml` |
+| 状态（第 1 期） | 主机上的心情、精力、亲近度：进门记一次到访，摸头记一次事件；心情好时带一点笑，精力影响动作幅度，越熟越常看着你。问候用主机记下的上次到访时间 | `runtime/bridge/dsh-go-bridge/lib/companion/`、`companion_api.dart` |
 | 记忆（第 1 期） | 「她记得的事」：用户写下、修改、删除，只存在当前主机；页面如实写明她还不会自己想起 | `companion_memory_page.dart` |
 | 生活细节 | 夜里更容易困、会打哈欠，清晨伸懒腰，心情好时哼歌冒音符，说到句末轻轻点头 | `stage.js` |
 | 小房子（第 1 期） | 海底的一角：贝壳点心盘、泡泡球、海草软垫，点了各有一段表演，主机记下活动和剩余时间。见 §6.1 | `index.html`、`stage.js`、`companion_page.dart` |
@@ -90,7 +90,7 @@ pack.zip
 
 ## 4. 预设和人设
 
-`cordis.patch.yml` 里 `--- shared rows ---` 以下的行，`rtbuild.py` 也会放进本机运行时的 overlay，所以本机和 `dsh plugin add DPSK-bridge` 的远程主机都有这个预设。人设用 `prefix` + `complete: true` + `includeRuntimeContext: false`，只留人设，再带上压缩组。人设写了不声称是真人、不写色情内容、不发展恋爱情节、遇到自伤信号要放下角色认真回应。
+`cordis.patch.yml` 里 `--- shared rows ---` 以下的行，`rtbuild.py` 也会放进本机运行时的 overlay，所以本机和 `dsh plugin add dsh-go-bridge` 的远程主机都有这个预设。人设用 `prefix` + `complete: true` + `includeRuntimeContext: false`，只留人设，再带上压缩组。人设写了不声称是真人、不写色情内容、不发展恋爱情节、遇到自伤信号要放下角色认真回应。
 
 **没有预设的主机**（旧运行时、没更新桥接的远程主机）：`CompanionSessions` 查不到预设就退回默认预设，人设放进第一条消息。这时她有工具，请求审批时页面上出现「有件事要你确认」，点了进普通对话。批准只能是真实点按，她说的话和语音都不算。
 

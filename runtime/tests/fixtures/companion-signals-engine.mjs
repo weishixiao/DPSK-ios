@@ -8,7 +8,7 @@ import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { createFixture } from './companion-recall-engine.mjs';
-import { createCompanionSignals } from '../../bridge/DPSK-bridge/lib/companion/signals.js';
+import { createCompanionSignals } from '../../bridge/dsh-go-bridge/lib/companion/signals.js';
 
 export async function createSignalsFixture(options = {}) {
   // Under `node --test` this process carries NODE_TEST_CONTEXT, and a nested

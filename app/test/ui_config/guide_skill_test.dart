@@ -1,6 +1,6 @@
-// The DPSK-guide skill (docs/guide, built by tool/guide_sync.py): it ships in
+// The dsh-go-guide skill (docs/guide, built by tool/guide_sync.py): it ships in
 // the app's assets, the engine-start auto-install puts it in
-// `$DSH_HOME/skills/DPSK-guide/` next to the other two, keeps it current
+// `$DSH_HOME/skills/dsh-go-guide/` next to the other two, keeps it current
 // while SKILL.md carries the managed line, and leaves it alone once the person
 // removes that line.
 

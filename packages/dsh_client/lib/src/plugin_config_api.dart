@@ -20,7 +20,7 @@ library;
 
 import 'carrier.dart';
 import 'connection.dart';
-import 'dpsk_api.dart';
+import 'dsh_go_api.dart';
 import 'engine_settings_api.dart';
 import 'errors.dart';
 import 'features_api.dart';

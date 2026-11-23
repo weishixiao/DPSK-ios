@@ -15,7 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'support/vector_drawable.dart';
 
-const _kotlin = 'android/app/src/main/kotlin/io/github/dpsk/harness';
+const _kotlin = 'android/app/src/main/kotlin/com/dpsk/harness';
 
 String _source(String relative) => File('$_kotlin/$relative').readAsStringSync();
 

@@ -191,10 +191,10 @@ flutter:
     # 伙伴小屋's page (lib/ui/companion). Its Live2D runtime and models are a
     # separate download, see docs/design/companion.md.
     - assets/companion/
-    - assets/skills/DPSK-ui/
-    - assets/skills/DPSK-plugin/
-    - assets/skills/DPSK-guide/
-    - assets/skills/DPSK-support/
+    - assets/skills/dsh-go-ui/
+    - assets/skills/dsh-go-plugin/
+    - assets/skills/dsh-go-guide/
+    - assets/skills/dsh-go-support/
     - assets/skills/companion-adapt/
     - assets/skills/pet-theme/
 

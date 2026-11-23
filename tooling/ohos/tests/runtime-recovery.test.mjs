@@ -10,7 +10,7 @@ const Recovery=await loadRecovery();
 const childFlags=process.execArgv.filter(flag=>flag==='--jitless');
 async function fixture(t,hook){const root=await fs.mkdtemp(join(tmpdir(),'dsh-rescue-'));t.after(()=>fs.rm(root,{recursive:true,force:true}));const store=new RecoveryFiles(root,hook);return {root,store,r:new Recovery(store,root)};}
 async function put(root,path,text){const p=join(root,path);await fs.mkdir(join(p,'..'),{recursive:true});await fs.writeFile(p,text);}
-async function setup(t,hook){const c=await fixture(t,hook);await put(c.root,'dsh-runtime/tree/old.js','old');await put(c.root,'runtime/rootfs/root/.dsh/profiles/config','plugins');await put(c.root,'runtime/rootfs/root/.dsh/DPSK/ui.json','ui');await put(c.root,'runtime/rootfs/root/.dsh/credentials','engine credential');await put(c.root,'runtime/rootfs/root/workspace/out.txt','user output');await put(c.root,'dsh-secrets/vault.bin','app key');await put(c.root,'preferences/hosts.json','host config');
+async function setup(t,hook){const c=await fixture(t,hook);await put(c.root,'dsh-runtime/tree/old.js','old');await put(c.root,'runtime/rootfs/root/.dsh/profiles/config','plugins');await put(c.root,'runtime/rootfs/root/.dsh/dsh-go/ui.json','ui');await put(c.root,'runtime/rootfs/root/.dsh/credentials','engine credential');await put(c.root,'runtime/rootfs/root/workspace/out.txt','user output');await put(c.root,'dsh-secrets/vault.bin','app key');await put(c.root,'preferences/hosts.json','host config');
  c.install=async()=>{await put(c.root,'dsh-runtime/tree/new.js','new');};return c;}
 async function preserved(c){assert.equal(await fs.readFile(join(c.root,'dsh-secrets/vault.bin'),'utf8'),'app key');assert.equal(await fs.readFile(join(c.root,'preferences/hosts.json'),'utf8'),'host config');}
 test('actual SIGKILL leaves durable active marker; two new processes count exactly twice',{timeout:20000},async t=>{
@@ -47,7 +47,7 @@ test('a reset takes the last good config and a restore cut short with it, and no
 });
 test('both ResetKeep choices restore exact selected bytes, not unselected credentials/workspace',async t=>{
  const c=await setup(t);await c.r.requestReset(['uiAndSkills','pluginsAndSettings'],ids[0],true);await c.r.initialize(1,c.install,()=>false);await preserved(c);
- assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/profiles/config'),'utf8'),'plugins');assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/DPSK/ui.json'),'utf8'),'ui');assert.equal(await c.store.kind(join(c.root,'runtime/rootfs/root/.dsh/credentials')),'missing');assert.equal(await c.store.kind(join(c.root,'runtime/rootfs/root/workspace')),'missing');
+ assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/profiles/config'),'utf8'),'plugins');assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/dsh-go/ui.json'),'utf8'),'ui');assert.equal(await c.store.kind(join(c.root,'runtime/rootfs/root/.dsh/credentials')),'missing');assert.equal(await c.store.kind(join(c.root,'runtime/rootfs/root/workspace')),'missing');
 });
 test('loaded native blocks reset before any move/delete/install and marker remains',async t=>{
  const c=await setup(t);await c.r.requestReset([],ids[0],true);let installs=0;await assert.rejects(c.r.initialize(1,async()=>{installs++;},()=>true),{code:'ohos_restart_required'});assert.equal(installs,0);assert.equal(await fs.readFile(join(c.root,'dsh-runtime/tree/old.js'),'utf8'),'old');assert.notEqual(await c.store.read(c.r.directory+'/reset.json'),null);
@@ -58,7 +58,7 @@ test('invalid choices and corrupted records fail closed, explicit reset can repl
 test('crash after keep rename and install failure resume without losing either kept or external bytes',async t=>{
  let hit=false;const c=await setup(t,async(op)=>{if(op==='after:move'&&!hit){hit=true;throw new Error('interrupted rename receipt');}});await c.r.requestReset(['uiAndSkills'],ids[0],true);await assert.rejects(c.r.initialize(1,c.install,()=>false));
  let failed=true;const next=new Recovery(new RecoveryFiles(c.root),c.root);await assert.rejects(next.initialize(2,async()=>{if(failed){failed=false;throw new Error('install failure');}await c.install();},()=>false));assert.notEqual(await c.store.read(c.r.directory+'/reset.json'),null);
- await next.initialize(3,c.install,()=>false);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/DPSK/ui.json'),'utf8'),'ui');await preserved(c);
+ await next.initialize(3,c.install,()=>false);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/dsh-go/ui.json'),'utf8'),'ui');await preserved(c);
 });
 test('directory fsync failure after commit never allows successful initialization; retry reads disk',async t=>{
  let fail=false;const c=await fixture(t,async op=>{if(fail&&op==='before:directory-fsync'){fail=false;throw new Error('sync unavailable');}});await c.r.initialize(1,async()=>{},()=>false);fail=true;await assert.rejects(c.r.arm(ids[0],2));
@@ -74,7 +74,7 @@ test('a recorded kept item missing at both ends blocks before deleting other ori
   if(op==='after:write'&&paths[0].endsWith('/reset.json')&&!hit){const record=JSON.parse(paths[1]);if(record.kept.length){hit=true;throw new Error('crash after kept receipt');}}
  });
  await c.r.requestReset(['uiAndSkills'],ids[0],true);await assert.rejects(c.r.initialize(1,c.install,()=>false));
- await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/DPSK'),{recursive:true});
+ await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/dsh-go'),{recursive:true});
  const next=new Recovery(new RecoveryFiles(c.root),c.root);await assert.rejects(next.initialize(2,c.install,()=>false));
  assert.equal(await fs.readFile(join(c.root,'dsh-runtime/tree/old.js'),'utf8'),'old');
 });
@@ -84,7 +84,7 @@ test('missing kept bytes in deleting/installing phase block before further destr
    if(stop&&op==='after:write'&&paths[0].endsWith('/reset.json')&&JSON.parse(paths[1]).stage===phase){stop=false;throw new Error('phase boundary interruption');}
   });
   await c.r.requestReset(['uiAndSkills'],ids[0],true);await assert.rejects(c.r.initialize(1,c.install,()=>false));
-  await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/DPSK'),{recursive:true});
+  await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/dsh-go'),{recursive:true});
   const store=new RecoveryFiles(c.root);const next=new Recovery(store,c.root);let installs=0;
   await assert.rejects(next.initialize(2,async()=>{installs++;await c.install();},()=>false));
   assert.equal(store.events.filter(e=>e.op==='before:tree').length,0,'must verify keep before deletion');assert.equal(installs,0,'must verify keep before install');
@@ -94,8 +94,8 @@ test('missing kept bytes in deleting/installing phase block before further destr
 test('installer-created target cannot stand in for a missing kept item without a restore intent',async t=>{
  const c=await setup(t);await c.r.requestReset(['uiAndSkills'],ids[0],true);
  await assert.rejects(c.r.initialize(1,async()=>{
-  await c.install();await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/DPSK'),{recursive:true});
-  await put(c.root,'runtime/rootfs/root/.dsh/DPSK/ui.json','fresh installer default');
+  await c.install();await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/dsh-go'),{recursive:true});
+  await put(c.root,'runtime/rootfs/root/.dsh/dsh-go/ui.json','fresh installer default');
  },()=>false));
  assert.notEqual(await c.store.read(c.r.directory+'/reset.json'),null);
 });
@@ -109,7 +109,7 @@ test('actual SIGKILL at every persisted reset phase resumes and retains selected
   const c=await setup(t);await c.r.requestReset(['uiAndSkills','pluginsAndSettings'],ids[0],true);
   const child=spawn(process.execPath,[...childFlags,new URL('./recovery-actor.mjs',import.meta.url).pathname,c.root,'reset',phase],{env:process.env,stdio:['ignore','pipe','pipe']});t.after(()=>{if(child.exitCode===null&&child.signalCode===null)child.kill('SIGKILL');});const exited=once(child,'exit');let line='';
   await new Promise((yes,no)=>{child.stdout.on('data',b=>{line+=b;if(line.includes('\n'))yes();});child.on('error',no);child.on('exit',()=>no(new Error('actor exited before phase '+phase)));});assert.equal(JSON.parse(line).stage,phase);child.kill('SIGKILL');assert.deepEqual(await exited,[null,'SIGKILL']);
-  const next=new Recovery(new RecoveryFiles(c.root),c.root);await next.initialize(4,c.install,()=>false);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/profiles/config'),'utf8'),'plugins');assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/DPSK/ui.json'),'utf8'),'ui');assert.equal(await c.store.read(c.r.directory+'/reset.json'),null);await preserved(c);
+  const next=new Recovery(new RecoveryFiles(c.root),c.root);await next.initialize(4,c.install,()=>false);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/profiles/config'),'utf8'),'plugins');assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/dsh-go/ui.json'),'utf8'),'ui');assert.equal(await c.store.read(c.r.directory+'/reset.json'),null);await preserved(c);
  }
 });
 test('each file-sync/rename/phase-commit interruption is recoverable without clearing reset early',async t=>{
@@ -118,12 +118,12 @@ test('each file-sync/rename/phase-commit interruption is recoverable without cle
  assert(points.length>30);
  for(let target=0;target<points.length;target++){
   let active=false,count=0,hit=false;const c=await setup(t,async(op,paths)=>{if(active&&relevant(op,paths)&&count++===target){hit=true;throw new Error('fault '+target+' '+op);}});await c.r.requestReset(['uiAndSkills','pluginsAndSettings'],ids[0],true);active=true;await assert.rejects(c.r.initialize(1,c.install,()=>false));assert(hit);
-  const next=new Recovery(new RecoveryFiles(c.root),c.root);await next.initialize(2,c.install,()=>false);await preserved(c);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/profiles/config'),'utf8'),'plugins');assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/DPSK/ui.json'),'utf8'),'ui');assert.equal(await c.store.read(c.r.directory+'/reset.json'),null);
+  const next=new Recovery(new RecoveryFiles(c.root),c.root);await next.initialize(2,c.install,()=>false);await preserved(c);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/profiles/config'),'utf8'),'plugins');assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/dsh-go/ui.json'),'utf8'),'ui');assert.equal(await c.store.read(c.r.directory+'/reset.json'),null);
  }
  console.log('RESET_FAULT_POINTS',points.length);
 });
 test('all four ResetKeep selections preserve exactly the six Android paths',async t=>{
- const ui=['root/.dsh/DPSK/ui.json','root/.dsh/skills/one','root/.agents/skills/one'];const plugins=['root/.dsh/profiles/config','root/.dsh/cordis.patch.yml','root/.dsh/.env'];
+ const ui=['root/.dsh/dsh-go/ui.json','root/.dsh/skills/one','root/.agents/skills/one'];const plugins=['root/.dsh/profiles/config','root/.dsh/cordis.patch.yml','root/.dsh/.env'];
  for(const keep of [[],['uiAndSkills'],['pluginsAndSettings'],['uiAndSkills','pluginsAndSettings']]){
   const c=await setup(t);for(const path of [...ui,...plugins])await put(c.root,'runtime/rootfs/'+path,'saved:'+path);
   await c.r.requestReset(keep,ids[0],true);await c.r.initialize(1,c.install,()=>false);
@@ -145,7 +145,7 @@ test('uninstall mode deletes runtime only and waits for explicit installation ac
  const c=await setup(t);await c.r.requestReset(['uiAndSkills'],ids[0],false);let installs=0;const install=async()=>{installs++;await c.install();};
  await c.r.initialize(1,install,()=>false);assert.equal(installs,0);assert.equal(await c.store.kind(c.r.payloadRoot),'missing');assert.equal(await c.store.kind(c.r.guestRoot),'missing');await preserved(c);
  assert.equal(c.r.status().waitingInstall,true);assert.notEqual(await c.store.read(c.r.directory+'/reset.json'),null);await assert.rejects(c.r.arm(ids[1],2));
- const next=new Recovery(new RecoveryFiles(c.root),c.root);await next.initialize(3,install,()=>false);assert.equal(installs,0);await next.installPending(install,()=>false);assert.equal(installs,1);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/DPSK/ui.json'),'utf8'),'ui');assert.equal(next.status().resetPending,false);
+ const next=new Recovery(new RecoveryFiles(c.root),c.root);await next.initialize(3,install,()=>false);assert.equal(installs,0);await next.installPending(install,()=>false);assert.equal(installs,1);assert.equal(await fs.readFile(join(c.root,'runtime/rootfs/root/.dsh/dsh-go/ui.json'),'utf8'),'ui');assert.equal(next.status().resetPending,false);
 });
 test('cancel before host.start clears only that admission marker and preserves prior failures',async t=>{
  const c=await fixture(t);await c.r.initialize(1,async()=>{},()=>false);await c.r.arm(ids[0],2);await c.r.finish(ids[0],false,3);
@@ -154,13 +154,13 @@ test('cancel before host.start clears only that admission marker and preserves p
 });
 test('waiting-install keeps both choices through restart and refuses missing kept bytes before install',async t=>{
  const c=await setup(t);await c.r.requestReset(['uiAndSkills'],ids[0],false);await c.r.initialize(1,c.install,()=>false);
- await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/DPSK'),{recursive:true});const next=new Recovery(new RecoveryFiles(c.root),c.root);let installs=0;
+ await fs.rm(join(c.root,'dsh-recovery/keep-'+ids[0]+'/root/.dsh/dsh-go'),{recursive:true});const next=new Recovery(new RecoveryFiles(c.root),c.root);let installs=0;
  await assert.rejects(next.initialize(2,async()=>{installs++;},()=>false));assert.equal(installs,0);assert.notEqual(await c.store.read(c.r.directory+'/reset.json'),null);
 });
 test('complete receipt still requires restored bytes before clearing the pending reset',async t=>{
  let stopped=false;const c=await setup(t,async(op,paths)=>{if(!stopped&&op==='after:write'&&paths[0].endsWith('/reset.json')&&JSON.parse(paths[1]).stage==='complete'){stopped=true;throw new Error('crash after complete receipt');}});
  await c.r.requestReset(['uiAndSkills'],ids[0],true);await assert.rejects(c.r.initialize(1,c.install,()=>false));
- await fs.rm(join(c.root,'runtime/rootfs/root/.dsh/DPSK'),{recursive:true});
+ await fs.rm(join(c.root,'runtime/rootfs/root/.dsh/dsh-go'),{recursive:true});
  const next=new Recovery(new RecoveryFiles(c.root),c.root);await assert.rejects(next.initialize(2,c.install,()=>false));assert.notEqual(await c.store.read(c.r.directory+'/reset.json'),null);
 });
 

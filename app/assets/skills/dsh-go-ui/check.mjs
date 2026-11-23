@@ -963,9 +963,9 @@ export function checkUiJson(text) {
 
 function defaultPath() {
   if (process.env.DSH_HOME) return join(process.env.DSH_HOME, 'DPSK', 'ui.json');
-  // Installed as <DSH_HOME>/skills/DPSK-ui/scripts/check.mjs.
+  // Installed as <DSH_HOME>/skills/dsh-go-ui/scripts/check.mjs.
   const skill = dirname(here);
-  if (basename(here) === 'scripts' && basename(skill) === 'DPSK-ui' && basename(dirname(skill)) === 'skills') {
+  if (basename(here) === 'scripts' && basename(skill) === 'dsh-go-ui' && basename(dirname(skill)) === 'skills') {
     return join(dirname(dirname(skill)), 'DPSK', 'ui.json');
   }
   return join(homedir(), '.dsh', 'DPSK', 'ui.json');

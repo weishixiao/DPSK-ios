@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support.dart' show tempRootfs, until;
 
 UiSkillBundle _bundle(String value) =>
-    UiSkillBundle({'SKILL.md': '---\n# DPSK:managed\nname: DPSK-ui\n---\n$value\n', 'value.txt': value});
+    UiSkillBundle({'SKILL.md': '---\n# DPSK:managed\nname: dsh-go-ui\n---\n$value\n', 'value.txt': value});
 
 class _Runtime extends LocalRuntimeController {
   @override
@@ -85,7 +85,7 @@ class _Harness {
   }
 
   Future<void>? get running => c.read(uiSkillAutoInstallProvider.notifier).running;
-  File skill(Directory dir) => File('${dir.path}/root/.dsh/skills/DPSK-ui/SKILL.md');
+  File skill(Directory dir) => File('${dir.path}/root/.dsh/skills/dsh-go-ui/SKILL.md');
   void dispose() {
     if (!disposed) {
       disposed = true;

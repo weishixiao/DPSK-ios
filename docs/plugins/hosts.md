@@ -1,6 +1,6 @@
 # 主机覆盖、安装与降级
 
-DPSK 连的主机有三种：手机本机引擎、SSH 主机、中转主机。工具卡走对话记录，哪里都有；其余插槽走 DPSK 桥接（`DPSK-bridge`），只有装了桥接的主机才有。
+DPSK 连的主机有三种：手机本机引擎、SSH 主机、中转主机。工具卡走对话记录，哪里都有；其余插槽走 DPSK 桥接（`dsh-go-bridge`），只有装了桥接的主机才有。
 
 | | 工具卡 | 胶囊 · 菜单 · 状态条 · 面板 | 网页版插件（网页岛） |
 |---|---|---|---|
@@ -30,13 +30,13 @@ dsh plugin --profile web add /绝对路径/my-plugin
 
 ### 把文件夹放进本机环境
 
-本机引擎跑在 App 自带的 Linux 环境里（`/root` 是家目录）。建议放在 `/root/.dsh/DPSK/plugins/<插件名>/`：「重置引擎」时这个目录默认保留；没选保留插件配置（profile）时，重置后再 `add` 一次即可。三种办法：
+本机引擎跑在 App 自带的 Linux 环境里（`/root` 是家目录）。建议放在 `/root/.dsh/dsh-go/plugins/<插件名>/`：「重置引擎」时这个目录默认保留；没选保留插件配置（profile）时，重置后再 `add` 一次即可。三种办法：
 
 | 办法 | 怎么做 |
 |---|---|
-| 让 agent 写 | 直接说想要什么（「输入框上面加个按钮，把剪贴板译成英文」）。App 自带的 `DPSK-plugin` 技能会让它照规矩写、自查、安装 |
-| 终端里拉 | `git clone` 或 `curl` 到 `/root/.dsh/DPSK/plugins/` |
-| 手机存储 | 文件夹拷到手机的「下载」里；在「设置」里打开「访问手机文件」后，本机环境里是 `/sdcard/Download/`，再 `cp -r` 到 `/root/.dsh/DPSK/plugins/`。开发时用 `adb push 文件夹 /sdcard/Download/` |
+| 让 agent 写 | 直接说想要什么（「输入框上面加个按钮，把剪贴板译成英文」）。App 自带的 `dsh-go-plugin` 技能会让它照规矩写、自查、安装 |
+| 终端里拉 | `git clone` 或 `curl` 到 `/root/.dsh/dsh-go/plugins/` |
+| 手机存储 | 文件夹拷到手机的「下载」里；在「设置」里打开「访问手机文件」后，本机环境里是 `/sdcard/Download/`，再 `cp -r` 到 `/root/.dsh/dsh-go/plugins/`。开发时用 `adb push 文件夹 /sdcard/Download/` |
 
 ## 降级
 

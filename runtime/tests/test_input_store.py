@@ -120,8 +120,8 @@ class InputStoreTest(unittest.TestCase):
         values, _ = store.shell_inputs(repo)
         defaults = [repo / ("runtime/locks/" + name + "/package-lock.json") for name in
                     ("dsh-" + values["DSH_VERSION"], "pnpm-" + values["PNPM_VERSION"])]
-        bridge = self.file("repo/runtime/bridge/DPSK-bridge/package-lock.json",
-                           (REPO / "runtime/bridge/DPSK-bridge/package-lock.json").read_bytes())
+        bridge = self.file("repo/runtime/bridge/dsh-go-bridge/package-lock.json",
+                           (REPO / "runtime/bridge/dsh-go-bridge/package-lock.json").read_bytes())
         defaults.append(bridge)
         selected = self.file("selected-lock.json", defaults[1].read_bytes())
         for missing in defaults:

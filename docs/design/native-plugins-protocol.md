@@ -1,7 +1,7 @@
 # 原生插件协议 v1（冻结稿）
 
 > 2026-10-25 冻结。规格依据：`docs/design/native-plugins.md`（总设计，下称「总设计」）§3、§7.1；`docs/design/plugin-seams.md`（接缝规格）§5.2、§9。
-> 实现：`runtime/bridge/DPSK-bridge/`（宿主侧桥接）。机器可读：`sdk/plugin-kit/schema/{manifest,contributions,stream,invoke}.schema.json`。
+> 实现：`runtime/bridge/dsh-go-bridge/`（宿主侧桥接）。机器可读：`sdk/plugin-kit/schema/{manifest,contributions,stream,invoke}.schema.json`。
 > 视图本身（组件树）不在本文：见 `docs/design/native-plugins-views.md` 与 `sdk/plugin-kit/schema/view.schema.json`。本文只规定视图怎么送达、多大、怎么更新。
 > 改协议：在提交说明里写一行「NA protocol v1 change: …」。v1 内只允许**加可选字段**；删字段、改含义、收紧上限一律算 v2。
 > **v1.1**（2026-10-25，桥接 0.3.0）：延后效果（§4.7）——handler 可返回 `pending`，结果之后经流推回发起点按的那条连接。全部是可选新增，v1 的 App 与插件不受影响。
@@ -21,7 +21,7 @@
 | `GET /DPSK/v1/assets/<pkg>/<path>` | App ← 桥接 | 插件声明目录下的图片（`image` 组件用），可选 |
 
 ```
-App                                   DPSK-bridge（宿主）                     插件（宿主半侧）
+App                                   dsh-go-bridge（宿主）                     插件（宿主半侧）
  │ 连上主机 / 收到 changed                │                                         │
  ├─ GET contributions?v=1&locale=… ─────▶│ 读已启用插件的 dshGo（缓存）              │
  │◀──────────── plugins[] + rev ─────────┤                                         │
@@ -142,7 +142,7 @@ v1 内新增，规则和取舍见 [plugin-platform.md](plugin-platform.md) §2�
 
 ```js
 export function apply(ctx) {
-  // 只有装了 DPSK-bridge 的主机才会进这个回调；没有 App 的主机上什么都不发生。
+  // 只有装了 dsh-go-bridge 的主机才会进这个回调；没有 App 的主机上什么都不发生。
   ctx.inject(['dshGo'], (ctx) => {
     ctx.dshGo.panel('usage', { view, data })
     ctx.dshGo.on('translate', async (scope) => ({ insert: await translate(scope.clipboard) }))

@@ -1,6 +1,6 @@
 // Which entries the plugin settings page offers, on what a real Host lists
 // (docs/design/plugin-config.md §7). The fixtures come from one r13 runtime
-// (DSH 0.2.1-rc.4 + DPSK-bridge 0.4.0) launched like the App launches it —
+// (DSH 0.2.1-rc.4 + dsh-go-bridge 0.4.0) launched like the App launches it —
 // its own overlay, voice, sign-in, message search and phone control —
 // after the person switched on the official voice-input kit and installed a
 // local plugin (`local-notes`):
@@ -119,7 +119,7 @@ void main() {
       expect(hasPluginConfig(state, id), isFalse, reason: id);
     }
     // Nor the App's other rows, loaded by path.
-    for (final id in ['DPSK-bridge', 'dsh-app-auth']) {
+    for (final id in ['dsh-go-bridge', 'dsh-app-auth']) {
       expect(state.isPlugin(id), isFalse, reason: id);
     }
   });

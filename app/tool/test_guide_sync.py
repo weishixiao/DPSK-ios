@@ -10,7 +10,7 @@ REPO = Path(__file__).resolve().parents[2]
 
 SKILL = """---
 # DPSK:managed — the DPSK app keeps this skill up to date
-name: DPSK-guide
+name: dsh-go-guide
 description: The guide.
 whenToUse: How to use the app.
 ---
@@ -78,9 +78,9 @@ class GuideSyncTest(unittest.TestCase):
         self.assertEqual(self.errors(), [])
         self.assertEqual(guide_sync.run(self.repo, write=True), [])
         self.assertEqual(guide_sync.run(self.repo, write=False), [])
-        assets = self.repo / 'app/assets/skills/DPSK-guide'
+        assets = self.repo / 'app/assets/skills/dsh-go-guide'
         manifest = json.loads((assets / 'manifest.json').read_text())
-        self.assertEqual(manifest['name'], 'DPSK-guide')
+        self.assertEqual(manifest['name'], 'dsh-go-guide')
         self.assertEqual(manifest['files']['zh-01-engine.md'], 'zh/01-engine.md')
         self.assertEqual(set(manifest['files']), {p.name for p in assets.iterdir()} - {'manifest.json'})
         for flat, target in manifest['files'].items():
@@ -91,7 +91,7 @@ class GuideSyncTest(unittest.TestCase):
         self.write('app/lib/l10n/parts/._hub_zh.arb', 'not JSON')
         self.write('app/android/app/src/main/res/values/._s.xml', 'not XML')
         self.assertEqual(guide_sync.run(self.repo, write=True), [])
-        assets = self.repo / 'app/assets/skills/DPSK-guide'
+        assets = self.repo / 'app/assets/skills/dsh-go-guide'
         (assets / '._SKILL.md').write_bytes(b'\x00\x05\x16\x07metadata')
         self.assertEqual(guide_sync.run(self.repo, write=False), [])
         manifest = json.loads((assets / 'manifest.json').read_text())
@@ -99,7 +99,7 @@ class GuideSyncTest(unittest.TestCase):
 
     def test_generated_assets_cannot_drift(self):
         guide_sync.run(self.repo, write=True)
-        assets = self.repo / 'app/assets/skills/DPSK-guide'
+        assets = self.repo / 'app/assets/skills/dsh-go-guide'
         (assets / 'zh-01-engine.md').write_text('edited by hand')
         self.assertTrue(any('out of date' in e for e in guide_sync.run(self.repo, write=False)))
         guide_sync.run(self.repo, write=True)
@@ -118,7 +118,7 @@ class GuideSyncTest(unittest.TestCase):
         self.write('docs/guide/harmony/README.md', '# Guide\n\n> DPSK 0.9.2\n\n[引擎](zh/01-engine.md)\n')
         self.assertEqual(guide_sync.run(self.repo, write=True), [])
         self.assertEqual(guide_sync.run(self.repo, write=False), [])
-        assets = self.repo / 'app/assets/skills/DPSK-guide'
+        assets = self.repo / 'app/assets/skills/dsh-go-guide'
         manifest = json.loads((assets / 'manifest.json').read_text())
         self.assertEqual(manifest['harmony']['harmony-zh-01-engine.md'], 'zh/01-engine.md')
         self.assertEqual(manifest['harmony']['harmony-SKILL.md'], 'SKILL.md')
@@ -130,7 +130,7 @@ class GuideSyncTest(unittest.TestCase):
 
     def test_no_harmony_pages_no_harmony_in_the_manifest(self):
         self.assertEqual(guide_sync.run(self.repo, write=True), [])
-        manifest = json.loads((self.repo / 'app/assets/skills/DPSK-guide/manifest.json').read_text())
+        manifest = json.loads((self.repo / 'app/assets/skills/dsh-go-guide/manifest.json').read_text())
         self.assertNotIn('harmony', manifest)
 
     def test_harmony_page_must_replace_a_page_in_both_languages(self):

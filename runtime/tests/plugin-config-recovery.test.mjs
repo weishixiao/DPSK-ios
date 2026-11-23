@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { syncBuiltinESMExports } from 'node:module';
-import { createPluginConfig } from '../bridge/DPSK-bridge/lib/plugin-config.js';
+import { createPluginConfig } from '../bridge/dsh-go-bridge/lib/plugin-config.js';
 import { withSources } from './plugin-config-source-fixture.mjs';
 
 const base = '/DPSK/v1/plugin-config';

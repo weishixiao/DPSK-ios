@@ -12,14 +12,14 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ManagedSkillInstallerTest {
-    private val skill = "---\n# DPSK:managed\nname: DPSK-ui\n---\n中文 🐳\n"
+    private val skill = "---\n# DPSK:managed\nname: dsh-go-ui\n---\n中文 🐳\n"
     private fun files(value: String = "value") = linkedMapOf("SKILL.md" to skill, "nested/data.txt" to value)
     private fun root() = Files.createTempDirectory("managed-skill-").toFile().apply { File(this, "root/.dsh").mkdirs() }
-    private fun args(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "DPSK-ui") =
+    private fun args(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "dsh-go-ui") =
         mapOf("requestId" to id, "expectedRoot" to root.path, "expectedToken" to "fixture-only", "expectedGeneration" to 1, "name" to name, "files" to files)
-    private fun request(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "DPSK-ui") =
+    private fun request(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "dsh-go-ui") =
         ManagedSkillRequest.parse(args(root, id, files, name))!!
-    private fun dir(root: File, name: String = "DPSK-ui") = File(root, "root/.dsh/skills/$name")
+    private fun dir(root: File, name: String = "dsh-go-ui") = File(root, "root/.dsh/skills/$name")
     private fun noTemps(root: File) = assertFalse(root.walkTopDown().any { it.name.endsWith(".DPSK-tmp") })
     private inline fun withRoot(test: (File) -> Unit) { val root = root(); try { test(root) } finally { root.deleteRecursively() } }
 
@@ -52,7 +52,7 @@ class ManagedSkillInstallerTest {
             .first { File(it, "assets/skills").isDirectory }
         var count = 0
         var size = 0
-        for (name in listOf("DPSK-ui", "DPSK-plugin", "DPSK-guide", "DPSK-support", "companion-adapt", "pet-theme")) {
+        for (name in listOf("dsh-go-ui", "dsh-go-plugin", "dsh-go-guide", "dsh-go-support", "companion-adapt", "pet-theme")) {
             val assets = File(app, "assets/skills/$name")
             val manifest = Json.parse(File(assets, "manifest.json").readText()) as Map<*, *>
             val bundled = (manifest["files"] as Map<*, *>).entries.associate { (asset, target) ->
@@ -310,12 +310,12 @@ class ManagedSkillInstallerTest {
         val h = QueueHarness()
         File(dir(root), "nested").apply { parentFile!!.mkdirs(); writeText("blocked") }
         h.submit(root, request(root, "fails"))
-        h.submit(root, request(root, "next", name = "DPSK-guide"))
+        h.submit(root, request(root, "next", name = "dsh-go-guide"))
         h.drain()
         assertEquals(2, h.results.size)
         assertEquals("io", h.results.first().second["reason"])
         assertEquals("installed", h.results.last().second["result"])
-        assertTrue(File(dir(root, "DPSK-guide"), "SKILL.md").exists())
+        assertTrue(File(dir(root, "dsh-go-guide"), "SKILL.md").exists())
     }
 
     @Test fun runRetirementBeforeWorkerAndBeforeDeliveryAreBothChecked() = withRoot { root ->

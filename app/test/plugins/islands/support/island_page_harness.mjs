@@ -31,7 +31,7 @@
 // Scenario (all):
 //   target    'view' | 'panel' | 'settings' | 'rightbar' (default 'view')
 //   cell      the id asked for;  names  its names (zh, en)
-//   occupants {slot: [{cell, label}]}  what DPSK-bridge reports (adds the bridge)
+//   occupants {slot: [{cell, label}]}  what dsh-go-bridge reports (adds the bridge)
 //   run       virtual ms to run (default 60000)
 // view:      views [{id, label, menu?}], stored, persist (false: a pick is
 //            not recorded), rewrites [ms], later {at, view}, pagehide

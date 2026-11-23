@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 
-const client = readFileSync(new URL('../bridge/DPSK-bridge/lib/client.js', import.meta.url), 'utf8');
+const client = readFileSync(new URL('../bridge/dsh-go-bridge/lib/client.js', import.meta.url), 'utf8');
 
 function page({ missing = true } = {}) {
   // Keep each simulated page independent. URL parsing is Node's implementation,
@@ -17,7 +17,7 @@ function page({ missing = true } = {}) {
   };
   context.window = context;
   vm.runInNewContext(client, context);
-  assert.equal(entry.id, 'DPSK-bridge');
+  assert.equal(entry.id, 'dsh-go-bridge');
   return { PageURL, materialize: () => entry.factory(() => assert.fail('unexpected import')) };
 }
 
@@ -25,7 +25,7 @@ test('the complete client installs the missing method synchronously in its facto
   const p = page();
   assert.equal(p.PageURL.canParse, undefined);
   const plugin = p.materialize();
-  assert.equal(plugin.name, 'DPSK-bridge');
+  assert.equal(plugin.name, 'dsh-go-bridge');
   assert.equal(typeof plugin.apply, 'function');
   assert.equal(p.PageURL.canParse('https://example.test/'), true);
   assert.equal(p.PageURL.canParse('README.md'), false);

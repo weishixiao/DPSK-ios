@@ -10,7 +10,7 @@ import { isPromise } from 'node:util/types';
 import { join, resolve } from 'node:path';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
-import { createCompanionPromptContext } from '../../bridge/DPSK-bridge/lib/companion/prompt-context.js';
+import { createCompanionPromptContext } from '../../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
 import { auxiliarySse, piAiSourceFixture } from './companion-auxiliary-source.mjs';
 
 export { auxiliarySse, piAiSourceFixture };

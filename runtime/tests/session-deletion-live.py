@@ -3,7 +3,7 @@ ap=argparse.ArgumentParser();ap.add_argument("--prefix",type=pathlib.Path,requir
 a.repo=pathlib.Path(__file__).resolve().parents[2];a.prefix=a.prefix.resolve();a.output=a.output.resolve();a.output.mkdir(parents=True,exist_ok=True)
 with tempfile.TemporaryDirectory(prefix="delete-live-") as tmp:
  home=pathlib.Path(tmp);diag=a.repo/"runtime/tests/fixtures/session-deletion-observer.mjs"
- patch=home/"bridge.yml";patch.write_text("- insert:\n    - id: DPSK-bridge\n      name: "+str(a.repo/"runtime/bridge/DPSK-bridge/lib/index.js")+"\n    - id: diagnostic\n      name: "+str(diag)+"\n")
+ patch=home/"bridge.yml";patch.write_text("- insert:\n    - id: dsh-go-bridge\n      name: "+str(a.repo/"runtime/bridge/dsh-go-bridge/lib/index.js")+"\n    - id: diagnostic\n      name: "+str(diag)+"\n")
  sock=socket.socket();sock.bind(("127.0.0.1",0));port=sock.getsockname()[1];sock.close()
  log=a.output/"host.log"
  with log.open("w") as f:

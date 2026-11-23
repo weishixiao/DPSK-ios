@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { Session } from 'node:inspector/promises';
 import { Duplex } from 'node:stream';
-import { WsConnection, encodeFrame } from '../bridge/DPSK-bridge/lib/native/ws.js';
+import { WsConnection, encodeFrame } from '../bridge/dsh-go-bridge/lib/native/ws.js';
 
 class Pipe extends Duplex {
   out = [];

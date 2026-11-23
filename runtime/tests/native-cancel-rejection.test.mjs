@@ -10,7 +10,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { apply } from '../bridge/DPSK-bridge/lib/index.js';
+import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
 
 function gate() {
   let resolve;

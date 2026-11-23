@@ -7,10 +7,10 @@ import {mkdtempSync,writeFileSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
-import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
-import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
-import {normalizeScope} from '../bridge/DPSK-bridge/lib/native/util.js';
+import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
+import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
+import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
+import {normalizeScope} from '../bridge/dsh-go-bridge/lib/native/util.js';
 const hold=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b});return {promise,resolve,reject}};
 const panel=(generation,save=()=>({patch:{generation:'done'}}))=>({view:{type:'text',text:generation},data(scope,emit){emit({generation});return()=>{}},actions:{save}});
 async function fixture(t){

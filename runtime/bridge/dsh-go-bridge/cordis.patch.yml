@@ -1,8 +1,8 @@
-# Layer applied when a profile lists this bundle (`dsh plugin add DPSK-bridge` on a remote
+# Layer applied when a profile lists this bundle (`dsh plugin add dsh-go-bridge` on a remote
 # host). The dsh-app runtime loads it by path from /etc/dsh-app/dsh-web.patch.yml instead.
 - insert:
-    - id: DPSK-bridge
-      name: DPSK-bridge
+    - id: dsh-go-bridge
+      name: dsh-go-bridge
     # rtbuild.py copies the rows below this line into that overlay too, so both get them.
     # --- shared rows ---
     # 伙伴小屋's conversation (app/lib/companion/companion_state.dart, docs/design/companion.md):
@@ -64,7 +64,7 @@
           # This scoped provider owns persona-prefix + fixed persona-suffix.
           # User messages stay verbatim; structured facts use runtime-context.
           - id: companion-full-context
-            name: DPSK-bridge/companion/full-context
+            name: dsh-go-bridge/companion/full-context
           - id: agent-instructions
             name: '@deepseek-ai/dsh-agent-instructions'
             config:

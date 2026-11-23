@@ -278,12 +278,12 @@ class PatchDsh(unittest.TestCase):
         root = Path(self.tmp.name, "host-root")
         (root / "opt").mkdir(parents=True)
         os.rename(self.prefix, root / "opt/dsh")
-        client = root / "opt/DPSK/DPSK-bridge/lib/client.js"
+        client = root / "opt/DPSK/dsh-go-bridge/lib/client.js"
         client.parent.mkdir(parents=True)
         client.write_text("// layout fixture\n")
         overlay = root / "etc/dsh-app/dsh-web.patch.yml"
         overlay.parent.mkdir(parents=True)
-        overlay.write_text("- insert:\n    - name: /opt/DPSK/DPSK-bridge/lib/index.js\n")
+        overlay.write_text("- insert:\n    - name: /opt/DPSK/dsh-go-bridge/lib/index.js\n")
         manifest = root / "manifest.json"
         manifest.write_text(json.dumps({"dshVersion": "1.0.0", "dshPatches": load(applied)}))
         script = read(os.path.join(HERE, "..", "test-host.sh"))

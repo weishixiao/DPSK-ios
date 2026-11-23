@@ -67,7 +67,7 @@ class HostError extends Error {
  * @param {{ dir?: string, pkg?: object, services?: Record<string, unknown>, caps?: object, bridge?: boolean, config?: unknown }} [options]
  *   dir: plugin directory (package.json is read from it); pkg: package.json object instead;
  *   services: other cordis services by name (e.g. { sessions }); bridge: false simulates a host
- *   without DPSK-bridge (the dshGo service never appears).
+ *   without dsh-go-bridge (the dshGo service never appears).
  */
 export function createTestHost(options = {}) {
   const dir = resolve(options.dir ?? '.')

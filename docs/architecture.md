@@ -20,7 +20,7 @@
 │ PRoot Ubuntu 24.04 用户态                                                    │
 │   dsh web --patch /etc/dsh-app/dsh-web.patch.yml --host 127.0.0.1 --port …  │
 │     ├─ 官方 DSH 引擎（runtime/patches 打了补丁）                              │
-│     └─ DPSK-bridge（Cordis 插件：/DPSK/v1/*，原生插件协议/伙伴/删除/配置） │
+│     └─ dsh-go-bridge（Cordis 插件：/DPSK/v1/*，原生插件协议/伙伴/删除/配置） │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -154,7 +154,7 @@ HomeShell = [ChatScreen] + [SessionsDrawer 左] + [QuickPanel 右] + [SystemEntr
 | 目录 | 职责 | 关键入口 |
 |---|---|---|
 | `l10n/` | 71 组 `parts/*_{zh,en}.arb` → 合并 ARB → 生成 `gen/`（生成物入库，CI 校验不手改） | `app/tool/l10n_merge.py`、`l10n.dart` `appL10n` |
-| `ui_config/` | ui.json 声明式界面：读取/校验/缓存/恢复默认（本机 `root/.dsh/DPSK/ui.json`，远程 `workspaceFiles/`） | `ui_config_state.dart` `uiOverridesProvider`、`ui_config_source.dart` |
+| `ui_config/` | ui.json 声明式界面：读取/校验/缓存/恢复默认（本机 `root/.dsh/dsh-go/ui.json`，远程 `workspaceFiles/`） | `ui_config_state.dart` `uiOverridesProvider`、`ui_config_source.dart` |
 | `plugins/native/` | 原生插件协议客户端（contributions/view/invoke/stream/assets） | `native_state.dart`、`native_surface.dart` |
 | `plugins/seams/` | 原生座位：4 个 adapter（cordis/dsh_ui_panel/pet/schema_config）+ 座位规划 | `seat_planner.dart`、`slot_catalog.dart` |
 | `phone/` | 手机操控 Dart 端（通道/审批/自检/技能录放） | `phone_channel.dart`、`phone_approval.dart` |
@@ -169,7 +169,7 @@ HomeShell = [ChatScreen] + [SessionsDrawer 左] + [QuickPanel 右] + [SystemEntr
 > `theme.mode`、`composer.quickActions`、`hide.pluginCapsule`、`plugins.seats`；
 > `header.actions`、`emptyState.suggestions`、`drawer.*`、`density`、`shortcuts`、`pet` 已解析但 lib 内无消费者。
 > 改 parser ≠ 生效，先全局搜 provider 符号。
-> `app/assets/skills/DPSK-ui/schema.json` 与 `ui_config_schema.dart` 必须同步（`app/test/ui_config/schema_sync_test.dart`）。
+> `app/assets/skills/dsh-go-ui/schema.json` 与 `ui_config_schema.dart` 必须同步（`app/test/ui_config/schema_sync_test.dart`）。
 
 ### 2.5 依赖方向、生成物与 l10n
 
@@ -214,7 +214,7 @@ Android/iOS 后台执行的机制、系统回收恢复和三方方案取舍见 [
 `SafetyGate`（最终审批门）→ 执行器：`a11y/`（无障碍读屏与操作、OCR、浮层、受保护页面）、
 `background/`（不打扰模式特权虚拟屏/Shizuku/ADB）、`shell/`（Android shell 会话）。
 技能录放在 `phone/skills/`；自检在 `phone/selfcheck/`。
-手机工具与提示词由 Kotlin 侧注入：`PhoneGuest.kt` 启动时往 rootfs 写 `/opt/dsh-app/phone/{relay.cjs,phone.patch.yml}`，用 `--patch` 挂上 `@deepseek-ai/dsh-mcp-client`（serverName=phone）；`PhoneToolCatalog.kt` 定义固定工具集；`GuestSetup.kt` 把 `PhoneGuest.AGENTS_SECTION` 写进 `$DSH_HOME/AGENTS.md`。`DPSK-bridge/lib/native/` 只实现原生插件协议（contributions/views/stream/invoke），与手机工具无关。
+手机工具与提示词由 Kotlin 侧注入：`PhoneGuest.kt` 启动时往 rootfs 写 `/opt/dsh-app/phone/{relay.cjs,phone.patch.yml}`，用 `--patch` 挂上 `@deepseek-ai/dsh-mcp-client`（serverName=phone）；`PhoneToolCatalog.kt` 定义固定工具集；`GuestSetup.kt` 把 `PhoneGuest.AGENTS_SECTION` 写进 `$DSH_HOME/AGENTS.md`。`dsh-go-bridge/lib/native/` 只实现原生插件协议（contributions/views/stream/invoke），与手机工具无关。
 
 ### 3.4 其余原生块
 
@@ -269,7 +269,7 @@ iOS 仍有明确缺口：内置视频预览、通话实时 PCM 字幕、网页�
 │        phone/（系统操作）  companion/ formability/ widget/（伙伴桌面卡片）         │
 │   └─ NativeHost 首次按需加载 libdsh_host.so（Ark N-API）                          │
 │        └─ C ABI → libnode.so：Node 24.22.1 --jitless，独立线程，一进程只启动一次  │
-│             dsh web + DPSK-bridge，补丁 = 公共链 + OH 覆盖补丁                  │
+│             dsh web + dsh-go-bridge，补丁 = 公共链 + OH 覆盖补丁                  │
 │             虚拟进程 runtime/ohos/process：just-bash、JS rg、isomorphic-git、     │
 │             node 脚本走 Worker；可选 Linux 客体（TinyEMU，libdsh_linux.so）       │
 └──────────────────────────────────────────────────────────────────────────────────┘
@@ -288,7 +288,7 @@ iOS 仍有明确缺口：内置视频预览、通话实时 PCM 字幕、网页�
 | OH 专属 JS | `runtime/ohos/{process,lifecycle,capabilities,publication,linux,net,plugins,preload.mjs}` | 只进 OH 组成物，Android 运行时字节不受影响 |
 | Dart 分支 | `state/android_features.dart` | `operatingSystemProvider`、`androidSystemFeaturesProvider`；另有少量 `*_ohos.dart`（语音、Linux、附件、空闲诊断） |
 | 无 OH 版的插件 | `app/ohos/pubspec_overrides.ohos.yaml`、`tooling/ohos/vendor_platform_switches.py`、`patch_framework.py` | 只在构建 HAP 时生效，不影响 Android |
-| 用户指南 | `docs/guide/harmony/` | 鸿蒙版单独一套，`guide_sync.py` 生成 `app/assets/skills/DPSK-guide/harmony-*` |
+| 用户指南 | `docs/guide/harmony/` | 鸿蒙版单独一套，`guide_sync.py` 生成 `app/assets/skills/dsh-go-guide/harmony-*` |
 
 规则：
 
@@ -366,7 +366,7 @@ UI 输入 ─> ChatController.send() ─> DshClient.prompt(sessionId, text)
 
 | 路由家族 | 提供 | 消费方 |
 |---|---|---|
-| `/capabilities` `/inventory` `/occupancy` | 能力协商、boot/桥版本、卸载占位表 | `dsh_client/src/dpsk_api.dart`、`client_inventory_api.dart` |
+| `/capabilities` `/inventory` `/occupancy` | 能力协商、boot/桥版本、卸载占位表 | `dsh_client/src/dsh_go_api.dart`、`client_inventory_api.dart` |
 | `/contributions` `/views/...` `/invoke` `/assets/...` | 原生插件协议 v1（清单/视图/调用/资源） | `plugins/native/`、`state/plugins_state.dart` |
 | WS `/stream`、`/media/...`、`/files/{id}/upload` / `complete` | 插件流、媒体、文件选择 | `ClientNativeBridge` |
 | `/plugin-config`（含 `/{entryId}`） | 插件配置编辑（含安全字段路径 `error.path`） | `plugin_config_state.dart` |
@@ -442,7 +442,7 @@ DSH npm 前缀（runtime/locks）→ rtbuild 按 series 应用目标平台的补
 | 用户指南 | §8 | `docs/guide/**` | `python3 app/tool/guide_sync.py --check` |
 | 匿名使用统计 | [埋点与报表设计](design/usage-metrics.md) | `app/lib/usage/`、`services/share-worker/` | App 日账本、Worker 接收与报表测试；新来源另做端到端对账 |
 | 原生插件协议/座位 | `docs/design/native-plugins.md`、`plugin-seams.md` | `plugins/native/`、`plugins/seams/`、`sdk/plugin-kit` | `cd sdk/plugin-kit && npm test` |
-| 桥路由 | `docs/design/bridge-contract.md` | `runtime/bridge/**`、`dsh_client dpsk_api.dart` | `node --test runtime/tests/*.test.mjs` |
+| 桥路由 | `docs/design/bridge-contract.md` | `runtime/bridge/**`、`dsh_client dsh_go_api.dart` | `node --test runtime/tests/*.test.mjs` |
 | 引擎补丁/升级 | §5.4/§5.5、`docs/maintenance/*-contract.md` | `runtime/patches/**`、`runtime/build-runtime.sh` | `python3 -I runtime/tests/test_patch_dsh.py`（构建需 x86_64 主机） |
 | 本机引擎生命周期 | `docs/design/runtime-cold-start.md` | Kotlin `runtime/`、`state/engine_control.dart` | 真机 + `(cd app/android && gradle :app:testArm64DebugUnitTest)` |
 | 手机操控 | `docs/design/phone-*.md` | Kotlin `phone/`、`state/phone_state.dart` | 真机 |

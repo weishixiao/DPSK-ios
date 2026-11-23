@@ -110,15 +110,15 @@ class ProcessLaunchGuardTest {
     )
     private val cLanguages = setOf("c", "cc", "cpp", "cxx", "h", "hpp")
     private val nativeLanguages = cLanguages + setOf("kt", "java")
-    private val diagnosticJavaOwner = "app/android/app/src/main/kotlin/io/github/dpsk/harness/diagnostics/SystemImeLogcat.kt"
-    private val updateJavaOwner = "app/android/app/src/main/kotlin/io/github/dpsk/harness/update/privileged/SelfUpdateInstallerService.kt"
+    private val diagnosticJavaOwner = "app/android/app/src/main/kotlin/com/dpsk/harness/diagnostics/SystemImeLogcat.kt"
+    private val updateJavaOwner = "app/android/app/src/main/kotlin/com/dpsk/harness/update/privileged/SelfUpdateInstallerService.kt"
     private val allowedNative = setOf(
-        "app/android/app/src/main/kotlin/io/github/dpsk/harness/runtime/DshProcess.kt",
+        "app/android/app/src/main/kotlin/com/dpsk/harness/runtime/DshProcess.kt",
         // The explicit root channel's `su -c <fixed command>` (argv from RootCommands): also a
         // Java ProcessBuilder child, which closes inherited fds like DshProcess's launches.
-        "app/android/app/src/main/kotlin/io/github/dpsk/harness/phone/background/RootProcess.kt",
+        "app/android/app/src/main/kotlin/com/dpsk/harness/phone/background/RootProcess.kt",
         // Explicitly authorized Android Shell: Java-owned helper and its bounded child shell.
-        "app/android/app/src/main/kotlin/io/github/dpsk/harness/phone/shell/AndroidShellProcess.kt",
+        "app/android/app/src/main/kotlin/com/dpsk/harness/phone/shell/AndroidShellProcess.kt",
         // The bounded privileged logcat reader also uses Java's fd-closing launcher.
         // The test below restricts this owner to one fixed-command ProcessBuilder.
         diagnosticJavaOwner,
@@ -254,7 +254,7 @@ class ProcessLaunchGuardTest {
     }
 
     @Test fun shellOwnerOnlyLaunchesItsReviewedHelperAndAndroidSh() {
-        val path = "app/android/app/src/main/kotlin/io/github/dpsk/harness/phone/shell/AndroidShellProcess.kt"
+        val path = "app/android/app/src/main/kotlin/com/dpsk/harness/phone/shell/AndroidShellProcess.kt"
         val source = File(repository(), path).readText()
         val calls = nativeCalls(source, "kt")
         val constructors = calls.filter { Code(source.substring(it.offset), "kt").read().getOrNull(1)?.text == "(" }

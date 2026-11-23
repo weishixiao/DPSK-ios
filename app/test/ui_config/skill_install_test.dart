@@ -1,4 +1,4 @@
-// The DPSK-ui skill: on-device install into a temp rootfs (managed line,
+// The dsh-go-ui skill: on-device install into a temp rootfs (managed line,
 // updates, a folder the person took over), the auto-install on engine start,
 // the SSH script run by a real /bin/sh, and the message for other hosts.
 
@@ -24,7 +24,7 @@ void main() {
     if (root.existsSync()) root.deleteSync(recursive: true);
   });
 
-  Directory skillDir(Directory rootfs) => Directory('${rootfs.path}/root/.dsh/skills/DPSK-ui');
+  Directory skillDir(Directory rootfs) => Directory('${rootfs.path}/root/.dsh/skills/dsh-go-ui');
 
   void expectInstalled(Directory dir) {
     for (final MapEntry(key: path, value: text) in bundle.files.entries) {
@@ -116,13 +116,13 @@ void main() {
       final r = await sh(uiSkillShellScript(bundle), {'DSH_HOME': '${home.path}/dsh', 'PATH': '/usr/bin:/bin'});
       expect(r.exitCode, 0, reason: '${r.stderr}');
       expect(r.stdout, contains('DSHAPP skill=installed'));
-      expectInstalled(Directory('${home.path}/dsh/skills/DPSK-ui'));
+      expectInstalled(Directory('${home.path}/dsh/skills/dsh-go-ui'));
     });
 
     test('without DSH_HOME it uses ~/.dsh, and leaves a folder the person took over', () async {
       final env = {'HOME': home.path, 'PATH': '/usr/bin:/bin'};
       expect((await sh(uiSkillShellScript(bundle), env)).exitCode, 0);
-      final dir = Directory('${home.path}/.dsh/skills/DPSK-ui');
+      final dir = Directory('${home.path}/.dsh/skills/dsh-go-ui');
       expectInstalled(dir);
       final skill = File('${dir.path}/SKILL.md');
       skill.writeAsStringSync(
@@ -136,7 +136,7 @@ void main() {
 
     test('the message for other hosts carries the working files', () {
       final prompt = uiSkillInstallPrompt(bundle);
-      expect(prompt, contains(r'$DSH_HOME/skills/DPSK-ui/'));
+      expect(prompt, contains(r'$DSH_HOME/skills/dsh-go-ui/'));
       for (final path in ['SKILL.md', 'schema.json', 'scripts/check.mjs']) {
         expect(prompt, contains('文件 `$path`：'));
         expect(prompt, contains(bundle.files[path]!.trimRight()));

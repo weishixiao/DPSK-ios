@@ -25,10 +25,10 @@ EM_NAMES = {3: "i386", 40: "arm", 62: "x86-64", 183: "aarch64"}
 NPMMIRROR = "https://registry.npmmirror.com/"
 NPMJS = "https://registry.npmjs.org/"
 # `dsh web` overlay (passed with --patch by the launch command): plugin-install registries and
-# the DPSK-bridge plugin row.
+# the dsh-go-bridge plugin row.
 DSH_WEB_PATCH = "/etc/dsh-app/dsh-web.patch.yml"
-# Where runtime/bridge/DPSK-bridge lands in the rootfs (loaded by absolute path from the overlay).
-DPSK_BRIDGE = "/opt/DPSK/DPSK-bridge"
+# Where runtime/bridge/dsh-go-bridge lands in the rootfs (loaded by absolute path from the overlay).
+DPSK_BRIDGE = "/opt/DPSK/dsh-go-bridge"
 # runtime/boot/boot-cache.mjs: path cache for `dsh web` while it boots, preloaded by the dsh shim.
 BOOT_CACHE = "/opt/DPSK/boot-cache.mjs"
 BOOT_CACHE_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "boot", "boot-cache.mjs")
@@ -970,11 +970,11 @@ def install_ca_bundle(entries, report):
 
 def bridge_shared_rows():
     """The rows of the bridge bundle's cordis.patch.yml that the local overlay also carries."""
-    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "bridge", "DPSK-bridge", "cordis.patch.yml")
+    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "bridge", "dsh-go-bridge", "cordis.patch.yml")
     with open(source, encoding="utf-8") as patch:
         rows = patch.read().split("    # --- shared rows ---\n", 1)[1]
     # Local runtimes load the bridge by path; it is not a profile dependency.
-    return rows.replace("name: DPSK-bridge/companion/full-context",
+    return rows.replace("name: dsh-go-bridge/companion/full-context",
                         "name: %s/lib/companion/full-context.js" % DPSK_BRIDGE)
 
 
@@ -1066,11 +1066,11 @@ def overlay_entries(runtime_info, with_python=False, with_pnpm=False, with_bridg
                       "      - %s\n" % (NPMMIRROR, NPMJS))
         if with_bridge:
             patch += ("#\n"
-                      "# DPSK-bridge: plugin inventory for the app (GET /DPSK/v1/inventory), loaded by path.\n"
-                      "# Do not also install DPSK-bridge into a profile: two sources of one browser package\n"
+                      "# dsh-go-bridge: plugin inventory for the app (GET /DPSK/v1/inventory), loaded by path.\n"
+                      "# Do not also install dsh-go-bridge into a profile: two sources of one browser package\n"
                       "# fail the client composition.\n"
                       "- insert:\n"
-                      "    - id: DPSK-bridge\n"
+                      "    - id: dsh-go-bridge\n"
                       "      name: %s/lib/index.js\n" % DPSK_BRIDGE)
             patch += bridge_shared_rows()
         f(DSH_WEB_PATCH.lstrip("/"), patch)
@@ -1939,7 +1939,7 @@ def main():
     p.add_argument("--prune-dev-metadata", action="store_true")
     p.add_argument("--deb", action="append", help="extra .deb to unpack and register (no maintainer scripts)")
     p.add_argument("--python", help="python-build-standalone install_only tarball -> /opt/python")
-    p.add_argument("--bridge", help="DPSK-bridge package dir -> " + DPSK_BRIDGE + " (+ overlay row)")
+    p.add_argument("--bridge", help="dsh-go-bridge package dir -> " + DPSK_BRIDGE + " (+ overlay row)")
     p.set_defaults(fn=cmd_assemble)
 
     p = sub.add_parser("manifest")

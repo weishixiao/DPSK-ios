@@ -233,7 +233,7 @@ class IslandRecipeBook {
         return at(then: {'panel': names});
       case 'rightbar':
         if (officialRightbar.contains(cell)) return at(web: {'rightbar': cell});
-        // DPSK-bridge opens a tab by its id (the cell); labels are the
+        // dsh-go-bridge opens a tab by its id (the cell); labels are the
         // fallback on hosts without it.
         if (cell.isEmpty) return null;
         return at(then: {'rightbar': names});

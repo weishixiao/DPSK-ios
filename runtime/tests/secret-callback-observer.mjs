@@ -19,7 +19,7 @@ export async function apply(ctx){
   const body={pid:process.pid,actualEditorPrototype:Object.getPrototypeOf(ctx.configEditor)===ConfigEditor.prototype,
    actualManagerPrototype:Object.getPrototypeOf(ctx.pluginManager)===PluginManager.prototype,
    actualConfigIdentity:entry.fiber.runtime.Config===fixture.Config,
-   actualBridgeCallback:entries.find(e=>e.options.id==='DPSK-bridge')?.fiber.runtime.callback===bridgeModule.apply,
+   actualBridgeCallback:entries.find(e=>e.options.id==='dsh-go-bridge')?.fiber.runtime.callback===bridgeModule.apply,
    asyncChange:ctx.configEditor.dshGoAsyncChange===true,
    sourceGraphSHA256:sha(source),sourceCallbackNodes:Object.values(graph.refs).filter(n=>Object.hasOwn(n,'callback')).length,
    sourceCanaryOccurrences:(source.match(/SYNTH_CB_R1_SOURCE_/g)??[]).length,

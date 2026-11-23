@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { readFile } from 'node:fs/promises';
 import { createServer, request as httpRequest } from 'node:http';
-import { createCompanionRoutes } from '../../bridge/DPSK-bridge/lib/companion/routes.js';
+import { createCompanionRoutes } from '../../bridge/dsh-go-bridge/lib/companion/routes.js';
 
 export const golden = JSON.parse(await readFile(
   new URL('../../../tooling/companion/fixtures/phone-context.json', import.meta.url), 'utf8'));

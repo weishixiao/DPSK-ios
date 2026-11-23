@@ -112,8 +112,8 @@ def main():
         runtime_ohos = runtime / 'runtime/ohos'
         shutil.copytree(ROOT / 'runtime/ohos', runtime_ohos,
                         ignore=shutil.ignore_patterns('node', 'node_modules', 'build', '__pycache__'))
-        bridge = ROOT / 'runtime/bridge/DPSK-bridge'
-        target_bridge = runtime / 'runtime/bridge/DPSK-bridge'
+        bridge = ROOT / 'runtime/bridge/dsh-go-bridge'
+        target_bridge = runtime / 'runtime/bridge/dsh-go-bridge'
         target_bridge.mkdir(parents=True, exist_ok=True)
         shutil.copytree(bridge / 'lib', target_bridge / 'lib')
         for name in ['package.json', 'cordis.patch.yml']:
@@ -139,11 +139,11 @@ def main():
 
     runtime_modules = {name: {'bytes': (runtime / name).stat().st_size, 'sha256': sha(runtime / name)} for name in [
         'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs',
-        'runtime/bridge/DPSK-bridge/lib/session-deletion.js',
+        'runtime/bridge/dsh-go-bridge/lib/session-deletion.js',
         'runtime/ohos/publication/atomic.mjs', 'runtime/ohos/publication/index.mjs']}
     write_json(out / 'runtime-deletion-modules.json', runtime_modules)
     run('bridge-isolated-import', [sys.executable, HERE / 'bridge-isolated-import.py',
-        '--node', args.node, '--bridge', runtime / 'runtime/bridge/DPSK-bridge',
+        '--node', args.node, '--bridge', runtime / 'runtime/bridge/dsh-go-bridge',
         '--out', out / 'bridge-isolated-import'])
 
     guest = out / '中文应用目录/runtime/rootfs'
@@ -270,7 +270,7 @@ def main():
         'attachmentFixtureSha256': sha(out / 'attachment-fixture-input.json'),
         'attachmentObjectsUnchangedAfterHostExit': True,
         'engineLifecycle': report['engineLifecycle'], 'runtimeDeletionModules': runtime_modules,
-        'isolatedBridgeSource': str(runtime / 'runtime/bridge/DPSK-bridge'),
+        'isolatedBridgeSource': str(runtime / 'runtime/bridge/dsh-go-bridge'),
         'bridgeFixtureSha256': sha(out / 'bridge-fixture-input.json'),
         'bridgeIsolatedImport': json.loads((out / 'bridge-isolated-import/report.json').read_text())['status'],
         'profileSha256': before_profile, 'roundSourceSha256': sha(source_round), 'roundDriverSha256': sha(round_driver),

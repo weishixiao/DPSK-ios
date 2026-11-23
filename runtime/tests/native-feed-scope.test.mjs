@@ -4,9 +4,9 @@ import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { NativeCore } from '../bridge/DPSK-bridge/lib/native/core.js';
-import { normalizeScope } from '../bridge/DPSK-bridge/lib/native/util.js';
-import { LIMITS } from '../bridge/DPSK-bridge/lib/native/limits.js';
+import { NativeCore } from '../bridge/dsh-go-bridge/lib/native/core.js';
+import { normalizeScope } from '../bridge/dsh-go-bridge/lib/native/util.js';
+import { LIMITS } from '../bridge/dsh-go-bridge/lib/native/limits.js';
 
 function setup(t) {
   t.mock.timers.enable({ apis: ['setTimeout', 'Date'], now: 10000 });

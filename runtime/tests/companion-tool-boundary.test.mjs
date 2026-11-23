@@ -7,7 +7,7 @@ import { writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { createFixture } from './fixtures/companion-recall-engine.mjs';
 import { createSignalsFixture } from './fixtures/companion-signals-engine.mjs';
-import { SIGNAL_META } from '../bridge/DPSK-bridge/lib/companion/signals-schema.js';
+import { SIGNAL_META } from '../bridge/dsh-go-bridge/lib/companion/signals-schema.js';
 
 const integration = (name, body) => test(name, {
   skip: !process.env.DSH_PREFIX && 'Set DSH_PREFIX to the complete patched engine',

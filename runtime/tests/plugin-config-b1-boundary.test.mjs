@@ -6,7 +6,7 @@ import {test} from 'node:test';
 import {readFileSync,readdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {createPluginConfig} from '../bridge/DPSK-bridge/lib/plugin-config.js';
+import {createPluginConfig} from '../bridge/dsh-go-bridge/lib/plugin-config.js';
 import {withSources} from './plugin-config-source-fixture.mjs';
 const fixtures=fileURLToPath(new URL('../../app/test/plugin_config/fixtures/schemas/',import.meta.url));
 const marker='B1_SYNTHETIC_INHERITED_SECRET';

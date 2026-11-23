@@ -1,4 +1,4 @@
-// Native plugin protocol v1 against a running `dsh web` with DPSK-bridge and the fixture plugins
+// Native plugin protocol v1 against a running `dsh web` with dsh-go-bridge and the fixture plugins
 // (runtime/tests/run-native-tests.sh). Node built-ins only.
 //
 //   node runtime/tests/native-bridge.mjs <base-url> <launch-token> [--empty] [--shipped]
@@ -12,7 +12,7 @@ import { pathToFileURL } from "node:url";
 
 const WS = await import(process.env.DPSK_BRIDGE_LIB
   ? pathToFileURL(`${process.env.DPSK_BRIDGE_LIB.replace(/\/$/, "")}/ws.js`).href
-  : new URL("../bridge/DPSK-bridge/lib/native/ws.js", import.meta.url));
+  : new URL("../bridge/dsh-go-bridge/lib/native/ws.js", import.meta.url));
 const [baseArg, token, ...flags] = process.argv.slice(2);
 if (!baseArg || !token) {
   console.error("usage: native-bridge.mjs <base-url> <launch-token> [--empty]");
@@ -235,7 +235,7 @@ check(en.json?.plugins.find((p) => p.pkg === USAGE)?.title === "Usage" && enQuic
 check(en.json?.rev !== c1.json?.rev, "rev differs per locale");
 const v2 = await contributions("v=2");
 check(v2.status === 400 && v2.json?.error?.code === "unsupported-version", `v=2 -> ${v2.status} ${v2.json?.error?.code}`);
-const listsBridge = pkgs.includes("DPSK-bridge") || pkgs.some((p) => p.startsWith("@deepseek-ai/"));
+const listsBridge = pkgs.includes("dsh-go-bridge") || pkgs.some((p) => p.startsWith("@deepseek-ai/"));
 check(!listsBridge, "bridge and official packages are never listed");
 
 // ------------------------------------------------------------------ views

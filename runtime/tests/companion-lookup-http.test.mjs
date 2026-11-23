@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
 import { readFile } from 'node:fs/promises';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
-import { FULL_PRESET } from '../bridge/DPSK-bridge/lib/companion/prompt-context.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
+import { FULL_PRESET } from '../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
 import { deferred, lookupPeer, lookupSource } from './fixtures/companion-lookup-source.mjs';
 import { auxiliarySse, piAiSourceFixture } from './fixtures/companion-auxiliary-source.mjs';
 import { chatSourceFixture } from './fixtures/companion-chat-usage-source.mjs';
-import { estimateLookupInputTokens } from '../bridge/DPSK-bridge/lib/companion/lookup-input.js';
+import { estimateLookupInputTokens } from '../bridge/dsh-go-bridge/lib/companion/lookup-input.js';
 
 const PATH = '/DPSK/v1/companion/lookup';
 const webSource = process.env.DSH_LOOKUP_SOURCE, llmSource = process.env.DSH_AUXILIARY_SOURCES;

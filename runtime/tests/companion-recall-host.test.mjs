@@ -9,8 +9,8 @@ import { createServer, request as httpRequest } from 'node:http';
 import { rm } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import test from 'node:test';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
-import { phoneMemoryRules } from '../bridge/DPSK-bridge/lib/companion/full-context.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
+import { phoneMemoryRules } from '../bridge/dsh-go-bridge/lib/companion/full-context.js';
 import { createFixture, requestSystemText, assertNoRealNetwork } from './fixtures/companion-recall-engine.mjs';
 
 const execute = promisify(execFile);
@@ -151,7 +151,7 @@ integration('actual full-context disposal and same-scope remount cannot revive a
   await before.ctx.fiber.dispose();
   assert.equal(current(), undefined);
   assert.equal((await f.coordinator.status(binding.bindingId)).status, 'retired');
-  const mounted = parent.plugin(await import('../bridge/DPSK-bridge/lib/companion/full-context.js'));
+  const mounted = parent.plugin(await import('../bridge/dsh-go-bridge/lib/companion/full-context.js'));
   await mounted.await();
   const after = current();
   assert(after && after !== before);

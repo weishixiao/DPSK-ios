@@ -173,7 +173,7 @@ void main() {
       extra: [
         uiSkillRemoteInstallerProvider.overrideWithValue(installer),
         uiSkillBundleLoaderProvider.overrideWithValue(
-          () async => UiSkillBundle({'SKILL.md': '---\nname: DPSK-ui\n---\n'}),
+          () async => UiSkillBundle({'SKILL.md': '---\nname: dsh-go-ui\n---\n'}),
         ),
       ],
     );

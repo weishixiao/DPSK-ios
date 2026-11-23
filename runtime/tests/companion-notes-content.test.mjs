@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {NOTES_LIMITS, notesSystem, selectNotes, notesModelInput, notesInputEstimate,
-  readNotesProposal, renderNotesPage} from '../bridge/DPSK-bridge/lib/companion/notes-content.js';
+  readNotesProposal, renderNotesPage} from '../bridge/dsh-go-bridge/lib/companion/notes-content.js';
 
 const directory = {target: {targetKey: '/selected', displayPath: '/selected'}, identity: '1:2'};
 const args = {localDate: '2026-11-21', timeZone: 'Asia/Singapore', outputName: '今日待办.md'};

@@ -62,7 +62,7 @@ export async function createRecallEngineAdapter(ctx, { contexts } = {}) {
     marked = undefined;
     coordinator()?.retireAll('adapter-disposed');
     return projection?.dispose();
-  }, 'DPSK-bridge: recall engine owner');
+  }, 'dsh-go-bridge: recall engine owner');
   engine = await loadEngine(ctx);
   if (closed) throw unavailable();
   const projectionRegistry = ctx.get('sessionProjections');

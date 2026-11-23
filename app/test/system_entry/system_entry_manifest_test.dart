@@ -98,12 +98,12 @@ void main() {
   test('the shared engine registers both plugins and MainActivity keeps its metadata', () {
     // The engine is shared with the resident companion, so plugins are added
     // where it is created, not in the Activity.
-    final engine = File('android/app/src/main/kotlin/io/github/dpsk/harness/DshFlutterEngine.kt')
+    final engine = File('android/app/src/main/kotlin/com/dpsk/harness/DshFlutterEngine.kt')
         .readAsStringSync();
     expect(engine, contains('engine.plugins.add(SharePlugin())'));
     expect(engine, contains('engine.plugins.add(ShortcutsPlugin())'));
     expect(engine, contains('LauncherIconPlugin()'));
-    final activity = File('android/app/src/main/kotlin/io/github/dpsk/harness/MainActivity.kt')
+    final activity = File('android/app/src/main/kotlin/com/dpsk/harness/MainActivity.kt')
         .readAsStringSync();
     expect(activity, contains('override fun getMetaData()'));
   });

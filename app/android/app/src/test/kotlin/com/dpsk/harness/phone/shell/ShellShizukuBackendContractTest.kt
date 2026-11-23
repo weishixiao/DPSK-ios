@@ -7,7 +7,7 @@ import org.junit.Test
 /** Prevent a manually frozen service version from reusing an APK-bound host across upgrades. */
 class ShellShizukuBackendContractTest {
     @Test fun bothShizukuServicesTrackTheInstalledApkVersion() {
-        val phone = File("src/main/kotlin/io/github/dpsk/harness/phone")
+        val phone = File("src/main/kotlin/com/dpsk/harness/phone")
         for (path in listOf("shell/ShellShizukuBackend.kt", "background/ShizukuStarter.kt")) {
             val source = File(phone, path).readText()
             assertTrue(path, source.contains("context.packageManager.getPackageInfo(context.packageName, 0).versionCode"))

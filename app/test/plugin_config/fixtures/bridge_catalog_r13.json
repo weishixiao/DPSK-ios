@@ -1459,9 +1459,9 @@
       "reason": "unsupported-schema"
     },
     {
-      "entryId": "DPSK-bridge",
+      "entryId": "dsh-go-bridge",
       "package": null,
-      "label": "DPSK-bridge",
+      "label": "dsh-go-bridge",
       "state": "unsupported",
       "configurable": false,
       "reason": "no-schema"

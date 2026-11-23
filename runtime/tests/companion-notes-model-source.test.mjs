@@ -7,7 +7,7 @@ import {createServer} from 'node:http';
 import {join} from 'node:path';
 import {chatSourceFixture} from './fixtures/companion-chat-usage-source.mjs';
 import {fixture, proposal, harness} from './fixtures/companion-notes-runner-fixture.mjs';
-import {notesSystem, notesModelInput, notesInputEstimate, NOTES_LIMITS} from '../bridge/DPSK-bridge/lib/companion/notes-content.js';
+import {notesSystem, notesModelInput, notesInputEstimate, NOTES_LIMITS} from '../bridge/dsh-go-bridge/lib/companion/notes-content.js';
 
 const modelRoot = join(harness, 'model-source');
 const finalUsage = {output_tokens: 13, cache_read_input_tokens: 7, vendor_field: 'actual-cumulative-final'};

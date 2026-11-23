@@ -32,7 +32,7 @@ final class UiConfigText extends UiConfigRead {
 }
 
 /// There is no ui.json. On a remote host whose DSH home was only guessed,
-/// [skillMissing] says the DPSK-ui skill is not installed there either.
+/// [skillMissing] says the dsh-go-ui skill is not installed there either.
 final class UiConfigAbsent extends UiConfigRead {
   const UiConfigAbsent({this.skillMissing = false});
 
@@ -86,7 +86,7 @@ abstract interface class UiConfigStatusSink {
 
 // ── On-device engine ────────────────────────────────────────────────────────
 
-/// `<rootfs>/root/.dsh/DPSK/ui.json`, followed with a directory watch
+/// `<rootfs>/root/.dsh/dsh-go/ui.json`, followed with a directory watch
 /// (inotify) and re-read on every [kicks] event (app resumes, runtime state
 /// changes); bursts settle for [debounce] first.
 class LocalUiConfigSource implements UiConfigSource, UiConfigStatusSink {
@@ -307,7 +307,7 @@ abstract interface class UiRemoteHost {
   /// A conversation to scope `workspaceFiles/*` to (the most recent one).
   Future<String?> recentSessionId();
 
-  /// `skills/list`'s path of the `DPSK-ui` skill (its SKILL.md).
+  /// `skills/list`'s path of the `dsh-go-ui` skill (its SKILL.md).
   Future<String?> skillFile(String sessionId);
 
   /// The host user's `$HOME` (from the connection handshake).
@@ -322,7 +322,7 @@ abstract interface class UiRemoteHost {
   Stream<void> get changes;
 }
 
-/// DSH home from the skill's SKILL.md path: `<home>/skills/DPSK-ui/SKILL.md`
+/// DSH home from the skill's SKILL.md path: `<home>/skills/dsh-go-ui/SKILL.md`
 /// (or the folder itself). Null when the path does not have that shape.
 String? dshHomeFromSkillPath(String path) {
   final parts = path.split('/');
@@ -330,7 +330,7 @@ String? dshHomeFromSkillPath(String path) {
     parts.removeLast();
   }
   if (parts.isNotEmpty && parts.last == 'SKILL.md') parts.removeLast();
-  if (parts.length < 3 || parts.last != 'DPSK-ui' || parts[parts.length - 2] != 'skills') return null;
+  if (parts.length < 3 || parts.last != 'dsh-go-ui' || parts[parts.length - 2] != 'skills') return null;
   final home = parts.sublist(0, parts.length - 2).join('/');
   return home.isEmpty ? null : home;
 }
@@ -627,7 +627,7 @@ class DshUiRemoteHost implements UiRemoteHost {
   @override
   Future<String?> skillFile(String sessionId) async {
     for (final skill in await client.listSkills(sessionId)) {
-      if (skill.name == 'DPSK-ui') return skill.path;
+      if (skill.name == 'dsh-go-ui') return skill.path;
     }
     return null;
   }

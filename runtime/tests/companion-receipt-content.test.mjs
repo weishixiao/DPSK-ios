@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {receiptTextLines, receiptObservation, receiptReport, receiptGrid, excludeReceiptAtPublish}
-  from '../bridge/DPSK-bridge/lib/companion/receipt-content.js';
+  from '../bridge/dsh-go-bridge/lib/companion/receipt-content.js';
 import {createReceiptWorkbook, verifyReceiptWorkbook, receiptHeaders}
-  from '../bridge/DPSK-bridge/lib/companion/receipt-workbook.js';
-import {zipSync, unzipSync, strToU8, strFromU8} from '../bridge/DPSK-bridge/lib/vendor/receipt-sheet/fflate.mjs';
+  from '../bridge/dsh-go-bridge/lib/companion/receipt-workbook.js';
+import {zipSync, unzipSync, strToU8, strFromU8} from '../bridge/dsh-go-bridge/lib/vendor/receipt-sheet/fflate.mjs';
 
 const text = '日期：2026-11-20\n项目：交通\n金额：CNY 128.50\n';
 function observed(value = text, name = 'original.txt', ref = 'source-one') {

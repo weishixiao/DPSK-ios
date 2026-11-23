@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { createServer, request } from 'node:http';
 import { once } from 'node:events';
 import { createFixture, requestSystemText, textResponse } from './fixtures/companion-recall-engine.mjs';
-import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
+import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
 
 const integration = (name, run) => test(name, {
   skip: !process.env.DSH_PREFIX && 'Set DSH_PREFIX to the actual runtime including companion-auxiliary-single-request.diff',

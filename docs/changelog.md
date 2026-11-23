@@ -426,13 +426,13 @@
 
 ### 中文
 
-- 排障：引擎起来后，App 会把一份脱敏的本机诊断写进引擎（`$DSH_HOME/dsh-app/diagnostics.md`）：版本、设备、运行时、启动方式、连接、性能档位、最近错误和日志尾部。新增内置技能 `DPSK-support`，教 AI 先读它再排查，并按症状给出可直接粘贴的 issue 草稿。
+- 排障：引擎起来后，App 会把一份脱敏的本机诊断写进引擎（`$DSH_HOME/dsh-app/diagnostics.md`）：版本、设备、运行时、启动方式、连接、性能档位、最近错误和日志尾部。新增内置技能 `dsh-go-support`，教 AI 先读它再排查，并按症状给出可直接粘贴的 issue 草稿。
 - 设置 → 诊断新增「让 AI 看诊断」：手动刷新这份快照，然后问 AI「看下诊断」就行。
 - 更新：修了「已经是 1.0.4 却提示最新」——某个更新源停在旧版本时，不再就此收工，会继续问其它源，取更新的那个；公测包也不再带内测通道令牌，免得一个过期的内测清单盖住 GitHub 的新版本。
 
 ### English
 
-- Support: once the engine is up, the app writes a redacted local diagnostics snapshot into it (`$DSH_HOME/dsh-app/diagnostics.md`): versions, device, runtime, launch mode, connection, performance tier, recent errors and log tails. The new bundled `DPSK-support` skill tells the agent to read it first, walk the symptom, and draft an issue you can paste.
+- Support: once the engine is up, the app writes a redacted local diagnostics snapshot into it (`$DSH_HOME/dsh-app/diagnostics.md`): versions, device, runtime, launch mode, connection, performance tier, recent errors and log tails. The new bundled `dsh-go-support` skill tells the agent to read it first, walk the symptom, and draft an issue you can paste.
 - Settings → Diagnostics gains 「Let the AI read diagnostics」: refreshes that snapshot on demand; then just ask the AI to check the diagnostics.
 - Update: fixed 「1.0.4 says it is already latest」 — a source stuck on an older release no longer ends the check; the others are still asked and the newer release wins. Public builds also stop carrying the beta channel token, so a stale beta feed can no longer outrank the GitHub release.
 
@@ -463,14 +463,14 @@
 - 可视化回复：选项卡可以在选项之外自己填一句（模型用 `freetext` 开启），回传时以「其他：…」跟在选择后面。模型忘了写 `dsh-ui` 围栏、把 JSON 直接写进正文时，也能画成原生卡片；复制和分享会把它换成一行摘要。
 - 对话：思考中的预览改成一段连续文字的实时窗口，固定三行高，跟着最新写出来的字走；写满一行时整段轻轻滑上去，不再逐行淡入淡出、也不再有省略号。一轮正常结束时，思考与工具调用一律收成一行——以前翻看过这一轮就会一直展开着；手动展开的思考也会在轮次结束后收回。
 - 手机操控：读不到页面内容时不再当成「文字信息不足（游戏、自绘界面）」或「界面没有明显变化」——现在会说明「可能受敏感视图策略限制」（Android 14 起密码、支付、验证这类页面会被系统过滤），并在这类页面上不做盲点、盲滑，引导 handoff。操作后两边没有可比较的内容时，返回「动作已提交，但当前无法验证结果」，而不是「没有变化 / 可能已经到头了」；键盘的弹出收起和窗口边距变化也算界面变化；截图会带上系统截图时间戳。
-- 技能：内置的 `DPSK-plugin`、`DPSK-ui` 说明写清了和官方 Cordis 技能的分工（手机原生界面 vs Harness 网页版 / 桌面），目录和安装入口不再混用；App 写入的全局指令也加了同样的分流规则。
+- 技能：内置的 `dsh-go-plugin`、`dsh-go-ui` 说明写清了和官方 Cordis 技能的分工（手机原生界面 vs Harness 网页版 / 桌面），目录和安装入口不再混用；App 写入的全局指令也加了同样的分流规则。
 
 ### English
 
 - Visual replies: an options card can allow an answer beyond its presets (the model turns it on with `freetext`); what the person types comes back as an `Other: …` line after the choice. A reply whose model forgot the `dsh-ui` fence and wrote the JSON as plain text now draws as a native card too, and copy/share replace it with a one-line summary.
 - Chat: the thinking preview is a three-line live window of continuous text that follows the newest words and glides up a line when one fills; the per-line fading and the leading ellipsis are gone. A turn that ends normally always folds its thinking and tool calls into one row — previously a turn you had scrolled through stayed expanded; thinking you expanded by hand folds back when the turn ends.
 - Phone control: a page whose content cannot be read is no longer reported as a poor tree ("game / custom-drawn UI") or as "no visible change" — it now says the content may be blocked by the sensitive-view policy (Android 14+ filters pages like passwords, payments and verification), stops blind taps and swipes there and points to handoff. When an action leaves nothing comparable on either side it reports "submitted, but the result cannot be verified" instead of "unchanged / probably at the end of the list"; IME show/hide and window inset changes count as screen changes, and a screenshot carries the system timestamp.
-- Skills: the bundled `DPSK-plugin` and `DPSK-ui` instructions now spell out how they divide work with the official Cordis skills (phone-native UI vs Harness Web / desktop), so directories and install entries are no longer mixed; the app's global instructions follow the same routing rule.
+- Skills: the bundled `dsh-go-plugin` and `dsh-go-ui` instructions now spell out how they divide work with the official Cordis skills (phone-native UI vs Harness Web / desktop), so directories and install entries are no longer mixed; the app's global instructions follow the same routing rule.
 
 ## 1.0.4 · 2026-10-31
 

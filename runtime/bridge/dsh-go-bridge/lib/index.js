@@ -1,5 +1,5 @@
 import { mountCompanionTasks } from "./companion/task-service.js";
-// DPSK-bridge, host half (docs/design/plugin-seams.md §5.2, §9.2).
+// dsh-go-bridge, host half (docs/design/plugin-seams.md §5.2, §9.2).
 //
 //   GET  /DPSK/v1/inventory   wire format v1: release, packages with browser halves, the last
 //                               slot occupancy report and `routeGuard`, measured on every
@@ -38,7 +38,7 @@ import { NativeCore } from "./native/core.js";
 import { effectiveLimits } from "./native/limits.js";
 import { STREAM_PATH, createNativeRoutes } from "./native/routes.js";
 
-export const name = "DPSK-bridge";
+export const name = "dsh-go-bridge";
 
 const PREFIX = "/DPSK";
 /** Unauthenticated canary route: the guard self-test expects it to be refused without credentials. */
@@ -73,7 +73,7 @@ function packageOf(specifier) {
 
 function cachePath() {
   const home = process.env.DSH_HOME?.trim() || join(homedir(), ".dsh");
-  return join(home, "cache", "DPSK-bridge", "occupancy.json");
+  return join(home, "cache", "dsh-go-bridge", "occupancy.json");
 }
 
 /** A right pane tab type (`sidebar.right.pane.tab(.title)` occupants): what it is called, how it opens. */
@@ -234,7 +234,7 @@ function installFallbackGuard(webCtx, open) {
       unwrap(raw.prefixes);
       unwrap(raw.upgrades);
     };
-  }, "DPSK-bridge: fallback route guard");
+  }, "dsh-go-bridge: fallback route guard");
   return "bridge";
 }
 
@@ -281,7 +281,7 @@ export function apply(ctx, config) {
 
   // Native plugin protocol: the service exists whenever the bridge runs (no cost without plugins).
   const native = new NativeCore(ctx, effectiveLimits(options.native), VERSION);
-  ctx.effect(() => () => native.dispose(), "DPSK-bridge: native core");
+  ctx.effect(() => () => native.dispose(), "dsh-go-bridge: native core");
   ctx.provide("dshGo", native.service);
   let companionRecall;
   const companionPrompt = createCompanionPromptContext({
@@ -290,7 +290,7 @@ export function apply(ctx, config) {
     allowMemory: agent => companionRecall?.allowsQueryContext(agent) === true,
   });
   ctx.provide('dshGoCompanionContext', companionPrompt);
-  ctx.effect(() => () => companionPrompt.clear(), 'DPSK-bridge: companion prompt context');
+  ctx.effect(() => () => companionPrompt.clear(), 'dsh-go-bridge: companion prompt context');
   const isCompanion = agent => ctx.get('agentPresets')?.presetForSession(agent.session) === FULL_PRESET;
   ctx.on('agent/inbox/claimed', ({ agent, message, turn }) => {
     if (isCompanion(agent)) companionPrompt.claim(agent, message, turn);
@@ -304,7 +304,7 @@ export function apply(ctx, config) {
   });
   ctx.on('agent/disposed', ({ agent }) => companionPrompt.retire(agent));
   const companionSignals = createCompanionSignals(ctx);
-  ctx.effect(() => () => companionSignals.dispose(), "DPSK-bridge: companion signals");
+  ctx.effect(() => () => companionSignals.dispose(), "dsh-go-bridge: companion signals");
   // HTTP writes and engine admission share exactly one store/coordinator per
   // bridge generation. Missing or incompatible engine modules keep recall off.
   const companionStore = createCompanionStore();
@@ -323,7 +323,7 @@ export function apply(ctx, config) {
     recallDisposed = true;
     companionRecall.dispose();
     companionContexts.dispose();
-  }, "DPSK-bridge: companion recall");
+  }, "dsh-go-bridge: companion recall");
   ctx.on("internal/plugin", () => native.markDirty());
   let pluginConfig;
   ctx.on("internal/status", (fiber) => { native.markDirty(); pluginConfig?.statusChanged(fiber); });
@@ -332,7 +332,7 @@ export function apply(ctx, config) {
 
   ctx.inject(["webServer"], (webCtx) => {
     webCtx.effect(() => webCtx.webServer.tapIndex(injectPromiseWithResolvers),
-      "DPSK-bridge: browser Promise.withResolvers");
+      "dsh-go-bridge: browser Promise.withResolvers");
     const routeGuardMode = options.guardRoutes === false ? "off" : installFallbackGuard(webCtx, open);
 
     // Guard self-test: a credential-less request to an unauthenticated route registered like any
@@ -347,7 +347,7 @@ export function apply(ctx, config) {
         canaryHits++;
         send(res, 204);
       },
-    }), "DPSK-bridge: guard canary");
+    }), "dsh-go-bridge: guard canary");
     const probeGuard = async () => {
       if (guardProbe !== undefined && Date.now() - guardProbe.at < GUARD_PROBE_TTL_MS) return guardProbe.ok;
       const before = canaryHits;
@@ -404,10 +404,10 @@ export function apply(ctx, config) {
     pluginConfig = createPluginConfig(webCtx, { readBody, send });
     const sessionDeletion = createSessionDeletion(webCtx, { readBody, send });
     const speechRoutes = createSpeechRoutes(webCtx, { send, fetch: options.speech?.fetch, apiKeyEnv: options.speech?.apiKeyEnv });
-    webCtx.effect(() => () => speechRoutes.dispose(), "DPSK-bridge: speech routes");
+    webCtx.effect(() => () => speechRoutes.dispose(), "dsh-go-bridge: speech routes");
     const companionRoutes = createCompanionRoutes({ send, store: companionStore, recall: companionRecall, signals: companionSignals, ctx: webCtx, promptContext: companionPrompt });
-    webCtx.effect(() => () => companionRoutes.dispose(), 'DPSK-bridge: companion auxiliary requests');
-    webCtx.effect(() => () => nativeRoutes.dispose(), "DPSK-bridge: native routes");
+    webCtx.effect(() => () => companionRoutes.dispose(), 'dsh-go-bridge: companion auxiliary requests');
+    webCtx.effect(() => () => nativeRoutes.dispose(), "dsh-go-bridge: native routes");
     webCtx.effect(() => webCtx.webServer.registerUpgrade({
       path: STREAM_PATH,
       handler: (req, socket, head) => {
@@ -418,7 +418,7 @@ export function apply(ctx, config) {
         }
         nativeRoutes.upgrade(req, socket, head);
       },
-    }), "DPSK-bridge: native stream");
+    }), "dsh-go-bridge: native stream");
 
     const handler = async (req, res) => {
       const rejection = rejectionOf(webCtx, req);
@@ -471,6 +471,6 @@ export function apply(ctx, config) {
       return send(res, 404, { error: { code: "route-not-found", message: "not found" } });
     };
 
-    webCtx.effect(() => webCtx.webServer.register({ kind: "prefix", path: PREFIX, handler }), "DPSK-bridge: /DPSK routes");
+    webCtx.effect(() => webCtx.webServer.register({ kind: "prefix", path: PREFIX, handler }), "dsh-go-bridge: /DPSK routes");
   });
 }

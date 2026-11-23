@@ -63,7 +63,7 @@ const engineNoteSources = {
   // `team-message` is the older team relay ([TeamMessage.fromEvent]).
   'agent-message',
   'team-message',
-  // DPSKal-round-driver: the next round toward a goal.
+  // dsh-goal-round-driver: the next round toward a goal.
   'goal',
   // dsh-schedule: a reminder came due.
   'schedule',

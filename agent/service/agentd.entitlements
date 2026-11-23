@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Holds the Mach service launchd registers for com.dpsk.agentd. -->
+	<key>platform-application</key>
+	<true/>
+	<!-- Inspects processes it did not start. This is the capability the app
+	     cannot have, and the reason the privileged half is a daemon. -->
+	<key>task_for_pid-allow</key>
+	<true/>
+	<!-- Reads and writes outside the container: the projects and log live in
+	     /var/mobile/Library/DPSKAgent. -->
+	<key>com.apple.private.security.no-container</key>
+	<true/>
+</dict>
+</plist>

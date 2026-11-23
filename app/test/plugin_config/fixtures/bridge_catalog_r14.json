@@ -770,7 +770,7 @@
     },
     {
       "entryId": "goal",
-      "package": "@deepseek-ai/DPSKal",
+      "package": "@deepseek-ai/dsh-goal",
       "owner": "core",
       "bundle": "@deepseek-ai/dsh-base",
       "kind": "core",
@@ -783,7 +783,7 @@
     },
     {
       "entryId": "goal-round-driver",
-      "package": "@deepseek-ai/DPSKal-round-driver",
+      "package": "@deepseek-ai/dsh-goal-round-driver",
       "owner": "core",
       "bundle": "@deepseek-ai/dsh-base",
       "kind": "core",

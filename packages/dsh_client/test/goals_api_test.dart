@@ -15,7 +15,7 @@ Map<String, Object?> failure(String code, String message) => {
   'error': {'code': code, 'message': message, 'details': <String, Object?>{}},
 };
 
-/// A `GoalView` as `goals/get` and the mutations return it (DPSKal 0.2.1).
+/// A `GoalView` as `goals/get` and the mutations return it (dsh-goal 0.2.1).
 Map<String, Object?> view({
   String id = 'goal-1',
   int revision = 3,

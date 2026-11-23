@@ -53,6 +53,7 @@ ThemeData buildLightTheme({
   glyphLocale,
   instantPages,
   fluid,
+  null,
   loadedFonts,
 );
 
@@ -77,6 +78,7 @@ ThemeData buildDarkTheme({
   glyphLocale,
   instantPages,
   fluid,
+  null,
   loadedFonts,
 );
 
@@ -121,6 +123,7 @@ ThemeData _build(
   Locale? glyphLocale,
   bool instantPages,
   bool fluid, [
+  ThemePack? themePack,
   Map<String, String> loadedFonts = const {},
 ]) {
   // iOS 式水平推入,上一页左移变暗;系统预测返回与边缘右滑都跟手

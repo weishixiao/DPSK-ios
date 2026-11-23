@@ -114,6 +114,8 @@ import 'widgets/attachments.dart';
 import 'widgets/notice_row.dart';
 import 'widgets/permission_pill.dart';
 import 'widgets/plus_panel.dart';
+import '../../state/phone_state.dart';
+import 'widgets/app_picker_sheet.dart';
 import 'widgets/quote_chip.dart';
 import 'widgets/read_only_bar.dart';
 import 'widgets/unknown_results_banner.dart';
@@ -1069,10 +1071,10 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
         files: canStageFiles(ref.read(activeConnectionProvider).value, ref.read(activeHostProvider)),
         sessionId: ref.read(currentSessionProvider),
         generate: ref.read(mediaPluginProvider) != MediaPluginState.absent,
-        call: true,
+        apps: true,
       );
-      if (choice is CallChoice) {
-        if (ownsDraft() && mounted) await _startCall(ownsDraft);
+      if (choice is AppChoice) {
+        if (ownsDraft() && mounted) await _pickAppAndSend(ownsDraft);
         return;
       }
       if (choice is GenerateChoice) {
@@ -1483,6 +1485,23 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
     final scope = _draftScope;
     unawaited(_startCall(() => mounted && identical(_draftScope, scope)));
   }
+
+  /// 「应用」: pick an installed app and say which one, in this conversation.
+  ///
+  /// The message carries the display name and bundle identifier and nothing
+  /// else — no process is attached, started or looked into. [ownsDraft]: still
+  /// the conversation it was asked from.
+  Future<void> _pickAppAndSend(bool Function() ownsDraft) async {
+    final host = ref.read(activeHostProvider);
+    final app = await showAppPickerSheet(context, channel: ref.read(phoneChannelProvider));
+    if (!mounted || !ownsDraft() || ref.read(activeHostProvider) != host) return;
+    if (app == null) return;
+    final sessionId = ref.read(currentSessionProvider);
+    if (sessionId == null) return;
+    final text = '${app.name} (${app.bundleId})';
+    await ref.read(chatProvider(sessionId).notifier).send(text);
+  }
+
 
   /// 「语音通话」 with this conversation (a new chat gets its conversation
   /// with the first thing said); [ownsDraft]: still the conversation it was asked from.

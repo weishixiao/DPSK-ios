@@ -37124,9 +37124,13 @@ abstract class L10n {
 
   /// No description provided for @speechCallTile.
   ///
+  /// In zh, this message translates to:  String get speechCallTile;
+
+  /// No description provided for @chatAppsTile.
+  ///
   /// In zh, this message translates to:
-  /// **'语音通话'**
-  String get speechCallTile;
+  /// **'应用'**
+  String get chatAppsTile;
 
   /// No description provided for @speechCallSection.
   ///

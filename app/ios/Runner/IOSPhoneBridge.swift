@@ -377,6 +377,10 @@ final class IOSPhoneControl: NSObject, FlutterStreamHandler {
         if !value { self.stop() }
         self.emit(); result(true)
       case "stopTask": self.stop(); result(true)
+      case "installedApps":
+        // Names and bundle identifiers only: the composer needs an identity to
+        // talk about, never a handle on anything running.
+        result(Self.installedApps())
       case "finishTask":
         guard let id = args["taskId"] as? Int, id == self.taskID, self.active,
           let owner = self.owner,
@@ -409,6 +413,11 @@ final class IOSPhoneControl: NSObject, FlutterStreamHandler {
       }
     }
     events?.setStreamHandler(self)
+  }
+
+  /// Installed applications, as name + bundle identifier pairs.
+  static func installedApps() -> [[String: String]] {
+    PhoneRunnerSupport.installedApps()
   }
 
   func bind(_ bridge: IOSPhoneBridge) { self.bridge = bridge; emit() }

@@ -1696,4 +1696,36 @@ class PhoneChannel {
       return PhoneResult(false, e.message ?? e.code);
     }
   }
+
+  /// Installed applications, for the composer's 应用 tile.
+  ///
+  /// Each entry carries the display name and bundle identifier only: the
+  /// conversation needs an identity to reason about, never a handle on the
+  /// process. Returns an empty list when the native module is absent, so the
+  /// picker degrades to "未就绪" instead of failing the sheet.
+  Future<List<InstalledApp>> installedApps() async {
+    try {
+      final raw = await _methods.invokeMethod<List<Object?>>('installedApps');
+      if (raw == null) return const [];
+      return [
+        for (final item in raw)
+          if (item is Map)
+            InstalledApp(
+              name: _text(item['name']) ?? _text(item['id']) ?? '',
+              bundleId: _text(item['id']) ?? '',
+            ),
+      ].where((a) => a.bundleId.isNotEmpty).toList();
+    } on MissingPluginException {
+      return const [];
+    } on PlatformException {
+      return const [];
+    }
+  }
+}
+/// One installed application, as the composer sees it.
+class InstalledApp {
+  const InstalledApp({required this.name, required this.bundleId});
+
+  final String name;
+  final String bundleId;
 }

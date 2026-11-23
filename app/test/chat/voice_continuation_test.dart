@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/voice_settings.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_controller.dart';
+import 'package:dsh_app/state/voice_settings.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/voice/voice_controller.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';

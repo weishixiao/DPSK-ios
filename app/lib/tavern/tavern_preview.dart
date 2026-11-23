@@ -64,7 +64,7 @@ class PreviewTavern implements Tavern, TavernPreview {
       creatorNotes: summary ? '' : c.creatorNotes,
       greetings: summary ? const [] : c.greetings,
       hasLorebook: c.data['character_book'] is Map,
-      theme: summary ? null : _copySetting(_dpskOf(c.data)['theme']),
+      theme: summary ? null : _copySetting(_dshgoOf(c.data)['theme']),
       chatCount: chats.length,
       lastChatAt: last,
       importedAt: c.importedAt,
@@ -1886,9 +1886,9 @@ void _mergeSettings(Map<String, Object?> into, Map<String, Object?> patch) {
   }
 }
 
-/// A card's extensions.dpsk, or nothing.
-Map<Object?, Object?> _dpskOf(Map<String, Object?> data) => switch (data['extensions']) {
-  {'dpsk': final Map<Object?, Object?> dpsk} => dpsk,
+/// A card's extensions.dshgo, or nothing.
+Map<Object?, Object?> _dshgoOf(Map<String, Object?> data) => switch (data['extensions']) {
+  {'dshgo': final Map<Object?, Object?> dshgo} => dshgo,
   _ => const {},
 };
 
@@ -2178,7 +2178,7 @@ const _samples = [
   _Card(
     id: 'sample-innkeeper',
     name: '林晚',
-    creator: 'DPSK',
+    creator: 'DSH Go',
     tags: ['示例', '悬疑'],
     description: '雨夜小镇上一家旅店的老板娘，知道很多事，但只说一半。',
     creatorNotes: '这是一张示例卡，用来预览酒馆的界面。',
@@ -2211,7 +2211,7 @@ const _samples = [
   _Card(
     id: 'sample-navigator',
     name: '星图',
-    creator: 'DPSK',
+    creator: 'DSH Go',
     tags: ['示例', '科幻'],
     description: '远航飞船上的导航 AI，说话简短，偶尔会讲冷笑话。',
     greetings: ['「舰桥欢迎你，舰长。航线已经算好，还有三十七个小时抵达。要听个笑话打发时间吗？」'],

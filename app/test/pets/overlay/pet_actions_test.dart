@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:dpsk_app/links/launcher_entries.dart';
-import 'package:dpsk_app/notify/chat_alerts.dart';
-import 'package:dpsk_app/pets/pet_overlay_actions.dart';
-import 'package:dpsk_app/pets/pet_signals.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
+import 'package:dsh_app/links/launcher_entries.dart';
+import 'package:dsh_app/notify/chat_alerts.dart';
+import 'package:dsh_app/pets/pet_overlay_actions.dart';
+import 'package:dsh_app/pets/pet_signals.dart';
+import 'package:dsh_app/pets/pet_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

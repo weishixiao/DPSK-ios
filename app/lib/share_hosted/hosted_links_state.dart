@@ -207,7 +207,7 @@ class HostedLinksController extends Notifier<HostedLinksState> {
     return null;
   }
 
-  /// Encrypts and uploads [file] (a `.dpsk` file's bytes), keeps the link and
+  /// Encrypts and uploads [file] (a `.dshgo` file's bytes), keeps the link and
   /// returns it. Throws [HostedShareException].
   Future<HostedLink> publish(Uint8List file, {required String title, HostedTtl ttl = HostedTtl.fallback}) async {
     if (_harmony && !await ensureLoaded()) throw const HostedStorageException();

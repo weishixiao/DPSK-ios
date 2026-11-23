@@ -2,9 +2,9 @@
 // records what it was asked to do, onboarding prefs with a chosen start, and
 // fixed device figures.
 
-import 'package:dpsk_app/runtime/local_footprint.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
+import 'package:dsh_app/runtime/local_footprint.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../shell/golden_harness.dart';

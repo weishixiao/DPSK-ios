@@ -2,7 +2,7 @@
 
 [中文](../voice.md)
 
-Four capabilities for a read-aloud kind of plugin: play a clip, stop the moment the person speaks, a caption updated ten times a second, and that caption floating over the app. All optional: without a declaration nothing happens, and older plugins and apps are unaffected. Full example: [`DPSK-example-readaloud`](../../../examples/plugins/DPSK-example-readaloud/). Spec: [protocol §11](../../design/native-plugins-protocol.md#11-可选能力v12).
+Four capabilities for a read-aloud kind of plugin: play a clip, stop the moment the person speaks, a caption updated ten times a second, and that caption floating over the app. All optional: without a declaration nothing happens, and older plugins and apps are unaffected. Full example: [`dsh-go-example-readaloud`](../../../examples/plugins/dsh-go-example-readaloud/). Spec: [protocol §11](../../design/native-plugins-protocol.md#11-可选能力v12).
 
 | Capability | You get | You do | The app does |
 |---|---|---|---|

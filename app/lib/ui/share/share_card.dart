@@ -1,6 +1,6 @@
 // The share card (晒成果) — a fixed-width poster of a reply, a stretch of a
 // conversation, a file or a plugin, in the app's own type and the person's
-// accent colour, with the DPSK lockup and a QR code to the project page.
+// accent colour, with the dsh-go lockup and a QR code to the project page.
 
 import 'dart:ui' show ImageFilter;
 
@@ -68,7 +68,7 @@ enum ShareTemplate {
 /// │                  ╰─────────────────╯  │
 /// │ The answer, as Markdown, ▢ pictures…  │
 /// │ ───────────────────────────────────── │
-/// │ ◖● DPSK                     ▣▣▣▣    │  brand + QR; the QR's corner
+/// │ ◖● dsh-go                     ▣▣▣▣    │  brand + QR; the QR's corner
 /// │    手机上的 DSH · 扫码获取       ▣▣▣▣    │  as far from both edges
 /// └──────────────────────────────────────┘
 /// ```
@@ -932,7 +932,7 @@ class _Plugin extends StatelessWidget {
   }
 }
 
-/// The brand line: the 「DPSK」 lockup with one short line under its word,
+/// The brand line: the 「DSH Go」 lockup with one short line under its word,
 /// the QR code at the right edge, the two centred on each other. A link too
 /// long to scan at the card's size ([ShareCard.qrFor]) leaves the lockup alone.
 class _Footer extends StatelessWidget {

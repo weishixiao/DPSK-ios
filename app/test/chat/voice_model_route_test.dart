@@ -2,10 +2,10 @@
 // (no detour through a phone service that fails on Chinese ROMs); without it
 // the phone service runs, and its failures fall back to the model.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/voice_settings.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_controller.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/voice_settings.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/voice/voice_controller.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';

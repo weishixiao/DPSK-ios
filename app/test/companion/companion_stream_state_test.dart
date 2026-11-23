@@ -7,28 +7,28 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_pack.dart';
-import 'package:dpsk_app/companion/companion_memory.dart';
-import 'package:dpsk_app/companion/companion_host_tasks.dart' show CompanionNotesForegroundCapture;
-import 'package:dpsk_app/companion/companion_initiative.dart';
-import 'package:dpsk_app/companion/companion_initiative_owner.dart';
-import 'package:dpsk_app/companion/companion_keeper.dart';
-import 'package:dpsk_app/companion/companion_state.dart';
-import 'package:dpsk_app/companion/companion_widget.dart';
-import 'package:dpsk_app/l10n/gen/app_localizations.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/companion_agent_state.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/chat/widgets/approval_card.dart';
-import 'package:dpsk_app/ui/companion/companion_ask.dart';
-import 'package:dpsk_app/ui/companion/companion_chrome.dart';
-import 'package:dpsk_app/ui/companion/companion_page.dart';
-import 'package:dpsk_app/ui/companion/companion_stage.dart';
-import 'package:dpsk_app/ui/companion/companion_tasks_page.dart';
-import 'package:dpsk_app/ui/theme/app_theme.dart';
+import 'package:dsh_app/companion/companion_pack.dart';
+import 'package:dsh_app/companion/companion_memory.dart';
+import 'package:dsh_app/companion/companion_host_tasks.dart' show CompanionNotesForegroundCapture;
+import 'package:dsh_app/companion/companion_initiative.dart';
+import 'package:dsh_app/companion/companion_initiative_owner.dart';
+import 'package:dsh_app/companion/companion_keeper.dart';
+import 'package:dsh_app/companion/companion_state.dart';
+import 'package:dsh_app/companion/companion_widget.dart';
+import 'package:dsh_app/l10n/gen/app_localizations.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/companion_agent_state.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/chat/widgets/approval_card.dart';
+import 'package:dsh_app/ui/companion/companion_ask.dart';
+import 'package:dsh_app/ui/companion/companion_chrome.dart';
+import 'package:dsh_app/ui/companion/companion_page.dart';
+import 'package:dsh_app/ui/companion/companion_stage.dart';
+import 'package:dsh_app/ui/companion/companion_tasks_page.dart';
+import 'package:dsh_app/ui/theme/app_theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -343,7 +343,7 @@ class _FollowupBridge extends _Bridge {
     bool followRedirects = true,
     int? maxResponseBytes,
   }) async {
-    if (path == '/DPSK/v1/companion/auxiliary') {
+    if (path == '/dsh-go/v1/companion/auxiliary') {
       discovery++;
       expect(query, {'sessionId': _session});
       return this.json({
@@ -378,7 +378,7 @@ class _FollowupBridge extends _Bridge {
     Duration? headerTimeout,
     Duration? idleTimeout = const Duration(seconds: 20),
   }) async {
-    expect(path, '/DPSK/v1/companion/auxiliary');
+    expect(path, '/dsh-go/v1/companion/auxiliary');
     final sent = Map<String, Object?>.from(body! as Map<String, Object?>);
     posts.add(sent);
     await release.future; // Deliberately late even if the Page cancels meanwhile.

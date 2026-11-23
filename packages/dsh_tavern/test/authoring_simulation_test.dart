@@ -45,7 +45,7 @@ void main() {
     final globalFile = File('${h.root.path}/lorebooks/global.json');
     await globalFile.writeAsString(
       '\ufeff${jsonEncode({
-        'format': 'dpsk-lorebook',
+        'format': 'dshgo-lorebook',
         'version': 1,
         'stWorldName': 'OriginalGlobalName',
         'book': _book('GLOBAL_BASE'),

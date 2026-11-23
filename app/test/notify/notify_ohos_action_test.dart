@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:dpsk_app/pets/pet_mood.dart';
-import 'package:dpsk_app/pets/pet_signals.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/bots_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
+import 'package:dsh_app/pets/pet_mood.dart';
+import 'package:dsh_app/pets/pet_signals.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/bots_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

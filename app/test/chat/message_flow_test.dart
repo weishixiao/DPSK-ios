@@ -5,15 +5,15 @@
 // composer, sent as a blockquote, shown as a quote in the bubble, split back
 // out on 编辑后重发); and 保存到相册 on a picture in a message.
 
-import 'package:dpsk_app/state/attachments.dart' show sessionImageProvider;
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/widgets/assistant_message.dart';
-import 'package:dpsk_app/ui/chat/widgets/quote_chip.dart';
-import 'package:dpsk_app/ui/chat/widgets/user_bubble.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart' show SettingsTile;
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/attachments.dart' show sessionImageProvider;
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/widgets/assistant_message.dart';
+import 'package:dsh_app/ui/chat/widgets/quote_chip.dart';
+import 'package:dsh_app/ui/chat/widgets/user_bubble.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart' show SettingsTile;
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -257,7 +257,7 @@ void main() {
     final saved = <MethodCall>[];
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(const MethodChannel('dsh/media'), (call) async {
       saved.add(call);
-      return 'Pictures/DPSK/截图.png';
+      return 'Pictures/DSH Go/截图.png';
     });
     addTearDown(
       () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(const MethodChannel('dsh/media'), null),

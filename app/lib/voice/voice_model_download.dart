@@ -1,5 +1,5 @@
 // Downloads the voice model's files into the engine's model cache: resumable
-// (`<file>.DPSK.part` + an HTTP range), checked against the pinned size and
+// (`<file>.dsh-go.part` + an HTTP range), checked against the pinned size and
 // SHA-256 before the file takes its final name, and stopped by a stall rather
 // than by a total deadline (a 240 MB file on a slow line is fine; a dead one
 // is not). Runs in its own isolate: hashing 240 MB must not touch the UI.
@@ -38,7 +38,7 @@ class VoiceDownloadJob {
   final int bytes;
   final String sha256;
 
-  String get partPath => '$path.DPSK.part';
+  String get partPath => '$path.dsh-go.part';
 
   List<Object> toWire() => [path, bytes, sha256, ...urls.map((u) => u.toString())];
 
@@ -73,7 +73,7 @@ Future<void> downloadVoiceFiles(
   final client = (clientFactory ?? HttpClient.new)()
     ..connectionTimeout = const Duration(seconds: 20)
     ..idleTimeout = const Duration(seconds: 5)
-    ..userAgent = 'DPSK';
+    ..userAgent = 'dsh-go';
   bool stop() => cancelled?.call() ?? false;
   var finished = 0;
   var last = DateTime.fromMillisecondsSinceEpoch(0);

@@ -1,9 +1,9 @@
 part of 'engine.dart';
 
-const _storyRuntimeKey = 'dpskStoryRuntime';
+const _storyRuntimeKey = 'dshgoStoryRuntime';
 
 story_core.StoryDefinition _storyDefinition(Map<String, Object?> data) {
-  final own = _readMap(_readMap(data['extensions'])['dpsk']);
+  final own = _readMap(_readMap(data['extensions'])['dshgo']);
   final version = own.containsKey('v') ? own['v'] : 1;
   return story_core.StoryDefinition.parse(own['story'], version: version);
 }
@@ -16,7 +16,7 @@ Map<String, Object?>? _storySnapshot(
 ) {
   final leaf = chat.currentLeafId;
   final saved = engine._stateAt(chat.id, leaf);
-  final own = leaf == null ? <String, Object?>{} : _map(engine._store.node(chat.id, leaf).extra['dpsk']);
+  final own = leaf == null ? <String, Object?>{} : _map(engine._store.node(chat.id, leaf).extra['dshgo']);
   final historical = _gameplayHistoricalConfig(engine, saved);
   if (historical.referenced && historical.config == null) {
     return {

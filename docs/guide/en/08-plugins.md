@@ -7,7 +7,7 @@ Plugins install on the current host. The top of the page says **Install to: This
 ## Plugins page
 
 <!-- nav: commonSettings,hubPlugins -->
-`Settings › Plugins` · [Open](dpsk://open/plugins)
+`Settings › Plugins` · [Open](dshgo://open/plugins)
 
 Two tabs: **Installed** and **Plugin market**. Installed shows your plugins and **DSH official** components; some official components need **Get** to install first. Pull down or tap refresh at the top right.
 
@@ -58,11 +58,11 @@ Turn off any of these places in the plugin's details. To turn off the whole plug
 
 The first time a plugin reads your draft, clipboard or a reply, it asks first. It reads only after you tap **Allow**, and only when you tap it. Once allowed, it can't be revoked separately; turn off that place or the plugin instead.
 
-The native UI needs the DPSK bridge on the host: this phone's engine has it built in, remote hosts usually don't, and it never shows over DSH Remote.
+The native UI needs the dsh-go bridge on the host: this phone's engine has it built in, remote hosts usually don't, and it never shows over DSH Remote.
 
-## DPSK market
+## DSH Go market
 
-The market offers Official, Adapted for DPSK and All sections. When an official index lists a package, its checked, pinned version takes precedence over other listings of the same name. Details include risk flags, native features, minimum app version, screenshots and localized descriptions. Risk flags describe capabilities rather than a guarantee of safety. Medium- and high-risk installations ask for confirmation.
+The market offers Official, Adapted for DSH Go and All sections. When an official index lists a package, its checked, pinned version takes precedence over other listings of the same name. Details include risk flags, native features, minimum app version, screenshots and localized descriptions. Risk flags describe capabilities rather than a guarantee of safety. Medium- and high-risk installations ask for confirmation.
 
 Before installation or an update, the app compares the declared digest with npm registry metadata. An unavailable or mismatching digest stops the operation before removing an old version. This does not verify the bytes eventually downloaded by the host; that requires host protocol support. Changing host or connection invalidates pending consent. Withdrawn installed versions show a warning.
 

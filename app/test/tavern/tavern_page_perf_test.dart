@@ -5,12 +5,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/tavern/tavern_canvas.dart';
-import 'package:dpsk_app/tavern/tavern_islands.dart';
-import 'package:dpsk_app/tavern/tavern_page_perf.dart';
-import 'package:dpsk_app/tavern/tavern_settings.dart';
-import 'package:dpsk_app/ui/tavern/tavern_settings_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_canvas.dart';
+import 'package:dsh_app/tavern/tavern_islands.dart';
+import 'package:dsh_app/tavern/tavern_page_perf.dart';
+import 'package:dsh_app/tavern/tavern_settings.dart';
+import 'package:dsh_app/ui/tavern/tavern_settings_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

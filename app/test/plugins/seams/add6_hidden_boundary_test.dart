@@ -1,9 +1,9 @@
 // First two cases reproduce independent reviewer R1 regressions.
 // The additional cases check hidden ancestors and visible sibling preservation.
 // ignore_for_file: depend_on_referenced_packages
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_form.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/ui/engine_settings/schema_form.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

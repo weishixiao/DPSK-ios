@@ -1,4 +1,4 @@
-import 'package:dpsk_app/speech/call/turn_words.dart';
+import 'package:dsh_app/speech/call/turn_words.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

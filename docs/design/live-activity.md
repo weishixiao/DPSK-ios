@@ -84,7 +84,7 @@ AOSP 16.0 / QPR1 / QPR2 / 17 的 `Notification.hasPromotableCharacteristics()` �
 | 锁屏 | 宠物、「正在思考 · 2 个对话在跑」这类不含内容的话、计时；**不显示对话标题** |
 
 - 颜色只有主题强调色一种，琥珀只给「等你处理」，红只给出错。深色（岛）用 `seedDark`。
-- 点卡片打开那个对话：`dpsk://live?…` 转成通知点击（`NotifyTaps`），和安卓一样走 `kind: live`。
+- 点卡片打开那个对话：`dshgo://live?…` 转成通知点击（`NotifyTaps`），和安卓一样走 `kind: live`。
 - 「停止」（iOS 17+，`LiveActivityIntent`）在 App 进程里交给 Dart，就是悬浮宠物的停止，同样的检查（宠物的对话、App 当前连着的主机）；不要求解锁。
 - iOS 只允许 App 在前台时开新活动：开不了就等回到前台再开。换对话时更新同一个活动，所以后台换对话也跟得上。
 - 用户划掉后，这一段不再出现，直到没有在跑的或换了对话。

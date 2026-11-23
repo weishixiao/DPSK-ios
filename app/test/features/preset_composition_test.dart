@@ -6,7 +6,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/features/preset_editor/preset_composition.dart';
+import 'package:dsh_app/ui/features/preset_editor/preset_composition.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaml/yaml.dart';
 

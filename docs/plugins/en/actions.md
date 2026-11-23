@@ -94,7 +94,7 @@ ctx.dshGo.on('translate', (scope) => ({
 
 - `insert` lands at the cursor **when the result arrives**: the person may have typed meanwhile, so insert, don't assume an empty composer.
 - Model calls spend the person's quota: one call per tap, and say what is happening ("Translating").
-- Example: the "To English" capsule in [`examples/plugins/DPSK-example-quick`](../../../examples/plugins/DPSK-example-quick/) translates the clipboard with the default DSH model, and falls back to inserting a request when the host has no model service.
+- Example: the "To English" capsule in [`examples/plugins/dsh-go-example-quick`](../../../examples/plugins/dsh-go-example-quick/) translates the clipboard with the default DSH model, and falls back to inserting a request when the host has no model service.
 
 ## Effects in tests
 

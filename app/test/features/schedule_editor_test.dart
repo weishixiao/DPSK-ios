@@ -8,23 +8,23 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/chat/widgets/question_card.dart';
-import 'package:dpsk_app/ui/chat/widgets/schedule_question_body.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/schedule_editor_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/common/search_capsule.dart';
-import 'package:dpsk_app/ui/features/schedule_editor/schedule_draft.dart';
-import 'package:dpsk_app/ui/features/schedule_editor/schedule_editor_page.dart';
-import 'package:dpsk_app/ui/features/schedule_editor/schedule_pickers.dart';
-import 'package:dpsk_app/ui/features/schedules_page.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart' show SegmentedPill;
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/chat/widgets/question_card.dart';
+import 'package:dsh_app/ui/chat/widgets/schedule_question_body.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/schedule_editor_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/common/search_capsule.dart';
+import 'package:dsh_app/ui/features/schedule_editor/schedule_draft.dart';
+import 'package:dsh_app/ui/features/schedule_editor/schedule_editor_page.dart';
+import 'package:dsh_app/ui/features/schedule_editor/schedule_pickers.dart';
+import 'package:dsh_app/ui/features/schedules_page.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart' show SegmentedPill;
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -186,7 +186,7 @@ void main() {
           'value': {
             'answers': [
               {
-                'id': 'DPSK-schedule-authorization-synthetic',
+                'id': 'dsh-go-schedule-authorization-synthetic',
                 'selected': ['授权 / Authorize'],
               },
             ],
@@ -237,7 +237,7 @@ void main() {
         'value': {
           'answers': [
             {
-              'id': 'DPSK-schedule-authorization-edit-question',
+              'id': 'dsh-go-schedule-authorization-edit-question',
               'selected': ['授权 / Authorize'],
             },
           ],

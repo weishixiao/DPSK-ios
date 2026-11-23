@@ -6,9 +6,9 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/links/launcher_entries.dart';
-import 'package:dpsk_app/state/app_icon_state.dart';
-import 'package:dpsk_app/ui/settings/appearance/app_icon_picker.dart';
+import 'package:dsh_app/links/launcher_entries.dart';
+import 'package:dsh_app/state/app_icon_state.dart';
+import 'package:dsh_app/ui/settings/appearance/app_icon_picker.dart';
 import 'package:flutter/painting.dart' show Color;
 import 'package:flutter_test/flutter_test.dart';
 

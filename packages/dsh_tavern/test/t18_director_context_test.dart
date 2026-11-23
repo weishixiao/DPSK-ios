@@ -38,7 +38,7 @@ Future<T24Harness> _open() async {
 Future<({String chat, String character})> _stateChat(T24Harness h) async {
   final raw = _map(jsonDecode(utf8.decode(t24Card())));
   _map(raw['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'story': {'outline': _outline},
       'state': {

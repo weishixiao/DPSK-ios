@@ -1,4 +1,4 @@
-import 'package:dpsk_app/state/phone_thought.dart';
+import 'package:dsh_app/state/phone_thought.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

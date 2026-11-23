@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:dpsk_app/forum/discourse_client.dart';
-import 'package:dpsk_app/forum/forum_models.dart';
-import 'package:dpsk_app/forum/forum_state.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/forum/forum_notifications_page.dart';
-import 'package:dpsk_app/ui/forum/forum_widgets.dart';
+import 'package:dsh_app/forum/discourse_client.dart';
+import 'package:dsh_app/forum/forum_models.dart';
+import 'package:dsh_app/forum/forum_state.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/forum/forum_notifications_page.dart';
+import 'package:dsh_app/ui/forum/forum_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

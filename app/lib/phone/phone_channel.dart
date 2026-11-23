@@ -966,7 +966,7 @@ enum PhoneUnlock {
   /// Password, verification-code and payment-code inputs.
   secretFields,
 
-  /// DPSK's own screens.
+  /// DSH Go's own screens.
   ownApp,
 }
 

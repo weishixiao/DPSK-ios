@@ -5,16 +5,16 @@
 
 import 'dart:ui' show Tristate;
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
-import 'package:dpsk_app/ui/common/breadcrumb_row.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
-import 'package:dpsk_app/ui/shell/sessions_drawer.dart';
-import 'package:dpsk_app/ui/workspace/directory_picker.dart';
-import 'package:dpsk_app/ui/workspace/workspace_switcher.dart';
-import 'package:dpsk_app/ui/workspace/workspaces_page.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
+import 'package:dsh_app/ui/common/breadcrumb_row.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/ui/shell/sessions_drawer.dart';
+import 'package:dsh_app/ui/workspace/directory_picker.dart';
+import 'package:dsh_app/ui/workspace/workspace_switcher.dart';
+import 'package:dsh_app/ui/workspace/workspaces_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/onboarding/api_key_page.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/onboarding/api_key_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

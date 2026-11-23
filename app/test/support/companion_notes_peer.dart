@@ -7,7 +7,7 @@ import 'package:dsh_client/dsh_client.dart';
 
 import '../../../tooling/companion/offline_http.dart';
 
-const notesPath = '/DPSK/v1/companion/tasks';
+const notesPath = '/dsh-go/v1/companion/tasks';
 const notesCapability = <String, Object?>{
   'v': 1,
   'hostStoreId': 'original-store',

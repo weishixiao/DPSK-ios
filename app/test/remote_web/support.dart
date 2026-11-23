@@ -3,8 +3,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart' show HostKind;
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart' show HostKind;
 import 'package:dsh_remote/dsh_remote.dart'
     show
         DshCarrier,

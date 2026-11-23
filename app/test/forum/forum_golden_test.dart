@@ -3,12 +3,12 @@
 //
 //   flutter test --update-goldens test/forum/forum_golden_test.dart
 
-import 'package:dpsk_app/forum/forum_models.dart';
-import 'package:dpsk_app/ui/forum/forum_account_sheet.dart';
-import 'package:dpsk_app/ui/forum/forum_composer_sheet.dart';
-import 'package:dpsk_app/ui/forum/forum_home_page.dart';
-import 'package:dpsk_app/ui/forum/forum_notifications_page.dart';
-import 'package:dpsk_app/ui/forum/forum_topic_page.dart';
+import 'package:dsh_app/forum/forum_models.dart';
+import 'package:dsh_app/ui/forum/forum_account_sheet.dart';
+import 'package:dsh_app/ui/forum/forum_composer_sheet.dart';
+import 'package:dsh_app/ui/forum/forum_home_page.dart';
+import 'package:dsh_app/ui/forum/forum_notifications_page.dart';
+import 'package:dsh_app/ui/forum/forum_topic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -42,7 +42,7 @@ void main() {
       await tester.tap(find.text('配置分享'));
       await tester.enterText(
         find.byType(TextField).at(1),
-        '后台保活 + 低功耗模型，一晚上只掉 3% 电。\n\n[配置：省电模式](https://weishixiao.github.io/DPSK/share/#p=…)',
+        '后台保活 + 低功耗模型，一晚上只掉 3% 电。\n\n[配置：省电模式](https://ccch1mneyyy.github.io/dsh-go/share/#p=…)',
       );
       await settle(tester);
       // The caret blinks: park focus so both themes freeze the same frame.

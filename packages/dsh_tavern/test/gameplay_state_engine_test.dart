@@ -17,7 +17,7 @@ void main() {
       'Guide',
       greeting: 'hello',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': {
             'schema': _modeSchema('A'),
@@ -49,7 +49,7 @@ void main() {
       'schemaPatches': [
         {'path': '', 'node': _modeSchema('B')},
       ],
-      'dpsk': {
+      'dshgo': {
         'v': 1,
         'state': {
           'init': {'mode': 'B'},
@@ -67,9 +67,9 @@ void main() {
     final chat = await h.engine.createChat(character);
     final greeting = (await h.engine.path(chat)).single.nodeId;
     final initial = await _saved(h.engine, chat);
-    final priorConfig = initial['dpskPackDefinitionConfigId'];
+    final priorConfig = initial['dshgoPackDefinitionConfigId'];
     expect(priorConfig, isA<String>());
-    expect(_map(initial['messageVariables'])['dpsk'], {'mode': 'B'});
+    expect(_map(initial['messageVariables'])['dshgo'], {'mode': 'B'});
     expect(_modeChoices((await h.engine.readState(chat)).schema), ['B']);
 
     final removed = await h.engine.updateGameplayBindings(
@@ -87,8 +87,8 @@ void main() {
     expect(events.whereType<TavernTurnFailed>(), isEmpty);
     expect(events.whereType<TavernTurnDone>(), hasLength(1));
     final retained = await _saved(h.engine, chat);
-    expect(_map(retained['messageVariables'])['dpsk'], {'mode': 'B'});
-    expect(retained['dpskPackDefinitionConfigId'], priorConfig);
+    expect(_map(retained['messageVariables'])['dshgo'], {'mode': 'B'});
+    expect(retained['dshgoPackDefinitionConfigId'], priorConfig);
     final oldView = await h.engine.readState(chat);
     expect(oldView.values, {'mode': 'B'});
     expect(_modeChoices(oldView.schema), ['B']);
@@ -98,14 +98,14 @@ void main() {
     expect(repaired.snapshot.values, {'mode': 'A'});
     expect(_modeChoices(repaired.snapshot.schema), ['A']);
     final adopted = await _saved(h.engine, chat);
-    expect(adopted['dpskPackDefinitionConfigId'], isA<String>());
-    expect(adopted['dpskPackDefinitionConfigId'], isNot(priorConfig));
+    expect(adopted['dshgoPackDefinitionConfigId'], isA<String>());
+    expect(adopted['dshgoPackDefinitionConfigId'], isNot(priorConfig));
 
     await h.engine.selectNode(chat, greeting);
     final original = await h.engine.readState(chat);
     expect(original.values, {'mode': 'B'});
     expect(_modeChoices(original.schema), ['B']);
-    expect((await _saved(h.engine, chat))['dpskPackDefinitionConfigId'], priorConfig);
+    expect((await _saved(h.engine, chat))['dshgoPackDefinitionConfigId'], priorConfig);
   });
 
   test(
@@ -117,7 +117,7 @@ void main() {
         'schemaPatches': [
           {'path': '', 'node': _modeSchema('B')},
         ],
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': {
             'init': {'mode': 'B'},
@@ -139,13 +139,13 @@ void main() {
       );
       final originalChat = await h.engine.createChat(character);
       final original = await _saved(h.engine, originalChat);
-      final knownConfig = original['dpskPackDefinitionConfigId'];
+      final knownConfig = original['dshgoPackDefinitionConfigId'];
       expect(knownConfig, isA<String>());
 
       final missingChat = await _importSaved(h.engine, character, {
         'variables': {'local': 'keep'},
         'messageVariables': {'foreign': 7},
-        'dpskPackDefinitionConfigId': knownConfig,
+        'dshgoPackDefinitionConfigId': knownConfig,
       }, 'missing-value.jsonl');
       final foreignRuntime = <String, Object?>{
         'version': 99,
@@ -154,10 +154,10 @@ void main() {
       final unknownChat = await _importSaved(h.engine, character, {
         'variables': {'local': 'keep'},
         'messageVariables': {
-          'dpsk': {'mode': 'foreign'},
+          'dshgo': {'mode': 'foreign'},
         },
-        'dpskPackDefinitionConfigId': 'not-in-this-database',
-        'dpskStoryRuntime': foreignRuntime,
+        'dshgoPackDefinitionConfigId': 'not-in-this-database',
+        'dshgoStoryRuntime': foreignRuntime,
       }, 'unknown-config.jsonl');
       final beforeReads = _rows(h);
 
@@ -179,18 +179,18 @@ void main() {
       expect(_rows(h), beforeReads);
 
       final stillMissing = await _saved(h.engine, missingChat);
-      expect(_map(stillMissing['messageVariables']).containsKey('dpsk'), isFalse);
-      expect(stillMissing['dpskPackDefinitionConfigId'], knownConfig);
+      expect(_map(stillMissing['messageVariables']).containsKey('dshgo'), isFalse);
+      expect(stillMissing['dshgoPackDefinitionConfigId'], knownConfig);
       final stillUnknown = await _saved(h.engine, unknownChat);
-      expect(stillUnknown['dpskPackDefinitionConfigId'], 'not-in-this-database');
-      expect(stillUnknown['dpskStoryRuntime'], foreignRuntime);
+      expect(stillUnknown['dshgoPackDefinitionConfigId'], 'not-in-this-database');
+      expect(stillUnknown['dshgoStoryRuntime'], foreignRuntime);
       h.expectNoGeneration();
 
       // A real stateless story adoption also retains a configuration reference.
       // Its resolved no-schema domain must not hide or lock ST local variables.
       final statelessCharacter = await h.card('Story only', greeting: 'begin');
       final storyRef = await _install(h, 'story-only', {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'story': {
             'acts': [
@@ -217,8 +217,8 @@ void main() {
       h.reply('first chapter turn');
       expect((await h.engine.send(storyChat, '').toList()).whereType<TavernTurnFailed>(), isEmpty);
       final adoptedStory = await _saved(h.engine, storyChat);
-      expect(adoptedStory['dpskPackDefinitionConfigId'], isA<String>());
-      expect(_map(adoptedStory['dpskStoryRuntime'])['actTurns'], 1);
+      expect(adoptedStory['dshgoPackDefinitionConfigId'], isA<String>());
+      expect(_map(adoptedStory['dshgoStoryRuntime'])['actTurns'], 1);
       final localView = await h.engine.readState(storyChat);
       expect(localView.legacy, isTrue);
       expect(_map(localView.values)['local'], 7);
@@ -229,8 +229,8 @@ void main() {
       h.reply('second chapter turn');
       expect((await h.engine.send(storyChat, '').toList()).whereType<TavernTurnFailed>(), isEmpty);
       final continuedStory = await _saved(h.engine, storyChat);
-      expect(_map(continuedStory['dpskStoryRuntime'])['actTurns'], 2);
-      expect(continuedStory['dpskPackDefinitionConfigId'], adoptedStory['dpskPackDefinitionConfigId']);
+      expect(_map(continuedStory['dshgoStoryRuntime'])['actTurns'], 2);
+      expect(continuedStory['dshgoPackDefinitionConfigId'], adoptedStory['dshgoPackDefinitionConfigId']);
     },
   );
   test('script message data adopts only validated changes on the actual physical target', () async {
@@ -238,7 +238,7 @@ void main() {
     final character = await h.card('Script state', greeting: 'legacy leaf');
     final chat = await h.engine.createChat(character);
     final leaf = (await h.engine.path(chat)).single.nodeId;
-    expect((await _saved(h.engine, chat)).containsKey('dpskPackDefinitionConfigId'), isFalse);
+    expect((await _saved(h.engine, chat)).containsKey('dshgoPackDefinitionConfigId'), isFalse);
     final ref = await _install(h, 'script-count', {
       'schemaPatches': [
         {
@@ -252,7 +252,7 @@ void main() {
           },
         },
       ],
-      'dpsk': {
+      'dshgo': {
         'v': 1,
         'state': {
           'init': {'n': 0},
@@ -293,31 +293,31 @@ void main() {
     final rootRef = created.upsertMessages.singleWhere((message) => message.message == 'pack root').ref;
     expect((await h.engine.path(chat)).map((message) => message.nodeId), [rootRef.nodeId, leaf]);
     final initialized = await _savedMessage(h.engine, chat, 'pack root');
-    expect(_map(initialized['messageVariables'])['dpsk'], {'n': 0});
-    expect(initialized['dpskPackDefinitionConfigId'], isA<String>());
+    expect(_map(initialized['messageVariables'])['dshgo'], {'n': 0});
+    expect(initialized['dshgoPackDefinitionConfigId'], isA<String>());
     expect(
       h.inspect(
         (db) => [
           for (final row in db.select('SELECT config_id FROM gameplay_effective_configs WHERE config_id = ?', [
-            initialized['dpskPackDefinitionConfigId'],
+            initialized['dshgoPackDefinitionConfigId'],
           ]))
             row['config_id'],
         ],
       ),
-      [initialized['dpskPackDefinitionConfigId']],
+      [initialized['dshgoPackDefinitionConfigId']],
     );
-    expect(initialized.containsKey('dpskPackRuntime'), isFalse);
-    expect((await _saved(h.engine, chat)).containsKey('dpskPackDefinitionConfigId'), isFalse);
+    expect(initialized.containsKey('dshgoPackRuntime'), isFalse);
+    expect((await _saved(h.engine, chat)).containsKey('dshgoPackDefinitionConfigId'), isFalse);
 
     final target = TavernVariableTarget(scope: TavernVariableScope.message, messageRef: rootRef);
     final changed = await h.bridge.replaceVariables(context.id, target, {
-      'dpsk': {'n': 1},
+      'dshgo': {'n': 1},
       'foreign': 'first',
     });
-    expect(changed.value['dpsk'], {'n': 2});
+    expect(changed.value['dshgo'], {'n': 2});
     expect(changed.stateEdit?.applied, isTrue);
     final adopted = await _savedMessage(h.engine, chat, 'pack root');
-    final packRuntime = _map(adopted['dpskPackRuntime']);
+    final packRuntime = _map(adopted['dshgoPackRuntime']);
     expect(_map(_map(packRuntime['bindings'])[bindingId])['rules'], ['once']);
 
     final ordinary = await h.bridge.replaceVariables(context.id, target, {...changed.value, 'foreign': 'second'});
@@ -339,8 +339,8 @@ void main() {
     });
     expect(preserved.stateEdit, isNull);
     final beforeRejected = await _savedMessage(h.engine, chat, 'pack root');
-    expect(beforeRejected['dpskPackDefinitionConfigId'], adopted['dpskPackDefinitionConfigId']);
-    expect(beforeRejected['dpskPackRuntime'], packRuntime);
+    expect(beforeRejected['dshgoPackDefinitionConfigId'], adopted['dshgoPackDefinitionConfigId']);
+    expect(beforeRejected['dshgoPackRuntime'], packRuntime);
     final rowsBeforeRejected = _rows(h);
 
     // The selected leaf has no configuration reference. The physical root
@@ -348,7 +348,7 @@ void main() {
     await expectLater(
       () => h.bridge.replaceVariables(context.id, target, {
         ...preserved.value,
-        'dpsk': {'n': 9},
+        'dshgo': {'n': 9},
       }),
       throwsA(
         scriptError(TavernScriptErrorCode.stateValidation).having((error) => error.committed, 'committed', isFalse),
@@ -360,7 +360,7 @@ void main() {
     expect(await _savedMessage(h.engine, chat, 'pack root'), beforeRejected);
     expect(_rows(h), rowsBeforeRejected);
     expect((await h.engine.path(chat)).last.nodeId, leaf);
-    expect((await _saved(h.engine, chat)).containsKey('dpskPackDefinitionConfigId'), isFalse);
+    expect((await _saved(h.engine, chat)).containsKey('dshgoPackDefinitionConfigId'), isFalse);
     h.expectNoGeneration();
   });
 
@@ -429,7 +429,7 @@ Future<TavernPackVersionRef> _install(ScriptFixture h, String id, Json fields) a
 Future<Json> _saved(TavernEngine engine, String chatId) async {
   final files = await engine.exportChat(chatId);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final state = _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  final state = _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
   return _map(jsonDecode(jsonEncode(state)));
 }
 
@@ -437,7 +437,7 @@ Future<Json> _savedMessage(TavernEngine engine, String chatId, String text) asyn
   final files = await engine.exportChat(chatId);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
   final message = document.messages.singleWhere((message) => message['mes'] == text);
-  final state = _map(_map(_map(message['extra'])['dpsk'])['tavernState']);
+  final state = _map(_map(_map(message['extra'])['dshgo'])['tavernState']);
   return _map(jsonDecode(jsonEncode(state)));
 }
 
@@ -460,7 +460,7 @@ Future<String> _importSaved(TavernEngine engine, String characterId, Json state,
         'send_date': DateTime.utc(2026, 11, 14).toIso8601String(),
         'variables': [state['messageVariables']],
         'extra': {
-          'dpsk': {'tavernState': state},
+          'dshgo': {'tavernState': state},
         },
       },
     ],

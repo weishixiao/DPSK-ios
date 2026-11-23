@@ -7,11 +7,11 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/launch/custom_launch.dart';
-import 'package:dpsk_app/launch/launch_import.dart';
-import 'package:dpsk_app/launch/launch_media.dart';
-import 'package:dpsk_app/plugins/native/native_effects.dart';
-import 'package:dpsk_app/plugins/native/native_file_platform.dart';
+import 'package:dsh_app/launch/custom_launch.dart';
+import 'package:dsh_app/launch/launch_import.dart';
+import 'package:dsh_app/launch/launch_media.dart';
+import 'package:dsh_app/plugins/native/native_effects.dart';
+import 'package:dsh_app/plugins/native/native_file_platform.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

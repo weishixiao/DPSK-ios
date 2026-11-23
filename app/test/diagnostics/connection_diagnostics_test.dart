@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/app_error_log.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/app_error_log.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -8,13 +8,13 @@
 # 不打扰模式: the privileged process is started by class name, outside R8's
 # view (Shizuku UserService, `app_process … PrivilegedDisplayMain` over self-ADB),
 # and talks to the app through a hand-written Binder and Parcel/Bundle protocol.
--keep class com.dpsk.harness.phone.background.** { *; }
+-keep class io.github.ccch1mneyyy.dsh_app.phone.background.** { *; }
 
 # Independent Shizuku service and self-ADB/app_process command entry points.
--keep class com.dpsk.harness.phone.shell.** { *; }
+-keep class io.github.ccch1mneyyy.dsh_app.phone.shell.** { *; }
 
 # The one-attempt self-update UserService is loaded by Shizuku outside R8 references.
--keep class com.dpsk.harness.update.privileged.** { *; }
+-keep class io.github.ccch1mneyyy.dsh_app.update.privileged.** { *; }
 
 # ONNX JNI looks up exception/value classes and constructors by their original names.
 # Without these, an inference error aborts the process instead of throwing OrtException.

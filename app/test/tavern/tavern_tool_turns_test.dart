@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/tavern/deferred_tavern.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_settings.dart';
-import 'package:dpsk_app/tavern/tavern_tool_turns.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_tool_strip.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/deferred_tavern.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_settings.dart';
+import 'package:dsh_app/tavern/tavern_tool_turns.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_tool_strip.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -237,7 +237,7 @@ void main() {
     expect(sent.version, 2);
     expect(sent.anchor['treeRevision'], 3);
     expect((sent.anchor['selectedLeaf']! as Map)['nodeId'], tavern.reply);
-    expect(sent.decisionId, startsWith('dpsk-'));
+    expect(sent.decisionId, startsWith('dshgo-'));
     expect((await SharedPreferences.getInstance()).getString('${tavernMemoryIntentKey}p1'), isNull);
     // Read again: what the engine now says.
     expect(find.text('已记住'), findsOneWidget);

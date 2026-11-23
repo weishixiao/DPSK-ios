@@ -13,7 +13,7 @@ final class TavernCastSource {
       packRef = null,
       assetResourceIds = const [];
 
-  /// localCastId at import identifies manifest.dpsk.cast[].id.
+  /// localCastId at import identifies manifest.dshgo.cast[].id.
   const TavernCastSource.pack({required TavernPackVersionRef this.packRef, this.assetResourceIds = const []})
     : kind = TavernCastSourceKind.packManifest,
       card = null,

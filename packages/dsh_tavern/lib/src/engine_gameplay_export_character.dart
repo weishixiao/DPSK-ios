@@ -27,7 +27,7 @@ extension _GameplayCharacterExports on TavernEngine {
       }
     }
     final extensions = data['extensions'];
-    Map<String, Object?>? dpsk;
+    Map<String, Object?>? dshgo;
     final hasDeclaration =
         resolution.rawPresent ||
         resolution.sources.any(
@@ -40,11 +40,11 @@ extension _GameplayCharacterExports on TavernEngine {
               (source['roles']! as List<Object?>).contains('definition'),
         );
     if (hasDeclaration && resolution.effective is Map<String, Object?>) {
-      dpsk = projection.definitions();
+      dshgo = projection.definitions();
       if (extensions == null && !data.containsKey('extensions')) {
-        data['extensions'] = <String, Object?>{'dpsk': dpsk};
+        data['extensions'] = <String, Object?>{'dshgo': dshgo};
       } else if (extensions is Map<String, Object?>) {
-        extensions['dpsk'] = dpsk;
+        extensions['dshgo'] = dshgo;
       } else {
         issues.add(
           _gameplayExportIssue(
@@ -103,7 +103,7 @@ extension _GameplayCharacterExports on TavernEngine {
 
     reserveUris(data['assets']);
     String allocatePath(String namespace, String identity, String original) {
-      final prefix = 'dpsk-$namespace/${_directorHash(identity).substring(0, 20)}';
+      final prefix = 'dshgo-$namespace/${_directorHash(identity).substring(0, 20)}';
       var path = '$prefix/$original';
       var suffix = 1;
       while (!usedPaths.add(path)) {
@@ -158,7 +158,7 @@ extension _GameplayCharacterExports on TavernEngine {
       });
     }
     final rewrittenAssets = <String>{};
-    if (dpsk != null) {
+    if (dshgo != null) {
       for (final ref in projection.assetReferences) {
         final source = ref['source']! as Map<String, Object?>;
         final path = projection.destination(source, ref['pointer']! as String);
@@ -181,7 +181,7 @@ extension _GameplayCharacterExports on TavernEngine {
           );
           continue;
         }
-        _putGameplayExportReference(dpsk, path, uri, issues, source: source);
+        _putGameplayExportReference(dshgo, path, uri, issues, source: source);
         rewrittenAssets.add(path);
       }
     }
@@ -271,19 +271,19 @@ extension _GameplayCharacterExports on TavernEngine {
         }
       }
     }
-    if (dpsk != null) {
-      for (final path in _gameplayExportAssetPointers(dpsk)) {
+    if (dshgo != null) {
+      for (final path in _gameplayExportAssetPointers(dshgo)) {
         if (rewrittenAssets.contains(path)) {
           continue;
         }
-        final value = _authoringLookup(dpsk, _gameplayCompositionPointer(path)!).value;
+        final value = _authoringLookup(dshgo, _gameplayCompositionPointer(path)!).value;
         if (value is! String) {
           continue;
         }
         final source = projection.sourceAt(path) ?? projection.host;
         final replacement = cardUri(source, value, path);
         if (replacement != null) {
-          _putGameplayExportReference(dpsk, path, replacement, issues, source: source);
+          _putGameplayExportReference(dshgo, path, replacement, issues, source: source);
         }
       }
     }
@@ -315,10 +315,10 @@ extension _GameplayCharacterExports on TavernEngine {
         );
       }
     }
-    var provenanceKey = 'dpsk_export_sources';
+    var provenanceKey = 'dshgo_export_sources';
     var suffix = 1;
     while (raw.containsKey(provenanceKey)) {
-      provenanceKey = 'dpsk_export_sources_${suffix++}';
+      provenanceKey = 'dshgo_export_sources_${suffix++}';
     }
     raw[provenanceKey] = {
       'v': 1,
@@ -414,7 +414,7 @@ extension _GameplayCharacterExports on TavernEngine {
 }
 
 void _reserveGameplayExportLegacyIds(_GameplayExportProjection projection, Map<String, Object?> data) {
-  projection.reserveDeclaration(_map(data['extensions'])['dpsk']);
+  projection.reserveDeclaration(_map(data['extensions'])['dshgo']);
   final entries = _map(data['character_book'])['entries'];
   if (entries is List<Object?>) {
     for (final (index, row) in entries.indexed) {

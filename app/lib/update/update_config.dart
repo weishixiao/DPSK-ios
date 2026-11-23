@@ -21,7 +21,7 @@
 library;
 
 /// GitHub repository the releases live in.
-const updateRepo = 'weishixiao/DPSK';
+const updateRepo = 'ccch1mneyyy/dsh-go';
 
 /// `releases/latest` of the REST API: tag, notes, assets with sizes and
 /// SHA-256 digests. Unauthenticated: 60 requests per hour per IP.
@@ -107,7 +107,7 @@ class UpdateMirror {
   /// The app's own mirror at [origin] (default [updateDownloadOrigin]).
   static UpdateMirror selfHosted([String origin = updateDownloadOrigin]) {
     final base = origin.endsWith('/') ? origin.substring(0, origin.length - 1) : origin;
-    return UpdateMirror(id: 'dpsk', label: Uri.tryParse(base)?.host ?? base, releases: '$base/download/');
+    return UpdateMirror(id: 'dshgo', label: Uri.tryParse(base)?.host ?? base, releases: '$base/download/');
   }
 
   /// Rewrites a github.com URL to go through this mirror. URLs on other hosts

@@ -5,7 +5,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/chat/media/generate_header.dart';
+import 'package:dsh_app/ui/chat/media/generate_header.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _golden =

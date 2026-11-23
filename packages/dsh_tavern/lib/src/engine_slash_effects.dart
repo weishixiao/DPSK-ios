@@ -31,7 +31,7 @@ class _ScriptEffectPlan {
   Set<String> get chatTargets => {
     if (local.hasIntents) 'local',
     ...stateUpdates.keys,
-    if (packWorldInfo?.isEmpty == false) 'dpskPackWorldInfo',
+    if (packWorldInfo?.isEmpty == false) 'dshgoPackWorldInfo',
     if (hasHashUpdate) 'stChatIdHash',
   };
   Set<String> get carriers => {if (global.hasIntents) 'global', if (chatTargets.isNotEmpty) 'chat'};
@@ -105,7 +105,7 @@ extension _ScriptEffectCarriers on _ScriptCoordinator {
       throw _scriptError(TavernScriptErrorCode.revisionConflict, plan.operation, 'The captured selection changed.');
     }
     for (final target in plan.chatTargets) {
-      if (!const {'local', 'timedWorldInfo', 'decoratorState', 'stChatIdHash', 'dpskPackWorldInfo'}.contains(target)) {
+      if (!const {'local', 'timedWorldInfo', 'decoratorState', 'stChatIdHash', 'dshgoPackWorldInfo'}.contains(target)) {
         throw _scriptError(
           TavernScriptErrorCode.reservedField,
           plan.operation,
@@ -279,8 +279,8 @@ extension _ScriptEffectCarriers on _ScriptCoordinator {
           final metadata = engine._chatCodec.metadataForNode(engine._store, chatId);
           final latest = anchor == null && group == null ? _emptyChatState(metadata) : engine._stateAt(chatId, anchor);
           final merged = state_core.mergeStatePackWorldInfo(
-            exists: latest.containsKey('dpskPackRuntime'),
-            raw: latest['dpskPackRuntime'],
+            exists: latest.containsKey('dshgoPackRuntime'),
+            raw: latest['dshgoPackRuntime'],
             delta: packWorldInfo,
           );
           if (merged.issues.isNotEmpty) {
@@ -301,9 +301,9 @@ extension _ScriptEffectCarriers on _ScriptCoordinator {
             );
           }
           if (merged.exists) {
-            state['dpskPackRuntime'] = merged.raw;
+            state['dshgoPackRuntime'] = merged.raw;
           } else {
-            state.remove('dpskPackRuntime');
+            state.remove('dshgoPackRuntime');
           }
         }
         if (anchor != null) {

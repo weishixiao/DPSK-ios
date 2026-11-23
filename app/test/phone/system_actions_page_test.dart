@@ -1,20 +1,20 @@
 // 系统操作's page and handoff prompt: true about what it can and can't do, no
 // switch without the disclosure, and only continue tells the AI to go on.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/system_actions_state.dart';
-import 'package:dpsk_app/phone/phone_channel.dart' show PhoneLogEntry;
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/features/permission_page.dart';
-import 'package:dpsk_app/ui/phone/action_log_page.dart';
-import 'package:dpsk_app/ui/phone/phone_disclosure_sheet.dart';
-import 'package:dpsk_app/ui/phone/system_actions_host.dart';
-import 'package:dpsk_app/ui/phone/system_actions_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/system_actions_state.dart';
+import 'package:dsh_app/phone/phone_channel.dart' show PhoneLogEntry;
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/features/permission_page.dart';
+import 'package:dsh_app/ui/phone/action_log_page.dart';
+import 'package:dsh_app/ui/phone/phone_disclosure_sheet.dart';
+import 'package:dsh_app/ui/phone/system_actions_host.dart';
+import 'package:dsh_app/ui/phone/system_actions_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

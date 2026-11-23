@@ -7,8 +7,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/ui/theme/dsh_glyphs.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/theme/dsh_glyphs.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -13,7 +13,7 @@ DSH 可以直接运行在这台手机上（本机引擎），也可以运行在�
 ## iPhone 的 Linux 与 Python
 
 <!-- nav: commonSettings,hubSettingsEngine -->
-`设置 › 本机引擎` · [打开](dpsk://open/engine)
+`设置 › 本机引擎` · [打开](dshgo://open/engine)
 
 在 iPhone 上，进入该页的「Linux 环境」小节。
 
@@ -42,7 +42,7 @@ python3 -m pip --version
 ## 本机引擎
 
 <!-- nav: commonSettings,hubSettingsEngine -->
-`设置 › 本机引擎` · [打开](dpsk://open/engine)
+`设置 › 本机引擎` · [打开](dshgo://open/engine)
 
 - **启动**、**停止**、**重启**：停止前会确认；停止和重启都会中断进行中的对话。
 - 启动失败时，页面显示失败原因和对应的修复按钮，如重试、**以安全模式启动**、查看日志。
@@ -86,7 +86,7 @@ python3 -m pip --version
 点主机名左边的图标直接查看详情：远程主机显示主机名、连接状态和当前网络路径，支持时可手动测量延迟；本机打开**本机引擎**。主机名和下拉箭头仍用于切换主机。
 
 <!-- nav: remoteSwitchHost,remoteManageHosts -->
-`切换主机 › 管理远程主机` · [打开](dpsk://open/remote)
+`切换主机 › 管理远程主机` · [打开](dshgo://open/remote)
 
 设置里也能进：
 

@@ -3,13 +3,13 @@
 // composer, a working capsule keeps its size; the status line's mark is
 // concentric with its left end; a panel card keeps the page's gutters.
 
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/ui/plugins/native/composer_capsules.dart';
-import 'package:dpsk_app/ui/plugins/native/composer_strip.dart';
-import 'package:dpsk_app/ui/plugins/native/native_composer_bar.dart';
-import 'package:dpsk_app/ui/plugins/native/native_panel.dart';
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/ui/plugins/native/composer_capsules.dart';
+import 'package:dsh_app/ui/plugins/native/composer_strip.dart';
+import 'package:dsh_app/ui/plugins/native/native_composer_bar.dart';
+import 'package:dsh_app/ui/plugins/native/native_panel.dart';
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -131,15 +131,15 @@ void main() {
   testWidgets('a panel page: the signed card keeps the 16 gutters, equal both sides', (tester) async {
     usePhoneView(tester);
     final bridge = FakeBridge(contributions([usagePlugin()]));
-    bridge.views['DPSK-example-usage/usage'] = const DshGoView(
-      pkg: 'DPSK-example-usage',
+    bridge.views['dsh-go-example-usage/usage'] = const DshGoView(
+      pkg: 'dsh-go-example-usage',
       id: 'usage',
       view: {'type': 'metric', 'label': '本对话', 'value': '¥0.42'},
     );
     await tester.pumpWidget(
       testApp(
         const NativePanelPage(
-          panel: NativePanel(package: 'DPSK-example-usage', id: 'usage', title: '用量', placement: {'features'}),
+          panel: NativePanel(package: 'dsh-go-example-usage', id: 'usage', title: '用量', placement: {'features'}),
         ),
         overrides: nativeOverrides(bridge),
       ),

@@ -22,7 +22,7 @@ import 'share_net.dart';
 Future<SharePayload> resolveShareLink(ShareLink link, ShareNet net) async =>
     decodeShareFile(await fetchShareLinkText(link, net));
 
-/// What a link points at, as `.dpsk` file text (or a bare code): the code
+/// What a link points at, as `.dshgo` file text (or a bare code): the code
 /// inline, or the file in its Gist, checked against the checksum the link
 /// carries.
 Future<String> fetchShareLinkText(ShareLink link, ShareNet net) async {

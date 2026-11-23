@@ -307,7 +307,7 @@ Uint8List _pack(String version, String castName) {
     'formatVersion': 1,
     'packId': 'binding-cast-pack',
     'packVersion': version,
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'cast': [
         {

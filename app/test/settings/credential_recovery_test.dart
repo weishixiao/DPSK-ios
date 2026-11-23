@@ -1,25 +1,25 @@
 // 清除已保存的密钥 on HarmonyOS: asked for, once, in the person's own words; what
 // was read from the vault doesn't come back; Android never sees any of it.
 
-import 'package:dpsk_app/forum/forum_auth.dart';
-import 'package:dpsk_app/forum/forum_config.dart';
-import 'package:dpsk_app/forum/forum_crypto.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/remote/relay/dsh_remote_backend.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/secrets/secure_storage.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
-import 'package:dpsk_app/state/account_state.dart' show accountBrowserProvider;
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/credential_recovery.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/provider_keys.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/onboarding/api_key_page.dart';
-import 'package:dpsk_app/ui/remote/ssh_host_form.dart';
-import 'package:dpsk_app/ui/settings/privacy_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/forum/forum_auth.dart';
+import 'package:dsh_app/forum/forum_config.dart';
+import 'package:dsh_app/forum/forum_crypto.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/remote/relay/dsh_remote_backend.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/secrets/secure_storage.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/state/account_state.dart' show accountBrowserProvider;
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/credential_recovery.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/provider_keys.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/onboarding/api_key_page.dart';
+import 'package:dsh_app/ui/remote/ssh_host_form.dart';
+import 'package:dsh_app/ui/settings/privacy_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

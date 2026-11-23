@@ -1,12 +1,12 @@
 # Hosts, install, fallbacks
 
-DPSK connects to three kinds of host: the on-device engine, SSH hosts and relay hosts. Tool cards travel in the conversation log and show everywhere; the other slots go through the DPSK bridge (`dsh-go-bridge`) and need it on the host.
+dsh-go connects to three kinds of host: the on-device engine, SSH hosts and relay hosts. Tool cards travel in the conversation log and show everywhere; the other slots go through the dsh-go bridge (`dsh-go-bridge`) and need it on the host.
 
 | | Tool cards | Capsules · menu · strip · panels | Web plugins (web islands) |
 |---|---|---|---|
 | On-device engine | ✅ | ✅ the bridge ships with the app's runtime | ✅ |
 | SSH host | ✅ | Phase 2 (the bridge cannot be installed on SSH hosts yet) | ✅ |
-| Relay host | ✅ (with the log) | ❌ the relay does not pass `/DPSK/*` | ❌ |
+| Relay host | ✅ (with the log) | ❌ the relay does not pass `/dsh-go/*` | ❌ |
 
 ## Installing a local plugin
 

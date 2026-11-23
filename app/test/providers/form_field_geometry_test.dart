@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/providers_state.dart';
-import 'package:dpsk_app/ui/features/preset_editor/preset_editor_page.dart';
-import 'package:dpsk_app/ui/providers/provider_form_page.dart';
-import 'package:dpsk_app/ui/providers/provider_widgets.dart';
-import 'package:dpsk_app/ui/remote/ssh_host_form.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/providers_state.dart';
+import 'package:dsh_app/ui/features/preset_editor/preset_editor_page.dart';
+import 'package:dsh_app/ui/providers/provider_form_page.dart';
+import 'package:dsh_app/ui/providers/provider_widgets.dart';
+import 'package:dsh_app/ui/remote/ssh_host_form.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

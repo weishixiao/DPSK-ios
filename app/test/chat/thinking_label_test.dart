@@ -2,9 +2,9 @@
 // sweeps nothing ticks and nothing masks the text; only one sweeps at a time;
 // with animations off it is plain still text.
 
-import 'package:dpsk_app/ui/chat/widgets/thinking_pill.dart';
-import 'package:dpsk_app/ui/common/think_glyph.dart';
-import 'package:dpsk_app/ui/fx/orbs/thinking_orb.dart';
+import 'package:dsh_app/ui/chat/widgets/thinking_pill.dart';
+import 'package:dsh_app/ui/common/think_glyph.dart';
+import 'package:dsh_app/ui/fx/orbs/thinking_orb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

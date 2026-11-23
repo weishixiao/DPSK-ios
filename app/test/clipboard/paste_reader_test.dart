@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dpsk_app/clipboard/paste_reader.dart';
+import 'package:dsh_app/clipboard/paste_reader.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

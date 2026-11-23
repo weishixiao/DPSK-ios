@@ -4,9 +4,9 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/fx/image_gen/field.dart';
-import 'package:dpsk_app/ui/fx/image_gen/presets.dart';
-import 'package:dpsk_app/ui/fx/image_gen/reveal.dart';
+import 'package:dsh_app/ui/fx/image_gen/field.dart';
+import 'package:dsh_app/ui/fx/image_gen/presets.dart';
+import 'package:dsh_app/ui/fx/image_gen/reveal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

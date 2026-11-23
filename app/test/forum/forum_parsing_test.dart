@@ -1,13 +1,13 @@
 // Reading Discourse JSON (fixtures captured from meta.discourse.org and the
-// DPSK forum, anonymised: user01… usernames, no real names or avatars, filler
+// dsh-go forum, anonymised: user01… usernames, no real names or avatars, filler
 // prose; shapes, ids, counts, emoji and code kept) and cooked post HTML.
 
-import 'package:dpsk_app/forum/discourse_client.dart';
-import 'package:dpsk_app/forum/emoji.dart';
-import 'package:dpsk_app/forum/forum_models.dart';
-import 'package:dpsk_app/forum/forum_share.dart';
-import 'package:dpsk_app/forum/render/cooked.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
+import 'package:dsh_app/forum/discourse_client.dart';
+import 'package:dsh_app/forum/emoji.dart';
+import 'package:dsh_app/forum/forum_models.dart';
+import 'package:dsh_app/forum/forum_share.dart';
+import 'package:dsh_app/forum/render/cooked.dart';
+import 'package:dsh_app/share_code/share_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';
@@ -102,9 +102,9 @@ void main() {
             'created_at': '2026-10-24T01:02:03.000Z',
             'post_number': 3,
             'topic_id': 5,
-            'fancy_title': '欢迎来到 DPSK 社区 :wave:',
-            'slug': 'DPSK',
-            'data': {'display_username': 'xiamu', 'topic_title': '欢迎来到 DPSK 社区'},
+            'fancy_title': '欢迎来到 dsh-go 社区 :wave:',
+            'slug': 'dsh-go',
+            'data': {'display_username': 'xiamu', 'topic_title': '欢迎来到 dsh-go 社区'},
           },
         ],
         'total_rows_notifications': 1,
@@ -112,7 +112,7 @@ void main() {
       });
       final n = page.notifications.single;
       expect(n.actor, 'xiamu');
-      expect(n.title, '欢迎来到 DPSK 社区 👋');
+      expect(n.title, '欢迎来到 dsh-go 社区 👋');
       expect(n.read, isFalse);
       expect(page.hasMore, isTrue);
     });
@@ -254,16 +254,16 @@ void main() {
       expect((details.body.single as CookedMarkdown).markdown, '很长的日志');
     });
 
-    test('the DPSK welcome topic (captured from the live forum)', () {
+    test('the dsh-go welcome topic (captured from the live forum)', () {
       const cooked =
-          '<p>DPSK 是在 Android 手机上运行 DeepSeek Harness（DSH）的客户端。</p>\n<div class="md-table">\n<table>\n'
+          '<p>dsh-go 是在 Android 手机上运行 DeepSeek Harness（DSH）的客户端。</p>\n<div class="md-table">\n<table>\n'
           '<thead>\n<tr>\n<th>分类</th>\n<th>发什么</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><a href="/c/plugins">插件</a></td>\n'
           '<td>插件发布、推荐与评测</td>\n</tr>\n</tbody>\n</table>\n</div><p><strong>提问前</strong>先搜一下。</p>\n'
           '<p>请友善交流，详见<a href="/guidelines">社区准则</a>。</p>';
       final md = (parseCooked(cooked, base: Uri.parse('https://forum.example')).single as CookedMarkdown).markdown;
       expect(
         md,
-        'DPSK 是在 Android 手机上运行 DeepSeek Harness（DSH）的客户端。\n\n'
+        'dsh-go 是在 Android 手机上运行 DeepSeek Harness（DSH）的客户端。\n\n'
         '| 分类 | 发什么 |\n| --- | --- |\n| [插件](https://forum.example/c/plugins) | 插件发布、推荐与评测 |\n\n'
         '**提问前**先搜一下。\n\n请友善交流，详见[社区准则](https://forum.example/guidelines)。',
       );
@@ -278,8 +278,8 @@ void main() {
       );
       expect(forumResolve(forumBase, '//cdn.test/x.png').toString(), 'https://cdn.test/x.png');
       expect(
-        forumTopicUrl(forumBase, topicId: 5, slug: 'DPSK', postNumber: 3).toString(),
-        'https://forum.test/t/DPSK/5/3',
+        forumTopicUrl(forumBase, topicId: 5, slug: 'dsh-go', postNumber: 3).toString(),
+        'https://forum.test/t/dsh-go/5/3',
       );
       final sub = Uri.parse('https://example.com/forum');
       expect(forumResolve(sub, '/t/x/1').toString(), 'https://example.com/forum/t/x/1');

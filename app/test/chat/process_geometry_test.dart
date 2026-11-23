@@ -1,8 +1,8 @@
-import 'package:dpsk_app/ui/fx/orbs/thinking_orb.dart';
-import 'package:dpsk_app/ui/chat/render/code_block.dart';
-import 'package:dpsk_app/ui/chat/widgets/stream_row.dart';
-import 'package:dpsk_app/ui/chat/widgets/thinking_pill.dart';
-import 'package:dpsk_app/ui/chat/widgets/tool_row.dart';
+import 'package:dsh_app/ui/fx/orbs/thinking_orb.dart';
+import 'package:dsh_app/ui/chat/render/code_block.dart';
+import 'package:dsh_app/ui/chat/widgets/stream_row.dart';
+import 'package:dsh_app/ui/chat/widgets/thinking_pill.dart';
+import 'package:dsh_app/ui/chat/widgets/tool_row.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

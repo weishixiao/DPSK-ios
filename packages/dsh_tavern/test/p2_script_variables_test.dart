@@ -602,7 +602,7 @@ void main() {
     final chat = await h.engine.createChat(character);
     final context = await h.context(chat, characterId: character);
     final initial = await h.bridge.getVariables(context.id, scriptMessage);
-    expect(initial.value['dpsk'], {'count': 0});
+    expect(initial.value['dshgo'], {'count': 0});
     final withMvu = <String, Object?>{
       ...initial.value,
       'stat_data': {'hp': 3},
@@ -621,10 +621,10 @@ void main() {
     expect((await h.bridge.getVariables(context.id, scriptMessage)).value, beforeRejected.value);
     final changed = await h.bridge.replaceVariables(context.id, scriptMessage, {
       ...withMvu,
-      'dpsk': {'count': 999},
+      'dshgo': {'count': 999},
       'stat_data': {'hp': 4},
     });
-    expect(changed.value['dpsk'], {'count': 5});
+    expect(changed.value['dshgo'], {'count': 5});
     expect(changed.value['stat_data'], {'hp': 4});
     expect(changed.stateEdit, isNotNull);
     expect(changed.stateEdit!.applied, isTrue);
@@ -641,14 +641,14 @@ void main() {
     expect(scriptMap(afterOrdinary['messageVariables'])['stat_data'], {'hp': 8});
     final next = await h.bridge.replaceVariables(context.id, scriptMessage, {
       ...changed.value,
-      'dpsk': {'count': 999},
+      'dshgo': {'count': 999},
       'stat_data': {'hp': 9},
     });
-    expect(next.value['dpsk'], {'count': 10}, reason: 'Each user edit has a fresh step invocation.');
+    expect(next.value['dshgo'], {'count': 10}, reason: 'Each user edit has a fresh step invocation.');
     expect(next.stateEdit!.snapshot.effects, isEmpty, reason: 'The once rule ledger survives ordinary data writes.');
     await h.reopen();
     final fresh = await h.context(chat, characterId: character);
-    expect((await h.bridge.getVariables(fresh.id, scriptMessage)).value['dpsk'], {'count': 10});
+    expect((await h.bridge.getVariables(fresh.id, scriptMessage)).value['dshgo'], {'count': 10});
     expect((await h.bridge.getVariables(fresh.id, scriptMessage)).value['stat_data'], {'hp': 9});
     h.expectNoGeneration();
   });
@@ -688,6 +688,6 @@ class _JsonTrap {
 Future<ScriptJson> _savedState(ScriptFixture h, String chat) async {
   final files = await h.engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final saved = scriptMap(scriptMap(scriptMap(document.messages.last['extra'])['dpsk'])['tavernState']);
+  final saved = scriptMap(scriptMap(scriptMap(document.messages.last['extra'])['dshgo'])['tavernState']);
   return scriptMap(jsonDecode(jsonEncode(saved)));
 }

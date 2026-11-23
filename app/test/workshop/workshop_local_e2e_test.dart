@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_pack.dart';
-import 'package:dpsk_app/pets/pet_library.dart';
-import 'package:dpsk_app/workshop/workshop_client.dart';
-import 'package:dpsk_app/workshop/workshop_http.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_repository.dart';
+import 'package:dsh_app/companion/companion_pack.dart';
+import 'package:dsh_app/pets/pet_library.dart';
+import 'package:dsh_app/workshop/workshop_client.dart';
+import 'package:dsh_app/workshop/workshop_http.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -57,7 +57,7 @@ abstract final class ChatPluginsMetrics {
 }
 
 /// The chat page's seven slots in page order (the header's, then the
-/// composer's): how the island stacks them (`recipes.json` `DPSK.chat`)
+/// composer's): how the island stacks them (`recipes.json` `dsh-go.chat`)
 /// and how the sources line names them.
 const chatSheetSlots = [
   Slots.headerActions,
@@ -244,7 +244,7 @@ class ChatWebPluginsPane extends ConsumerWidget {
 }
 
 /// The capsule row's id for the entry (`composer_capsules.dart`).
-const chatPluginsCapsuleId = 'DPSK:plugins';
+const chatPluginsCapsuleId = 'dsh-go:plugins';
 
 /// The web plugins' part: whose they are, then their island or the way to
 /// DSH Web.

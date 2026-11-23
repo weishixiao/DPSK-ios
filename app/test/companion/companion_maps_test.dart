@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_local.dart';
-import 'package:dpsk_app/companion/companion_maps.dart';
-import 'package:dpsk_app/companion/companion_memory.dart';
-import 'package:dpsk_app/companion/companion_reminder.dart';
-import 'package:dpsk_app/l10n/gen/app_localizations.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/ui/companion/companion_tasks_page.dart';
-import 'package:dpsk_app/ui/theme/app_theme.dart';
+import 'package:dsh_app/companion/companion_local.dart';
+import 'package:dsh_app/companion/companion_maps.dart';
+import 'package:dsh_app/companion/companion_memory.dart';
+import 'package:dsh_app/companion/companion_reminder.dart';
+import 'package:dsh_app/l10n/gen/app_localizations.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/ui/companion/companion_tasks_page.dart';
+import 'package:dsh_app/ui/theme/app_theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

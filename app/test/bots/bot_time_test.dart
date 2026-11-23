@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/bots/bot_format.dart';
+import 'package:dsh_app/ui/bots/bot_format.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';

@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/chat/widgets/turn_failure_text.dart';
+import 'package:dsh_app/ui/chat/widgets/turn_failure_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

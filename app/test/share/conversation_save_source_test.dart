@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/share_code/conversation_share.dart';
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/replay/conversation_out.dart';
-import 'package:dpsk_app/ui/share/share_panel.dart';
-import 'package:dpsk_app/ui/share/share_panel_pages.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/share_code/conversation_share.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/replay/conversation_out.dart';
+import 'package:dsh_app/ui/share/share_panel.dart';
+import 'package:dsh_app/ui/share/share_panel_pages.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +48,7 @@ class _NativeSaves {
     save.content = await File(save.path).readAsString();
     read[index].complete();
     if (refuse) throw PlatformException(code: 'permission', message: 'controlled native save refusal');
-    return 'Download/DPSK/${save.name}';
+    return 'Download/DSH-Go/${save.name}';
   }
 
   void unblock() {

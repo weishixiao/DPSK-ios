@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/runtime/phone_callback_bridge.dart';
+import 'package:dsh_app/runtime/phone_callback_bridge.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

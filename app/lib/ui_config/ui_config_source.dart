@@ -105,7 +105,7 @@ class LocalUiConfigSource implements UiConfigSource, UiConfigStatusSink {
   final Stream<void> kicks;
   final Duration debounce;
 
-  /// Whether the app may create `DPSK/` or write `ui.status.json` now:
+  /// Whether the app may create `dsh-go/` or write `ui.status.json` now:
   /// not while an install swaps the rootfs and moves /root around
   /// (RuntimeInstaller.activateRootfs), where a new file could make the
   /// move fail.
@@ -165,7 +165,7 @@ class LocalUiConfigSource implements UiConfigSource, UiConfigStatusSink {
     }
   }
 
-  /// Finds the directory and (re)starts the watch; creates `DPSK/` once
+  /// Finds the directory and (re)starts the watch; creates `dsh-go/` once
   /// DSH home exists.
   Future<void> _arm() async {
     Directory? root;
@@ -181,7 +181,7 @@ class LocalUiConfigSource implements UiConfigSource, UiConfigStatusSink {
       return;
     }
     final home = Directory('${root.path}$guestDshHome');
-    final dir = Directory('${home.path}/DPSK');
+    final dir = Directory('${home.path}/dsh-go');
     if (_watch != null && _dir?.path == dir.path) return;
     await _disarm();
     _dir = dir;
@@ -263,7 +263,7 @@ class LocalUiConfigSource implements UiConfigSource, UiConfigStatusSink {
     }
   }
 
-  /// `DPSK/ui.status.json`: what the app applied, for the agent. Written
+  /// `dsh-go/ui.status.json`: what the app applied, for the agent. Written
   /// only when it changes; removed when there is no ui.json.
   @override
   Future<void> writeStatus(UiConfigLoad? load) async {
@@ -335,7 +335,7 @@ String? dshHomeFromSkillPath(String path) {
   return home.isEmpty ? null : home;
 }
 
-/// A remote host's `$DSH_HOME/DPSK/ui.json` over `workspaceFiles/*`.
+/// A remote host's `$DSH_HOME/dsh-go/ui.json` over `workspaceFiles/*`.
 class RemoteUiConfigSource implements UiConfigSource {
   RemoteUiConfigSource({
     required this.host,
@@ -449,7 +449,7 @@ class RemoteUiConfigSource implements UiConfigSource {
         return;
       }
       _session = session;
-      _path = '$home/DPSK/ui.json';
+      _path = '$home/dsh-go/ui.json';
       _skillMissing = guessed;
       await _read();
     } finally {

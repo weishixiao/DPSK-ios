@@ -1,5 +1,5 @@
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/chat_rows.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/chat_rows.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

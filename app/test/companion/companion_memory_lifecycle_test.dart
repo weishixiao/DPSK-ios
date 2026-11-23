@@ -4,11 +4,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_context.dart';
-import 'package:dpsk_app/companion/companion_light.dart';
-import 'package:dpsk_app/companion/companion_local.dart';
-import 'package:dpsk_app/companion/companion_memory.dart';
-import 'package:dpsk_app/companion/companion_memory_worker.dart';
+import 'package:dsh_app/companion/companion_context.dart';
+import 'package:dsh_app/companion/companion_light.dart';
+import 'package:dsh_app/companion/companion_local.dart';
+import 'package:dsh_app/companion/companion_memory.dart';
+import 'package:dsh_app/companion/companion_memory_worker.dart';
 import 'package:dsh_client/companion.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

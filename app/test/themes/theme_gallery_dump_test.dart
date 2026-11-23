@@ -19,14 +19,14 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/state/balance_state.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/empty_state.dart';
-import 'package:dpsk_app/ui/chat/widgets/live_clock.dart';
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/state/balance_state.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/empty_state.dart';
+import 'package:dsh_app/ui/chat/widgets/live_clock.dart';
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

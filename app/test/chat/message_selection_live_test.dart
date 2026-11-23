@@ -3,7 +3,7 @@
 // finger comes down on it or the writing stops: each delta would otherwise
 // make the region sort the whole reply's pieces again.
 
-import 'package:dpsk_app/ui/chat/widgets/message_selection.dart';
+import 'package:dsh_app/ui/chat/widgets/message_selection.dart';
 import 'package:flutter/gestures.dart' show kLongPressTimeout;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

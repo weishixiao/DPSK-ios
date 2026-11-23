@@ -3,9 +3,9 @@
 // and on a new ready generation; a failed read keeps the last tasks and isn't
 // retried.
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/header_schedule_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/header_schedule_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/tavern/tavern_card_theme.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_settings.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_reading.dart';
-import 'package:dpsk_app/ui/tavern/tavern_vn_view.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/wallpaper/custom_wallpaper.dart';
+import 'package:dsh_app/tavern/tavern_card_theme.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_settings.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_reading.dart';
+import 'package:dsh_app/ui/tavern/tavern_vn_view.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/wallpaper/custom_wallpaper.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../support/test_fonts.dart';
 
-/// The preview, its sample card carrying [theme] as extensions.dpsk.theme.
+/// The preview, its sample card carrying [theme] as extensions.dshgo.theme.
 class _Themed extends PreviewTavern {
   _Themed(this.theme) : super(tick: Duration.zero);
 

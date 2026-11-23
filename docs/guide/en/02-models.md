@@ -29,7 +29,7 @@ Switching hosts or reconnecting reads that host's defaults again; unsubmitted ch
 ## Providers
 
 <!-- nav: commonSettings,hubSettingsProviders -->
-`Settings › Models` · [Open](dpsk://open/models)
+`Settings › Models` · [Open](dshgo://open/models)
 
 Providers come in three groups:
 

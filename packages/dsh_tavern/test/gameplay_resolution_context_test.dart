@@ -59,7 +59,7 @@ void main() {
     expect(result.context.chatId, chat);
     expect(result.hostCharacterId, host);
     expect(result.rawPresent, isTrue);
-    expect(result.raw, hostExtension['dpsk']);
+    expect(result.raw, hostExtension['dshgo']);
     expect(_map(_map(result.effective)['state'])['init'], {'count': 7});
     expect(result.definitions.singleWhere((item) => item['path'] == '/state')['executable'], isTrue);
     final current = result.currentState!;
@@ -113,7 +113,7 @@ void main() {
         'summary': '{{setglobalvar::resolve-must-not-run::yes}}',
       },
     };
-    final character = await h.card('Saved values', extensions: {'dpsk': definition});
+    final character = await h.card('Saved values', extensions: {'dshgo': definition});
     final withoutValueRequest = await h.engine.resolveGameplayConfig(TavernGameplayContext(characterId: character));
     final unavailableValue = await h.engine.resolveGameplayConfig(
       TavernGameplayContext(characterId: character),
@@ -124,10 +124,10 @@ void main() {
     expect(unavailableValue.conflicts.map((issue) => issue['code']), contains('not_available'));
     expect(withoutValueRequest.conflicts.map((issue) => issue['code']), isNot(contains('not_available')));
     final variables = <Json>[
-      {'dpsk': null, 'foreign': 'null-node'},
+      {'dshgo': null, 'foreign': 'null-node'},
       {'foreign': 'missing-node'},
       {
-        'dpsk': {'n': 5},
+        'dshgo': {'n': 5},
         'foreign': 'value-node',
       },
     ];
@@ -150,8 +150,8 @@ void main() {
         validateCurrentState: true,
       );
       final current = result.currentState!;
-      final valueExists = saved.containsKey('dpsk');
-      final value = saved['dpsk'];
+      final valueExists = saved.containsKey('dshgo');
+      final value = saved['dshgo'];
       expect(current.source, {'kind': 'state', 'chatId': chat, 'nodeId': nodeId});
       expect(current.valueExists, valueExists);
       expect(current.value, value);
@@ -206,7 +206,7 @@ Future<Map<String, List<int>>> _files(ScriptFixture h, List<String> paths) async
 Json _messageVariables(ScriptFixture h, String nodeId) => h.inspect((db) {
   final row = db.select('SELECT extra FROM nodes WHERE id = ?', [nodeId]).single;
   final extra = _map(jsonDecode(row['extra']! as String));
-  return _map(_map(_map(extra['dpsk'])['tavernState'])['messageVariables']);
+  return _map(_map(_map(extra['dshgo'])['tavernState'])['messageVariables']);
 });
 
 Future<String> _importSavedValues(ScriptFixture h, String characterId, List<Json> values) async {
@@ -229,7 +229,7 @@ Future<String> _importSavedValues(ScriptFixture h, String characterId, List<Json
           'send_date': DateTime.utc(2026, 11, 12, 5, index).toIso8601String(),
           'variables': [values[index]],
           'extra': {
-            'dpsk': {
+            'dshgo': {
               'tavernState': {
                 'variables': {'local': 'kept'},
                 'timedWorldInfo': <String, Object?>{},

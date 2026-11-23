@@ -3,12 +3,12 @@
 // disclosure was accepted on the pick), the pet only once it can be drawn.
 // An engine already on its way restarts once, so its start has them.
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/pets/overlay_channel.dart';
-import 'package:dpsk_app/state/access_state.dart';
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/pets/overlay_channel.dart';
+import 'package:dsh_app/state/access_state.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

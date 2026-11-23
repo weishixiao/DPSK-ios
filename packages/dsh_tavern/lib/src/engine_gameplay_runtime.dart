@@ -400,13 +400,13 @@ _GameplayRuntime _compileGameplayRuntime(
   TavernEngine engine,
   Map<String, Object?> saved,
 ) {
-  if (!saved.containsKey('dpskPackDefinitionConfigId')) {
+  if (!saved.containsKey('dshgoPackDefinitionConfigId')) {
     return (referenced: false, config: null, issues: []);
   }
-  final id = saved['dpskPackDefinitionConfigId'];
+  final id = saved['dshgoPackDefinitionConfigId'];
   Map<String, Object?> issue(String code, String message) => {
     'code': code,
-    'path': '/dpskPackDefinitionConfigId',
+    'path': '/dshgoPackDefinitionConfigId',
     'message': message,
   };
   if (id is! String || id.isEmpty) {
@@ -493,7 +493,7 @@ void _ensureGameplayConfig(TavernEngine engine, _GameplayRuntime? config) {
 
 void _stampGameplayConfig(_GameplayRuntime? config, Map<String, Object?> saved) {
   if (config != null) {
-    saved['dpskPackDefinitionConfigId'] = config.effectiveConfigId;
+    saved['dshgoPackDefinitionConfigId'] = config.effectiveConfigId;
   }
 }
 
@@ -509,7 +509,7 @@ List<Map<String, Object?>> _gameplayValueIssues(
   final input = _StateInput(saved);
   if (!config.state.hasSchema &&
       !input.valueExists &&
-      (!saved.containsKey('dpskPackDefinitionConfigId') ||
+      (!saved.containsKey('dshgoPackDefinitionConfigId') ||
           previousConfig != null && !previousConfig.state.hasSchema)) {
     return input.issues;
   }
@@ -517,14 +517,14 @@ List<Map<String, Object?>> _gameplayValueIssues(
     return [
       {
         'code': 'gameplay_value_definition',
-        'path': '/messageVariables/dpsk',
+        'path': '/messageVariables/dshgo',
         'message':
             'The prospective definition is not executable; the prior value and definition reference are retained.',
         'effectiveConfigId': config.effectiveConfigId,
       },
     ];
   }
-  if (initializing && !input.valueExists && !saved.containsKey('dpskPackDefinitionConfigId')) {
+  if (initializing && !input.valueExists && !saved.containsKey('dshgoPackDefinitionConfigId')) {
     return input.issues;
   }
   return [
@@ -532,7 +532,7 @@ List<Map<String, Object?>> _gameplayValueIssues(
     for (final issue in config.state.validate(input.value, valueExists: input.valueExists))
       {
         ...issue,
-        'path': '/messageVariables/dpsk${issue['path']! as String}',
+        'path': '/messageVariables/dshgo${issue['path']! as String}',
         'transition': 'gameplay_value',
         'effectiveConfigId': config.effectiveConfigId,
       },
@@ -559,7 +559,7 @@ void _ensureAdoptedGameplay(
     turn.cancellation.check();
   }
   if (config != null &&
-      state['dpskPackDefinitionConfigId'] == config.effectiveConfigId &&
+      state['dshgoPackDefinitionConfigId'] == config.effectiveConfigId &&
       (stateSettlement?.trace['stateCommitted'] == true ||
           stateSettlement?.events?.result['committed'] == true ||
           storySettlement?.result['committed'] == true)) {

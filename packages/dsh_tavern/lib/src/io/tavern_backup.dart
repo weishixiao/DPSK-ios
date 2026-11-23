@@ -9,11 +9,11 @@ import 'package:crypto/crypto.dart';
 
 import '../backup.dart';
 
-const _backupFormat = 'dpsk-tavern-backup';
+const _backupFormat = 'dshgo-tavern-backup';
 const _backupVersion = 1;
 const _databaseName = 'tavern.sqlite3';
 const _manifestName = 'manifest.json';
-const _restoreFormat = 'dpsk-tavern-restore';
+const _restoreFormat = 'dshgo-tavern-restore';
 final _restoreOwners = <String>{};
 
 /// The shared identity for facade admission and backup/recovery journals.
@@ -45,7 +45,7 @@ Future<TavernBackupSnapshot> captureTavernBackup(
     throw FileSystemException('Tavern directory does not exist.', source.path);
   }
   _requireNamedDirectory(source);
-  final work = await source.parent.createTemp('.dpsk-tavern-backup-');
+  final work = await source.parent.createTemp('.dshgo-tavern-backup-');
   final payload = Directory('${work.path}/data');
   try {
     await payload.create();
@@ -341,7 +341,7 @@ Future<void> _writeZip(
     }),
   );
   final target = File(targetPath);
-  final outputWork = await target.parent.createTemp('.dpsk-tavern-zip-');
+  final outputWork = await target.parent.createTemp('.dshgo-tavern-zip-');
   final temporary = File('${outputWork.path}/backup.zip');
   try {
     final output = OutputFileStream(temporary.path);
@@ -937,8 +937,8 @@ void _checkPathSet(Iterable<String> files, List<String> directories) {
 String _pathKey(String path) => Platform.isWindows || Platform.isMacOS ? path.toLowerCase() : path;
 String _rootKey(Directory directory) => _pathKey(directory.absolute.uri.toString());
 String _rootId(Directory root) => sha256.convert(utf8.encode(_rootKey(root))).toString().substring(0, 16);
-String _workPrefix(Directory root) => '.dpsk-restore-${_rootId(root)}-';
-File _journalFile(Directory root) => File('${root.parent.path}/.dpsk-restore-${_rootId(root)}.json');
+String _workPrefix(Directory root) => '.dshgo-restore-${_rootId(root)}-';
+File _journalFile(Directory root) => File('${root.parent.path}/.dshgo-restore-${_rootId(root)}.json');
 
 void _requireNamedDirectory(Directory directory) {
   if (directory.absolute.uri.normalizePath() == directory.parent.absolute.uri.normalizePath()) {

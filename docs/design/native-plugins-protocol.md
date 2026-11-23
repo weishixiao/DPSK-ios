@@ -13,12 +13,12 @@
 |---|---|---|
 | `package.json` → `dshGo` | 插件 → 桥接 | 静态清单：协议版本、显示名、图标、`wants`、四种贡献 |
 | `ctx.dshGo` | 插件 ↔ 桥接（进程内） | `panel` / `strip` / `on` / `refresh`：视图、数据、点按处理 |
-| `GET /DPSK/v1/contributions` | App ← 桥接 | 所有已启用插件的贡献、署名、问题列表；带 `ETag` |
-| `GET /DPSK/v1/views/<pkg>/<id>` | App ← 桥接 | 一个面板的视图 + 初始数据（按 scope） |
-| `WS /DPSK/v1/stream` | App ↔ 桥接 | 一台主机一条；按 `{pkg, id, scope}` 订阅数据，合并补丁、心跳、重连补拉 |
-| `POST /DPSK/v1/invoke` | App → 桥接 | 用户点按 → 插件处理 → 白名单效果；3 秒窗口由 App 执行 |
+| `GET /dsh-go/v1/contributions` | App ← 桥接 | 所有已启用插件的贡献、署名、问题列表；带 `ETag` |
+| `GET /dsh-go/v1/views/<pkg>/<id>` | App ← 桥接 | 一个面板的视图 + 初始数据（按 scope） |
+| `WS /dsh-go/v1/stream` | App ↔ 桥接 | 一台主机一条；按 `{pkg, id, scope}` 订阅数据，合并补丁、心跳、重连补拉 |
+| `POST /dsh-go/v1/invoke` | App → 桥接 | 用户点按 → 插件处理 → 白名单效果；3 秒窗口由 App 执行 |
 | 流 `done` / `void`（v1.1） | App ← 桥接 | 延后效果：invoke 先回 `pending`，插件做完后结果只推给发起点按的那条流连接（§4.7） |
-| `GET /DPSK/v1/assets/<pkg>/<path>` | App ← 桥接 | 插件声明目录下的图片（`image` 组件用），可选 |
+| `GET /dsh-go/v1/assets/<pkg>/<path>` | App ← 桥接 | 插件声明目录下的图片（`image` 组件用），可选 |
 
 ```
 App                                   dsh-go-bridge（宿主）                     插件（宿主半侧）
@@ -208,7 +208,7 @@ ctx.dshGo.on('translate', (scope, event) => ({
 
 | 项 | 规则 |
 |---|---|
-| 鉴权 | 所有 `/DPSK/*` 路由和 WebSocket 升级都走路由守卫（`Connection.requestRejection`）：无凭据 **401**、跨站 Origin / Host 不符 **403**、Connection 未就绪 **503**。这些响应由守卫发出，正文是纯文本，App 只看状态码。桥接在路由内再查一遍（未打补丁的主机也安全） |
+| 鉴权 | 所有 `/dsh-go/*` 路由和 WebSocket 升级都走路由守卫（`Connection.requestRejection`）：无凭据 **401**、跨站 Origin / Host 不符 **403**、Connection 未就绪 **503**。这些响应由守卫发出，正文是纯文本，App 只看状态码。桥接在路由内再查一遍（未打补丁的主机也安全） |
 | 能力参数 | `contributions` 和 `views` 的查询参数：`v`（App 支持的协议主版本，逗号分隔，如 `1`）、`app`（App 版本 `x.y.z`）、`locale`（BCP 47，如 `zh-CN`）、`surfaces`（逗号分隔）、`components`（逗号分隔）。缺 `v` 按 `1`；缺 `app` 按 `0.0.0`（声明了 `minApp` 的插件会是 `needs-app`） |
 | scope 字段 | `sessionId`、`turnId`、`messageId`、`callId`，每个是 1–256 个字符、不含控制字符的字符串。HTTP 里是同名查询参数，流和 invoke 里是 `scope` 对象。未知键丢弃 |
 | scope 规范化 | 去掉空值后按键名排序；两个 scope 相等当且仅当规范化后相等。订阅按 `{pkg, id, 规范化 scope}` 共享同一份数据源 |
@@ -271,9 +271,9 @@ HTTP 错误（守卫的 401/403/503 除外）的正文：
 
 **NA protocol v1 change（#656，能力缺省兼容）：** `surfaces`、`components` 查询参数分别独立处理。未提供某参数时，桥接向插件的视图回调省略对应可选字段，让 SDK 沿用原有 v1 surface / component 默认；显式空参数（例如 `surfaces=`）仍传空数组，表示该类能力均未声明，不自动回退。明确提供的列表按解析规则规范化后传递：按逗号拆分，去掉每项两端空白，丢掉空项和超过 64 个 UTF-16 代码单元的项，最多保留 64 项（例如 `surfaces=panels,,plugin` 得到 `["panels", "plugin"]`）。此规则不改变 `v` 的版本准入；`placement: "plugin"` 仍须在 `surfaces` 明确列出才保留，否则退回 `session.tab`。清单的 `contributes` 类别和 placement 是不同集合，`plugin` 不是新的清单类别。
 
-### 4.1 `GET /DPSK/v1/contributions`
+### 4.1 `GET /dsh-go/v1/contributions`
 
-请求：`GET /DPSK/v1/contributions?v=1&app=0.10.0&locale=zh-CN&surfaces=composer.actions,message.actions,composer.strip,panels&components=stack,row,text,…`，可带 `If-None-Match`。
+请求：`GET /dsh-go/v1/contributions?v=1&app=0.10.0&locale=zh-CN&surfaces=composer.actions,message.actions,composer.strip,panels&components=stack,row,text,…`，可带 `If-None-Match`。
 
 响应 200（`ETag: "<rev>"`；`If-None-Match` 命中返回 304 空体）：
 
@@ -286,7 +286,7 @@ HTTP 错误（守卫的 401/403/503 除外）的正文：
   "limits": { … },                 // §7 上限表的机器可读版
   "plugins": [
     {
-      "pkg": "DPSK-example-usage",
+      "pkg": "dsh-go-example-usage",
       "version": "1.0.0",
       "title": "用量",               // 已按 locale 取值
       "icon": "chart",
@@ -316,7 +316,7 @@ HTTP 错误（守卫的 401/403/503 除外）的正文：
 
 **缓存与失效**：桥接按「插件启停代数」缓存解析后的清单（任一插件 fiber 状态变化、启动图 rev 变化、`ctx.dshGo` 注册变化都会让代数 +1），`package.json` 另按 mtime 复查。App 的拉取时机：连上主机一次；收到流的 `changed` 一次；回到前台一次（带 `If-None-Match`，没变化就是 304）。目标：本机冷启动 300 ms 内拿到。
 
-### 4.2 `GET /DPSK/v1/views/<pkg>/<id>`
+### 4.2 `GET /dsh-go/v1/views/<pkg>/<id>`
 
 `<pkg>` 是包名（带 scope 的包占两段：`/views/@acme/usage-meter/usage`），`<id>` 是面板 id。查询参数 = 能力参数 + scope 字段。
 
@@ -325,7 +325,7 @@ HTTP 错误（守卫的 401/403/503 除外）的正文：
 ```jsonc
 {
   "v": 1,
-  "pkg": "DPSK-example-usage",
+  "pkg": "dsh-go-example-usage",
   "id": "usage",
   "title": "用量",
   "view": { "type": "stack", "children": [ … ] },   // 见 view.schema.json
@@ -343,7 +343,7 @@ HTTP 错误（守卫的 401/403/503 除外）的正文：
 - 初始数据：桥接启动（或复用）该 `{pkg, id, scope, locale}` 的数据源，最多等 1 秒第一份 `emit`。数据源按 locale 分开（不区分大小写，`_` 视同 `-`），所以 App 的 GET 视图和流 `hello` 要带同一个 locale，订阅才能接上 GET 时启动的那份。数据源在最后一个订阅者离开 30 秒后才取消，所以「GET 视图 → 马上订阅流」不会重启插件的数据函数。
 - 状态不是 `ok` → 409（`degraded` / `not-native`）；包或面板不存在 → 404。
 
-### 4.3 `WS /DPSK/v1/stream`
+### 4.3 `WS /dsh-go/v1/stream`
 
 一台主机一条连接，App 进后台 60 秒后关（code 1000），回前台重连并补拉。消息都是 JSON 文本帧，`t` 为类型；双方忽略不认识的 `t` 和字段。
 
@@ -392,14 +392,14 @@ HTTP 错误（守卫的 401/403/503 除外）的正文：
 
 **关闭码**：1000 正常、1001 超时、1002 帧格式错、1008 协议违例（首帧不是 `hello`、不是 JSON 对象）、1009 帧过大、1011 桥接内部错误、1013 积压 / 连接数已满。
 
-### 4.4 `POST /DPSK/v1/invoke`
+### 4.4 `POST /dsh-go/v1/invoke`
 
 请求（≤ 64 KiB）：
 
 ```jsonc
 {
   "v": 1,
-  "pkg": "DPSK-example-quick",
+  "pkg": "dsh-go-example-quick",
   "id": "translate",                  // 贡献 id（面板点按时是面板 id）
   "surface": "composer.actions",      // composer.actions | message.actions | composer.tools | session.actions | composer.strip | panel
   "action": "refresh",                // 仅 panel：视图里按钮 / options / confirm 的 action 名（1–64 字符）
@@ -446,7 +446,7 @@ HTTP 错误（守卫的 401/403/503 除外）的正文：
 
 桥接在发出前截断 `text`、丢弃其他字段。订阅方式与面板相同（`sub {pkg, id: <strip id>, scope: {sessionId}}`），没有视图，不需要 GET：App 直接画 `icon` + `text`（v1 状态条不走组件树，视图 schema 的 `strip` 预算档留给以后）。
 
-### 4.6 `GET /DPSK/v1/assets/<pkg>/<path>`（可选）
+### 4.6 `GET /dsh-go/v1/assets/<pkg>/<path>`（可选）
 
 - 只服务 `dshGo.assets` 目录内的文件；路径越出目录（含符号链接）→ 404。
 - 扩展名白名单：`png`、`jpg`、`jpeg`、`webp`、`gif`；单个 ≤ 1 MiB。
@@ -542,7 +542,7 @@ handler 在 3 秒内返回 `{ pending, result }`（§2.2），桥接立即回：
 | v1 内演进 | 只加可选字段、新 surface、新效果、新组件；老 App 忽略。App 通过 `caps.surfaces` / `caps.components` 告诉插件自己认识什么 |
 | 桥接比 App 旧（第二期 SSH 主机） | App 看 `bridge` 版本号决定是否用新字段；路由 404 = 没装桥接，原生插件全部不显示。延后效果看 `welcome.conn` 是否存在 |
 | 不兼容变更 | 升 `v` 到 2，新旧并存：桥接同时服务 App 请求的最高共同版本 |
-| 工具卡（`meta["DPSK/view"]`） | 写进对话记录，只增不删字段，App 永久兼容老格式 |
+| 工具卡（`meta["dsh-go/view"]`） | 写进对话记录，只增不删字段，App 永久兼容老格式 |
 
 ## 9. 典型时序
 
@@ -563,7 +563,7 @@ handler 在 3 秒内返回 `{ pending, result }`（§2.2），桥接立即回：
 
 ## 11. 可选能力（v1.2）
 
-给朗读这类插件的四样东西：放一段声音、用户开口时停、高频小字幕、悬浮一行字幕。全部可选，协议主版本仍是 `v: 1`。实现：桥接 `lib/native/{capabilities,capability-runtime}.js`；App `lib/plugins/native/native_capabilities.dart`、`android/…/nativemedia/`；测试 `runtime/tests/native-capabilities*.mjs`、`app/test/plugins/native/native_capabilities_test.dart`。示例：`examples/plugins/DPSK-example-readaloud/`。
+给朗读这类插件的四样东西：放一段声音、用户开口时停、高频小字幕、悬浮一行字幕。全部可选，协议主版本仍是 `v: 1`。实现：桥接 `lib/native/{capabilities,capability-runtime}.js`；App `lib/plugins/native/native_capabilities.dart`、`android/…/nativemedia/`；测试 `runtime/tests/native-capabilities*.mjs`、`app/test/plugins/native/native_capabilities_test.dart`。示例：`examples/plugins/dsh-go-example-readaloud/`。
 
 | 能力 | 插件得到什么 | 谁做 |
 |---|---|---|
@@ -625,7 +625,7 @@ App 端协商：`contributions` 的查询参数 `features=audio,voice,micro,over
 
 ### 11.4 媒体路由与事件
 
-`GET /DPSK/v1/media/<pkg>/<id>?lease=…&key=…`：鉴权与其他路由相同（守卫 401 / 403）；只认这两个查询参数；`lease` 必须是活着的、有 audio 角色且媒体 id 相同的租约，`key` 与 `play` 时一致，否则 404。全桥接同时 2 个、每插件 1 个（429）。响应 `cache-control: no-store`、`nosniff`，没有重定向、没有插件给的响应头；超时 504、取消 410、不合格 502 / 413，半截音频不会当成功。App 整段下载（不跟随任何重定向、字节上限、一个总时限）到私有缓存再播放。手机永远不直接访问插件给的地址；`127.0.0.1` 是主机上的事，由插件在 `media` 里自己去取。
+`GET /dsh-go/v1/media/<pkg>/<id>?lease=…&key=…`：鉴权与其他路由相同（守卫 401 / 403）；只认这两个查询参数；`lease` 必须是活着的、有 audio 角色且媒体 id 相同的租约，`key` 与 `play` 时一致，否则 404。全桥接同时 2 个、每插件 1 个（429）。响应 `cache-control: no-store`、`nosniff`，没有重定向、没有插件给的响应头；超时 504、取消 410、不合格 502 / 413，半截音频不会当成功。App 整段下载（不跟随任何重定向、字节上限、一个总时限）到私有缓存再播放。手机永远不直接访问插件给的地址；`127.0.0.1` 是主机上的事，由插件在 `media` 里自己去取。
 
 App → 桥接：`{ t: "cap.event", lease, seq, event, reason? }`，`seq` 在租约内递增。
 
@@ -657,7 +657,7 @@ App → 桥接：`micro.sub { sub, pkg, id, scope? }`、`micro.unsub { sub }`；
 | 跟着声音走 | 一个会话里有声音时，声音结束（播完、被停、开口打断）后 App 自动停掉聆听（等用户说完）并关掉字幕 |
 | 回声 | App 用系统的通话录音通道和回声消除（有的话），朗读时提高开口门槛、忽略开头 0.4 秒。外放声音很大、设备没有回声消除时仍可能把朗读声当成开口（朗读会自己停下）；小声说话也可能听不出 |
 | 字幕 | 一行纯文字，App 的字体和颜色，没有链接、没有输入；文字只是文字 |
-| 主机 | 本机引擎可用；SSH 主机等桥接能装上之后同样可用（路由一致）；中转主机没有 `/DPSK/*`，这些能力不可用 |
+| 主机 | 本机引擎可用；SSH 主机等桥接能装上之后同样可用（路由一致）；中转主机没有 `/dsh-go/*`，这些能力不可用 |
 
 ### 11.7 上限
 
@@ -692,8 +692,8 @@ App 仍在既有三秒点击窗口内启动，核对当前 host/stream/plugin �
 
 | 接口 | 请求 | 响应 |
 |---|---|---|
-| `POST /DPSK/v1/files/<request>/upload?stream=…&name=…&mediaType=…` | `application/octet-stream` 原始字节；name 必填，mediaType 可省略 | `{ v: 1, file: { handle, name, bytes, mediaType, access: "read" } }` |
-| `POST /DPSK/v1/files/<request>/complete?stream=…` | `application/json`，`{ status: "selected" | "cancelled" | "error" }`，≤ 1 KiB | `{ v: 1, effects, issues }`，执行一次被等待的选择回调后返回 |
+| `POST /dsh-go/v1/files/<request>/upload?stream=…&name=…&mediaType=…` | `application/octet-stream` 原始字节；name 必填，mediaType 可省略 | `{ v: 1, file: { handle, name, bytes, mediaType, access: "read" } }` |
+| `POST /dsh-go/v1/files/<request>/complete?stream=…` | `application/json`，`{ status: "selected" | "cancelled" | "error" }`，≤ 1 KiB | `{ v: 1, effects, issues }`，执行一次被等待的选择回调后返回 |
 
 上传前检查数量和已知长度，随后独立统计实际读入字节。单文件 ≤ 8 MiB、单次 ≤ 16 MiB；未知长度先预留剩余容量与单文件上限的较小值。桥接保留的内容缓冲区共享 64 MiB，预算包含未知长度的预留，不采用不断增长的 chunk 数组。每上传 30 秒，不允许同时上传和 complete。错误会清除整批已上传内容并阻止后续上传，只能 complete error/cancelled；无部分成功。桥接回给 App 的收据体上限为 4 KiB，complete 响应上限 96 KiB。
 

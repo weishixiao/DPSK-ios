@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
-import 'package:dpsk_app/ui/engine/engine_screen.dart';
-import 'package:dpsk_app/ui/remote/remote_screen.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
+import 'package:dsh_app/ui/engine/engine_screen.dart';
+import 'package:dsh_app/ui/remote/remote_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

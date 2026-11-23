@@ -590,7 +590,7 @@
       }
     }
   },
-  "tavernStorybookMadeWith": "Written in the DPSK tavern",
+  "tavernStorybookMadeWith": "Written in the DSH Go tavern",
   "tavernStorybookContents": "Contents",
   "tavernStorybookChapter": "Chapter {n}",
   "@tavernStorybookChapter": {

@@ -4,10 +4,10 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/plugins/seams/seat_models.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/plugins/islands/islands.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/plugins/seams/seat_models.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/plugins/islands/islands.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -275,7 +275,7 @@ void main() {
       expect(await probeRouteGuard(base), RouteGuard.unknown);
       await server.close(force: true);
       expect(await probeRouteGuard(base), RouteGuard.unknown, reason: 'nothing listening');
-      expect(seen.first, '/DPSK/v1/inventory cookie=null');
+      expect(seen.first, '/dsh-go/v1/inventory cookie=null');
     });
 
     test('launch URL is the 网页版 one', () {

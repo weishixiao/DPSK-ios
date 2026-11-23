@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

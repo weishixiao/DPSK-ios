@@ -51,7 +51,7 @@ Future<({int status, String? cookie})> _login(String baseUrl, String token) asyn
 }
 
 Future<Map<String, Object?>> _engineJson(String baseUrl, String cookie, String endpoint) async {
-  final request = await _client.getUrl(Uri.parse('$baseUrl/DPSK/v1/$endpoint'));
+  final request = await _client.getUrl(Uri.parse('$baseUrl/dsh-go/v1/$endpoint'));
   request.headers.set(HttpHeaders.cookieHeader, cookie);
   final response = await request.close();
   final body = await utf8.decodeStream(response);

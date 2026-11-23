@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dpsk_app/companion/companion_widget.dart';
+import 'package:dsh_app/companion/companion_widget.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

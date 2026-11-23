@@ -6,8 +6,8 @@
 import 'dart:collection';
 import 'dart:math';
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui.dart';
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui.dart';
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,4 +1,4 @@
-import 'package:dpsk_app/companion/companion_context.dart';
+import 'package:dsh_app/companion/companion_context.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

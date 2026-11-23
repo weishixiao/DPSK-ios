@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/phone/phone_control_screen.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/phone/phone_control_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

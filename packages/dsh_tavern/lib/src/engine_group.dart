@@ -236,7 +236,7 @@ class _GroupCoordinator {
           settings['stateEnabled'] != false,
           gameplay: gameplay,
         );
-        if (gameplay != null && state['dpskPackDefinitionConfigId'] == gameplay.effectiveConfigId) {
+        if (gameplay != null && state['dshgoPackDefinitionConfigId'] == gameplay.effectiveConfigId) {
           _ensureGameplayConfig(engine, gameplay);
         }
         engine._store.setGroupInitialState(id, state);
@@ -563,7 +563,7 @@ class _GroupCoordinator {
       round.cancellation.check();
       final view = round.view!;
       final saved = engine._stateAt(round.group.chatId, engine._store.chat(round.group.chatId).currentLeafId);
-      final referenced = saved.containsKey('dpskPackDefinitionConfigId');
+      final referenced = saved.containsKey('dshgoPackDefinitionConfigId');
       round.gameplay = round.gameplayAdmission.hasActivePacks || referenced
           ? await _prepareGameplayRuntime(
               engine,
@@ -634,7 +634,7 @@ class _GroupCoordinator {
         final metadata = engine._chatCodec.metadataForNode(engine._store, chat.id);
         final source =
             engine._stateAt(chat.id, chat.currentLeafId)['chatJsonlSourceFile'] ??
-            _map(_map(chat.metadata['dpsk'])['chatJsonl'])['rootFile'];
+            _map(_map(chat.metadata['dshgo'])['chatJsonl'])['rootFile'];
         final member = _member(round.group, actorId);
         final config = _groupModelConfig(round.config, member.modelRole);
         final child = _Turn(
@@ -882,7 +882,7 @@ class _GroupCoordinator {
       }
       final output = director_core.DirectOutput.parse(run.output!);
       final consumed = <String>{
-        for (final node in history) ..._strings(_map(_map(node.extra['dpsk'])['group'])['directorEventIds']),
+        for (final node in history) ..._strings(_map(_map(node.extra['dshgo'])['group'])['directorEventIds']),
       };
       final selected = <String>[];
       for (var index = 0; index < output.events.length; index++) {
@@ -965,7 +965,7 @@ Map<String, Object?> _groupReplyExtra(_Turn turn) {
   if (turn.groupView == null) return const {};
   final round = turn.groupRound;
   return {
-    'dpsk': {
+    'dshgo': {
       'group': {
         'version': 1,
         'actorCharacterId': turn.actorId,

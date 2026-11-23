@@ -53,7 +53,7 @@ void main() {
         usage: const TavernUsage(promptTokens: 3, cacheHitTokens: 1, completionTokens: 2),
         extra: {
           'foreign': [null, id],
-          'dpsk': {
+          'dshgo': {
             'branchName': id,
             'unknown': {'kept': true},
           },

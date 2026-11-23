@@ -1,19 +1,19 @@
-/// DPSK native plugins: the app's end of the bridge's `dshGo` service
+/// dsh-go native plugins: the app's end of the bridge's `dshGo` service
 /// (docs/design/native-plugins-protocol.md, protocol v1).
 ///
-/// * `GET  /DPSK/v1/contributions`: every enabled plugin's native
+/// * `GET  /dsh-go/v1/contributions`: every enabled plugin's native
 ///   contributions ([DshGoContributions]), asked with the app's capabilities
 ///   ([DshGoCaps]); `ETag` / `If-None-Match` make a re-read cheap.
-/// * `GET  /DPSK/v1/capabilities`: protocol major and implemented route
+/// * `GET  /dsh-go/v1/capabilities`: protocol major and implemented route
 ///   families ([DshGoBridgeCapabilities]), independent of resource availability.
-/// * `GET  /DPSK/v1/views/<pkg>/<id>`: one panel's view, initial data and
+/// * `GET  /dsh-go/v1/views/<pkg>/<id>`: one panel's view, initial data and
 ///   data revision ([DshGoView]).
-/// * `WS   /DPSK/v1/stream`: one socket per Host, subscriptions by
+/// * `WS   /dsh-go/v1/stream`: one socket per Host, subscriptions by
 ///   `{pkg, id, scope}` ([DshGoStream]). The stream keeps each subscription's
 ///   data model (JSON Merge Patch on `base` → `rev`), so a subscriber only
 ///   ever sees whole snapshots. It closes 60 s after the app goes to the
 ///   background and comes back with every subscription's `rev` (catch-up).
-/// * `POST /DPSK/v1/invoke`: a tap → the plugin's effects
+/// * `POST /dsh-go/v1/invoke`: a tap → the plugin's effects
 ///   ([DshGoInvokeResult]). Effects are data here; the app keeps its own
 ///   whitelist and runs them only within 3 s of the tap.
 ///
@@ -41,15 +41,15 @@ import 'session_api.dart';
 /// Protocol major version the app speaks.
 const dshGoProtocol = 1;
 
-const dshGoCapabilitiesPath = '/DPSK/v1/capabilities';
-const dshGoContributionsPath = '/DPSK/v1/contributions';
-const dshGoViewsPath = '/DPSK/v1/views';
-const dshGoStreamPath = '/DPSK/v1/stream';
-const dshGoInvokePath = '/DPSK/v1/invoke';
+const dshGoCapabilitiesPath = '/dsh-go/v1/capabilities';
+const dshGoContributionsPath = '/dsh-go/v1/contributions';
+const dshGoViewsPath = '/dsh-go/v1/views';
+const dshGoStreamPath = '/dsh-go/v1/stream';
+const dshGoInvokePath = '/dsh-go/v1/invoke';
 
 String _pickedFilePath(String request, String operation) {
   if (!RegExp(r'^[A-Za-z0-9_-]{32}$').hasMatch(request)) throw ArgumentError('invalid file request');
-  return '/DPSK/v1/files/$request/$operation';
+  return '/dsh-go/v1/files/$request/$operation';
 }
 
 /// Surface names: the keys of `contributes`, and (for invoke) `panel`.
@@ -711,7 +711,7 @@ extension DshGoApi on DshClient {
     );
   }
 
-  /// `GET /DPSK/v1/contributions`. Null for an explicitly missing route or
+  /// `GET /dsh-go/v1/contributions`. Null for an explicitly missing route or
   /// a legacy 404 with no advertised native-ui capability. Resource errors
   /// propagate. Only an ambiguous 404 triggers negotiation; a successful read
   /// does not add a round trip. With [previous] from an earlier successful read, asks
@@ -747,7 +747,7 @@ extension DshGoApi on DshClient {
     return contributions;
   }
 
-  /// `GET /DPSK/v1/views/<pkg>/<id>`: a panel's view and initial data.
+  /// `GET /dsh-go/v1/views/<pkg>/<id>`: a panel's view and initial data.
   Future<DshGoView> readDshGoView(
     String pkg,
     String id, {
@@ -765,8 +765,8 @@ extension DshGoApi on DshClient {
     return DshGoView.fromJson(json, pkg: pkg, id: id, bytes: response.body.length);
   }
 
-  /// `POST /DPSK/v1/invoke`. Throws [DshRemoteException] with the bridge's
-  /// code (`DPSK/timeout`, `DPSK/no-handler` …) when it refuses.
+  /// `POST /dsh-go/v1/invoke`. Throws [DshRemoteException] with the bridge's
+  /// code (`dsh-go/timeout`, `dsh-go/no-handler` …) when it refuses.
   Future<DshGoInvokeResult> invokeDshGo(
     DshGoInvocation invocation, {
     Duration timeout = const Duration(seconds: 8),
@@ -846,10 +846,10 @@ extension DshGoApi on DshClient {
     );
   }
 
-  /// v1.2 `GET /DPSK/v1/media/<pkg>/<id>?lease=…&key=…`: a finite audio
+  /// v1.2 `GET /dsh-go/v1/media/<pkg>/<id>?lease=…&key=…`: a finite audio
   /// clip the plugin made on the Host, read whole with a byte cap, no
   /// redirects and one deadline ([DshConnection.getBounded]). Throws
-  /// [DshRemoteException] (`DPSK/<code>`) for an error answer and
+  /// [DshRemoteException] (`dsh-go/<code>`) for an error answer and
   /// [DshProtocolException] for anything but a supported audio type.
   Future<DshGoMedia> readDshGoMedia(
     String pkg,
@@ -863,7 +863,7 @@ extension DshGoApi on DshClient {
       throw ArgumentError('invalid media reference');
     }
     String segments(String s) => s.split('/').map((p) => Uri.encodeComponent(p).replaceAll('%40', '@')).join('/');
-    final path = '/DPSK/v1/media/${segments(pkg)}/${Uri.encodeComponent(id)}';
+    final path = '/dsh-go/v1/media/${segments(pkg)}/${Uri.encodeComponent(id)}';
     final response = await _dshGoConnection(
       path,
     ).getBounded(path, query: {'lease': lease, 'key': ?key}, maxBytes: maxBytes, timeout: timeout);
@@ -878,13 +878,13 @@ extension DshGoApi on DshClient {
   DshConnection _dshGoConnection(String path) {
     final carrier = this.carrier;
     if (carrier is! DshHttpCarrier) {
-      throw DshRemoteException('DPSK/unsupported', 'This connection cannot reach the DPSK bridge', {'path': path});
+      throw DshRemoteException('dsh-go/unsupported', 'This connection cannot reach the dsh-go bridge', {'path': path});
     }
     return carrier.connection;
   }
 }
 
-/// `/DPSK/v1/views/<pkg>/<id>`: a scoped package takes two segments
+/// `/dsh-go/v1/views/<pkg>/<id>`: a scoped package takes two segments
 /// (`/views/@acme/usage-meter/usage`).
 String dshGoViewPath(String pkg, String id) {
   String segment(String s) => Uri.encodeComponent(s).replaceAll('%40', '@');
@@ -895,7 +895,7 @@ int _dshGoVersion(String path, Object? value) {
   final version = asInt(value);
   if (version == null) throw DshProtocolException('$path: missing or invalid protocol version');
   if (version != dshGoProtocol) {
-    throw DshRemoteException('DPSK/unsupported-version', '$path: unsupported protocol version $version', {
+    throw DshRemoteException('dsh-go/unsupported-version', '$path: unsupported protocol version $version', {
       'path': path,
       'v': version,
     });
@@ -912,7 +912,7 @@ DshRemoteException _dshGoHttpError(String path, DshHttpResponse response) {
   final error = _dshGoErrorBody(response);
   final code = asString(error?['code']);
   return DshRemoteException(
-    code == null ? 'DPSK/http-${response.statusCode}' : 'DPSK/$code',
+    code == null ? 'dsh-go/http-${response.statusCode}' : 'dsh-go/$code',
     asString(error?['message']) ?? '$path: HTTP ${response.statusCode}',
     {'path': path, 'status': response.statusCode},
   );
@@ -1183,7 +1183,7 @@ class _Subscription {
   };
 }
 
-/// One WebSocket to the Host's `/DPSK/v1/stream` (§4.3), subscriptions
+/// One WebSocket to the Host's `/dsh-go/v1/stream` (§4.3), subscriptions
 /// multiplexed by `sub`.
 ///
 /// - Connects (`hello`) on the first subscription; closes when the last one

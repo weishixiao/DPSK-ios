@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/tavern/tavern_island_story.dart';
-import 'package:dpsk_app/tavern/tavern_islands.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_settings.dart';
-import 'package:dpsk_app/ui/tavern/tavern_canvas_view.dart';
-import 'package:dpsk_app/ui/tavern/tavern_island.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/tavern/tavern_island_story.dart';
+import 'package:dsh_app/tavern/tavern_islands.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_settings.dart';
+import 'package:dsh_app/ui/tavern/tavern_canvas_view.dart';
+import 'package:dsh_app/ui/tavern/tavern_island.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

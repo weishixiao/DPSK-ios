@@ -9,9 +9,9 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/ui/shell/page_frame.dart';
-import 'package:dpsk_app/ui/web/web_back.dart';
-import 'package:dpsk_app/ui/web/web_view_page.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/ui/web/web_back.dart';
+import 'package:dsh_app/ui/web/web_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

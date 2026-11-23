@@ -5,10 +5,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 /// The app's directory (tests run with `app/` as the working directory).

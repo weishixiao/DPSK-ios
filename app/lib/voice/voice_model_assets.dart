@@ -32,13 +32,13 @@ abstract final class VoiceModelPaths {
       '/opt/dsh/node_modules/@deepseek-ai/dsh-experimental-speech-to-text-sensevoice/runtime/assets.json';
 
   /// Suffix of the app's resumable partial files (the provider's own are `.<uuid>.part`).
-  static const partSuffix = '.DPSK.part';
+  static const partSuffix = '.dsh-go.part';
 
   /// Where 重新下载 puts the new files (laid out as under [models]) until
   /// every one is in and checked. The same file system as [models], so each
   /// takes its place with a rename; outside it, so the provider never sees
   /// a half-downloaded copy.
-  static const staging = '$dataRoot/DPSK-staging';
+  static const staging = '$dataRoot/dsh-go-staging';
 }
 
 /// Mirror URLs by SHA-256: ModelScope copies, pinned to a revision.

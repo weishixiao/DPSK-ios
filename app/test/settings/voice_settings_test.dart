@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/streaming_asr_state.dart';
-import 'package:dpsk_app/state/voice_settings.dart';
-import 'package:dpsk_app/state/voice_state.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/ui/settings/voice_settings_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/streaming_asr_state.dart';
+import 'package:dsh_app/state/voice_settings.dart';
+import 'package:dsh_app/state/voice_state.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/settings/voice_settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

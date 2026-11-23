@@ -1,18 +1,18 @@
 // 模型渠道 list and 渠道详情: what each state shows, where taps go, delete
 // with confirmation, the connection test, and measured row geometry.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/providers_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/common/page_hero.dart';
-import 'package:dpsk_app/ui/common/status_chip.dart';
-import 'package:dpsk_app/ui/providers/provider_detail_page.dart';
-import 'package:dpsk_app/ui/providers/provider_form_page.dart';
-import 'package:dpsk_app/ui/providers/provider_widgets.dart' show Monogram;
-import 'package:dpsk_app/ui/providers/providers_page.dart';
-import 'package:dpsk_app/ui/settings/settings_screen.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/providers_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/common/page_hero.dart';
+import 'package:dsh_app/ui/common/status_chip.dart';
+import 'package:dsh_app/ui/providers/provider_detail_page.dart';
+import 'package:dsh_app/ui/providers/provider_form_page.dart';
+import 'package:dsh_app/ui/providers/provider_widgets.dart' show Monogram;
+import 'package:dsh_app/ui/providers/providers_page.dart';
+import 'package:dsh_app/ui/settings/settings_screen.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

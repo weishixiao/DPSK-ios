@@ -1,11 +1,11 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/ui/update/update_sheet.dart';
-import 'package:dpsk_app/update/privileged_installer.dart';
-import 'package:dpsk_app/update/release.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/ui/update/update_sheet.dart';
+import 'package:dsh_app/update/privileged_installer.dart';
+import 'package:dsh_app/update/release.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -50,7 +50,7 @@ AppUpdateState _ready({SelfUpdatePending pending = const SelfUpdatePending(), bo
   check: UpdateCheckPhase.available,
   latest: offer ? parseUpdateManifest({
     'schema': 1, 'version': '1.2.0+2', 'tag': 'v1.2.0', 'notes': '',
-    'assets': {'arm64': {'name': 'DPSK-1.2.0-arm64.apk', 'size': 1}},
+    'assets': {'arm64': {'name': 'dsh-go-1.2.0-arm64.apk', 'size': 1}},
   }) : null,
   task: pending.unresolved ? UpdateTaskPhase.installing : UpdateTaskPhase.ready,
   selfUpdate: pending,

@@ -4,7 +4,7 @@
 
 ## 1. 两种模式共用数据
 
-`companion_adapt_contract.dart` 是无 I/O、无 Flutter 依赖的纯模块。原 `companion_adapt.dart` re-export，旧调用方无需换 import。`companionAdaptInput` 返回 `{schema:"DPSK/companion-adapt-request",v:1,target:"app-local-adapter-v1",vocabulary,probe,verifiedEffects,wanted,truncation,current?,currentDropped?,userFeedback?}`；`companionAdaptRequest` 是它的 JSON 字符串；`companionAdaptFullRequest` 只在同一字符串前加 `/companion-adapt`。
+`companion_adapt_contract.dart` 是无 I/O、无 Flutter 依赖的纯模块。原 `companion_adapt.dart` re-export，旧调用方无需换 import。`companionAdaptInput` 返回 `{schema:"dsh-go/companion-adapt-request",v:1,target:"app-local-adapter-v1",vocabulary,probe,verifiedEffects,wanted,truncation,current?,currentDropped?,userFeedback?}`；`companionAdaptRequest` 是它的 JSON 字符串；`companionAdaptFullRequest` 只在同一字符串前加 `/companion-adapt`。
 
 `probe.mocFile` 来自 stage 的相对路径，绝非指纹。App 保存时仍用真实 moc3 计算 SHA-256。参数最多 800 个可用记录（原请求只取 600），名称/分组最多 160 个 Unicode 标量，部件 300，表情/动作各 256；反馈 1000。有限数、正确范围和默认值是入表前提。Stage 报告原始 min/max/default，不做三位小数舍入，避免把很小但有效的范围变成零宽。`parametersComplete` 只说明参数数量是否完整，不能当语义已验证。字段被截断或排除时明确留计数；替换后尚无可用规则或 identity 证据的标准名写入 `coverageUnknown`。
 

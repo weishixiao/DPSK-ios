@@ -1,8 +1,8 @@
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_publish.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/diagnostics/diagnostics_publish.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -37,7 +37,7 @@ void main() {
     final call = calls.single;
     expect(call.method, 'publishDiagnostics');
     final markdown = (call.arguments as Map<Object?, Object?>)['markdown'] as String;
-    expect(markdown, contains('# DPSK 本机诊断'));
+    expect(markdown, contains('# DSH Go 本机诊断'));
     expect(markdown, contains('## 环境'));
   });
 

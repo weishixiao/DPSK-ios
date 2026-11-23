@@ -3,15 +3,15 @@
 // picks the default one, so 「App 外显示」 has something to show (0.9.8 smoke
 // 03j / 03k). A choice already made, 「不显示」 included, stays.
 
-import 'package:dpsk_app/performance/performance_state.dart';
-import 'package:dpsk_app/pets/overlay_channel.dart';
-import 'package:dpsk_app/pets/pet_prefs.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/access_state.dart';
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/performance/performance_state.dart';
+import 'package:dsh_app/pets/overlay_channel.dart';
+import 'package:dsh_app/pets/pet_prefs.dart';
+import 'package:dsh_app/pets/pet_state.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/access_state.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

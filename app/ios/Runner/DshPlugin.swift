@@ -6,7 +6,7 @@ import UIKit
 import UserNotifications
 
 // The app's own platform channels on iOS. The Android side of each is under
-// android/app/src/main/kotlin/com/dpsk/harness/. A channel nobody
+// android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/. A channel nobody
 // registers reaches Dart as MissingPluginException, which already means "not on
 // this platform": `dsh/runtime` (no local engine), `dsh/update`, `dsh/phone`,
 // `dsh/pet_overlay` and the rest stay that way until there is something to say.
@@ -151,7 +151,7 @@ private final class AppChannel {
 
 // MARK: - dsh/links
 
-/// Incoming `dpsk://` links and files opened with the app. Files are copied into
+/// Incoming `dshgo://` links and files opened with the app. Files are copied into
 /// the cache on one serial queue, so links reach Dart in the order they arrived even
 /// when a large file comes before a small one.
 private final class LinksChannel {
@@ -217,7 +217,7 @@ private final class LinksChannel {
 /// The home screen's quick actions. 新对话 and 语音输入 are declared in Info.plist, the
 /// latest conversations are set from Dart, and the system shows four in all.
 private final class ShortcutsChannel {
-  private static let prefix = "com.dpsk.harness."
+  private static let prefix = "io.github.ccch1mneyyy.dshgo."
   private static let recentShown = 2
 
   private let channel: FlutterMethodChannel
@@ -413,7 +413,7 @@ private struct LocalEngineFiles {
   /// carry engine-visible absolute paths and epoch milliseconds, as Dart expects.
   func outputs(depth: Int) -> [[String: Any]] {
     guard let root = canonical(guestRoot.path) else { return [] }
-    let expected = root + "/root/workspace/DPSK"
+    let expected = root + "/root/workspace/DSH-Go"
     guard canonical(expected) == expected else { return [] }
     let manager = FileManager.default
     let maxDepth = min(max(depth, 1), 8)
@@ -561,7 +561,7 @@ private final class FilesChannel: NSObject, QLPreviewControllerDataSource {
         let wanted = name?.isEmpty == false ? name! : URL(fileURLWithPath: path).lastPathComponent
         let target = Self.free(in: documents, name: (wanted as NSString).lastPathComponent)
         try manager.copyItem(at: URL(fileURLWithPath: path), to: target)
-        onMain { result("DPSK/\(target.lastPathComponent)") }
+        onMain { result("DSH Go/\(target.lastPathComponent)") }
       } catch {
         onMain { result(FlutterError(code: "failed", message: error.localizedDescription, details: nil)) }
       }

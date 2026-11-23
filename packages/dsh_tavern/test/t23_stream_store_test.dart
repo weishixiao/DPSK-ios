@@ -29,7 +29,7 @@ void main() {
       usage: const TavernUsage(promptTokens: 7),
       extra: {
         'foreign': {'keep': true},
-        'dpsk': {
+        'dshgo': {
           'inspection': {'status': 'completed'},
           'keep': 9,
         },
@@ -39,7 +39,7 @@ void main() {
       chat,
       metadata: {
         'foreign': 'keep',
-        'dpsk': {
+        'dshgo': {
           'latestInspection': {'nodeId': node.nodeId},
         },
       },
@@ -66,7 +66,7 @@ void main() {
     expect(store.message(chat, node.nodeId).text, 'lastword');
     expect(store.message(chat, node.nodeId).reasoning, isNull);
     expect(store.message(chat, node.nodeId).usage, isNull);
-    expect((store.node(chat, node.nodeId).extra['dpsk']! as Map<String, Object?>).containsKey('inspection'), isFalse);
+    expect((store.node(chat, node.nodeId).extra['dshgo']! as Map<String, Object?>).containsKey('inspection'), isFalse);
     expect(store.node(chat, node.nodeId).extra['foreign'], {'keep': true});
     expect(store.path(chat).single.text, 'lastword');
     expect(store.allNodes(chat).single.message.text, 'lastword');
@@ -164,7 +164,7 @@ void main() {
         reasoning: 'final reason',
         usage: const TavernUsage(promptTokens: 11),
         extra: {
-          'dpsk': {
+          'dshgo': {
             'inspection': {'status': 'completed'},
           },
         },
@@ -198,7 +198,7 @@ void main() {
     expect(store.message(chat, node.nodeId).usage, isNull);
     expect(store.node(chat, node.nodeId).extra, {
       'foreign': {'keep': true},
-      'dpsk': {'keep': 9},
+      'dshgo': {'keep': 9},
     });
     expect(_row(database, node.nodeId)['stream_text'], isNull);
     expect(_events(database, 'text'), [2]);
@@ -310,7 +310,7 @@ void main() {
       speaker: 'Other',
       text: 'otherword',
       extra: {
-        'dpsk': {
+        'dshgo': {
           'inspection': {'status': 'completed', 'keep': 'other'},
         },
       },
@@ -318,7 +318,7 @@ void main() {
     store.updateChat(
       otherChat,
       metadata: {
-        'dpsk': {
+        'dshgo': {
           'latestInspection': {'nodeId': other.nodeId},
         },
       },
@@ -334,13 +334,13 @@ void main() {
     expect(store.message(chat, node.nodeId).usage, isNull);
     final extra = store.node(chat, node.nodeId).extra;
     expect(extra['foreign'], {'keep': true});
-    expect(extra['dpsk'], {'keep': 9});
-    expect(store.chat(chat).metadata, {'foreign': 'keep', 'dpsk': <String, Object?>{}});
-    expect((store.node(otherChat, other.nodeId).extra['dpsk']! as Map<String, Object?>)['inspection'], {
+    expect(extra['dshgo'], {'keep': 9});
+    expect(store.chat(chat).metadata, {'foreign': 'keep', 'dshgo': <String, Object?>{}});
+    expect((store.node(otherChat, other.nodeId).extra['dshgo']! as Map<String, Object?>)['inspection'], {
       'status': 'completed',
       'keep': 'other',
     });
-    expect((store.chat(otherChat).metadata['dpsk']! as Map<String, Object?>)['latestInspection'], {
+    expect((store.chat(otherChat).metadata['dshgo']! as Map<String, Object?>)['latestInspection'], {
       'nodeId': other.nodeId,
     });
     expect(_events(database, 'text'), [2]);

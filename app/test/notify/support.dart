@@ -2,9 +2,9 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 /// Lets queued microtasks and zero-length timers run.

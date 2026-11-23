@@ -36,7 +36,7 @@ void main() {
       text: 'reported root',
       state: {'n': 1},
       extra: {
-        'dpsk': {
+        'dshgo': {
           'inspection': {
             'version': 1,
             'chatId': chat,
@@ -126,7 +126,7 @@ void main() {
         VALUES('n','c',1,'character','Guide','old body',1,?)''',
         [
           jsonEncode({
-            'dpsk': {
+            'dshgo': {
               'inspection': {
                 'version': 1,
                 'chatId': 'c',

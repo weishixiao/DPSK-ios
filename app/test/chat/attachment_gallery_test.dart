@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/attachments.dart';
-import 'package:dpsk_app/ui/chat/widgets/attachments.dart';
-import 'package:dpsk_app/ui/chat/widgets/image_gallery.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart' show SettingsTile;
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/attachments.dart';
+import 'package:dsh_app/ui/chat/widgets/attachments.dart';
+import 'package:dsh_app/ui/chat/widgets/image_gallery.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart' show SettingsTile;
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,7 +47,7 @@ List<MethodCall> _mockGallery(WidgetTester tester) {
   const channel = MethodChannel('dsh/media');
   tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, (call) async {
     calls.add(call);
-    return 'Pictures/DPSK/saved.png';
+    return 'Pictures/DSH Go/saved.png';
   });
   addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, null));
   return calls;

@@ -1,10 +1,10 @@
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_settings.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_ink.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_settings.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_ink.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

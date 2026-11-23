@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/plugins/seams/seams.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

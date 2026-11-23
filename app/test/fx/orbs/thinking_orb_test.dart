@@ -3,7 +3,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/fx/orbs/thinking_orb.dart';
+import 'package:dsh_app/ui/fx/orbs/thinking_orb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/fx/voice_ring/voice_ring.dart';
+import 'package:dsh_app/ui/fx/voice_ring/voice_ring.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

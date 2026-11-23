@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

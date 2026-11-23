@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/share_hosted/hosted_client.dart';
-import 'package:dpsk_app/share_hosted/hosted_crypto.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_client.dart';
+import 'package:dsh_app/share_hosted/hosted_crypto.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -59,7 +59,7 @@ class FakeHost {
 }
 
 void main() {
-  final file = Uint8List.fromList(utf8.encode('{"dpsk":2,"kind":"conversation","name":"修复登录"}'));
+  final file = Uint8List.fromList(utf8.encode('{"dshgo":2,"kind":"conversation","name":"修复登录"}'));
   final now = DateTime.utc(2026, 10, 25, 8);
 
   test('upload: only ciphertext leaves, and the link opens it', () async {

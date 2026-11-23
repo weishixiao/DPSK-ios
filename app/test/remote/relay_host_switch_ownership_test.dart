@@ -5,12 +5,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/remote/relay/dsh_remote_backend.dart';
-import 'package:dpsk_app/remote/relay/network_route.dart';
-import 'package:dpsk_app/remote/relay/relay_backend.dart';
-import 'package:dpsk_app/remote/secret_store.dart' as app_secrets;
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
+import 'package:dsh_app/remote/relay/dsh_remote_backend.dart';
+import 'package:dsh_app/remote/relay/network_route.dart';
+import 'package:dsh_app/remote/relay/relay_backend.dart';
+import 'package:dsh_app/remote/secret_store.dart' as app_secrets;
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:dsh_remote/dsh_remote.dart' as remote;
 import 'package:flutter/foundation.dart' show debugPrint;

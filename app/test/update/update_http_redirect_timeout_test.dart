@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/update/update_http.dart';
+import 'package:dsh_app/update/update_http.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _budget = Duration(milliseconds: 1731);

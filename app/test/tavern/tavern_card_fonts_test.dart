@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/tavern/tavern_card_theme.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_ink.dart';
-import 'package:dpsk_app/ui/tavern/tavern_reading.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_card_theme.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_ink.dart';
+import 'package:dsh_app/ui/tavern/tavern_reading.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

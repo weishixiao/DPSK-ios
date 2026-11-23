@@ -7,17 +7,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/artifact_files.dart';
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/ui/chat/artifact_preview.dart' show runArtifactAction;
-import 'package:dpsk_app/ui/chat/media/media_card.dart' show saveMediaItems;
-import 'package:dpsk_app/ui/chat/widgets/artifact_card.dart';
-import 'package:dpsk_app/ui/share/share_card.dart';
-import 'package:dpsk_app/ui/share/share_content.dart';
-import 'package:dpsk_app/ui/share/share_image_page.dart';
-import 'package:dpsk_app/ui/share/share_panel.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/artifact_files.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/ui/chat/artifact_preview.dart' show runArtifactAction;
+import 'package:dsh_app/ui/chat/media/media_card.dart' show saveMediaItems;
+import 'package:dsh_app/ui/chat/widgets/artifact_card.dart';
+import 'package:dsh_app/ui/share/share_card.dart';
+import 'package:dsh_app/ui/share/share_content.dart';
+import 'package:dsh_app/ui/share/share_image_page.dart';
+import 'package:dsh_app/ui/share/share_panel.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,7 +56,7 @@ class _Android {
         case 'saveToDownloads':
           await saveGate;
           if (saveError case final error?) throw error;
-          return savedAt ?? 'Download/DPSK/${args['name']}';
+          return savedAt ?? 'Download/DSH-Go/${args['name']}';
         case 'listOutputs':
           return const <Object?>[];
         case 'pdfInfo':
@@ -221,7 +221,7 @@ void main() {
       'name': 'report.pdf',
       'mime': 'application/pdf',
     });
-    expect(find.text('已存到 下载/DPSK/report.pdf'), findsOneWidget);
+    expect(find.text('已存到 下载/DSH-Go/report.pdf'), findsOneWidget);
     // Success feedback stays five seconds, then the description is back.
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
@@ -248,11 +248,11 @@ void main() {
       await tester.pumpWidget(_card([_pdf]));
       await tester.pumpAndSettle();
       await openMenu(tester);
-      expect(find.text('下载/DPSK 文件夹'), findsOneWidget);
+      expect(find.text('下载/DSH-Go 文件夹'), findsOneWidget);
       expect(find.text('保存到文件'), findsNothing);
       await tester.tap(find.text('存到「下载」'));
       await tester.pumpAndSettle();
-      expect(find.text('已存到 下载/DPSK/report.pdf'), findsOneWidget);
+      expect(find.text('已存到 下载/DSH-Go/report.pdf'), findsOneWidget);
       await tester.pump(const Duration(seconds: 5));
       await tester.pumpAndSettle();
     });
@@ -287,7 +287,7 @@ void main() {
       await openMenu(tester);
       expect(find.text('选择保存位置'), findsOneWidget);
       expect(find.text('存到「下载」'), findsNothing);
-      expect(find.text('下载/DPSK 文件夹'), findsNothing);
+      expect(find.text('下载/DSH-Go 文件夹'), findsNothing);
       await tester.tap(find.text('保存到文件'));
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('正在保存…'), findsOneWidget);
@@ -371,7 +371,7 @@ void main() {
       await tester.pumpWidget(fileAction());
       await tester.tap(find.text('go'));
       await tester.pumpAndSettle();
-      expect(find.text('已存到 下载/DPSK/report.pdf'), findsOneWidget);
+      expect(find.text('已存到 下载/DSH-Go/report.pdf'), findsOneWidget);
     });
 
     testWidgets('file actions: HarmonyOS says 已保存, and nothing when backed out of', (tester) async {
@@ -406,7 +406,7 @@ void main() {
       final messenger = tester.binding.defaultBinaryMessenger;
       messenger.setMockMethodCallHandler(media, (call) async {
         gallery.add(call);
-        return 'Movies/DPSK/${(call.arguments as Map)['name']}';
+        return 'Movies/DSH Go/${(call.arguments as Map)['name']}';
       });
       addTearDown(() => messenger.setMockMethodCallHandler(media, null));
       await tester.pumpWidget(batch());
@@ -606,7 +606,7 @@ void main() {
       saved.clear();
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(_files, (call) async {
         saved.add(call);
-        return 'Download/DPSK/a (2).png';
+        return 'Download/DSH-Go/a (2).png';
       });
       files = ArtifactFiles(
         connection: HostConnection(client: DshClient.withCarrier(carrier), label: '工作站', isLocal: false, hostId: 'h1'),
@@ -645,7 +645,7 @@ void main() {
       expect(carrier.calls.last, 'workspaceFiles/readBytes');
 
       final where = await files.saveToDownloads('s1', image);
-      expect(where, 'Download/DPSK/a (2).png');
+      expect(where, 'Download/DSH-Go/a (2).png');
       expect(saved.single.method, 'saveToDownloads');
       expect((saved.single.arguments as Map)['path'], fresh.path);
       expect((saved.single.arguments as Map)['mime'], 'image/png');

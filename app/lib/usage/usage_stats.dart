@@ -307,7 +307,7 @@ class UsageStatsController extends Notifier<UsageStatsState> {
       if (carrier is! DshHttpCarrier) return;
       try {
         final response = await carrier.connection.postBytes(
-          '/DPSK/v1/usage/collect',
+          '/dsh-go/v1/usage/collect',
           utf8.encode(enabled ? 'on' : 'off'),
           followRedirects: false,
           timeout: const Duration(seconds: 3),

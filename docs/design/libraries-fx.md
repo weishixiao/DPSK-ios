@@ -1,4 +1,4 @@
-# Libraries.dev 特效在 DPSK 里的用法
+# Libraries.dev 特效在 dsh-go 里的用法
 
 2026-11-14。用户说"参考 libraries.dev 的特效丰富语音模块和其他用得到的地方，MIT 随便用，但一定要切合整体风格，不能花里胡哨，要高级典雅精致"。
 

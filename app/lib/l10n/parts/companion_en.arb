@@ -99,7 +99,7 @@
   "companionMemoryEmpty": "Nothing saved yet",
   "companionMemoryEmptyHint": "She picks up what you talk about on her own. If there is something you want her to keep in mind, you can write it here.",
   "companionMemoryUnsupported": "This host can't keep her memories yet",
-  "companionMemoryUnsupportedHint": "It isn't available over the DSH Remote relay, or this host's DPSK bridge is older.",
+  "companionMemoryUnsupportedHint": "It isn't available over the DSH Remote relay, or this host's dsh-go bridge is older.",
   "companionMemoryLoadFailed": "Couldn't load",
   "companionMemoryRetry": "Retry",
   "companionMemoryConflict": "It was just changed elsewhere, so it's been refreshed",

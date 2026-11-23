@@ -1,6 +1,6 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/voice_scribe_settings.dart';
-import 'package:dpsk_app/ui/plugins/voice_scribe_settings_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/voice_scribe_settings.dart';
+import 'package:dsh_app/ui/plugins/voice_scribe_settings_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

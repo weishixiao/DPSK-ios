@@ -1,4 +1,4 @@
-// A card's own look (docs/design/roleplay-ui.md §10, extensions.dpsk.theme):
+// A card's own look (docs/design/roleplay-ui.md §10, extensions.dshgo.theme):
 // its accent, the layout it reads best in, its characters' name colours and
 // its background, read leniently from the raw JSON. It reaches only the story
 // (transcript, stage, picture); the app's shell keeps its own look. Its fonts

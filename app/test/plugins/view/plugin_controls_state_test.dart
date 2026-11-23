@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_model.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin_controls_state.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_model.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin_controls_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 DshUiInput input({String name = 'name', DshUiAction? onChange, bool required = false, int maxLength = 256}) =>

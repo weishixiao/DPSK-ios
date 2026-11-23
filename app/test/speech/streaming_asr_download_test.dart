@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/voice/streaming_asr_download.dart';
+import 'package:dsh_app/voice/streaming_asr_download.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Four small files served like Hugging Face's `resolve` URLs.

@@ -519,7 +519,7 @@ void main() {
     final host = await h.card(
       'Host',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': _counterState(),
           'story': {
@@ -531,7 +531,7 @@ void main() {
       },
     );
     final foreign = {
-      'dpsk': {
+      'dshgo': {
         'v': 1,
         'state': _counterState(initial: 99, summary: 'ACTOR_SCHEMA_MUST_NOT_RUN'),
         'story': {
@@ -634,7 +634,7 @@ void main() {
       'Host',
       description: 'HOST_NOT_AN_ACTOR',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': {
             'schema': {
@@ -691,7 +691,7 @@ void main() {
       'Actor',
       description: 'ACTOR_BODY',
       extensions: {
-        'dpsk': {'v': 1, 'state': _counterState(initial: 99, summary: 'ACTOR_SCHEMA_MUST_NOT_RUN')},
+        'dshgo': {'v': 1, 'state': _counterState(initial: 99, summary: 'ACTOR_SCHEMA_MUST_NOT_RUN')},
       },
     );
     final other = await h.card('Other');
@@ -844,7 +844,7 @@ void main() {
           source.nodeId,
         ]).single;
         expect((row['text'], row['speaker_character_id']), ('ACTOR_SOURCE', actor));
-        final own = _map(_map(jsonDecode(row['extra']! as String))['dpsk']);
+        final own = _map(_map(jsonDecode(row['extra']! as String))['dshgo']);
         expect(_map(own['group'])['actorCharacterId'], actor);
         expect(_map(own['secretBinding'])['runId'], bind.id);
       } finally {

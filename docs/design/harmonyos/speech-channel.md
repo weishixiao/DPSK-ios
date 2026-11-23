@@ -7,7 +7,7 @@
 预检移到任何 `synthesize` 之前，并完成有背压、可取消的响应流。
 
 产品基底为 `a836880`。协议只读参考固定公开提交
-[`dd130b31061e305cd9c06e103c3e5210fee1922f`](https://github.com/weishixiao/DPSK/commit/dd130b31061e305cd9c06e103c3e5210fee1922f)，
+[`dd130b31061e305cd9c06e103c3e5210fee1922f`](https://github.com/ccch1mneyyy/dsh-Go/commit/dd130b31061e305cd9c06e103c3e5210fee1922f)，
 不是切换产品基底。对应文件 SHA 在
 `runtime/tests/ohos/speech-channel-contract.json`。本次不修改 Android、UI 或引擎
 `speech.js`；原生后端见 [speech-pcm.md](speech-pcm.md)。通道补丁依赖该后端，

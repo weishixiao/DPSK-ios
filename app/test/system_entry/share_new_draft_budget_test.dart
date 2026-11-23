@@ -5,17 +5,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/draft_store.dart';
-import 'package:dpsk_app/state/attachments.dart';
+import 'package:dsh_app/state/draft_store.dart';
+import 'package:dsh_app/state/attachments.dart';
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/voice_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/widgets/attachments.dart';
-import 'package:dpsk_app/ui/shell/system_entry_host.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/voice_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/widgets/attachments.dart';
+import 'package:dsh_app/ui/shell/system_entry_host.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';

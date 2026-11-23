@@ -290,7 +290,7 @@ void main() {
       ],
       'foreign': [1, null],
       'extensions': {
-        'dpsk': {'presetEnvelope': 'legacy-opaque'},
+        'dshgo': {'presetEnvelope': 'legacy-opaque'},
       },
     };
     await h.engine.setPreset(ChatPreset(raw));
@@ -606,7 +606,7 @@ void main() {
     await h.engine.updatePreset(imported.id, imported.raw);
     final patch = <String, Object?>{
       'extensions': {
-        'dpsk': {
+        'dshgo': {
           'presetEnvelope': {
             'outerUnknown': {'changed': 4},
           },

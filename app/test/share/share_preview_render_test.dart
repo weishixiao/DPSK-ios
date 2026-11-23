@@ -6,9 +6,9 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/share/share_card.dart';
-import 'package:dpsk_app/ui/share/share_content.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/share/share_card.dart';
+import 'package:dsh_app/ui/share/share_content.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart' show ImageAttachment;
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

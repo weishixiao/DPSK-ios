@@ -8,14 +8,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/ui/update/update_sheet.dart';
-import 'package:dpsk_app/update/installer.dart';
-import 'package:dpsk_app/update/release.dart';
-import 'package:dpsk_app/update/update_config.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/ui/update/update_sheet.dart';
+import 'package:dsh_app/update/installer.dart';
+import 'package:dsh_app/update/release.dart';
+import 'package:dsh_app/update/update_config.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -25,11 +25,11 @@ import '../shell/golden_harness.dart';
 import 'support.dart';
 
 const _version = '1.2.0+11011200';
-const _apk = 'DPSK-1.2.0-arm64.apk';
-const _patchName = 'DPSK-1.0.0-to-1.2.0-arm64.dshdlt';
+const _apk = 'dsh-go-1.2.0-arm64.apk';
+const _patchName = 'dsh-go-1.0.0-to-1.2.0-arm64.dshdlt';
 const _feed = 'https://dl.dshtui.com/update.json';
 const _dl = 'https://dl.dshtui.com/download/1.2.0';
-const _github = 'https://github.com/weishixiao/DPSK/releases/download/v1.2.0';
+const _github = 'https://github.com/ccch1mneyyy/dsh-go/releases/download/v1.2.0';
 
 final _old = utf8.encode('PK the installed 1.0.0, ${'resources ' * 300}${'classes ' * 300}');
 final _new = [..._old.sublist(0, 2000), ...utf8.encode('the 1.2.0 code'), ..._old.sublist(2400)];

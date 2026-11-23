@@ -4,12 +4,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/companion/companion_float.dart' show companionFloatStoreProvider;
-import 'package:dpsk_app/companion/companion_pack.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/plugins/islands/island_platform.dart';
-import 'package:dpsk_app/ui/workshop/workshop_companion_auto_cover.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart' show workshopPreviewSide;
+import 'package:dsh_app/companion/companion_float.dart' show companionFloatStoreProvider;
+import 'package:dsh_app/companion/companion_pack.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/plugins/islands/island_platform.dart';
+import 'package:dsh_app/ui/workshop/workshop_companion_auto_cover.dart';
+import 'package:dsh_app/workshop/workshop_models.dart' show workshopPreviewSide;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

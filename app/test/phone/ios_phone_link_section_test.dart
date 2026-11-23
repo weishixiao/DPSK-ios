@@ -3,9 +3,9 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/phone/ios_phone_link.dart';
-import 'package:dpsk_app/state/ios_phone_link_state.dart';
-import 'package:dpsk_app/ui/phone/ios_phone_link_section.dart';
+import 'package:dsh_app/phone/ios_phone_link.dart';
+import 'package:dsh_app/state/ios_phone_link_state.dart';
+import 'package:dsh_app/ui/phone/ios_phone_link_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

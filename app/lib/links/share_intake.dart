@@ -1,11 +1,11 @@
-// What other apps share to DPSK through the system
+// What other apps share to dsh-go through the system
 // share sheet — text, photos, files. Native side:
 // android/.../share/ShareActivity.kt (the share-sheet target) and
 // share/SharePlugin.kt (MethodChannel `dsh/share`), which copies the files
 // into the app cache first (photos scaled like the composer's own picker).
 //
 // Where a share goes is decided in lib/ui/shell/system_entry_host.dart: a
-// lone `.dpsk` file or a share link to the share-code importer, a hosted
+// lone `.dshgo` file or a share link to the share-code importer, a hosted
 // conversation link to its replay, everything else into a new conversation's
 // composer (lib/state/compose_inbox.dart).
 
@@ -64,7 +64,7 @@ class IncomingShare {
 
   bool get isEmpty => (text == null || text!.trim().isEmpty) && files.isEmpty && skipped.isEmpty;
 
-  /// A lone `.dpsk` file: imported, not chatted about.
+  /// A lone `.dshgo` file: imported, not chatted about.
   SharedFile? get shareCodeFile =>
       files.length == 1 && skipped.isEmpty && files.single.isShareCode ? files.single : null;
 

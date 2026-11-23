@@ -116,7 +116,7 @@ void main() {
     final physical = {
       'variables': {'physical': 'sentinel'},
       'messageVariables': {
-        'dpsk': {'count': 77},
+        'dshgo': {'count': 77},
       },
       'foreign': ['physical'],
     };
@@ -138,8 +138,8 @@ void main() {
     expect(await h.engine.readVariables(chat), {'route': 'A'});
     expect(h.engine.variables(chat), {'route': 'A'});
     expect(await _saved(h.engine, chat), savedA);
-    expect(_map(savedA['dpskStateRuntime'])['firedRules'], ['id:branch-reward']);
-    expect(_map(savedA['dpskStateRuntime'])['pendingPrompts'], hasLength(1));
+    expect(_map(savedA['dshgoStateRuntime'])['firedRules'], ['id:branch-reward']);
+    expect(_map(savedA['dshgoStateRuntime'])['pendingPrompts'], hasLength(1));
     await h.engine.selectNode(chat, bChild.nodeId);
     final selectedBChild = await h.engine.readState(chat);
     expect(selectedBChild.values, {'count': 2});
@@ -461,7 +461,7 @@ Future<_Branches> _branches(T24Harness h) async {
 Future<String> _stateChat(T24Harness h) async {
   final raw = _map(jsonDecode(utf8.decode(t24Card())));
   _map(raw['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'state': {
         'schema': {
@@ -536,7 +536,7 @@ Map<String, String?> _choices(T24Harness h, String chat) => _db(
 Future<Map<String, Object?>> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  return _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  return _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
 }
 
 (Database, ChatStore) _store() {

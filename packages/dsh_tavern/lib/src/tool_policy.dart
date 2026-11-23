@@ -149,13 +149,13 @@ Map<String, Object?> parseToolCardDeclaration(Map<String, Object?> cardData) {
   }
 
   final extensions = child(cardData, 'extensions', 'extensions');
-  final dpsk = extensions == null ? null : child(extensions, 'dpsk', 'extensions.dpsk');
-  if (dpsk != null) {
-    captured['v'] = {'present': dpsk.containsKey('v'), 'raw': _copyValue(dpsk['v'])};
-    if (dpsk.containsKey('v') && (dpsk['v'] is! int || dpsk['v'] != 1)) {
-      invalid('extensions.dpsk.v', dpsk['v']);
+  final dshgo = extensions == null ? null : child(extensions, 'dshgo', 'extensions.dshgo');
+  if (dshgo != null) {
+    captured['v'] = {'present': dshgo.containsKey('v'), 'raw': _copyValue(dshgo['v'])};
+    if (dshgo.containsKey('v') && (dshgo['v'] is! int || dshgo['v'] != 1)) {
+      invalid('extensions.dshgo.v', dshgo['v']);
     }
-    final tools = child(dpsk, 'tools', 'extensions.dpsk.tools');
+    final tools = child(dshgo, 'tools', 'extensions.dshgo.tools');
     if (tools != null) {
       for (final name in const ['roll', 'remember']) {
         captured[name] = {'present': tools.containsKey(name), 'raw': _copyValue(tools[name])};
@@ -164,7 +164,7 @@ Map<String, Object?> parseToolCardDeclaration(Map<String, Object?> cardData) {
         }
         final tool = tools[name];
         if (tool is! Map<String, Object?>) {
-          invalid('extensions.dpsk.tools.$name', tool, tool: name);
+          invalid('extensions.dshgo.tools.$name', tool, tool: name);
           continue;
         }
         if (!tool.containsKey('disabled')) {
@@ -172,7 +172,7 @@ Map<String, Object?> parseToolCardDeclaration(Map<String, Object?> cardData) {
         }
         final disabled = tool['disabled'];
         if (disabled is! bool) {
-          invalid('extensions.dpsk.tools.$name.disabled', disabled, tool: name);
+          invalid('extensions.dshgo.tools.$name.disabled', disabled, tool: name);
         } else if (name == 'roll') {
           rollDisabled = disabled;
         } else {

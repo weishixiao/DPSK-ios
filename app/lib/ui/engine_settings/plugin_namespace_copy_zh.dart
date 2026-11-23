@@ -177,7 +177,7 @@ const pluginNamespaceCopyZh = <String, Map<String, FieldCopy>>{
     'streamEnabled': FieldCopy(label: '启用流媒体在线播放'),
     'streamRules': FieldCopy(label: '流媒体规则', hint: 'CSS、XPath 或取址脚本'),
   },
-  // @weishixiao/dsh-media 0.2.1; bundle row: dsh-media.
+  // @ccch1mneyyy/dsh-media 0.2.1; bundle row: dsh-media.
   'dsh-media': {
     'services': FieldCopy(label: '媒体服务'),
     'defaults.serviceId': FieldCopy(label: '默认服务 ID', hint: '留空使用首个已配置服务'),

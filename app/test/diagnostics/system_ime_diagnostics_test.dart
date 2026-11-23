@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_markdown.dart';
-import 'package:dpsk_app/diagnostics/system_ime_diagnostics.dart';
-import 'package:dpsk_app/diagnostics/system_ime_evidence.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/diagnostics/diagnostics_markdown.dart';
+import 'package:dsh_app/diagnostics/system_ime_diagnostics.dart';
+import 'package:dsh_app/diagnostics/system_ime_evidence.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

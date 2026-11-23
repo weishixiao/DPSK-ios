@@ -1,4 +1,4 @@
-import 'package:dpsk_app/companion/companion_screen_pace.dart';
+import 'package:dsh_app/companion/companion_screen_pace.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 // These exercise the real local policy with explicit display/user events.

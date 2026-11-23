@@ -1,11 +1,11 @@
 // The app's notes to the model (a call's instructions, a persona sent inline)
 // go out with the message and are never shown as what the person said.
 
-import 'package:dpsk_app/state/app_notes.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart' show SettingsTile;
+import 'package:dsh_app/state/app_notes.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart' show SettingsTile;
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

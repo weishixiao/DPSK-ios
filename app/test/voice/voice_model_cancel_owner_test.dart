@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/voice_model_state.dart';
-import 'package:dpsk_app/voice/voice_model_assets.dart';
-import 'package:dpsk_app/voice/voice_model_download.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/voice_model_state.dart';
+import 'package:dsh_app/voice/voice_model_assets.dart';
+import 'package:dsh_app/voice/voice_model_download.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

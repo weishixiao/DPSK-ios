@@ -1,7 +1,7 @@
 // The ways in from the rest of the phone, sent where they
 // belong —
 //
-//   share sheet        a lone `.dpsk` file or a share link → the share-code
+//   share sheet        a lone `.dshgo` file or a share link → the share-code
 //                      importer (as if opened); a hosted conversation link →
 //                      its replay; a lone character card → 酒馆; anything
 //                      else → 新对话 with the text and attachments in the

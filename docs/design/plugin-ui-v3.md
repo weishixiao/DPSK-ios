@@ -1,6 +1,6 @@
 # 插件界面 v3：兼容网页插件，给原生插件更多位置和组件
 
-> 2026-10-28。基于 main `2e37d13`（DPSK，内置 DSH 0.2.1-rc.4）。在 [plugin-seams.md](plugin-seams.md)（接缝规格：「原生适配器优先，网页岛兜底」）和 [native-plugins.md](native-plugins.md) / [-protocol.md](native-plugins-protocol.md) / [-views.md](native-plugins-views.md)（原生协议 NA v1.3、视图 v2）上扩展，不另起炉灶。审美规则沿用 [polish-guide.md](polish-guide.md)、[page-design.md](page-design.md) 和作者侧的 [design-rules.md](../plugins/design-rules.md)。
+> 2026-10-28。基于 main `2e37d13`（DSH Go，内置 DSH 0.2.1-rc.4）。在 [plugin-seams.md](plugin-seams.md)（接缝规格：「原生适配器优先，网页岛兜底」）和 [native-plugins.md](native-plugins.md) / [-protocol.md](native-plugins-protocol.md) / [-views.md](native-plugins-views.md)（原生协议 NA v1.3、视图 v2）上扩展，不另起炉灶。审美规则沿用 [polish-guide.md](polish-guide.md)、[page-design.md](page-design.md) 和作者侧的 [design-rules.md](../plugins/design-rules.md)。
 >
 > 调研数据没有入库（复现方法见附录 A）。下载的包逐个放进新建的空目录，只在内存里读 tarball 做文本匹配，不解压、不执行。
 >
@@ -237,7 +237,7 @@ rc.4 里，插件可以给对话注册一个「View」（和 Chat、Trajectory �
 | 尺寸 | 圆角 28；内容左右 20（两侧相等）；起始半高，可拉到全高；宽屏最宽 640 居中 |
 | 顺序 | 原生面板按插件名排序；网页一节固定在最后，一个岛装下所有网页插件 |
 | 岛 | 打开弹层才建，关掉后 30 秒回收（`IslandBudgetRules.hiddenGrace`）；预算不够、守卫没生效、8 秒（`IslandTiming.sheetReady`；实测一般 0.8–3.4 s，最慢 11.3 s，弹层只是看一眼，不等更久）没 `ready` → 换成一行「在网页版打开」 |
-| 一个岛怎么装 7 个 slot | App 侧的键 `DPSK.chat`（不是 DSH 的 slot），配方 `"slots": [7 个]`、`"stretch": "common"`、`"ready": "sheet"`。桥接一次遮掉 7 个 slot 的官方条目（`#DPSK-island=a,b,…`）；`island.js` 取有内容的那几个 slot 的最近公共盒子当框，框里只留通往它们的路径，其余移出布局，于是条目按页面顺序竖排（先头部的，后输入框的） |
+| 一个岛怎么装 7 个 slot | App 侧的键 `dsh-go.chat`（不是 DSH 的 slot），配方 `"slots": [7 个]`、`"stretch": "common"`、`"ready": "sheet"`。桥接一次遮掉 7 个 slot 的官方条目（`#dsh-go-island=a,b,…`）；`island.js` 取有内容的那几个 slot 的最近公共盒子当框，框里只留通往它们的路径，其余移出布局，于是条目按页面顺序竖排（先头部的，后输入框的） |
 | 什么时候建岛 | 7 个 slot 的每个第三方条目单独规划都是岛（本机引擎 + 守卫、Tier B）、没有一项被 `ui.json` 改成 `web` 或隐藏，且预算放得下这一个岛；否则整块是一行「在网页版打开」（岛里不能只藏某个插件的条目） |
 | 署名 | 原生面板照旧每张卡带插件名；岛里条目没有逐条标记，所以在岛上方列出来源包名 |
 | 用户控制 | ui.json `plugins.seats` 照旧能隐藏某插件或改成 `web` |
@@ -267,7 +267,7 @@ rc.4 里，插件可以给对话注册一个「View」（和 Chat、Trajectory �
 | 会话头部的按钮 | `session.header.actions` / `utilities` | 对话操作（P2 `session.actions`） | 清单 + `on(id)` |
 | 另一种看对话的方式 | `conversation.view` | 对话详情页签面板 `placement: "session.tab"`（已有） | `panel(id)` |
 | 侧栏面板、右栏页签 | `main` + `panellist`、`sidebar.right.pane.tab` | 面板 `features` / `session.tab`（已有） | `panel(id)` |
-| 工具结果卡 | `tool.call.toolview` | 工具卡（已有） | `presentationMeta` 里加 `"DPSK/view"` |
+| 工具结果卡 | `tool.call.toolview` | 工具卡（已有） | `presentationMeta` 里加 `"dsh-go/view"` |
 | 消息旁的按钮 | `assistant-actions` | 消息菜单（已有） | 清单 + `on(id)` |
 | 回合尾的数字 | `turnTail` | 回合尾注（P2 `turn.note`） | `turnNote(id)` |
 | 弹窗、提示 | `shell.overlay` · Modal / Toast | 弹层面板（P2 `presentation: "sheet"`）、`toast` 效果 | — |
@@ -282,7 +282,7 @@ SDK 配套一个检查：`dsh-go-plugin-check --from-web <插件目录>` 读出�
 | 改进 | 期 | 内容 |
 |---|---|---|
 | rc.4 配方复核 | P1 | rc.4 改了会话头部（View 标签行、「更多」）。`recipes.json` 的配方在 rc.4 运行时上逐个跑一遍（模拟器），`island_logic_test.dart` 补 rc.4 的用例 |
-| 给网页作者的环境标记 | P1（只写文档） | 岛里 `<html>` 已有 `data-DPSK-island` 和 `data-DPSK-island-form`（page / panel），以及 `--DPSK-island-top` 等 CSS 变量；写进 `web-panels.md`，配一节「让网页插件在 DPSK 里好看」：用 `--dsw-*` token、不写死宽度、360 宽下自测 |
+| 给网页作者的环境标记 | P1（只写文档） | 岛里 `<html>` 已有 `data-dsh-go-island` 和 `data-dsh-go-island-form`（page / panel），以及 `--dsh-go-island-top` 等 CSS 变量；写进 `web-panels.md`，配一节「让网页插件在 DSH Go 里好看」：用 `--dsw-*` token、不写死宽度、360 宽下自测 |
 | 岛内浮层 | P2 | 插件自己页面弹出的对话框、提示挂在 `shell.overlay` 里，在岛里被一并隐藏。做法同现有 body 弹层（`island.js` `markLayers`）：岛内点按后 3 秒内出现在 `[data-slot="shell.overlay"]` 下的新节点放出来；本机由桥接遮掉官方占用者 |
 | 只读环境信息 | P2 | `window.__dshGoIsland.info()` → `{app, form, theme, textScale}`，只读，不加任何能力 |
 | 预热 | 不做 | 一个岛约 200 MB，提前建不划算；首开骨架 1–3 秒维持现状 |
@@ -293,7 +293,7 @@ SDK 配套一个检查：`dsh-go-plugin-check --from-web <插件目录>` 读出�
 |---|---|---|
 | App → 网页插件的一个占用者 | 座位规划器按顺序试：原生适配器（schema 表单、Cordis、同位置的 `dshGo` 原生面板）→ 岛（这个 slot 支持的形态、守卫、占用表、内存预算、5 秒就绪门）→ 「在网页版打开」 | 都不行就隐藏，并在插件详情「网页版界面」里列出（§3.5） |
 | App → `dshGo` 插件 | 请求带 `caps`：`surfaces`、`components`、`features`、App 版本 | 插件自己用 `adaptView` / `hasComponent` 降级；不认识的组件画占位，不认识的 surface 忽略 |
-| 网页插件 → 自己是不是在 App 的岛里 | `html[data-DPSK-island]`、`data-DPSK-island-form`（P1 写进文档），P2 加只读 `info()` | 不在岛里就照常是网页版 |
+| 网页插件 → 自己是不是在 App 的岛里 | `html[data-dsh-go-island]`、`data-dsh-go-island-form`（P1 写进文档），P2 加只读 `info()` | 不在岛里就照常是网页版 |
 | 同一个包两边都有 | 原生优先：对话详情页签和全部功能已经是这样（`seat_planner.dart` 里 `nativePanelId` 那段）；聊天页弹层 P1 先两样都显示，P2 由桥接在岛模式下把已原生化的包的网页条目一并遮掉 | ui.json `plugins.seats` 可以反过来指定 `web` |
 
 ## 4. 给作者的新能力
@@ -483,7 +483,7 @@ owner 举的例子里，**已经有的**：列表 `list`、网格 `grid`、标�
 | `notify` | 首次询问、逐插件开关、频率上限；内容不含链接，点开只能去本插件面板或对话 | 桥接 + App | — |
 | 小部件（P3） | 用户自己加到桌面才有；只显示状态条那三项；锁屏不显示 | App | — |
 
-所有 `/DPSK/*` 路由照旧经 K3 守卫，没有凭据一律 401。永远不开放的清单不变：批准工具调用、改权限、手机操控、装卸插件、切主机、读 App 设置或凭据、无点按的自动执行（`notify` 只是提示，不带任何效果）。
+所有 `/dsh-go/*` 路由照旧经 K3 守卫，没有凭据一律 401。永远不开放的清单不变：批准工具调用、改权限、手机操控、装卸插件、切主机、读 App 设置或凭据、无点按的自动执行（`notify` 只是提示，不带任何效果）。
 
 ## 5. 审美约束
 
@@ -572,18 +572,18 @@ owner 举的例子里，**已经有的**：列表 `list`、网格 `grid`、标�
 | `docs/plugins/slots.md` | `chat.panel` 落地、聊天页弹层的样子 | 新 surface 逐个一节 |
 | `docs/plugins/components.md` | 4 个新组件 + 深浅色 golden 截图 | P2 组件 |
 | `docs/plugins/styles.md` / `design-rules.md` | `accent: "app"`、新图标名单、§5 的「谁定什么」 | 表格列类型 |
-| `docs/plugins/web-panels.md` | 对话视图、聊天页面板岛、网页版界面一节、岛里的环境标记与「在 DPSK 里好看」 | 浮层、`info()`、`open web:` |
+| `docs/plugins/web-panels.md` | 对话视图、聊天页面板岛、网页版界面一节、岛里的环境标记与「在 DSH Go 里好看」 | 浮层、`info()`、`open web:` |
 | `docs/plugins/from-web.md`（新） | §3.6 对照表 + 每行一个最小例子 | `check --from-web` |
 | `docs/plugins/native-for-free.md` | `dsh-ui` 围栏和 genui 的关系；工具卡「已经在写 `presentationMeta` 就再加一个键」 | — |
 | `docs/plugins/versions.md` | 新组件的降级、`caps.components` | 新 surface 与桥接版本 |
 | `docs/plugins/en/*` | 同步英文 | 同步英文 |
-| `sdk/plugin-kit/schema/view.schema.json` | `emptyState`、`gallery`、`progress.shape`、`metric.trend`、`accent: "app"`、`x-DPSK` 里的上限 | P2 组件 |
+| `sdk/plugin-kit/schema/view.schema.json` | `emptyState`、`gallery`、`progress.shape`、`metric.trend`、`accent: "app"`、`x-dsh-go` 里的上限 | P2 组件 |
 | `schema/manifest.schema.json`、`contributions.schema.json` | `chat.panel` 已在，补说明 | 新 surface、`tools`、`notify`、`presentation` |
 | `types/schema.d.ts`（`scripts/gen-types.mjs` 生成）、`lib/view.js` | 生成类型；构造函数 `emptyState()`、`gallery()` | 同 |
 | `lib/caps.js` | `adaptView` 的新降级（`gallery` → `grid` + `image`、`emptyState` → `callout`） | 同 |
 | `lib/view-check.js` | 新组件校验，和 Dart 共用对照用例 | 同 |
 | `skill/SKILL.md`（`dsh-go-plugin` 技能） | 新组件、`chat.panel`、`accent: "app"` 的写法 | 新 surface |
-| 示例插件 | 新 `examples/plugins/DPSK-example-album`：聊天页弹层 + 全部功能里一个相册面板，用到 `gallery`、`emptyState`、环形进度、趋势线、`accent: "app"`（图片放 `assets/`，没有图时是空态） | 给 `DPSK-example-quick` 加 `composer.tools` 和 `session.actions`；`DPSK-example-usage` 加 `turn.note` |
+| 示例插件 | 新 `examples/plugins/dsh-go-example-album`：聊天页弹层 + 全部功能里一个相册面板，用到 `gallery`、`emptyState`、环形进度、趋势线、`accent: "app"`（图片放 `assets/`，没有图时是空态） | 给 `dsh-go-example-quick` 加 `composer.tools` 和 `session.actions`；`dsh-go-example-usage` 加 `turn.note` |
 
 ## 8. 需要 owner 定的事
 

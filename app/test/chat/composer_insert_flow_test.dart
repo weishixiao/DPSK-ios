@@ -3,20 +3,20 @@
 // focused, with a short confirmation that stays clear of the composer. A
 // picked skill always goes out as a message, never as a look-alike command.
 
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/composer_insert.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/draft_store.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/composer_toast.dart';
-import 'package:dpsk_app/ui/chat/empty_actions.dart';
-import 'package:dpsk_app/ui/chat/empty_state.dart';
-import 'package:dpsk_app/ui/safe_mode/engine_failure_card.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/composer_insert.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/draft_store.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/composer_toast.dart';
+import 'package:dsh_app/ui/chat/empty_actions.dart';
+import 'package:dsh_app/ui/chat/empty_state.dart';
+import 'package:dsh_app/ui/safe_mode/engine_failure_card.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

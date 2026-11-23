@@ -6,11 +6,11 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/state/attachments.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/empty_state.dart' show chatClock;
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/state/attachments.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/empty_state.dart' show chatClock;
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

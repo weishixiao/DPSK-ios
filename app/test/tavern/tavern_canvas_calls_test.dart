@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/tavern/tavern_canvas_calls.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_script_host.dart';
+import 'package:dsh_app/tavern/tavern_canvas_calls.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_script_host.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter_test/flutter_test.dart';
 

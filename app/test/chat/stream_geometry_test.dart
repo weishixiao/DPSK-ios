@@ -6,20 +6,20 @@
 // card's two buttons are equal and mirrored, and the reply actions' first
 // icon sits on the text edge with the footnote's chevron on the right one.
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/turn_summary.dart';
-import 'package:dpsk_app/ui/chat/widgets/approval_card.dart';
-import 'package:dpsk_app/ui/chat/widgets/assistant_message.dart';
-import 'package:dpsk_app/ui/chat/widgets/change_card.dart';
-import 'package:dpsk_app/ui/chat/widgets/chat_card.dart';
-import 'package:dpsk_app/ui/chat/widgets/command_row.dart';
-import 'package:dpsk_app/ui/chat/widgets/notice_row.dart';
-import 'package:dpsk_app/ui/chat/widgets/question_card.dart';
-import 'package:dpsk_app/ui/chat/widgets/thinking_pill.dart';
-import 'package:dpsk_app/ui/chat/widgets/tool_row.dart';
-import 'package:dpsk_app/ui/common/think_glyph.dart';
-import 'package:dpsk_app/ui/common/tool_glyph.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/turn_summary.dart';
+import 'package:dsh_app/ui/chat/widgets/approval_card.dart';
+import 'package:dsh_app/ui/chat/widgets/assistant_message.dart';
+import 'package:dsh_app/ui/chat/widgets/change_card.dart';
+import 'package:dsh_app/ui/chat/widgets/chat_card.dart';
+import 'package:dsh_app/ui/chat/widgets/command_row.dart';
+import 'package:dsh_app/ui/chat/widgets/notice_row.dart';
+import 'package:dsh_app/ui/chat/widgets/question_card.dart';
+import 'package:dsh_app/ui/chat/widgets/thinking_pill.dart';
+import 'package:dsh_app/ui/chat/widgets/tool_row.dart';
+import 'package:dsh_app/ui/common/think_glyph.dart';
+import 'package:dsh_app/ui/common/tool_glyph.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

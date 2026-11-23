@@ -1,9 +1,9 @@
 // Portions derived from Libraries.dev Metal (https://github.com/Jakubantalik/Libraries.dev), MIT, Copyright (c) 2026 Jakub Antalik. See THIRD_PARTY_NOTICES.md.
 
-import 'package:dpsk_app/ui/fx/metal/metal_badge.dart';
-import 'package:dpsk_app/ui/fx/metal/metal_fx.dart';
-import 'package:dpsk_app/ui/fx/metal/metal_material.dart';
-import 'package:dpsk_app/ui/fx/metal/metal_text.dart';
+import 'package:dsh_app/ui/fx/metal/metal_badge.dart';
+import 'package:dsh_app/ui/fx/metal/metal_fx.dart';
+import 'package:dsh_app/ui/fx/metal/metal_material.dart';
+import 'package:dsh_app/ui/fx/metal/metal_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

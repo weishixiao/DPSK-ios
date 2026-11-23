@@ -2,11 +2,11 @@
 // capsules and back, search across the workspace, long-press actions, live
 // updates from the Host's change feed, pull to refresh.
 
-import 'package:dpsk_app/ui/chat/artifact_preview.dart';
-import 'package:dpsk_app/ui/common/breadcrumb_row.dart';
-import 'package:dpsk_app/ui/files/files_page.dart';
-import 'package:dpsk_app/ui/files/workspace_browser.dart';
-import 'package:dpsk_app/ui/session/workspace_files.dart';
+import 'package:dsh_app/ui/chat/artifact_preview.dart';
+import 'package:dsh_app/ui/common/breadcrumb_row.dart';
+import 'package:dsh_app/ui/files/files_page.dart';
+import 'package:dsh_app/ui/files/workspace_browser.dart';
+import 'package:dsh_app/ui/session/workspace_files.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

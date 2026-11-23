@@ -1,6 +1,6 @@
 part of 'engine.dart';
 
-const _gameplayEventRuntimeKey = 'dpskPackRuntime';
+const _gameplayEventRuntimeKey = 'dshgoPackRuntime';
 
 typedef _GameplayEventPromptRef = ({state_core.StateExecutionSource source, String id});
 typedef _GameplayPendingEventPrompt = ({_GameplayEventPromptRef ref, Map<String, Object?> prompt});
@@ -38,7 +38,7 @@ Map<String, state_core.StateEventTarget> _gameplayEventWireTargets(_GameplayRunt
       result[target.name] = target;
       continue;
     }
-    final stem = 'dpsk.pack.event:${_directorHash({'source': target.source.toJson(), 'name': target.name})}';
+    final stem = 'dshgo.pack.event:${_directorHash({'source': target.source.toJson(), 'name': target.name})}';
     var name = stem;
     var suffix = 0;
     while (!reserved.add(name)) {

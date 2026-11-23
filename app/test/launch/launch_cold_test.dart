@@ -7,11 +7,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/launch/custom_launch.dart';
-import 'package:dpsk_app/launch/launch_media.dart';
-import 'package:dpsk_app/launch/launch_motion.dart';
-import 'package:dpsk_app/launch/launch_state.dart';
-import 'package:dpsk_app/ui/launch/launch_overlay.dart';
+import 'package:dsh_app/launch/custom_launch.dart';
+import 'package:dsh_app/launch/launch_media.dart';
+import 'package:dsh_app/launch/launch_motion.dart';
+import 'package:dsh_app/launch/launch_state.dart';
+import 'package:dsh_app/ui/launch/launch_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

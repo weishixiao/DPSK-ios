@@ -60,7 +60,7 @@ class HostedShareClient {
 
   void close() => _client.close();
 
-  /// Encrypts [file] (a `.dpsk` file's bytes), uploads it and returns the
+  /// Encrypts [file] (a `.dshgo` file's bytes), uploads it and returns the
   /// link. [title] is only kept on the phone.
   Future<HostedLink> upload(Uint8List file, HostedTtl ttl, {String? title}) async {
     final key = newHostedKey();

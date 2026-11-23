@@ -1,9 +1,9 @@
-import 'package:dpsk_app/state/media_generation.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
-import 'package:dpsk_app/ui/settings/media_settings_page.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/state/media_generation.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/ui/settings/media_settings_page.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -79,7 +79,7 @@ void main() {
     await tester.tap(find.text('在此主机上安装'));
     await tester.pumpAndSettle();
     expect(find.byType(MarketPluginSheet), findsOneWidget);
-    expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, '需要 DPSK 1.0.2 或更高版本')).onPressed, isNull);
+    expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, '需要 DSH Go 1.0.2 或更高版本')).onPressed, isNull);
     expect(carrier.argsOf('pluginManager/installBundle'), isEmpty);
   });
 

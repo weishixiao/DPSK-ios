@@ -30,7 +30,7 @@ A team lets several agents in one lead chat share the work: they share a task bo
 <!-- nav: chatChats,catalogAllFeatures,catalogAgentTeam -->
 `Chats › All features › Agent team`
 
-[Open](dpsk://open/agent-team)
+[Open](dshgo://open/agent-team)
 
 The page has three tabs, **Members**, **Tasks** and **Messages**:
 

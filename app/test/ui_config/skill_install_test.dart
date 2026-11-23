@@ -4,9 +4,9 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,7 +30,7 @@ void main() {
     for (final MapEntry(key: path, value: text) in bundle.files.entries) {
       expect(File('${dir.path}/$path').readAsStringSync(), text, reason: path);
     }
-    expect(dir.listSync(recursive: true).where((e) => e.path.endsWith('.DPSK-tmp')), isEmpty);
+    expect(dir.listSync(recursive: true).where((e) => e.path.endsWith('.dsh-go-tmp')), isEmpty);
   }
 
   test('the bundle has the skill, the schema, the checker and examples in place', () {
@@ -57,7 +57,7 @@ void main() {
   test('a SKILL.md without the managed line is the person\'s: not touched', () async {
     await installUiSkill(root, bundle);
     final skill = File('${skillDir(root).path}/SKILL.md');
-    final mine = skill.readAsStringSync().replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), '');
+    final mine = skill.readAsStringSync().replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), '');
     skill.writeAsStringSync('$mine\n我的补充\n');
     File('${skillDir(root).path}/schema.json').writeAsStringSync('{}');
     expect(await installUiSkill(root, bundle), UiSkillInstallResult.userOwned);
@@ -126,7 +126,7 @@ void main() {
       expectInstalled(dir);
       final skill = File('${dir.path}/SKILL.md');
       skill.writeAsStringSync(
-        skill.readAsStringSync().replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), ''),
+        skill.readAsStringSync().replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), ''),
       );
       File('${dir.path}/schema.json').writeAsStringSync('{}');
       final r = await sh(uiSkillShellScript(bundle), env);

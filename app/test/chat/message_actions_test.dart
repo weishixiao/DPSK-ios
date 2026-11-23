@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/draft_store.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_model.dart' show dshUiPlainText;
-import 'package:dpsk_app/ui/common/segmented_pill.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart' show SettingsTile;
-import 'package:dpsk_app/ui/share/share_panel.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/draft_store.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_model.dart' show dshUiPlainText;
+import 'package:dsh_app/ui/common/segmented_pill.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart' show SettingsTile;
+import 'package:dsh_app/ui/share/share_panel.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

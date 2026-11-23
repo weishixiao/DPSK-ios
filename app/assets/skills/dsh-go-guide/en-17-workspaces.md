@@ -5,7 +5,7 @@ A workspace is a folder on the host. Conversations read and write files in it. O
 <!-- nav: catalogAllFeatures,catalogWorkspaces -->
 `All features › Workspaces`
 
-[Open](dpsk://open/workspaces)
+[Open](dshgo://open/workspaces)
 
 The list puts pinned workspaces first, then groups, then the rest. Each row shows its folder and how many conversations it holds.
 

@@ -19,7 +19,7 @@ import 'plugin_widgets.dart';
 import 'plugins_screen.dart';
 
 /// 「插件市场」: search, then three sections (docs/design/plugin-market.md
-/// §2) — 官方 and 适配 DPSK from the official index, 全部 (dshfind's
+/// §2) — 官方 and 适配 DSH Go from the official index, 全部 (dshfind's
 /// catalogue with the official entries in place, category chips) as cards —
 /// and 提交插件 at the bottom.
 class MarketSliver extends ConsumerStatefulWidget {
@@ -68,7 +68,7 @@ class _MarketSliverState extends ConsumerState<MarketSliver> {
       child: SearchCapsule(controller: _search, hint: l10n.pluginsSearch, onChanged: _onQuery, onClear: _clear),
     );
 
-    // 官方 and 适配 DPSK: the official index. Searching hides a section with
+    // 官方 and 适配 DSH Go: the official index. Searching hides a section with
     // nothing to show; otherwise it says 暂无, or that it didn't load.
     List<Widget> section(MarketSection which, String title) {
       final entries = official.whenOrNull(data: (c) => marketSection(c, which, filter));
@@ -278,7 +278,7 @@ class _SectionNote extends StatelessWidget {
 }
 
 /// The market repository's submission guide (GitHub), at the bottom.
-const marketSubmitUrl = 'https://github.com/weishixiao/DPSK-market#提交插件';
+const marketSubmitUrl = 'https://github.com/ccch1mneyyy/dsh-go-market#提交插件';
 
 class _SubmitPlugin extends StatelessWidget {
   const _SubmitPlugin();

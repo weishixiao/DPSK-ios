@@ -4,9 +4,9 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:dpsk_app/pets/overlay_channel.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
+import 'package:dsh_app/pets/overlay_channel.dart';
+import 'package:dsh_app/pets/pet_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

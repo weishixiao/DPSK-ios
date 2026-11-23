@@ -7,11 +7,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/state/artifact_files.dart';
-import 'package:dpsk_app/state/media_generation.dart';
-import 'package:dpsk_app/state/risk_notice_store.dart';
-import 'package:dpsk_app/state/session_modes.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_image.dart';
+import 'package:dsh_app/state/artifact_files.dart';
+import 'package:dsh_app/state/media_generation.dart';
+import 'package:dsh_app/state/risk_notice_store.dart';
+import 'package:dsh_app/state/session_modes.dart';
+import 'package:dsh_app/ui/chat/render/markdown_image.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -158,7 +158,7 @@ List<MethodCall> mockGallery() {
   final messenger = TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger;
   messenger.setMockMethodCallHandler(channel, (call) async {
     calls.add(call);
-    return 'Pictures/DPSK/${(call.arguments as Map)['name']}';
+    return 'Pictures/DSH Go/${(call.arguments as Map)['name']}';
   });
   addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
   return calls;
@@ -177,7 +177,7 @@ class _NoRiskNotices implements RiskNoticeStore {
 /// synthetic transcripts' own.
 Map<String, Object?> testCatalogMeta() => {
   'v': 1,
-  'contract': 'DPSK/media/catalog',
+  'contract': 'dsh-go/media/catalog',
   'capabilities': {'image': true, 'video': true},
   'models': [
     {
@@ -246,7 +246,7 @@ SettingsNamespaceView testMediaNamespace({
         'meta': {
           'default': <Object?>[],
           // null: no catalogue at all.
-          'extra': {'DPSK/media/catalog': ?(catalog is _Default ? testCatalogMeta() : catalog)},
+          'extra': {'dsh-go/media/catalog': ?(catalog is _Default ? testCatalogMeta() : catalog)},
         },
         'inner': {
           'type': 'array',

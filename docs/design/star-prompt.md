@@ -1,8 +1,8 @@
 # 求 star 的提示
 
-> 2026-10-29 · 基于 main `e120b7ca`。范围：公测后邀请用户去 GitHub 给 DPSK 点 star。入口有两个：对话框（最多问五次，2026-11-21 起；之前最多两次），以及「设置 › 关于」里的一行。替换 10-28 的底部弹层方案（3 天 + 10 次回复）。
+> 2026-10-29 · 基于 main `e120b7ca`。范围：公测后邀请用户去 GitHub 给 dsh-go 点 star。入口有两个：对话框（最多问五次，2026-11-21 起；之前最多两次），以及「设置 › 关于」里的一行。替换 10-28 的底部弹层方案（3 天 + 10 次回复）。
 
-**结论**：App 在前台累计用满 **30 分钟**后，等你在首页或对话里闲下来，弹出一个对话框：鲸娘捧着星星的贴纸、一句「本鱼已经在 DPSK 里陪你半个小时啦~」、一段请求，和三个键「去 GitHub 点 Star」「已经点过啦」「下次再说」。点前两个永不再问；点「下次再说」（或返回、点外面）的，累计用满 **2、5、10、20 小时**时再各问一次，每次换一段话，第一句写实际时长（「陪你 5 个小时啦~」），最后一次明说是最后一次，之后不再问。整个提示由编译参数 `DSH_STAR_PROMPT` 控制，默认关闭；`tooling/build-apk.sh` 打正式包时自动打开（§5）。「设置 › 关于 › 给 DPSK 点个 star」不受开关影响。
+**结论**：App 在前台累计用满 **30 分钟**后，等你在首页或对话里闲下来，弹出一个对话框：鲸娘捧着星星的贴纸、一句「本鱼已经在 DSH Go 里陪你半个小时啦~」、一段请求，和三个键「去 GitHub 点 Star」「已经点过啦」「下次再说」。点前两个永不再问；点「下次再说」（或返回、点外面）的，累计用满 **2、5、10、20 小时**时再各问一次，每次换一段话，第一句写实际时长（「陪你 5 个小时啦~」），最后一次明说是最后一次，之后不再问。整个提示由编译参数 `DSH_STAR_PROMPT` 控制，默认关闭；`tooling/build-apk.sh` 打正式包时自动打开（§5）。「设置 › 关于 › 给 dsh-go 点个 star」不受开关影响。
 
 ## 1. 出现时机
 
@@ -39,7 +39,7 @@
 | 去 GitHub 点 Star | 用外部浏览器打开仓库，永不再问。不知道、也不去查你到底点没点 |
 | 已经点过啦 | 永不再问 |
 | 下次再说，或返回、点外面 | 到下一档再问（§1）；第五次之后不再问 |
-| 设置 › 关于 › 给 DPSK 点个 star | 打开 GitHub，视同「去 GitHub 点 Star」 |
+| 设置 › 关于 › 给 dsh-go 点个 star | 打开 GitHub，视同「去 GitHub 点 Star」 |
 
 对话框一出现就记下（次数和当时的累计时长），中途被杀进程按「下次再说」算。
 
@@ -48,7 +48,7 @@
 ```
 ╭──────────────────────────────────╮
 │            ( 鲸娘 )              │  贴纸 ≤192，背后一圈很淡的主题色光晕
-│      本鱼已经在 DPSK           │  titleLarge · 居中 · 两行等宽（不让「啦~」单独一行）
+│      本鱼已经在 DSH Go           │  titleLarge · 居中 · 两行等宽（不让「啦~」单独一行）
 │      里陪你半个小时啦~            │
 │   这是一个免费开源的项目，如果它……   │  bodyMedium · onSurfaceVariant · 居中
 │      拜托你啦~ 这真的很重要！！      │  bodyMedium w600 · 主色
@@ -71,21 +71,21 @@
 
 | 位置 | 中文 | English |
 |---|---|---|
-| 第一句 | 本鱼已经在 DPSK 里陪你半个小时啦~ / 一个小时 / N 个小时 | I’ve kept you company in DPSK for half an hour now~ / an hour / N hours |
-| 正文 | 这是一个免费开源的项目，如果它让你的移动端体验更好了一点，拜托点个 Star 支持一下，这对本鱼是很大的鼓励！ | DPSK is free and open source. If it’s made your phone a little nicer to use, please give it a Star — it means so much to this little whale! |
+| 第一句 | 本鱼已经在 DSH Go 里陪你半个小时啦~ / 一个小时 / N 个小时 | I’ve kept you company in DSH Go for half an hour now~ / an hour / N hours |
+| 正文 | 这是一个免费开源的项目，如果它让你的移动端体验更好了一点，拜托点个 Star 支持一下，这对本鱼是很大的鼓励！ | DSH Go is free and open source. If it’s made your phone a little nicer to use, please give it a Star — it means so much to this little whale! |
 | 请求 | 拜托你啦~ 这真的很重要！！ | Pretty please~ It really matters!! |
-| 第二次正文 | 看来你挺喜欢这里嘛！点个 Star 只要几秒钟，却能让更多人发现 DPSK，本鱼也会更有干劲！ | Looks like you like it here! A Star takes a few seconds, helps more people find DPSK, and keeps this little whale going! |
+| 第二次正文 | 看来你挺喜欢这里嘛！点个 Star 只要几秒钟，却能让更多人发现 DSH Go，本鱼也会更有干劲！ | Looks like you like it here! A Star takes a few seconds, helps more people find DSH Go, and keeps this little whale going! |
 | 第二次请求 | 就差你这一颗星星啦~ | Just one star from you~ |
-| 第三次正文 | DPSK 不收费、没有广告，全靠大家的 Star 让更多人看到。如果它帮到了你，就送本鱼一颗星星吧！ | DPSK is free, with no ads — Stars are how more people get to see it. If it’s helped you, would you give this little whale a star? |
+| 第三次正文 | DSH Go 不收费、没有广告，全靠大家的 Star 让更多人看到。如果它帮到了你，就送本鱼一颗星星吧！ | DSH Go is free, with no ads — Stars are how more people get to see it. If it’s helped you, would you give this little whale a star? |
 | 第三次请求 | 本鱼眼巴巴地等着呢~ | Waiting here with hopeful eyes~ |
-| 第四次正文 | 这么久了，本鱼一直都在。如果 DPSK 已经成了你每天都会打开的 App，点个 Star 就是给作者最好的回礼。 | I’ve been here all along. If DPSK is something you open every day now, a Star is the best thank-you its author could get. |
+| 第四次正文 | 这么久了，本鱼一直都在。如果 DSH Go 已经成了你每天都会打开的 App，点个 Star 就是给作者最好的回礼。 | I’ve been here all along. If DSH Go is something you open every day now, a Star is the best thank-you its author could get. |
 | 第四次请求 | 求求你啦，就点一下下~ | Pretty please, just one tap~ |
 | 第五次正文 | 这是本鱼最后一次问你啦。不管点不点，本鱼都会一直陪着你。要是愿意的话，点个 Star 让本鱼开心一下吧！ | This is the last time I’ll ask. Star or not, I’ll keep you company all the same. But if you’d like, a Star would make this little whale very happy! |
 | 第五次请求 | 最后一次，拜托啦！ | Last time, pretty please! |
 | 主键 | 去 GitHub 点 Star | Star it on GitHub |
 | 次键 | 已经点过啦 | Already starred |
 | 第三键 | 下次再说 | Maybe later |
-| 设置行 | 给 DPSK 点个 star | Star DPSK on GitHub |
+| 设置行 | 给 dsh-go 点个 star | Star dsh-go on GitHub |
 
 ## 5. 公测开关
 
@@ -109,8 +109,8 @@
 | `app/lib/ui/star/star_prompt_host.dart` | 挂在首页外壳上；记录或场景一变就判断，安静 3 秒后弹出 |
 | `app/lib/app.dart` | 开关打开时从启动起持有记录（开始计时） |
 | `app/lib/state/notify_state.dart` | `launchNoticeShownProvider`：使用统计提示、更新弹层、后台联网那一行出现时置位 |
-| `app/lib/ui/settings/about_page.dart` | 「关于」里的「给 DPSK 点个 star」 |
+| `app/lib/ui/settings/about_page.dart` | 「关于」里的「给 dsh-go 点个 star」 |
 
 ## 8. 测试
 
-`app/test/star/star_prompt_test.dart`：29 分钟不弹、30 分钟弹；只在 `resumed` 时计时、跨启动累加；「下次再说」后 2、5、10、20 小时各差 1 分钟不弹、到点弹，第一句写实际小时数、正文和请求按档换，拖晚的下一档至少隔 1 小时；返回、点外面等于「下次再说」，第五次后不再问、不再计时；五档文案中英文各不相同，最后一档写明「最后一次」；「去 GitHub 点 Star」打开 `https://github.com/weishixiao/DPSK`、「已经点过啦」都永不再问；打不开浏览器时复制网址；首次引导、对话在跑、有审批、页面盖着、不在前台、手机操控、听写、键盘、草稿、抽屉、本次启动已有提示时都不弹，条件解除后会弹；开关关闭时不读写；偏好读写失败；设置行；360×780 / 360×640 × 1、1.3 倍字号和平板的几何（不溢出、贴纸方正居中、主键通栏、标题两行等宽）；英文；入场动画开关；浅色、深色 golden。
+`app/test/star/star_prompt_test.dart`：29 分钟不弹、30 分钟弹；只在 `resumed` 时计时、跨启动累加；「下次再说」后 2、5、10、20 小时各差 1 分钟不弹、到点弹，第一句写实际小时数、正文和请求按档换，拖晚的下一档至少隔 1 小时；返回、点外面等于「下次再说」，第五次后不再问、不再计时；五档文案中英文各不相同，最后一档写明「最后一次」；「去 GitHub 点 Star」打开 `https://github.com/ccch1mneyyy/dsh-go`、「已经点过啦」都永不再问；打不开浏览器时复制网址；首次引导、对话在跑、有审批、页面盖着、不在前台、手机操控、听写、键盘、草稿、抽屉、本次启动已有提示时都不弹，条件解除后会弹；开关关闭时不读写；偏好读写失败；设置行；360×780 / 360×640 × 1、1.3 倍字号和平板的几何（不溢出、贴纸方正居中、主键通栏、标题两行等宽）；英文；入场动画开关；浅色、深色 golden。

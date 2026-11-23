@@ -6,10 +6,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/media/gallery.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/chat/widgets/image_actions.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/media/gallery.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/chat/widgets/image_actions.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -133,9 +133,9 @@ void main() {
 
   group('saveToGallery', () {
     test('sends the bytes, the name and the type; returns the place', () async {
-      final calls = _mockMedia((_) async => 'Pictures/DPSK/chart.png');
+      final calls = _mockMedia((_) async => 'Pictures/DSH Go/chart.png');
       final where = await saveToGallery(const MediaChannel(), _png, name: 'chart.png');
-      expect(where, 'Pictures/DPSK/chart.png');
+      expect(where, 'Pictures/DSH Go/chart.png');
       expect(calls.single.method, 'saveImage');
       final args = calls.single.arguments as Map;
       expect(args['name'], 'chart.png');
@@ -193,7 +193,7 @@ void main() {
         return saved;
       }
 
-      for (final (os, place) in [('android', 'Pictures/DPSK/a.png'), ('ohos', 'file://media/Photo/1/a.png')]) {
+      for (final (os, place) in [('android', 'Pictures/DSH Go/a.png'), ('ohos', 'file://media/Photo/1/a.png')]) {
         testWidgets('$os: saved says so, whatever the place looks like', (tester) async {
           _mockMedia((_) async => place);
           expect(await save(tester, os), isTrue);
@@ -222,14 +222,14 @@ void main() {
       final expected = '$prefix.png';
       final calls = _mockMedia((call) async {
         final args = call.arguments as Map;
-        return 'Pictures/DPSK/${args['name']}';
+        return 'Pictures/DSH Go/${args['name']}';
       });
       final where = await saveToGallery(const MediaChannel(), _png, name: '$prefix😀.png');
       final args = calls.single.arguments as Map;
       expect(args['name'], expected);
       expect(args['bytes'], _png);
       expect(args['mime'], 'image/png');
-      expect(where, 'Pictures/DPSK/$expected');
+      expect(where, 'Pictures/DSH Go/$expected');
     });
   });
 
@@ -248,7 +248,7 @@ void main() {
     }
 
     testWidgets('saved: 已保存到相册, and the key shows a tick for a moment', (tester) async {
-      _mockMedia((_) async => 'Pictures/DPSK/chart.png');
+      _mockMedia((_) async => 'Pictures/DSH Go/chart.png');
       await pumpButton(tester);
       await tester.tap(find.byTooltip('保存到相册'));
       await pumpFrames(tester, 2);
@@ -275,7 +275,7 @@ void main() {
     });
 
     testWidgets('long-press menu: save goes through the same path', (tester) async {
-      final calls = _mockMedia((_) async => 'Pictures/DPSK/chart.png');
+      final calls = _mockMedia((_) async => 'Pictures/DSH Go/chart.png');
       usePhoneView(tester);
       await tester.pumpWidget(
         testApp(

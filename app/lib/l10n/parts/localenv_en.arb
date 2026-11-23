@@ -36,7 +36,7 @@
   "engineCapYes": "Available",
   "engineCapNone": "Unavailable",
   "marketInstallRefused": "This engine can't install market plugins",
-  "localEnvChooseUseTitle": "How will you use DPSK?",
+  "localEnvChooseUseTitle": "How will you use dsh-Go?",
   "localEnvTavernTitle": "Chat with characters",
   "localEnvTavernDetail": "Bring DeepSeek chats over here too · nothing to install"
 }

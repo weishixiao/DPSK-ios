@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/commands_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/session_detail_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/usage_state.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/commands_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/session_detail_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/usage_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

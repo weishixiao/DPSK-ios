@@ -15,8 +15,8 @@
 | Cloudflare API token 文件 | Cloudflare 创建有本服务权限的 token，保存到仓库外的私有文件 | 文件路径放入 `CF_TOKEN_FILE`，不要把 token 本身贴进命令或提交到仓库 |
 | GitHub OAuth App 的 Client ID | 第 1.4 节建好的 OAuth App 页面上的 Client ID（公开值，不是 client secret） | 写入 `wrangler.jsonc` 的 `vars.WORKSHOP_GITHUB_CLIENT_ID` |
 | 公开下载域名 | 单独公开下载桶所用的 HTTPS 域名，例如 `https://dl.example.com/` | 写入 `vars.DL_BASE_URL`；不要把私有投稿桶接到这个域名 |
-| 管理密钥文件 | 首次开通脚本自动生成；默认 `~/.config/keys/dpsk-share-admin.txt` | 文件路径可用 `ADMIN_FILE` 改，正文采用默认路径 |
-| KV ID | 首次 `apply` 发现或创建后写入 `~/keys/dpsk-cloudflare-kv-quota-id` | 不要填随机值；已有同名 KV 时必须核对其真实 ID |
+| 管理密钥文件 | 首次开通脚本自动生成；默认 `~/.config/keys/dshgo-share-admin.txt` | 文件路径可用 `ADMIN_FILE` 改，正文采用默认路径 |
+| KV ID | 首次 `apply` 发现或创建后写入 `~/keys/dshgo-cloudflare-kv-quota-id` | 不要填随机值；已有同名 KV 时必须核对其真实 ID |
 
 不要把本文的 `example.com`、仓库的 `dshtui.com` 或任何全零 ID 当成自己的配置。如果你正维护仓库默认账号和域名，可保留经你确认的默认域名；新账号必须填自己的值。
 
@@ -24,7 +24,7 @@
 
 ### 1.1 首次上线只支持没有旧工坊状态的起点
 
-在 Cloudflare 的 R2 对象浏览器中，检查私有桶 `dpsk-share` 的精确对象键 **`workshop/state-v1.json`**（定义为 `services/share-worker/src/workshop-state.ts` 中的 `STATE_KEY`）。桶尚未创建，或这个对象尚不存在，才继续下面的首次上线流程。整个桶可以已有分享链接、下载包等其他对象，**不需要清空桶**。
+在 Cloudflare 的 R2 对象浏览器中，检查私有桶 `dshgo-share` 的精确对象键 **`workshop/state-v1.json`**（定义为 `services/share-worker/src/workshop-state.ts` 中的 `STATE_KEY`）。桶尚未创建，或这个对象尚不存在，才继续下面的首次上线流程。整个桶可以已有分享链接、下载包等其他对象，**不需要清空桶**。
 
 如果这个工坊状态对象已经存在，先保留对象与备份，请维护者核对举报处理字段、审计事件和容量预留，再决定升级。**不要删除状态文件、审计或版本绑定来强行继续。** 老记录缺少举报处理字段能够被读取，不代表任意旧容量都能按当前规则继续写入。具体容量与回滚边界见第 8 节。
 
@@ -34,22 +34,22 @@
 
 | 绑定 / 资源 | 实际名字与用途 | 首次怎么准备 |
 |---|---|---|
-| Worker | `dpsk-share` | `provision.sh apply` 部署 |
-| `BUCKET` | R2 桶 `dpsk-share`；私有分享对象、工坊状态和投稿 ZIP（对象键 `workshop/blobs/<sha256>.zip`） | `apply` 创建缺失桶；**保持私有，不开公开域名或 r2.dev** |
-| `DL` | R2 桶 `dpsk-dl`；公开发版文件及既有市场镜像 | **先在 R2 后台创建**并连接自己的 `dl.<zone>` 自定义域名（见 `docs/release.md` 的公开下载桶一节）；`apply` 不创建它 |
-| `QUOTA` | KV 命名空间 `dpsk-share-quota`；近似小时计数，也供既有 beta 功能使用 | `apply` 发现或新建并记录 ID |
+| Worker | `dshgo-share` | `provision.sh apply` 部署 |
+| `BUCKET` | R2 桶 `dshgo-share`；私有分享对象、工坊状态和投稿 ZIP（对象键 `workshop/blobs/<sha256>.zip`） | `apply` 创建缺失桶；**保持私有，不开公开域名或 r2.dev** |
+| `DL` | R2 桶 `dshgo-dl`；公开发版文件及既有市场镜像 | **先在 R2 后台创建**并连接自己的 `dl.<zone>` 自定义域名（见 `docs/release.md` 的公开下载桶一节）；`apply` 不创建它 |
+| `QUOTA` | KV 命名空间 `dshgo-share-quota`；近似小时计数，也供既有 beta 功能使用 | `apply` 发现或新建并记录 ID |
 | `ASSETS` | 构建后的 `public/` 静态资源 | `npm run build` / Wrangler 构建生成并上传，不手工建存储桶 |
 | `BETA_GUARD` | Durable Object 类 `BetaGuard`，既有 beta 错误密钥计数 | 随配置和 migration `v1` 部署，不自行换类名或 migration 标签 |
 | `STATS_SALT` | Durable Object 类 `StatsSalt`，既有统计使用的当日盐 | 随 migration `v2` 部署 |
 | `UPLOAD_BURST` | Rate Limiting namespace `42001`，每 60 秒 5 次 | 由部署配置绑定；同账号其他 Worker 不要复用该 namespace |
 | `READ_LIMIT` | namespace `42002`，每 60 秒 120 次 | 同上；工坊作者鉴权和公开读取会使用它 |
 | `USAGE_LIMIT` | namespace `42003`，每 60 秒 20 次 | 同上；供 App 使用统计，不是工坊投稿额度 |
-| `DOWNLOADS` / `CHECKS` / `USAGE` | Analytics Engine 数据集 `dpsk_downloads` / `dpsk_checks` / `dpsk_usage` | 已开 Analytics Engine 时正常部署；未开时本手册用 `--no-analytics` |
+| `DOWNLOADS` / `CHECKS` / `USAGE` | Analytics Engine 数据集 `dshgo_downloads` / `dshgo_checks` / `dshgo_usage` | 已开 Analytics Engine 时正常部署；未开时本手册用 `--no-analytics` |
 | Custom Domain | 脚本选择的 `go.<zone>` 或 `s.<zone>` | `apply` 核对占用情况后部署；DNS 由 Custom Domain 管理 |
 | Cron | 每 10 分钟同步既有插件/宠物市场 | 随配置部署；它不是工坊审批器 |
 | zone Redirect Rule | 既有插件市场两条路径转公开下载桶 | `apply/deploy` 在镜像一致后创建或更新指定描述的规则 |
 
-`dpsk-share` 的现有生命周期只让 `7d/`、`30d/` 对象到期，并中止未完成的 multipart 上传。**不能给 `workshop/` 前缀添加 7 天、30 天或其他自动删除规则。** 工坊撤回记录、作者绑定、永久版本绑定和审计需要保留。`apply` 会把这个私有桶的生命周期规则替换为脚本的固定规则；如果该桶已有自己维护的其他规则，先请维护者核对，不直接运行。设计说明见 `docs/design/workshop-worker.md`。
+`dshgo-share` 的现有生命周期只让 `7d/`、`30d/` 对象到期，并中止未完成的 multipart 上传。**不能给 `workshop/` 前缀添加 7 天、30 天或其他自动删除规则。** 工坊撤回记录、作者绑定、永久版本绑定和审计需要保留。`apply` 会把这个私有桶的生命周期规则替换为脚本的固定规则；如果该桶已有自己维护的其他规则，先请维护者核对，不直接运行。设计说明见 `docs/design/workshop-worker.md`。
 
 ### 1.3 配置项和密钥
 
@@ -89,7 +89,7 @@ App 只申请空 scope，令牌只能读公开资料。作者请求必须带 `Au
 
 ## 2. 一次性准备（以下命令在自己的电脑上执行）
 
-先在 Cloudflare 开通 R2，创建上表的 **公开下载桶 `dpsk-dl`** 并连接自己的 `dl.<zone>` 域名；私有投稿桶保持私有。确认账号与域名均归自己控制，且第 1.1 节没有旧工坊状态。
+先在 Cloudflare 开通 R2，创建上表的 **公开下载桶 `dshgo-dl`** 并连接自己的 `dl.<zone>` 域名；私有投稿桶保持私有。确认账号与域名均归自己控制，且第 1.1 节没有旧工坊状态。
 
 API token 至少需能调用脚本实际涉及的 Workers、R2、KV、zone 查询、Custom Domain/DNS 与单条重定向规则接口。仓库的权限说明在 `docs/design/share-links.md`（创建 token 一节）；脚本还会操作 zone 的 `http_request_dynamic_redirect` ruleset（见 `provision.sh` 末段）。**（待确认：你账号中单条重定向规则权限的具体显示名和授权范围，`docs/design/share-links.md` 的权限列表没有列出它，以 Cloudflare 的 Rulesets API 文档与创建 token 页面为准。）** 仅有 Workers Scripts 写权限不等于有该规则写权限。把权限限定到自己的账号和 zone，不使用别人的 token。
 
@@ -146,7 +146,7 @@ npm test
 **C07 — 指定 Cloudflare API token 文件。**
 
 ```bash
-export CF_TOKEN_FILE="$HOME/.config/keys/dpsk-cloudflare-api-token.txt"
+export CF_TOKEN_FILE="$HOME/.config/keys/dshgo-cloudflare-api-token.txt"
 ```
 
 把路径改成刚保存的文件，文件应只供自己的账号读取。这里没有把 token 本身打印或写进命令。
@@ -170,7 +170,7 @@ export ZONE_NAME='替换成自己的域名'
 **C10 — 固定管理员密钥文件路径。**
 
 ```bash
-export ADMIN_FILE="$HOME/.config/keys/dpsk-share-admin.txt"
+export ADMIN_FILE="$HOME/.config/keys/dshgo-share-admin.txt"
 ```
 
 首次没有文件时由脚本生成；如果此路径已有非空文件，脚本会复用它而不会自动加长或调整权限。请确认已有密钥至少 32 字符，文件也只由自己读取（需要时按 C27 设置权限）；不要把一行说明文字或旧 Cloudflare token 当成管理密钥。
@@ -187,7 +187,7 @@ scripts/provision.sh check
 
 预期看到 zone/账号、候选域名、Worker 是否存在、私有桶是否存在、KV 名称与 ID，最后退出 0。缺资源可以是首次上线的正常结果；`zone … is on another account`、域名被其他服务占用、KV ID 不匹配或权限错误不是正常结果。修正输入后重新执行本步；不要跳过占用检查。
 
-这个 check **不是全部资源与写权限的完整预检**。例如 R2 查询的 `success=false` 都会被脚本显示为桶不存在，不能单凭退出 0 区分“确实还没建桶”和“权限/API 查询失败”。显示不存在时，还要在自己的 Cloudflare 后台核对；公开下载桶 `dpsk-dl` 也须按第 1.2 节单独准备。
+这个 check **不是全部资源与写权限的完整预检**。例如 R2 查询的 `success=false` 都会被脚本显示为桶不存在，不能单凭退出 0 区分“确实还没建桶”和“权限/API 查询失败”。显示不存在时，还要在自己的 Cloudflare 后台核对；公开下载桶 `dshgo-dl` 也须按第 1.2 节单独准备。
 
 **C12 — 创建缺失资源并部署。** 未开启 Analytics Engine 的账号先采用这一条：
 
@@ -197,14 +197,14 @@ scripts/provision.sh apply --no-analytics
 
 已明确开启 Analytics Engine、并要保留原统计服务的账号，去掉 `--no-analytics`；不要两条轮流试到“看起来成功”。这个选择需与后面的常规 redeploy 保持一致。
 
-本步会真正改 Cloudflare：创建缺失的私有 R2 桶/KV，设置上述生命周期，生成并上传 `ADMIN_KEY`，部署 Worker/绑定/域名/Cron，执行线上分享链接 e2e（`scripts/e2e.mjs`，范围见 `docs/design/share-links.md`），并在满足条件后设置指定的插件市场重定向规则。**它不是只做工坊健康检查。** 不会替你创建 `dpsk-dl`；也不会替你建 GitHub OAuth App 或完成人工审稿。
+本步会真正改 Cloudflare：创建缺失的私有 R2 桶/KV，设置上述生命周期，生成并上传 `ADMIN_KEY`，部署 Worker/绑定/域名/Cron，执行线上分享链接 e2e（`scripts/e2e.mjs`，范围见 `docs/design/share-links.md`），并在满足条件后设置指定的插件市场重定向规则。**它不是只做工坊健康检查。** 不会替你创建 `dshgo-dl`；也不会替你建 GitHub OAuth App 或完成人工审稿。
 
 预期可见 `created bucket` / 已有资源信息、`admin key written to …`（仅首次生成时）、Wrangler 部署结果、e2e 成功和市场重定向成功，最终退出 0。不要分享完整终端输出，先人工检查是否含自己账号或密钥信息。
 
 | 结果不符合时 | 下一步 |
 |---|---|
 | `creating bucket failed` | 在 Cloudflare 后台确认 R2 已开通、账号/token 权限正确；不要换到其他人的账号 |
-| 找不到 `dpsk-dl` 或公开域名 | 回第 1.2 节补建公开下载桶与正确自定义域名 |
+| 找不到 `dshgo-dl` 或公开域名 | 回第 1.2 节补建公开下载桶与正确自定义域名 |
 | Analytics 绑定失败 | 未开 Analytics Engine 则用同一 `--no-analytics` 方案；不要删除无关绑定 |
 | 域名暂未可访问，e2e 失败 | 先在自己的 Cloudflare 后台核域名/证书/Worker 部署；恢复后按 C13 再部署检查，不能据终端最后一行之前的成功字样宣布全部成功 |
 | `market … doesn't serve … yet` | Worker 可能已部署，失败的是既有市场镜像/重定向后置检查；核公开桶域名与 Cron，再等镜像更新后用 C13。不要重建私有桶或删工坊状态 |
@@ -335,7 +335,7 @@ curl -i "https://$WORKSHOP_HOST/market/companions.json"
 
 ### 7.1 紧急关闭投稿
 
-最快的维护方式是先在自己的 Cloudflare 后台打开 **Workers & Pages → `dpsk-share` → Settings → Variables and Secrets**，把普通文本变量 `WORKSHOP_UPLOAD_ENABLED` 改成 **`0`**，保存并部署配置变更。如果界面菜单不同，搜索这个完整变量名；不要删除变量，因为未设置代表开启。后台菜单依据 Cloudflare [环境变量说明](https://developers.cloudflare.com/workers/configuration/environment-variables/)。
+最快的维护方式是先在自己的 Cloudflare 后台打开 **Workers & Pages → `dshgo-share` → Settings → Variables and Secrets**，把普通文本变量 `WORKSHOP_UPLOAD_ENABLED` 改成 **`0`**，保存并部署配置变更。如果界面菜单不同，搜索这个完整变量名；不要删除变量，因为未设置代表开启。后台菜单依据 Cloudflare [环境变量说明](https://developers.cloudflare.com/workers/configuration/environment-variables/)。
 
 部署完成后重新执行 **C16**，确认 `features.uploads: false`。在看到这个结果之前，不宣布紧急关闭已完成。这个检查不需要 key。
 
@@ -403,7 +403,7 @@ wr secret put ADMIN_KEY < "$ADMIN_FILE"
 **C24 — 为新 key 选择一个尚不存在的私有文件。**
 
 ```bash
-export ADMIN_FILE="$HOME/.config/keys/dpsk-share-admin-next.txt"
+export ADMIN_FILE="$HOME/.config/keys/dshgo-share-admin-next.txt"
 ```
 
 若该文件已用于以前的轮换，改成另一个新文件名；不要覆盖尚用于恢复的旧 key。这里仅更换同一参数的文件路径。
@@ -460,7 +460,7 @@ wr deployments list
 wr rollback '替换成已确认兼容的Cloudflare-Version-ID'
 ```
 
-只替换引号中的值，确认提示中是自己的 `dpsk-share` 及预定版本后再确认。预期产生一个使用该版本的新部署。`docs/design/share-links.md` 记录的是不带参数的 `wrangler rollback`（回到上一个版本）；这里显式给出版本参数（见 [Wrangler rollback 规范](https://developers.cloudflare.com/workers/wrangler/commands/workers/#rollback)），避免省略参数后自动选中不兼容的上一版本。不能使用 `--yes`、忽略错误或任意挑一个能部署的历史版本来代替兼容性核对。
+只替换引号中的值，确认提示中是自己的 `dshgo-share` 及预定版本后再确认。预期产生一个使用该版本的新部署。`docs/design/share-links.md` 记录的是不带参数的 `wrangler rollback`（回到上一个版本）；这里显式给出版本参数（见 [Wrangler rollback 规范](https://developers.cloudflare.com/workers/wrangler/commands/workers/#rollback)），避免省略参数后自动选中不兼容的上一版本。不能使用 `--yes`、忽略错误或任意挑一个能部署的历史版本来代替兼容性核对。
 
 回滚后再次核对线上普通变量和管理密钥是否符合当前维护要求，执行 C15–C19，再进审核台读取状态。目标版本原有开关可能是开启的；若 uploads 被恢复为 true，按第 7.1 节重新关闭并验证。等问题得到确认修复后才恢复投稿。R2/KV/DO 绑定已不存在或迁移不兼容时，平台可能拒绝回滚；保留错误和版本信息交维护者，不重建空桶假装恢复了历史数据。
 

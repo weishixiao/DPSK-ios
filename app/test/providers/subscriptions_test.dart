@@ -2,17 +2,17 @@
 // step of the sign-in sheet against a fake bridge, polling that stops with
 // the sheet, and the signed-in page's sign-out.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/account_state.dart' show accountBrowserProvider;
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/subscriptions_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/providers/providers_page.dart';
-import 'package:dpsk_app/ui/providers/subscription_page.dart';
-import 'package:dpsk_app/ui/providers/subscription_sheet.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/account_state.dart' show accountBrowserProvider;
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/subscriptions_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/providers/providers_page.dart';
+import 'package:dsh_app/ui/providers/subscription_page.dart';
+import 'package:dsh_app/ui/providers/subscription_sheet.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

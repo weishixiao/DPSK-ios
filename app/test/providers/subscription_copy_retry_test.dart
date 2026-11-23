@@ -1,7 +1,7 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/account_state.dart' show accountBrowserProvider;
-import 'package:dpsk_app/state/subscriptions_state.dart';
-import 'package:dpsk_app/ui/providers/subscription_sheet.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/account_state.dart' show accountBrowserProvider;
+import 'package:dsh_app/state/subscriptions_state.dart';
+import 'package:dsh_app/ui/providers/subscription_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

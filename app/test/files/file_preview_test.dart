@@ -4,10 +4,10 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/ui/chat/artifact_preview.dart';
-import 'package:dpsk_app/ui/chat/render/code_block.dart';
-import 'package:dpsk_app/ui/files/table_view.dart';
-import 'package:dpsk_app/ui/session/workspace_files.dart';
+import 'package:dsh_app/ui/chat/artifact_preview.dart';
+import 'package:dsh_app/ui/chat/render/code_block.dart';
+import 'package:dsh_app/ui/files/table_view.dart';
+import 'package:dsh_app/ui/session/workspace_files.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

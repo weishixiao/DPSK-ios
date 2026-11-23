@@ -4,14 +4,14 @@
 //
 //   flutter test --update-goldens test/settings
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/account_state.dart';
-import 'package:dpsk_app/state/balance_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/settings/background_guide_page.dart';
-import 'package:dpsk_app/ui/settings/diagnostics_page.dart';
-import 'package:dpsk_app/ui/settings/settings_screen.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/account_state.dart';
+import 'package:dsh_app/state/balance_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/settings/background_guide_page.dart';
+import 'package:dsh_app/ui/settings/diagnostics_page.dart';
+import 'package:dsh_app/ui/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

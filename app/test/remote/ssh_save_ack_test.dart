@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/remote/ssh_host_form.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/remote/ssh_host_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

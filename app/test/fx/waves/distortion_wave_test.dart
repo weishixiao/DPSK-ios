@@ -1,8 +1,8 @@
 // Portions derived from Libraries.dev Distortion waves (https://github.com/Jakubantalik/Libraries.dev), MIT, Copyright (c) 2026 Jakub Antalik. See THIRD_PARTY_NOTICES.md.
 
-import 'package:dpsk_app/ui/fx/waves/distortion_wave.dart';
-import 'package:dpsk_app/ui/fx/waves/wave_front.dart';
-import 'package:dpsk_app/ui/fx/waves/wave_stage.dart';
+import 'package:dsh_app/ui/fx/waves/distortion_wave.dart';
+import 'package:dsh_app/ui/fx/waves/wave_front.dart';
+import 'package:dsh_app/ui/fx/waves/wave_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

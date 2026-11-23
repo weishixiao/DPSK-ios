@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// DPSK plugin checker. See lib/check.js for options and exit codes.
+// dsh-go plugin checker. See lib/check.js for options and exit codes.
 import { main } from '../lib/check.js'
 
 process.stdout.on('error', (e) => {

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/ohos_linux_runtime.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart' show runtimeBridgeProvider;
-import 'package:dpsk_app/secrets/secure_storage.dart';
-import 'package:dpsk_app/state/ohos_linux_state.dart';
-import 'package:dpsk_app/ui/settings/linux_environment_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/ohos_linux_runtime.dart';
+import 'package:dsh_app/runtime/runtime_state.dart' show runtimeBridgeProvider;
+import 'package:dsh_app/secrets/secure_storage.dart';
+import 'package:dsh_app/state/ohos_linux_state.dart';
+import 'package:dsh_app/ui/settings/linux_environment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

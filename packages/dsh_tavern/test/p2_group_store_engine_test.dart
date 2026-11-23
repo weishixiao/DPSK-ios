@@ -246,7 +246,7 @@ void main() {
     expect(document.messages.map((line) => line['name']), ['Twin', 'Twin', before[2].speaker, 'Twin']);
     for (var index = 0; index < 2; index++) {
       final row = document.messages[index];
-      final own = _map(_map(_map(row['extra'])['dpsk'])['chatJsonl']);
+      final own = _map(_map(_map(row['extra'])['dshgo'])['chatJsonl']);
       final identity = index == 0 ? first : second;
       expect(own['speakerCharacterId'], identity);
       expect(row['original_avatar'], isNot(identity));
@@ -502,7 +502,7 @@ class _UnexpectedModel extends TavernModelClient {
 }
 
 Map<String, Object?> _stateExtension(int count) => {
-  'dpsk': {
+  'dshgo': {
     'v': 1,
     'state': {
       'schema': {

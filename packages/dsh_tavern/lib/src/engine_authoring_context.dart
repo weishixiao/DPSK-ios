@@ -287,7 +287,7 @@ final class _AuthoringPromptContextCapture {
     message: message,
     depth: history.isEmpty ? 1 : history.last.depth + 1,
     extra: {
-      'dpsk': {'tavernState': saved},
+      'dshgo': {'tavernState': saved},
     },
     original: const {},
   );
@@ -310,7 +310,7 @@ final class _AuthoringPromptContextCapture {
   turn.metadata = ChatJsonlCodec().metadataForState(turn.chat, saved);
   turn.state = state;
   if (turn.gameplay case final config?) {
-    if (state['dpskPackDefinitionConfigId'] == config.effectiveConfigId) {
+    if (state['dshgoPackDefinitionConfigId'] == config.effectiveConfigId) {
       turn.gameplayPreviousConfig = config;
     }
   }
@@ -475,7 +475,7 @@ extension _AuthoringPromptContexts on TavernEngine {
           ? _store.groupInitialState(chat.id)
           : _stateFromNode(chat.id, sourceNode, chat: chat);
       final rawSource =
-          sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dpsk'])['chatJsonl'])['rootFile'];
+          sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dshgo'])['chatJsonl'])['rootFile'];
       sourceFile = rawSource is String ? rawSource : null;
       metadataSource = _chatCodec.metadataSourceTargetForState(chat, sourceState);
       initialState = group != null && parent == null
@@ -614,7 +614,7 @@ extension _AuthoringPromptContexts on TavernEngine {
       settings: admissionSettings,
     );
     final historicalGameplay = _gameplayHistoricalConfig(this, initialState);
-    final savedConfigId = initialState['dpskPackDefinitionConfigId'];
+    final savedConfigId = initialState['dshgoPackDefinitionConfigId'];
     final gameplayConfigRows = _store.readGameplayConfigurationRows([
       if (savedConfigId is String && savedConfigId.isNotEmpty) savedConfigId,
     ]);
@@ -748,7 +748,7 @@ extension _AuthoringPromptContexts on TavernEngine {
         for (final entry in rows.entries) {
           gameplayConfigRows.putIfAbsent(entry.key, () => entry.value);
         }
-        final historical = _gameplayHistoricalConfig(this, {'dpskPackDefinitionConfigId': id});
+        final historical = _gameplayHistoricalConfig(this, {'dshgoPackDefinitionConfigId': id});
         secretDefinitions[id] = (definition: historical.config?.secrets, error: null, stack: null);
       } catch (error, stack) {
         secretDefinitions[id] = (definition: null, error: error, stack: stack);
@@ -1030,7 +1030,7 @@ extension _AuthoringPromptContexts on TavernEngine {
         final sourceState = localWorkspace.stateAt(sourceNodeId);
         metadata = localWorkspace.metadataFor(sourceNodeId);
         final rawSource =
-            sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dpsk'])['chatJsonl'])['rootFile'];
+            sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dshgo'])['chatJsonl'])['rootFile'];
         sourceFile = rawSource is String ? rawSource : null;
         initialState = parent == null && group == null && chat.currentLeafId == null && kind != _TurnKind.regenerate
             ? _emptyChatState(metadata)
@@ -1049,12 +1049,12 @@ extension _AuthoringPromptContexts on TavernEngine {
         turn.sourceFile = sourceFile;
         turn.variables = local;
         turn.state = _copy(initialState);
-        turn.gameplay = gameplayAdmission.hasActivePacks || initialState.containsKey('dpskPackDefinitionConfigId')
+        turn.gameplay = gameplayAdmission.hasActivePacks || initialState.containsKey('dshgoPackDefinitionConfigId')
             ? prospectiveGameplay
             : null;
         turn.gameplayPreviousConfig =
             prospectiveGameplay != null &&
-                initialState['dpskPackDefinitionConfigId'] == prospectiveGameplay.effectiveConfigId
+                initialState['dshgoPackDefinitionConfigId'] == prospectiveGameplay.effectiveConfigId
             ? prospectiveGameplay
             : historicalGameplay.config;
         if (sourceFile != null) {
@@ -1281,7 +1281,7 @@ extension _AuthoringPromptContexts on TavernEngine {
           continue;
         }
         final raw = _authoringBook(document);
-        final envelope = !document.containsKey('entries') && document['format'] == 'dpsk-lorebook';
+        final envelope = !document.containsKey('entries') && document['format'] == 'dshgo-lorebook';
         linked.add(
           WorldInfoBook.fromJson(
             id: id,

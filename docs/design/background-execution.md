@@ -1,4 +1,4 @@
-# 后台运行：三方机制比较与 DPSK 的取舍
+# 后台运行：三方机制比较与 dsh-Go 的取舍
 
 > 2026-11-19，静态源码比较，不是耗电、时长或抗杀实测。
 > 主仓基线 `5996f1dae5e69f542e3b5fc05f1477ef86e14163`；
@@ -9,7 +9,7 @@
 
 没有“永远不被杀”的移动端保活。保住进程、获得后台执行时间、断线重连、恢复引擎、继续对话是五件不同的事。通知还在、Live Activity 显示 Running、唤醒锁已持有，都不能单独证明任务仍在执行。
 
-- **Android 默认保留 DPSK 的前台服务、唤醒锁、厂商设置引导，补齐系统回收整个宿主后的有条件恢复。** Minis 的媒体播放服务类型不适合作为 AI 任务的默认身份。
+- **Android 默认保留 dsh-Go 的前台服务、唤醒锁、厂商设置引导，补齐系统回收整个宿主后的有条件恢复。** Minis 的媒体播放服务类型不适合作为 AI 任务的默认身份。
 - **iOS 默认保留系统持续处理任务和真实 PiP 的既有路径，修复暂停收尾额度申请过晚。** 按用户明确选择，另提供默认关闭的静音音频与后台定位增强模式，必须主动开启及授权，不把它们变成默认依赖。
 - **Minis 比 fork 的增强保活工程更完整，但不能据此声称实机更稳或更省电。** 可学习任务限定、停止撤销、统一音频协调、状态展示与执行许可分离；不整套搬它的调度状态机。
 
@@ -17,10 +17,10 @@
 
 | 平台/项目 | 已核实机制 | 代价与边界 |
 |---|---|---|
-| DPSK Android 基线 | `specialUse` 前台服务；运行期间持有 `PARTIAL_WAKE_LOCK`；电池/厂商设置引导；子引擎被杀限次恢复 | 服务返回 `START_NOT_STICKY`，整个宿主消失后内存里的恢复代码无法执行；锁不免除内存回收、Doze 或厂商断网 |
+| dsh-Go Android 基线 | `specialUse` 前台服务；运行期间持有 `PARTIAL_WAKE_LOCK`；电池/厂商设置引导；子引擎被杀限次恢复 | 服务返回 `START_NOT_STICKY`，整个宿主消失后内存里的恢复代码无法执行；锁不免除内存回收、Doze 或厂商断网 |
 | WhyWhySeeYa Android | 前台服务、锁、Manifest、启动器与主仓相同 | 新增保活实际在 iOS；该 fork 还落后部分主仓启动故障修复，不能把旧差异当新优化 |
 | OpenMinis Android | `mediaPlayback` 前台服务、唤醒锁、厂商设置；全会话共享 shell 软预算 | 标签不是实际音频功能；`START_STICKY` 重建时若内存 tracker 无任务仍会停止，不是任意任务自动恢复 |
-| DPSK iOS 基线 | iOS 26 `BGContinuedProcessingTask`；可选真实宠物 PiP 独立提供许可；短时额度用于暂停收尾 | 系统可拒绝/到期/取消；旧 iOS 无持续任务额度，短时收尾不是无限执行 |
+| dsh-Go iOS 基线 | iOS 26 `BGContinuedProcessingTask`；可选真实宠物 PiP 独立提供许可；短时额度用于暂停收尾 | 系统可拒绝/到期/取消；旧 iOS 无持续任务额度，短时收尾不是无限执行 |
 | WhyWhySeeYa iOS | 原有持续任务外，加静音循环、后台定位和自建 Live Activity | 无任务也可在离前台时开启静音；绕过现有音频协调器；停止静音时未通知引擎撤回后台许可；位置权限、音频冲突、耗电和审核风险 |
 | OpenMinis iOS | 用户可选增强保护、定位会话/更新、静音音频、持续处理任务和独立 Live Activity | 按任务和开关限定、音频有协调/退让、闲置有界收尾，比 fork 谨慎；仍占定位/音频资源，不能保证存活 |
 
@@ -30,19 +30,19 @@ fork 的静音播放器直接修改全局 `AVAudioSession`；`mixWithOthers` 不
 
 Minis 的 iOS 实现更克制：有真实任务和用户开关才运行，后台定位有延迟 arming；iOS 17+ 使用 `CLBackgroundActivitySession` 和 `CLLocationUpdate.liveUpdates`；静音走最低优先级音频协调器，任务结束后安排一次 60 秒闲置收尾；这是代码设定，不是进程被系统暂停时仍按墙钟准时执行的保证。默认 `preferred` 模式下，持续处理任务运行时停用定位，静音仍可能保留；另有 fallback 模式。展示层另有节流、隐私开关和旧活动清理。
 
-这些是资源所有权设计的参考，不是定位/音频用途合规的证明。Apple 对后台音频、位置使用均有实际功能要求；无需麦克风权限不等于无隐私、耗电或审核成本。DPSK 本来已有音频协调器和系统进度卡，因此增强模式独立复用协调器并明确用途与成本，不复制第三方常驻实现，也不新增第二套进度卡片。用户主动授权不等于平台审核认可这种用途，发行渠道仍须独立核对。
+这些是资源所有权设计的参考，不是定位/音频用途合规的证明。Apple 对后台音频、位置使用均有实际功能要求；无需麦克风权限不等于无隐私、耗电或审核成本。dsh-Go 本来已有音频协调器和系统进度卡，因此增强模式独立复用协调器并明确用途与成本，不复制第三方常驻实现，也不新增第二套进度卡片。用户主动授权不等于平台审核认可这种用途，发行渠道仍须独立核对。
 
 ### Minis 的进程软预算值得学，但不能接错层
 
 Android `GlobalShellThrottle` 将所有 AI 会话的 shell 入口排成共享队列，以 `/proc` 子孙进程观察控制准入：默认软预算 16，新命令预估 4，排队时每 250 ms 检查。它不是每条命令的硬限制，单命令内部仍能继续 fork；其他 App、孤儿进程和不同 ROM 也使观测不完整。不能把 AOSP 的默认 phantom 追踪池 32 解释成每个 App 各有 32。
 
-若在 DPSK 引入，入口必须是 **Node 引擎的 bash/PTY/后台任务派生层**，并按实际基础进程数留余量；只给 Kotlin 的顶层引擎启动加锁挡不住 Ubuntu 内部并发。需要同时处理排队取消、执行超时与排队超时分离、交互终端、子代理和远程主机。本次没有移植这套预算，也没有修改全局 phantom-process 系统限制，更不会在结果不明时重放已经启动的命令。
+若在 dsh-Go 引入，入口必须是 **Node 引擎的 bash/PTY/后台任务派生层**，并按实际基础进程数留余量；只给 Kotlin 的顶层引擎启动加锁挡不住 Ubuntu 内部并发。需要同时处理排队取消、执行超时与排队超时分离、交互终端、子代理和远程主机。本次没有移植这套预算，也没有修改全局 phantom-process 系统限制，更不会在结果不明时重放已经启动的命令。
 
 ## 本次实现
 
 ### Android：只恢复先前明确启动的引擎
 
-实现入口：[DshService](../../app/android/app/src/main/kotlin/com/dpsk/harness/runtime/DshService.kt)、[RuntimeController](../../app/android/app/src/main/kotlin/com/dpsk/harness/runtime/RuntimeController.kt)、[RuntimeServiceRecovery](../../app/android/app/src/main/kotlin/com/dpsk/harness/runtime/RuntimeServiceRecovery.kt)。
+实现入口：[DshService](../../app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/runtime/DshService.kt)、[RuntimeController](../../app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/runtime/RuntimeController.kt)、[RuntimeServiceRecovery](../../app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/runtime/RuntimeServiceRecovery.kt)。
 
 - 明确的启动请求保存非敏感的 `phoneStorage` / `visualReplies`，编码仅含两个布尔值；安全模式和启动方式继续使用已有持久化来源。运行且快照更新已提交时才请求 `START_STICKY`。偏好沿用异步 `apply()`，不让前台通知或停止请求等待磁盘；若被杀时尚未落盘，新进程读不到快照就不启动，不用默认值猜恢复配置。若已有旧快照而新写入/删除尚未刷盘，突然被杀仍可能读回旧的两个布尔选项；这是 best-effort 恢复提示，不是事务检查点。已处理的手动停止由系统服务停止语义阻止重建，但尚未送达的停止请求不能承诺跨崩溃生效。
 - 系统用空 intent 重建服务时，只有有效快照才启动；不存在快照就结束。未知 action 不启动引擎，安装不请求自动重建。
@@ -84,7 +84,7 @@ Android `GlobalShellThrottle` 将所有 AI 会话的 shell 入口排成共享队
 
 已增加/接入的自动检查：
 
-- [Android 恢复策略测试](../../app/android/app/src/test/kotlin/com/dpsk/harness/runtime/RuntimeServiceRecoveryTest.kt)：快照往返、临时环境、撤销、保存失败和跨代/跨进程自动停止；由现有 Android JVM CI 编译运行。不是完整 Service 生命周期真机测试。
+- [Android 恢复策略测试](../../app/android/app/src/test/kotlin/io/github/ccch1mneyyy/dsh_app/runtime/RuntimeServiceRecoveryTest.kt)：快照往返、临时环境、撤销、保存失败和跨代/跨进程自动停止；由现有 Android JVM CI 编译运行。不是完整 Service 生命周期真机测试。
 - [iOS 暂停时序夹具](../../tooling/ios/engine-smoke/test-pause-task.py)：抽取真实生产方法，用确定性队列/UIKit 替身验证申请先于排队、到期、回前台、闲置、旧回调和系统拒绝；不能替代 iOS 系统实际授予额度。
 - [iOS 生命周期夹具](../../tooling/ios/engine-smoke/test-engine-background.py)：对真实 `EngineLifecycle` 做回环 HTTP 应答，22 步核对 PiP、持续任务、音频、定位四个来源独立授权和撤回；修正过时的初始化、应答结构和前后台断言。
 - [iOS 增强保护夹具](../../tooling/ios/engine-smoke/test-background-protection.py)：对生产控制器、音频协调器和生命周期执行系统边界替身检查，覆盖默认关闭、显式授权、后台有任务、结束释放、音频抢占/中断和定位撤回。三份 Swift 夹具接入 [iOS compile](../../.github/workflows/ios-compile.yml) 的 PR 也运行的 engine job。
@@ -97,8 +97,8 @@ Android `GlobalShellThrottle` 将所有 AI 会话的 shell 入口排成共享队
 
 仅学习机制并在主仓独立修改，没有合并、cherry-pick 或复制第三方实现。OpenMinis 的 [GPLv3](https://github.com/OpenMinis/OpenMinis/blob/1a71df0f381cefde80bf912b723de6f9831bc177/LICENSE) 与本仓 AGPLv3 的具体移植仍需逐目录核对并保留许可/来源，不因“开源”就免除义务。
 
-- [主仓基线前台服务](https://github.com/weishixiao/DPSK/blob/5996f1dae5e69f542e3b5fc05f1477ef86e14163/app/android/app/src/main/kotlin/com/dpsk/harness/runtime/DshService.kt)、[iOS 持续处理任务](https://github.com/weishixiao/DPSK/blob/5996f1dae5e69f542e3b5fc05f1477ef86e14163/app/ios/Runner/ContinuedRun.swift)。
-- [fork iOS 保活](https://github.com/WhyWhySeeYa/DPSK/blob/6c6c3b72852f2bda608c5aed3d337189e24b7ebf/app/ios/Runner/ContinuedRun.swift#L134-L343)、[额外后台声明](https://github.com/WhyWhySeeYa/DPSK/blob/6c6c3b72852f2bda608c5aed3d337189e24b7ebf/app/ios/Runner/Info.plist#L7-L17)。
+- [主仓基线前台服务](https://github.com/ccch1mneyyy/dsh-Go/blob/5996f1dae5e69f542e3b5fc05f1477ef86e14163/app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/runtime/DshService.kt)、[iOS 持续处理任务](https://github.com/ccch1mneyyy/dsh-Go/blob/5996f1dae5e69f542e3b5fc05f1477ef86e14163/app/ios/Runner/ContinuedRun.swift)。
+- [fork iOS 保活](https://github.com/WhyWhySeeYa/dsh-Go/blob/6c6c3b72852f2bda608c5aed3d337189e24b7ebf/app/ios/Runner/ContinuedRun.swift#L134-L343)、[额外后台声明](https://github.com/WhyWhySeeYa/dsh-Go/blob/6c6c3b72852f2bda608c5aed3d337189e24b7ebf/app/ios/Runner/Info.plist#L7-L17)。
 - [Minis Android 服务](https://github.com/OpenMinis/OpenMinis/blob/1a71df0f381cefde80bf912b723de6f9831bc177/src/android/app/src/main/java/com/openminis/app/service/AgentForegroundService.kt)、[全局 shell 软预算](https://github.com/OpenMinis/OpenMinis/blob/1a71df0f381cefde80bf912b723de6f9831bc177/src/android/app/src/main/java/com/openminis/app/sandbox/GlobalShellThrottle.kt)。
 - [Minis iOS 后台保护](https://github.com/OpenMinis/OpenMinis/blob/1a71df0f381cefde80bf912b723de6f9831bc177/src/ios/Agent/Background/BackgroundKeepAliveManager.swift)、[独立 Live Activity](https://github.com/OpenMinis/OpenMinis/blob/1a71df0f381cefde80bf912b723de6f9831bc177/src/ios/Agent/Background/AgentLiveActivityManager.swift)。
 - Android 官方：[前台服务类型](https://developer.android.com/develop/background-work/services/fgs/service-types#special-use)、[Android 15、target 35 起的 dataSync/mediaProcessing 六小时限制](https://developer.android.com/develop/background-work/services/fgs/timeout)、[Doze 与豁免](https://developer.android.com/training/monitoring-device-state/doze-standby)。

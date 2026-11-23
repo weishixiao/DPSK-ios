@@ -14,10 +14,10 @@
 
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/state/tile_style_state.dart';
-import 'package:dpsk_app/ui/common/feature_tile.dart';
-import 'package:dpsk_app/ui/common/feature_tile_shapes.g.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/state/tile_style_state.dart';
+import 'package:dsh_app/ui/common/feature_tile.dart';
+import 'package:dsh_app/ui/common/feature_tile_shapes.g.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

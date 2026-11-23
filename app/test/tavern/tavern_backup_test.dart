@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/ui/tavern/tavern_backup.dart';
-import 'package:dpsk_app/ui/tavern/tavern_settings_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/ui/tavern/tavern_backup.dart';
+import 'package:dsh_app/ui/tavern/tavern_settings_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -88,7 +88,7 @@ void main() {
   test('sizes read as KB or MB; a backup is named by when it was made', () {
     expect(tavernSize(2048), '2 KB');
     expect(tavernSize(3670016), '3.5 MB');
-    expect(tavernBackupName(DateTime(2026, 11, 11, 8, 5)), 'dpsk-tavern-20261111-0805.zip');
+    expect(tavernBackupName(DateTime(2026, 11, 11, 8, 5)), 'dshgo-tavern-20261111-0805.zip');
   });
 
   testWidgets('备份 writes one ZIP, hands it on, and says how much is in it', (tester) async {
@@ -100,7 +100,7 @@ void main() {
     expect(tavern.paths.single, startsWith(_temp.path));
     final (path, name) = shared.single;
     expect(path, tavern.paths.single);
-    expect(name, matches(RegExp(r'^dpsk-tavern-\d{8}-\d{4}\.zip$')));
+    expect(name, matches(RegExp(r'^dshgo-tavern-\d{8}-\d{4}\.zip$')));
     expect(File(path).existsSync(), isTrue);
     expect(find.text('备份好了：12 个文件，3.5 MB'), findsOneWidget);
   });
@@ -117,7 +117,7 @@ void main() {
     await _open(
       tester,
       PreviewTavern(tick: Duration.zero),
-      picked: '/backups/dpsk-tavern.zip',
+      picked: '/backups/dshgo-tavern.zip',
       restore: (path) async {
         restored.add(path);
         return TavernBackupInfo(createdAt: DateTime(2026, 11, 10), sqliteUserVersion: 5, fileCount: 30, totalBytes: 1);
@@ -132,7 +132,7 @@ void main() {
     await _tap(tester, 'tavern-restore');
     await tester.tap(find.widgetWithText(TextButton, '恢复'));
     await tester.pumpAndSettle();
-    expect(restored, ['/backups/dpsk-tavern.zip']);
+    expect(restored, ['/backups/dshgo-tavern.zip']);
     expect(find.text('恢复好了：30 个文件'), findsOneWidget);
   });
 

@@ -614,7 +614,7 @@ void main() {
     await _withFixture((f) async {
       final raw = jsonDecode(utf8.decode(t24Card())) as Map<String, Object?>;
       (raw['data']! as Map<String, Object?>)['extensions'] = {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'story': {
             'acts': [

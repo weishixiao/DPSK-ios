@@ -5,7 +5,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';
@@ -94,8 +94,8 @@ void main() {
       final scripts = Directory('${home.path}/skills/dsh-go-ui/scripts')..createSync(recursive: true);
       File(checker).copySync('${scripts.path}/check.mjs');
       File('$appDir/assets/skills/dsh-go-ui/schema.json').copySync('${home.path}/skills/dsh-go-ui/schema.json');
-      Directory('${home.path}/DPSK').createSync();
-      File('${home.path}/DPSK/ui.json').writeAsStringSync('{"version": 1, "hide": ["whaleTail"]}');
+      Directory('${home.path}/dsh-go').createSync();
+      File('${home.path}/dsh-go/ui.json').writeAsStringSync('{"version": 1, "hide": ["whaleTail"]}');
 
       final env = {...Platform.environment}..remove('DSH_HOME');
       final installed = await Process.run(
@@ -105,7 +105,7 @@ void main() {
         includeParentEnvironment: false,
       );
       expect(installed.exitCode, 0, reason: '${installed.stderr}');
-      expect((jsonDecode(installed.stdout as String) as Map)['file'], '${home.path}/DPSK/ui.json');
+      expect((jsonDecode(installed.stdout as String) as Map)['file'], '${home.path}/dsh-go/ui.json');
 
       final viaEnv = await run(['--json'], env: {'DSH_HOME': home.path});
       expect((jsonDecode(viaEnv.stdout as String) as Map)['applied'], 1);

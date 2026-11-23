@@ -1,10 +1,10 @@
 // What iOS calls things, and what it doesn't offer. Other platforms keep their wording.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/voice_settings.dart';
-import 'package:dpsk_app/ui/chat/widgets/image_actions.dart';
-import 'package:dpsk_app/ui/settings/voice_settings_page.dart';
-import 'package:dpsk_app/ui/theme/app_theme.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/voice_settings.dart';
+import 'package:dsh_app/ui/chat/widgets/image_actions.dart';
+import 'package:dsh_app/ui/settings/voice_settings_page.dart';
+import 'package:dsh_app/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

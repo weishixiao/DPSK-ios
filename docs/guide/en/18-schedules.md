@@ -5,7 +5,7 @@ Let a conversation receive an instruction at a set time: once, daily, or on a re
 <!-- nav: catalogAllFeatures,catalogSchedules -->
 `All features › Automations`
 
-[Open](dpsk://open/schedules)
+[Open](dshgo://open/schedules)
 
 Filter the list by **Active** or **Ended**, and search task names, instructions and rules. Each row shows its rule and the next run; ended tasks show when they last ran.
 

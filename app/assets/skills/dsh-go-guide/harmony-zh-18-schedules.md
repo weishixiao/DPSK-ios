@@ -5,7 +5,7 @@
 <!-- nav: catalogAllFeatures,catalogSchedules -->
 `全部功能 › 自动化任务`
 
-[打开](dpsk://open/schedules)
+[打开](dshgo://open/schedules)
 
 列表可以按**已开启**、**已结束**筛选，也能搜索任务名称、指令和规则。每一项写着规则和下次运行时间；已结束的任务写着运行过的时间。
 

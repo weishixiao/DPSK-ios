@@ -2,7 +2,7 @@
 // bug report. Gathered into a [DiagnosticsSnapshot] first, so the archive
 // itself is built by pure functions (and tested as such).
 //
-//   DPSK-diagnostics-20261024-153012.zip
+//   dsh-go-diagnostics-20261024-153012.zip
 //   ├── summary.json       app and DSH versions, device, Android, runtime
 //   │                      manifest, engine state, connection kind
 //   ├── settings.json      app settings, secrets reduced to "set or not"
@@ -80,11 +80,11 @@ class DiagnosticsSnapshot {
 abstract final class DiagnosticsBundle {
   static const mime = 'application/zip';
 
-  /// `DPSK-diagnostics-20261024-153012.zip` (ASCII: it travels through
+  /// `dsh-go-diagnostics-20261024-153012.zip` (ASCII: it travels through
   /// share targets and mail clients).
   static String fileName(DateTime at) {
     String two(int n) => n.toString().padLeft(2, '0');
-    return 'DPSK-diagnostics-${at.year}${two(at.month)}${two(at.day)}-'
+    return 'dsh-go-diagnostics-${at.year}${two(at.month)}${two(at.day)}-'
         '${two(at.hour)}${two(at.minute)}${two(at.second)}.zip';
   }
 

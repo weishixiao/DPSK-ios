@@ -1,7 +1,7 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/chat_error_text.dart';
-import 'package:dpsk_app/state/engine_error_text.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/chat_error_text.dart';
+import 'package:dsh_app/state/engine_error_text.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

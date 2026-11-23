@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/account_state.dart' show accountBrowserProvider;
-import 'package:dpsk_app/state/subscriptions_state.dart';
-import 'package:dpsk_app/ui/providers/subscription_sheet.dart';
+import 'package:dsh_app/state/account_state.dart' show accountBrowserProvider;
+import 'package:dsh_app/state/subscriptions_state.dart';
+import 'package:dsh_app/ui/providers/subscription_sheet.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

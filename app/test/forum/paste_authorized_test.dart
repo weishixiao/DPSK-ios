@@ -1,8 +1,8 @@
 // Runs against the original public picker before adding any new product API.
 // The MethodChannel boundary stands in for a genuine native authorized result;
 // this is not evidence that a Linux machine can grant PasteButton permission.
-import 'package:dpsk_app/forum/forum_share.dart';
-import 'package:dpsk_app/state/android_features.dart';
+import 'package:dsh_app/forum/forum_share.dart';
+import 'package:dsh_app/state/android_features.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +24,7 @@ void main() {
       if (call.method == 'readText') {
         nativeReads++;
         expect((call.arguments as Map)['requestId'], isA<String>());
-        return {'status': 'text', 'text': 'dpsk://share/plugin?p=clipboard.12345678'};
+        return {'status': 'text', 'text': 'dshgo://share/plugin?p=clipboard.12345678'};
       }
       return false;
     });

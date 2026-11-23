@@ -1,23 +1,23 @@
-// Hosted links opened in the app (link router, shared text, `dpsk://`), the
+// Hosted links opened in the app (link router, shared text, `dshgo://`), the
 // landing page on the share host (old github.io links still read), and the
 // two entries to 「我的分享链接」.
 
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/links/share_intake.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/share_hosted/hosted_client.dart';
-import 'package:dpsk_app/share_hosted/hosted_config.dart';
-import 'package:dpsk_app/share_hosted/hosted_crypto.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/replay/conversation_out.dart' show ManageLinksButton;
-import 'package:dpsk_app/ui/replay/replay_page.dart';
-import 'package:dpsk_app/ui/share_hosted/hosted_links_page.dart';
-import 'package:dpsk_app/ui/share_hosted/hosted_links_tile.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/links/share_intake.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/share_hosted/hosted_client.dart';
+import 'package:dsh_app/share_hosted/hosted_config.dart';
+import 'package:dsh_app/share_hosted/hosted_crypto.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/replay/conversation_out.dart' show ManageLinksButton;
+import 'package:dsh_app/ui/replay/replay_page.dart';
+import 'package:dsh_app/ui/share_hosted/hosted_links_page.dart';
+import 'package:dsh_app/ui/share_hosted/hosted_links_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,10 +43,10 @@ void main() {
         expect(ShareLink.parse(uri)?.code, code, reason: base);
         expect(ShareLink.find('看看这个 $base#p=$code 很好用')?.code, code, reason: base);
       }
-      expect(isLandingUri(Uri.parse('https://weishixiao.github.io/DPSK/other/')), isFalse);
+      expect(isLandingUri(Uri.parse('https://ccch1mneyyy.github.io/dsh-go/other/')), isFalse);
       expect(isLandingUri(Uri.parse('https://go.dshtui.com/c/')), isFalse);
       expect(
-        ShareLink.inline(ShareLink.parse(Uri.parse('dpsk://share/plugin?p=$code'))!.kind!, code).webLink,
+        ShareLink.inline(ShareLink.parse(Uri.parse('dshgo://share/plugin?p=$code'))!.kind!, code).webLink,
         startsWith('https://go.dshtui.com/share/#p='),
       );
     });
@@ -55,19 +55,19 @@ void main() {
   group('finding hosted links', () {
     final key = encodeHostedKey(newHostedKey());
 
-    test('https and dpsk forms, on our host only', () {
-      expect(parseHostedUrl('dpsk://go.dshtui.com/c/Ab3dE5gH9k#k=$key')?.origin, 'https://go.dshtui.com');
+    test('https and dshgo forms, on our host only', () {
+      expect(parseHostedUrl('dshgo://go.dshtui.com/c/Ab3dE5gH9k#k=$key')?.origin, 'https://go.dshtui.com');
       expect(isHostedLink(Uri.parse('https://go.dshtui.com/c/Ab3dE5gH9k#k=$key')), isTrue);
-      expect(isHostedLink(Uri.parse('dpsk://go.dshtui.com/c/Ab3dE5gH9k#k=$key')), isTrue);
+      expect(isHostedLink(Uri.parse('dshgo://go.dshtui.com/c/Ab3dE5gH9k#k=$key')), isTrue);
       expect(isHostedLink(Uri.parse('https://evil.example/c/Ab3dE5gH9k#k=$key')), isFalse);
       expect(isHostedLink(Uri.parse('https://go.dshtui.com:8443/c/Ab3dE5gH9k#k=$key')), isFalse);
     });
 
     test('in forwarded text, punctuation and all', () {
       final url = 'https://go.dshtui.com/c/Ab3dE5gH9k#k=$key';
-      expect(findHostedUrl('「修复登录」· DPSK 对话\n$url'), Uri.parse(url));
+      expect(findHostedUrl('「修复登录」· dsh-go 对话\n$url'), Uri.parse(url));
       expect(findHostedUrl('看这个：$url。'), Uri.parse(url));
-      expect(findHostedUrl('dpsk://go.dshtui.com/c/Ab3dE5gH9k#k=$key'), Uri.parse(url));
+      expect(findHostedUrl('dshgo://go.dshtui.com/c/Ab3dE5gH9k#k=$key'), Uri.parse(url));
       expect(findHostedUrl('https://evil.example/c/Ab3dE5gH9k#k=$key'), isNull);
       expect(findHostedUrl('https://go.dshtui.com/c/Ab3dE5gH9k#k=short'), isNull);
       expect(findHostedUrl('https://go.dshtui.com/share/#p=a.b'), isNull);
@@ -75,7 +75,7 @@ void main() {
 
     test('a shared text with one goes to its replay, not the composer', () {
       final url = 'https://go.dshtui.com/c/Ab3dE5gH9k#k=$key';
-      expect(IncomingShare(text: '「修复登录」· DPSK 对话\n$url').hostedLink, Uri.parse(url));
+      expect(IncomingShare(text: '「修复登录」· dsh-go 对话\n$url').hostedLink, Uri.parse(url));
       expect(
         IncomingShare(
           text: url,
@@ -117,7 +117,7 @@ void main() {
       return links;
     }
 
-    for (final scheme in ['https', 'dpsk']) {
+    for (final scheme in ['https', 'dshgo']) {
       testWidgets('$scheme link → replay', (tester) async {
         final links = await pumpHome(tester);
         links.add(Uri.parse('$scheme://go.dshtui.com/c/M000000001#k=$key'));

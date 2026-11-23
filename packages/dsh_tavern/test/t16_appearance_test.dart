@@ -53,7 +53,7 @@ void main() {
       ],
     };
     final extensions = _data(json)['extensions']! as Map<String, Object?>;
-    extensions['dpsk'] = {
+    extensions['dshgo'] = {
       'theme': theme,
       'notAppearance': {'keep': 'private'},
     };
@@ -89,7 +89,7 @@ void main() {
       <String, Object?>{},
     ]) {
       final json = _document();
-      (_data(json)['extensions']! as Map<String, Object?>)['dpsk'] = {'theme': theme};
+      (_data(json)['extensions']! as Map<String, Object?>)['dshgo'] = {'theme': theme};
       final card = codec.decode(_bytes(json));
       final before = jsonEncode(card.json);
       expect(card.toCharacter('one').theme, theme);
@@ -101,7 +101,7 @@ void main() {
       [1],
     ]) {
       final json = _document();
-      (_data(json)['extensions']! as Map<String, Object?>)['dpsk'] = bad;
+      (_data(json)['extensions']! as Map<String, Object?>)['dshgo'] = bad;
       expect(codec.decode(_bytes(json)).toCharacter('one').theme, isNull);
       _data(json)['extensions'] = bad;
       expect(codec.decode(_bytes(json)).toCharacter('one').theme, isNull);
@@ -315,7 +315,7 @@ void main() {
         {'name': '海'},
       ],
     };
-    (_data(json)['extensions']! as Map<String, Object?>)['dpsk'] = {'theme': theme, 'other': 'keep'};
+    (_data(json)['extensions']! as Map<String, Object?>)['dshgo'] = {'theme': theme, 'other': 'keep'};
     _data(json)['assets'] = [
       {
         'type': 'emotion',
@@ -422,7 +422,7 @@ void main() {
         'accent': '#123456',
         'nested': [1, null],
       };
-      (_data(json)['extensions']! as Map<String, Object?>)['dpsk'] = {'theme': theme, 'other': 'private'};
+      (_data(json)['extensions']! as Map<String, Object?>)['dshgo'] = {'theme': theme, 'other': 'private'};
       (_data(json)['extensions']! as Map<String, Object?>)['regex_scripts'] = [
         {
           'id': 'invalid',
@@ -482,7 +482,7 @@ void main() {
 
   test('appearance stays out of valid and recovered summaries without opening original or resource bytes', () async {
     final json = _document();
-    (_data(json)['extensions']! as Map<String, Object?>)['dpsk'] = {
+    (_data(json)['extensions']! as Map<String, Object?>)['dshgo'] = {
       'theme': {'appearance-only-marker': List<String>.filled(1024, 'theme payload')},
     };
     _data(json)['assets'] = [
@@ -521,7 +521,7 @@ void main() {
     final engine = await _openWithoutModel(root, importedAt);
     final json = _document();
     final theme = {'accent': '#123456', 'background': 'embeded://shared.png'};
-    (_data(json)['extensions']! as Map<String, Object?>)['dpsk'] = {'theme': theme};
+    (_data(json)['extensions']! as Map<String, Object?>)['dshgo'] = {'theme': theme};
     _data(json)['assets'] = [
       {'type': 'background', 'name': 'same name', 'uri': 'embeded://shared.png', 'ext': 'png'},
     ];
@@ -569,7 +569,7 @@ void main() {
       final json = _document();
       _data(json).remove('character_book');
       final theme = {'layout': 'novel', 'background': '__asset:assets/smile.png'};
-      (_data(json)['extensions']! as Map<String, Object?>)['dpsk'] = {'theme': theme};
+      (_data(json)['extensions']! as Map<String, Object?>)['dshgo'] = {'theme': theme};
       _data(json)['assets'] = [
         {'type': 'icon', 'name': 'main', 'uri': 'ccdefault:', 'ext': 'png'},
         {'type': 'emotion', 'name': 'smile', 'uri': '__asset:assets/smile.png', 'ext': 'png'},

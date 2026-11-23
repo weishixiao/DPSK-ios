@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/pets/pet_library.dart';
-import 'package:dpsk_app/ui/workshop/workshop_auto_cover.dart';
+import 'package:dsh_app/pets/pet_library.dart';
+import 'package:dsh_app/ui/workshop/workshop_auto_cover.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as image;
 

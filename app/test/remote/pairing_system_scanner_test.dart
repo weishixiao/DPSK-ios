@@ -4,8 +4,8 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/remote/pairing_page.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/remote/pairing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

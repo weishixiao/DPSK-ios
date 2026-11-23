@@ -371,8 +371,8 @@ void main() {
     final (_, chatId) = await chat();
     await installTrigger('''CREATE TRIGGER reject_completed_inspection BEFORE UPDATE OF metadata ON chats
       WHEN EXISTS (SELECT 1 FROM nodes
-        WHERE id = json_extract(NEW.metadata, '\$.dpsk.latestInspection.nodeId')
-        AND json_extract(extra, '\$.dpsk.inspection.status') = 'completed')
+        WHERE id = json_extract(NEW.metadata, '\$.dshgo.latestInspection.nodeId')
+        AND json_extract(extra, '\$.dshgo.inspection.status') = 'completed')
       BEGIN SELECT RAISE(ABORT, 'fixture_completed'); END''');
     model.reply('已经成功保存的正文', usage: const TavernUsage(promptTokens: 9));
     final events = await engine.send(chatId, '问').toList();
@@ -416,8 +416,8 @@ void main() {
     model.reply('B');
     final sibling = _done(await engine.regenerate(chatId, first.nodeId).toList());
     await installTrigger('''CREATE TRIGGER reject_a_inspection BEFORE UPDATE OF metadata ON chats
-      WHEN json_extract(NEW.metadata, '\$.dpsk.latestInspection.nodeId') = '${first.nodeId}'
-        OR json_extract(NEW.metadata, '\$.dpsk.latestInspection.snapshot.contextNodeId') = '${first.nodeId}'
+      WHEN json_extract(NEW.metadata, '\$.dshgo.latestInspection.nodeId') = '${first.nodeId}'
+        OR json_extract(NEW.metadata, '\$.dshgo.latestInspection.snapshot.contextNodeId') = '${first.nodeId}'
       BEGIN SELECT RAISE(ABORT, 'fixture_a_snapshot'); END''');
     final failed = (await engine.continueReply(chatId, first.nodeId).toList()).whereType<TavernTurnFailed>().single;
     expect(failed.kind, TavernFailure.server);
@@ -440,8 +440,8 @@ void main() {
     model.reply('保留我');
     final done = _done(await engine.send(chatId, '问').toList());
     await installTrigger('''CREATE TRIGGER reject_latest_clear BEFORE UPDATE OF metadata ON chats
-      WHEN json_extract(OLD.metadata, '\$.dpsk.latestInspection') IS NOT NULL
-        AND json_extract(NEW.metadata, '\$.dpsk.latestInspection') IS NULL
+      WHEN json_extract(OLD.metadata, '\$.dshgo.latestInspection') IS NOT NULL
+        AND json_extract(NEW.metadata, '\$.dshgo.latestInspection') IS NULL
       BEGIN SELECT RAISE(ABORT, 'fixture_latest_clear'); END''');
     final before = jsonEncode((await engine.inspectTurn(chatId))!.toJson());
     await expectLater(engine.deleteFrom(chatId, done.nodeId), throwsA(isA<SqliteException>()));
@@ -466,8 +466,8 @@ void main() {
       extra: {
         ...node.extra,
         'foreign': {'keep': '🐋'},
-        'dpsk': {
-          ...(node.extra['dpsk']! as Map<String, Object?>),
+        'dshgo': {
+          ...(node.extra['dshgo']! as Map<String, Object?>),
           'futureFlag': {'enabled': true},
         },
       },
@@ -478,7 +478,7 @@ void main() {
       metadata: {
         ...oldChat.metadata,
         'foreign': [1, 2, 3],
-        'dpsk': {...(oldChat.metadata['dpsk']! as Map<String, Object?>), 'futureFlag': 'keep'},
+        'dshgo': {...(oldChat.metadata['dshgo']! as Map<String, Object?>), 'futureFlag': 'keep'},
       },
     );
     await store.close();
@@ -490,10 +490,10 @@ void main() {
     try {
       final extra = store.node(chatId, first.nodeId).extra;
       expect(extra['foreign'], {'keep': '🐋'});
-      expect((extra['dpsk']! as Map<String, Object?>)['futureFlag'], {'enabled': true});
+      expect((extra['dshgo']! as Map<String, Object?>)['futureFlag'], {'enabled': true});
       final metadata = store.chat(chatId).metadata;
       expect(metadata['foreign'], [1, 2, 3]);
-      expect((metadata['dpsk']! as Map<String, Object?>)['futureFlag'], 'keep');
+      expect((metadata['dshgo']! as Map<String, Object?>)['futureFlag'], 'keep');
     } finally {
       await store.close();
     }

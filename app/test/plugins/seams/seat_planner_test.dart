@@ -1,5 +1,5 @@
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/state/hosts_state.dart';
 import 'package:dsh_client/dsh_client.dart' show ClientInventoryTier;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';

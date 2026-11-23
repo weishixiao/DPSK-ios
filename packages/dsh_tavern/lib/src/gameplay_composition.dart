@@ -270,12 +270,12 @@ List<_GameplayDeclaration> _gameplayDeclarations(
   for (final entry in cards.entries) {
     final data = entry.value;
     final extensions = data is Map<String, Object?> ? data['extensions'] : null;
-    final present = extensions is Map<String, Object?> && extensions.containsKey('dpsk');
+    final present = extensions is Map<String, Object?> && extensions.containsKey('dshgo');
     result.add(
       _GameplayDeclaration(
         source: {'kind': 'card', 'characterId': entry.key},
         rawPresent: present,
-        raw: extensions is Map<String, Object?> ? extensions['dpsk'] : null,
+        raw: extensions is Map<String, Object?> ? extensions['dshgo'] : null,
         roles: [
           if (entry.key == context.hostCharacterId) 'host',
           if (entry.key == context.request.characterId) 'actor',
@@ -286,7 +286,7 @@ List<_GameplayDeclaration> _gameplayDeclarations(
   }
   for (final input in snapshot) {
     final manifest = input.version?.manifest;
-    final present = manifest?.containsKey('dpsk') ?? false;
+    final present = manifest?.containsKey('dshgo') ?? false;
     result.add(
       _GameplayDeclaration(
         source: {
@@ -297,7 +297,7 @@ List<_GameplayDeclaration> _gameplayDeclarations(
           'packRef': input.binding.packRef.toJson(),
         },
         rawPresent: present,
-        raw: present ? manifest!['dpsk'] : null,
+        raw: present ? manifest!['dshgo'] : null,
         roles: [
           if (_gameplayDefinitionScope(input, context)) 'definition',
           if (input.scope != TavernGameplayScope.character || input.targetId == context.request.characterId) 'regex',
@@ -364,7 +364,7 @@ TavernGameplayResolution _composeGameplayData(
     if (!source.eligible) {
       conflicts.add(
         _gameplayConflict(
-          source.rawPresent && source.fields == null ? 'dpsk_source_shape' : 'dpsk_source_version',
+          source.rawPresent && source.fields == null ? 'dshgo_source_shape' : 'dshgo_source_version',
           'This source is preserved but cannot contribute executable declarations.',
           source: source,
           sourcePath: '',
@@ -747,7 +747,7 @@ TavernGameplayResolution _composeGameplayData(
               {
                 'diagnostic': issue,
                 'source': current.source,
-                'sourcePath': '/messageVariables/dpsk${issue['path'] ?? ''}',
+                'sourcePath': '/messageVariables/dshgo${issue['path'] ?? ''}',
               },
           ],
         );
@@ -1330,6 +1330,6 @@ String _gameplayToolSourcePath(String fieldPath) {
   if (fieldPath == 'extensions') {
     return '/extensions';
   }
-  final suffix = fieldPath.substring('extensions.dpsk'.length);
+  final suffix = fieldPath.substring('extensions.dshgo'.length);
   return suffix.isEmpty ? '' : '/${suffix.substring(1).split('.').map(_gameplayPointerToken).join('/')}';
 }

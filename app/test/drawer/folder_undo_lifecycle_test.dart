@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/drawer_view_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
-import 'package:dpsk_app/ui/shell/drawer/archive_notice.dart';
-import 'package:dpsk_app/ui/shell/drawer/drawer_actions.dart';
-import 'package:dpsk_app/ui/shell/drawer/session_tile.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/drawer_view_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
+import 'package:dsh_app/ui/shell/drawer/archive_notice.dart';
+import 'package:dsh_app/ui/shell/drawer/drawer_actions.dart';
+import 'package:dsh_app/ui/shell/drawer/session_tile.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

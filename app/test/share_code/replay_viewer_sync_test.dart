@@ -8,8 +8,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/share_code/conversation_html.dart';
-import 'package:dpsk_app/share_code/replay_viewer.g.dart';
+import 'package:dsh_app/share_code/conversation_html.dart';
+import 'package:dsh_app/share_code/replay_viewer.g.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -36,11 +36,11 @@ void main() {
   });
 
   test('a filled page keeps its data inside the data block', () {
-    const file = '{"dpsk":2,"kind":"conversation","name":"</script><script>alert(1)</script>","code":"x.y"}';
+    const file = '{"dshgo":2,"kind":"conversation","name":"</script><script>alert(1)</script>","code":"x.y"}';
     final html = conversationHtml(file, title: '<b>标题</b>');
-    expect(html, contains('<title>&lt;b&gt;标题&lt;/b&gt; · DPSK</title>'));
+    expect(html, contains('<title>&lt;b&gt;标题&lt;/b&gt; · DSH Go</title>'));
     final block = RegExp(
-      r'<script type="application/json" id="dpsk-data">(.*?)</script>',
+      r'<script type="application/json" id="dshgo-data">(.*?)</script>',
       dotAll: true,
     ).firstMatch(html)!;
     expect(block.group(1), isNot(contains('<')));

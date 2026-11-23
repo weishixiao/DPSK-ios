@@ -89,7 +89,7 @@ extension _DeepSeekImportOperations on TavernEngine {
         characterId: character.id,
         title: session.title.isEmpty ? character.name : session.title,
         metadata: {
-          'dpsk': {
+          'dshgo': {
             'deepseek': {'version': 1, 'sessionId': session.id},
           },
         },

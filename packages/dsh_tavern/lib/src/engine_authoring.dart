@@ -130,8 +130,8 @@ extension _AuthoringOperations on TavernEngine {
             'base': document,
             'rawText': text.rawText,
             'authorityRevision': _authoringRevisionJson(revision),
-            'sourceFormat': !document.containsKey('entries') && document['format'] == 'dpsk-lorebook'
-                ? 'dpsk-lorebook'
+            'sourceFormat': !document.containsKey('entries') && document['format'] == 'dshgo-lorebook'
+                ? 'dshgo-lorebook'
                 : 'st-json',
           };
         });
@@ -321,7 +321,7 @@ Map<String, Object?> _authoringObject(Object? value, String message) {
 }
 
 Map<String, Object?> _authoringBook(Map<String, Object?> document) {
-  if (document.containsKey('entries') || document['format'] != 'dpsk-lorebook') return document;
+  if (document.containsKey('entries') || document['format'] != 'dshgo-lorebook') return document;
   if (document['version'] != 1 || (document['stWorldName'] != null && document['stWorldName'] is! String)) {
     throw const FormatException('Unsupported or invalid stored lorebook.');
   }

@@ -161,7 +161,7 @@ class TavernCard {
       creator: data['creator'] is String ? data['creator'] as String : null,
       tags: _strings(data['tags']),
       avatarPath: avatarPath,
-      theme: jsonDecode(jsonEncode(_map(extensions['dpsk'])['theme'])),
+      theme: jsonDecode(jsonEncode(_map(extensions['dshgo'])['theme'])),
       assets: appearanceAssets,
       description: _text(data['description']),
       creatorNotes: creatorNotes(language: language),

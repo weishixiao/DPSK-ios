@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/tavern/tavern_intake.dart';
+import 'package:dsh_app/ui/tavern/tavern_intake.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

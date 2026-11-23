@@ -44,7 +44,7 @@ abstract class ShareNet {
   /// Uploads [content] as a secret Gist with one file; returns its id.
   Future<String> createGist({required String token, required String fileName, required String content});
 
-  /// The text of the Gist's `.dpsk` file.
+  /// The text of the Gist's `.dshgo` file.
   Future<String> fetchGist(String id);
 }
 
@@ -129,7 +129,7 @@ class HttpShareNet implements ShareNet {
       for (final file in files.values) {
         if (file is! Map) continue;
         final name = file['filename'];
-        if (name is! String || !name.endsWith('.dpsk')) continue;
+        if (name is! String || !name.endsWith('.dshgo')) continue;
         if (file['truncated'] != true && file['content'] is String) return file['content'] as String;
         final raw = file['raw_url'];
         if (raw is String && raw.startsWith('https://gist.githubusercontent.com/')) {

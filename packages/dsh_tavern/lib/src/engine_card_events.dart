@@ -1,10 +1,10 @@
 part of 'engine.dart';
 
-const _cardEventRuntimeKey = 'dpskDirectorEventRuntime';
+const _cardEventRuntimeKey = 'dshgoDirectorEventRuntime';
 typedef _CardEventPrepared = ({_DirectorPrepared run, Map<String, state_core.StateEventTarget>? targets});
 
 state_core.CardEventDefinition _cardEventDefinition(Map<String, Object?> data) {
-  final own = _readMap(_readMap(data['extensions'])['dpsk']);
+  final own = _readMap(_readMap(data['extensions'])['dshgo']);
   return state_core.CardEventDefinition.parse(
     _readMap(own['director'])['eventRules'],
     version: own.containsKey('v') ? own['v'] : 1,
@@ -50,7 +50,7 @@ Map<String, Object?>? _cardEventSnapshot(
     return null;
   }
   final snapshot = _inspectGameplayEvents(definition, saved, gameplay);
-  final own = leaf == null ? <String, Object?>{} : _map(engine._store.node(chat.id, leaf).extra['dpsk']);
+  final own = leaf == null ? <String, Object?>{} : _map(engine._store.node(chat.id, leaf).extra['dshgo']);
   return {
     ...snapshot.toJson(),
     'nodeId': leaf,
@@ -217,7 +217,7 @@ List<PromptInjection> _cardEventTurnInjections(_Turn turn) {
   final injections = <PromptInjection>[];
   for (final prompt in snapshot.pendingPrompts) {
     final id = prompt['id']! as String;
-    final sourceId = 'dpsk.director.event.prompt:$id';
+    final sourceId = 'dshgo.director.event.prompt:$id';
     turn.cardEventOfferedPrompts[sourceId] = id;
     injections.add(
       PromptInjection(
@@ -233,7 +233,7 @@ List<PromptInjection> _cardEventTurnInjections(_Turn turn) {
     );
   }
   for (final row in _gameplayPendingEventPrompts(snapshot.packRuntime, turn.gameplay)) {
-    final sourceId = 'dpsk.gameplay.event.prompt:${_directorHash(_gameplayEventPromptRefJson(row.ref))}';
+    final sourceId = 'dshgo.gameplay.event.prompt:${_directorHash(_gameplayEventPromptRefJson(row.ref))}';
     turn.cardEventOfferedPackPrompts[sourceId] = row.ref;
     injections.add(
       PromptInjection(

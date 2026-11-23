@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/share_hosted/hosted_crypto.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_crypto.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final _fixtures = '${Directory.current.path}/test/share_hosted/fixtures';
@@ -50,7 +50,7 @@ void main() {
   group('seal and open', () {
     test('round trip, with a fresh IV each time', () {
       final key = newHostedKey();
-      final file = utf8.encode('{"dpsk":2,"kind":"conversation","name":"测试"}');
+      final file = utf8.encode('{"dshgo":2,"kind":"conversation","name":"测试"}');
       final a = sealHosted(file, key);
       final b = sealHosted(file, key);
       expect(a.sublist(0, 4), hostedMagic);

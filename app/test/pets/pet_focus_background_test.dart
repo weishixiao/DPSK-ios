@@ -2,14 +2,14 @@
 // the background, where Flutter draws no frames: the out-of-app pet must see
 // the turn end, or it keeps working and swallows the turn's 做完了.
 
-import 'package:dpsk_app/pets/pet_overlay_bridge.dart';
-import 'package:dpsk_app/pets/pet_prefs.dart';
-import 'package:dpsk_app/pets/pet_signals.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/ui_mode_state.dart';
-import 'package:dpsk_app/ui/pets/pet_stage.dart';
+import 'package:dsh_app/pets/pet_overlay_bridge.dart';
+import 'package:dsh_app/pets/pet_prefs.dart';
+import 'package:dsh_app/pets/pet_signals.dart';
+import 'package:dsh_app/pets/pet_state.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/ui_mode_state.dart';
+import 'package:dsh_app/ui/pets/pet_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

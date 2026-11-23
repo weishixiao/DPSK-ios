@@ -16,7 +16,7 @@ abstract final class AppInfo {
 
   /// The app's name as the phone shows it: launcher, Recents, notifications, system
   /// settings, the licence page. Matches `android:label` in AndroidManifest.xml.
-  static const name = 'DPSK';
+  static const name = 'DSH Go';
 
   /// The in-app wordmark: the drawer's lockup, the welcome page and the brand mark's
   /// spoken label.
@@ -26,16 +26,16 @@ abstract final class AppInfo {
   /// Shown on the About and licence pages.
   static String get disclaimer => appL10n.stateAppDisclaimer;
 
-  /// The line under the brand mark (welcome page, 关于 DPSK).
+  /// The line under the brand mark (welcome page, 关于 dsh-go).
   static String get slogan => appL10n.appSlogan;
 
-  /// The original DPSK author and their personal profiles, not project pages.
-  static const author = 'weishixiao';
+  /// The original DSH Go author and their personal profiles, not project pages.
+  static const author = 'ccch1mneyyy';
   static const authorBilibiliName = 'ccchimneyyy';
   static const authorBilibiliUrl = 'https://b23.tv/9WBns6Y';
-  static const authorXHandle = '@cweishixiaoy';
-  static const authorXUrl = 'https://x.com/cweishixiaoy';
-  static const authorGithubUrl = 'https://github.com/weishixiao';
+  static const authorXHandle = '@cccch1mneyyyy';
+  static const authorXUrl = 'https://x.com/cccch1mneyyyy';
+  static const authorGithubUrl = 'https://github.com/ccch1mneyyy';
 
   static const deepseekPlatform = 'https://platform.deepseek.com/api_keys';
   static const remoteConsole = 'https://dsh.r2049.cn/app';

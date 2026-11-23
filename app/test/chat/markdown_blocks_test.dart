@@ -1,9 +1,9 @@
 // A long or streamed reply is drawn in blocks (#1469): new text re-renders
 // only the last block, and the blocks lay out exactly as one GptMarkdown.
 
-import 'package:dpsk_app/ui/chat/render/markdown_blocks.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_split.dart';
+import 'package:dsh_app/ui/chat/render/markdown_blocks.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/chat/render/markdown_split.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

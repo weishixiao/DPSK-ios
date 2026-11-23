@@ -220,7 +220,7 @@ void main() {
 
   test('unfinished lorebook seeds can be corrected and saved without normalizing their envelope', () async {
     final h = await ScriptFixture.open();
-    const raw = '\ufeff{"format":"dpsk-lorebook","version":1,"vendor":{"keep":null},"book":{"entries":42}}';
+    const raw = '\ufeff{"format":"dshgo-lorebook","version":1,"vendor":{"keep":null},"book":{"entries":42}}';
     final seed = await h.engine.createAuthoringSeed(
       TavernAuthoringSeedInput(kind: TavernAuthoringTargetKind.lorebook, bytes: Uint8List.fromList(utf8.encode(raw))),
     );

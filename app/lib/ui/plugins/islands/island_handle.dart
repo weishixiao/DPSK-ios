@@ -178,11 +178,11 @@ class IslandHandle extends ChangeNotifier {
     final cell = spec.cell ?? '';
     if (spec.slot == rightPaneTabSlot) {
       if (cell.isEmpty || book.officialRightbar.contains(cell)) return url;
-      return url.replace(fragment: 'DPSK-tab=${Uri.encodeComponent(cell)}');
+      return url.replace(fragment: 'dsh-go-tab=${Uri.encodeComponent(cell)}');
     }
     if (!spec.maskOfficial) return url;
     final slots = recipe?.slotsFor(spec.slot) ?? [spec.slot];
-    return url.replace(fragment: 'DPSK-island=${slots.map(Uri.encodeComponent).join(',')}');
+    return url.replace(fragment: 'dsh-go-island=${slots.map(Uri.encodeComponent).join(',')}');
   }
 
   static const rightPaneTabSlot = 'sidebar.right.pane.tab';

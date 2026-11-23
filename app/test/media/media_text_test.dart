@@ -1,9 +1,9 @@
 // Media words: the metadata line that cuts the model's name first, costs,
 // failures, and the reply lines a card makes redundant.
 
-import 'package:dpsk_app/ui/chat/media/media_card.dart' show fitMediaMetaLine;
-import 'package:dpsk_app/ui/chat/media/media_format.dart';
-import 'package:dpsk_app/ui/chat/media/media_paths.dart';
+import 'package:dsh_app/ui/chat/media/media_card.dart' show fitMediaMetaLine;
+import 'package:dsh_app/ui/chat/media/media_format.dart';
+import 'package:dsh_app/ui/chat/media/media_paths.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';

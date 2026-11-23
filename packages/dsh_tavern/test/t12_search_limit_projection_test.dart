@@ -126,7 +126,7 @@ void main() {
       usage: const TavernUsage(promptTokens: 7, cacheHitTokens: 2, completionTokens: 3, model: 'original'),
       extra: {
         'foreign': [null, true, '\uFEFFkept'],
-        'dpsk': {
+        'dshgo': {
           'inspection': {
             'version': 1,
             'chatId': chat,

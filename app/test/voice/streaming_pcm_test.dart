@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/voice/streaming_pcm.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/voice/streaming_pcm.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

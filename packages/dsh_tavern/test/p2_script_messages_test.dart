@@ -122,7 +122,7 @@ void main() {
           'vendor': {'must': 'survive the write'},
           'extra': {
             'foreign': ['selected'],
-            'dpsk': {
+            'dshgo': {
               'inspection': {'foreignEvidence': 'retain'},
             },
           },
@@ -316,14 +316,14 @@ void main() {
     for (final forbidden in <ScriptJson>[
       {
         'extra': {
-          'dpsk': {'tavernState': {}},
+          'dshgo': {'tavernState': {}},
         },
       },
       {
         'swipesInfo': [
           {
             'extra': {
-              'dpsk': {'branchName': 'bypass'},
+              'dshgo': {'branchName': 'bypass'},
             },
           },
         ],
@@ -412,7 +412,7 @@ void main() {
     final expectedIds = <String?>[null, character, null, null];
     expect((await h.engine.path(chat)).map((message) => message.role), expectedRoles);
     expect((await h.engine.path(chat)).map((message) => message.speakerCharacterId), expectedIds);
-    ScriptJson own(Object? extra) => scriptMap(scriptMap(scriptMap(extra)['dpsk'])['chatJsonl']);
+    ScriptJson own(Object? extra) => scriptMap(scriptMap(scriptMap(extra)['dshgo'])['chatJsonl']);
     void checkWire(List<TavernChatFile> files) {
       final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
       final row = document.messages.singleWhere((message) => message['mes'] == 'ACTOR-1');
@@ -810,7 +810,7 @@ void main() {
     final beforeFile = (await h.engine.exportChat(chat)).first;
     final beforeDocument = StChatDocument.decode(beforeFile.fileName, beforeFile.bytes);
     final beforeState = scriptMap(
-      scriptMap(scriptMap(beforeDocument.messages.single['extra'])['dpsk'])['tavernState'],
+      scriptMap(scriptMap(beforeDocument.messages.single['extra'])['dshgo'])['tavernState'],
     );
     await h.bridge.setChatMessages(context.id, [
       TavernScriptMessagePatch(
@@ -831,7 +831,7 @@ void main() {
     expect(
       page.swipes.map((swipe) => swipe.data),
       everyElement({
-        'dpsk': {'count': 5},
+        'dshgo': {'count': 5},
         'stat_data': {'hp': 7},
       }),
     );
@@ -840,19 +840,19 @@ void main() {
     expect(await h.engine.inspectTurn(chat, nodeId: page.ref.nodeId), isNull);
     final afterFile = (await h.engine.exportChat(chat)).first;
     final afterDocument = StChatDocument.decode(afterFile.fileName, afterFile.bytes);
-    final afterState = scriptMap(scriptMap(scriptMap(afterDocument.messages.single['extra'])['dpsk'])['tavernState']);
+    final afterState = scriptMap(scriptMap(scriptMap(afterDocument.messages.single['extra'])['dshgo'])['tavernState']);
     expect(afterState, beforeState);
     final updated = await h.bridge.replaceVariables(context.id, scriptMessage, {
       ...page.data!,
-      'dpsk': {'count': 999},
+      'dshgo': {'count': 999},
     });
-    expect(updated.value['dpsk'], {'count': 10});
+    expect(updated.value['dshgo'], {'count': 10});
     expect(updated.stateEdit!.snapshot.effects, isEmpty);
-    expect((await _data(h, context.id, original))['dpsk'], {'count': 5});
+    expect((await _data(h, context.id, original))['dshgo'], {'count': 5});
     await h.reopen();
     final fresh = await h.context(chat, characterId: character);
-    expect((await h.bridge.getVariables(fresh.id, scriptMessage)).value['dpsk'], {'count': 10});
-    expect((await _data(h, fresh.id, original))['dpsk'], {'count': 5});
+    expect((await h.bridge.getVariables(fresh.id, scriptMessage)).value['dshgo'], {'count': 10});
+    expect((await _data(h, fresh.id, original))['dshgo'], {'count': 5});
     h.expectNoGeneration();
   });
 
@@ -907,7 +907,7 @@ void main() {
 
 ScriptJson _privateExtra(ScriptFixture h, TavernScriptMessageRef ref) => h.inspect((db) {
   final row = db.select('SELECT extra FROM nodes WHERE id = ?', [ref.nodeId]).single;
-  return scriptMap(scriptMap(jsonDecode(row['extra'] as String))['dpsk']);
+  return scriptMap(scriptMap(jsonDecode(row['extra'] as String))['dshgo']);
 });
 
 Future<ScriptJson> _data(ScriptFixture h, String contextId, TavernScriptMessageRef ref) async =>

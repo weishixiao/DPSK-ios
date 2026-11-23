@@ -1,11 +1,11 @@
 # 管家（Router）
 
-> 2026-11-08 起草，方向稿。owner 的设想：DPSK 变成一个 router，接入各种 IM 和 GitHub，替用户整理消息、汇报，把任务派给本地或云端电脑上的 worker；以后再接米家这类智能设备，用户只和这一个入口打交道。参照 DeepSeek Harness 团队 2026-10-31 的 Super-agent 设计稿和开源原型。接口细节等 §10 的 A0 调研之后再定。
+> 2026-11-08 起草，方向稿。owner 的设想：dsh-Go 变成一个 router，接入各种 IM 和 GitHub，替用户整理消息、汇报，把任务派给本地或云端电脑上的 worker；以后再接米家这类智能设备，用户只和这一个入口打交道。参照 DeepSeek Harness 团队 2026-10-31 的 Super-agent 设计稿和开源原型。接口细节等 §10 的 A0 调研之后再定。
 
 ## 0. 结论
 
-- **不从零写 router。** 官方原型 `deepseek-ai/dsh-superagent-prototype`（MIT）本身就是一个 DSH bundle：router、worker 两个预设，和我们的桥接用同一套 `cordis.patch.yml`。DPSK 照 DS Bot 的做法（[dsbot.md](dsbot.md)）给它做原生客户端，再补上原型没有的手机一侧。
-- **DPSK 有三个身份。** 管家的脸（用户只和它说话）；一台设备节点（读通知、手机操控、点米家 App）；装 worker 的主机之一（本机引擎）。
+- **不从零写 router。** 官方原型 `deepseek-ai/dsh-superagent-prototype`（MIT）本身就是一个 DSH bundle：router、worker 两个预设，和我们的桥接用同一套 `cordis.patch.yml`。dsh-Go 照 DS Bot 的做法（[dsbot.md](dsbot.md)）给它做原生客户端，再补上原型没有的手机一侧。
+- **dsh-Go 有三个身份。** 管家的脸（用户只和它说话）；一台设备节点（读通知、手机操控、点米家 App）；装 worker 的主机之一（本机引擎）。
 - **Router 推荐放在常开的机器上**（电脑、NAS、云机）。没有这种机器的人放手机本机引擎，代价是耗电。
 - **外来消息怎么处理由用户选。** 别人发来的消息、邮件、issue 是直接派活，还是先变成「建议」进收件箱等用户点，用原型的接收模式（`off` / `observe` / `auto`）让用户定。安全相关的都是选项，不替用户加限制（§7）。
 - **米家走 Home Assistant**：小米官方的 Xiaomi Home 集成加 HA 自带的 MCP Server，对引擎来说就是一组工具。没有 HA 时退到手机操控去点米家 App。
@@ -43,14 +43,14 @@
 ## 2. 分工
 
 ```
-手机 DPSK                       常开主机                               worker 和设备
+手机 dsh-Go                       常开主机                               worker 和设备
 ├ 管家的脸 ⇄───────────────── Router 会话（轻模型，只沟通派活）
 ├ 通知读取（第一道筛）────────→ 第二道筛（攒批）←─ 官方接口连接器
 ├ 手机操控（手机上的 worker）←┐ 任务账本（授权范围、预算）──────────→ 本机 worktree / 别的电脑 / 云机
 └ 米家 App（没有 HA 时）       └ Watchdog                               Home Assistant
 ```
 
-原型缺的正好是 DPSK 已经有一半的东西：多主机和 Remote 扫码配对（#765、#766）、手机操控（13 个工具，确认规则已定）、通知（`chat_alerts`）、给 DSH 插件做原生客户端的做法（DS Bot）。
+原型缺的正好是 dsh-Go 已经有一半的东西：多主机和 Remote 扫码配对（#765、#766）、手机操控（13 个工具，确认规则已定）、通知（`chat_alerts`）、给 DSH 插件做原生客户端的做法（DS Bot）。
 
 ## 3. Router 放在哪
 
@@ -100,7 +100,7 @@
 
 **状态**：排队 / 进行中 / 等你（提问、审批）/ 待验收 / 完成 / 失败 / 撤回。
 
-- **Worker 是普通 DSH 会话**，用 worker 预设开在选定的主机上。用户在 DPSK 里点开就是普通对话页，审批、提问、改动卡都复用。
+- **Worker 是普通 DSH 会话**，用 worker 预设开在选定的主机上。用户在 dsh-Go 里点开就是普通对话页，审批、提问、改动卡都复用。
 - **选主机**：Router 维护主机清单——在线没有、系统、有哪些工作区和仓库、有没有 GPU、能不能操控手机。v1 只派到 Router 所在的主机（原型现成的 worktree），v2 再派到别处。
 - **跨机器**：现在只有手机能连上各台主机（SSH、Remote 中继、局域网）。Router 在电脑 A、要派活给电脑 B，有三条路，A0 比较：(a) Router 也用 Remote 协议当客户端去连 B，用扫码配对给它一个设备身份；(b) 经手机转发——手机一睡就断，不推荐；(c) 每台机器跑一个小守护进程主动连 Router（设计稿说的 BYOM 设备守护进程）。倾向 (a) 或 (c)。
 - **手机任务**：要用手机的活（操控 App、读屏）派给手机本机引擎上的 worker，沿用手机操控的设置。

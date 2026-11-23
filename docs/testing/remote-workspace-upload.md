@@ -53,7 +53,7 @@ None found in reviewed scope。五轴核对：
 - 上游依据：[ds-harness-remote 0.6.2 / 479b943 协议](<https://github.com/liguobao/ds-harness-remote/blob/479b94341c0d0de63846f21d0fcca26997d158d1/docs/protocol.md#L1529-L1648>) 和 [Host 实现](<https://github.com/liguobao/ds-harness-remote/blob/479b94341c0d0de63846f21d0fcca26997d158d1/packages/plugin/src/workspace-upload.ts>)，MIT；来源已补入[第三方声明](<../../THIRD_PARTY_NOTICES.md#L120-L148>)。
 - App 沿用普通附件单文件 200 MiB 和单消息总预算；远程传输层只保留协议绝对上限 1 GiB。Relay/TURN、未知路径或旧插件通常仍被 Host 限到 20 MiB，不能通过改 App 绕过。
 - 协议回归覆盖大于 20 MiB 的声明能进入 Host open、Host 拒绝前不读取文件数据；拒绝保留原错误码。另覆盖畸形确认、危险文件名、同名改名、超时、连接退休、失败清理及真实 Noise 通道的精确 RPC 参数。
-- 初始本机阶段没有运行原生 UI 测试；随后 [CI 41691203233](<https://github.com/weishixiao/DPSK/actions/runs/41691203233>) 实际执行全部 Flutter 分片。其他检查通过，Flutter 1 有 6 个失败：3 个新测试把 Tooltip 当作 label 查询、1 个旧几何测试取到了拆分后的图标而非主机控件组、2 张网络详情 golden。已按 Flutter 3.47 的 tooltip 语义和控件组边界修正断言，保留原点击/尺寸/间距要求，不删除或跳过测试。
+- 初始本机阶段没有运行原生 UI 测试；随后 [CI 41691203233](<https://github.com/ccch1mneyyy/dsh-Go/actions/runs/41691203233>) 实际执行全部 Flutter 分片。其他检查通过，Flutter 1 有 6 个失败：3 个新测试把 Tooltip 当作 label 查询、1 个旧几何测试取到了拆分后的图标而非主机控件组、2 张网络详情 golden。已按 Flutter 3.47 的 tooltip 语义和控件组边界修正断言，保留原点击/尺寸/间距要求，不删除或跳过测试。
 - 提交超时可能已经落盘；abort 成功也不代表已提交文件被删除。没有宣称可恢复跨连接上传或隔离恶意本地主机进程。
 
 ## CI follow-up

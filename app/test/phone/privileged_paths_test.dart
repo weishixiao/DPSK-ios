@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/phone_state.dart';
+import 'package:dsh_app/state/phone_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

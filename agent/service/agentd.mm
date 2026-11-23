@@ -5,14 +5,14 @@
 // harness never link any of this: they send JSON to the Mach service below, and
 // what comes back is a record of what happened, never a live handle.
 //
-// Everything a request can reach is in `DPSKAgentSafety` first: this file has no
+// Everything a request can reach is in `DshGoAgentSafety` first: this file has no
 // path around the allowlist or around the confirmation flag.
 
 #import <Foundation/Foundation.h>
 
-#import "DPSKAgentLog.h"
-#import "DPSKAgentProbe.h"
-#import "DPSKAgentSafety.h"
+#import "DshGoAgentLog.h"
+#import "DshGoAgentProbe.h"
+#import "DshGoAgentSafety.h"
 
 #include <signal.h>
 #include <spawn.h>
@@ -25,45 +25,45 @@ static const NSUInteger kMaxPayload = 1024 * 1024;
 static const NSUInteger kMaxReadLength = 64 * 1024;
 static const NSUInteger kMaxWriteLength = 4 * 1024;
 
-@protocol DPSKAgentXPC <NSObject>
+@protocol DshGoAgentXPC <NSObject>
 - (void)call:(NSData *)payload reply:(void (^)(NSData *reply))reply;
 @end
 
 #pragma mark - Handlers
 
-static NSDictionary *DPSKPing(void) {
+static NSDictionary *DSH GoPing(void) {
     return @{
         @"version": @"0.1.0",
         @"pid": @(getpid()),
         @"uptime": @([[NSProcessInfo processInfo] systemUptime]),
-        @"allowlist": [[DPSKAgentSafety shared] allowedBundleIds],
+        @"allowlist": [[DshGoAgentSafety shared] allowedBundleIds],
     };
 }
 
 /// Resolve `pid`, check the allowlist, and answer the refusal as an error.
-static BOOL DPSKResolveTarget(NSDictionary *params, pid_t *pid, NSError **error) {
+static BOOL DSH GoResolveTarget(NSDictionary *params, pid_t *pid, NSError **error) {
     NSInteger value = 0;
-    if (!DPSKAgentIntegerParam(params, @"pid", 1, 99999, &value, error)) return NO;
+    if (!DshGoAgentIntegerParam(params, @"pid", 1, 99999, &value, error)) return NO;
     NSString *reason = nil;
-    if (![[DPSKAgentSafety shared] allowsPID:(pid_t)value reason:&reason]) {
-        if (error) *error = DPSKAgentMakeError(DPSKAgentErrorTargetNotAllowed, reason ?: @"target not allowed");
+    if (![[DshGoAgentSafety shared] allowsPID:(pid_t)value reason:&reason]) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorTargetNotAllowed, reason ?: @"target not allowed");
         return NO;
     }
     *pid = (pid_t)value;
     return YES;
 }
 
-static id DPSKHandleRead(NSDictionary *params, NSError **error) {
+static id DSH GoHandleRead(NSDictionary *params, NSError **error) {
     pid_t pid = 0;
-    if (!DPSKResolveTarget(params, &pid, error)) return nil;
+    if (!DSH GoResolveTarget(params, &pid, error)) return nil;
 
     uint64_t address = 0;
-    if (!DPSKAgentAddressParam(params, @"address", &address, error)) return nil;
+    if (!DshGoAgentAddressParam(params, @"address", &address, error)) return nil;
 
     NSInteger length = 0;
-    if (!DPSKAgentIntegerParam(params, @"length", 1, (NSInteger)kMaxReadLength, &length, error)) return nil;
+    if (!DshGoAgentIntegerParam(params, @"length", 1, (NSInteger)kMaxReadLength, &length, error)) return nil;
 
-    NSData *data = DPSKAgentReadMemory(pid, address, (NSUInteger)length, error);
+    NSData *data = DshGoAgentReadMemory(pid, address, (NSUInteger)length, error);
     if (data == nil) return nil;
 
     NSMutableString *hex = [NSMutableString stringWithCapacity:data.length * 2];
@@ -74,14 +74,14 @@ static id DPSKHandleRead(NSDictionary *params, NSError **error) {
     return @{@"hex": hex, @"base": [NSString stringWithFormat:@"%llx", address], @"length": @(data.length)};
 }
 
-static id DPSKHandleWrite(NSDictionary *params, BOOL confirmed, NSError **error) {
+static id DSH GoHandleWrite(NSDictionary *params, BOOL confirmed, NSError **error) {
     pid_t pid = 0;
-    if (!DPSKResolveTarget(params, &pid, error)) return nil;
+    if (!DSH GoResolveTarget(params, &pid, error)) return nil;
 
     uint64_t address = 0;
-    if (!DPSKAgentAddressParam(params, @"address", &address, error)) return nil;
+    if (!DshGoAgentAddressParam(params, @"address", &address, error)) return nil;
 
-    NSData *data = DPSKAgentHexParam(params, @"hex", kMaxWriteLength, error);
+    NSData *data = DshGoAgentHexParam(params, @"hex", kMaxWriteLength, error);
     if (data == nil) return nil;
 
     // A write is the one method that changes the target, so it is the one method
@@ -89,14 +89,14 @@ static id DPSKHandleWrite(NSDictionary *params, BOOL confirmed, NSError **error)
     // the target so the log line is worth reading later.
     if (!confirmed) {
         if (error) {
-            *error = DPSKAgentMakeError(DPSKAgentErrorConfirmationRequired,
+            *error = DshGoAgentMakeError(DshGoAgentErrorConfirmationRequired,
                                         [NSString stringWithFormat:@"writing %lu bytes to pid %d needs a confirmed request",
                                          (unsigned long)data.length, pid]);
         }
         return nil;
     }
 
-    if (!DPSKAgentWriteMemory(pid, address, data, error)) return nil;
+    if (!DshGoAgentWriteMemory(pid, address, data, error)) return nil;
     return @{@"written": @(data.length), @"address": [NSString stringWithFormat:@"%llx", address]};
 }
 
@@ -105,28 +105,28 @@ static id DPSKHandleWrite(NSDictionary *params, BOOL confirmed, NSError **error)
 /// The argv array is fixed: the request names a project, never a command. `make`
 /// itself is the Theos toolchain's entry point, so the compile happens with the
 /// same rules the person would get in a terminal.
-static id DPSKHandleCompile(NSDictionary *params, NSError **error) {
-    NSString *project = DPSKAgentStringParam(params, @"project", error);
+static id DSH GoHandleCompile(NSDictionary *params, NSError **error) {
+    NSString *project = DshGoAgentStringParam(params, @"project", error);
     if (project == nil) return nil;
 
     // A project name is a directory name, nothing more: no separators, no `..`.
     NSCharacterSet *illegal = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-"] invertedSet];
     if ([project rangeOfCharacterFromSet:illegal].location != NSNotFound) {
-        if (error) *error = DPSKAgentMakeError(DPSKAgentErrorBadParams, @"`project` must be a plain directory name");
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`project` must be a plain directory name");
         return nil;
     }
 
-    NSString *root = [DPSKAgentStateDirectory() stringByAppendingPathComponent:@"projects"];
+    NSString *root = [DshGoAgentStateDirectory() stringByAppendingPathComponent:@"projects"];
     NSString *directory = [root stringByAppendingPathComponent:project];
     if (![[NSFileManager defaultManager] fileExistsAtPath:directory]) {
-        if (error) *error = DPSKAgentMakeError(DPSKAgentErrorBadParams,
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
                                               [NSString stringWithFormat:@"no project at %@", directory]);
         return nil;
     }
 
     int output[2] = {-1, -1};
     if (pipe(output) != 0) {
-        if (error) *error = DPSKAgentMakeError(DPSKAgentErrorInternal, @"pipe() failed");
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal, @"pipe() failed");
         return nil;
     }
 
@@ -145,7 +145,7 @@ static id DPSKHandleCompile(NSDictionary *params, NSError **error) {
 
     if (spawned != 0) {
         close(output[0]);
-        if (error) *error = DPSKAgentMakeError(DPSKAgentErrorInternal,
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal,
                                               [NSString stringWithFormat:@"posix_spawn: %s", strerror(spawned)]);
         return nil;
     }
@@ -165,7 +165,7 @@ static id DPSKHandleCompile(NSDictionary *params, NSError **error) {
     NSString *text = [[NSString alloc] initWithData:log encoding:NSUTF8StringEncoding] ?: @"";
 
     if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
-        if (error) *error = DPSKAgentMakeError(DPSKAgentErrorInternal,
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal,
                                               [NSString stringWithFormat:@"make package exited %d", WEXITSTATUS(status)]);
         return @{@"log": text};
     }
@@ -188,7 +188,7 @@ static id DPSKHandleCompile(NSDictionary *params, NSError **error) {
     return @{@"log": text, @"artifact": newest ?: @""};
 }
 
-static NSDictionary *DPSKHandleRequest(NSDictionary *request) {
+static NSDictionary *DSH GoHandleRequest(NSDictionary *request) {
     NSString *identifier = request[@"id"];
     NSString *method = request[@"method"];
     NSDictionary *params = request[@"params"];
@@ -210,47 +210,47 @@ static NSDictionary *DPSKHandleRequest(NSDictionary *request) {
     pid_t target = 0;
 
     if ([method isEqualToString:@"probe.ping"]) {
-        result = DPSKPing();
+        result = DSH GoPing();
     } else if ([method isEqualToString:@"probe.listProcesses"]) {
-        result = @{@"processes": DPSKAgentListProcesses()};
+        result = @{@"processes": DshGoAgentListProcesses()};
     } else if ([method isEqualToString:@"probe.modules"]) {
-        if (DPSKResolveTarget(params, &target, &error)) {
-            result = @{@"pid": @(target), @"modules": DPSKAgentModulesForPID(target)};
+        if (DSH GoResolveTarget(params, &target, &error)) {
+            result = @{@"pid": @(target), @"modules": DshGoAgentModulesForPID(target)};
         }
     } else if ([method isEqualToString:@"probe.readMemory"]) {
-        result = DPSKHandleRead(params, &error);
+        result = DSH GoHandleRead(params, &error);
     } else if ([method isEqualToString:@"mem.write"]) {
-        result = DPSKHandleWrite(params, confirmed, &error);
+        result = DSH GoHandleWrite(params, confirmed, &error);
     } else if ([method isEqualToString:@"tweak.compile"]) {
-        result = DPSKHandleCompile(params, &error);
+        result = DSH GoHandleCompile(params, &error);
     } else if ([method isEqualToString:@"tweak.inject"]) {
         // Reserved: answering "not implemented" is how a caller learns the
         // difference between "did nothing" and "cannot do this yet".
-        error = DPSKAgentMakeError(DPSKAgentErrorNotImplemented, @"tweak.inject is not implemented in this build");
+        error = DshGoAgentMakeError(DshGoAgentErrorNotImplemented, @"tweak.inject is not implemented in this build");
     } else {
-        error = DPSKAgentMakeError(DPSKAgentErrorBadParams,
+        error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
                                    [NSString stringWithFormat:@"unknown method %@", method]);
     }
 
     if (error != nil) {
-        NSString *code = DPSKAgentErrorCodeName((DPSKAgentErrorCode)error.code);
-        DPSKAgentLog(@"%@ %@ target=%d -> %@ (%@)", identifier, method, target, code, error.localizedDescription);
+        NSString *code = DshGoAgentErrorCodeName((DshGoAgentErrorCode)error.code);
+        DshGoAgentLog(@"%@ %@ target=%d -> %@ (%@)", identifier, method, target, code, error.localizedDescription);
         return @{@"id": identifier, @"ok": @NO, @"error": @{@"code": code, @"message": error.localizedDescription ?: @""}};
     }
 
-    DPSKAgentLog(@"%@ %@ target=%d -> ok", identifier, method, target);
+    DshGoAgentLog(@"%@ %@ target=%d -> ok", identifier, method, target);
     return @{@"id": identifier, @"ok": @YES, @"result": result ?: @{}};
 }
 
 #pragma mark - XPC
 
-@interface DPSKAgentListener : NSObject <NSXPCListenerDelegate, DPSKAgentXPC>
+@interface DshGoAgentListener : NSObject <NSXPCListenerDelegate, DshGoAgentXPC>
 @end
 
-@implementation DPSKAgentListener
+@implementation DshGoAgentListener
 
 - (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)connection {
-    connection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(DPSKAgentXPC)];
+    connection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(DshGoAgentXPC)];
     connection.exportedObject = self;
     [connection resume];
     return YES;
@@ -272,12 +272,12 @@ static NSDictionary *DPSKHandleRequest(NSDictionary *request) {
         if (![request isKindOfClass:[NSDictionary class]]) {
             answer = @{@"id": @"", @"ok": @NO, @"error": @{@"code": @"ERR_BAD_PARAMS", @"message": @"payload must be a JSON object"}};
         } else {
-            answer = DPSKHandleRequest(request);
+            answer = DSH GoHandleRequest(request);
         }
     } @catch (NSException *exception) {
         // A malformed request must not take the service down: the phone's other
         // workbench features are on the other side of this listener.
-        DPSKAgentLog(@"exception: %@ %@", exception.name, exception.reason);
+        DshGoAgentLog(@"exception: %@ %@", exception.name, exception.reason);
         answer = @{@"id": @"", @"ok": @NO, @"error": @{@"code": @"ERR_INTERNAL", @"message": exception.reason ?: @"exception"}};
     }
 
@@ -295,14 +295,14 @@ int main(int argc, char **argv) {
     @autoreleasepool {
         // A dead client must not kill the service with SIGPIPE.
         signal(SIGPIPE, SIG_IGN);
-        DPSKAgentLog(@"agentd 0.1.0 starting (pid %d)", getpid());
-        [[DPSKAgentSafety shared] reload];
+        DshGoAgentLog(@"agentd 0.1.0 starting (pid %d)", getpid());
+        [[DshGoAgentSafety shared] reload];
 
-        NSXPCListener *listener = [[NSXPCListener alloc] initWithMachServiceName:@"com.dpsk.agentd"];
-        DPSKAgentListener *delegate = [[DPSKAgentListener alloc] init];
+        NSXPCListener *listener = [[NSXPCListener alloc] initWithMachServiceName:@"io.github.ccch1mneyyy.dshgo.agentd"];
+        DshGoAgentListener *delegate = [[DshGoAgentListener alloc] init];
         listener.delegate = delegate;
         [listener resume];
-        DPSKAgentLog(@"agentd listening on com.dpsk.agentd");
+        DshGoAgentLog(@"agentd listening on io.github.ccch1mneyyy.dshgo.agentd");
         [[NSRunLoop currentRunLoop] run];
     }
     return 0;

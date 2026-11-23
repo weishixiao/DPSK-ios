@@ -3,10 +3,10 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:dpsk_app/ui/fx/metal/metal_bend.dart';
-import 'package:dpsk_app/ui/fx/metal/metal_geometry.dart';
-import 'package:dpsk_app/ui/fx/metal/metal_glow.dart';
-import 'package:dpsk_app/ui/fx/metal/metal_material.dart';
+import 'package:dsh_app/ui/fx/metal/metal_bend.dart';
+import 'package:dsh_app/ui/fx/metal/metal_geometry.dart';
+import 'package:dsh_app/ui/fx/metal/metal_glow.dart';
+import 'package:dsh_app/ui/fx/metal/metal_material.dart';
 import 'package:flutter/material.dart' show HSLColor;
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:dpsk_app/speech/call/voice_call.dart';
-import 'package:dpsk_app/speech/deepseek_speech.dart';
-import 'package:dpsk_app/speech/speech_audio.dart';
-import 'package:dpsk_app/speech/speech_out.dart';
-import 'package:dpsk_app/speech/voice_cloud.dart';
+import 'package:dsh_app/speech/call/voice_call.dart';
+import 'package:dsh_app/speech/deepseek_speech.dart';
+import 'package:dsh_app/speech/speech_audio.dart';
+import 'package:dsh_app/speech/speech_out.dart';
+import 'package:dsh_app/speech/voice_cloud.dart';
 import 'package:flutter/services.dart';
 
 /// The native side, played by the test: records what was asked, plays back

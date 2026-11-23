@@ -115,7 +115,7 @@ void main() {
     final parentId = await h.card(
       'Parent',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'cast': [
             {'id': 'child', 'card': child},
           ],
@@ -264,11 +264,11 @@ void main() {
 
 Uint8List _pack(
   String id,
-  Map<String, Object?> dpsk, {
+  Map<String, Object?> dshgo, {
   List<Map<String, Object?>> resources = const [],
   Map<String, List<int>> files = const {},
 }) {
-  final manifest = {'formatVersion': 1, 'packId': id, 'packVersion': 'one', 'dpsk': dpsk, 'resources': resources};
+  final manifest = {'formatVersion': 1, 'packId': id, 'packVersion': 'one', 'dshgo': dshgo, 'resources': resources};
   final archive = Archive()..addFile(ArchiveFile.string('pack.json', jsonEncode(manifest)));
   for (final entry in files.entries) {
     archive.addFile(ArchiveFile(entry.key, entry.value.length, entry.value));

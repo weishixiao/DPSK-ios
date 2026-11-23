@@ -49,7 +49,7 @@ void main() {
         'display_text': '显示',
         'branches': ['分支'],
         'bookmark_link': '存档',
-        'dpsk': {'future': true},
+        'dshgo': {'future': true},
         'unknown': {'preserve': true},
       },
       'variables': [

@@ -1,9 +1,9 @@
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/segmented_pill.dart';
-import 'package:dpsk_app/ui/common/sheet_navigator.dart';
-import 'package:dpsk_app/ui/common/sheet_title_bar.dart';
-import 'package:dpsk_app/ui/common/status_chip.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/segmented_pill.dart';
+import 'package:dsh_app/ui/common/sheet_navigator.dart';
+import 'package:dsh_app/ui/common/sheet_title_bar.dart';
+import 'package:dsh_app/ui/common/status_chip.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

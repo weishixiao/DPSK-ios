@@ -4,8 +4,8 @@
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/ui/common/third_party_licenses.dart';
-import 'package:dpsk_app/ui/settings/font_licenses.dart';
+import 'package:dsh_app/ui/common/third_party_licenses.dart';
+import 'package:dsh_app/ui/settings/font_licenses.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 

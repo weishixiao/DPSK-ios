@@ -66,7 +66,7 @@ Future<({String characterId, String chatId})> _storyChat(
 }) async {
   final raw = _map(jsonDecode(utf8.decode(t24Card())));
   _map(raw['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'story': story ?? _counterStory(),
       'state': ?state,
@@ -159,7 +159,7 @@ _Json _rows(T24Harness h) => _db(
 Future<_Json> _saved(T24Harness h, String chat) async {
   final files = await h.engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final saved = _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  final saved = _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
   // The document is deeply read-only; mutation fixtures need detached JSON.
   return _map(jsonDecode(jsonEncode(saved)));
 }
@@ -171,7 +171,7 @@ Future<_Json> _own(T24Harness h, String chat) async {
     (database) => _map(
       _map(
         jsonDecode(database.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String),
-      )['dpsk'],
+      )['dshgo'],
     ),
   );
 }
@@ -182,8 +182,8 @@ Future<void> _replaceSaved(T24Harness h, String chat, _Json saved) async {
     final extra = _map(
       jsonDecode(database.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String),
     );
-    final own = extra['dpsk'];
-    extra['dpsk'] = {if (own is _Json) ...own, 'tavernState': saved};
+    final own = extra['dshgo'];
+    extra['dshgo'] = {if (own is _Json) ...own, 'tavernState': saved};
     database.execute('UPDATE nodes SET extra = ? WHERE id = ?', [jsonEncode(extra), leaf]);
   });
 }
@@ -362,7 +362,7 @@ void _progressTests() {
     final run = (await _storyRuns(h, chat)).single;
     expect(run.nodeId, reply.nodeId);
     expect(run.result['committed'], isTrue);
-    expect(_map((await _saved(h, chat))['dpskStateRuntime'])['firedRules'], ['id:ready-after-model']);
+    expect(_map((await _saved(h, chat))['dshgoStateRuntime'])['firedRules'], ['id:ready-after-model']);
     expect(_map((await h.engine.inspectTurn(chat))!.director['story'])['committed'], isTrue);
   });
 
@@ -448,7 +448,7 @@ void _lifecycleTests() {
     final chat = (await _storyChat(h)).chatId;
     await _enable(h);
     await _reply(h, chat);
-    final saved = _map((await _saved(h, chat))['dpskStoryRuntime']);
+    final saved = _map((await _saved(h, chat))['dshgoStoryRuntime']);
     await h.engine.sendOnly(chat, 'manual user');
     await h.engine.narrate(chat, 'manual narrator');
     final beforeImpersonation = (await h.engine.path(chat)).map((message) => message.nodeId).toList();
@@ -456,7 +456,7 @@ void _lifecycleTests() {
     await _finish(active, text: 'a possible user line');
     _success(active);
     expect((await h.engine.path(chat)).map((message) => message.nodeId), beforeImpersonation);
-    expect((await _saved(h, chat))['dpskStoryRuntime'], saved);
+    expect((await _saved(h, chat))['dshgoStoryRuntime'], saved);
     expect((await _story(h, chat))['actTurns'], 1);
     expect(await _storyRuns(h, chat), hasLength(1));
     expect(h.model.generated, 2);
@@ -477,10 +477,10 @@ void _lifecycleTests() {
       )).chatId;
       await _enable(h);
       await _reply(h, chat);
-      final before = (await _saved(h, chat))['dpskStoryRuntime'];
+      final before = (await _saved(h, chat))['dshgoStoryRuntime'];
       final reply = await _reply(h, chat, text: 'kept abnormal body', reason: reason);
       expect(reply.text, 'kept abnormal body');
-      expect((await _saved(h, chat))['dpskStoryRuntime'], before);
+      expect((await _saved(h, chat))['dshgoStoryRuntime'], before);
       expect((await _story(h, chat))['currentActId'], 'first');
       expect((await _story(h, chat))['actTurns'], 1);
       expect(await _storyRuns(h, chat), hasLength(1));
@@ -494,7 +494,7 @@ void _lifecycleTests() {
       final chat = (await _storyChat(h)).chatId;
       await _enable(h);
       await _reply(h, chat);
-      final before = (await _saved(h, chat))['dpskStoryRuntime'];
+      final before = (await _saved(h, chat))['dshgoStoryRuntime'];
       final active = await _start(h, h.engine.send(chat, ''));
       active.call.add(const ModelText('PARTIAL'));
       expect((await _story(h, chat))['actTurns'], 1);
@@ -515,7 +515,7 @@ void _lifecycleTests() {
         outcome == 'cancelled' ? TavernFailure.cancelled : TavernFailure.network,
       );
       expect((await h.engine.path(chat)).last.text, 'PARTIAL');
-      expect((await _saved(h, chat))['dpskStoryRuntime'], before);
+      expect((await _saved(h, chat))['dshgoStoryRuntime'], before);
       expect(await _storyRuns(h, chat), hasLength(1));
     });
   }
@@ -662,7 +662,7 @@ void _integrityTests() {
       expect((await h.engine.path(chat)).last.text, 'partial survives failed terminal');
       expect(_map((await h.engine.readState(chat)).values), {'count': 0, 'ready': false});
       final saved = await _saved(h, chat);
-      expect(saved.containsKey('dpskStoryRuntime'), isFalse);
+      expect(saved.containsKey('dshgoStoryRuntime'), isFalse);
       expect((await _story(h, chat))['unlockedEndings'], isEmpty);
       final failureRun = (await _storyRuns(h, chat)).single;
       expect(failureRun.result['committed'], isFalse);
@@ -733,7 +733,7 @@ void _integrityTests() {
       await _enable(h);
       final first = await _reply(h, chat, text: 'valid body');
       final before = await _own(h, chat);
-      final runtime = _map(before['tavernState'])['dpskStoryRuntime'];
+      final runtime = _map(before['tavernState'])['dshgoStoryRuntime'];
       expect(_maps(before['storyEffects']).single['id'], 'old-success');
       final active = await _start(h, h.engine.continueReply(chat, first.nodeId));
       expect(_maps(active.call.body!['tools']).map((tool) => _map(tool['function'])['name']), contains('update_state'));
@@ -748,7 +748,7 @@ void _integrityTests() {
       expect(_success(active).nodeId, first.nodeId);
       expect(_map((await h.engine.readState(chat)).values)['denominator'], 0);
       final after = await _own(h, chat);
-      expect(_map(after['tavernState'])['dpskStoryRuntime'], runtime);
+      expect(_map(after['tavernState'])['dshgoStoryRuntime'], runtime);
       for (final key in ['storyInvocation', 'storyChanges', 'storyEffects', 'storyIssues']) {
         expect(after[key], before[key], reason: key);
       }
@@ -776,22 +776,22 @@ void _integrityTests() {
       await _enable(h);
       await _reply(h, chat);
       final saved = await _saved(h, chat);
-      final runtime = _map(saved['dpskStoryRuntime']);
+      final runtime = _map(saved['dshgoStoryRuntime']);
       runtime['vendor'] = {
         'kept': [1, null],
       };
       if (corruption == 'null') {
-        saved['dpskStoryRuntime'] = null;
+        saved['dshgoStoryRuntime'] = null;
       } else if (corruption == 'future version') {
         runtime['version'] = 99;
       } else {
         runtime['definitionFingerprint'] = 'different-definition';
       }
-      final before = jsonDecode(jsonEncode(saved['dpskStoryRuntime']));
+      final before = jsonDecode(jsonEncode(saved['dshgoStoryRuntime']));
       await _replaceSaved(h, chat, saved);
       expect((await _story(h, chat))['valid'], isFalse);
       await _reply(h, chat);
-      expect((await _saved(h, chat))['dpskStoryRuntime'], before);
+      expect((await _saved(h, chat))['dshgoStoryRuntime'], before);
       final view = await _story(h, chat);
       expect(view['initialized'], isTrue);
       expect(view['valid'], isFalse);
@@ -799,7 +799,7 @@ void _integrityTests() {
       expect(view['effects'], isEmpty);
       expect((await _storyRuns(h, chat)).first.result['committed'], isFalse);
       await h.reopen();
-      expect((await _saved(h, chat))['dpskStoryRuntime'], before);
+      expect((await _saved(h, chat))['dshgoStoryRuntime'], before);
     });
   }
 
@@ -821,17 +821,17 @@ void _integrityTests() {
       )).chatId;
       final saved = await _saved(h, chat);
       if (corruption == 'invalid DSH value') {
-        _map(saved['messageVariables'])['dpsk'] = 17;
+        _map(saved['messageVariables'])['dshgo'] = 17;
       } else {
-        saved['dpskStateRuntime'] = {'version': 99, 'vendor': 'preserve'};
+        saved['dshgoStateRuntime'] = {'version': 99, 'vendor': 'preserve'};
       }
       await _replaceSaved(h, chat, saved);
       await _enable(h);
       await _reply(h, chat);
       final after = await _saved(h, chat);
       expect(after['messageVariables'], saved['messageVariables']);
-      expect(after['dpskStateRuntime'], saved['dpskStateRuntime']);
-      expect(after.containsKey('dpskStoryRuntime'), isFalse);
+      expect(after['dshgoStateRuntime'], saved['dshgoStateRuntime']);
+      expect(after.containsKey('dshgoStoryRuntime'), isFalse);
       final view = await _story(h, chat);
       expect(view['initialized'], isFalse);
       expect(view['unlockedEndings'], isEmpty);

@@ -1,4 +1,4 @@
-import 'package:dpsk_app/performance/performance_state.dart';
+import 'package:dsh_app/performance/performance_state.dart';
 
 /// A performance channel with no device behind it: it answers at once that
 /// nothing is available, so no test waits on (or leaves a timer for) a

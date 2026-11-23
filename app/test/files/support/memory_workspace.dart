@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/state/workspace_state.dart';
+import 'package:dsh_app/state/workspace_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 class MemoryWorkspace implements WorkspaceSource {

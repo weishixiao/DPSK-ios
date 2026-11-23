@@ -212,7 +212,7 @@ void main() {
       hidden: true,
       usage: const TavernUsage(promptTokens: 7, completionTokens: 2),
       extra: {
-        'dpsk': {
+        'dshgo': {
           'inspection': {'status': 'completed'},
           'keep': 1,
         },
@@ -237,7 +237,7 @@ void main() {
     expect(reply.message.siblingCount, 2);
     expect(reply.message.siblingIndex, 0);
     expect(reply.extra, {
-      'dpsk': {'keep': 1},
+      'dshgo': {'keep': 1},
       'opaque': [1, null],
     });
     expect(reply.original, {'source': 'retained'});

@@ -66,7 +66,7 @@ void main() {
     test('$shape tool-only cancellation rolls back empty nodes and keeps an unanchored audit', () async {
       final h = await _open();
       final before = await h.engine.path(h.chatId);
-      // A fresh greeting stores state in node_states and may have no dpsk
+      // A fresh greeting stores state in node_states and may have no dshgo
       // carrier. Cancellation must preserve its complete extra JSON verbatim.
       final beforeExtra = _extra(h, before.last.nodeId);
       final active = await _start(h);
@@ -189,7 +189,7 @@ void main() {
       expect(snapshot.values, {'n': 0, 'ticks': 0});
       expect(snapshot.changes, isEmpty);
       expect(snapshot.effects, isEmpty);
-      final runtime = _saved(h, done.message.nodeId)['dpskStateRuntime'];
+      final runtime = _saved(h, done.message.nodeId)['dshgoStateRuntime'];
       final ledger = runtime == null ? <String, Object?>{} : _map(runtime);
       expect(ledger['firedRules'] ?? const <String>[], isEmpty);
       expect(ledger['pendingPrompts'] ?? const <Object?>[], isEmpty);
@@ -279,10 +279,10 @@ void main() {
     final initial = <String, Object?>{
       'variables': {'local': 4},
       'messageVariables': {
-        'dpsk': {'n': 0, 'ticks': 0},
+        'dshgo': {'n': 0, 'ticks': 0},
         'stat_data': {'keep': 7},
       },
-      'dpskStateRuntime': initialRuntime,
+      'dshgoStateRuntime': initialRuntime,
     };
     final h = await _open(rules: [_tickRule(effects: true)], saved: initial);
     _db(
@@ -306,7 +306,7 @@ void main() {
     expect(snapshot.changes, isEmpty);
     expect(snapshot.effects, isEmpty);
     final partialState = _saved(h, partialId);
-    expect(partialState['dpskStateRuntime'], initialRuntime);
+    expect(partialState['dshgoStateRuntime'], initialRuntime);
     expect(_map(partialState['messageVariables'])['stat_data'], {'keep': 7});
     expect(h.engine.variables(h.chatId), {'local': 4});
     final failedRuns = await h.engine.readAgentRuns(h.chatId);
@@ -328,7 +328,7 @@ void main() {
     _expectForeignKeys(h);
     await h.reopen();
     expect((await h.engine.readState(h.chatId)).values, {'n': 0, 'ticks': 0});
-    expect(_saved(h, partialId)['dpskStateRuntime'], initialRuntime);
+    expect(_saved(h, partialId)['dshgoStateRuntime'], initialRuntime);
     expect((await h.engine.readAgentRuns(h.chatId)).map((run) => run.id), failedRuns.map((run) => run.id));
 
     _db(h, (db) => db.execute('DROP TRIGGER reject_committed_state_tool'));
@@ -348,13 +348,13 @@ void main() {
       isTrue,
     );
     expect(committed.effects.map((effect) => effect['effectId']).toSet(), hasLength(4));
-    final runtime = _map(_saved(h, success.message.nodeId)['dpskStateRuntime']);
+    final runtime = _map(_saved(h, success.message.nodeId)['dshgoStateRuntime']);
     expect(runtime['firedRules'], ['id:tick']);
     expect(runtime['future'], {'kept': true});
     final prompt = _rows(runtime['pendingPrompts']).single;
     expect(prompt['text'], 'NEW_PENDING_SENTINEL');
     expect(prompt['id'], committed.effects.singleWhere((effect) => effect['type'] == 'prompt')['effectId']);
-    expect(_saved(h, partialId)['dpskStateRuntime'], initialRuntime);
+    expect(_saved(h, partialId)['dshgoStateRuntime'], initialRuntime);
     final allRuns = await h.engine.readAgentRuns(h.chatId);
     expect(allRuns.where((run) => run.kind != 'tool.turn'), hasLength(4));
     expect(allRuns.where((run) => run.kind == 'tool.turn'), hasLength(2));
@@ -457,7 +457,7 @@ Future<_Harness> _open({
     if (prefill) {
       preset['assistant_prefill'] = 'PREFIX';
       preset['extensions'] = {
-        'dpsk': {
+        'dshgo': {
           'prefill': {'enabled': true, 'target': 'content'},
         },
       };
@@ -465,7 +465,7 @@ Future<_Harness> _open({
     await opened.setPreset(ChatPreset(preset));
     final card = _map(jsonDecode(utf8.decode(t24Card())));
     _map(card['data'])['extensions'] = {
-      'dpsk': {
+      'dshgo': {
         'v': 1,
         'state': {
           'schema': {
@@ -505,7 +505,7 @@ Future<_Harness> _open({
             'mes': 'G',
             'send_date': T24Harness.at.toIso8601String(),
             'extra': {
-              'dpsk': {'tavernState': saved},
+              'dshgo': {'tavernState': saved},
             },
           },
         ],
@@ -660,6 +660,6 @@ T _db<T>(_Harness h, T Function(Database) action) {
 
 String _extra(_Harness h, String nodeId) =>
     _db(h, (db) => db.select('SELECT extra FROM nodes WHERE id = ?', [nodeId]).single['extra']! as String);
-Map<String, Object?> _own(_Harness h, String nodeId) => _map(_map(jsonDecode(_extra(h, nodeId)))['dpsk']);
+Map<String, Object?> _own(_Harness h, String nodeId) => _map(_map(jsonDecode(_extra(h, nodeId)))['dshgo']);
 Map<String, Object?> _saved(_Harness h, String nodeId) => _map(_own(h, nodeId)['tavernState']);
 void _expectForeignKeys(_Harness h) => expect(_db(h, (db) => db.select('PRAGMA foreign_key_check').isEmpty), isTrue);

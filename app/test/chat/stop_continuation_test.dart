@@ -5,10 +5,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/pets/pet_signals.dart';
-import 'package:dpsk_app/state/attachments.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
+import 'package:dsh_app/pets/pet_signals.dart';
+import 'package:dsh_app/state/attachments.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

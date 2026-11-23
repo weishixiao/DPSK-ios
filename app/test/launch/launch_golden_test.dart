@@ -5,7 +5,7 @@
 
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/launch/launch_state.dart';
+import 'package:dsh_app/launch/launch_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

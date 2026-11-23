@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dpsk_app/voice/native_trial.dart';
+import 'package:dsh_app/voice/native_trial.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -5,10 +5,10 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/streaming_asr_model_state.dart';
-import 'package:dpsk_app/state/voice_model_state.dart';
-import 'package:dpsk_app/ui/settings/voice_settings_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/streaming_asr_model_state.dart';
+import 'package:dsh_app/state/voice_model_state.dart';
+import 'package:dsh_app/ui/settings/voice_settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

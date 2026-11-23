@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dpsk_app/companion/companion_file_stream.dart';
+import 'package:dsh_app/companion/companion_file_stream.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<void> _settled(Future<dynamic> future) =>

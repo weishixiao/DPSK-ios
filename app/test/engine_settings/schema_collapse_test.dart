@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/common/overview_card.dart' show OverviewChevron;
-import 'package:dpsk_app/ui/engine_settings/engine_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/field_row.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_collapsed_groups.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_fields.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/common/overview_card.dart' show OverviewChevron;
+import 'package:dsh_app/ui/engine_settings/engine_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/field_row.dart';
+import 'package:dsh_app/ui/engine_settings/schema_collapsed_groups.dart';
+import 'package:dsh_app/ui/engine_settings/schema_fields.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

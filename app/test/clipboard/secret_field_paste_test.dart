@@ -1,8 +1,8 @@
 // The engine settings' secret sheet: its 粘贴 strips whitespace and clears an error
 // on both OSes, and shows a HarmonyOS failure inline, where a sheet doesn't hide it.
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/engine_settings/field_sheets.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/engine_settings/field_sheets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

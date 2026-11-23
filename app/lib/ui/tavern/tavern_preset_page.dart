@@ -140,10 +140,10 @@ class TavernPresetPage extends ConsumerWidget {
     final numbers = TavernGeneration.of(raw);
     final prompts = tavernPresetPrompts(raw);
     void set(String key, Object value) => unawaited(tavern.updatePreset(presetId, {key: value}));
-    // The prefill (engine T20): extensions.dpsk.prefill's switch and target,
+    // The prefill (engine T20): extensions.dshgo.prefill's switch and target,
     // and ST's own assistant_prefill text.
     final prefill = switch (raw['extensions']) {
-      {'dpsk': {'prefill': final Map<String, Object?> p}} => p,
+      {'dshgo': {'prefill': final Map<String, Object?> p}} => p,
       _ => const <String, Object?>{},
     };
     final prefillText = switch (raw['assistant_prefill']) {
@@ -153,7 +153,7 @@ class TavernPresetPage extends ConsumerWidget {
     void setPrefill(Map<String, Object?> patch) => unawaited(
       tavern.updatePreset(presetId, {
         'extensions': {
-          'dpsk': {'prefill': patch},
+          'dshgo': {'prefill': patch},
         },
       }),
     );

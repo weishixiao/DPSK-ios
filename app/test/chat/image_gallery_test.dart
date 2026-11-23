@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/chat/widgets/image_gallery.dart';
+import 'package:dsh_app/ui/chat/widgets/image_gallery.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

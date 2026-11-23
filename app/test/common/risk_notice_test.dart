@@ -6,18 +6,18 @@
 //
 //   flutter test --update-goldens test/common/risk_notice_test.dart
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/ask_ai.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/risk_notice_store.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/ask_ai.dart';
-import 'package:dpsk_app/ui/common/risk_notice.dart';
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/ask_ai.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/risk_notice_store.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/ask_ai.dart';
+import 'package:dsh_app/ui/common/risk_notice.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

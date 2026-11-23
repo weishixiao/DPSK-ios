@@ -7,7 +7,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import 'package:dpsk_app/tavern/tavern_packs.dart';
+import 'package:dsh_app/tavern/tavern_packs.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,7 +16,7 @@ Uint8List _pack() {
     'formatVersion': 1,
     'packId': 'guards',
     'packVersion': '1',
-    'dpsk': {
+    'dshgo': {
       'cast': [
         {
           'id': 'guard',

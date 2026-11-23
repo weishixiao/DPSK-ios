@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -126,7 +126,7 @@ void main() {
       'purpose': 'schedule-authorization',
       'questions': [
         {
-          'id': 'DPSK-schedule-authorization-one',
+          'id': 'dsh-go-schedule-authorization-one',
           'question': 'Session: s\nCreate\nAutonomous execution risk\n{"prompt":"full prompt","at":"tomorrow"}',
           'options': [
             {'label': '授权 / Authorize'},

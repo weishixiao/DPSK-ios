@@ -5,36 +5,36 @@
 // with a moment's state are named below). Add a row without registering it,
 // or drop one and leave it in the index, and this fails.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/account_state.dart';
-import 'package:dpsk_app/state/balance_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/engine/engine_screen.dart';
-import 'package:dpsk_app/ui/engine_settings/engine_settings_hub.dart';
-import 'package:dpsk_app/ui/engine_settings/runtime_settings_pages.dart';
-import 'package:dpsk_app/ui/engine_settings/subagent_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/web_search_page.dart';
-import 'package:dpsk_app/ui/features/permission_page.dart';
-import 'package:dpsk_app/ui/pets/pet_settings_page.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/phone/phone_control_screen.dart';
-import 'package:dpsk_app/ui/phone/phone_widgets.dart';
-import 'package:dpsk_app/ui/providers/providers_page.dart';
-import 'package:dpsk_app/ui/remote/remote_screen.dart';
-import 'package:dpsk_app/ui/settings/appearance/appearance_page.dart';
-import 'package:dpsk_app/ui/settings/about_page.dart';
-import 'package:dpsk_app/ui/settings/background_guide_page.dart';
-import 'package:dpsk_app/ui/settings/notification_settings.dart';
-import 'package:dpsk_app/ui/settings/interface_page.dart';
-import 'package:dpsk_app/ui/settings/performance_page.dart';
-import 'package:dpsk_app/ui/settings/personalization_page.dart';
-import 'package:dpsk_app/ui/settings/privacy_page.dart';
-import 'package:dpsk_app/ui/settings/settings_screen.dart';
-import 'package:dpsk_app/state/app_info.dart';
-import 'package:dpsk_app/ui/settings/index/spots.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/account_state.dart';
+import 'package:dsh_app/state/balance_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/engine/engine_screen.dart';
+import 'package:dsh_app/ui/engine_settings/engine_settings_hub.dart';
+import 'package:dsh_app/ui/engine_settings/runtime_settings_pages.dart';
+import 'package:dsh_app/ui/engine_settings/subagent_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/web_search_page.dart';
+import 'package:dsh_app/ui/features/permission_page.dart';
+import 'package:dsh_app/ui/pets/pet_settings_page.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/phone/phone_control_screen.dart';
+import 'package:dsh_app/ui/phone/phone_widgets.dart';
+import 'package:dsh_app/ui/providers/providers_page.dart';
+import 'package:dsh_app/ui/remote/remote_screen.dart';
+import 'package:dsh_app/ui/settings/appearance/appearance_page.dart';
+import 'package:dsh_app/ui/settings/about_page.dart';
+import 'package:dsh_app/ui/settings/background_guide_page.dart';
+import 'package:dsh_app/ui/settings/notification_settings.dart';
+import 'package:dsh_app/ui/settings/interface_page.dart';
+import 'package:dsh_app/ui/settings/performance_page.dart';
+import 'package:dsh_app/ui/settings/personalization_page.dart';
+import 'package:dsh_app/ui/settings/privacy_page.dart';
+import 'package:dsh_app/ui/settings/settings_screen.dart';
+import 'package:dsh_app/state/app_info.dart';
+import 'package:dsh_app/ui/settings/index/spots.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -233,7 +233,7 @@ void main() {
     );
   });
 
-  testWidgets('关于 DPSK', (tester) async {
+  testWidgets('关于 DSH Go', (tester) async {
     await _check(tester, SettingsPageId.about, () => _app(tester, const AboutPage(), _running()));
   });
 

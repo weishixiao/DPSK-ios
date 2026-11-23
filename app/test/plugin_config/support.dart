@@ -3,9 +3,9 @@
 // plumbing, a translator mixing live fields, a reload field and a key, and a
 // market plugin that ships its own web page (`configure({ auto: false })`).
 
-import 'package:dpsk_app/state/engine_settings_state.dart' show FieldRef;
-import 'package:dpsk_app/state/plugin_config/plugin_config_memory.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_state.dart';
+import 'package:dsh_app/state/engine_settings_state.dart' show FieldRef;
+import 'package:dsh_app/state/plugin_config/plugin_config_memory.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -743,7 +743,7 @@ TavernPackImportResult _install(
   return store.importGameplayPackData(
     decoded,
     inspection: const {
-      'dpsk': {'present': false},
+      'dshgo': {'present': false},
       'resources': <Object?>[],
     },
   );
@@ -776,7 +776,7 @@ TavernPackImportResult _installPolicyBook(
   return store.importGameplayPackData(
     decoded,
     inspection: const {
-      'dpsk': {'present': false},
+      'dshgo': {'present': false},
       'resources': <Object?>[],
     },
   );

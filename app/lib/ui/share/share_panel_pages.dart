@@ -528,7 +528,7 @@ class _ShareLinkPageState extends State<ShareLinkPage> {
 
 // ── 文件 ───────────────────────────────────────────────────────────────────
 
-/// 「文件」: a conversation as a DPSK file, a web page or Markdown; a
+/// 「文件」: a conversation as a dsh-go file, a web page or Markdown; a
 /// delivered file as itself. Then 「保存」 / 「分享」.
 class ShareFilePage extends StatefulWidget {
   const ShareFilePage({super.key});

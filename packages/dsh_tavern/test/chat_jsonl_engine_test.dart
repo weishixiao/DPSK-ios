@@ -607,7 +607,7 @@ void main() {
     final document = StChatDocument.decode(file.fileName, file.bytes);
     expect((document.header['chat_metadata']! as Map<String, Object?>)['variables'], {'n': 1});
     final extra = document.messages.single['extra']! as Map<String, Object?>;
-    final own = extra['dpsk']! as Map<String, Object?>;
+    final own = extra['dshgo']! as Map<String, Object?>;
     expect((own['tavernState']! as Map<String, Object?>)['variables'], {'n': 1});
     await engine.close();
     engine = await open();

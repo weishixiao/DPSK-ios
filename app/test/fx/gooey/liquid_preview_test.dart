@@ -9,9 +9,9 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/fx/gooey/gooey.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/app_theme.dart';
+import 'package:dsh_app/ui/fx/gooey/gooey.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,13 +1,13 @@
-// A conversation file opened with DPSK (「打开方式」, system share, a
-// dpsk:// link) goes to its replay; anything else still to the importer.
+// A conversation file opened with dsh-go (「打开方式」, system share, a
+// dshgo:// link) goes to its replay; anything else still to the importer.
 //
 //   flutter test test/replay/open_conversation_test.dart
 
 import 'dart:io';
 
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/replay/replay_page.dart';
-import 'package:dpsk_app/ui/share_code/share_code_host.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/replay/replay_page.dart';
+import 'package:dsh_app/ui/share_code/share_code_host.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -19,7 +19,7 @@ Future<void> _openFile(WidgetTester tester, String text) async {
   usePhoneView(tester);
   final dir = (await tester.runAsync(() => Directory.systemTemp.createTemp('open-conversation')))!;
   addTearDown(() => dir.deleteSync(recursive: true));
-  final file = File('${dir.path}/对话.dpsk')..writeAsStringSync(text);
+  final file = File('${dir.path}/对话.dshgo')..writeAsStringSync(text);
   await tester.pumpWidget(
     testApp(
       Builder(
@@ -39,7 +39,7 @@ Future<void> _openFile(WidgetTester tester, String text) async {
 }
 
 void main() {
-  testWidgets('a .dpsk conversation opens its replay, pictures and all', (tester) async {
+  testWidgets('a .dshgo conversation opens its replay, pictures and all', (tester) async {
     await _openFile(tester, richFileText());
     expect(find.byType(ReplayPage), findsOneWidget);
     final page = tester.widget<ReplayPage>(find.byType(ReplayPage));

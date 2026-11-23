@@ -5,7 +5,7 @@
 <!-- nav: catalogAllFeatures,catalogWorkspaces -->
 `全部功能 › 工作区`
 
-[打开](dpsk://open/workspaces)
+[打开](dshgo://open/workspaces)
 
 列表把置顶的工作区排在前面，然后是分组，最后是其余工作区；每一项带目录和对话数量。
 

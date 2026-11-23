@@ -46,7 +46,7 @@ class SecretDefinition {
     if (!defined) return;
     _collectProtectedPaths();
     if (_version != 1) {
-      _issues.add(_issue('secret_version', '', 'Only enclosing dpsk version 1 is executable.'));
+      _issues.add(_issue('secret_version', '', 'Only enclosing dshgo version 1 is executable.'));
       return;
     }
     if (_raw is! _Json || !_finiteJson(_raw)) {

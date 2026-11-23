@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/share_hosted/hosted_client.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/share_hosted/hosted_client.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:dpsk_app/ui/share_hosted/hosted_link_maker.dart';
-import 'package:dpsk_app/ui/replay/conversation_out.dart';
+import 'package:dsh_app/ui/share_hosted/hosted_link_maker.dart';
+import 'package:dsh_app/ui/replay/conversation_out.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';

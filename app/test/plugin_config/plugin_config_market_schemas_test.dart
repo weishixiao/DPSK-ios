@@ -8,12 +8,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_memory.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_fields.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_form.dart';
-import 'package:dpsk_app/ui/plugins/config/plugin_config_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_memory.dart';
+import 'package:dsh_app/ui/engine_settings/schema_fields.dart';
+import 'package:dsh_app/ui/engine_settings/schema_form.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -149,8 +149,8 @@ void main() {
   });
 
   group('Chinese first, then English, then the key', () {
-    test('@weishixiao/dsh-media 0.2.1: a long Chinese description names the field', () {
-      final view = _view('weishixiao-dsh-media-0.2.1');
+    test('@ccch1mneyyy/dsh-media 0.2.1: a long Chinese description names the field', () {
+      final view = _view('ccch1mneyyy-dsh-media-0.2.1');
       expect(_label(view, 'defaults.serviceId'), '默认服务 ID');
       expect(_hint(view, 'defaults.serviceId'), '留空使用首个已配置服务');
       expect(_label(view, 'budget.unknownPriceHoldCny'), '无可靠价格时每次预留金额');

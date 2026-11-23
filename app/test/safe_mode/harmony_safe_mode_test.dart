@@ -2,14 +2,14 @@
 // failures only read as `killed` or `launchFailed`, and a change of mode takes a new
 // process. The way in has to be reachable anyway, and the dialogs say what it costs.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/safe_mode_state.dart';
-import 'package:dpsk_app/ui/safe_mode/engine_failure_card.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_card.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_settings.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/safe_mode_state.dart';
+import 'package:dsh_app/ui/safe_mode/engine_failure_card.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_card.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';

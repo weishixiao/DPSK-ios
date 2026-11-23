@@ -1,10 +1,10 @@
-// A reply's `dpsk://open/<page>` link opens that page through the router;
+// A reply's `dshgo://open/<page>` link opens that page through the router;
 // an unknown page gets the one-line toast and nothing else.
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/links/page_links.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/links/page_links.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -56,16 +56,16 @@ void main() {
       tester.widget<GptMarkdown>(find.byType(GptMarkdown)).onLinkTap!(url, '');
 
   testWidgets('tapping a page link in a reply opens the page', (tester) async {
-    await pumpReply(tester, '在这里改：[打开手机操控](dpsk://open/phone)');
-    tapLink(tester, 'dpsk://open/phone');
+    await pumpReply(tester, '在这里改：[打开手机操控](dshgo://open/phone)');
+    tapLink(tester, 'dshgo://open/phone');
     await tester.pumpAndSettle();
     expect(opened, ['phone']);
     expect(find.text('page phone'), findsOneWidget);
   });
 
   testWidgets('an unknown page shows one line and opens nothing', (tester) async {
-    await pumpReply(tester, '[打开](dpsk://open/nope)');
-    tapLink(tester, 'dpsk://open/nope');
+    await pumpReply(tester, '[打开](dshgo://open/nope)');
+    tapLink(tester, 'dshgo://open/nope');
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(opened, isEmpty);

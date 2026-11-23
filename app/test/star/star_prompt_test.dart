@@ -14,25 +14,25 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/pets/pet_mood.dart';
-import 'package:dpsk_app/pets/pet_signals.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart' show RuntimePhase, RuntimeStatus;
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/draft_store.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
-import 'package:dpsk_app/state/phone_state.dart' show phoneChannelProvider;
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/star_prompt.dart';
-import 'package:dpsk_app/state/voice_state.dart';
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/settings/about_page.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
-import 'package:dpsk_app/ui/shell/root_gate.dart';
-import 'package:dpsk_app/ui/star/star_prompt_dialog.dart';
-import 'package:dpsk_app/ui/star/star_prompt_host.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/pets/pet_mood.dart';
+import 'package:dsh_app/pets/pet_signals.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart' show RuntimePhase, RuntimeStatus;
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/draft_store.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
+import 'package:dsh_app/state/phone_state.dart' show phoneChannelProvider;
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/star_prompt.dart';
+import 'package:dsh_app/state/voice_state.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/settings/about_page.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/ui/shell/root_gate.dart';
+import 'package:dsh_app/ui/star/star_prompt_dialog.dart';
+import 'package:dsh_app/ui/star/star_prompt_host.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -106,7 +106,7 @@ const _halfHour = Duration(minutes: 30);
 /// Half an hour in: due.
 const _due = StarPromptRecord(used: _halfHour);
 
-final _github = Uri.parse('https://github.com/weishixiao/DPSK');
+final _github = Uri.parse('https://github.com/ccch1mneyyy/dsh-go');
 
 String _title(int hours) => lookupL10n(AppLocale.zhCN).starPromptTitle(hours);
 
@@ -331,12 +331,12 @@ void main() {
     test('the first line tells the real time: half an hour, then whole hours', () {
       final zh = lookupL10n(AppLocale.zhCN);
       final en = lookupL10n(AppLocale.en);
-      expect(zh.starPromptTitle(0), '本鱼已经在 DPSK 里陪你半个小时啦⁠~');
-      expect(zh.starPromptTitle(1), '本鱼已经在 DPSK 里陪你一个小时啦⁠~');
-      expect(zh.starPromptTitle(5), '本鱼已经在 DPSK 里陪你 5 个小时啦⁠~');
-      expect(en.starPromptTitle(0), 'I’ve kept you company in DPSK for half an hour now~');
-      expect(en.starPromptTitle(1), 'I’ve kept you company in DPSK for an hour now~');
-      expect(en.starPromptTitle(6), 'I’ve kept you company in DPSK for 6 hours now~');
+      expect(zh.starPromptTitle(0), '本鱼已经在 DSH Go 里陪你半个小时啦⁠~');
+      expect(zh.starPromptTitle(1), '本鱼已经在 DSH Go 里陪你一个小时啦⁠~');
+      expect(zh.starPromptTitle(5), '本鱼已经在 DSH Go 里陪你 5 个小时啦⁠~');
+      expect(en.starPromptTitle(0), 'I’ve kept you company in DSH Go for half an hour now~');
+      expect(en.starPromptTitle(1), 'I’ve kept you company in DSH Go for an hour now~');
+      expect(en.starPromptTitle(6), 'I’ve kept you company in DSH Go for 6 hours now~');
     });
 
     test('keeps through JSON; the earlier prompt’s record keeps only whether it was finished', () {
@@ -381,7 +381,7 @@ void main() {
       await bench.settle();
       expect(bench.showing, isTrue);
       expect(find.text(_title(0)), findsOneWidget);
-      expect(find.text('本鱼已经在 DPSK 里陪你半个小时啦⁠~'), findsOneWidget);
+      expect(find.text('本鱼已经在 DSH Go 里陪你半个小时啦⁠~'), findsOneWidget);
       expect(bench.store.record, const StarPromptRecord(used: _halfHour, shows: 1, askedAt: _halfHour));
     });
 
@@ -520,7 +520,7 @@ void main() {
           }
           expect(bench.showing, isFalse);
         }
-        expect(find.text('本鱼已经在 DPSK 里陪你 20 个小时啦⁠~'), findsNothing);
+        expect(find.text('本鱼已经在 DSH Go 里陪你 20 个小时啦⁠~'), findsNothing);
         expect(bench.store.record!.shows, StarPromptRules.maxShows);
         expect(bench.store.record!.finished, isFalse);
         expect(await comesBack(bench, const Duration(hours: 24)), isFalse);
@@ -732,8 +732,8 @@ void main() {
     });
   });
 
-  group('设置 › 关于 DPSK', () {
-    testWidgets('给 DPSK 点个 star opens GitHub and ends the prompt', (tester) async {
+  group('设置 › 关于 DSH Go', () {
+    testWidgets('给 DSH Go 点个 star opens GitHub and ends the prompt', (tester) async {
       usePhoneSurface(tester);
       final bench = _Bench(tester, MemoryStarStore(_due), TestClock());
       await tester.pumpWidget(
@@ -751,7 +751,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      final row = find.widgetWithText(SettingsTile, '给 DPSK 点个 star');
+      final row = find.widgetWithText(SettingsTile, '给 DSH Go 点个 star');
       await tester.scrollUntilVisible(row, 300, scrollable: find.byType(Scrollable).first);
       await tester.pumpAndSettle();
       await tester.tap(row);
@@ -844,7 +844,7 @@ void main() {
       await _pumpDialog(tester, width: 360, height: 780, scale: 1.3, locale: const Locale('en'), hours: 6);
       await tester.pumpAndSettle();
       fits(tester);
-      expect(find.text('I’ve kept you company in DPSK for 6 hours now~'), findsOneWidget);
+      expect(find.text('I’ve kept you company in DSH Go for 6 hours now~'), findsOneWidget);
     });
 
     testWidgets('animations on: the whale bobs in and comes to rest at full size', (tester) async {

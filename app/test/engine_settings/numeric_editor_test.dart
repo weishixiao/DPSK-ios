@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/engine_settings/engine_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/field_sheets.dart';
-import 'package:dpsk_app/ui/engine_settings/numeric_edit_math.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_fields.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/engine_settings/engine_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/field_sheets.dart';
+import 'package:dsh_app/ui/engine_settings/numeric_edit_math.dart';
+import 'package:dsh_app/ui/engine_settings/schema_fields.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

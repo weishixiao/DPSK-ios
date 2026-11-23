@@ -163,7 +163,7 @@ class ProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = DshColors.of(context);
-    final slot = DshColors.identityIndex('DPSK profile');
+    final slot = DshColors.identityIndex('dsh-go profile');
     return DecoratedBox(
       decoration: ShapeDecoration(color: colors.identity[slot], shape: Squircle.border(size * 0.25)),
       child: SizedBox.square(

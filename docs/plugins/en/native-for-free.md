@@ -1,6 +1,6 @@
 # Native for free
 
-Six things in a DSH plugin already show natively in the DPSK app, with no DPSK-specific code (the sixth needs one function). Use them before reaching for [slots](slots.md).
+Six things in a DSH plugin already show natively in the dsh-go app, with no dsh-go-specific code (the sixth needs one function). Use them before reaching for [slots](slots.md).
 
 | In your plugin | In the app | How native | Hosts |
 |---|---|---|---|
@@ -9,7 +9,7 @@ Six things in a DSH plugin already show natively in the DPSK app, with no DPSK-s
 | Plugin settings (an exported `Config`, live-editable fields) | Plugin details and the plugin group in Settings: a native form | Fully | On-device, SSH; relay depends on the host |
 | Tools (`defineTool`) | The tool row: icon + name + one-line summary; expands to arguments and result | Generic | All |
 | Teaching the model to write ` ```dsh-ui ` blocks (in a skill or system prompt) | Charts, metrics, comparisons and options in replies | Fully | All |
-| `"DPSK/view"` in a tool's `presentationMeta` | A native card in the tool row | Fully | All |
+| `"dsh-go/view"` in a tool's `presentationMeta` | A native card in the tool row | Fully | All |
 
 ## The tool row's summary
 
@@ -23,7 +23,7 @@ So name the argument that best describes a call `query`, `url`, `path` or `name`
 
 Your exported `Config` (schemastery) becomes a native settings page, reached from the plugin's details and Settings › Engine parameters › Plugins. `.volatile()` fields apply as they change; the rest apply when the person taps Save, which reloads the plugin. Secret fields (`role('secret')`) are write-only. Nested objects become groups, `.collapse()` groups start folded, and a `description` written as `{ zh, en }` follows the app's language. If your plugin has its own web settings page, register `configure({ auto: false })` in `apply`: the app puts "Set up on the web" at the top and still draws every field it can.
 
-Every field shows on a host whose DPSK bridge serves `/DPSK/v1/plugin-config`; elsewhere the app only gets volatile fields. Bind secrets to a credential with a `role('credential-ref')` field: a bare `role('secret')` shows whether it is set but can't be filled in from the app ([design](../../design/plugin-config.md)).
+Every field shows on a host whose dsh-go bridge serves `/dsh-go/v1/plugin-config`; elsewhere the app only gets volatile fields. Bind secrets to a credential with a `role('credential-ref')` field: a bare `role('secret')` shows whether it is set but can't be filled in from the app ([design](../../design/plugin-config.md)).
 
 ## dsh-ui blocks
 

@@ -1,8 +1,8 @@
 // Smooth packs crossfade from one animation into the next; pixel art cuts.
-import 'package:dpsk_app/pets/pet_pack.dart';
-import 'package:dpsk_app/pets/pet_sheets.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
-import 'package:dpsk_app/ui/pets/pet_sprite.dart';
+import 'package:dsh_app/pets/pet_pack.dart';
+import 'package:dsh_app/pets/pet_sheets.dart';
+import 'package:dsh_app/pets/pet_state.dart';
+import 'package:dsh_app/ui/pets/pet_sprite.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 

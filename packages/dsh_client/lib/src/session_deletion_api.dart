@@ -1,4 +1,4 @@
-/// Permanent deletion is an optional, guarded DPSK Host capability.
+/// Permanent deletion is an optional, guarded dsh-go Host capability.
 /// Stock/old Hosts and relay-only carriers must never fall back to archive.
 library;
 
@@ -9,8 +9,8 @@ import 'errors.dart';
 import 'json.dart';
 import 'session_api.dart';
 
-const sessionDeletionCapabilityPath = '/DPSK/v1/sessions/deletion';
-const sessionDeletionPath = '/DPSK/v1/sessions/delete';
+const sessionDeletionCapabilityPath = '/dsh-go/v1/sessions/deletion';
+const sessionDeletionPath = '/dsh-go/v1/sessions/delete';
 const _maxReplyBytes = 8192;
 
 extension SessionDeletionApi on DshClient {

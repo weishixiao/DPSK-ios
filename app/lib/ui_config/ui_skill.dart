@@ -57,7 +57,7 @@ const companionAdaptSkillName = 'companion-adapt';
 const petThemeSkillName = 'pet-theme';
 
 /// The managed line inside SKILL.md's front matter.
-const uiSkillManagedMarker = '# DPSK:managed';
+const uiSkillManagedMarker = '# dsh-go:managed';
 
 final _safePath = RegExp(r'^[A-Za-z0-9_-][A-Za-z0-9._-]*(/[A-Za-z0-9_-][A-Za-z0-9._-]*)*$');
 
@@ -156,7 +156,7 @@ Future<UiSkillInstallResult> installUiSkill(Directory rootfs, UiSkillBundle bund
       if (file.existsSync() && file.readAsStringSync() == text) continue;
     } catch (_) {}
     file.parent.createSync(recursive: true);
-    final tmp = File('${file.path}.DPSK-tmp');
+    final tmp = File('${file.path}.dsh-go-tmp');
     tmp.writeAsStringSync(text, flush: true);
     tmp.renameSync(file.path);
     changed = true;
@@ -402,10 +402,10 @@ String uiSkillShellScript(UiSkillBundle bundle) {
     n++;
     final body = text.endsWith('\n') ? text : '$text\n';
     out
-      ..writeln("cat > \"\$d/$path.DPSK-tmp\" <<'$tag'")
+      ..writeln("cat > \"\$d/$path.dsh-go-tmp\" <<'$tag'")
       ..write(body)
       ..writeln(tag)
-      ..writeln('mv "\$d/$path.DPSK-tmp" "\$d/$path"');
+      ..writeln('mv "\$d/$path.dsh-go-tmp" "\$d/$path"');
   }
   out.writeln("echo 'DSHAPP skill=installed'");
   return out.toString();

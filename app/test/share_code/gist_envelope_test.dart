@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_code_state.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_code_state.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/share_code/share_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/fake_engine.dart';
@@ -29,7 +29,7 @@ void main() {
       }
       final root = await Directory.systemTemp.createTemp('gist-envelope-');
       addTearDown(() => root.delete(recursive: true));
-      final file = await File('${root.path}/profile.dpsk').writeAsString(text);
+      final file = await File('${root.path}/profile.dshgo').writeAsString(text);
       final fromFile = decodeShareFile(await file.readAsString()) as ProfileShare;
       expect(fromFile.toJson(), profile.toJson());
       final net = FakeShareNet()..gists[id] = text;
@@ -52,7 +52,7 @@ void main() {
   test('invalid envelope error does not poison the next valid Gist read', () async {
     final code = encodeShareCode(profile);
     final link = ShareLink.gist(id, code.split('.').last);
-    final net = FakeShareNet()..gists[id] = '{"dpsk":1,"code":';
+    final net = FakeShareNet()..gists[id] = '{"dshgo":1,"code":';
     await expectLater(resolveShareLink(link, net), throwsA(isA<ShareDecodeException>()));
     net.gists[id] = encodeShareFile(profile, code: code);
     expect((await resolveShareLink(link, net) as ProfileShare).toJson(), profile.toJson());

@@ -2,21 +2,21 @@
 // reset's three answers (saved, not saved, can't tell) each read as what they are,
 // through the app reopening. On Android none of this shows.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/engine_control.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/safe_mode_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/engine/engine_screen.dart';
-import 'package:dpsk_app/ui/engine/engine_status.dart';
-import 'package:dpsk_app/ui/engine/reset_outcome.dart';
-import 'package:dpsk_app/ui/features/feature_catalog.dart';
-import 'package:dpsk_app/ui/safe_mode/engine_failure_card.dart';
-import 'package:dpsk_app/ui/settings/index/spots.dart';
-import 'package:dpsk_app/ui/settings/search/settings_search.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/engine_control.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/safe_mode_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/engine/engine_screen.dart';
+import 'package:dsh_app/ui/engine/engine_status.dart';
+import 'package:dsh_app/ui/engine/reset_outcome.dart';
+import 'package:dsh_app/ui/features/feature_catalog.dart';
+import 'package:dsh_app/ui/safe_mode/engine_failure_card.dart';
+import 'package:dsh_app/ui/settings/index/spots.dart';
+import 'package:dsh_app/ui/settings/search/settings_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

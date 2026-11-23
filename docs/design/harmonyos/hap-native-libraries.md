@@ -33,7 +33,7 @@ JS、JSON、配置和静态资源进入 rawfile，再由 P2 按 SHA256 增量落
 - `@deepseek-ai/node-addon-system/flock` 请求固定 `flock` 产品。
 - `node-addon-native-custom-loader` 只接受 AUTO/NAPI 后端，再核原生 binding 声明的产品和 ABI；不尝试平台 optional 包、local build、Node ABI 后端或 native cache。
 
-helper 只接受两个产品名，把它们映射到上表文件名。库目录来自宿主保护的 `DPSK_OHOS_NATIVE_LIBRARY_DIR`，必须是非根绝对目录；实际库必须为该 canonical 目录中的普通文件，库文件符号链接拒绝。缺目录、缺文件、未打包产品分别返回稳定的 `ERR_OHOS_NATIVE_LIBRARY_DIRECTORY`、`ERR_OHOS_NATIVE_LIBRARY_PATH`、`ERR_OHOS_NATIVE_PRODUCT`。不会搜索工作区、当前目录或数据树中的替代库。
+helper 只接受两个产品名，把它们映射到上表文件名。库目录来自宿主保护的 `DSH_GO_OHOS_NATIVE_LIBRARY_DIR`，必须是非根绝对目录；实际库必须为该 canonical 目录中的普通文件，库文件符号链接拒绝。缺目录、缺文件、未打包产品分别返回稳定的 `ERR_OHOS_NATIVE_LIBRARY_DIRECTORY`、`ERR_OHOS_NATIVE_LIBRARY_PATH`、`ERR_OHOS_NATIVE_PRODUCT`。不会搜索工作区、当前目录或数据树中的替代库。
 
 `.so` 不是 Node 的 `.node` require 扩展，故这里明确调用 `process.dlopen(module, filename)`，不注册全局扩展、不覆盖 Node 内建模块，也不读取生产禁止的仿真开关。
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/workshop_catalog_state.dart';
-import 'package:dpsk_app/workshop/workshop_client.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/state/workshop_catalog_state.dart';
+import 'package:dsh_app/workshop/workshop_client.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'workshop_state_support.dart';

@@ -10,13 +10,13 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart' show HostKind;
-import 'package:dpsk_app/state/plugin_config/plugin_config_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/read_list_cache.dart';
-import 'package:dpsk_app/state/read_list_identity.dart' show readListIdentityProvider;
-import 'package:dpsk_app/ui/plugins/config/plugin_config_entries.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/state/hosts_state.dart' show HostKind;
+import 'package:dsh_app/state/plugin_config/plugin_config_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/read_list_cache.dart';
+import 'package:dsh_app/state/read_list_identity.dart' show readListIdentityProvider;
+import 'package:dsh_app/ui/plugins/config/plugin_config_entries.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

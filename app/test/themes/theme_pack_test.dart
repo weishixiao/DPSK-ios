@@ -3,12 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import 'package:dpsk_app/state/appearance_state.dart';
-import 'package:dpsk_app/themes/theme_library.dart';
-import 'package:dpsk_app/themes/theme_pack_validator.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/workshop/workshop_preview.dart';
-import 'package:dpsk_app/workshop/workshop_receipt.dart';
+import 'package:dsh_app/state/appearance_state.dart';
+import 'package:dsh_app/themes/theme_library.dart';
+import 'package:dsh_app/themes/theme_pack_validator.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/workshop/workshop_preview.dart';
+import 'package:dsh_app/workshop/workshop_receipt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

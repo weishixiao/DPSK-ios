@@ -21,7 +21,7 @@
   "androidShellPaired": "ADB paired",
   "androidShellConnected": "ADB connected",
   "androidShellAuthorize": "Request Shizuku authorization",
-  "androidShellAuthorizeHint": "Install and start Shizuku, then press this button to authorize DPSK. Opening or refreshing this page never requests permission.",
+  "androidShellAuthorizeHint": "Install and start Shizuku, then press this button to authorize dsh-Go. Opening or refreshing this page never requests permission.",
   "androidShellStatus": "Execution status",
   "androidShellUid": "Actual UID",
   "androidShellUidUnknown": "Not reported yet",

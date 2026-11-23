@@ -2,17 +2,17 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart' show ActiveHostController, HostKind, HostRef, activeHostProvider;
-import 'package:dpsk_app/state/read_list_identity.dart';
-import 'package:dpsk_app/state/remote_web_state.dart';
-import 'package:dpsk_app/ui/plugins/islands/island_platform.dart';
-import 'package:dpsk_app/ui/remote/remote_web/remote_web_error.dart';
-import 'package:dpsk_app/ui/remote/remote_web/remote_web_page.dart';
-import 'package:dpsk_app/ui/web/dsh_web_launcher.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart' show ActiveHostController, HostKind, HostRef, activeHostProvider;
+import 'package:dsh_app/state/read_list_identity.dart';
+import 'package:dsh_app/state/remote_web_state.dart';
+import 'package:dsh_app/ui/plugins/islands/island_platform.dart';
+import 'package:dsh_app/ui/remote/remote_web/remote_web_error.dart';
+import 'package:dsh_app/ui/remote/remote_web/remote_web_page.dart';
+import 'package:dsh_app/ui/web/dsh_web_launcher.dart';
 import 'package:dsh_remote/dsh_remote.dart' show RemoteHostSession, RemoteRpcException;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,7 +1,7 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/plugins/market_tab.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/plugins/market_tab.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

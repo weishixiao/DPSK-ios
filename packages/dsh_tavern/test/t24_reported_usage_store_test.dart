@@ -170,7 +170,7 @@ void main() {
     expect(database.select('SELECT reported_usage FROM nodes').single['reported_usage'], isNotNull);
     store.updateMessage(chat, id, text: 'edited draft');
     expect(store.message(chat, id).reportedUsage, isNull);
-    expect((store.node(chat, id).extra['dpsk']! as Map<String, Object?>).containsKey('inspection'), isFalse);
+    expect((store.node(chat, id).extra['dshgo']! as Map<String, Object?>).containsKey('inspection'), isFalse);
     expect(store.node(chat, id).extra['foreign'], {'keep': true});
     store.writeStreamingBody(chat, id, text: 'next draft');
     store.updateMessage(
@@ -282,7 +282,7 @@ Map<String, Object?> _owned(
   Map<String, Object?> inspection = const {},
 }) => {
   'foreign': {'keep': true},
-  'dpsk': <String, Object?>{
+  'dshgo': <String, Object?>{
     'inspection': <String, Object?>{
       'version': 1,
       'chatId': chat,

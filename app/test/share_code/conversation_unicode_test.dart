@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/conversation_export.dart';
-import 'package:dpsk_app/share_code/conversation_share.dart';
-import 'package:dpsk_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/conversation_export.dart';
+import 'package:dsh_app/share_code/conversation_share.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -76,7 +76,7 @@ void main() {
       expect(share.entries.whereType<UserEntry>().single.text, sample.text);
       final dir = await Directory.systemTemp.createTemp('conversation-unicode-');
       try {
-        final file = File('${dir.path}/conversation.dpsk');
+        final file = File('${dir.path}/conversation.dshgo');
         await file.writeAsString(export.file(share).text, flush: true);
         final text = await file.readAsString();
         final envelope = jsonDecode(text) as Map<String, Object?>;

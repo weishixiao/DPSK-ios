@@ -1,4 +1,4 @@
-// Incoming app links (`dpsk://…`, the https landing
+// Incoming app links (`dshgo://…`, the https landing
 // links once App Links are verified) and files opened with / shared to the
 // app, routed to the feature that owns them. Native side:
 // android/.../links/LinksPlugin.kt (MethodChannel `dsh/links`).
@@ -12,7 +12,7 @@
 //   });
 //   router.registerLinkHandler('forum/auth', …); // host + path prefix, longest wins
 //   router.registerLinkHandler('example.com/s', …); // https: the URL's host
-//   router.registerFileHandler('dpsk', (file) async { … }); // file:// by extension
+//   router.registerFileHandler('dshgo', (file) async { … }); // file:// by extension
 //   router.registerFileFallback((file) async { … }); // files no extension claims
 //   off(); // unregister
 //
@@ -20,11 +20,11 @@
 //   toasts), null while the home shell isn't on screen.
 //
 // Reserved hosts: `share` (分享码, lib/share_code), `forum` (community login,
-// e.g. `dpsk://forum/auth?payload=…`), `open` (a page of the app,
+// e.g. `dshgo://forum/auth?payload=…`), `open` (a page of the app,
 // links/page_links.dart), and the share host's own name for
-// hosted conversation links (`dpsk://go.dshtui.com/c/…`, the same as its
+// hosted conversation links (`dshgo://go.dshtui.com/c/…`, the same as its
 // https links; registered by [LinkHost] itself, lib/ui/share_hosted/) and
-// the official market's plugin pages (`dpsk://go.dshtui.com/p/…`,
+// the official market's plugin pages (`dshgo://go.dshtui.com/p/…`,
 // links/plugin_links.dart).
 //
 // ── Delivery ────────────────────────────────────────────────────────────────
@@ -57,7 +57,7 @@ import '../l10n/l10n.dart';
 import 'share_consumption.dart';
 
 /// Scheme of the app's own links.
-const appLinkScheme = 'dpsk';
+const appLinkScheme = 'dshgo';
 
 /// The native bridge: a broadcast stream of incoming links.
 class AppLinks {
@@ -69,7 +69,7 @@ class AppLinks {
 
   /// Scheme of the placeholder for a file the native side couldn't read (too
   /// large, unreadable); its path is the file's name.
-  static const unreadableScheme = 'x-dpsk-unreadable';
+  static const unreadableScheme = 'x-dshgo-unreadable';
 
   final MethodChannel _channel;
   late final StreamController<Uri> _controller;
@@ -371,7 +371,7 @@ class _LinkHostState extends ConsumerState<LinkHost> {
     _offHosted = registerHostedLinks(_router);
     // A plugin's page in the official market: its detail sheet.
     _offPlugins = registerPluginLinks(_router);
-    // `dpsk://open/<page>`: the guide's links to the app's own pages.
+    // `dshgo://open/<page>`: the guide's links to the app's own pages.
     _offPages = registerPageLinks(
       _router,
       session: () => ref.read(currentSessionProvider),

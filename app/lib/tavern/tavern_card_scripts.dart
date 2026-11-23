@@ -37,11 +37,11 @@ List<String> tavernScriptButtons(TavernRunnableScript s) => [
       if (b.visible && b.name.isNotEmpty) b.name,
 ];
 
-/// Whether [card] (its fields) uses MVU: it says so (extensions.dpsk.mvu),
+/// Whether [card] (its fields) uses MVU: it says so (extensions.dshgo.mvu),
 /// or something in it — a script, a regex, a greeting — loads MagVarUpdate.
 bool tavernUsesMvu(Map<String, Object?>? card) {
   if (card == null) return false;
-  if (card['extensions'] case {'dpsk': {'mvu': {'enabled': true}}}) return true;
+  if (card['extensions'] case {'dshgo': {'mvu': {'enabled': true}}}) return true;
   // Its world book left out: often most of the card, and never what loads it.
   return jsonEncode({...card}..remove('character_book')).contains('MagVarUpdate');
 }

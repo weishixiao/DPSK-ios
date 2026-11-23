@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/guest_fs.dart';
-import 'package:dpsk_app/share_code/profile_export.dart';
-import 'package:dpsk_app/share_code/restore_point.dart';
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_code_state.dart';
-import 'package:dpsk_app/share_code/share_import.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/share_code/share_net.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
+import 'package:dsh_app/share_code/guest_fs.dart';
+import 'package:dsh_app/share_code/profile_export.dart';
+import 'package:dsh_app/share_code/restore_point.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_code_state.dart';
+import 'package:dsh_app/share_code/share_import.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/share_code/share_net.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -391,7 +391,7 @@ void main() {
     final code = encodeShareCode(share);
     final id = await net.createGist(
       token: 'good',
-      fileName: 'x.dpsk',
+      fileName: 'x.dshgo',
       content: encodeShareFile(share, code: code),
     );
     final sum = code.split('.').last;

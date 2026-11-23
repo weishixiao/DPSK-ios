@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/state/chat_state.dart';
+import 'package:dsh_app/state/chat_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 final _t0 = DateTime(2026, 10, 23, 14, 30);

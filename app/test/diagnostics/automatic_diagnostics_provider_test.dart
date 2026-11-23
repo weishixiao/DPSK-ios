@@ -1,10 +1,10 @@
-import 'package:dpsk_app/diagnostics/automatic_diagnostics.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart' show FlagController, appForegroundProvider;
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/automatic_diagnostics.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart' show FlagController, appForegroundProvider;
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

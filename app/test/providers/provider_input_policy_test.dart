@@ -3,11 +3,11 @@
 // embedding contract probe in the G53 evidence bundle.
 import 'dart:convert';
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/providers_state.dart';
-import 'package:dpsk_app/ui/providers/provider_form_page.dart';
-import 'package:dpsk_app/ui/providers/provider_widgets.dart';
-import 'package:dpsk_app/ui/providers/providers_page.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/providers_state.dart';
+import 'package:dsh_app/ui/providers/provider_form_page.dart';
+import 'package:dsh_app/ui/providers/provider_widgets.dart';
+import 'package:dsh_app/ui/providers/providers_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,16 +1,16 @@
 // Safe mode, Dart side: parsing the native status, the failure card's decision table,
 // the repair prompt, and the platform-channel calls.
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/engine_control.dart';
-import 'package:dpsk_app/state/safe_mode_state.dart';
-import 'package:dpsk_app/ui/common/status_dot.dart';
-import 'package:dpsk_app/ui/engine/engine_status.dart';
-import 'package:dpsk_app/ui/safe_mode/engine_failure_card.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_actions.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_banner.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_card.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/engine_control.dart';
+import 'package:dsh_app/state/safe_mode_state.dart';
+import 'package:dsh_app/ui/common/status_dot.dart';
+import 'package:dsh_app/ui/engine/engine_status.dart';
+import 'package:dsh_app/ui/safe_mode/engine_failure_card.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_actions.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_banner.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_card.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/state/attachments.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/ui/session/workspace_upload.dart';
+import 'package:dsh_app/state/attachments.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/ui/session/workspace_upload.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

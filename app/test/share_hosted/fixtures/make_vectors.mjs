@@ -20,11 +20,11 @@ let conversation;
 try {
   conversation = JSON.parse(readFileSync(fixture, 'utf8')).file;
 } catch {
-  conversation = '{"dpsk":2,"kind":"conversation","name":"示例","code":"x"}';
+  conversation = '{"dshgo":2,"kind":"conversation","name":"示例","code":"x"}';
 }
 const texts = [
   { name: 'empty', text: '' },
-  { name: 'short', text: '{"dpsk":2,"kind":"conversation","name":"你好 👋"}' },
+  { name: 'short', text: '{"dshgo":2,"kind":"conversation","name":"你好 👋"}' },
   { name: 'conversation', text: conversation },
 ];
 

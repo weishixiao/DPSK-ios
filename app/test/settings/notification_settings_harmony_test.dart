@@ -3,14 +3,14 @@
 // running, and the way to the switch is that system's. Its half-sheet may bring
 // no resume, so the status is read again when it closes.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/notify/notify_channel.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/notify_state.dart' show notifyChannelProvider;
-import 'package:dpsk_app/ui/settings/notification_settings.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/notify/notify_channel.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/notify_state.dart' show notifyChannelProvider;
+import 'package:dsh_app/ui/settings/notification_settings.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

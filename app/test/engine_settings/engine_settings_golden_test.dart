@@ -4,14 +4,14 @@
 //
 //   flutter test --update-goldens test/engine_settings
 
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/engine_settings/engine_settings_hub.dart';
-import 'package:dpsk_app/ui/engine_settings/engine_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/general_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/runtime_settings_pages.dart';
-import 'package:dpsk_app/ui/engine_settings/subagent_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/web_search_page.dart';
-import 'package:dpsk_app/ui/plugins/plugin_inventory_page.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/engine_settings/engine_settings_hub.dart';
+import 'package:dsh_app/ui/engine_settings/engine_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/general_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/runtime_settings_pages.dart';
+import 'package:dsh_app/ui/engine_settings/subagent_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/web_search_page.dart';
+import 'package:dsh_app/ui/plugins/plugin_inventory_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

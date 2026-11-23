@@ -29,7 +29,7 @@
 ## 渠道页
 
 <!-- nav: commonSettings,hubSettingsProviders -->
-`设置 › 模型` · [打开](dpsk://open/models)
+`设置 › 模型` · [打开](dshgo://open/models)
 
 渠道分三组：
 

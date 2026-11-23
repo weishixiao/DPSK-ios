@@ -1512,7 +1512,7 @@
     },
     {
       "entryId": "local-notes",
-      "package": "DPSK-fixture-local-notes",
+      "package": "dsh-go-fixture-local-notes",
       "label": "local-notes",
       "state": "active",
       "configurable": true

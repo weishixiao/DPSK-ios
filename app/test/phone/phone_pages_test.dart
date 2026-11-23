@@ -2,15 +2,15 @@
 // set-ups; the channel picker itself is dnd_channels_test.dart), 应用名单 with
 // its risk notes.
 
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/ask_ai.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/common/risk_notice.dart';
-import 'package:dpsk_app/ui/phone/app_rules_page.dart';
-import 'package:dpsk_app/ui/phone/dnd_mode_page.dart';
-import 'package:dpsk_app/ui/phone/phone_widgets.dart';
-import 'package:dpsk_app/ui/phone/restricted_settings_guide.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/ask_ai.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/common/risk_notice.dart';
+import 'package:dsh_app/ui/phone/app_rules_page.dart';
+import 'package:dsh_app/ui/phone/dnd_mode_page.dart';
+import 'package:dsh_app/ui/phone/phone_widgets.dart';
+import 'package:dsh_app/ui/phone/restricted_settings_guide.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -133,7 +133,7 @@ void main() {
 
       h.native!.push(phoneStatus(shizukuInstalled: true, shizukuRunning: true));
       await settlePhone(tester);
-      await tester.tap(find.text('授权给 DPSK'));
+      await tester.tap(find.text('授权给 DSH Go'));
       await tester.pump();
       expect(h.native!.callsOf('requestShizukuPermission'), hasLength(1));
 
@@ -162,7 +162,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('打开 Shizuku 官网'), findsNothing);
       expect(find.text('用 Sui 开启'), findsNothing);
-      await tester.tap(find.text('授权给 DPSK'));
+      await tester.tap(find.text('授权给 DSH Go'));
       await tester.pumpAndSettle();
       expect(h.native!.callsOf('requestShizukuPermission').single.arguments, {'provider': 'sui'});
 

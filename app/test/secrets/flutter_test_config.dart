@@ -2,7 +2,7 @@
 // app-wide visual test configuration unchanged; this scope does not render UI.
 import 'dart:async';
 
-import 'package:dpsk_app/performance/performance_state.dart';
+import 'package:dsh_app/performance/performance_state.dart';
 
 import '../support/quiet_performance.dart';
 

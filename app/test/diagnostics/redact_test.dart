@@ -2,7 +2,7 @@
 // `redactDiagnostics` (launch tokens as the engine log masks them, API-key
 // shapes, Bearer credentials, secret-named assignments).
 
-import 'package:dpsk_app/diagnostics/redact.dart';
+import 'package:dsh_app/diagnostics/redact.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _sk = 'sk-4c1f0e7b9a2d4e6f8a1b3c5d7e9fa3f9';

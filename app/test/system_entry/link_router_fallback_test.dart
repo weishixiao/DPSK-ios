@@ -1,10 +1,10 @@
 // LinkRouter's file fallback: files opened with the app that no feature
 // registered an extension for go to the new-chat composer instead of the
-// 「无法打开这个文件」 toast; registered extensions (.dpsk) still win.
+// 「无法打开这个文件」 toast; registered extensions (.dshgo) still win.
 
 import 'dart:async';
 
-import 'package:dpsk_app/links/app_links.dart';
+import 'package:dsh_app/links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -22,7 +22,7 @@ void main() {
 
     final codes = <Uri>[];
     final others = <Uri>[];
-    router.registerFileHandler('dpsk', (uri) async {
+    router.registerFileHandler('dshgo', (uri) async {
       codes.add(uri);
       return true;
     });
@@ -33,16 +33,16 @@ void main() {
     await tester.pump();
 
     links
-      ..add(Uri.file('/c/links/1/读书笔记.dpsk'))
+      ..add(Uri.file('/c/links/1/读书笔记.dshgo'))
       ..add(Uri.file('/c/links/2/notes.md'))
       ..add(Uri.file('/c/links/3/README'));
     await tester.pump();
-    expect(codes.map((u) => u.pathSegments.last), ['读书笔记.dpsk']);
+    expect(codes.map((u) => u.pathSegments.last), ['读书笔记.dshgo']);
     expect(others.map((u) => u.pathSegments.last), ['notes.md', 'README']);
     expect(toasts, isEmpty);
 
     // Links are not files: the fallback never sees them.
-    links.add(Uri.parse('dpsk://nowhere'));
+    links.add(Uri.parse('dshgo://nowhere'));
     await tester.pump();
     expect(others, hasLength(2));
     expect(toasts, ['无法打开这个链接']);

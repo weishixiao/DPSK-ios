@@ -497,7 +497,7 @@ void main() {
         host.capabilitiesStatus = status;
         await expectLater(
           client.readBridgeInventory(),
-          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/http-$status')),
+          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/http-$status')),
         );
       }
       host.capabilitiesStatus = 404;
@@ -506,7 +506,7 @@ void main() {
       });
       await expectLater(
         client.readBridgeInventory(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/not-found')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/not-found')),
       );
       host.capabilitiesBody = jsonEncode({
         'error': {'code': 'route-not-found', 'message': 'route missing'},
@@ -517,7 +517,7 @@ void main() {
       host.capabilities = {'v': 2};
       await expectLater(
         client.readBridgeInventory(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/unsupported-version')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/unsupported-version')),
       );
       host.capabilities = {'v': 1, 'bridge': '0.4.0'};
       await expectLater(client.readBridgeInventory(), throwsA(isA<DshProtocolException>()));

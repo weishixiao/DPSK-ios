@@ -40,8 +40,8 @@ void main() {
 
   test('share codes still open as files and links, but are no second share target', () {
     final links = _component('activity', '.links.LinkTrampolineActivity');
-    expect(links, contains('<data android:scheme="dpsk" />'));
-    expect(links, contains('application/vnd.dpsk+json'));
+    expect(links, contains('<data android:scheme="dshgo" />'));
+    expect(links, contains('application/vnd.dshgo+json'));
     expect(links, contains('android.intent.action.VIEW'));
     // Two entries named DSH in the share sheet otherwise.
     expect(links, isNot(contains('android.intent.action.SEND')));
@@ -98,12 +98,12 @@ void main() {
   test('the shared engine registers both plugins and MainActivity keeps its metadata', () {
     // The engine is shared with the resident companion, so plugins are added
     // where it is created, not in the Activity.
-    final engine = File('android/app/src/main/kotlin/com/dpsk/harness/DshFlutterEngine.kt')
+    final engine = File('android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/DshFlutterEngine.kt')
         .readAsStringSync();
     expect(engine, contains('engine.plugins.add(SharePlugin())'));
     expect(engine, contains('engine.plugins.add(ShortcutsPlugin())'));
     expect(engine, contains('LauncherIconPlugin()'));
-    final activity = File('android/app/src/main/kotlin/com/dpsk/harness/MainActivity.kt')
+    final activity = File('android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/MainActivity.kt')
         .readAsStringSync();
     expect(activity, contains('override fun getMetaData()'));
   });

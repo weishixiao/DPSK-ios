@@ -721,7 +721,7 @@ await runUntil(now + (s.run || 60000));
 if (s.pagehide) for (const fn of windowHandlers.pagehide || []) fn();
 
 out.shown = model.shown();
-const marked = html.descendants().find((e) => (e.getAttribute('data-DPSK-island') || '').split(' ').includes('shown'));
+const marked = html.descendants().find((e) => (e.getAttribute('data-dsh-go-island') || '').split(' ').includes('shown'));
 out.island = marked && marked.firstElementChild ? marked.firstElementChild.model ?? null : null;
 if (model.stored) out.stored = model.stored();
 if (model.layout) out.layout = model.layout();

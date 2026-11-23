@@ -2,12 +2,12 @@
 // No new product API: these can run unchanged on original f87.
 import 'dart:async';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/drawer_view_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
-import 'package:dpsk_app/ui/shell/drawer/selection_bars.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/drawer_view_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
+import 'package:dsh_app/ui/shell/drawer/selection_bars.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

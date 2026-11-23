@@ -12,7 +12,7 @@
 - 没有的挂**网页岛**：一个 WebView 加载本机 DSH 的官方网页版，导航到目标位置，只露出目标 slot。
 - 不能做「每条消息一个岛」。岛是整个官方客户端，一个约百 MB 量级，只能整页、面板、浮层三种形态，同屏最多 1–2 个。
 
-另加一个口子：**`$DSH_HOME/DPSK/ui.json`**，只能声明不能执行，让用户叫 AI 改原生界面（§10）。
+另加一个口子：**`$DSH_HOME/dsh-go/ui.json`**，只能声明不能执行，让用户叫 AI 改原生界面（§10）。
 
 必须先补的安全洞：本机 webserver 上插件路由不鉴权，手机上任何 App 都能调（§9）。网页岛上线前，本机引擎必须先装路由守卫。
 
@@ -194,7 +194,7 @@ ctx.dshGoPanels.register({
 ```
 
 - `PanelDoc` = `dsh_ui` 的节点表，加 list / keyValue / progress / table / actions 五种块。
-- App 走守卫后的路由读取 `GET /DPSK/v1/panels` 加流式更新；`invoke` 走 `POST`。
+- App 走守卫后的路由读取 `GET /dsh-go/v1/panels` 加流式更新；`invoke` 走 `POST`。
 - 插件只要 `inject: ['dshGoPanels?']`（可选依赖），没有 App 时零影响。
 - 以后 std 定稿，按 std 改坐标，渲染器不动。
 
@@ -211,13 +211,13 @@ ctx.dshGoPanels.register({
 
 `dsh-go-bridge` 是 App 运行时自带的一个 DSH 包，有宿主和浏览器两半，经 `/etc/dsh-app/dsh-web.patch.yml`（`runtime/lib/rtbuild.py:26`）加载。远程主机可选从 npm 安装，要用户确认。
 
-- **浏览器半侧**：`inject: ['slots']`。每次页面启动读 `slots` 的实时组合（`SlotCore.snapshot()` / `entries(key)`，签名见 `dsh-cordis-client-runner/lib/client.js:2226`），按 slot 汇总占用者（包名、cell、order、label），`POST /DPSK/v1/occupancy` 报给宿主，带 `__DSH_BOOT__.rev`。
+- **浏览器半侧**：`inject: ['slots']`。每次页面启动读 `slots` 的实时组合（`SlotCore.snapshot()` / `entries(key)`，签名见 `dsh-cordis-client-runner/lib/client.js:2226`），按 slot 汇总占用者（包名、cell、order、label），`POST /dsh-go/v1/occupancy` 报给宿主，带 `__DSH_BOOT__.rev`。
 - **宿主半侧**：
   - 缓存最新一份占用表（按 boot rev）。
-  - `GET /DPSK/v1/inventory` 返回 `{release, bootRev, packages[{name, hasClient, rev}], slots{key: SlotOccupant[]}}`。
+  - `GET /dsh-go/v1/inventory` 返回 `{release, bootRev, packages[{name, hasClient, rev}], slots{key: SlotOccupant[]}}`。
   - 同时承载 §4.3 的面板服务。
 - **冷启动**：App 发现 bootRev 变了而占用表还是旧的，就开一个隐藏的「探针岛」加载一次页面，报完即销毁（计入内存预算，§7）。
-- 所有 `/DPSK/*` 路由都经过 §9 的守卫。App 用已有的 API 鉴权调用。
+- 所有 `/dsh-go/*` 路由都经过 §9 的守卫。App 用已有的 API 鉴权调用。
 
 ## 6. 网页岛
 
@@ -226,11 +226,11 @@ ctx.dshGoPanels.register({
 - **URL**：同 `localWebUri(baseUrl, token)`（`app/lib/ui/web/local_web_screen.dart:21`），SSH 隧道主机同理。中转主机不提供网页，没有岛。
 - **导航**：复用 `app/assets/web/dsh_web_open.js` 的会话 / 设置分区 / 面板 / 右栏能力，只读加载。岛脚本补三个目标：设置分区、右栏页签、主面板。rc.4 的设置导航和侧栏面板行上没有 id，只能按名字找，所以岛只认**整个名字相等、且只有一个**的那一项（桥接占用表里另有同名条目也不点），点后要它变成 `aria-current`、槽位内容换过才算打开；客户端只把当前分区 / 面板放在内存里，读不回 id。右栏页签由桥接按 tab type id 打开（它确认该 kind 成了活动页签），桥接打不开就不再按名字猜；没有桥接 `openTab` 时按名字找引导页条目，点后从 `dsh.sidebar-right.v1.<会话>` 读回活动页签的 kind 核对，岛只显示这个页签自己的槽位（分屏时别的窗格也画同一个 slot）。任何一项没确认，都按「没找到」上报，退回网页版——槽位本身一直在（`main` 默认画对话、设置默认画第一个分区），不能把它当成找到（CR-7881a22）。
 - **隔离**：页面加载后注入 `islands/island.js` + `island.css`。
-  1. `<html>` 加 `DPSK-island` 类；`[data-slot="root"]` 整体 `visibility:hidden`。
+  1. `<html>` 加 `dsh-go-island` 类；`[data-slot="root"]` 整体 `visibility:hidden`。
   2. 目标 slot 的子孙 `visibility:visible`，再按「配方」把目标容器拉满视口。配方见 `app/assets/islands/recipes.json`：`{slot, open, stretch}`，选择器只用 `data-slot`、角色和 CSS 模块类名后缀，原则同手机布局。
   3. 背景改透明（`html, body { background: transparent }`），WebView `setBackgroundColor(transparent)`。
 - **就绪门**：岛先隐藏（`Offstage` / 不透明度 0）。脚本确认目标 slot 存在且非空后发 `ready`；5 秒内没有 `ready`，或报 `empty` / `slot-missing`，就销毁岛、换成「在网页版打开」。DSH 升级弄坏配方时，最坏结果是「不生效」，不会出错页。
-- **list slot 里的官方条目**：Tier B 的浏览器半侧在**岛模式下**（`location.hash` 带 `#DPSK-island=<slot>`）用同 id、更低 priority 注册空组件，遮掉官方占用者（依据：同 id 复用即替换，`slots.zh.md`「Cardinality 与 scope」）。只剩第三方条目。Tier A 主机上面板岛不可用，只有整页岛。
+- **list slot 里的官方条目**：Tier B 的浏览器半侧在**岛模式下**（`location.hash` 带 `#dsh-go-island=<slot>`）用同 id、更低 priority 注册空组件，遮掉官方占用者（依据：同 id 复用即替换，`slots.zh.md`「Cardinality 与 scope」）。只剩第三方条目。Tier A 主机上面板岛不可用，只有整页岛。
 
 ### 6.2 三种形态
 
@@ -283,7 +283,7 @@ ctx.dshGoPanels.register({
   - Kotlin 经 `WebViewFlutterAndroidExternalApi.getWebView(engine, id)` 拿到 WebView（webview_flutter_android 4.14.1 自带此类）。
   - 再用 androidx.webkit 的 `WebSettingsCompat.setForceDark` + 只用网页主题的暗色策略（targetSdk 28 走这条）。androidx.webkit 1.15.0 已是传递依赖，App 需显式声明同版本。
   - DSH 主题为 `system` 时随之切换。不写宿主设置：`ui-theme` 的模式存在宿主上，跨浏览器共享，改了会影响用户电脑上的网页版。
-- **配色**：注入 `<style id="DPSK-island-theme">`，用 App 配色覆盖 DSH 的核心别名 token（共 107 个，取最影响观感的约 15 个）：
+- **配色**：注入 `<style id="dsh-go-island-theme">`，用 App 配色覆盖 DSH 的核心别名 token（共 107 个，取最影响观感的约 15 个）：
   - 背景：`--dsw-alias-bg-base`（岛内设为透明）、`--dsw-alias-bg-layer-1/2`。
   - 文字：`--dsw-alias-label-primary/secondary/tertiary`。
   - 描边：`--dsw-alias-border-l1…l4`。
@@ -322,11 +322,11 @@ ctx.dshGoPanels.register({
 
 | | 本机引擎 | 远程主机 |
 |---|---|---|
-| 路径 | `$DSH_HOME/DPSK/ui.json`，即 rootfs 内 `/root/.dsh/dsh-go/ui.json`，App 侧是 `filesDir/runtime/rootfs/root/.dsh/dsh-go/ui.json` | 对方的 `$DSH_HOME/DPSK/ui.json` |
+| 路径 | `$DSH_HOME/dsh-go/ui.json`，即 rootfs 内 `/root/.dsh/dsh-go/ui.json`，App 侧是 `filesDir/runtime/rootfs/root/.dsh/dsh-go/ui.json` | 对方的 `$DSH_HOME/dsh-go/ui.json` |
 | 读 | App 直接读文件（Dart） | `workspaceFiles/read`（`packages/dsh_client/lib/src/workspace_api.dart` 已封装）。这个端点接受工作区外的绝对路径，权限由对方文件系统组合决定；需要带一个会话 id（`workspaceFileScopeId`），取最近一个对话；主机上一个对话都没有时暂不读 |
 | 找到 `$DSH_HOME` | 固定 `/root/.dsh` | ① SSH 主机：启动时读远端环境变量；② 其他主机：`skills/list`（`features_api.dart:493`）里 `dsh-go-ui` 技能的 `path` 往上三级（`<dshHome>/skills/dsh-go-ui/SKILL.md`）；③ 都拿不到 → 设置里显示「这台主机还没装界面技能」+ 安装入口（§10.5） |
-| 自动重读 | `Directory('<rootfs>/root/.dsh/DPSK').watch()`（inotify；目录不存在时 App 先建），加上回到前台时补读一次；去抖 300 ms | `workspaceFiles/changes` 流（文件监听沿用文件读权限，可在工作区外）；不支持时退回前台每 60 秒一次 `stat` 比对 `version`；重连和回到前台时补读 |
-| 写 | App 不写 ui.json（只读）。可选：本机 App 把读取结果写到 `$DSH_HOME/DPSK/ui.status.json`，供 agent 自查 | 远程只读（`dsh-api-workspace-files` 不提供写操作） |
+| 自动重读 | `Directory('<rootfs>/root/.dsh/dsh-go').watch()`（inotify；目录不存在时 App 先建），加上回到前台时补读一次；去抖 300 ms | `workspaceFiles/changes` 流（文件监听沿用文件读权限，可在工作区外）；不支持时退回前台每 60 秒一次 `stat` 比对 `version`；重连和回到前台时补读 |
+| 写 | App 不写 ui.json（只读）。可选：本机 App 把读取结果写到 `$DSH_HOME/dsh-go/ui.status.json`，供 agent 自查 | 远程只读（`dsh-api-workspace-files` 不提供写操作） |
 
 - 每台主机各自一份。App 按 `hostId` 缓存最后一次有效配置，冷启动时先用缓存，避免界面闪变。
 - 中转主机若不开放 `workspaceFiles/*`，就不支持 ui.json（用 `supportsEndpoint` 判定）。
@@ -423,7 +423,7 @@ class FromUiJsonBadge extends StatelessWidget { … }     // 「来自 ui.json�
   - `scripts/check.mjs`：零依赖校验器，`node $DSH_HOME/skills/dsh-go-ui/scripts/check.mjs` 输出与 App 相同的 Pointer 错误。
   - 本机另可读 `ui.status.json`。
   - 两套校验共用 `app/test/ui_config/fixtures/`。
-- **本机自动安装**：每次引擎启动前由 Dart 写入 rootfs（与 `GuestSetup.writeAgentsMd` 同样的「受管标记」做法：`SKILL.md` 首行带 `<!-- DPSK:managed -->`，用户删掉这行后不再覆盖）。不改 `GuestSetup.kt`。
+- **本机自动安装**：每次引擎启动前由 Dart 写入 rootfs（与 `GuestSetup.writeAgentsMd` 同样的「受管标记」做法：`SKILL.md` 首行带 `<!-- dsh-go:managed -->`，用户删掉这行后不再覆盖）。不改 `GuestSetup.kt`。
 - **远程安装**（必须用户确认）：
   - ① SSH 主机：经已有的 SSH 通道写文件。
   - ② 其他主机：App 准备一条消息（含技能文件内容和写入指令），放进输入框由用户点发送，让对方 agent 用自己的工具写入。
@@ -433,7 +433,7 @@ class FromUiJsonBadge extends StatelessWidget { … }     // 「来自 ui.json�
 
 | 操作 | 代码 | 结果 |
 |---|---|---|
-| **运行时升级** | `RuntimeInstaller.install` → `activateRootfs`（`app/android/.../runtime/RuntimeInstaller.kt:32-58、106-126`） | **保留**。用户的 `/root` 先移到 `home.carry`，新 rootfs 换上后再移回，`/root/.dsh` 里的插件（`profiles/web`）、`cordis.patch.yml`、`skills/`、`DPSK/ui.json` 都在。被替换的只有运行时自有文件，如 `/etc/dsh-app/dsh-web.patch.yml`（每次升级重写，`rtbuild.py:696-705`） |
+| **运行时升级** | `RuntimeInstaller.install` → `activateRootfs`（`app/android/.../runtime/RuntimeInstaller.kt:32-58、106-126`） | **保留**。用户的 `/root` 先移到 `home.carry`，新 rootfs 换上后再移回，`/root/.dsh` 里的插件（`profiles/web`）、`cordis.patch.yml`、`skills/`、`dsh-go/ui.json` 都在。被替换的只有运行时自有文件，如 `/etc/dsh-app/dsh-web.patch.yml`（每次升级重写，`rtbuild.py:696-705`） |
 | **「重置运行环境」** | `RuntimeController.reset` → `RuntimeInstaller.reset()` = `baseDir.deleteRecursivelySafely()`（`RuntimeController.kt:296-325`、`RuntimeInstaller.kt:71-73`） | **全部删除**：整个 `filesDir/runtime`，包括 `/root/.dsh` 下的插件、补丁、技能、ui.json、对话记录。对话框文案只提到「对话记录和工作区文件」（`app/lib/ui/engine/engine_screen.dart:365-368`） |
 
 建议：

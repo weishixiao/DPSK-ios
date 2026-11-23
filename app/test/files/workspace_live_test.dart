@@ -10,7 +10,7 @@ library;
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/workspace_state.dart';
+import 'package:dsh_app/state/workspace_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

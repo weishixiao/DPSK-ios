@@ -8,7 +8,7 @@ import '../../../l10n/l10n.dart';
 import 'dsh_ui_model.dart';
 
 /// 工具结果 meta 里放原生卡片的键（`presentationMeta` 的返回值里）。
-const toolCardViewKey = 'DPSK/view';
+const toolCardViewKey = 'dsh-go/view';
 
 /// 三档上限（规格 §5）。
 enum PluginViewBudget {
@@ -93,7 +93,7 @@ bool _sameJson(Object? a, Object? b) {
 /// 发 invoke 并执行效果；返回 false 表示失败（被点的元素复原）。不要抛错。
 typedef PluginActionHandler = Future<bool> Function(PluginAction action);
 
-/// 把插件资源 `asset:<路径>` 换成带凭据的图片（`/DPSK/v1/assets/<包名>/<路径>`，
+/// 把插件资源 `asset:<路径>` 换成带凭据的图片（`/dsh-go/v1/assets/<包名>/<路径>`，
 /// 包名由调用方补上）；返回 null 画占位。
 typedef PluginImageResolver = ImageProvider? Function(String src);
 

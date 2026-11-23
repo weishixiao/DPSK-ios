@@ -229,10 +229,10 @@ List<WorldInfoBook> _mergeGameplayBooks(
 /// Unknown carriers remain evidence; known rule/event ledgers never enter an
 /// empty-chat WI checkpoint or a WI-only compare-and-swap target.
 ({bool exists, Object? raw}) _gameplayWorldInfoCarrier(Map<String, Object?> state, {bool includeIdentityOnly = true}) {
-  if (!state.containsKey('dpskPackRuntime')) {
+  if (!state.containsKey('dshgoPackRuntime')) {
     return (exists: false, raw: null);
   }
-  final raw = state['dpskPackRuntime'];
+  final raw = state['dshgoPackRuntime'];
   if (raw is! Map<String, Object?> || raw['v'] != 1 || raw['bindings'] is! Map<String, Object?>) {
     return (exists: true, raw: _runtimeValue(raw));
   }
@@ -260,8 +260,8 @@ state_core.StatePackWorldInfoSnapshot? _gameplayWorldInfoSnapshot(
 ) => resources.packSources.isEmpty
     ? null
     : state_core.StatePackWorldInfoSnapshot(
-        exists: state.containsKey('dpskPackRuntime'),
-        raw: state['dpskPackRuntime'],
+        exists: state.containsKey('dshgoPackRuntime'),
+        raw: state['dshgoPackRuntime'],
       );
 
 void _adoptGameplayWorldInfo(_Turn turn, WorldInfoResult world) {
@@ -271,8 +271,8 @@ void _adoptGameplayWorldInfo(_Turn turn, WorldInfoResult world) {
   final session = turn.stateSession;
   final adopted = session == null
       ? state_core.mergeStatePackWorldInfo(
-          exists: turn.state.containsKey('dpskPackRuntime'),
-          raw: turn.state['dpskPackRuntime'],
+          exists: turn.state.containsKey('dshgoPackRuntime'),
+          raw: turn.state['dshgoPackRuntime'],
           delta: world.packWorldInfo,
         )
       : session.adoptPackWorldInfo(world.packWorldInfo);
@@ -283,7 +283,7 @@ void _adoptGameplayWorldInfo(_Turn turn, WorldInfoResult world) {
     );
   }
   if (adopted.exists) {
-    turn.state['dpskPackRuntime'] = adopted.raw;
+    turn.state['dshgoPackRuntime'] = adopted.raw;
   }
 }
 

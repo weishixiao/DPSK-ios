@@ -302,7 +302,7 @@ void main() {
       expect(exported.row['is_user'], isFalse);
       expect(exported.row['is_system'], isFalse);
       expect(_map(exported.row['extra'])['type'], 'narrator');
-      expect(_map(_map(_map(exported.row['extra'])['dpsk'])['chatJsonl'])['role'], 'narrator');
+      expect(_map(_map(_map(exported.row['extra'])['dshgo'])['chatJsonl'])['role'], 'narrator');
       final files = await h.engine.exportChat(h.chatId);
       final imported = await h.engine.importChats(h.characterId, files);
       final restored = await h.engine.path(imported.chatIds.single);
@@ -489,12 +489,12 @@ void main() {
         'swipe_info': [
           {
             'extra': {
-              'dpsk': {'tavernState': branchOld},
+              'dshgo': {'tavernState': branchOld},
             },
           },
           {
             'extra': {
-              'dpsk': {'tavernState': branchNew},
+              'dshgo': {'tavernState': branchNew},
             },
           },
         ],
@@ -840,7 +840,7 @@ Map<String, Object?> _row(String text, {Map<String, Object?>? state}) => {
   'mes': text,
   if (state != null)
     'extra': {
-      'dpsk': {'tavernState': state},
+      'dshgo': {'tavernState': state},
     },
 };
 
@@ -864,7 +864,7 @@ Future<({StChatDocument document, Map<String, Object?> row})> _exported(
   for (final file in await engine.exportChat(chatId)) {
     final document = StChatDocument.decode(file.fileName, file.bytes);
     for (final row in document.messages) {
-      if (_map(_map(_map(row['extra'])['dpsk'])['chatJsonl'])['nodeId'] == nodeId) {
+      if (_map(_map(_map(row['extra'])['dshgo'])['chatJsonl'])['nodeId'] == nodeId) {
         return (document: document, row: row);
       }
     }
@@ -875,7 +875,7 @@ Future<({StChatDocument document, Map<String, Object?> row})> _exported(
 Future<Map<String, Object?>> _currentState(TavernEngine engine, String chatId) async {
   final leaf = (await engine.path(chatId)).last;
   final exported = await _exported(engine, chatId, leaf.nodeId);
-  return _map(_map(_map(exported.row['extra'])['dpsk'])['tavernState']);
+  return _map(_map(_map(exported.row['extra'])['dshgo'])['tavernState']);
 }
 
 Map<String, Object?> _branchState(int n, int hash, String identity) => {

@@ -2,19 +2,19 @@
 // tasks; one task opens its page (rule, next runs, 立即运行, 管理), more open
 // a list; a failed refresh keeps the clock; the key reads out what it opens.
 
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/features_state.dart';
-import 'package:dpsk_app/state/header_schedule_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/schedule_editor_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/chat/chat_header.dart';
-import 'package:dpsk_app/ui/chat/header_schedule.dart';
-import 'package:dpsk_app/ui/chat/model_sheet.dart';
-import 'package:dpsk_app/ui/common/status_dot.dart';
-import 'package:dpsk_app/ui/features/schedule_editor/time_zones.dart';
-import 'package:dpsk_app/ui/features/schedules_page.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/features_state.dart';
+import 'package:dsh_app/state/header_schedule_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/schedule_editor_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/chat/chat_header.dart';
+import 'package:dsh_app/ui/chat/header_schedule.dart';
+import 'package:dsh_app/ui/chat/model_sheet.dart';
+import 'package:dsh_app/ui/common/status_dot.dart';
+import 'package:dsh_app/ui/features/schedule_editor/time_zones.dart';
+import 'package:dsh_app/ui/features/schedules_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';

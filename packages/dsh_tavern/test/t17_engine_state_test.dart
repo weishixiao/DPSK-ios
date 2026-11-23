@@ -44,7 +44,7 @@ Map<String, Object?> _definition({List<Object?> rules = const [], int step = 5})
 Future<({String characterId, String chatId})> _stateChat(T24Harness h, {Map<String, Object?>? definition}) async {
   final raw = jsonDecode(utf8.decode(t24Card())) as Map<String, Object?>;
   _map(raw['data'])['extensions'] = {
-    'dpsk': {'v': 1, 'state': definition ?? _definition()},
+    'dshgo': {'v': 1, 'state': definition ?? _definition()},
   };
   final character = await h.engine.importCard(Uint8List.fromList(utf8.encode(jsonEncode(raw))));
   return (characterId: character.id, chatId: await h.engine.createChat(character.id));
@@ -74,7 +74,7 @@ Map<String, Object?> _rows(T24Harness h) => _db(
 Future<Map<String, Object?>> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final source = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final saved = _map(_map(_map(source.messages.last['extra'])['dpsk'])['tavernState']);
+  final saved = _map(_map(_map(source.messages.last['extra'])['dshgo'])['tavernState']);
   // The decoded document is deeply read-only; mutation fixtures need their own
   // complete JSON tree, including nested message variables and runtime values.
   return _map(jsonDecode(jsonEncode(saved)));
@@ -86,8 +86,8 @@ Future<void> _replaceSaved(T24Harness h, String chat, Map<String, Object?> saved
     final extra =
         jsonDecode(db.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String)
             as Map<String, Object?>;
-    final own = extra['dpsk'] is Map<String, Object?> ? _map(extra['dpsk']) : <String, Object?>{};
-    extra['dpsk'] = {...own, 'tavernState': saved};
+    final own = extra['dshgo'] is Map<String, Object?> ? _map(extra['dshgo']) : <String, Object?>{};
+    extra['dshgo'] = {...own, 'tavernState': saved};
     db.execute('UPDATE nodes SET extra = ? WHERE id = ?', [jsonEncode(extra), leaf]);
   });
 }
@@ -188,7 +188,7 @@ Future<String> _importSaved(
         'send_date': T24Harness.at.toIso8601String(),
         'variables': [saved['messageVariables']],
         'extra': {
-          'dpsk': {'tavernState': saved},
+          'dshgo': {'tavernState': saved},
         },
       },
     ],
@@ -199,7 +199,7 @@ Future<String> _importSaved(
 }
 
 List<Map<String, Object?>> _pending(Map<String, Object?> saved) {
-  final runtime = saved['dpskStateRuntime'];
+  final runtime = saved['dshgoStateRuntime'];
   if (runtime is! Map<String, Object?>) {
     return [];
   }
@@ -330,7 +330,7 @@ void main() {
       await h.engine.sendOnly(imported, 'manual');
       final saved = await _saved(h.engine, imported);
       expect(_map(saved['messageVariables'])['stat_data'], {'foreign': 7});
-      expect(_map(_map(saved['messageVariables'])['dpsk'])['count'], 0);
+      expect(_map(_map(saved['messageVariables'])['dshgo'])['count'], 0);
       expect(await h.engine.readVariables(imported), {'local': 'kept'});
       expect(await h.engine.readAgentRuns(imported), isEmpty);
       expect(h.model.generated, 0);
@@ -631,7 +631,7 @@ void main() {
     expect(effects.singleWhere((effect) => effect['type'] == 'unlock')['id'], 'original-achievement');
     expect(effects.every((effect) => effect['source'] == 'rules' && effect['ruleId'] == 'id:reward'), isTrue);
     final saved = await _saved(h.engine, created.chatId);
-    expect(_map(saved['dpskStateRuntime'])['firedRules'], ['id:reward']);
+    expect(_map(saved['dshgoStateRuntime'])['firedRules'], ['id:reward']);
     expect(_pending(saved).single['id'], effects.singleWhere((effect) => effect['type'] == 'prompt')['effectId']);
     await h.reopen();
     final second = await h.engine.setStateValue(created.chatId, '/count', 2);
@@ -731,7 +731,7 @@ void main() {
     });
     await h.engine.setPreset(ChatPreset(raw));
     final saved = await _saved(h.engine, created.chatId);
-    saved['dpskStateRuntime'] = {
+    saved['dshgoStateRuntime'] = {
       'version': 1,
       'firedRules': <String>[],
       'pendingPrompts': [
@@ -755,7 +755,7 @@ void main() {
     final created = await _stateChat(h);
     final saved = await _saved(h.engine, created.chatId);
     final large = 'BUDGET-EXCLUDED-${List.filled(40000, 'x').join()}';
-    saved['dpskStateRuntime'] = {
+    saved['dshgoStateRuntime'] = {
       'version': 1,
       'firedRules': <String>[],
       'pendingPrompts': [
@@ -919,7 +919,7 @@ void main() {
           ),
         );
         final saved = await _saved(h.engine, created.chatId);
-        saved['dpskStateRuntime'] = badRuntime.value;
+        saved['dshgoStateRuntime'] = badRuntime.value;
         final imported = await _importSaved(h, created.characterId, saved);
         final initial = await h.engine.readState(imported);
         expect(initial.issues, isNotEmpty);
@@ -934,11 +934,11 @@ void main() {
           expect(_maps(h.model.allCalls.last.body!['tools']).map((tool) => _map(tool['function'])['name']), ['roll']);
           expect(_count(await h.engine.readState(imported)), 0);
           expect((await h.engine.readState(imported)).effects, isEmpty);
-          expect((await _saved(h.engine, imported))['dpskStateRuntime'], badRuntime.value);
+          expect((await _saved(h.engine, imported))['dshgoStateRuntime'], badRuntime.value);
         }
         final rejected = await h.engine.setStateValue(imported, '/count', 1);
         expect(rejected.applied, isFalse);
-        expect((await _saved(h.engine, imported))['dpskStateRuntime'], badRuntime.value);
+        expect((await _saved(h.engine, imported))['dshgoStateRuntime'], badRuntime.value);
         final runs = await h.engine.readAgentRuns(imported);
         final stateRuns = runs.where((run) => run.kind != 'tool.turn').toList();
         expect(stateRuns, hasLength(3));
@@ -995,7 +995,7 @@ void main() {
     expect(copied.changes, before.changes);
     expect(copied.effects, before.effects);
     final savedCopy = await _saved(h.engine, imported);
-    expect(savedCopy['dpskStateRuntime'], selectedSaved['dpskStateRuntime']);
+    expect(savedCopy['dshgoStateRuntime'], selectedSaved['dshgoStateRuntime']);
     expect(_map(savedCopy['messageVariables'])['stat_data'], {
       'external': [null, 7],
     });
@@ -1007,7 +1007,7 @@ void main() {
     final old = await h.engine.readState(imported);
     expect(_count(old), 2);
     expect(old.changes.single['new'], 2);
-    expect(_map((await _saved(h.engine, imported))['dpskStateRuntime'])['firedRules'], ['id:branch-once']);
+    expect(_map((await _saved(h.engine, imported))['dshgoStateRuntime'])['firedRules'], ['id:branch-once']);
     await h.reopen();
     expect(_count(await h.engine.readState(imported)), 2);
     expect(await h.engine.readAgentRuns(imported), isEmpty);

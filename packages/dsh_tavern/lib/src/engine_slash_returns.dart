@@ -57,7 +57,7 @@ extension _SlashReturnOperations on _ScriptCoordinator {
             text: text,
             extra: {
               'type': 'generic',
-              'dpsk_display': {'textKind': html ? 'html' : 'plain', 'renderMarkdown': html},
+              'dshgo_display': {'textKind': html ? 'html' : 'plain', 'renderMarkdown': html},
             },
           );
           owner.checkAlive();

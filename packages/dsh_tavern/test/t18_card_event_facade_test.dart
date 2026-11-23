@@ -62,7 +62,7 @@ Future<T24Harness> _open({bool thinking = false}) async {
 Future<_Chat> _chat(T24Harness h, {required List<_Json> handlers, _Json? state, _Json? story}) async {
   final raw = _map(jsonDecode(utf8.decode(t24Card())));
   _map(raw['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'director': {
         'eventRules': {'v': 1, 'rules': handlers},
@@ -223,13 +223,13 @@ Future<List<TavernAgentRun>> _applyRuns(T24Harness h, String chat) async =>
 Future<_Json> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final saved = _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  final saved = _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
   // The document is deeply read-only; mutation fixtures need detached JSON.
   return _map(jsonDecode(jsonEncode(saved)));
 }
 
 List<_Json> _pending(_Json saved) {
-  final runtime = saved['dpskDirectorEventRuntime'];
+  final runtime = saved['dshgoDirectorEventRuntime'];
   return runtime is _Json ? _rowsOrEmpty(runtime['pendingPrompts']) : [];
 }
 
@@ -239,8 +239,8 @@ Future<void> _replaceSaved(T24Harness h, String chat, _Json saved) async {
     final extra = _map(
       jsonDecode(database.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String),
     );
-    final own = extra['dpsk'];
-    extra['dpsk'] = {if (own is _Json) ...own, 'tavernState': saved};
+    final own = extra['dshgo'];
+    extra['dshgo'] = {if (own is _Json) ...own, 'tavernState': saved};
     database.execute('UPDATE nodes SET extra = ? WHERE id = ?', [jsonEncode(extra), leaf]);
   });
 }
@@ -251,7 +251,7 @@ Future<_Json> _own(T24Harness h, String chat) async {
     final extra = _map(
       jsonDecode(database.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String),
     );
-    return extra['dpsk'] is _Json ? _map(extra['dpsk']) : <String, Object?>{};
+    return extra['dshgo'] is _Json ? _map(extra['dshgo']) : <String, Object?>{};
   });
 }
 
@@ -611,7 +611,7 @@ void _promptTests() {
     await _direct(h, created.chatId);
     await _reply(h, created.chatId);
     final saved = await _saved(h.engine, created.chatId);
-    final oldRuntime = _map(saved['dpskDirectorEventRuntime']);
+    final oldRuntime = _map(saved['dshgoDirectorEventRuntime']);
     final oldPrompt = _pending(saved).single;
     final files = await h.engine.exportChat(created.chatId);
     final imported = (await h.engine.importChats(created.characterId, files)).chatIds.single;
@@ -619,7 +619,7 @@ void _promptTests() {
     expect((await h.engine.readDirector(imported)).latestSuccess, isNull);
     final main = await _reply(h, imported);
     expect(_requestText(main.call), contains(_literal));
-    final after = _map((await _saved(h.engine, imported))['dpskDirectorEventRuntime']);
+    final after = _map((await _saved(h.engine, imported))['dshgoDirectorEventRuntime']);
     expect(after['consumed'], oldRuntime['consumed']);
     expect(after['firedHandlers'], oldRuntime['firedHandlers']);
     expect(after['pendingPrompts'], isEmpty);
@@ -684,7 +684,7 @@ void _promptTests() {
     final first = await _reply(h, chat);
     expect(_requestText(first.call), isNot(contains('EVENT-PROMPT-')));
     final saved = await _saved(h.engine, chat);
-    expect(saved.containsKey('dpskStateRuntime'), isFalse);
+    expect(saved.containsKey('dshgoStateRuntime'), isFalse);
     final prompt = _pending(saved).single;
     expect(prompt['text'], _literal);
     expect(prompt['eventId'], '${run.id}:event:0');
@@ -727,7 +727,7 @@ void _promptTests() {
     await _direct(h, chat);
     await _reply(h, chat);
     final saved = await _saved(h.engine, chat);
-    final ordinary = _maps(_map(saved['dpskStateRuntime'])['pendingPrompts']);
+    final ordinary = _maps(_map(saved['dshgoStateRuntime'])['pendingPrompts']);
     final events = _pending(saved);
     expect(ordinary, hasLength(1));
     expect(ordinary.single['text'], startsWith('ORDINARY-PROMPT-'));
@@ -741,7 +741,7 @@ void _promptTests() {
     expect('EVENT-PROMPT-'.allMatches(text), hasLength(1));
     expect('ORDINARY-PROMPT-'.allMatches(text), hasLength(1));
     final after = await _saved(h.engine, chat);
-    expect(_maps(_map(after['dpskStateRuntime'])['pendingPrompts']), isEmpty);
+    expect(_maps(_map(after['dshgoStateRuntime'])['pendingPrompts']), isEmpty);
     expect(_pending(after), isEmpty);
     expect(h.engine.variables(chat).containsKey('ordinaryMustStayLiteral'), isFalse);
     expect(h.engine.variables(chat).containsKey('eventMustStayLiteral'), isFalse);
@@ -781,7 +781,7 @@ void _promptTests() {
     _success(active);
     final saved = await _saved(h.engine, chat);
     expect(_pending(saved), isEmpty);
-    expect(_maps(_map(saved['dpskDirectorEventRuntime'])['consumed']), [
+    expect(_maps(_map(saved['dshgoDirectorEventRuntime'])['consumed']), [
       {'eventId': '${first.id}:event:0', 'handlerId': 'prompt'},
     ]);
     await _enable(h);
@@ -875,7 +875,7 @@ void _promptTests() {
         await _finishMain(active, text: '', reason: 'length');
         _success(active);
       }
-      expect((await _saved(h.engine, chat))['dpskDirectorEventRuntime'], saved['dpskDirectorEventRuntime']);
+      expect((await _saved(h.engine, chat))['dshgoDirectorEventRuntime'], saved['dshgoDirectorEventRuntime']);
       expect((await h.engine.path(chat)).last.text, 'partial body');
     });
   }
@@ -903,7 +903,7 @@ void _promptTests() {
     );
     await h.engine.sendOnly(chat, 'manual user');
     await h.engine.narrate(chat, 'manual narration');
-    expect((await _saved(h.engine, chat))['dpskDirectorEventRuntime'], saved['dpskDirectorEventRuntime']);
+    expect((await _saved(h.engine, chat))['dshgoDirectorEventRuntime'], saved['dshgoDirectorEventRuntime']);
     final before = _tables(h);
     final beforePath = await h.engine.path(chat);
     final active = await _startMain(h, h.engine.impersonate(chat));
@@ -918,7 +918,7 @@ void _promptTests() {
       (await h.engine.path(chat)).map((message) => (message.nodeId, message.role, message.text)),
       beforePath.map((message) => (message.nodeId, message.role, message.text)),
     );
-    expect((await _saved(h.engine, chat))['dpskDirectorEventRuntime'], saved['dpskDirectorEventRuntime']);
+    expect((await _saved(h.engine, chat))['dshgoDirectorEventRuntime'], saved['dshgoDirectorEventRuntime']);
   });
 }
 
@@ -1234,7 +1234,7 @@ void _stateAndTransactionTests() {
         'keep': [null, 'future'],
       },
     };
-    saved['dpskDirectorEventRuntime'] = unsupported;
+    saved['dshgoDirectorEventRuntime'] = unsupported;
     await _replaceSaved(h, chat, saved);
     await _enable(h);
     await _direct(h, chat);
@@ -1246,7 +1246,7 @@ void _stateAndTransactionTests() {
       ],
     );
     expect(await _count(h, chat), 1);
-    expect((await _saved(h.engine, chat))['dpskDirectorEventRuntime'], unsupported);
+    expect((await _saved(h.engine, chat))['dshgoDirectorEventRuntime'], unsupported);
     final view = await _view(h, chat);
     expect(view['valid'], isFalse);
     expect(view['issues'], isNotEmpty);
@@ -1344,7 +1344,7 @@ void _stateAndTransactionTests() {
         expect((await h.engine.path(chat)).last.text, 'original partial');
         expect(await _count(h, chat), 1);
         final after = await _saved(h.engine, chat);
-        for (final key in ['dpskStateRuntime', 'dpskDirectorEventRuntime', 'dpskStoryRuntime']) {
+        for (final key in ['dshgoStateRuntime', 'dshgoDirectorEventRuntime', 'dshgoStoryRuntime']) {
           expect(after[key], saved[key], reason: key);
         }
         final newOwn = await _own(h, chat);
@@ -1356,7 +1356,7 @@ void _stateAndTransactionTests() {
       }
       await h.reopen();
       expect(await _count(h, chat), 1);
-      expect((await _saved(h.engine, chat))['dpskDirectorEventRuntime'], saved['dpskDirectorEventRuntime']);
+      expect((await _saved(h.engine, chat))['dshgoDirectorEventRuntime'], saved['dshgoDirectorEventRuntime']);
     },
   );
 }
@@ -1376,13 +1376,13 @@ void _branchTests() {
       await _enable(h);
       final run = await _direct(h, chat);
       final first = await _reply(h, chat, text: 'first');
-      final original = (await _saved(h.engine, chat))['dpskDirectorEventRuntime'];
+      final original = (await _saved(h.engine, chat))['dshgoDirectorEventRuntime'];
       expect(await _count(h, chat), 1);
       final continued = await _startMain(h, h.engine.continueReply(chat, first.message.nodeId));
       await _finishMain(continued, text: ' continued');
       expect(_success(continued).nodeId, first.message.nodeId);
       expect(await _count(h, chat), 1);
-      expect((await _saved(h.engine, chat))['dpskDirectorEventRuntime'], original);
+      expect((await _saved(h.engine, chat))['dshgoDirectorEventRuntime'], original);
       final regenerated = await _startMain(h, h.engine.regenerate(chat, first.message.nodeId));
       await _finishMain(regenerated, text: 'independent sibling');
       final second = _success(regenerated);
@@ -1396,7 +1396,7 @@ void _branchTests() {
       expect(await _count(h, chat), 1);
       expect((await _own(h, chat))['directorEventInvocation'], isNot(secondAudit));
       await h.reopen();
-      expect((await _saved(h.engine, chat))['dpskDirectorEventRuntime'], original);
+      expect((await _saved(h.engine, chat))['dshgoDirectorEventRuntime'], original);
       expect((await h.engine.readDirectorEvents(chat)).single.status, 'pending');
     },
   );
@@ -1417,14 +1417,14 @@ void _branchTests() {
       await _direct(h, created.chatId);
       await _reply(h, created.chatId);
       final saved = await _saved(h.engine, created.chatId);
-      final runtime = _map(saved['dpskDirectorEventRuntime']);
+      final runtime = _map(saved['dshgoDirectorEventRuntime']);
       runtime['vendor'] = {
         'keep': [null, 'portable'],
       };
       await _replaceSaved(h, created.chatId, saved);
       final files = await h.engine.exportChat(created.chatId);
       final imported = (await h.engine.importChats(created.characterId, files)).chatIds.single;
-      expect((await _saved(h.engine, imported))['dpskDirectorEventRuntime'], runtime);
+      expect((await _saved(h.engine, imported))['dshgoDirectorEventRuntime'], runtime);
       final pending = _pending(await _saved(h.engine, imported));
       final run = await _direct(
         h,
@@ -1435,7 +1435,7 @@ void _branchTests() {
       );
       final main = await _reply(h, imported);
       expect(_requestText(main.call), contains(_literal));
-      final after = _map((await _saved(h.engine, imported))['dpskDirectorEventRuntime']);
+      final after = _map((await _saved(h.engine, imported))['dshgoDirectorEventRuntime']);
       expect(after['vendor'], runtime['vendor']);
       expect(after['firedHandlers'], ['portable-once']);
       expect(after['consumed'], runtime['consumed']);
@@ -1478,7 +1478,7 @@ void _branchTests() {
       final target = Directory('${work.path}/restored');
       await restoreTavernDirectory(archive.path, target.path);
       final engine = restored = await TavernEngine.openDirectory(target);
-      expect((await _saved(engine, chat))['dpskDirectorEventRuntime'], before['dpskDirectorEventRuntime']);
+      expect((await _saved(engine, chat))['dshgoDirectorEventRuntime'], before['dshgoDirectorEventRuntime']);
       final copied = (await engine.readAgentRuns(
         chat,
         limit: 1000,
@@ -1508,7 +1508,7 @@ Future<TavernPackVersionRef> _eventPack(
     'packVersion': version,
     'resources': <Object?>[],
     if (references.isNotEmpty) 'references': references,
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       if (withRule)
         'state': {
@@ -1541,7 +1541,7 @@ String _packEventWire(_Json capability, String bindingId) =>
         as String;
 
 _Json _packEventBinding(_Json saved, String bindingId) =>
-    _map(_map(_map(saved['dpskPackRuntime'])['bindings'])[bindingId]);
+    _map(_map(_map(saved['dshgoPackRuntime'])['bindings'])[bindingId]);
 
 void _gameplayEventTests() {
   test('pack event names and once domains remain separate in one real state settlement', () async {
@@ -1712,7 +1712,7 @@ void _gameplayEventTests() {
     expect(_requestText(stale.call), isNot(contains('VERSION-ONE')));
     expect(await _count(h, created.chatId), 0);
     final staleSaved = await _saved(h.engine, created.chatId);
-    final stalePack = staleSaved['dpskPackRuntime'];
+    final stalePack = staleSaved['dshgoPackRuntime'];
     expect(stalePack is _Json && _map(stalePack['bindings']).containsKey(binding), isFalse);
 
     final freshHelper = await _startDirector(h, created.chatId);
@@ -1775,7 +1775,7 @@ void _gameplayEventTests() {
       data['name'] = name;
       data['first_mes'] = '$name greeting';
       data['extensions'] = {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': {
             ..._state(),
@@ -1845,7 +1845,7 @@ void _gameplayEventTests() {
       reason: 'The host proposal is executable under the identical host definition used by this actor.',
     );
     final saved = await _saved(h.engine, chat);
-    expect(saved['dpskPackDefinitionConfigId'], actorView.effectiveConfigId);
+    expect(saved['dshgoPackDefinitionConfigId'], actorView.effectiveConfigId);
     expect(_maps(_map(_packEventBinding(saved, binding)['events'])['consumed']), [
       {'eventId': '${run.id}:event:0', 'handlerId': 'group-handler'},
     ]);
@@ -1889,9 +1889,9 @@ void _gameplayEventTests() {
     expect(active.events.values.whereType<TavernTurnFailed>().single.kind, TavernFailure.cancelled);
     expect(await _count(h, created.chatId), 0);
     final saved = await _saved(h.engine, created.chatId);
-    expect(saved.containsKey('dpskPackDefinitionConfigId'), isFalse);
+    expect(saved.containsKey('dshgoPackDefinitionConfigId'), isFalse);
     expect(
-      saved.containsKey('dpskPackRuntime'),
+      saved.containsKey('dshgoPackRuntime'),
       isFalse,
       reason: 'The failed old admission cannot consume the newly enabled rule.',
     );
@@ -1959,7 +1959,7 @@ void _gameplayEventTests() {
       final saved = await _saved(h.engine, created.chatId);
       if (item.count == 0) {
         expect(
-          saved.containsKey('dpskPackRuntime'),
+          saved.containsKey('dshgoPackRuntime'),
           isFalse,
           reason: 'The unresolved supported action cannot execute or consume its once rule.',
         );

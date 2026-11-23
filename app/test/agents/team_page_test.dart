@@ -4,14 +4,14 @@
 //
 //   flutter test --update-goldens test/agents/team_page_test.dart
 
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/agents/team_page.dart';
-import 'package:dpsk_app/ui/chat/widgets/live_clock.dart';
-import 'package:dpsk_app/ui/common/segmented_pill.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/agents/team_page.dart';
+import 'package:dsh_app/ui/chat/widgets/live_clock.dart';
+import 'package:dsh_app/ui/common/segmented_pill.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

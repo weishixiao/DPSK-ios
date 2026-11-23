@@ -383,7 +383,7 @@ extension _AuthoringPromptPreviews on TavernEngine {
     branch.bindReply(turn, capture.actorData, task.captureId);
     capture.scripts.claim(turn);
     final reply = branch.reply!;
-    capture.finalSecretCheck(currentLeafId: branch.leaf, replyState: _map(_map(reply.extra['dpsk'])['tavernState']));
+    capture.finalSecretCheck(currentLeafId: branch.leaf, replyState: _map(_map(reply.extra['dshgo'])['tavernState']));
     turn.cancellation.check();
     return task.value(
       TavernAuthoringPreviewStatus.complete,
@@ -421,7 +421,7 @@ final class _AuthoringPromptBranch {
         message: message,
         depth: history.isEmpty ? 1 : history.last.depth + 1,
         extra: {
-          'dpsk': {'tavernState': turn.currentState},
+          'dshgo': {'tavernState': turn.currentState},
         },
         original: const {},
       ),
@@ -466,9 +466,9 @@ final class _AuthoringPromptBranch {
             reportedUsage: original.reportedUsage,
           );
     final extra = old == null ? _copy(_groupReplyExtra(turn)) : _copy(old.extra);
-    extra['dpsk'] = {..._map(extra['dpsk']), 'tavernState': turn.currentState};
+    extra['dshgo'] = {..._map(extra['dshgo']), 'tavernState': turn.currentState};
     if (continuing && turn.groupView != null) {
-      final own = _map(extra['dpsk']);
+      final own = _map(extra['dshgo']);
       own['group'] = {
         ..._map(own['group']),
         'version': 1,
@@ -476,7 +476,7 @@ final class _AuthoringPromptBranch {
         'model': turn.config.model,
         'deepseek': turn.config.deepseek,
       };
-      extra['dpsk'] = own;
+      extra['dshgo'] = own;
     }
     final node = StoredNode(
       message: message,

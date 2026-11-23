@@ -1,7 +1,7 @@
 // Hosted conversation links opened in the app.
 // `https://go.dshtui.com/c/<id>#k=<key>` — an App Link, shared text
 // (lib/links/share_intake.dart → the link router) or the web viewer's
-// `dpsk://go.dshtui.com/c/…` — is fetched, decrypted on the phone and opened
+// `dshgo://go.dshtui.com/c/…` — is fetched, decrypted on the phone and opened
 // in the replay page.
 
 import 'dart:async';
@@ -62,7 +62,7 @@ Future<bool> openHostedLink(BuildContext context, Uri uri) async {
 DecodedConversation _decodeConversation((Uint8List, String) input) =>
     decodeConversationFile(utf8.decode(input.$1), fallbackTitle: input.$2);
 
-/// Registers `<share host>/c` with [router] — https and `dpsk://` links
+/// Registers `<share host>/c` with [router] — https and `dshgo://` links
 /// alike — so hosted links open in the replay page. [LinkHost] calls it.
 /// Returns the unregister function.
 VoidCallback registerHostedLinks(LinkRouter router) {

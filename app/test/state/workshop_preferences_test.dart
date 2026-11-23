@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/state/workshop_preferences.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/state/workshop_preferences.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';

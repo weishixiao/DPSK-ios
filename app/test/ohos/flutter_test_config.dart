@@ -2,9 +2,9 @@
 // render product fonts/assets. Visual tests keep test/flutter_test_config.dart.
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/performance/performance_state.dart';
-import 'package:dpsk_app/state/locale_state.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/performance/performance_state.dart';
+import 'package:dsh_app/state/locale_state.dart';
 
 import '../support/quiet_performance.dart';
 

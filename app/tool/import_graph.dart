@@ -7,7 +7,7 @@
 // `test/arch/import_direction_test.dart` uses the same scanner as its guard.
 import 'dart:io';
 
-const _package = 'dpsk_app';
+const _package = 'dsh_app';
 
 /// Files directly under `lib/` that wire the app together; they may import anything.
 const compositionRoots = {'app.dart', 'main.dart'};

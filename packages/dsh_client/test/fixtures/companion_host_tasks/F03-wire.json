@@ -18,7 +18,7 @@
       "name": "accepted_create_long_source_room",
       "request": {
         "method": "POST",
-        "path": "/DPSK/v1/companion/tasks",
+        "path": "/dsh-go/v1/companion/tasks",
         "body": {
           "v": 1,
           "hostStoreId": "983a33de-5cec-4d89-82dc-7ef2cd33e120",
@@ -118,7 +118,7 @@
       "name": "amend_before_create_barrier",
       "request": {
         "method": "POST",
-        "path": "/DPSK/v1/companion/tasks/amend-before-create/amend",
+        "path": "/dsh-go/v1/companion/tasks/amend-before-create/amend",
         "body": {
           "v": 1,
           "hostStoreId": "983a33de-5cec-4d89-82dc-7ef2cd33e120",
@@ -210,7 +210,7 @@
       "name": "cancel_preserves_prior_artifact",
       "request": {
         "method": "POST",
-        "path": "/DPSK/v1/companion/tasks/task-1/cancel",
+        "path": "/dsh-go/v1/companion/tasks/task-1/cancel",
         "body": {
           "v": 1,
           "hostStoreId": "983a33de-5cec-4d89-82dc-7ef2cd33e120",
@@ -348,7 +348,7 @@
       "name": "pending_original_approval_distinct_ids",
       "request": {
         "method": "GET",
-        "path": "/DPSK/v1/companion/tasks/task-1?hostStoreId=afc06c82-95a6-4879-9695-8c5a6508b277"
+        "path": "/dsh-go/v1/companion/tasks/task-1?hostStoreId=afc06c82-95a6-4879-9695-8c5a6508b277"
       },
       "response": {
         "status": 200,

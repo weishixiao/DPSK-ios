@@ -251,7 +251,7 @@ class PackFormat(unittest.TestCase):
             with self.subTest(pid):
                 self.assertEqual(p['name'], name)
                 self.assertEqual(p['author'], 'DSH-TUI')
-                self.assertEqual(p['license'], 'DSH-TUI 吉祥物，作者授权 DPSK 使用')
+                self.assertEqual(p['license'], 'DSH-TUI 吉祥物，作者授权 dsh-go 使用')
                 self.assertEqual(p['source'], source)
                 with open(os.path.join(d, 'pack.json'), encoding='utf-8') as fh:
                     self.assertNotIn('非官方', fh.read())

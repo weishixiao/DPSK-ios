@@ -6,11 +6,11 @@
 // with equal room either side of their text; the galleries' even gaps and
 // edges on the column; and the card unchanged by the phone's text size.
 
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/share/qr_code.dart';
-import 'package:dpsk_app/ui/share/share_card.dart';
-import 'package:dpsk_app/ui/share/share_content.dart';
-import 'package:dpsk_app/ui/share/share_gallery.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/share/qr_code.dart';
+import 'package:dsh_app/ui/share/share_card.dart';
+import 'package:dsh_app/ui/share/share_content.dart';
+import 'package:dsh_app/ui/share/share_gallery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -2,13 +2,13 @@
 // turn end is the phone's, what goes to the native side, and how the turn's
 // alert follows (lib/state/notify_state.dart).
 
-import 'package:dpsk_app/phone/phone_channel.dart';
-import 'package:dpsk_app/state/chat_reveal.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
-import 'package:dpsk_app/state/phone_turn_end.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
+import 'package:dsh_app/phone/phone_channel.dart';
+import 'package:dsh_app/state/chat_reveal.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
+import 'package:dsh_app/state/phone_turn_end.dart';
+import 'package:dsh_app/state/sessions_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

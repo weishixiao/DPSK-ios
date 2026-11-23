@@ -3,11 +3,11 @@
 //
 //   flutter test test/settings/quick_panel_settings_test.dart
 
-import 'package:dpsk_app/state/quick_panel_state.dart';
-import 'package:dpsk_app/ui/settings/interface_page.dart';
-import 'package:dpsk_app/ui/settings/quick_panel_items_sheet.dart';
-import 'package:dpsk_app/ui/shell/sessions_drawer.dart' show DrawerDestination;
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/quick_panel_state.dart';
+import 'package:dsh_app/ui/settings/interface_page.dart';
+import 'package:dsh_app/ui/settings/quick_panel_items_sheet.dart';
+import 'package:dsh_app/ui/shell/sessions_drawer.dart' show DrawerDestination;
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

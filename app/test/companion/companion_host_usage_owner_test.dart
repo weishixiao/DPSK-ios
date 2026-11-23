@@ -4,8 +4,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_local.dart';
-import 'package:dpsk_app/companion/companion_memory.dart';
+import 'package:dsh_app/companion/companion_local.dart';
+import 'package:dsh_app/companion/companion_memory.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -49,7 +49,7 @@ class _Fixture {
       methods.add(request.method);
       final query = Map<String, String>.from(request.uri.queryParameters);
       queries.add(query);
-      expect(request.uri.path, '/DPSK/v1/companion/usage');
+      expect(request.uri.path, '/dsh-go/v1/companion/usage');
       if (!started.isCompleted) started.complete();
       final response = await answer(query);
       request.response.statusCode = status;

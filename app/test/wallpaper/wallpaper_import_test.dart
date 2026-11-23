@@ -4,11 +4,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/plugins/native/native_effects.dart';
-import 'package:dpsk_app/plugins/native/native_file_platform.dart';
-import 'package:dpsk_app/state/wallpaper_state.dart';
-import 'package:dpsk_app/wallpaper/custom_wallpaper.dart';
-import 'package:dpsk_app/wallpaper/wallpaper_import.dart';
+import 'package:dsh_app/plugins/native/native_effects.dart';
+import 'package:dsh_app/plugins/native/native_file_platform.dart';
+import 'package:dsh_app/state/wallpaper_state.dart';
+import 'package:dsh_app/wallpaper/custom_wallpaper.dart';
+import 'package:dsh_app/wallpaper/wallpaper_import.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

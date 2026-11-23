@@ -1,8 +1,8 @@
 // Fakes for the safe-mode tests: a runtime controller that records how it was
 // started, and a bridge that answers the safe-mode calls without a device.
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
 
 class RecordingRuntime extends LocalRuntimeController {
   RecordingRuntime(this.initial);

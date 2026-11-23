@@ -1,7 +1,7 @@
 // Optional iOS pet window: enabling or recovering it asks the native side.
 
-import 'package:dpsk_app/pets/overlay_channel.dart';
-import 'package:dpsk_app/ui/phone/ios_pet_pip_section.dart';
+import 'package:dsh_app/pets/overlay_channel.dart';
+import 'package:dsh_app/ui/phone/ios_pet_pip_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

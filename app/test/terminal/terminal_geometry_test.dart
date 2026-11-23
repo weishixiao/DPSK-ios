@@ -5,9 +5,9 @@
 // mirror each other around a centred title; the tab capsules and 「+」 share
 // one height and one centre line, flush with the card's edge.
 
-import 'package:dpsk_app/ui/terminal/terminal_keys.dart';
-import 'package:dpsk_app/ui/terminal/terminal_page.dart';
-import 'package:dpsk_app/ui/terminal/terminal_screen.dart';
+import 'package:dsh_app/ui/terminal/terminal_keys.dart';
+import 'package:dsh_app/ui/terminal/terminal_page.dart';
+import 'package:dsh_app/ui/terminal/terminal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

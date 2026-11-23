@@ -108,7 +108,7 @@ class SchemaMeta {
   final String? role;
   final Object? extra;
 
-  /// A name the schema gives itself (`meta.title`; the DPSK bridge keeps
+  /// A name the schema gives itself (`meta.title`; the dsh-go bridge keeps
   /// it). Rare: a plugin's Config usually only has a description.
   final LocalizedText? title;
   final LocalizedText? description;

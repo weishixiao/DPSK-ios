@@ -1,8 +1,8 @@
-Package: com.dpsk.agentd
-Name: DPSK Agent Service
+Package: io.github.ccch1mneyyy.dshgo.agentd
+Name: DSH Go Agent Service
 Version: 0.1.0
 Architecture: iphoneos-arm64
-Description: Privileged executor for the DPSK reversal workbench. Reads processes, modules and memory for the apps its owner builds; every write needs a confirmed request.
+Description: Privileged executor for the DSH Go reversal workbench. Reads processes, modules and memory for the apps its owner builds; every write needs a confirmed request.
 Maintainer: local
 Author: local
 Section: Development

@@ -495,7 +495,7 @@ Future<_Harness> _open({bool deepseek = true, bool thinking = true, bool statefu
   data['description'] = _privateInput;
   if (stateful) {
     data['extensions'] = {
-      'dpsk': {
+      'dshgo': {
         'v': 1,
         'state': {
           'schema': {

@@ -13,7 +13,7 @@
 | `DSH_HOME` | `<guestRoot>/root/.dsh` |
 | `DSH_AGENTS_HOME` | `<guestRoot>/root/.agents` |
 | 唯一默认工作区和 `workspaceRoots[0]` | `<guestRoot>/root/workspace` |
-| 用户交付目录 | `<guestRoot>/root/workspace/DPSK` |
+| 用户交付目录 | `<guestRoot>/root/workspace/DSH-Go` |
 | 诊断 Markdown | `<DSH_HOME>/dsh-app/diagnostics.md` |
 | 运行时安装基目录 / 已提交代码树 | `context.filesDir + '/dsh-runtime'` / 其下 `tree`，保持原位 |
 
@@ -51,4 +51,4 @@
 
 递归公共声明核查使用 TypeScript 5.9.3、固定公开 OH `.d.ts` 和明确的最小 Flutter 签名。初次在文件写入缓冲区发现诊断，改为明确的 ArrayBuffer 并复制当前 subarray 后，最终 RuntimePlugin 的 8 个产品模块图为零诊断；真实短写/子视图测试也通过。该结果不等于 ArkTS/hvigor 编译通过。最终补丁 SHA 与专职复核结论见交付根说明。
 
-v6 时专用产出列表的 FilesMediaPlugin 单独交付为27号；v7 为去除该插件顶层原生导入，完整并入这部分，统一替代26和27。共享 RuntimePaths、启动时创建 DPSK 和受管理的 AGENTS 指令保留。不要在 v7 上再重复应用26或27。
+v6 时专用产出列表的 FilesMediaPlugin 单独交付为27号；v7 为去除该插件顶层原生导入，完整并入这部分，统一替代26和27。共享 RuntimePaths、启动时创建 DSH-Go 和受管理的 AGENTS 指令保留。不要在 v7 上再重复应用26或27。

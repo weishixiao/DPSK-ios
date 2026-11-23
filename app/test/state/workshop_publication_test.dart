@@ -1,5 +1,5 @@
-import 'package:dpsk_app/state/workshop_publication.dart';
-import 'package:dpsk_app/state/workshop_publish_sources.dart';
+import 'package:dsh_app/state/workshop_publication.dart';
+import 'package:dsh_app/state/workshop_publish_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 WorkshopPublicationInput _valid() => WorkshopPublicationInput(

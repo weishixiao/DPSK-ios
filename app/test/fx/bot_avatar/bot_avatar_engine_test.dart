@@ -3,12 +3,12 @@
 import 'dart:math' as math;
 import 'dart:ui' show Color;
 
-import 'package:dpsk_app/ui/fx/bot_avatar/bot_avatar.dart';
-import 'package:dpsk_app/ui/fx/bot_avatar/bot_avatar_color.dart';
-import 'package:dpsk_app/ui/fx/bot_avatar/bot_avatar_engine.dart';
-import 'package:dpsk_app/ui/fx/bot_avatar/bot_avatar_form.dart';
-import 'package:dpsk_app/ui/fx/bot_avatar/bot_avatar_fur.dart';
-import 'package:dpsk_app/ui/fx/bot_avatar/bot_avatar_outline.dart';
+import 'package:dsh_app/ui/fx/bot_avatar/bot_avatar.dart';
+import 'package:dsh_app/ui/fx/bot_avatar/bot_avatar_color.dart';
+import 'package:dsh_app/ui/fx/bot_avatar/bot_avatar_engine.dart';
+import 'package:dsh_app/ui/fx/bot_avatar/bot_avatar_form.dart';
+import 'package:dsh_app/ui/fx/bot_avatar/bot_avatar_fur.dart';
+import 'package:dsh_app/ui/fx/bot_avatar/bot_avatar_outline.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /* advance a sim by `seconds` in 60 fps steps */

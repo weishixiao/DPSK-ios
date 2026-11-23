@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/terminal_state.dart';
-import 'package:dpsk_app/ui/terminal/terminal_screen.dart';
+import 'package:dsh_app/state/terminal_state.dart';
+import 'package:dsh_app/ui/terminal/terminal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

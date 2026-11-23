@@ -3,18 +3,18 @@
 // the new Bot form and the new group sheet create, memory is edited in place,
 // a member's work is stopped.
 
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/ui/bots/bot_chat_page.dart';
-import 'package:dpsk_app/ui/bots/bot_details_page.dart';
-import 'package:dpsk_app/ui/bots/bots_page.dart';
-import 'package:dpsk_app/ui/bots/drawer_row.dart';
-import 'package:dpsk_app/ui/bots/new_bot_page.dart';
-import 'package:dpsk_app/ui/bots/new_room_sheet.dart';
-import 'package:dpsk_app/ui/bots/room_chat_page.dart';
-import 'package:dpsk_app/ui/bots/room_details_page.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/ui/bots/bot_chat_page.dart';
+import 'package:dsh_app/ui/bots/bot_details_page.dart';
+import 'package:dsh_app/ui/bots/bots_page.dart';
+import 'package:dsh_app/ui/bots/drawer_row.dart';
+import 'package:dsh_app/ui/bots/new_bot_page.dart';
+import 'package:dsh_app/ui/bots/new_room_sheet.dart';
+import 'package:dsh_app/ui/bots/room_chat_page.dart';
+import 'package:dsh_app/ui/bots/room_details_page.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';

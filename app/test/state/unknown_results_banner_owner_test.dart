@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/ask_ai.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/unknown_results.dart';
-import 'package:dpsk_app/ui/chat/widgets/unknown_results_banner.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/ask_ai.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/unknown_results.dart';
+import 'package:dsh_app/ui/chat/widgets/unknown_results_banner.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

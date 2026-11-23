@@ -5,16 +5,16 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_files.dart';
-import 'package:dpsk_app/ui/tavern/tavern_pack_bindings_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_pack_export_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_packs_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_widgets.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_files.dart';
+import 'package:dsh_app/ui/tavern/tavern_pack_bindings_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_pack_export_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_packs_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_widgets.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -36,7 +36,7 @@ TavernPackVersion _version(String id, String version, {bool removed = false}) =>
     'formatVersion': 1,
     'packId': id,
     'packVersion': version,
-    'dpsk': {
+    'dshgo': {
       'cast': [
         {
           'id': 'guard',

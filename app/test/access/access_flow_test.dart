@@ -1,4 +1,4 @@
-// First run's 「想让 DPSK 帮你做哪些事」 end to end with a fake phone: the
+// First run's 「想让 DSH Go 帮你做哪些事」 end to end with a fake phone: the
 // pick (and what picking asks first), the walk (dialogs answer at once,
 // pages on coming back, a maker's switch on the person's word, the
 // restricted-settings steps), the summary, a walk resumed after the app was
@@ -7,14 +7,14 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/access_state.dart';
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/access/access_walk.dart';
-import 'package:dpsk_app/ui/onboarding/access_step.dart';
-import 'package:dpsk_app/ui/settings/system_access_page.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/access_state.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/access/access_walk.dart';
+import 'package:dsh_app/ui/onboarding/access_step.dart';
+import 'package:dsh_app/ui/settings/system_access_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -68,7 +68,7 @@ void main() {
     testWidgets('nothing picked to begin with; 跳过 goes on and writes nothing', (tester) async {
       var done = 0;
       await _pump(tester, AccessStepPage(onDone: () => done++), FakeAccessDriver(offPhone));
-      expect(find.text('想让 DPSK 帮你做哪些事'), findsOneWidget);
+      expect(find.text('想让 DSH Go 帮你做哪些事'), findsOneWidget);
       for (final name in ['读写手机里的文件', '桌宠与悬浮窗', '手机操控', '后台持续运行', '语音输入']) {
         expect(find.text(name), findsOneWidget);
         expect(tester.getSemantics(find.text(name)), isSemantics(isChecked: false, hasCheckedState: true));
@@ -174,7 +174,7 @@ void main() {
 
       // 4 / 5: vivo's own switch, with where it lives; the person's word for it.
       expect(find.text('允许后台高耗电'), findsOneWidget);
-      expect(find.text('位置：电池 › 后台耗电管理 › DPSK'), findsOneWidget);
+      expect(find.text('位置：电池 › 后台耗电管理 › DSH Go'), findsOneWidget);
       expect(_primaryLabel(tester), '去设置');
       await _tapPrimary(tester);
       await awayAndBack(tester);

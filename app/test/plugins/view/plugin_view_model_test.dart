@@ -4,8 +4,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui.dart';
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui.dart';
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'fixtures.dart';
@@ -444,7 +444,7 @@ void main() {
       expect(src('asset:/etc/x.png'), isNull);
       expect(src('asset:a/.hidden/b.png'), isNull);
       expect(src('asset:icons/a.svg'), isNull);
-      expect(src('/DPSK/v1/assets/pkg/a.png'), isNull);
+      expect(src('/dsh-go/v1/assets/pkg/a.png'), isNull);
       expect(src('https://tracker.example/p.png'), isNull);
       expect(src('//tracker.example/p.png'), isNull);
       expect(src('data:image/svg+xml;base64,PHN2Zy8+'), isNull);

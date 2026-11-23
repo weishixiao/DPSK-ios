@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:test/test.dart';
 
-const _path = '/DPSK/v1/companion/recall';
+const _path = '/dsh-go/v1/companion/recall';
 const _store = '10000000-0000-4000-8000-000000000001';
 const _bindingId = '20000000-0000-4000-8000-000000000002';
 const _epoch = '30000000-0000-4000-8000-000000000003';

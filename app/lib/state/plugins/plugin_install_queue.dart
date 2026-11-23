@@ -329,7 +329,7 @@ class PluginInstallsController extends Notifier<Map<String, PluginInstallJob>> {
                 PluginFailureKind.mismatch,
                 appL10n.marketMismatchTitle,
                 appL10n.marketMismatchMessage(expected.version),
-                detail: 'DPSK.json  ${expected.integrity}\nnpm          $reported',
+                detail: 'dsh-go.json  ${expected.integrity}\nnpm          $reported',
               ),
             ),
           );

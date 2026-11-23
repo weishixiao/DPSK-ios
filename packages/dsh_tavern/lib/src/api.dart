@@ -88,7 +88,7 @@ class TavernCharacter {
   /// The card picture on this phone (the PNG it came in, or the `main` icon).
   final String? avatarPath;
 
-  /// Detached extensions.dpsk.theme on complete details. Missing/null stays
+  /// Detached extensions.dshgo.theme on complete details. Missing/null stays
   /// null; list summaries omit it. The app interprets this raw JSON value.
   final Object? theme;
 
@@ -1091,7 +1091,7 @@ abstract interface class Tavern {
   /// ST-hidden messages remain selectable; soft-deleted messages do not.
   Future<void> selectNode(String chatId, String nodeId, {bool restoreDescendants = false});
 
-  /// Labels a visible branch root in extra.dpsk.branchName. Trims the name;
+  /// Labels a visible branch root in extra.dshgo.branchName. Trims the name;
   /// null/empty clears it. Cancels and awaits this chat's active turn before
   /// merging the latest extra. Does not rewrite text or selected edges.
   Future<void> nameBranch(String chatId, String nodeId, String? name);
@@ -1136,7 +1136,7 @@ abstract interface class Tavern {
   /// Sampling keys use their native ST names. The original source is unchanged.
   /// Name is a library label; package metadata is synchronized when present.
   /// For plain ST exports the caller chooses the corresponding file name.
-  /// extensions.dpsk.presetEnvelope is an export-owned carrier; edits that
+  /// extensions.dshgo.presetEnvelope is an export-owned carrier; edits that
   /// change it are rejected, so an opaque wrapper cannot be silently lost.
   Future<TavernPresetImportResult> updatePreset(String presetId, Map<String, Object?> patch, {String? name});
   Future<TavernPresetImportResult> updatePresetPrompt(String presetId, String identifier, Map<String, Object?> patch);
@@ -1146,7 +1146,7 @@ abstract interface class Tavern {
   Future<TavernPresetImportResult> setPresetOrder(String presetId, List<String> identifiers);
   Future<TavernPresetImportResult> setPresetPromptEnabled(String presetId, String identifier, bool enabled);
 
-  /// Native ST JSON, with preserved project data under extensions.dpsk.
+  /// Native ST JSON, with preserved project data under extensions.dshgo.
   Future<String> exportPreset(String presetId);
 
   Future<TavernPresetSelection> presetSelection({String? chatId});

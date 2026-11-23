@@ -5,7 +5,7 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

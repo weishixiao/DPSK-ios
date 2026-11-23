@@ -203,7 +203,7 @@ void main() {
           // Old catalogues have no tail table. Their original-node fallback
           // must remain usable without a schema migration.
           final metadata = store.chat(chatId).metadata;
-          final own = (metadata['dpsk'] as Map<String, Object?>)['chatJsonl'] as Map<String, Object?>;
+          final own = (metadata['dshgo'] as Map<String, Object?>)['chatJsonl'] as Map<String, Object?>;
           for (final file in (own['files'] as List<Object?>).cast<Map<String, Object?>>()) {
             file.remove('unusedTails');
           }
@@ -244,7 +244,7 @@ Map<String, Object?> _tailProjection(List<StChatDocument> documents) => {
 };
 
 Map<String, Object?> _ownHeader(StChatDocument document) =>
-    ((document.header['chat_metadata'] as Map<String, Object?>)['dpsk'] as Map<String, Object?>)['chatJsonl']
+    ((document.header['chat_metadata'] as Map<String, Object?>)['dshgo'] as Map<String, Object?>)['chatJsonl']
         as Map<String, Object?>;
 String _sourceName(StChatDocument document) => _ownHeader(document)['sourceFileName'] as String;
 TavernChatFile _file(StChatDocument document) => TavernChatFile(fileName: document.fileName, bytes: document.encode());
@@ -283,7 +283,7 @@ StChatDocument _document(
           ],
         'extra': <String, Object?>{
           if (noActiveVariables)
-            'dpsk': <String, Object?>{
+            'dshgo': <String, Object?>{
               'chatJsonl': <String, Object?>{'version': 1, 'hasMessageVariables': false},
             },
         },

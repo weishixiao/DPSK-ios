@@ -1,5 +1,5 @@
 // 「对话回放」 — a shared conversation, read-only, played back the way it happened.
-// Opened from a `.dpsk` file (system share, 「打开方式」) or as the share sheet's
+// Opened from a `.dshgo` file (system share, 「打开方式」) or as the share sheet's
 // preview.
 //
 //   (‹) (  修复登录重复提交      ) (≡)     ← back · title · 全文

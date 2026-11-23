@@ -6,13 +6,13 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_text_controller.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_controller.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_widgets.dart';
-import 'package:dpsk_app/ui/chat/widgets/attachments.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/mention/mention_text_controller.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/voice/voice_controller.dart';
+import 'package:dsh_app/ui/chat/voice/voice_widgets.dart';
+import 'package:dsh_app/ui/chat/widgets/attachments.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -4,18 +4,18 @@
 // the plugin's native settings. Regenerate with
 // `flutter test --update-goldens test/plugins/native/native_slots_golden_test.dart`.
 
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/widgets/assistant_message.dart';
-import 'package:dpsk_app/ui/plugins/native/native_composer_bar.dart';
-import 'package:dpsk_app/ui/plugins/native/native_panel.dart';
-import 'package:dpsk_app/ui/plugins/native/native_plugin_section.dart';
-import 'package:dpsk_app/ui/plugins/seats/session_plugins_tab.dart';
-import 'package:dpsk_app/ui/theme/backdrop.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/widgets/assistant_message.dart';
+import 'package:dsh_app/ui/plugins/native/native_composer_bar.dart';
+import 'package:dsh_app/ui/plugins/native/native_panel.dart';
+import 'package:dsh_app/ui/plugins/native/native_plugin_section.dart';
+import 'package:dsh_app/ui/plugins/seats/session_plugins_tab.dart';
+import 'package:dsh_app/ui/theme/backdrop.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,7 +69,7 @@ FakeBridge _bridge(_Copy c) {
   final bridge = FakeBridge(
     contributions([
       plugin(
-        'DPSK-example-quick',
+        'dsh-go-example-quick',
         title: c.quick,
         icon: 'bolt',
         composer: [
@@ -88,7 +88,7 @@ FakeBridge _bridge(_Copy c) {
         ],
       ),
       plugin(
-        'DPSK-example-usage',
+        'dsh-go-example-usage',
         title: c.usage,
         icon: 'chart',
         strip: [
@@ -106,8 +106,8 @@ FakeBridge _bridge(_Copy c) {
       ),
     ]),
   );
-  bridge.views['DPSK-example-usage/usage'] = DshGoView(
-    pkg: 'DPSK-example-usage',
+  bridge.views['dsh-go-example-usage/usage'] = DshGoView(
+    pkg: 'dsh-go-example-usage',
     id: 'usage',
     title: c.usage,
     view: {
@@ -302,7 +302,7 @@ void main() {
           app(
             NativePanelPage(
               panel: NativePanel(
-                package: 'DPSK-example-usage',
+                package: 'dsh-go-example-usage',
                 id: 'usage',
                 title: c.usage,
                 icon: 'chart',
@@ -337,7 +337,7 @@ void main() {
               occupancy: const {Slots.rightPaneTab: []},
               nativePanels: [
                 NativePanel(
-                  package: 'DPSK-example-usage',
+                  package: 'dsh-go-example-usage',
                   id: 'usage',
                   title: c.usage,
                   icon: 'chart',
@@ -368,8 +368,8 @@ void main() {
                       return const Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          NativePluginSection(package: 'DPSK-example-quick'),
-                          NativePluginSection(package: 'DPSK-example-usage'),
+                          NativePluginSection(package: 'dsh-go-example-quick'),
+                          NativePluginSection(package: 'dsh-go-example-usage'),
                         ],
                       );
                     },
@@ -383,9 +383,9 @@ void main() {
         await pumpFrames(tester);
         final container = ProviderScope.containerOf(tester.element(find.byType(Consumer).first));
         container.read(nativeDiagnosticsProvider.notifier)
-          ..view('DPSK-example-usage', 3277)
-          ..invoked('DPSK-example-usage', const Duration(milliseconds: 48))
-          ..report('DPSK-example-usage', '/runtime/usage', [
+          ..view('dsh-go-example-usage', 3277)
+          ..invoked('dsh-go-example-usage', const Duration(milliseconds: 48))
+          ..report('dsh-go-example-usage', '/runtime/usage', [
             NativeIssue('', nativeIssueText('timeout'), code: 'timeout'),
           ]);
         await pumpFrames(tester);

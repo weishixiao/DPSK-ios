@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

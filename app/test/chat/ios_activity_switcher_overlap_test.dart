@@ -1,6 +1,6 @@
-import 'package:dpsk_app/ui/chat/run_info.dart';
-import 'package:dpsk_app/ui/chat/widgets/activity_strip.dart';
-import 'package:dpsk_app/ui/chat/widgets/live_clock.dart';
+import 'package:dsh_app/ui/chat/run_info.dart';
+import 'package:dsh_app/ui/chat/widgets/activity_strip.dart';
+import 'package:dsh_app/ui/chat/widgets/live_clock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

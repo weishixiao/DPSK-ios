@@ -1,6 +1,6 @@
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/unknown_results.dart';
-import 'package:dpsk_app/ui/chat/widgets/unknown_results_banner.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/unknown_results.dart';
+import 'package:dsh_app/ui/chat/widgets/unknown_results_banner.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

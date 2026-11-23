@@ -3,11 +3,11 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import 'package:dpsk_app/l10n/gen/app_localizations.dart';
-import 'package:dpsk_app/pets/pet_library.dart';
-import 'package:dpsk_app/pets/pet_pack.dart';
-import 'package:dpsk_app/pets/pet_pack_validator.dart' show petArchiveByteCap;
-import 'package:dpsk_app/ui/pets/pet_picker.dart' show codexImportWarnings, codexWarningText;
+import 'package:dsh_app/l10n/gen/app_localizations.dart';
+import 'package:dsh_app/pets/pet_library.dart';
+import 'package:dsh_app/pets/pet_pack.dart';
+import 'package:dsh_app/pets/pet_pack_validator.dart' show petArchiveByteCap;
+import 'package:dsh_app/ui/pets/pet_picker.dart' show codexImportWarnings, codexWarningText;
 import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_test/flutter_test.dart';
 

@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/read_list_identity.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/read_list_identity.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -159,12 +159,12 @@ final emptyOfficialMarket = MarketCatalog(
 );
 
 /// The official fixtures (`fixtures/official-index.json` and
-/// `fixtures/DPSK.json`), written to the contract in
+/// `fixtures/dsh-go.json`), written to the contract in
 /// docs/design/plugin-market.md §3.
 Map<String, Object?> officialIndexJson() =>
     jsonDecode(File('test/plugins/fixtures/official-index.json').readAsStringSync()) as Map<String, Object?>;
 Map<String, Object?> officialSidecarJson() =>
-    jsonDecode(File('test/plugins/fixtures/DPSK.json').readAsStringSync()) as Map<String, Object?>;
+    jsonDecode(File('test/plugins/fixtures/dsh-go.json').readAsStringSync()) as Map<String, Object?>;
 
 /// The official market read from the fixtures, as the app reads the live one.
 MarketCatalog officialFixtureMarket({Map<String, Object?>? index, Map<String, Object?>? sidecar}) => MarketCatalog(

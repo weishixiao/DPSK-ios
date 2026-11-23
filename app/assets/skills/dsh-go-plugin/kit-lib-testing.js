@@ -1,4 +1,4 @@
-// A stand-in for DSH + the DPSK bridge, for unit tests of a plugin's host
+// A stand-in for DSH + the dsh-go bridge, for unit tests of a plugin's host
 // half and for `check --load`. It runs your `apply(ctx)` against a fake
 // cordis context, records what you register through `ctx.dshGo`, and answers
 // like the bridge: the same manifest parse, the same `ready` / `no-handler` /
@@ -313,13 +313,13 @@ export function createTestHost(options = {}) {
         dataPanels: [...regs.panels].filter(([, r]) => typeof r.data === 'function').map(([id]) => id),
       }
     },
-    /** The plugin's row in GET /DPSK/v1/contributions for `caps`. */
+    /** The plugin's row in GET /dsh-go/v1/contributions for `caps`. */
     contributions(capsOverride = {}) {
       const c = { ...caps, ...capsOverride }
       return renderPlugin(parsed, { versions: [c.protocol ?? PROTOCOL], app: c.app, locale: c.locale, surfaces: c.surfaces, features: c.features }, live())
     },
     /**
-     * POST /DPSK/v1/invoke. Resolves { effects, issues } like the bridge; rejects with
+     * POST /dsh-go/v1/invoke. Resolves { effects, issues } like the bridge; rejects with
      * { status, code } where the bridge would answer an error.
      */
     async invoke(id, request = {}) {
@@ -386,7 +386,7 @@ export function createTestHost(options = {}) {
     },
     /** Deferred results still running (each settles once: done, timeout, cancelled or error). */
     pendings,
-    /** GET /DPSK/v1/views/<pkg>/<id>: the view your panel(id) returns for `scope`, with stats. */
+    /** GET /dsh-go/v1/views/<pkg>/<id>: the view your panel(id) returns for `scope`, with stats. */
     async view(id, scope = {}, capsOverride = {}) {
       const item = parsed.items.panels.find((p) => p.id === id)
       if (item === undefined) throw new HostError(404, 'not-found', `${parsed.pkg} declares no panel ${id}`)

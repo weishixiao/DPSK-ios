@@ -96,7 +96,7 @@ void main() {
           'mes': 'FIRST',
           'extra': {
             'foreign': ['keep'],
-            'dpsk': {
+            'dshgo': {
               'other': {'kept': true},
             },
           },
@@ -119,9 +119,9 @@ void main() {
     final decoded = StChatDocument.decode(documents.first.fileName, documents.first.bytes);
     final row = decoded.messages.single;
     final swipeExtras = (row['swipe_info']! as List<Object?>).map((value) => _map(_map(value)['extra']));
-    final original = swipeExtras.singleWhere((extra) => _map(extra['dpsk'])['branchName'] == 'FIRST LABEL');
+    final original = swipeExtras.singleWhere((extra) => _map(extra['dshgo'])['branchName'] == 'FIRST LABEL');
     expect(original['foreign'], ['keep']);
-    expect(_map(original['dpsk'])['other'], {'kept': true});
+    expect(_map(original['dshgo'])['other'], {'kept': true});
     expect(h.engine.variables(chat), values);
   });
   test('unknown and foreign nodes fail without relabeling either chat', () async {
@@ -331,11 +331,11 @@ void main() {
     expect(infos, hasLength(3));
     expect(_map(_map(infos[0])['extra'])['reasoning'], '\ufeff旧思考🐋');
     expect(_map(_map(infos[0])['extra'])['foreign'], {'old': true});
-    final hiddenOwn = _map(_map(_map(infos[1])['extra'])['dpsk']);
+    final hiddenOwn = _map(_map(_map(infos[1])['extra'])['dshgo']);
     expect(hiddenOwn['branchName'], '离线路');
     expect(_map(hiddenOwn['chatJsonl'])['hidden'], isTrue);
     expect(rows[2]['is_system'], isFalse);
-    expect(_map(_map(rows[0]['extra'])['dpsk'])['branchName'], '主根');
+    expect(_map(_map(rows[0]['extra'])['dshgo'])['branchName'], '主根');
     expect(_map(document.header['chat_metadata'])['variables'], {'n': 7});
     expect(_treeFields(await h.engine.tree(chat)), _swipeTreeExpected(ids));
     expect((await h.engine.path(chat)).map((node) => node.nodeId), [ids[1], ids[2], ids[5], ids[6], ids[8]]);

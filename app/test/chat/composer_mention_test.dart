@@ -1,13 +1,13 @@
 // `@` references in the composer: the grammar, chips that edit as one unit,
 // and the bubble that shows them after sending.
 
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_chip.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_syntax.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_text_controller.dart';
-import 'package:dpsk_app/ui/chat/secret_mask.dart';
-import 'package:dpsk_app/ui/chat/widgets/attachments.dart';
-import 'package:dpsk_app/ui/chat/widgets/user_bubble.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/mention/mention_chip.dart';
+import 'package:dsh_app/ui/chat/mention/mention_syntax.dart';
+import 'package:dsh_app/ui/chat/mention/mention_text_controller.dart';
+import 'package:dsh_app/ui/chat/secret_mask.dart';
+import 'package:dsh_app/ui/chat/widgets/attachments.dart';
+import 'package:dsh_app/ui/chat/widgets/user_bubble.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

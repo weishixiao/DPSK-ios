@@ -223,7 +223,7 @@ final class _AuthoringScriptWorkspace {
           final state = _copy(old.state)..['variables'] = value;
           final extra = {
             ...old.rawExtra,
-            'dpsk': {..._map(old.rawExtra['dpsk']), 'tavernState': _copy(state)},
+            'dshgo': {..._map(old.rawExtra['dshgo']), 'tavernState': _copy(state)},
           };
           _adoptNode(leaf, state, extra);
         } else if (turn.groupView != null) {
@@ -234,7 +234,7 @@ final class _AuthoringScriptWorkspace {
       case TavernVariableScope.message:
         final id = target.messageRef!.nodeId;
         final old = node(id);
-        final gameplay = turn.gameplayAdmission!.hasActivePacks || old.state.containsKey('dpskPackDefinitionConfigId')
+        final gameplay = turn.gameplayAdmission!.hasActivePacks || old.state.containsKey('dshgoPackDefinitionConfigId')
             ? prospectiveGameplay
             : null;
         final context = _ScriptDataContext(
@@ -257,7 +257,7 @@ final class _AuthoringScriptWorkspace {
         );
         final extra = {
           ...old.rawExtra,
-          'dpsk': {..._map(old.rawExtra['dpsk']), ...?prepared.audit, 'tavernState': _copy(prepared.state)},
+          'dshgo': {..._map(old.rawExtra['dshgo']), ...?prepared.audit, 'tavernState': _copy(prepared.state)},
         };
         final selected = id == chat.currentLeafId ? prepared.state : stateAt(chat.currentLeafId);
         final variables = _map(selected['variables']);

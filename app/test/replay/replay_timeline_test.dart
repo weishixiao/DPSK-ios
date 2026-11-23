@@ -10,20 +10,20 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/share_code/conversation_export.dart';
-import 'package:dpsk_app/share_code/conversation_share.dart';
-import 'package:dpsk_app/ui/replay/replay_frame.dart';
-import 'package:dpsk_app/ui/replay/replay_timeline.dart';
+import 'package:dsh_app/share_code/conversation_export.dart';
+import 'package:dsh_app/share_code/conversation_share.dart';
+import 'package:dsh_app/ui/replay/replay_frame.dart';
+import 'package:dsh_app/ui/replay/replay_timeline.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:dpsk_app/share_code/conversation_html.dart';
+import 'package:dsh_app/share_code/conversation_html.dart';
 
 import 'support/conversation_fixture.dart';
 import 'support/rich_conversation.dart';
 
 ConversationShare _share() =>
-    ConversationExport(fixtureSource()).build(now: DateTime.utc(2026, 10, 25, 3), app: 'DPSK 1.0.0');
+    ConversationExport(fixtureSource()).build(now: DateTime.utc(2026, 10, 25, 3), app: 'dsh-go 1.0.0');
 
 void main() {
   test('streamed prefixes keep rune boundaries when seeking in either direction', () {
@@ -185,11 +185,11 @@ void main() {
     final text = richFileText();
     final html = conversationHtml(text, title: '修复登录重复提交');
     expect(decodeConversationFile(text).assets, hasLength(1));
-    expect(html, contains('<title>修复登录重复提交 · DPSK</title>'));
+    expect(html, contains('<title>修复登录重复提交 · DSH Go</title>'));
     final dir = Platform.environment['WRITE_PREVIEW'];
     if (dir != null && dir.isNotEmpty) {
       Directory(dir).createSync(recursive: true);
-      File('$dir/修复登录重复提交.dpsk').writeAsStringSync(text);
+      File('$dir/修复登录重复提交.dshgo').writeAsStringSync(text);
       File('$dir/修复登录重复提交.html').writeAsStringSync(html);
     }
   });

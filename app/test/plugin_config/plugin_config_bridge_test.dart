@@ -1,4 +1,4 @@
-// The plugin configuration on the DPSK bridge's routes (PLUGIN-CONFIG-
+// The plugin configuration on the dsh-go bridge's routes (PLUGIN-CONFIG-
 // CONTRACT R1), against a fake Host over real HTTP: the capability probe and
 // its fallback, entries read one at a time, the opaque revision sent back,
 // held edits in one write, and every refusal with its rollback path —
@@ -8,11 +8,11 @@
 // the scope: DSH's own entries, listed and configurable on the Host, are
 // never read or written from here.
 
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_memory.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart' show installedPluginsProvider;
-import 'package:dpsk_app/ui/plugins/config/plugin_config_entries.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_memory.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_state.dart';
+import 'package:dsh_app/state/plugins_state.dart' show installedPluginsProvider;
+import 'package:dsh_app/ui/plugins/config/plugin_config_entries.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

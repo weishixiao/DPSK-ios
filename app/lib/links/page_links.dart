@@ -1,4 +1,4 @@
-// `dpsk://open/<page>` opens one of the app's pages and
+// `dshgo://open/<page>` opens one of the app's pages and
 // does nothing else. The bundled guide (docs/guide, the dsh-go-guide skill)
 // links to pages this way, so a reply can say 「在这里打开」. A reply's
 // Markdown link reaches the router through [openReplyPageLink]
@@ -23,7 +23,7 @@ import '../ui/features/feature_catalog.dart';
 import '../ui/settings/index/settings_pages.dart';
 import 'app_links.dart';
 
-/// The host of page links: `dpsk://open/<page>`.
+/// The host of page links: `dshgo://open/<page>`.
 const pageLinkHost = 'open';
 
 /// 全部功能 pages a link may open that aren't settings, by their
@@ -54,7 +54,7 @@ Set<String> get pageLinkIds => {
   ..._registeredPages.keys,
 };
 
-/// The page id [uri] names: exactly `dpsk://open/<id>` (a trailing slash is
+/// The page id [uri] names: exactly `dshgo://open/<id>` (a trailing slash is
 /// fine) with an id from [pageLinkIds]; null otherwise.
 String? pageLinkId(Uri uri) {
   if (uri.scheme.toLowerCase() != appLinkScheme || uri.host.toLowerCase() != pageLinkHost) return null;
@@ -102,7 +102,7 @@ final pageLinkResolverProvider = Provider<PageResolver>((ref) {
       : pageForId(id, sessionId);
 });
 
-/// Routes `dpsk://open/…` to its page, pushed over the home route. [session]
+/// Routes `dshgo://open/…` to its page, pushed over the home route. [session]
 /// reads the conversation open in the chat. Returns the unregister function.
 VoidCallback registerPageLinks(LinkRouter router, {String? Function()? session, PageResolver page = pageForId}) =>
     router.registerLinkHandler(pageLinkHost, (uri) async {
@@ -119,7 +119,7 @@ VoidCallback registerPageLinks(LinkRouter router, {String? Function()? session, 
       return true;
     });
 
-/// A link tapped in a reply: when it is a page link (any `dpsk://open/…`),
+/// A link tapped in a reply: when it is a page link (any `dshgo://open/…`),
 /// hands it to the router — which opens the page, or shows its toast for one
 /// it doesn't know — and returns true. False for every other link.
 bool openReplyPageLink(BuildContext context, String url) {

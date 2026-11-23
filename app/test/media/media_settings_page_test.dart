@@ -3,10 +3,10 @@
 // (one credential per provider), the key written into the credential store,
 // and deleting a service clearing the defaults that named it.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/state/media_generation.dart';
-import 'package:dpsk_app/ui/settings/media_settings_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/state/media_generation.dart';
+import 'package:dsh_app/ui/settings/media_settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -52,7 +52,7 @@ Map<String, Object?> _preset({
 /// app's fallback list then keeps the page usable.
 Map<String, Object?> _catalog({bool presets = true, bool video = true}) => {
   'v': 1,
-  'contract': 'DPSK/media/catalog',
+  'contract': 'dsh-go/media/catalog',
   'capabilities': {'image': true, 'video': video},
   'models': [
     _model('doubao-seedream-5-0-pro', 'Seedream 5.0', 'image', 'ark-image'),
@@ -147,7 +147,7 @@ Map<String, Object?> _schema(Map<String, Object?>? catalog, {bool kindDefaults =
       'type': 'transform',
       'meta': {
         'default': <Object?>[],
-        if (catalog != null) 'extra': {'DPSK/media/catalog': catalog},
+        if (catalog != null) 'extra': {'dsh-go/media/catalog': catalog},
       },
       'inner': {
         'type': 'array',

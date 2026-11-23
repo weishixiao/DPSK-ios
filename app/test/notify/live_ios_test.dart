@@ -1,12 +1,12 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/pets/pet_signals.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/appearance_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/live_activity_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
-import 'package:dpsk_app/ui/theme/accent.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/pets/pet_signals.dart';
+import 'package:dsh_app/pets/pet_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/appearance_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/live_activity_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
+import 'package:dsh_app/ui/theme/accent.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

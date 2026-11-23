@@ -87,7 +87,7 @@ const diagnosticErrorTypes = {
   'UnsupportedError',
   'OtherError',
 };
-final _evidenceLocation = RegExp(r'^package:(?:dpsk_app|flutter)/[A-Za-z0-9_/.-]{1,120}\.dart:[0-9]{1,7}:[0-9]{1,7}$');
+final _evidenceLocation = RegExp(r'^package:(?:dsh_app|flutter)/[A-Za-z0-9_/.-]{1,120}\.dart:[0-9]{1,7}:[0-9]{1,7}$');
 
 /// Never accept exception bodies, audio, traces or arbitrary native strings.
 Map<String, Object?> diagnosticEvidenceFacts(Object? raw) {

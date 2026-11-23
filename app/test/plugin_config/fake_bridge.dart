@@ -1,4 +1,4 @@
-// A fake `dsh web` with the DPSK bridge's plugin-config routes
+// A fake `dsh web` with the dsh-go bridge's plugin-config routes
 // (PLUGIN-CONFIG-CONTRACT R1 §4–§5) over real HTTP: login, the entry list,
 // one entry's complete form with an opaque revision, `{revision, ops}`
 // writes, every refusal the contract names, and the RPCs the page also uses

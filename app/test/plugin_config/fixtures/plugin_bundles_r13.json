@@ -2971,14 +2971,14 @@
     "overrides": []
   },
   {
-    "name": "DPSK-fixture-local-notes",
+    "name": "dsh-go-fixture-local-notes",
     "official": false,
     "availability": "profile",
     "version": "1.0.0",
-    "description": "A local third-party plugin for the DPSK plugin-config catalog fixture",
+    "description": "A local third-party plugin for the DSH Go plugin-config catalog fixture",
     "meta": {
-      "title": "DPSK-fixture-local-notes",
-      "description": "A local third-party plugin for the DPSK plugin-config catalog fixture"
+      "title": "dsh-go-fixture-local-notes",
+      "description": "A local third-party plugin for the DSH Go plugin-config catalog fixture"
     },
     "source": "link:/root/plugins/local-notes",
     "enabled": true,
@@ -2988,11 +2988,11 @@
     "rows": [
       {
         "rowId": "local-notes",
-        "moduleName": "DPSK-fixture-local-notes",
+        "moduleName": "dsh-go-fixture-local-notes",
         "entryId": "include:local-notes",
         "meta": {
-          "title": "DPSK-fixture-local-notes",
-          "description": "A local third-party plugin for the DPSK plugin-config catalog fixture"
+          "title": "dsh-go-fixture-local-notes",
+          "description": "A local third-party plugin for the DSH Go plugin-config catalog fixture"
         }
       }
     ],

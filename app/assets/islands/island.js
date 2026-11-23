@@ -1,4 +1,4 @@
-// DPSK web island runtime (docs/design/plugin-seams.md §6). Injected by the
+// dsh-go web island runtime (docs/design/plugin-seams.md §6). Injected by the
 // app's IslandHandle after every load, right after the read-only
 // `assets/web/dsh_web_open.js` (its __dshAppOpen does the session hop and the
 // settings / panel / right-sidebar clicks). Idempotent per document.
@@ -12,7 +12,7 @@
 //   ready {slot, cell, release, found}     empty / error {slot, code, detail}
 //   size {h}     hit {rects, dpr}     link {url}     session {id}
 //
-// Only marks official nodes with data-DPSK-island attributes (island.css
+// Only marks official nodes with data-dsh-go-island attributes (island.css
 // reacts to them) and clicks official controls; never removes, moves or
 // restyles them otherwise. The channel is visible to every frame on the page:
 // the app treats whatever arrives as untrusted.
@@ -20,8 +20,8 @@
   if (window.__dshGoIsland) return;
 
   var CHANNEL = 'DshGoIsland';
-  var MARK = 'data-DPSK-island';
-  var FORM = 'data-DPSK-island-form';
+  var MARK = 'data-dsh-go-island';
+  var FORM = 'data-dsh-go-island-form';
 
   var st = {
     cfg: null,
@@ -439,8 +439,8 @@
       st.frame = frame;
       markMany(all, frame);
       uninert();
-      frame.style.setProperty('--DPSK-island-pad-x', (cfg.pad && cfg.pad[0] != null ? cfg.pad[0] : 16) + 'px');
-      frame.style.setProperty('--DPSK-island-pad-y', (cfg.pad && cfg.pad[1] != null ? cfg.pad[1] : 16) + 'px');
+      frame.style.setProperty('--dsh-go-island-pad-x', (cfg.pad && cfg.pad[0] != null ? cfg.pad[0] : 16) + 'px');
+      frame.style.setProperty('--dsh-go-island-pad-y', (cfg.pad && cfg.pad[1] != null ? cfg.pad[1] : 16) + 'px');
       return true;
     }
     var slotEl = findSlot(cfg.slot);
@@ -452,8 +452,8 @@
     mark(slotEl, frame);
     uninert();
     if (frame) {
-      frame.style.setProperty('--DPSK-island-pad-x', (cfg.pad && cfg.pad[0] != null ? cfg.pad[0] : 16) + 'px');
-      frame.style.setProperty('--DPSK-island-pad-y', (cfg.pad && cfg.pad[1] != null ? cfg.pad[1] : 16) + 'px');
+      frame.style.setProperty('--dsh-go-island-pad-x', (cfg.pad && cfg.pad[0] != null ? cfg.pad[0] : 16) + 'px');
+      frame.style.setProperty('--dsh-go-island-pad-y', (cfg.pad && cfg.pad[1] != null ? cfg.pad[1] : 16) + 'px');
     }
     return true;
   }
@@ -658,10 +658,10 @@
   // ---- theme -----------------------------------------------------------------
 
   function themeStyle() {
-    var s = document.getElementById('DPSK-island-theme');
+    var s = document.getElementById('dsh-go-island-theme');
     if (!s) {
       s = document.createElement('style');
-      s.id = 'DPSK-island-theme';
+      s.id = 'dsh-go-island-theme';
       document.head.appendChild(s);
     }
     return s;
@@ -680,8 +680,8 @@
     });
     var scheme = theme.dark ? 'dark' : 'light';
     themeStyle().textContent =
-      'html[data-DPSK-island]{color-scheme:' + scheme + '!important}' +
-      'html[data-DPSK-island] body,html[data-DPSK-island] body[data-ds-dark-theme]{' + decl.join(';') + '}';
+      'html[data-dsh-go-island]{color-scheme:' + scheme + '!important}' +
+      'html[data-dsh-go-island] body,html[data-dsh-go-island] body[data-ds-dark-theme]{' + decl.join(';') + '}';
     enforceScheme();
   }
 
@@ -699,16 +699,16 @@
   function applyInsets(insets) {
     st.insets = insets || st.insets;
     var root = document.documentElement.style;
-    root.setProperty('--DPSK-island-top', Math.max(0, +st.insets.top || 0) + 'px');
-    root.setProperty('--DPSK-island-bottom', Math.max(0, +st.insets.bottom || 0) + 'px');
+    root.setProperty('--dsh-go-island-top', Math.max(0, +st.insets.top || 0) + 'px');
+    root.setProperty('--dsh-go-island-bottom', Math.max(0, +st.insets.bottom || 0) + 'px');
   }
 
   function installCss(css) {
     if (!css) return;
-    var s = document.getElementById('DPSK-island-css');
+    var s = document.getElementById('dsh-go-island-css');
     if (!s) {
       s = document.createElement('style');
-      s.id = 'DPSK-island-css';
+      s.id = 'dsh-go-island-css';
       document.head.appendChild(s);
     }
     s.textContent = css;
@@ -1051,7 +1051,7 @@
   }
 
   // target: {session?, web?: <__dshAppOpen target>, then?: {settings|plugin|panel|rightbar|view}}
-  var HOP = 'DPSK-island-hop';
+  var HOP = 'dsh-go-island-hop';
 
   function storedSession() {
     try {
@@ -1079,7 +1079,7 @@
     step('hop');
     st.leaving = true;
     var url = new URL(location.href);
-    url.searchParams.set('DPSK-hop', String(Date.now()));
+    url.searchParams.set('dsh-go-hop', String(Date.now()));
     location.replace(url.toString());
     return true;
   }

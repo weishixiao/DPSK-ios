@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/diagnostics/system_ime_diagnostics.dart';
-import 'package:dpsk_app/diagnostics/system_ime_evidence.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/settings/diagnostics_page.dart';
-import 'package:dpsk_app/state/android_features.dart' show operatingSystemProvider;
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/diagnostics/system_ime_diagnostics.dart';
+import 'package:dsh_app/diagnostics/system_ime_evidence.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/settings/diagnostics_page.dart';
+import 'package:dsh_app/state/android_features.dart' show operatingSystemProvider;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

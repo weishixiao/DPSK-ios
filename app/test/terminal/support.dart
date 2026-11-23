@@ -4,8 +4,8 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/terminal_state.dart';
-import 'package:dpsk_app/ui/terminal/terminal_page.dart';
+import 'package:dsh_app/state/terminal_state.dart';
+import 'package:dsh_app/ui/terminal/terminal_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

@@ -3,17 +3,17 @@
 // (the pet's bubble replaces the glass banner while it is on screen), the
 // empty state's whale, and 宠物设置.
 
-import 'package:dpsk_app/pets/pet_prefs.dart';
-import 'package:dpsk_app/pets/pet_signals.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
-import 'package:dpsk_app/ui/chat/widgets/activity_strip.dart';
-import 'package:dpsk_app/ui/chat/widgets/live_clock.dart';
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
-import 'package:dpsk_app/ui/pets/pet_bubble.dart';
-import 'package:dpsk_app/ui/pets/pet_picker.dart';
-import 'package:dpsk_app/ui/pets/pet_settings_page.dart';
+import 'package:dsh_app/pets/pet_prefs.dart';
+import 'package:dsh_app/pets/pet_signals.dart';
+import 'package:dsh_app/pets/pet_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
+import 'package:dsh_app/ui/chat/widgets/activity_strip.dart';
+import 'package:dsh_app/ui/chat/widgets/live_clock.dart';
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/ui/pets/pet_bubble.dart';
+import 'package:dsh_app/ui/pets/pet_picker.dart';
+import 'package:dsh_app/ui/pets/pet_settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

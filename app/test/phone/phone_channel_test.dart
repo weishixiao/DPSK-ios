@@ -1,7 +1,7 @@
 // The typed wrapper over `dsh/phone`: parsing the contract's maps, and staying
 // usable when the native side is missing or throws.
 
-import 'package:dpsk_app/phone/phone_channel.dart';
+import 'package:dsh_app/phone/phone_channel.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,8 +1,8 @@
-import 'package:dpsk_app/speech/deepseek_speech.dart';
-import 'package:dpsk_app/speech/voice_cloud.dart';
-import 'package:dpsk_app/state/voice_settings.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_controller.dart';
+import 'package:dsh_app/speech/deepseek_speech.dart';
+import 'package:dsh_app/speech/voice_cloud.dart';
+import 'package:dsh_app/state/voice_settings.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/voice/voice_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,4 +1,4 @@
-import 'package:dpsk_app/companion/companion_keeper.dart';
+import 'package:dsh_app/companion/companion_keeper.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 /// Light mode's keeper for widget tests, in memory: real file I/O doesn't run

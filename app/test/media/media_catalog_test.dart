@@ -1,6 +1,6 @@
 // What the host can generate with (media-generation §4.3, §4.6.5;
 // CR-722ae3f must-fix 1): the catalogue from the plugin's settings/describe
-// metadata — services.meta.extra["DPSK/media/catalog"], under whatever
+// metadata — services.meta.extra["dsh-go/media/catalog"], under whatever
 // namespace — crossed with the services really configured and keys really
 // there. Missing, broken or unknown catalogues give no generation mode; there
 // is no built-in model table to fall back on.
@@ -12,8 +12,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/engine_settings_state.dart' show credentialRefsOf;
-import 'package:dpsk_app/state/media_generation.dart';
+import 'package:dsh_app/state/engine_settings_state.dart' show credentialRefsOf;
+import 'package:dsh_app/state/media_generation.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -31,7 +31,7 @@ Map<String, Object?> _catalog(Map<String, Object?> describe) {
   final refs = (_ns(describe)['schema']! as Map)['refs']! as Map;
   for (final node in refs.values) {
     final extra = ((node as Map)['meta'] as Map?)?['extra'] as Map?;
-    if (extra?['DPSK/media/catalog'] case final Map<String, Object?> catalog) return catalog;
+    if (extra?['dsh-go/media/catalog'] case final Map<String, Object?> catalog) return catalog;
   }
   throw StateError('no catalogue in the fixture');
 }
@@ -40,8 +40,8 @@ void _setCatalog(Map<String, Object?> describe, Object? catalog) {
   final refs = (_ns(describe)['schema']! as Map)['refs']! as Map;
   for (final node in refs.values) {
     final meta = (node as Map)['meta'] as Map?;
-    if (meta?['extra'] case final Map extra when extra.containsKey('DPSK/media/catalog')) {
-      extra['DPSK/media/catalog'] = catalog;
+    if (meta?['extra'] case final Map extra when extra.containsKey('dsh-go/media/catalog')) {
+      extra['dsh-go/media/catalog'] = catalog;
       return;
     }
   }

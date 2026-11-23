@@ -102,7 +102,7 @@ export function widgetView(values: WidgetValues, now: Date, ready: boolean = tru
     line: time - (values.saidAt ?? 0) < 12 * 3600000 ? values.line ?? '' : '',
     pearls: bond >= 0 ? '●'.repeat(bond + 1) + '○'.repeat(3 - bond) : '',
     pose: night && !busy ? 'sleeping' : bond >= 2 ? 'happy' : 'idle',
-    openUri: 'dpsk://open/companion'
+    openUri: 'dshgo://open/companion'
   };
   return view;
 }

@@ -621,7 +621,7 @@ final _dataImage = RegExp(r'^data:image/(png|jpeg|jpg|webp|gif);base64,', caseSe
 
 /// `asset:icons/a.png`：插件 `dshGo.assets` 目录里的图片
 /// （docs/design/native-plugins-protocol.md §4.6），
-/// App 拼成 `/DPSK/v1/assets/<包名>/<路径>` 并带凭据去取。
+/// App 拼成 `/dsh-go/v1/assets/<包名>/<路径>` 并带凭据去取。
 final _assetRef = RegExp(r'^asset:([A-Za-z0-9_~-][A-Za-z0-9._~-]*(/[A-Za-z0-9_~-][A-Za-z0-9._~-]*)*)$');
 final _assetExtension = RegExp(r'\.(png|jpe?g|webp|gif)$', caseSensitive: false);
 

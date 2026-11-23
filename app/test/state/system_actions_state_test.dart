@@ -6,8 +6,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/system_actions_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/system_actions_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

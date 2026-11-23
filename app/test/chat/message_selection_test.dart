@@ -1,6 +1,6 @@
 // 选区朗读不把凭据交给语音：选中的一段属于密钥的部分去掉，按整条消息认。
 
-import 'package:dpsk_app/ui/chat/widgets/message_selection.dart';
+import 'package:dsh_app/ui/chat/widgets/message_selection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _message = '连 postgres://admin:hunter2secret@db.example.com:5432/app 试试 test';

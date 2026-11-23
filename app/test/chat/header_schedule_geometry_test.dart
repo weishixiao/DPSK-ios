@@ -4,14 +4,14 @@
 // 12 from the edges, every piece centred on one line), and the model chip
 // gives up the room, so a five-character status still fits where it did.
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/header_schedule_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/chat/chat_header.dart';
-import 'package:dpsk_app/ui/chat/header_schedule.dart';
-import 'package:dpsk_app/ui/chat/model_sheet.dart';
-import 'package:dpsk_app/ui/common/status_dot.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/header_schedule_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/chat/chat_header.dart';
+import 'package:dsh_app/ui/chat/header_schedule.dart';
+import 'package:dsh_app/ui/chat/model_sheet.dart';
+import 'package:dsh_app/ui/common/status_dot.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

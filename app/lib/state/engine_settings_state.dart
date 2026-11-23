@@ -197,7 +197,7 @@ class EngineSettings {
   /// take effect on a reload).
   final Set<String> staged;
 
-  /// Secret positions whose binding the Host described (the DPSK bridge),
+  /// Secret positions whose binding the Host described (the dsh-go bridge),
   /// by [FieldRef.key]: the credential each is bound to, or null for a bare
   /// secret that is not written here.
   final Map<String, String?> secretBindings;

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/usage/usage_net.dart';
-import 'package:dpsk_app/usage/usage_ledger.dart';
-import 'package:dpsk_app/usage/usage_stats.dart';
+import 'package:dsh_app/usage/usage_net.dart';
+import 'package:dsh_app/usage/usage_ledger.dart';
+import 'package:dsh_app/usage/usage_stats.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/remote/relay/dsh_remote_backend.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
+import 'package:dsh_app/remote/relay/dsh_remote_backend.dart';
+import 'package:dsh_app/remote/secret_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

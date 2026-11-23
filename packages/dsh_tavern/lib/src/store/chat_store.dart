@@ -392,11 +392,11 @@ class ChatStore {
       // was marked, including descendants with an older deletion token.
       _db.execute('DELETE FROM nodes WHERE deleted_by IS NOT NULL');
       _db.execute('DELETE FROM deleted_subtrees');
-      _db.execute(r'''UPDATE chats SET metadata = json_remove(metadata, '$.dpsk.latestInspection')
+      _db.execute(r'''UPDATE chats SET metadata = json_remove(metadata, '$.dshgo.latestInspection')
         WHERE EXISTS (SELECT 1 FROM nodes n WHERE n.chat_id = chats.id AND n.stream_text IS NOT NULL
-          AND n.id = json_extract(chats.metadata, '$.dpsk.latestInspection.nodeId'))''');
+          AND n.id = json_extract(chats.metadata, '$.dshgo.latestInspection.nodeId'))''');
       _db.execute(r'''UPDATE nodes SET text = stream_text, reasoning = stream_reasoning,
-        usage = NULL, reported_usage = NULL, extra = json_remove(extra, '$.dpsk.inspection'),
+        usage = NULL, reported_usage = NULL, extra = json_remove(extra, '$.dshgo.inspection'),
         stream_text = NULL, stream_reasoning = NULL WHERE stream_text IS NOT NULL''');
     });
   }
@@ -1138,8 +1138,8 @@ class ChatStore {
     _ensureOpen();
     return {
       for (final row in _db.select(
-        r'''SELECT id, character_id, json_extract(metadata, '$.dpsk.deepseek.sessionId') AS source
-          FROM chats WHERE 'text' = json_type(metadata, '$.dpsk.deepseek.sessionId')''',
+        r'''SELECT id, character_id, json_extract(metadata, '$.dshgo.deepseek.sessionId') AS source
+          FROM chats WHERE 'text' = json_type(metadata, '$.dshgo.deepseek.sessionId')''',
       ))
         row['source'] as String: (chatId: row['id'] as String, characterId: row['character_id'] as String),
     };
@@ -1531,8 +1531,8 @@ ORDER BY n.seq
     final row = _nodeRow(
       chatId,
       nodeId,
-      columns: '''CASE WHEN json_type(n.display_context, '\$.dpsk.tavernState') = 'object'
-        THEN json_extract(n.display_context, '\$.dpsk.tavernState') END AS state''',
+      columns: '''CASE WHEN json_type(n.display_context, '\$.dshgo.tavernState') = 'object'
+        THEN json_extract(n.display_context, '\$.dshgo.tavernState') END AS state''',
     );
     final encoded = row['state'];
     return encoded == null ? nodeState(chatId, nodeId) : _map(encoded);
@@ -1687,10 +1687,10 @@ ORDER BY n.seq
   }) {
     _ensureOpen();
     final extra = includeRuntime
-        ? "json_object('dpsk', json_object('chatJsonl', json_extract(n.extra, '\$.dpsk.chatJsonl'), "
-              "'group', json_extract(n.extra, '\$.dpsk.group')))"
+        ? "json_object('dshgo', json_object('chatJsonl', json_extract(n.extra, '\$.dshgo.chatJsonl'), "
+              "'group', json_extract(n.extra, '\$.dshgo.group')))"
         : includeSource
-        ? "json_object('dpsk', json_object('chatJsonl', json_extract(n.extra, '\$.dpsk.chatJsonl')))"
+        ? "json_object('dshgo', json_object('chatJsonl', json_extract(n.extra, '\$.dshgo.chatJsonl')))"
         : "'{}'";
     return [
       for (final row in _ancestorRows(
@@ -1942,7 +1942,7 @@ ORDER BY n.seq
   /// Every direct child's original physical state becomes a full checkpoint.
   /// The optional synchronous [capturePortableState] runs before any edges
   /// change and must only compute a state from the old child/source metadata.
-  /// Its result replaces only raw extra.dpsk.tavernState; physical state,
+  /// Its result replaces only raw extra.dshgo.tavernState; physical state,
   /// inspection, reported usage and other raw fields remain independent.
   /// A throwing callback rolls back this operation. The facade restores the
   /// chat's runtime state after this structural edit in the same transaction.
@@ -1976,8 +1976,8 @@ ORDER BY n.seq
           // _storedNode projects pending inspection out of its returned copy.
           // Merge into the original row instead, preserving that raw evidence.
           final extra = _map(child['extra']);
-          final own = extra['dpsk'];
-          extra['dpsk'] = {if (own is Map<String, Object?>) ...own, 'tavernState': portable};
+          final own = extra['dshgo'];
+          extra['dshgo'] = {if (own is Map<String, Object?>) ...own, 'tavernState': portable};
           encodedExtra = _encodeNodeExtra(extra, chatId, childId);
         }
         snapshots[childId] = (state: physical, extra: encodedExtra);
@@ -2349,11 +2349,11 @@ ORDER BY n.seq
         if (capturePortableState != null) {
           final portable = capturePortableState(_storedNode(row), state);
           final extra = _map(row['extra']);
-          final own = extra['dpsk'];
-          if (extra.containsKey('dpsk') && own is! Map<String, Object?>) {
-            throw StateError('Cannot preserve a malformed internal dpsk container while moving a page.');
+          final own = extra['dshgo'];
+          if (extra.containsKey('dshgo') && own is! Map<String, Object?>) {
+            throw StateError('Cannot preserve a malformed internal dshgo container while moving a page.');
           }
-          extra['dpsk'] = {if (own is Map<String, Object?>) ...own, 'tavernState': portable};
+          extra['dshgo'] = {if (own is Map<String, Object?>) ...own, 'tavernState': portable};
           encodedExtra = _encodeNodeExtra(extra, chatId, id);
         }
         snapshots[id] = (physical: physical, extra: encodedExtra);
@@ -2690,7 +2690,7 @@ ORDER BY n.seq
     depth: row['depth'] as int,
     selectedChildId: row['selected_child_id'] as String?,
     extra: {
-      'dpsk': {
+      'dshgo': {
         if (row['display_state'] != null) 'tavernState': _map(row['display_state']),
         if (row['display_source'] != null) 'chatJsonl': _map(row['display_source']),
       },
@@ -2704,7 +2704,7 @@ ORDER BY n.seq
     selectedChildId: row['selected_child_id'] as String?,
     extra: {
       ..._map(row['script_extra']),
-      if (row['script_state'] != null) 'dpsk': {'tavernState': _map(row['script_state'])},
+      if (row['script_state'] != null) 'dshgo': {'tavernState': _map(row['script_state'])},
     },
     original: _map(row['original']),
   );
@@ -2712,7 +2712,7 @@ ORDER BY n.seq
   static Map<String, Object?> _nodeExtra(Row row) {
     final extra = _map(row['extra']);
     if (row['stream_text'] != null) {
-      final own = extra['dpsk'];
+      final own = extra['dshgo'];
       if (own is Map<String, Object?>) own.remove('inspection');
     }
     return extra;
@@ -2755,20 +2755,20 @@ ORDER BY n.seq
   // projections. Streaming recovery only removes inspection, leaving both
   // state/source and script-visible extra unchanged while clearing reported_usage.
   static _NodeExtraProjection _encodeNodeExtra(Map<String, Object?> extra, String chatId, String nodeId) {
-    final own = extra['dpsk'];
+    final own = extra['dshgo'];
     final state = own is Map<String, Object?> ? own['tavernState'] : null;
     final source = own is Map<String, Object?> ? own['chatJsonl'] : null;
     return _NodeExtraProjection(
       jsonEncode(extra),
       _reportedUsage(extra, chatId, nodeId),
       jsonEncode({
-        'dpsk': {
+        'dshgo': {
           'tavernState': state is Map<String, Object?> ? state : null,
           'chatJsonl': source is Map<String, Object?> ? source : null,
         },
         'scriptExtra': {
           for (final entry in extra.entries)
-            if (entry.key != 'dpsk') entry.key: entry.value,
+            if (entry.key != 'dshgo') entry.key: entry.value,
         },
       }),
     );
@@ -2777,7 +2777,7 @@ ORDER BY n.seq
   // Read only this owned, small value. A path read never reconstructs the
   // inspection's prompt/trace or turns absent/invalid reporting into zero.
   static String? _reportedUsage(Map<String, Object?> extra, String chatId, String nodeId) {
-    final own = extra['dpsk'];
+    final own = extra['dshgo'];
     if (own is! Map<String, Object?>) return null;
     final inspection = own['inspection'];
     if (inspection is! Map<String, Object?> ||
@@ -2870,10 +2870,10 @@ ORDER BY n.seq
     char(1) || n.stream_text AS stream_text, char(1) || n.stream_reasoning AS stream_reasoning,
     char(1) || n.speaker_character_id AS speaker_character_id, NULL AS usage, NULL AS reported_usage,
     json_type(n.original, '\$.is_system') = 'true' AS display_system,
-    CASE WHEN json_type(n.display_context, '\$.dpsk.tavernState') = 'object'
-      THEN json_extract(n.display_context, '\$.dpsk.tavernState') END AS display_state,
-    CASE WHEN json_type(n.display_context, '\$.dpsk.chatJsonl') = 'object'
-      THEN json_extract(n.display_context, '\$.dpsk.chatJsonl') END AS display_source''';
+    CASE WHEN json_type(n.display_context, '\$.dshgo.tavernState') = 'object'
+      THEN json_extract(n.display_context, '\$.dshgo.tavernState') END AS display_state,
+    CASE WHEN json_type(n.display_context, '\$.dshgo.chatJsonl') = 'object'
+      THEN json_extract(n.display_context, '\$.dshgo.chatJsonl') END AS display_source''';
 
   static const _scriptNodeColumns = '''
     n.id, n.parent_id, n.selected_child_id, n.depth, n.role,
@@ -2883,9 +2883,9 @@ ORDER BY n.seq
     char(1) || n.speaker_character_id AS speaker_character_id, NULL AS usage, NULL AS reported_usage,
     CASE WHEN json_type(n.display_context, '\$.scriptExtra') = 'object'
       THEN json_extract(n.display_context, '\$.scriptExtra')
-      ELSE json_remove(n.extra, '\$.dpsk') END AS script_extra,
-    CASE WHEN json_type(n.display_context, '\$.dpsk.tavernState') = 'object'
-      THEN json_extract(n.display_context, '\$.dpsk.tavernState') END AS script_state,
+      ELSE json_remove(n.extra, '\$.dshgo') END AS script_extra,
+    CASE WHEN json_type(n.display_context, '\$.dshgo.tavernState') = 'object'
+      THEN json_extract(n.display_context, '\$.dshgo.tavernState') END AS script_state,
     json_remove(n.original, '\$.mes', '\$.swipes', '\$.extra') AS original''';
 
   static const _promptNodeColumns = '''
@@ -2997,11 +2997,11 @@ CREATE INDEX nodes_reported_path ON nodes(chat_id, id, at, reported_usage)
   WHERE deleted_by IS NULL AND role = 'character' AND stream_text IS NULL AND reported_usage IS NOT NULL;
 ALTER TABLE nodes ADD COLUMN display_context TEXT;
 UPDATE nodes SET display_context = CASE WHEN json_valid(extra) THEN
-  json_object('dpsk', json_object(
-    'tavernState', CASE WHEN json_type(extra, '$.dpsk.tavernState') = 'object'
-      THEN json_extract(extra, '$.dpsk.tavernState') END,
-    'chatJsonl', CASE WHEN json_type(extra, '$.dpsk.chatJsonl') = 'object'
-      THEN json_extract(extra, '$.dpsk.chatJsonl') END))
+  json_object('dshgo', json_object(
+    'tavernState', CASE WHEN json_type(extra, '$.dshgo.tavernState') = 'object'
+      THEN json_extract(extra, '$.dshgo.tavernState') END,
+    'chatJsonl', CASE WHEN json_type(extra, '$.dshgo.chatJsonl') = 'object'
+      THEN json_extract(extra, '$.dshgo.chatJsonl') END))
   ELSE extra END;
 ''';
 
@@ -3047,24 +3047,24 @@ ALTER TABLE nodes ADD COLUMN deleted_by TEXT REFERENCES deleted_subtrees(id) DEF
 CREATE INDEX nodes_deleted_by ON nodes(deleted_by) WHERE deleted_by IS NOT NULL;
 ALTER TABLE nodes ADD COLUMN reported_usage TEXT;
 UPDATE nodes SET reported_usage = CASE WHEN json_valid(extra) THEN CASE WHEN
-  json_type(extra, '$.dpsk.inspection') = 'object'
-  AND json_type(extra, '$.dpsk.inspection.version') IN ('integer', 'real')
-  AND json_extract(extra, '$.dpsk.inspection.version') = 1
-  AND json_type(extra, '$.dpsk.inspection.chatId') = 'text'
-  AND json_extract(extra, '$.dpsk.inspection.chatId') = chat_id
-  AND json_type(extra, '$.dpsk.inspection.nodeId') = 'text'
-  AND json_extract(extra, '$.dpsk.inspection.nodeId') = id
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage') = 'object'
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage.promptTokens') = 'integer'
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage.cacheHitTokens') = 'integer'
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage.completionTokens') = 'integer'
-  AND (json_type(extra, '$.dpsk.inspection.reportedUsage.model') IS NULL
-    OR json_type(extra, '$.dpsk.inspection.reportedUsage.model') IN ('null', 'text'))
+  json_type(extra, '$.dshgo.inspection') = 'object'
+  AND json_type(extra, '$.dshgo.inspection.version') IN ('integer', 'real')
+  AND json_extract(extra, '$.dshgo.inspection.version') = 1
+  AND json_type(extra, '$.dshgo.inspection.chatId') = 'text'
+  AND json_extract(extra, '$.dshgo.inspection.chatId') = chat_id
+  AND json_type(extra, '$.dshgo.inspection.nodeId') = 'text'
+  AND json_extract(extra, '$.dshgo.inspection.nodeId') = id
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage') = 'object'
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage.promptTokens') = 'integer'
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage.cacheHitTokens') = 'integer'
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage.completionTokens') = 'integer'
+  AND (json_type(extra, '$.dshgo.inspection.reportedUsage.model') IS NULL
+    OR json_type(extra, '$.dshgo.inspection.reportedUsage.model') IN ('null', 'text'))
   THEN json_object(
-    'promptTokens', json_extract(extra, '$.dpsk.inspection.reportedUsage.promptTokens'),
-    'cacheHitTokens', json_extract(extra, '$.dpsk.inspection.reportedUsage.cacheHitTokens'),
-    'completionTokens', json_extract(extra, '$.dpsk.inspection.reportedUsage.completionTokens'),
-    'model', json_extract(extra, '$.dpsk.inspection.reportedUsage.model'))
+    'promptTokens', json_extract(extra, '$.dshgo.inspection.reportedUsage.promptTokens'),
+    'cacheHitTokens', json_extract(extra, '$.dshgo.inspection.reportedUsage.cacheHitTokens'),
+    'completionTokens', json_extract(extra, '$.dshgo.inspection.reportedUsage.completionTokens'),
+    'model', json_extract(extra, '$.dshgo.inspection.reportedUsage.model'))
   END END;
 ''';
 

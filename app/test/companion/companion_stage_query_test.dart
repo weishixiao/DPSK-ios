@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/companion/companion_stage.dart';
+import 'package:dsh_app/ui/companion/companion_stage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _gb = 1024 * 1024 * 1024;

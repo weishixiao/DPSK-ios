@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:dpsk_app/launch/custom_launch.dart';
-import 'package:dpsk_app/launch/launch_import.dart';
-import 'package:dpsk_app/plugins/native/native_file_platform.dart';
+import 'package:dsh_app/launch/custom_launch.dart';
+import 'package:dsh_app/launch/launch_import.dart';
+import 'package:dsh_app/plugins/native/native_file_platform.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

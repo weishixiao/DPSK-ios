@@ -3,11 +3,11 @@
 // using a schema-declared secret slot, so the engine's snapshot affinity has
 // to cover that path too).
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/read_list_identity.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/read_list_identity.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

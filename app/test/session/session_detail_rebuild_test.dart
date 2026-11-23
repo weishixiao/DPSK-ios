@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/widgets/live_clock.dart';
-import 'package:dpsk_app/ui/common/page_hero.dart';
-import 'package:dpsk_app/ui/session/session_detail_page.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/widgets/live_clock.dart';
+import 'package:dsh_app/ui/common/page_hero.dart';
+import 'package:dsh_app/ui/session/session_detail_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

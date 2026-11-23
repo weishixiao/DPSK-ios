@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dpsk_app/ui/remote/pairing_page.dart';
+import 'package:dsh_app/ui/remote/pairing_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

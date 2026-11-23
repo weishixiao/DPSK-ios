@@ -7,15 +7,15 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/plugin_config/plugin_config_memory.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart' show installedPluginsProvider;
-import 'package:dpsk_app/state/ui_mode_state.dart';
-import 'package:dpsk_app/ui/engine_settings/field_row.dart';
-import 'package:dpsk_app/ui/plugins/config/plugin_config_page.dart';
-import 'package:dpsk_app/ui/plugins/seats/seat_links.dart' show seatWebOpenerProvider;
-import 'package:dpsk_app/ui/web/dsh_web_launcher.dart';
-import 'package:dpsk_app/ui/web/web_target.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_memory.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_state.dart';
+import 'package:dsh_app/state/plugins_state.dart' show installedPluginsProvider;
+import 'package:dsh_app/state/ui_mode_state.dart';
+import 'package:dsh_app/ui/engine_settings/field_row.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_page.dart';
+import 'package:dsh_app/ui/plugins/seats/seat_links.dart' show seatWebOpenerProvider;
+import 'package:dsh_app/ui/web/dsh_web_launcher.dart';
+import 'package:dsh_app/ui/web/web_target.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

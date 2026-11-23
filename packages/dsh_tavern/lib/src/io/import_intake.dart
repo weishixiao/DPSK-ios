@@ -198,9 +198,9 @@ final class _Intake {
       regexList(extensions['regex_scripts'], '$path.extensions.regex_scripts');
       helpers(extensions, '$path.extensions');
       text(_map(extensions['depth_prompt'])?['prompt'], '$path.extensions.depth_prompt.prompt');
-      final dpsk = _map(extensions['dpsk']);
-      if (dpsk != null) {
-        stateDefinition(dpsk, '$path.extensions.dpsk');
+      final dshgo = _map(extensions['dshgo']);
+      if (dshgo != null) {
+        stateDefinition(dshgo, '$path.extensions.dshgo');
       }
     }
     final embedded = data['character_book'];
@@ -216,8 +216,8 @@ final class _Intake {
     }
   }
 
-  void stateDefinition(Map<String, Object?> dpsk, String path) {
-    final raw = _map(dpsk['state']);
+  void stateDefinition(Map<String, Object?> dshgo, String path) {
+    final raw = _map(dshgo['state']);
     // Absence of schema is the legacy-card contract. Do not infer a schema,
     // reinterpret opaque extension values, or add new counts to old reports.
     if (raw == null || !raw.containsKey('schema')) {
@@ -227,7 +227,7 @@ final class _Intake {
     final rules = raw['rules'];
     // Declared rows, including invalid ones; this is not an execution count.
     count('stateRules', rules is List<Object?> ? rules.length : 0);
-    final definition = state_core.StateDefinition.parse(raw, version: dpsk.containsKey('v') ? dpsk['v'] : 1);
+    final definition = state_core.StateDefinition.parse(raw, version: dshgo.containsKey('v') ? dshgo['v'] : 1);
     final before = findings.length;
     for (final issue in definition.issues) {
       final code = issue['code']! as String;

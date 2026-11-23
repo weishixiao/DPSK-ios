@@ -545,7 +545,7 @@ class BackgroundSettingsInfo {
 class ResetKeep {
   const ResetKeep({this.uiAndSkills = false, this.pluginsAndSettings = false});
 
-  /// `$DSH_HOME/DPSK` (ui.json) and the user's skills.
+  /// `$DSH_HOME/dsh-go` (ui.json) and the user's skills.
   final bool uiAndSkills;
 
   /// Installed plugins with their settings, `cordis.patch.yml` and `.env`.

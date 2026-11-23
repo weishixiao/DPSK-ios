@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/ssh/ssh_host_config.dart';
-import 'package:dpsk_app/remote/ssh/ssh_link.dart';
-import 'package:dpsk_app/remote/ssh/ssh_transport.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/ssh/ssh_host_config.dart';
+import 'package:dsh_app/remote/ssh/ssh_link.dart';
+import 'package:dsh_app/remote/ssh/ssh_transport.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/fake_ssh.dart';

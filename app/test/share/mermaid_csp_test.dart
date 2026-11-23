@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/chat/render/mermaid_preview.dart';
+import 'package:dsh_app/ui/chat/render/mermaid_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

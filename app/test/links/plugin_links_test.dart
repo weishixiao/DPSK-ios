@@ -1,19 +1,19 @@
 // A plugin's page in the official market: the link the detail sheet shares
 // (`https://go.dshtui.com/p/<encoded name>`), and the same path coming back —
-// as the web page's `dpsk://` hand-over or the https link itself — opening
+// as the web page's `dshgo://` hand-over or the https link itself — opening
 // the plugin's detail sheet.
 
 import 'dart:io';
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/links/plugin_links.dart';
-import 'package:dpsk_app/share_code/share_net.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/plugins/market_tab.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
-import 'package:dpsk_app/ui/share_code/share_out.dart';
-import 'package:dpsk_app/ui/share/share_entry.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/links/plugin_links.dart';
+import 'package:dsh_app/share_code/share_net.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/plugins/market_tab.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/ui/share_code/share_out.dart';
+import 'package:dsh_app/ui/share/share_entry.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,7 +26,7 @@ import '../share_code/support/sheet_support.dart' show RecordingShareOut;
 void main() {
   group('the link', () {
     test('the package name is one encoded path segment', () {
-      expect(marketPluginLink('@dsh-go/media'), 'https://go.dshtui.com/p/%40DPSK%2Fmedia');
+      expect(marketPluginLink('@dsh-go/media'), 'https://go.dshtui.com/p/%40dsh-go%2Fmedia');
       expect(marketPluginLink('dsh-approval-gate'), 'https://go.dshtui.com/p/dsh-approval-gate');
     });
 
@@ -38,11 +38,11 @@ void main() {
       expect(text, contains('天气'));
     });
 
-    test('https and dpsk:// on the share host, encoded or not, name the package', () {
+    test('https and dshgo:// on the share host, encoded or not, name the package', () {
       for (final (link, name) in [
-        ('https://go.dshtui.com/p/%40DPSK%2Fmedia', '@dsh-go/media'),
-        ('dpsk://go.dshtui.com/p/%40DPSK%2Fmedia', '@dsh-go/media'),
-        ('dpsk://go.dshtui.com/p/@dsh-go/media', '@dsh-go/media'),
+        ('https://go.dshtui.com/p/%40dsh-go%2Fmedia', '@dsh-go/media'),
+        ('dshgo://go.dshtui.com/p/%40dsh-go%2Fmedia', '@dsh-go/media'),
+        ('dshgo://go.dshtui.com/p/@dsh-go/media', '@dsh-go/media'),
         ('https://GO.DSHTUI.COM/p/dsh-approval-gate/', 'dsh-approval-gate'),
         (marketPluginLink('@someone/dsh-weather'), '@someone/dsh-weather'),
       ]) {
@@ -60,7 +60,7 @@ void main() {
         'https://go.dshtui.com/p/Not%20A%20Package',
         'https://me@go.dshtui.com/p/dsh-media',
         'https://go.dshtui.com:8443/p/dsh-media',
-        'dpsk://share/p/dsh-media',
+        'dshgo://share/p/dsh-media',
       ]) {
         expect(marketPluginLinkName(Uri.parse(link)), isNull, reason: link);
       }
@@ -161,7 +161,7 @@ void main() {
 
     testWidgets('the web page hand-over opens the official entry', (tester) async {
       await pumpHome(tester);
-      links.add(Uri.parse('dpsk://go.dshtui.com/p/%40DPSK%2Fmedia'));
+      links.add(Uri.parse('dshgo://go.dshtui.com/p/%40dsh-go%2Fmedia'));
       await tester.pump();
       await tester.pumpAndSettle();
       expect(find.byType(MarketPluginSheet), findsOneWidget);
@@ -185,7 +185,7 @@ void main() {
 
     testWidgets('a plugin neither market lists: one line, no sheet', (tester) async {
       await pumpHome(tester);
-      expect(await router.open(Uri.parse('dpsk://go.dshtui.com/p/nope')), isTrue);
+      expect(await router.open(Uri.parse('dshgo://go.dshtui.com/p/nope')), isTrue);
       await tester.pumpAndSettle();
       expect(find.byType(MarketPluginSheet), findsNothing);
       expect(find.text('插件市场里没有 nope'), findsOneWidget);

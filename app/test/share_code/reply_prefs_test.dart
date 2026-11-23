@@ -1,7 +1,7 @@
-import 'package:dpsk_app/share_code/guest_fs.dart';
-import 'package:dpsk_app/share_code/share_import.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/ui/settings/reply_prefs_page.dart';
+import 'package:dsh_app/share_code/guest_fs.dart';
+import 'package:dsh_app/share_code/share_import.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/ui/settings/reply_prefs_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

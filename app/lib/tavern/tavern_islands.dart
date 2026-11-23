@@ -16,7 +16,7 @@ import 'tavern_page_perf.dart';
 /// localStorage works (a page with no base URL has the origin "null", which
 /// has none) and is the tavern's own. `.invalid` never resolves: nothing a
 /// relative URL names is fetched from anywhere.
-const tavernFrameBaseUrl = 'https://tavern.dpsk.invalid/';
+const tavernFrameBaseUrl = 'https://tavern.dshgo.invalid/';
 
 /// One part of a message.
 sealed class TavernPart {

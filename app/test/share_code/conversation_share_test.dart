@@ -9,13 +9,13 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/share_code/conversation_export.dart';
-import 'package:dpsk_app/share_code/conversation_redact.dart';
-import 'package:dpsk_app/share_code/conversation_share.dart';
-import 'package:dpsk_app/share_code/image_shrink.dart';
-import 'package:dpsk_app/share_code/jpeg_encoder.dart';
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
+import 'package:dsh_app/share_code/conversation_export.dart';
+import 'package:dsh_app/share_code/conversation_redact.dart';
+import 'package:dsh_app/share_code/conversation_share.dart';
+import 'package:dsh_app/share_code/image_shrink.dart';
+import 'package:dsh_app/share_code/jpeg_encoder.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_models.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -25,7 +25,7 @@ final _now = DateTime.utc(2026, 10, 25, 3);
 
 ConversationShare _build({int? from, int? to, bool thinking = true, bool tools = true}) =>
     ConversationExport(fixtureSource())
-        .build(from: from, to: to, thinking: thinking, toolOutput: tools, now: _now, app: 'DPSK 1.0.0');
+        .build(from: from, to: to, thinking: thinking, toolOutput: tools, now: _now, app: 'dsh-go 1.0.0');
 
 String _code(Map<String, Object?> json) {
   final body = utf8.encode(jsonEncode(json));
@@ -44,7 +44,7 @@ void main() {
       ]);
       expect(back.title, '修复登录重复提交');
       expect(back.model, 'deepseek-v4-pro');
-      expect(back.app, 'DPSK 1.0.0');
+      expect(back.app, 'dsh-go 1.0.0');
     });
 
     test('written as v2 with schema 1; older readers ask for an update', () {
@@ -123,7 +123,7 @@ void main() {
       final other = ConversationAsset.of(Uint8List.fromList([1, 2, 3]), mediaType: 'image/png');
       final text = encodeConversationFile(share, [asset, other]);
       final envelope = jsonDecode(text) as Map<String, Object?>;
-      expect(envelope['dpsk'], 2);
+      expect(envelope['dshgo'], 2);
       expect(envelope['kind'], 'conversation');
       expect(envelope['name'], '带图');
       // Only pictures the conversation uses.

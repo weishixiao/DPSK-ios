@@ -408,7 +408,7 @@ void main() {
     expect(after.map((message) => message.text), before.map((message) => message.text));
     expect(h.engine.variables(chat)['draftWrites'], 1);
     final exported = await _document(h.engine, chat);
-    final state = _map(_map(_map(exported.messages.last['extra'])['dpsk'])['tavernState']);
+    final state = _map(_map(_map(exported.messages.last['extra'])['dshgo'])['tavernState']);
     expect(_map(state['variables'])['draftWrites'], 1);
     await h.reopen();
     expect((await h.engine.path(chat)).map((message) => message.text), before.map((message) => message.text));

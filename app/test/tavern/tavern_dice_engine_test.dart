@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:math' as math;
 
-import 'package:dpsk_app/tavern/deferred_tavern.dart';
-import 'package:dpsk_app/tavern/tavern_dice.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_tool_turns.dart';
-import 'package:dpsk_app/ui/common/fluid_bits.dart';
-import 'package:dpsk_app/ui/tavern/tavern_dice_sheet.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/deferred_tavern.dart';
+import 'package:dsh_app/tavern/tavern_dice.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_tool_turns.dart';
+import 'package:dsh_app/ui/common/fluid_bits.dart';
+import 'package:dsh_app/ui/tavern/tavern_dice_sheet.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -127,7 +127,7 @@ void main() {
 
     expect(engine.asked.single.chatId, _chat);
     expect(engine.asked.single.dice, '1d20');
-    expect(engine.asked.single.actionId, startsWith('dpsk-'));
+    expect(engine.asked.single.actionId, startsWith('dshgo-'));
     expect(_total(tester), '19');
     expect(find.text('放进输入框'), findsOneWidget);
     expect(await _kept(), isNull);
@@ -154,7 +154,7 @@ void main() {
 
   testWidgets('a roll left unsettled is there when the sheet opens again', (tester) async {
     final engine = _Roller([true]);
-    final intent = const TavernRollIntent(chatId: _chat, actionId: 'dpsk-earlier', dice: '2d6+1');
+    final intent = const TavernRollIntent(chatId: _chat, actionId: 'dshgo-earlier', dice: '2d6+1');
     await _open(
       tester,
       DeferredTavern(Future.value(engine)),
@@ -164,13 +164,13 @@ void main() {
     expect(_enabled(tester, 'tavern-dice-roll'), isFalse);
 
     await _tap(tester, 'tavern-dice-recheck');
-    expect(engine.asked.single, (chatId: _chat, actionId: 'dpsk-earlier', dice: '2d6+1'));
+    expect(engine.asked.single, (chatId: _chat, actionId: 'dshgo-earlier', dice: '2d6+1'));
     expect(_total(tester), '10');
   });
 
   testWidgets('放弃这次 lets the unsettled roll go', (tester) async {
     final engine = _Roller([]);
-    final intent = const TavernRollIntent(chatId: _chat, actionId: 'dpsk-earlier', dice: '1d20');
+    final intent = const TavernRollIntent(chatId: _chat, actionId: 'dshgo-earlier', dice: '1d20');
     await _open(
       tester,
       DeferredTavern(Future.value(engine)),

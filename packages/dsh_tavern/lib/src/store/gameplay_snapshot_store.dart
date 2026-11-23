@@ -68,7 +68,7 @@ extension GameplaySnapshotStore on ChatStore {
     final currentNode = leaf == null ? null : node(chatId!, leaf);
     Map<String, Object?>? state;
     if (currentNode != null) {
-      final own = currentNode.extra['dpsk'];
+      final own = currentNode.extra['dshgo'];
       final override = own is Map<String, Object?> ? own['tavernState'] : null;
       // A portable override is the existing reader's first choice. Do not
       // read a separate physical delta chain which that reader never uses.

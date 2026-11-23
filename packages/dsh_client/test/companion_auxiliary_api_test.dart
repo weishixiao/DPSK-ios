@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:test/test.dart';
 
-const _path = '/DPSK/v1/companion/auxiliary';
+const _path = '/dsh-go/v1/companion/auxiliary';
 const _session = 'full-companion-session';
 const _request = 'phone-request-1';
 const _instance = 'host-instance-1';

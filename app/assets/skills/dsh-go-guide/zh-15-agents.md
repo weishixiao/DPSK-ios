@@ -30,7 +30,7 @@
 <!-- nav: chatChats,catalogAllFeatures,catalogAgentTeam -->
 `对话列表 › 全部功能 › 智能体团队`
 
-[打开](dpsk://open/agent-team)
+[打开](dshgo://open/agent-team)
 
 页面分**成员**、**任务**、**消息**三栏：
 

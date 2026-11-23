@@ -5,13 +5,13 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/state/artifact_files.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_image.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/state/artifact_files.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/chat/render/markdown_image.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

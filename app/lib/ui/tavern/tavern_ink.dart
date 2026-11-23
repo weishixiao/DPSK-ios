@@ -163,7 +163,7 @@ String tavernIndentParagraphs(String text) {
   ].join('\n');
 }
 
-/// The card's own name colours (extensions.dpsk.theme.names), over the
+/// The card's own name colours (extensions.dshgo.theme.names), over the
 /// story: [tavernNameColor] reads them first.
 class TavernNameColors extends InheritedWidget {
   const TavernNameColors({super.key, required this.names, this.font, required super.child});

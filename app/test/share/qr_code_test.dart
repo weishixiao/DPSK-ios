@@ -8,7 +8,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/share/qr_code.dart';
+import 'package:dsh_app/ui/share/qr_code.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 QrEcc _level(String l) => switch (l) {
@@ -53,7 +53,7 @@ void main() {
   }
 
   test('picks the lowest-penalty mask and keeps the finder patterns', () {
-    final code = QrCode.encode('https://github.com/weishixiao/DPSK');
+    final code = QrCode.encode('https://github.com/ccch1mneyyy/dsh-go');
     expect(code.version, 3);
     expect(code.ecc, QrEcc.medium);
     // Finder corners: dark outer ring, light separator.

@@ -140,7 +140,7 @@ void main() {
     try {
       db.execute(
         r'''UPDATE nodes SET extra = json_set(extra,
-        '$.dpsk.inspection.prompt', 'not an inspection prompt') WHERE id = ?''',
+        '$.dshgo.inspection.prompt', 'not an inspection prompt') WHERE id = ?''',
         [reply.nodeId],
       );
     } finally {

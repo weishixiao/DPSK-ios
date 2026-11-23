@@ -3,14 +3,14 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/plugins/native/native_effects.dart';
-import 'package:dpsk_app/plugins/native/native_file_platform.dart';
-import 'package:dpsk_app/plugins/native/native_files.dart';
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/plugins/native/native_surface.dart';
-import 'package:dpsk_app/ui/plugins/native/native_panel.dart';
-import 'package:dpsk_app/ui/plugins/native/native_taps.dart' show nativePanelKey;
+import 'package:dsh_app/plugins/native/native_effects.dart';
+import 'package:dsh_app/plugins/native/native_file_platform.dart';
+import 'package:dsh_app/plugins/native/native_files.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/plugins/native/native_surface.dart';
+import 'package:dsh_app/ui/plugins/native/native_panel.dart';
+import 'package:dsh_app/ui/plugins/native/native_taps.dart' show nativePanelKey;
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

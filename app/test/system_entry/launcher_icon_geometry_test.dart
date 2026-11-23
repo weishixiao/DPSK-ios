@@ -9,13 +9,13 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:dpsk_app/links/launcher_entries.dart';
-import 'package:dpsk_app/state/attachments.dart';
+import 'package:dsh_app/links/launcher_entries.dart';
+import 'package:dsh_app/state/attachments.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/vector_drawable.dart';
 
-const _kotlin = 'android/app/src/main/kotlin/com/dpsk/harness';
+const _kotlin = 'android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app';
 
 String _source(String relative) => File('$_kotlin/$relative').readAsStringSync();
 

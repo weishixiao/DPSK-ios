@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/engine/log_view.dart';
-import 'package:dpsk_app/ui/plugins/plugin_load_status.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/engine/log_view.dart';
+import 'package:dsh_app/ui/plugins/plugin_load_status.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

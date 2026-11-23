@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>DSHCompanionAccessGroup</key>
-	<string>$(AppIdentifierPrefix)com.dpsk.harness.companion-widget</string>
+	<string>$(AppIdentifierPrefix)io.github.ccch1mneyyy.dshgo.companion-widget</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
@@ -25,7 +25,7 @@
 		<string>zh-Hans</string>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>DPSK</string>
+	<string>DSH Go</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -33,7 +33,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>dpsk_app</string>
+	<string>dsh_app</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -73,7 +73,7 @@
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>New chat</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>com.dpsk.harness.new</string>
+			<string>io.github.ccch1mneyyy.dshgo.new</string>
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemIconSymbolName</key>
@@ -81,7 +81,7 @@
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>Voice input</string>
 			<key>UIApplicationShortcutItemType</key>
-			<string>com.dpsk.harness.voice</string>
+			<string>io.github.ccch1mneyyy.dshgo.voice</string>
 		</dict>
 	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -107,10 +107,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>com.dpsk.harness</string>
+			<string>io.github.ccch1mneyyy.dshgo</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>dpsk</string>
+				<string>dshgo</string>
 			</array>
 		</dict>
 	</array>
@@ -118,14 +118,14 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeName</key>
-			<string>DPSK share</string>
+			<string>DSH Go share</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.dpsk.harness.share</string>
+				<string>io.github.ccch1mneyyy.dshgo.share</string>
 			</array>
 		</dict>
 	</array>
@@ -137,18 +137,18 @@
 				<string>public.json</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>DPSK share</string>
+			<string>DSH Go share</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.dpsk.harness.share</string>
+			<string>io.github.ccch1mneyyy.dshgo.share</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>dpsk</string>
+					<string>dshgo</string>
 				</array>
 				<key>public.mime-type</key>
 				<array>
-					<string>application/vnd.dpsk+json</string>
+					<string>application/vnd.dshgo+json</string>
 				</array>
 			</dict>
 		</dict>

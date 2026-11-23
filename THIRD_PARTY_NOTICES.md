@@ -1,6 +1,6 @@
 # 第三方声明（Third-Party Notices）
 
-本文件集中列出 DPSK 复制或改写进源码的第三方代码与素材，以及随 App 一起分发的字体、原生库和 Linux 运行时组件。源文件头用 `SPDX-FileCopyrightText` / `SPDX-License-Identifier` 标记版权与许可，并指向本文件；各项目的派生关系见各条目。
+本文件集中列出 dsh-go 复制或改写进源码的第三方代码与素材，以及随 App 一起分发的字体、原生库和 Linux 运行时组件。源文件头用 `SPDX-FileCopyrightText` / `SPDX-License-Identifier` 标记版权与许可，并指向本文件；各项目的派生关系见各条目。
 
 - App 内「设置 › 开源许可」页随 APK 分发同样的声明（`app/lib/ui/common/third_party_licenses.dart`，字体在 `app/lib/ui/settings/font_licenses.dart`）。
 - Dart / Flutter 依赖应按 `app/pubspec.lock`（以及本地包的 lock）核对直接与传递依赖；Flutter 从包根 `LICENSE` 收集许可并显示在许可证页。这里不逐包重复，发行前仍须核验实际 APK 的许可资产，不能仅凭依赖声明认定已收录。
@@ -18,7 +18,7 @@
 | 许可 | MIT：作者授权本项目按 MIT 许可使用 |
 | 用途 | 手机操控：无障碍读屏与操作、控制浮层，以及「不打扰模式」的特权虚拟屏 |
 
-上游路径前缀为 `android/app/src/main/kotlin/app/xiangyue/phase/`；本仓库路径前缀为 `app/android/app/src/main/kotlin/com/dpsk/harness/phone/`。
+上游路径前缀为 `android/app/src/main/kotlin/app/xiangyue/phase/`；本仓库路径前缀为 `app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/phone/`。
 
 | 本仓库文件 | 上游来源 |
 |---|---|
@@ -47,12 +47,12 @@ used under the MIT License with the author's permission.
 
 | 项 | 内容 |
 |---|---|
-| 作品 | DPSK 展示网站：HTML、CSS、JavaScript、内容检查与发布脚本、八张功能展示图 |
+| 作品 | DSH Go 展示网站：HTML、CSS、JavaScript、内容检查与发布脚本、八张功能展示图 |
 | 作者 | ClayGao233 / 采云师烧饼（https://github.com/ClayGao233 、https://space.bilibili.com/28879571） |
 | 许可 | 作者交付给本项目用于 go.dshtui.com；交付包未附许可证声明，不在本仓库的 AGPL-3.0 授权范围内 |
 | 用途 | `https://go.dshtui.com/` 首页 |
 
-本仓库位置：`site/home/`。在交付版本上的改动：产品名统一写作「DPSK」，填写作者、下载、仓库、贡献者和分享元信息（`dist/site-config.js`），加入页面 CSP、下载二维码、第二个下载链接和 Star 数（`dist/index.html`、`dist/author-ui.js`、`dist/refinements.css` 末尾），统一换行符；没有发布的工作文件（作者说明、备份脚本、未用到的图片）未收入。功能展示图依据 DPSK 的界面截图制作，含 DPSK 的品牌图形和鲸娘形象（见 `ASSETS.md`）。页底保留作者的「网页开发」署名。
+本仓库位置：`site/home/`。在交付版本上的改动：产品名统一写作「DSH Go」，填写作者、下载、仓库、贡献者和分享元信息（`dist/site-config.js`），加入页面 CSP、下载二维码、第二个下载链接和 Star 数（`dist/index.html`、`dist/author-ui.js`、`dist/refinements.css` 末尾），统一换行符；没有发布的工作文件（作者说明、备份脚本、未用到的图片）未收入。功能展示图依据 DSH Go 的界面截图制作，含 DSH Go 的品牌图形和鲸娘形象（见 `ASSETS.md`）。页底保留作者的「网页开发」署名。
 
 ### PiPilot（MIT）
 
@@ -168,7 +168,7 @@ DS Bot 的 NOTICE 原文附在文末。
 | 许可 | MIT（只用代码；`LICENSE-MODEL.md` 管的模型文件 `Magnet.mfxl`、`VoicePosition.mfxl` 和 Pro 内容都没有用） |
 | 用途 | 界面特效：思考光球、边框流光、语音辉光、语音光环、机器人头像等，从作者的 TypeScript / Swift / Metal 源码翻译成 Dart、Flutter 着色器和 Kotlin；手机操控时屏幕边缘的色带取自 Distortion waves（`packages/distortion-waves`）着色器里留在屏幕边缘的那部分颜色（rim）和 `WaveRim.lumps` |
 
-本仓库位置：`app/lib/ui/fx/`（每个文件第一行注明出处）及其 `app/shaders/fx/` 下的着色器；手机操控的边缘色带在 `app/android/app/src/main/kotlin/com/dpsk/harness/phone/a11y/EdgeBeam.kt`、`EdgeBeamModel.kt`（同样在文件第一行注明出处）。
+本仓库位置：`app/lib/ui/fx/`（每个文件第一行注明出处）及其 `app/shaders/fx/` 下的着色器；手机操控的边缘色带在 `app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/phone/a11y/EdgeBeam.kt`、`EdgeBeamModel.kt`（同样在文件第一行注明出处）。
 
 金属质感的着色器 `app/shaders/fx/metal_liquid.frag` 是 metal-fx 用的 Paper Shaders `liquidMetal`（Apache-2.0，Paper Design, Inc.，`@paper-design/shaders` 0.0.80）的 GLSL 翻译，按 metal-fx 的 NOTICE 原文保留：
 
@@ -193,7 +193,7 @@ Libraries.dev metal-fx, translated to Flutter GLSL.
 | 版权人 | Copyright (c) 2026 qiannianhuanxiang |
 | 许可 | MIT |
 | 用途 | 不打扰模式特权进程的 `app_process` 入口 |
-| 文件 | `app/android/app/src/main/kotlin/com/dpsk/harness/phone/background/PrivilegedDisplayEntry.kt` |
+| 文件 | `app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/phone/background/PrivilegedDisplayEntry.kt` |
 
 ### discourse_docker（MIT）
 
@@ -332,7 +332,7 @@ Libraries.dev metal-fx, translated to Flutter GLSL.
 | AndroidX WebKit | 1.15.0 | Apache-2.0 | The Android Open Source Project | 网页插件的深色模式 |
 | flutter_webrtc（pub 包，含 Android 插件代码） | 1.6.3 | MIT；其 NOTICE 另含 react-native-webrtc（MIT，Copyright (c) 2015 Howard Yang）与 `SimulcastVideoEncoderFactoryWrapper.kt`（Apache-2.0，Copyright 2017, Lyo Kato；Copyright 2017-2021, Shiguredo Inc.），原文见文末 | Copyright (c) 2018 湖北捷智云技术有限公司 | DSH Remote 直连（P2P / TURN）的 DataChannel；只用数据通道，不碰麦克风、摄像头和音频会话 |
 | WebRTC Android SDK（`io.github.webrtc-sdk:android`，libwebrtc m150） | 150.7871.04 | BSD-3-Clause，另附 Google 的专利授权（PATENTS） | Copyright (c) 2011, The WebRTC project authors | flutter_webrtc 的原生 WebRTC（`libjingle_peerconnection_so.so`，每个 ABI 一份） |
-| AudioSwitch（`com.github.davidliu:audioswitch`，twilio/audioswitch 的分支） | `039a35aefab7747c557242fa216c9ea11743b604` | Apache-2.0 | Copyright 2020 Twilio, inc. | flutter_webrtc 的音频路由依赖；DPSK 不建音频轨，不会启用 |
+| AudioSwitch（`com.github.davidliu:audioswitch`，twilio/audioswitch 的分支） | `039a35aefab7747c557242fa216c9ea11743b604` | Apache-2.0 | Copyright 2020 Twilio, inc. | flutter_webrtc 的音频路由依赖；DSH Go 不建音频轨，不会启用 |
 | mobile_scanner（pub 包，含 Android 插件代码） | 7.5.0 | BSD-3-Clause | Copyright (c) 2022, Julian Steenbakker | Remote「扫码配对电脑」的相机扫码和相册识图 |
 | ML Kit Barcode Scanning（`com.google.mlkit:barcode-scanning`，模型随 APK 打包） | 17.3.0 | [ML Kit 服务条款](https://developers.google.com/ml-kit/terms)（Google 免费分发的二进制，非开源） | Google LLC | mobile_scanner 的二维码识别，在手机本地运行，不需要 Google Play 服务 |
 | CameraX（`androidx.camera:*`，mobile_scanner 的依赖） | 随 mobile_scanner 7.5.0 | Apache-2.0 | The Android Open Source Project | 扫码时的相机预览 |
@@ -454,7 +454,7 @@ C710 新增的 `image` 4.12.0 是 MIT 许可 pub 依赖；其原许可由 Flutte
 - **Clawd on Desk**（https://github.com/rullerzhou-afk/clawd-on-desk，AGPL-3.0）：桌宠的主题包格式、状态名、优先级与时长默认值与它兼容，宠物包可以在两边通用。本项目没有复制它的代码。
 - **Streamdown**（https://github.com/vercel/streamdown）：`app/lib/ui/chat/render/stream_repair.dart` 修补流式 Markdown 末尾的方式参照了它的 `remend`。
 - **DS Bot**：dsh-ui 组件的名称与 DS Bot 一致。
-- **Open-Meteo**（https://open-meteo.com，数据 CC BY 4.0）：示例插件 `examples/plugins/DPSK-example-weather` 使用它的天气数据，卡片上注明来源。
+- **Open-Meteo**（https://open-meteo.com，数据 CC BY 4.0）：示例插件 `examples/plugins/dsh-go-example-weather` 使用它的天气数据，卡片上注明来源。
 
 ## 六、OpenHarmony 虚拟进程与构建工具
 
@@ -1028,6 +1028,6 @@ Local recognition is enabled by default. While off, recognition requests do not
 trigger SDK loading or initialization. Turning it off prevents new recognition,
 but does not uninstall
 the SDK or promise to clear or stop sending previously accumulated SDK statistics.
-The DPSK anonymous usage statistics switch does not control this SDK.
+The dsh-go anonymous usage statistics switch does not control this SDK.
 The Apache 2.0 license for documentation sample code is not the license for
 this SDK binary. This notice does not replace Google's SDK terms.

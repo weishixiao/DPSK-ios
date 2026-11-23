@@ -6,7 +6,7 @@
 
 `app/lib/ui/companion/companion_page.dart::_widgetUpdate` 已在伙伴状态和话语变化时调用 `companionWidgetProvider.update`，没有 Android 平台门。本补丁不修改此页面，也不修改 `app/lib/companion/companion_widget.dart`。原 Dart 合同会捕获原生异常；卡片保存/刷新失败不会影响伙伴页面，但也不会向页面假报“已添加”。
 
-基底 Android 合同来自 `app/android/app/src/main/kotlin/com/dpsk/harness/companion/CompanionWidget.kt`：通道仅有 `update`，成功返回 null，没有事件；非 Map 是无操作，未知方法 notImplemented。下面九个字段由当前真实生产者发送。字段缺省保留旧值，显式 null 删除，布尔/对象忽略。鸿蒙只保存这九个有消费者的键；未知键忽略。
+基底 Android 合同来自 `app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/companion/CompanionWidget.kt`：通道仅有 `update`，成功返回 null，没有事件；非 Map 是无操作，未知方法 notImplemented。下面九个字段由当前真实生产者发送。字段缺省保留旧值，显式 null 删除，布尔/对象忽略。鸿蒙只保存这九个有消费者的键；未知键忽略。
 
 | 字段 | 有效类型 | 意义 |
 | --- | --- | --- |
@@ -27,7 +27,7 @@
 
 话语仅在 `now - saidAt < 12 小时` 时保留，正好十二小时清空。多个实例逐个异步刷新时，每个实例派发前重新计算本地时间和 TTL，避免首个 SDK 调用长时间等待后给后面的实例沿用旧时间。未来 saidAt、时钟回拨导致负年龄时仍保留，和 Android 相同。系统周期刷新有调度延迟，不能承诺到期那一毫秒桌面立即变化；Android XML 本来也是 30 分钟刷新。
 
-输出 `WidgetView` 是扁平绑定对象：`ready/name/nameDefault/status/statusDefault/line/pearls/pose/openUri`。`nameDefault=true` 表示页面应使用本地化默认名字；`statusDefault` 为 waiting/asleep 时由页面显示对应本地化字符串，空串表示显示 status（含有意留空）。`ready=false` 是尚未从盘上读完的初始绑定，不能显示为“已同步”。`pose` 只取 sleeping/happy/idle；`openUri` 固定为 `dpsk://open/companion`。行为空时页面隐藏话语区域。
+输出 `WidgetView` 是扁平绑定对象：`ready/name/nameDefault/status/statusDefault/line/pearls/pose/openUri`。`nameDefault=true` 表示页面应使用本地化默认名字；`statusDefault` 为 waiting/asleep 时由页面显示对应本地化字符串，空串表示显示 status（含有意留空）。`ready=false` 是尚未从盘上读完的初始绑定，不能显示为“已同步”。`pose` 只取 sleeping/happy/idle；`openUri` 固定为 `dshgo://open/companion`。行为空时页面隐藏话语区域。
 
 ## 独立进程、原子性和失败
 
@@ -49,7 +49,7 @@ UI 更新先原子存储，再查询 API 20 `getPublishedRunningFormInfos()`，�
 2. **`app/ohos/entry/src/main/resources/base/profile/companion_form.json`**：forms 中 name=`companion_room`、uiSyntax=`arkts`、src 指向本机卡片页；updateEnabled=true、updateDuration=1（30 分钟）。页面的尺寸、设计宽度和支持大小由本机选择。不要启用 dataProxy/Push 或创建独立常驻服务。bundle/module/ability/form/dimension 是卡片身份的一部分，发布后改变需要按官方升级规则处理。
 3. **`app/ohos/entry/src/main/ets/widget/pages/CompanionCard.ets`（建议路径）**：用 ArkTS 卡片数据存储绑定上面的九个输出字段；ready=false 提供初始/待刷新表现。nameDefault 和 statusDefault 解析本地化资源；line 空则隐藏；pose 映射三张本地图片；不在页面启动任何后台执行/通话。
 4. **资源文件**：提供 companion_widget_idle / companion_widget_happy / companion_widget_sleeping 对应媒体和名称/等待/睡眠文案。本次 ZIP 源码只见 Android 对三张 drawable 的引用，没有图像文件字节，因此这里不复制或伪造它们。本机可沿用现有正式视觉资产生成流程。
-5. **卡片点击**：只在用户 click 中调用 `postCardAction` 的 router 事件，目标 bundle 为本应用，uri 固定 `dpsk://open/companion`。不同时指定 abilityName（官方说它优先于 uri），不使用需要保活权限的 call 事件。现有 AppLinksPlugin 要求 Want.action=`ohos.want.action.viewData` 并接收 uri；本机必须实测 cold/warm 两种卡片 router 到达的 Want，确认进入伙伴页面。宿主链接回归不能代替这个系统路由实测。
+5. **卡片点击**：只在用户 click 中调用 `postCardAction` 的 router 事件，目标 bundle 为本应用，uri 固定 `dshgo://open/companion`。不同时指定 abilityName（官方说它优先于 uri），不使用需要保活权限的 call 事件。现有 AppLinksPlugin 要求 Want.action=`ohos.want.action.viewData` 并接收 uri；本机必须实测 cold/warm 两种卡片 router 到达的 Want，确认进入伙伴页面。宿主链接回归不能代替这个系统路由实测。
 6. **Flutter UI**：当前 `_widgetUpdate` 已发送，无需重新加一个平台门或复制伙伴逻辑。若本机加“添加桌面卡片”说明/入口，应在上述页面、注册、资源和真机流程齐备后呈现；本补丁没有宣称添加成功的接口。
 
 ## 官方来源与核验边界

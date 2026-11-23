@@ -1,11 +1,11 @@
 import 'dart:math' as math;
 
-import 'package:dpsk_app/ui/fx/voice_ring/aura.dart';
-import 'package:dpsk_app/ui/fx/voice_ring/frame.dart';
-import 'package:dpsk_app/ui/fx/voice_ring/lean.dart';
-import 'package:dpsk_app/ui/fx/voice_ring/light.dart';
-import 'package:dpsk_app/ui/fx/voice_ring/voice.dart';
-import 'package:dpsk_app/ui/fx/voice_ring/voice_ring.dart';
+import 'package:dsh_app/ui/fx/voice_ring/aura.dart';
+import 'package:dsh_app/ui/fx/voice_ring/frame.dart';
+import 'package:dsh_app/ui/fx/voice_ring/lean.dart';
+import 'package:dsh_app/ui/fx/voice_ring/light.dart';
+import 'package:dsh_app/ui/fx/voice_ring/voice.dart';
+import 'package:dsh_app/ui/fx/voice_ring/voice_ring.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

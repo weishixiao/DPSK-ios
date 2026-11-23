@@ -187,7 +187,7 @@ void main() {
           );
         }
         // Retain raw provenance even when H4 can share a runtime node.
-        final files = _map(_map(store.chat(chat).metadata['dpsk'])['chatJsonl'])['files']! as List<Object?>;
+        final files = _map(_map(store.chat(chat).metadata['dshgo'])['chatJsonl'])['files']! as List<Object?>;
         expect(files.map((file) => _map(_map(_map(file)['header'])['chat_metadata'])['chat_id_hash']), [
           c.first,
           c.second,
@@ -258,7 +258,7 @@ void main() {
         final metadata = <String, Object?>{
           ...oldTerminal,
           if (externalEdit) 'scenario': 'EDITED',
-          'dpsk': {
+          'dshgo': {
             'chatJsonl': {'version': 1, 'runtimeContext': _canonical(oldTerminal)},
           },
         };
@@ -394,9 +394,9 @@ Map<String, Object?> _admissions(int count) => {
 Map<String, Object?> _map(Object? value) =>
     value is Map<String, Object?> ? jsonDecode(jsonEncode(value)) as Map<String, Object?> : {};
 Map<String, Object?> _nodeState(ChatStore store, String chat, String node) =>
-    _map(_map(store.node(chat, node).extra['dpsk'])['tavernState']);
+    _map(_map(store.node(chat, node).extra['dshgo'])['tavernState']);
 Map<String, Object?> _extra(Map<String, Object?> state, [Map<String, Object?> own = const {}]) => {
-  'dpsk': {'tavernState': state, if (own.isNotEmpty) 'chatJsonl': own},
+  'dshgo': {'tavernState': state, if (own.isNotEmpty) 'chatJsonl': own},
 };
 Map<String, Object?> _row(
   String text, {

@@ -14,7 +14,7 @@ const replayViewerPage = r'''<!doctype html>
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-SQx9DjHcIv7KDXzxussj4x+ZyUAaCegGkYXT1lOZc8A='; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="color-scheme" content="light dark">
 <title>__DSHGO_TITLE__</title>
-<style>/* DPSK conversation viewer (viewer.js). Shared by the landing page and the
+<style>/* dsh-go conversation viewer (viewer.js). Shared by the landing page and the
    self-contained page the app exports (app/tool/make_replay_viewer.py inlines
    it). Colours follow the app's default theme (雾蓝), light and dark. */
 
@@ -243,11 +243,11 @@ const replayViewerPage = r'''<!doctype html>
 </head>
 <body class="dv-page">
 <div id="dv-root"></div>
-<script type="application/json" id="dpsk-data">__DSHGO_DATA__</script>
-<script>// DPSK conversation viewer (docs/design/share-codes.md). One source,
+<script type="application/json" id="dshgo-data">__DSHGO_DATA__</script>
+<script>// dsh-go conversation viewer (docs/design/share-codes.md). One source,
 // three ways a conversation arrives ([boot]):
 //
-//   - a `.dpsk` file picked or dropped on the landing page (site/share/);
+//   - a `.dshgo` file picked or dropped on the landing page (site/share/);
 //   - the app's 「导出为网页」: this script inlined into one self-contained
 //     page with the file in it (app/tool/make_replay_viewer.py →
 //     app/lib/share_code/replay_viewer.g.dart);
@@ -274,8 +274,8 @@ const replayViewerPage = r'''<!doctype html>
       "allText": "全文",
       "progress": "回放进度",
       "speed": "倍速",
-      "openApp": "用 DPSK 打开",
-      "download": "下载 DPSK",
+      "openApp": "用 dsh-go 打开",
+      "download": "下载 dsh-go",
       "saveChat": "存为对话文件",
       "pause": "暂停",
       "replay": "重新播放",
@@ -304,11 +304,11 @@ const replayViewerPage = r'''<!doctype html>
       "achieved": "已达成",
       "pickFile": "选择文件",
       "viewChat": "查看对话",
-      "pickHint": "选择或拖入 .dpsk 文件",
+      "pickHint": "选择或拖入 .dshgo 文件",
       "fileTooLarge": "文件太大",
       "drop": "松手打开",
       "opening": "正在打开…",
-      "errorNewer": "需要更新 DPSK 才能打开",
+      "errorNewer": "需要更新 dsh-go 才能打开",
       "errorBrowser": "这个浏览器打不开，换个新版浏览器试试",
       "errorKind": "这不是对话文件",
       "errorGone": "链接已过期或被删除",
@@ -326,7 +326,7 @@ const replayViewerPage = r'''<!doctype html>
       "messages": "{n} 条消息",
       "thoughts": "{n} 段思考",
       "tokenCount": "{count} tokens",
-      "viewerTitle": "查看对话 · DPSK"
+      "viewerTitle": "查看对话 · dsh-go"
     },
     "en": {
       "chat": "Chat",
@@ -335,8 +335,8 @@ const replayViewerPage = r'''<!doctype html>
       "allText": "Full text",
       "progress": "Replay progress",
       "speed": "Speed",
-      "openApp": "Open in DPSK",
-      "download": "Download DPSK",
+      "openApp": "Open in dsh-go",
+      "download": "Download dsh-go",
       "saveChat": "Save chat file",
       "pause": "Pause",
       "replay": "Replay",
@@ -365,11 +365,11 @@ const replayViewerPage = r'''<!doctype html>
       "achieved": "Achieved",
       "pickFile": "Choose file",
       "viewChat": "View chat",
-      "pickHint": "Choose or drop a .dpsk file",
+      "pickHint": "Choose or drop a .dshgo file",
       "fileTooLarge": "File is too large",
       "drop": "Drop to open",
       "opening": "Opening…",
-      "errorNewer": "Update DPSK to open this",
+      "errorNewer": "Update dsh-go to open this",
       "errorBrowser": "Can’t open this in your browser. Try a newer one.",
       "errorKind": "This isn’t a chat file",
       "errorGone": "This link has expired or was deleted",
@@ -402,7 +402,7 @@ const replayViewerPage = r'''<!doctype html>
         "one": "{count} token",
         "other": "{count} tokens"
       },
-      "viewerTitle": "View chat · DPSK"
+      "viewerTitle": "View chat · dsh-go"
     }
   };
 
@@ -492,13 +492,13 @@ const replayViewerPage = r'''<!doctype html>
     return json;
   }
 
-  /** A `.dpsk` file's text (or a bare code): {code, kind, name, assets}. */
+  /** A `.dshgo` file's text (or a bare code): {code, kind, name, assets}. */
   function readEnvelope(text) {
     var t = String(text).trim();
     if (t.charAt(0) !== '{') return { code: t, assets: null };
     var json;
     try { json = JSON.parse(t); } catch (e) { throw new Error('format'); }
-    if (!json || typeof json.dpsk !== 'number' || typeof json.code !== 'string') throw new Error('format');
+    if (!json || typeof json.dshgo !== 'number' || typeof json.code !== 'string') throw new Error('format');
     return {
       code: json.code,
       kind: typeof json.kind === 'string' ? json.kind : null,
@@ -615,7 +615,7 @@ const replayViewerPage = r'''<!doctype html>
     return out;
   }
 
-  /** A conversation from a `.dpsk` file's text (or a bare code). */
+  /** A conversation from a `.dshgo` file's text (or a bare code). */
   async function openFile(text, opts) {
     var env = readEnvelope(text);
     var json = await decodeCode(env.code, opts);
@@ -628,7 +628,7 @@ const replayViewerPage = r'''<!doctype html>
 
   var MAGIC = [0x44, 0x53, 0x47, 0x31]; // "DSG1"
 
-  /** The `.dpsk` text inside a hosted blob: `DSG1` + 12-byte IV + AES-GCM
+  /** The `.dshgo` text inside a hosted blob: `DSG1` + 12-byte IV + AES-GCM
    *  ciphertext (tag included) of the gzipped file. */
   async function decryptHosted(buffer, keyText) {
     var bytes = new Uint8Array(buffer);
@@ -1217,7 +1217,7 @@ const replayViewerPage = r'''<!doctype html>
     }
     if (opts.download !== false) {
       var dl = el('a', 'dv-btn ' + (opts.appLink ? 'dv-secondary' : 'dv-primary'), tr('download'));
-      dl.href = opts.download || 'https://github.com/weishixiao/DPSK/releases/latest';
+      dl.href = opts.download || 'https://github.com/ccch1mneyyy/dsh-go/releases/latest';
       dl.rel = 'noopener';
       dl.target = '_blank';
       actions.appendChild(dl);
@@ -1227,7 +1227,7 @@ const replayViewerPage = r'''<!doctype html>
       var save = el('button', 'dv-btn dv-secondary', tr('saveChat'));
       save.type = 'button';
       save.addEventListener('click', function () {
-        var url = URL.createObjectURL(new Blob([opts.fileText], { type: 'application/vnd.dpsk+json' }));
+        var url = URL.createObjectURL(new Blob([opts.fileText], { type: 'application/vnd.dshgo+json' }));
         var a = el('a');
         a.href = url;
         a.download = fileName(conv.title);
@@ -1747,7 +1747,7 @@ const replayViewerPage = r'''<!doctype html>
 
   function fileName(title) {
     var base = textPrefix(String(title || tr('chat')).replace(/[\\/:*?"<>|\u0000-\u001f]+/g, ' ').trim(), 40) || tr('chat');
-    return base + '.dpsk';
+    return base + '.dshgo';
   }
 
   function card(host, heading, text, button) {
@@ -1762,12 +1762,12 @@ const replayViewerPage = r'''<!doctype html>
     return c;
   }
 
-  /** 「查看对话」: pick a `.dpsk` file or drop one anywhere on the page. */
+  /** 「查看对话」: pick a `.dshgo` file or drop one anywhere on the page. */
   function opener(host, opts) {
     opts = opts || {};
     var input = el('input');
     input.type = 'file';
-    input.accept = '.dpsk,application/vnd.dpsk+json,application/json';
+    input.accept = '.dshgo,application/vnd.dshgo+json,application/json';
     input.hidden = true;
     var pick = el('button', 'dv-btn dv-primary', tr('pickFile'));
     pick.type = 'button';
@@ -1784,7 +1784,7 @@ const replayViewerPage = r'''<!doctype html>
         var text = await file.text();
         var opened = await openFile(text);
         mount(host, opened.conversation, { assets: opened.assets, fileText: text, download: opts.download });
-        document.title = opened.conversation.title + ' · DPSK';
+        document.title = opened.conversation.title + ' · dsh-go';
         detachDrop();
       } catch (e) {
         error.textContent = errorText(e);
@@ -1819,7 +1819,7 @@ const replayViewerPage = r'''<!doctype html>
    *  a hosted link, or the file opener. */
   async function boot(host) {
     host = host || document.getElementById('dv-root');
-    var data = document.getElementById('dpsk-data');
+    var data = document.getElementById('dshgo-data');
     var embedded = data ? data.textContent.trim() : '';
     try {
       // The exported page has the file here; the template's own marker is
@@ -1836,12 +1836,12 @@ const replayViewerPage = r'''<!doctype html>
         if (!key) throw new Error('key');
         card(host, tr('opening'), null, null);
         var hosted = await openHosted(path[1], key);
-        document.title = hosted.conversation.title + ' · DPSK';
+        document.title = hosted.conversation.title + ' · dsh-go';
         mount(host, hosted.conversation, {
           assets: hosted.assets,
           fileText: hosted.fileText,
           // The app opens the same link (the key stays in the fragment).
-          appLink: 'dpsk://' + location.host + location.pathname + location.hash
+          appLink: 'dshgo://' + location.host + location.pathname + location.hash
         });
         return;
       }
@@ -1849,7 +1849,7 @@ const replayViewerPage = r'''<!doctype html>
       opener(host);
     } catch (e) {
       var dl = el('a', 'dv-btn dv-secondary', tr('download'));
-      dl.href = 'https://github.com/weishixiao/DPSK/releases/latest';
+      dl.href = 'https://github.com/ccch1mneyyy/dsh-go/releases/latest';
       dl.rel = 'noopener';
       card(host, errorText(e), null, dl);
     }

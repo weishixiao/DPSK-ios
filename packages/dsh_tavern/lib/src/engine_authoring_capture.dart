@@ -93,11 +93,11 @@ extension _AuthoringResourceCapture on TavernEngine {
           if (snapshot.present) {
             document = _decodeObject(decodeAuthoringText(utf8.encode(snapshot.rawText!)).text, 'Lorebook');
             _authoringBook(document);
-            final envelope = !document.containsKey('entries') && document['format'] == 'dpsk-lorebook';
+            final envelope = !document.containsKey('entries') && document['format'] == 'dshgo-lorebook';
             if (envelope && document['importReport'] != null) {
               TavernImportReport.fromJson(document['importReport']! as Map<String, Object?>);
             }
-            format = envelope ? 'dpsk-lorebook' : 'st-json';
+            format = envelope ? 'dshgo-lorebook' : 'st-json';
           }
           return _AuthoringCapturedResource(
             target: target,

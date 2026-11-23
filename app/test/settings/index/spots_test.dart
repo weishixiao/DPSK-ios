@@ -2,11 +2,11 @@
 // reachable from the hub, every searchable entry with synonyms in both
 // languages, link ids that don't collide.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/links/page_links.dart';
-import 'package:dpsk_app/ui/features/feature_catalog.dart';
-import 'package:dpsk_app/ui/phone/android_shell_page.dart';
-import 'package:dpsk_app/ui/settings/index/settings_pages.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/links/page_links.dart';
+import 'package:dsh_app/ui/features/feature_catalog.dart';
+import 'package:dsh_app/ui/phone/android_shell_page.dart';
+import 'package:dsh_app/ui/settings/index/settings_pages.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -82,7 +82,7 @@ void main() {
     expect(ids.toSet().intersection(catalogPageLinks), isEmpty);
     for (final id in ids) {
       expect(id, matches(RegExp(r'^[a-z0-9-]+$')), reason: id);
-      expect(pageLinkId(Uri.parse('dpsk://open/$id')), id);
+      expect(pageLinkId(Uri.parse('dshgo://open/$id')), id);
     }
   });
 

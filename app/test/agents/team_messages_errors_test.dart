@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/agents/team_page.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart' show ListPageCard;
-import 'package:dpsk_app/ui/common/segmented_pill.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/agents/team_page.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart' show ListPageCard;
+import 'package:dsh_app/ui/common/segmented_pill.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

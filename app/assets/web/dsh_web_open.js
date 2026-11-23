@@ -37,7 +37,7 @@
   var PENDING = 'dsh-app-open-pending';
   var STORE = 'dsh.sessions.current';
   // A hop's one-off query (see hop); gone from the address once it landed.
-  var HOP_PARAM = 'DPSK-hop';
+  var HOP_PARAM = 'dsh-go-hop';
   // How long a blank conversation has to stay as it is after New before it counts as the new one.
   var BLANK_SETTLE_MS = 1500;
   // How long an open may keep looking once the page has booted.

@@ -6,9 +6,9 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/share/share_card.dart';
-import 'package:dpsk_app/ui/share/share_content.dart';
-import 'package:dpsk_app/ui/share/share_export.dart';
+import 'package:dsh_app/ui/share/share_card.dart';
+import 'package:dsh_app/ui/share/share_content.dart';
+import 'package:dsh_app/ui/share/share_export.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

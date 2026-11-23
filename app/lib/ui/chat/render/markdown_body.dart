@@ -283,7 +283,7 @@ class MarkdownBody extends StatefulWidget {
   // onLinkTap identity; its cached spans may retain this context-only callback.
   static void _onLinkTap(BuildContext context, String url, String title) {
     if (!context.mounted) return;
-    // `dpsk://open/<page>`: the guide's links to the app's own pages.
+    // `dshgo://open/<page>`: the guide's links to the app's own pages.
     if (openReplyPageLink(context, url)) return;
     final uri = linkToOpen(url);
     if (uri != null) {

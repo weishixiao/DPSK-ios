@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/tavern/tavern_canvas.dart';
-import 'package:dpsk_app/tavern/tavern_canvas_calls.dart';
-import 'package:dpsk_app/tavern/tavern_card_scripts.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_script_wire.dart' show tavernScriptKey;
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_settings.dart';
-import 'package:dpsk_app/ui/tavern/tavern_canvas_view.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_page.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_canvas.dart';
+import 'package:dsh_app/tavern/tavern_canvas_calls.dart';
+import 'package:dsh_app/tavern/tavern_card_scripts.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_script_wire.dart' show tavernScriptKey;
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_settings.dart';
+import 'package:dsh_app/ui/tavern/tavern_canvas_view.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_page.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -359,7 +359,7 @@ void main() {
       card: const {
         'name': '林晚',
         'extensions': {
-          'dpsk': {
+          'dshgo': {
             'mvu': {'enabled': true},
           },
         },

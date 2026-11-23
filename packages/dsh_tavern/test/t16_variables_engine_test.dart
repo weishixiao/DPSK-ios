@@ -93,7 +93,7 @@ void main() {
       ]);
       db.execute('UPDATE nodes SET extra = ? WHERE id = ?', [
         jsonEncode({
-          'dpsk': {
+          'dshgo': {
             'tavernState': {
               'variables': {'saved': 'portable'},
               'stChatIdHash': null,
@@ -112,7 +112,7 @@ void main() {
       h,
       (db) => db.execute('UPDATE nodes SET extra = ? WHERE id = ?', [
         jsonEncode({
-          'dpsk': {
+          'dshgo': {
             'tavernState': {'stChatIdHash': null},
           },
         }),

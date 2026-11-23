@@ -6,14 +6,14 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/runtime/background_net.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/ui/chat/chat_header.dart';
-import 'package:dpsk_app/ui/notify/background_net_host.dart';
-import 'package:dpsk_app/ui/settings/background_guide_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/runtime/background_net.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/ui/chat/chat_header.dart';
+import 'package:dsh_app/ui/notify/background_net_host.dart';
+import 'package:dsh_app/ui/settings/background_guide_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

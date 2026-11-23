@@ -166,7 +166,7 @@ void main() {
       'Guide',
       greeting: 'opening',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': {
             'schema': {
@@ -214,7 +214,7 @@ void main() {
     // Return to an actual ancestor before any of the three domains consumed.
     // The same durable proposal remains eligible on this independent branch.
     await h.engine.selectNode(chat, greeting);
-    expect((await _saved(h.engine, chat)).containsKey('dpskPackRuntime'), isFalse);
+    expect((await _saved(h.engine, chat)).containsKey('dshgoPackRuntime'), isFalse);
     final branchB = await _send(h, chat, 'ember', 'branch B');
     expect(branchB.message.nodeId, isNot(branchA.message.nodeId));
     final savedB = await _saved(h.engine, chat);
@@ -289,9 +289,9 @@ void main() {
     expect(_worldEntry(current)['sticky'], _worldEntry(rowB)['sticky']);
 
     await h.engine.selectNode(chat, branchA.message.nodeId);
-    expect((await _saved(h.engine, chat))['dpskPackRuntime'], savedA['dpskPackRuntime']);
+    expect((await _saved(h.engine, chat))['dshgoPackRuntime'], savedA['dshgoPackRuntime']);
     await h.reopen();
-    expect((await _saved(h.engine, chat))['dpskPackRuntime'], savedA['dpskPackRuntime']);
+    expect((await _saved(h.engine, chat))['dshgoPackRuntime'], savedA['dshgoPackRuntime']);
     expect(_map((await h.engine.readState(chat)).values)['n'], 11);
     expect(h.requests, hasLength(4));
   });
@@ -553,7 +553,7 @@ Future<TavernPackVersionRef> _worldPack(ScriptFixture h, String version, String 
       },
     },
   },
-  dpsk: {
+  dshgo: {
     'v': 1,
     'state': {
       'rules': [
@@ -602,11 +602,11 @@ Future<TavernPackVersionRef> _install(
   String version, {
   List<Json> resources = const [],
   Map<String, Object?> files = const {},
-  Json? dpsk,
+  Json? dshgo,
 }) async {
   final manifest = Uint8List.fromList(
     utf8.encode(
-      jsonEncode({'formatVersion': 1, 'packId': id, 'packVersion': version, 'resources': resources, 'dpsk': ?dpsk}),
+      jsonEncode({'formatVersion': 1, 'packId': id, 'packVersion': version, 'resources': resources, 'dshgo': ?dshgo}),
     ),
   );
   final archive = Archive()..addFile(ArchiveFile('pack.json', manifest.length, manifest));
@@ -695,11 +695,11 @@ String _requestText(Json body) =>
 Future<Json> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final raw = _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  final raw = _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
   return _map(jsonDecode(jsonEncode(raw)));
 }
 
 Json _map(Object? value) => value! as Json;
 List<Json> _maps(Object? value) => (value! as List<Object?>).map(_map).toList();
-Json _binding(Json saved, String binding) => _map(_map(_map(saved['dpskPackRuntime'])['bindings'])[binding]);
+Json _binding(Json saved, String binding) => _map(_map(_map(saved['dshgoPackRuntime'])['bindings'])[binding]);
 Json _worldEntry(Json row) => _map(_map(_map(_map(row['worldInfo'])['entries'])['lore'])['memory']);

@@ -3,10 +3,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/session_export.dart';
-import 'package:dpsk_app/ui/features/session_export_page.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/session_export.dart';
+import 'package:dsh_app/ui/features/session_export_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -85,12 +85,12 @@ void main() {
             expect(await File(path).readAsBytes(), [0x50, 0x4b, 1, 1]);
             if (missingAtCleanup) await File(path).parent.delete(recursive: true);
             if (failure) throw original;
-            return 'Download/DPSK/dsh-session-S.zip';
+            return 'Download/DSH-Go/dsh-session-S.zip';
           }).saveToDownloads('S');
           if (failure) {
             await expectLater(operation, throwsA(same(original)));
           } else {
-            expect(await operation, 'Download/DPSK/dsh-session-S.zip');
+            expect(await operation, 'Download/DSH-Go/dsh-session-S.zip');
           }
           expect(source, isNotNull);
           expect(await File(source!).parent.exists(), isFalse);
@@ -176,7 +176,7 @@ void main() {
           // file.inputStream/copyTo. Hold this same pre-read boundary explicitly.
           if (saves.length == 1) await save.release.future;
           save.consumed = await File(save.path).readAsBytes();
-          return 'Download/DPSK/${(call.arguments as Map)['name']}';
+          return 'Download/DSH-Go/${(call.arguments as Map)['name']}';
         });
         usePhoneView(tester);
         try {

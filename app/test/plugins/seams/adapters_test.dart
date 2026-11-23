@@ -1,9 +1,9 @@
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/state/cordis_state.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/state/cordis_state.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -159,9 +159,9 @@ void main() {
 
   group('P2 skeletons', () {
     test('dsh-ui-panel matches native panel cells only; pet matches nothing yet', () {
-      // Native panels occupy `DPSK:<id>` cells (test/plugins/native/native_panel_test.dart).
+      // Native panels occupy `dsh-go:<id>` cells (test/plugins/native/native_panel_test.dart).
       for (final slot in [Slots.dshGoPanel, Slots.rightPaneTab, Slots.main]) {
-        final native = SlotOccupant(slot: slot, package: 'dsh-cost', cell: 'DPSK:cost');
+        final native = SlotOccupant(slot: slot, package: 'dsh-cost', cell: 'dsh-go:cost');
         final web = SlotOccupant(slot: slot, package: 'dsh-cost', cell: 'cost');
         expect(const DshUiPanelAdapter().slots, contains(slot));
         expect(const DshUiPanelAdapter().canRender(native, const PluginClientInfo(package: 'dsh-cost')), isTrue);

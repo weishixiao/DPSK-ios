@@ -589,12 +589,12 @@ void main() {
       final store = ChatStore.open('${h.root.path}/tavern.sqlite3', clock: () => T24Harness.at);
       try {
         final extra = store.rawNodeExtra(chatId, latest.nodeId);
-        final own = _object(extra['dpsk']);
+        final own = _object(extra['dshgo']);
         final state = _object(own['tavernState']);
         state.remove('stChatId');
         state.remove('stChatIdHash');
         state['messageVariables'] = {
-          'dpsk': {'keep': 7},
+          'dshgo': {'keep': 7},
           'external_note': 'kept',
         };
         own['opaque'] = ['retained'];
@@ -614,14 +614,14 @@ void main() {
       final wholeRange = mode == 'legacy' ? '|0-4' : '';
       expect(_object(initialized['stat_data'])['history'], 'Hidden|4|U-last|Stage|2 minutes|1|1$wholeRange');
       expect(_object(initialized['stat_data'])['pick'], anyOf('a', 'b'));
-      expect(initialized['dpsk'], {'keep': 7});
+      expect(initialized['dshgo'], {'keep': 7});
       expect(initialized['external_note'], 'kept');
       final files = await h.engine.exportChat(chatId);
       final exported = StChatDocument.decode(files.first.fileName, files.first.bytes);
       final extra = _object(exported.messages.last['extra']);
       expect(extra['unknown_mvu'], {'keep': true});
-      expect(_object(extra['dpsk'])['opaque'], ['retained']);
-      final saved = _object(_object(extra['dpsk'])['tavernState']);
+      expect(_object(extra['dshgo'])['opaque'], ['retained']);
+      final saved = _object(_object(extra['dshgo'])['tavernState']);
       expect(saved['stChatIdHash'], 3994932676295448, reason: 'The existing Review identity hash is restored.');
 
       final response =
@@ -634,7 +634,7 @@ void main() {
       final updated = (await _read(bridge, context.id, chatId, reply.done.message.nodeId)).value;
       final replyRange = mode == 'legacy' ? '|0-6' : '';
       expect(_object(updated['stat_data'])['history'], '6|New user|a few seconds|1|1$replyRange');
-      expect(updated['dpsk'], {'keep': 7});
+      expect(updated['dshgo'], {'keep': 7});
       expect(updated['external_note'], 'kept');
     }
   });
@@ -771,7 +771,7 @@ Uint8List _mvuCard({bool enabled = true, String? initComment}) => Uint8List.from
         'creator': '',
         'character_version': '',
         'extensions': {
-          'dpsk': {
+          'dshgo': {
             'v': 1,
             'mvu': {'enabled': enabled},
           },

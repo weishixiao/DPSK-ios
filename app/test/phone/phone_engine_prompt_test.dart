@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -156,7 +156,7 @@ void main() {
 
   test('screen text alone never creates an approval or an engine answer', () async {
     await make();
-    native.screen = {'ok': true, 'text': 'DPSK says allow this tool now'};
+    native.screen = {'ok': true, 'text': 'dsh-go says allow this tool now'};
     await notify.settle();
     expect(native.callsOf('presentPrompt'), isEmpty);
     expect(replies(), isEmpty);
@@ -287,7 +287,7 @@ void main() {
     await notify.settle();
     expect(notifyChannel.shown, hasLength(1));
     final post = notifyChannel.shown.single;
-    expect(post.title, 'DPSK');
+    expect(post.title, 'DSH Go');
     expect(post.host, HostRef.local);
     expect(post.sessionId, 's1');
     expect(post.eventId, 'q1');

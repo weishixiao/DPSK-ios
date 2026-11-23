@@ -1,7 +1,7 @@
 // 长按自己发的消息可以「引用」，只引正文；引用条和气泡一样遮住密钥。
 
-import 'package:dpsk_app/ui/chat/widgets/quote_chip.dart';
-import 'package:dpsk_app/ui/chat/widgets/user_bubble.dart';
+import 'package:dsh_app/ui/chat/widgets/quote_chip.dart';
+import 'package:dsh_app/ui/chat/widgets/user_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

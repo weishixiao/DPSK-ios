@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_fields.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/ui/engine_settings/schema_fields.dart';
 import 'package:dsh_client/dsh_client.dart' show SettingsDescription;
 import 'package:flutter_test/flutter_test.dart';
 

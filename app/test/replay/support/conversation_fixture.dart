@@ -3,8 +3,8 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/share_code/conversation_export.dart';
-import 'package:dpsk_app/state/chat_state.dart';
+import 'package:dsh_app/share_code/conversation_export.dart';
+import 'package:dsh_app/state/chat_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 final t0 = DateTime.utc(2026, 10, 24, 14, 0, 0);

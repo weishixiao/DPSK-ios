@@ -127,7 +127,7 @@ void main() {
     test('a call posts the endpoint and payload with the cookie and Host, and returns the value', () async {
       host.handlers['hello'] = (payload) {
         expect(payload['api'], [1]);
-        expect((payload['client']! as Map)['name'], 'DPSK');
+        expect((payload['client']! as Map)['name'], 'dsh-go');
         return {
           'api': 1,
           'apiMin': 1,

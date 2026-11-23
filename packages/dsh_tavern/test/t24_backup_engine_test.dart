@@ -425,15 +425,15 @@ Future<({Directory work, File journal})> _interruptedReplacement(T24Harness h, {
   var key = root.uri.toString();
   if (Platform.isWindows || Platform.isMacOS) key = key.toLowerCase();
   final id = sha256.convert(utf8.encode(key)).toString().substring(0, 16);
-  final work = await root.parent.createTemp('.dpsk-restore-$id-');
+  final work = await root.parent.createTemp('.dshgo-restore-$id-');
   if (phase == 'prepared') {
     await Directory('${work.path}/incoming').create();
     await File('${work.path}/incoming/tavern.sqlite3').writeAsString('unpublished candidate must not be opened');
   }
-  final journal = File('${root.parent.path}/.dpsk-restore-$id.json');
+  final journal = File('${root.parent.path}/.dshgo-restore-$id.json');
   await journal.writeAsString(
     jsonEncode({
-      'format': 'dpsk-tavern-restore',
+      'format': 'dshgo-tavern-restore',
       'version': 1,
       'root': key,
       'workName': work.uri.pathSegments.where((part) => part.isNotEmpty).last,

@@ -8,13 +8,13 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/plugins/islands/islands.dart';
-import 'package:dpsk_app/ui/plugins/seats/plugin_seat_page.dart';
-import 'package:dpsk_app/ui/plugins/seats/session_plugins_tab.dart';
-import 'package:dpsk_app/ui/session/session_detail_page.dart';
-import 'package:dpsk_app/ui/web/web_target.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/plugins/islands/islands.dart';
+import 'package:dsh_app/ui/plugins/seats/plugin_seat_page.dart';
+import 'package:dsh_app/ui/plugins/seats/session_plugins_tab.dart';
+import 'package:dsh_app/ui/session/session_detail_page.dart';
+import 'package:dsh_app/ui/web/web_target.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

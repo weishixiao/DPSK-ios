@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../support/sample_chat.dart';

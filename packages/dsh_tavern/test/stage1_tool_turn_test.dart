@@ -421,7 +421,7 @@ void main() {
     ];
     final own = exported
         .where((line) => line['extra'] is Map<String, Object?>)
-        .map((line) => stage1Map(stage1Map(stage1Map(line['extra'])['dpsk'])['chatJsonl']))
+        .map((line) => stage1Map(stage1Map(stage1Map(line['extra'])['dshgo'])['chatJsonl']))
         .singleWhere((value) => value['nodeId'] == old.nodeId);
     expect(own['usage'], isNull);
     await stage1Finish(next, content: 'new');

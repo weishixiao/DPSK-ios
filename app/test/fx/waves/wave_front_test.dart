@@ -6,8 +6,8 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
-import 'package:dpsk_app/ui/fx/waves/distortion_wave_style.dart';
-import 'package:dpsk_app/ui/fx/waves/wave_front.dart';
+import 'package:dsh_app/ui/fx/waves/distortion_wave_style.dart';
+import 'package:dsh_app/ui/fx/waves/wave_front.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

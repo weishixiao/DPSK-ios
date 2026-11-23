@@ -69,7 +69,7 @@ Future<_Bound> _bound(
 }) async {
   final raw = _map(jsonDecode(utf8.decode(t24Card())));
   _map(raw['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'state': {
         'schema': {
@@ -113,7 +113,7 @@ Future<_Bound> _bound(
   };
   final Uint8List? secretPack;
   if (packSecret) {
-    final own = _map(_map(_map(raw['data'])['extensions'])['dpsk']);
+    final own = _map(_map(_map(raw['data'])['extensions'])['dshgo']);
     final registry = _map(own['director']).remove('secretSlots');
     secretPack = _secretPack('bound-secret-policy', {
       'v': 1,
@@ -217,7 +217,7 @@ Uint8List _secretPack(String id, _Json declaration) {
           'formatVersion': 1,
           'packId': id,
           'packVersion': 'one',
-          'dpsk': declaration,
+          'dshgo': declaration,
           'resources': <Object?>[],
         }),
       ),
@@ -228,7 +228,7 @@ Uint8List _secretPack(String id, _Json declaration) {
 Future<_Json> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final saved = _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  final saved = _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
   // The document is deeply read-only; mutation fixtures need detached JSON.
   return _map(jsonDecode(jsonEncode(saved)));
 }
@@ -248,7 +248,7 @@ Future<void> _replaceSaved(T24Harness h, String chat, _Json saved) async {
     final extra = _map(
       jsonDecode(database.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String),
     );
-    extra['dpsk'] = {..._map(extra['dpsk']), 'tavernState': saved};
+    extra['dshgo'] = {..._map(extra['dshgo']), 'tavernState': saved};
     database.execute('UPDATE nodes SET extra = ? WHERE id = ?', [jsonEncode(extra), leaf]);
   });
 }
@@ -344,9 +344,9 @@ void main() {
       final h = await _open();
       final bound = await _bound(h, revealed: false, packSecret: true);
       final saved = await _saved(h.engine, bound.chatId);
-      final oldConfig = saved['dpskPackDefinitionConfigId'];
+      final oldConfig = saved['dshgoPackDefinitionConfigId'];
       expect(oldConfig, isA<String>());
-      final ledger = saved['dpskSecretRuntime'];
+      final ledger = saved['dshgoSecretRuntime'];
       final binding = _maps(_map(ledger)['bindings']).single;
       expect(_map(binding['executionSource'])['kind'], 'pack');
       expect(binding['bindReceiptId'], bound.bindId);
@@ -367,10 +367,10 @@ void main() {
       );
       expect((await h.engine.setStateValue(bound.chatId, '/revealed', true)).applied, isTrue);
       final changed = await _saved(h.engine, bound.chatId);
-      final newConfig = changed['dpskPackDefinitionConfigId'];
+      final newConfig = changed['dshgoPackDefinitionConfigId'];
       expect(newConfig, isA<String>());
       expect(newConfig, isNot(oldConfig));
-      expect(changed['dpskSecretRuntime'], ledger);
+      expect(changed['dshgoSecretRuntime'], ledger);
       expect(
         (await h.engine.readAgentRuns(bound.chatId, limit: 1000)).singleWhere((run) => run.id == bound.bindId).result,
         proof,
@@ -439,7 +439,7 @@ void main() {
       final released = await _reply(h, bound.chatId);
       expect(_text(released.call), contains(_template.replaceAll('{{fact}}', _fact)));
       expect((await _trace(h.engine, bound.chatId))['attempted'], hasLength(1));
-      expect((await _saved(h.engine, bound.chatId))['dpskSecretRuntime'], ledger);
+      expect((await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'], ledger);
 
       _db(h, (db) => db.execute('DELETE FROM agent_runs WHERE id = ?', [bound.bindId]));
       expect(
@@ -471,7 +471,7 @@ void main() {
       final blocked = await _reply(h, bound.chatId);
       expect(_text(blocked.call), isNot(contains(_fact)));
       expect((await _trace(h.engine, bound.chatId))['offered'], isEmpty);
-      expect((await _saved(h.engine, bound.chatId))['dpskSecretRuntime'], ledger);
+      expect((await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'], ledger);
     },
   );
 
@@ -479,7 +479,7 @@ void main() {
     final h = await _open();
     await h.engine.setGlobalVariables({'secretVault': 'GLOBAL-MUST-NOT-EXPAND'});
     final bound = await _bound(h);
-    final ledger = (await _saved(h.engine, bound.chatId))['dpskSecretRuntime'];
+    final ledger = (await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'];
     final active = await _reply(h, bound.chatId, reason: 'length');
     expect(_text(active.call), contains(_template.replaceAll('{{fact}}', _fact)));
     expect(_text(active.call), isNot(contains('GLOBAL-MUST-NOT-EXPAND')));
@@ -491,7 +491,7 @@ void main() {
     expect(offered['text'], _template.replaceAll('{{fact}}', _fact));
     expect(trace['included'], [offered['sourceId']]);
     expect(trace['attempted'], trace['included']);
-    expect((await _saved(h.engine, bound.chatId))['dpskSecretRuntime'], ledger);
+    expect((await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'], ledger);
     expect(jsonEncode(ledger), isNot(contains('knownBy')));
     expect(_map((await h.engine.readState(bound.chatId)).values)['secret'], _fact);
   });
@@ -500,7 +500,7 @@ void main() {
     final h = await _open();
     final template = 'BUDGET-SECRET-${List.filled(40000, 'x').join()}{{fact}}';
     final bound = await _bound(h, template: template);
-    final before = (await _saved(h.engine, bound.chatId))['dpskSecretRuntime'];
+    final before = (await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'];
     final active = await _reply(h, bound.chatId);
     expect(_text(active.call), isNot(contains('BUDGET-SECRET-')));
     expect(_text(active.call), isNot(contains(_fact)));
@@ -508,7 +508,7 @@ void main() {
     expect(trace['offered'], hasLength(1));
     expect(trace['included'], isEmpty);
     expect(trace['attempted'], isEmpty);
-    expect((await _saved(h.engine, bound.chatId))['dpskSecretRuntime'], before);
+    expect((await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'], before);
   });
 
   test('release condition is reevaluated from current persisted state and user reads keep the private value', () async {
@@ -535,11 +535,11 @@ void main() {
       expect(_text(active.call), isNot(contains(_fact)));
       if (path == '/secret') expect(_text(active.call), isNot(contains(replacement)));
       expect((await _trace(h.engine, bound.chatId))['offered'], isEmpty);
-      expect((await _saved(h.engine, bound.chatId))['dpskSecretRuntime'], isNotNull);
+      expect((await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'], isNotNull);
     });
   }
 
-  for (final carrier in ['dpskSecretRuntime', 'dpskStateRuntime']) {
+  for (final carrier in ['dshgoSecretRuntime', 'dshgoStateRuntime']) {
     test('unavailable $carrier is preserved and cannot authorize release', () async {
       final h = await _open();
       final bound = await _bound(h);
@@ -566,7 +566,7 @@ void main() {
       await h.engine.close();
       final file = File('${h.root.path}/characters/${bound.characterId}/card.json');
       final raw = _map(jsonDecode(await file.readAsString()));
-      final own = _map(_map(_map(raw['data'])['extensions'])['dpsk']);
+      final own = _map(_map(_map(raw['data'])['extensions'])['dshgo']);
       _map(own['director']).remove('secretSlots');
       _map(_map(_map(_map(own['state'])['schema'])['properties'])['secret']).remove('x-dsh-hidden');
       await file.writeAsString(jsonEncode(raw), flush: true);
@@ -589,8 +589,8 @@ void main() {
     final files = await h.engine.exportChat(bound.chatId);
     final imported = (await h.engine.importChats(bound.characterId, files)).chatIds.single;
     expect(
-      (await _saved(h.engine, imported))['dpskSecretRuntime'],
-      (await _saved(h.engine, bound.chatId))['dpskSecretRuntime'],
+      (await _saved(h.engine, imported))['dshgoSecretRuntime'],
+      (await _saved(h.engine, bound.chatId))['dshgoSecretRuntime'],
     );
     expect(
       (await h.engine.readAgentRuns(imported, limit: 1000)).where((run) => run.kind == 'director.secret_bind'),

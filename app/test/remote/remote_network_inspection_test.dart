@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/relay/relay_backend.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/relay/relay_backend.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

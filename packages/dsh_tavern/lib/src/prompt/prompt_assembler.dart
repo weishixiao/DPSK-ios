@@ -338,8 +338,8 @@ final class _AssemblyRun {
     type = input.generationType.trim().toLowerCase();
     if (type.isEmpty) type = 'normal';
     final extensions = settings['extensions'];
-    final dpsk = extensions is Map<String, Object?> ? extensions['dpsk'] : null;
-    final prefill = dpsk is Map<String, Object?> ? dpsk['prefill'] : null;
+    final dshgo = extensions is Map<String, Object?> ? extensions['dshgo'] : null;
+    final prefill = dshgo is Map<String, Object?> ? dshgo['prefill'] : null;
     enhancedPrefillEnabled = prefill is Map<String, Object?> && prefill['enabled'] == true;
     prefillTarget = prefill is Map<String, Object?> && prefill['target'] == 'reasoning' ? 'reasoning' : 'content';
     final prefillMode =

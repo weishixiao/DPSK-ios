@@ -122,7 +122,7 @@ void main() {
     // T11 assigns identity to every imported variant, including one whose
     // ordinary swipe_info was absent. No hash has been computed for this file.
     expect(roots[1].extra, {
-      'dpsk': {
+      'dshgo': {
         'tavernState': {'stChatId': 'missing', 'stChatIdHash': null, 'chatJsonlSourceFile': 'missing'},
       },
     });
@@ -171,7 +171,7 @@ void main() {
           {
             ..._row('A'),
             'extra': {
-              'dpsk': {
+              'dshgo': {
                 'tavernState': {
                   'variables': {'n': 4},
                   'messageVariables': {'flag': true},
@@ -192,8 +192,8 @@ void main() {
       chat,
       leaf,
       extra: {
-        'dpsk': {
-          ..._map(node.extra['dpsk']),
+        'dshgo': {
+          ..._map(node.extra['dshgo']),
           'tavernState': {
             'variables': {'n': 5},
             'messageVariables': {'flag': false},
@@ -210,7 +210,7 @@ void main() {
     addTearDown(other.close);
     final imported = codec.importBatch(other, characterId: 'card', documents: [output]).chatIds.single;
     expect(other.chat(imported).variables, {'n': 5});
-    expect(_map(other.node(imported, other.chat(imported).currentLeafId!).extra['dpsk'])['vendor'], [1, null]);
+    expect(_map(other.node(imported, other.chat(imported).currentLeafId!).extra['dshgo'])['vendor'], [1, null]);
   });
 
   test('is_system is independent hidden state for both users and characters', () {
@@ -512,11 +512,11 @@ void main() {
         'chat_metadata': {'variables': []},
       },
       {
-        'chat_metadata': {'dpsk': []},
+        'chat_metadata': {'dshgo': []},
       },
       {
         'chat_metadata': {
-          'dpsk': {
+          'dshgo': {
             'chatJsonl': {'version': 2},
           },
         },
@@ -614,7 +614,7 @@ void main() {
       {
         ..._row('x'),
         'extra': {
-          'dpsk': {
+          'dshgo': {
             'tavernState': {'variables': []},
           },
         },
@@ -622,7 +622,7 @@ void main() {
       {
         ..._row('x'),
         'extra': {
-          'dpsk': {
+          'dshgo': {
             'chatJsonl': {'version': 2, 'unknown': 'preserved by caller'},
           },
         },
@@ -630,7 +630,7 @@ void main() {
       {
         ..._row('x'),
         'extra': {
-          'dpsk': {
+          'dshgo': {
             'chatJsonl': {'version': 1, 'message': []},
           },
         },
@@ -652,7 +652,7 @@ void main() {
           'future',
           [],
           metadata: {
-            'dpsk': {
+            'dshgo': {
               'chatJsonl': {'version': 99},
             },
           },
@@ -745,7 +745,7 @@ void main() {
               null,
               {
                 'extra': {
-                  'dpsk': {
+                  'dshgo': {
                     'chatJsonl': {
                       'version': 1,
                       'sourceHeader': {
@@ -827,7 +827,7 @@ void main() {
           {
             ..._row('A'),
             'extra': {
-              'dpsk': {
+              'dshgo': {
                 'inspection': oldInspection,
                 'vendor': {'unchanged': 8},
               },
@@ -835,7 +835,7 @@ void main() {
           },
         ],
         metadata: {
-          'dpsk': {'latestInspection': oldLatest},
+          'dshgo': {'latestInspection': oldLatest},
           'unknown': [true, null],
         },
       ),
@@ -844,11 +844,11 @@ void main() {
     int? encodedLength;
     for (var round = 0; round < 3; round++) {
       final node = current.node(chat, current.chat(chat).currentLeafId!);
-      final dpsk = _map(node.extra['dpsk']);
-      expect(dpsk.containsKey('inspection'), isFalse);
-      expect(_map(dpsk['chatJsonl'])['opaqueInspection'], oldInspection);
-      expect(dpsk['vendor'], {'unchanged': 8});
-      final chatDshgo = _map(current.chat(chat).metadata['dpsk']);
+      final dshgo = _map(node.extra['dshgo']);
+      expect(dshgo.containsKey('inspection'), isFalse);
+      expect(_map(dshgo['chatJsonl'])['opaqueInspection'], oldInspection);
+      expect(dshgo['vendor'], {'unchanged': 8});
+      final chatDshgo = _map(current.chat(chat).metadata['dshgo']);
       expect(chatDshgo.containsKey('latestInspection'), isFalse);
       expect(_map(chatDshgo['chatJsonl'])['opaqueLatestInspection'], oldLatest);
       final files = codec.exportChat(current, chat);
@@ -995,7 +995,7 @@ void main() {
       },
       extra: {
         'unknown': [1, null],
-        'dpsk': {
+        'dshgo': {
           'chatJsonl': {
             'version': 1,
             'future': {'keep': 3},
@@ -1150,7 +1150,7 @@ void main() {
       title: '@source-1',
       metadata: {
         'scenario': 'M',
-        'dpsk': {
+        'dshgo': {
           'chatJsonl': {
             'version': 1,
             'sources': {
@@ -1249,7 +1249,7 @@ void main() {
   test('speaker identities omit null carriers and cannot revive cleared selected swipes', () {
     Map<String, Object?> extra(String id, int marker) => {
       'vendor': [marker, null],
-      'dpsk': {
+      'dshgo': {
         'outerUnknown': false,
         'chatJsonl': {
           'version': 1,
@@ -1258,7 +1258,7 @@ void main() {
         },
       },
     };
-    Map<String, Object?> identity(Object? value) => _map(_map(_map(value)['dpsk'])['chatJsonl']);
+    Map<String, Object?> identity(Object? value) => _map(_map(_map(value)['dshgo'])['chatJsonl']);
     final chat = load([
       _document('speaker-identities.jsonl', [
         {..._row('User', user: true), 'extra': extra('ignored-user-id', 1)},
@@ -1287,7 +1287,7 @@ void main() {
       'selected-id',
     ]);
     expect(_map(first.messages.first['extra'])['vendor'], [1, null]);
-    expect(_map(_map(first.messages.first['extra'])['dpsk'])['outerUnknown'], isFalse);
+    expect(_map(_map(first.messages.first['extra'])['dshgo'])['outerUnknown'], isFalse);
     expect(identity(first.messages.first['extra'])['future'], {'keep': 1});
 
     store.updateMessage(chat, path.last.nodeId, clearSpeakerCharacterId: true);
@@ -1402,7 +1402,7 @@ Map<String, Object?> _map(Object? value) =>
     value is Map<String, Object?> ? jsonDecode(jsonEncode(value)) as Map<String, Object?> : {};
 
 Map<String, Object?> _state(ChatStore store, String chat, StoredNode node) {
-  final direct = _map(node.extra['dpsk'])['tavernState'];
+  final direct = _map(node.extra['dshgo'])['tavernState'];
   return (direct is Map<String, Object?> ? _map(direct) : store.nodeState(chat, node.message.nodeId))
     ..remove('chatJsonlSourceFile')
     ..remove('stChatId')
@@ -1438,8 +1438,8 @@ Map<String, Object?> _tree(ChatStore store, String chat) {
       ..remove('branches')
       ..remove('bookmark_link')
       ..remove('reasoning');
-    final dpsk = _map(extra['dpsk'])..remove('tavernState');
-    final own = _map(dpsk['chatJsonl']);
+    final dshgo = _map(extra['dshgo'])..remove('tavernState');
+    final own = _map(dshgo['chatJsonl']);
     for (final key in [
       'version',
       'nodeId',
@@ -1456,14 +1456,14 @@ Map<String, Object?> _tree(ChatStore store, String chat) {
       own.remove(key);
     }
     if (own.isEmpty) {
-      dpsk.remove('chatJsonl');
+      dshgo.remove('chatJsonl');
     } else {
-      dpsk['chatJsonl'] = own;
+      dshgo['chatJsonl'] = own;
     }
-    if (dpsk.isEmpty) {
-      extra.remove('dpsk');
+    if (dshgo.isEmpty) {
+      extra.remove('dshgo');
     } else {
-      extra['dpsk'] = dpsk;
+      extra['dshgo'] = dshgo;
     }
     records.add({
       'path': codes[message.nodeId],

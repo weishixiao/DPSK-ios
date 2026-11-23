@@ -408,7 +408,7 @@ ChatPreset _preset({
   'assistant_prefill': text,
   if (enabled != null)
     'extensions': {
-      'dpsk': {
+      'dshgo': {
         'prefill': {'enabled': enabled, 'target': ?target},
       },
     },

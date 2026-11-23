@@ -1,9 +1,9 @@
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
-import 'package:dpsk_app/ui/shell/sessions_drawer.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/ui/shell/sessions_drawer.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';

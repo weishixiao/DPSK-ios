@@ -74,7 +74,7 @@ EntryAbility 在 `onCreate` 和 `onNewWant` 立即转发实际 Want、LaunchPara
 
 外部 URI 只接受 `file://<非空外部 authority>/...`：拒绝空 authority、自身 bundle 及其子 authority、HTTP、控制字符、无效百分号转义和解码后 `.`/`..`。这是一层输入限制，实际 provider/URI 授权仍由系统实现，本地夹具不能证明跨应用隔离。
 
-普通文件才复制，FIFO 用 NONBLOCK 打开后立即按类型拒绝；每文件 30 MiB、每批 60 MiB、最多 9 文件、文本最多 200000 UTF-16 单元，数值来自 Kotlin SharePlugin。超量按 Dart 已有错误名跳过。中文/特殊字符名限制在 240 UTF-8 字节，保留短后缀；没有 title 时使用公开 FileUri.name，因此 `.dpsk` 路由后缀不会退化成 `shared`。图片当前按原字节复制，不执行 Kotlin 的压缩/旋转/HEIC 转码；后续图像处理不能计入本包验收。
+普通文件才复制，FIFO 用 NONBLOCK 打开后立即按类型拒绝；每文件 30 MiB、每批 60 MiB、最多 9 文件、文本最多 200000 UTF-16 单元，数值来自 Kotlin SharePlugin。超量按 Dart 已有错误名跳过。中文/特殊字符名限制在 240 UTF-8 字节，保留短后缀；没有 title 时使用公开 FileUri.name，因此 `.dshgo` 路由后缀不会退化成 `shared`。图片当前按原字节复制，不执行 Kotlin 的压缩/旋转/HEIC 转码；后续图像处理不能计入本包验收。
 
 最多 4 个读取批次同时进行，冷启动队列最多 8 个已接受 arrival。超出部分合并成一个 too_many 提示，不把外部记录无限积存。已接受的 arrival 维持顺序，即使后一个文件先复制结束也不会越过队头。队列属于 Ark 模块，不属于一次 Flutter attachment：引擎重挂继续保留，ready 先应答再发送。普通 detach 不撤销外部已到达的合法分享。
 
@@ -84,7 +84,7 @@ EntryAbility 在 `onCreate` 和 `onNewWant` 立即转发实际 Want、LaunchPara
 
 执行 `runtime/tests/ohos/hms-share-channel.test.mjs`。测试对真实产品 ETS 做 TypeScript 擦除，文件操作落到真实 Linux FS，`openUserFile` 调用基底 C++ helper 编成的真实 Node addon；只替换 Flutter、HMS、Display、UTD/FileUri 的平台边界。HMS 模拟事件不是华为平台实现。
 
-当前36项实际通过：原33项包括两个事件顺序、重复/迟到事件、show resolve 不结束、四种失败点、跨插件实例 lease、迟到 detach、准备 IO 取消、已退休回包通道、真实短读短写、私有路径/父末符号链接拒绝、稀疏超量文件、真实 60 MiB总量、真实 FIFO 无写方、源文件真实变长、冷队列乱序完成、8批文件回收保护、分配失败关闭全部 FD、中文 .dpsk 文件名与预算边界；后加的真实懒加载迟到取消1项保持原断言。两个不同Context用例在旧方法体上为35/36，修后36/36，验证两种缓存/临时目录和工作区可分享，同时兄弟目录、私有files、穿越和符号链接仍拒绝。原独立PathProvider探针另按原字节重跑通过。以上都是Linux边界验证，未把替身面板称为实际HMS面板。
+当前36项实际通过：原33项包括两个事件顺序、重复/迟到事件、show resolve 不结束、四种失败点、跨插件实例 lease、迟到 detach、准备 IO 取消、已退休回包通道、真实短读短写、私有路径/父末符号链接拒绝、稀疏超量文件、真实 60 MiB总量、真实 FIFO 无写方、源文件真实变长、冷队列乱序完成、8批文件回收保护、分配失败关闭全部 FD、中文 .dshgo 文件名与预算边界；后加的真实懒加载迟到取消1项保持原断言。两个不同Context用例在旧方法体上为35/36，修后36/36，验证两种缓存/临时目录和工作区可分享，同时兄弟目录、私有files、穿越和符号链接仍拒绝。原独立PathProvider探针另按原字节重跑通过。以上都是Linux边界验证，未把替身面板称为实际HMS面板。
 
 保留前像：首个测试夹具的旧面板等待条件挂起后单独修正；随后 27 项中 4 失败，3 项是产品逻辑缺口（新插件接管、无 title 名称、ready 顺序），1 项是夹具只等 FD 关闭却未等目录清理结束。三个产品修复与夹具修复分开说明。新增退休回包通道反例先实际失败，再修正通过。旧失败日志与源码摘要不覆盖。
 

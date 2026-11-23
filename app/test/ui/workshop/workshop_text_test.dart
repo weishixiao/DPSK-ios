@@ -1,7 +1,7 @@
 // The address shown before a credential is handed over
 // (ui/workshop/workshop_text.dart): what is on screen must name one host.
 
-import 'package:dpsk_app/ui/workshop/workshop_text.dart';
+import 'package:dsh_app/ui/workshop/workshop_text.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

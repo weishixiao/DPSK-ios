@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Holds the Mach service launchd registers for com.dpsk.agentd. -->
+	<!-- Holds the Mach service launchd registers for io.github.ccch1mneyyy.dshgo.agentd. -->
 	<key>platform-application</key>
 	<true/>
 	<!-- Inspects processes it did not start. This is the capability the app
@@ -10,7 +10,7 @@
 	<key>task_for_pid-allow</key>
 	<true/>
 	<!-- Reads and writes outside the container: the projects and log live in
-	     /var/mobile/Library/DPSKAgent. -->
+	     /var/mobile/Library/DshGoAgent. -->
 	<key>com.apple.private.security.no-container</key>
 	<true/>
 </dict>

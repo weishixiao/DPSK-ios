@@ -1,19 +1,19 @@
-// Goldens for first run's 「想让 DPSK 帮你做哪些事」 beside the unpack (the
+// Goldens for first run's 「想让 DSH Go 帮你做哪些事」 beside the unpack (the
 // pick, a step, a step after a denial, a maker's switch after the trip, the
 // restricted-settings steps, the summary) and 设置 › 系统权限, on a vivo.
 //
 //   flutter test --update-goldens test/access/access_golden_test.dart
 
-import 'package:dpsk_app/phone/phone_channel.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/access_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/access/access_pick_page.dart';
-import 'package:dpsk_app/ui/access/access_summary_page.dart';
-import 'package:dpsk_app/ui/access/access_walk.dart';
-import 'package:dpsk_app/ui/onboarding/access_step.dart';
-import 'package:dpsk_app/ui/onboarding/onboarding_scaffold.dart';
-import 'package:dpsk_app/ui/settings/system_access_page.dart';
+import 'package:dsh_app/phone/phone_channel.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/access_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/access/access_pick_page.dart';
+import 'package:dsh_app/ui/access/access_summary_page.dart';
+import 'package:dsh_app/ui/access/access_walk.dart';
+import 'package:dsh_app/ui/onboarding/access_step.dart';
+import 'package:dsh_app/ui/onboarding/onboarding_scaffold.dart';
+import 'package:dsh_app/ui/settings/system_access_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;
 import 'package:flutter_riverpod/misc.dart' show Override;

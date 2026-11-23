@@ -11,7 +11,7 @@ import 'errors.dart';
 import 'mux.dart';
 import 'session_api.dart';
 
-const _path = '/DPSK/v1/companion/signals';
+const _path = '/dsh-go/v1/companion/signals';
 
 final class CompanionSignalCapabilities {
   const CompanionSignalCapabilities._(this._owner, this.generation, this.available, this.reason);

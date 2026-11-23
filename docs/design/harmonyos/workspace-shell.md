@@ -34,7 +34,7 @@ workerData.dshOhosWorkspaceGrants = { mounts: job.mounts };
 
 **首版只接受一个grant，且policy.workspaceRoot必须精确等于mountPoint。** 缺失、更窄子目录政策、跨grant任务均ERR_WORKSPACE_SCOPE_UNSUPPORTED；不能把仅授权cwd子目录的任务上扩到整个grant。cwd可位于这个已授权根下。更窄政策需要以后原生pin task子目录，当前未实现。
 
-生产Worker使用filesystem.mjs现有入口，自动读取固定workerData字段；此字段只能由可信factory放入，不能从spec/argv/env透传。Node脚本、Python、git、9P尚无该文件消费者，root910须对访问这些虚拟mount的请求明确拒绝，不能转成宿主裸路径。只有内部shell Worker带grant时，factory才以可信值覆盖DPSK_OHOS_NATIVE_LIBRARY_DIR；普通无grant Worker和Node脚本保持原scrub行为。
+生产Worker使用filesystem.mjs现有入口，自动读取固定workerData字段；此字段只能由可信factory放入，不能从spec/argv/env透传。Node脚本、Python、git、9P尚无该文件消费者，root910须对访问这些虚拟mount的请求明确拒绝，不能转成宿主裸路径。只有内部shell Worker带grant时，factory才以可信值覆盖DSH_GO_OHOS_NATIVE_LIBRARY_DIR；普通无grant Worker和Node脚本保持原scrub行为。
 
 ## 生命周期：退休与实际退出分开
 

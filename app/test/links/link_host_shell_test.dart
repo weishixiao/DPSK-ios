@@ -4,19 +4,19 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/share_code/guest_fs.dart';
-import 'package:dpsk_app/share_code/share_code_state.dart';
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_import.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/share_code/share_net.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/share_code/guest_fs.dart';
+import 'package:dsh_app/share_code/share_code_state.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_import.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/share_code/share_net.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -109,10 +109,10 @@ Widget _shell({List<Override> extra = const []}) => ProviderScope(
 );
 
 void main() {
-  testWidgets('a cold-start dpsk:// link reaches a handler a feature registers at startup', (tester) async {
+  testWidgets('a cold-start dshgo:// link reaches a handler a feature registers at startup', (tester) async {
     final native = _FakeLinksNative(tester);
     // The intent that launched the app, before Flutter draws anything.
-    await native.arrive('dpsk://demo/hello?payload=cold');
+    await native.arrive('dshgo://demo/hello?payload=cold');
 
     await tester.pumpWidget(_shell());
     await tester.pump();
@@ -130,14 +130,14 @@ void main() {
     expect(got.single.queryParameters['payload'], 'cold');
 
     // Later links while the app runs (onNewIntent) go straight through, once.
-    await native.arrive('dpsk://demo/hello?payload=warm');
+    await native.arrive('dshgo://demo/hello?payload=warm');
     await tester.pump();
     expect(got.map((u) => u.queryParameters['payload']), ['cold', 'warm']);
     await tester.pump(const Duration(seconds: 5));
     expect(find.text('无法打开这个链接'), findsNothing);
   });
 
-  testWidgets('a cold-start dpsk://share/plugin link opens the install sheet', (tester) async {
+  testWidgets('a cold-start dshgo://share/plugin link opens the install sheet', (tester) async {
     final native = _FakeLinksNative(tester);
     final link = ShareLink.inline(ShareKind.plugin, encodeShareCode(const PluginShare(_plugin)));
     await native.arrive(link.appLink.toString());
@@ -159,7 +159,7 @@ void main() {
   testWidgets('a cold-start file with spaces and Unicode opens and installs', (tester) async {
     final dir = Directory.systemTemp.createTempSync('share-links-');
     addTearDown(() => dir.deleteSync(recursive: true));
-    final file = File('${dir.path}/团队 配置.dpsk')..writeAsStringSync(encodeShareFile(const PluginShare(_plugin)));
+    final file = File('${dir.path}/团队 配置.dshgo')..writeAsStringSync(encodeShareFile(const PluginShare(_plugin)));
     final native = _FakeLinksNative(tester);
     await native.arrive(file.uri.toString());
     final engine = FakeEngine();
@@ -176,7 +176,7 @@ void main() {
     testWidgets('a running shell handles a $kind share file without a generic error', (tester) async {
       final dir = Directory.systemTemp.createTempSync('share-links-');
       addTearDown(() => dir.deleteSync(recursive: true));
-      final file = File('${dir.path}/$kind.dpsk');
+      final file = File('${dir.path}/$kind.dshgo');
       if (kind != 'missing') {
         file.writeAsStringSync(kind == 'oversize' ? 'x' * (maxShareCodeChars * 2 + 1) : '{"code":"broken"}');
       }

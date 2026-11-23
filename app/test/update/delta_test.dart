@@ -7,7 +7,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/update/delta.dart';
+import 'package:dsh_app/update/delta.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';

@@ -6,22 +6,22 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/ask_ai.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/ask_ai.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/common/risk_notice.dart';
-import 'package:dpsk_app/ui/features/permission_page.dart';
-import 'package:dpsk_app/ui/settings/settings_screen.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/ask_ai.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/ask_ai.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/common/risk_notice.dart';
+import 'package:dsh_app/ui/features/permission_page.dart';
+import 'package:dsh_app/ui/settings/settings_screen.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,7 +63,7 @@ void main() {
 
     test('a remote host that takes files: the matching guide page rides along', () async {
       final request = await askAiRequest(AskAiTopic.phoneControl, route: GuideRoute.attachment, read: _pages);
-      expect(request.text, '关于 DPSK App：手机操控是怎么工作的？有什么风险？\n请按附件里的使用说明回答。');
+      expect(request.text, '关于 DSH Go App：手机操控是怎么工作的？有什么风险？\n请按附件里的使用说明回答。');
       final file = request.attachments.single;
       expect(file.name, 'dsh-go-guide-phone-control.md');
       expect(file.isImage, isFalse);
@@ -86,9 +86,9 @@ void main() {
         await askAiRequest(AskAiTopic.remote, route: GuideRoute.none, read: _pages),
         await askAiRequest(AskAiTopic.plugins, route: GuideRoute.attachment, read: _pages),
       ]) {
-        expect(request.text, startsWith('关于 DPSK App：'));
+        expect(request.text, startsWith('关于 DSH Go App：'));
         expect(request.attachments, isEmpty);
-        expect(request.note, '这台主机没有 DPSK 使用说明，回答可能不准确');
+        expect(request.note, '这台主机没有 DSH Go 使用说明，回答可能不准确');
       }
     });
 
@@ -166,7 +166,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(AppPage), findsNothing, reason: 'back at the chat');
       final request = _container(tester).read(composeInboxProvider).single;
-      expect(request.text, startsWith('关于 DPSK App：怎么连接自己的电脑或服务器？'));
+      expect(request.text, startsWith('关于 DSH Go App：怎么连接自己的电脑或服务器？'));
       expect(request.attachments.single.name, 'dsh-go-guide-engine-hosts.md');
     });
 
@@ -220,7 +220,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(row);
       await tester.pumpAndSettle();
-      expect(_container(tester).read(composeInboxProvider).single.text, '/dsh-go-guide DPSK 能做什么？我该从哪里开始？');
+      expect(_container(tester).read(composeInboxProvider).single.text, '/dsh-go-guide DSH Go 能做什么？我该从哪里开始？');
     });
 
     testWidgets('使用帮助 is not there in 网页模式', (tester) async {

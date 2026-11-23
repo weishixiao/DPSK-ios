@@ -1,8 +1,8 @@
 part of 'engine.dart';
 
 state_core.StateDefinition _stateDefinition(Map<String, Object?> data) {
-  final dpsk = _readMap(_readMap(data['extensions'])['dpsk']);
-  return state_core.StateDefinition.parse(dpsk['state'], version: dpsk.containsKey('v') ? dpsk['v'] : 1);
+  final dshgo = _readMap(_readMap(data['extensions'])['dshgo']);
+  return state_core.StateDefinition.parse(dshgo['state'], version: dshgo.containsKey('v') ? dshgo['v'] : 1);
 }
 
 /// Saved source identity is evidence, never inferred from the current binding.
@@ -39,8 +39,8 @@ class _StateInput {
   _StateInput(Map<String, Object?> state) {
     final messages = state['messageVariables'];
     if (messages is Map<String, Object?>) {
-      valueExists = messages.containsKey('dpsk');
-      value = messages['dpsk'];
+      valueExists = messages.containsKey('dshgo');
+      value = messages['dshgo'];
     } else if (state.containsKey('messageVariables')) {
       issues.add(
         _stateIssue(
@@ -50,16 +50,16 @@ class _StateInput {
         ),
       );
     }
-    packRuntimeExists = state.containsKey('dpskPackRuntime');
-    packRuntime = state['dpskPackRuntime'];
-    runtimeExists = state.containsKey('dpskStateRuntime');
-    runtime = state['dpskStateRuntime'];
+    packRuntimeExists = state.containsKey('dshgoPackRuntime');
+    packRuntime = state['dshgoPackRuntime'];
+    runtimeExists = state.containsKey('dshgoStateRuntime');
+    runtime = state['dshgoStateRuntime'];
     if (!runtimeExists) return;
     if (runtime is! Map<String, Object?> || (runtime as Map<String, Object?>)['version'] != 1) {
       issues.add(
         _stateIssue(
           'runtime-version',
-          '/dpskStateRuntime',
+          '/dshgoStateRuntime',
           'The saved state runtime is not a supported version 1 object.',
         ),
       );
@@ -71,7 +71,7 @@ class _StateInput {
       issues.add(
         _stateIssue(
           'runtime-fired-rules',
-          '/dpskStateRuntime/firedRules',
+          '/dshgoStateRuntime/firedRules',
           'The saved once ledger must be a list of strings.',
         ),
       );
@@ -90,7 +90,7 @@ class _StateInput {
         issues.add(
           _stateIssue(
             'runtime-pending-prompts',
-            '/dpskStateRuntime/pendingPrompts',
+            '/dshgoStateRuntime/pendingPrompts',
             'Pending prompts must have unique string ids and string text.',
           ),
         );
@@ -124,7 +124,7 @@ Future<TavernStateSnapshot> _readSavedState(TavernEngine engine, String chatId) 
       extra,
       config?.state ?? state_core.StateDefinition.parse(null),
       settings,
-      dpskOnly: config == null || config.state.hasSchema || _StateInput(saved).valueExists,
+      dshgoOnly: config == null || config.state.hasSchema || _StateInput(saved).valueExists,
       allowInitialPreview: false,
       interpretationIssues: historical.issues,
       protection: config == null ? null : _SecretProtection(const {}, saved, gameplay: config),
@@ -153,15 +153,15 @@ TavernStateSnapshot _statePanel(
   state_core.StateDefinition definition,
   Map<String, Object?> settings, {
   _SecretProtection? protection,
-  bool dpskOnly = false,
+  bool dshgoOnly = false,
   bool allowInitialPreview = true,
   List<Map<String, Object?>> interpretationIssues = const [],
 }) {
-  final own = _map(extra['dpsk']);
+  final own = _map(extra['dshgo']);
   final changes = _stateRows(own['stateChanges']);
   final effects = _stateRows(own['stateEffects']);
   final ownIssues = _stateRows(own['stateIssues']);
-  if (!definition.hasSchema && !dpskOnly) {
+  if (!definition.hasSchema && !dshgoOnly) {
     final exists = saved.containsKey('variables');
     final values = exists ? saved['variables'] : <String, Object?>{};
     return TavernStateSnapshot(
@@ -234,7 +234,7 @@ void _initializeDshState(
     return;
   }
   final input = _StateInput(saved);
-  if (!input.writable || input.valueExists || saved.containsKey('dpskPackDefinitionConfigId')) {
+  if (!input.writable || input.valueExists || saved.containsKey('dshgoPackDefinitionConfigId')) {
     return;
   }
   final result = definition
@@ -249,12 +249,12 @@ void _initializeDshState(
   if (!result.valid || !result.valueExists) {
     return;
   }
-  saved['messageVariables'] = {..._map(saved['messageVariables']), 'dpsk': result.value};
+  saved['messageVariables'] = {..._map(saved['messageVariables']), 'dshgo': result.value};
   if (result.runtimeExists) {
-    saved['dpskStateRuntime'] = result.runtime;
+    saved['dshgoStateRuntime'] = result.runtime;
   }
   if (result.packRuntimeExists) {
-    saved['dpskPackRuntime'] = result.packRuntime;
+    saved['dshgoPackRuntime'] = result.packRuntime;
   }
   _stampGameplayConfig(gameplay, saved);
 }
@@ -397,7 +397,7 @@ Future<TavernStateEditResult> _editSavedState(
           _gameplayCaptureConflict();
         }
         if (applied) {
-          if (gameplay != null && next['dpskPackDefinitionConfigId'] == gameplay.effectiveConfigId) {
+          if (gameplay != null && next['dshgoPackDefinitionConfigId'] == gameplay.effectiveConfigId) {
             _ensureGameplayConfig(engine, gameplay);
           }
           engine._store.updateMessage(chatId, leaf!, extra: nextExtra);
@@ -433,7 +433,7 @@ Future<TavernStateEditResult> _editSavedState(
               ? historical.config?.state ?? state_core.StateDefinition.parse(null)
               : _stateDefinition(record.card.data),
           settings,
-          dpskOnly: applied
+          dshgoOnly: applied
               ? gameplay != null && !legacyDomain
               : historical.referenced &&
                     (previousConfig == null || previousConfig.state.hasSchema || stateInput.valueExists),
@@ -571,7 +571,7 @@ Map<String, Object?> _stateNodeExtra(
   Map<String, Object?> own,
 ) => {
   ..._copy(extra),
-  'dpsk': {..._map(extra['dpsk']), ..._copy(own), 'tavernState': _copy(state)},
+  'dshgo': {..._map(extra['dshgo']), ..._copy(own), 'tavernState': _copy(state)},
 };
 
 Map<String, Object?> _stateOwnAudit(
@@ -598,12 +598,12 @@ Map<String, Object?> _stateResultSnapshot(
   Set<String> consumed,
 ) {
   final next = _copy(previous);
-  if (result.valueExists) next['messageVariables'] = {..._map(next['messageVariables']), 'dpsk': result.value};
+  if (result.valueExists) next['messageVariables'] = {..._map(next['messageVariables']), 'dshgo': result.value};
   if (result.runtimeExists) {
-    next['dpskStateRuntime'] = result.runtime;
+    next['dshgoStateRuntime'] = result.runtime;
   }
   if (result.packRuntimeExists) {
-    next['dpskPackRuntime'] = result.packRuntime;
+    next['dshgoPackRuntime'] = result.packRuntime;
   }
   final input = _StateInput(next);
   if (!input.writable) return next;
@@ -623,7 +623,7 @@ Map<String, Object?> _stateResultSnapshot(
         if (prompt.containsKey('localId')) 'localId': prompt['localId'],
       },
   ];
-  next['dpskStateRuntime'] = runtime;
+  next['dshgoStateRuntime'] = runtime;
   return next;
 }
 
@@ -679,7 +679,7 @@ List<PromptInjection> _stateTurnInjections(_Turn turn) {
           turn.statePreparationIssues.add(
             _stateIssue(
               'state_prompt_source',
-              '/dpskStateRuntime/pendingPrompts',
+              '/dshgoStateRuntime/pendingPrompts',
               'A saved prompt has an unsupported execution source; it is preserved without injection.',
             ),
           );
@@ -692,7 +692,7 @@ List<PromptInjection> _stateTurnInjections(_Turn turn) {
       final id = prompt['id']! as String;
       // Ledger IDs are imported user data. Keep them out of the assembler's
       // native extension-ID namespace (for example 2_floating_prompt).
-      final sourceId = 'dpsk.state.prompt:$id';
+      final sourceId = 'dshgo.state.prompt:$id';
       turn.stateOfferedPrompts[sourceId] = id;
       result.add(
         PromptInjection(

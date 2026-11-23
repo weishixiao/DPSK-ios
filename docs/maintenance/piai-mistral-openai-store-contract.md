@@ -5,7 +5,7 @@
 用户选择自定义 OpenAI Chat Completions，Base URL 为
 `https://api.mistral.ai/v1`（可带末尾 `/`），未显式设置 `supportsStore`。
 DSH 0.2.2-rc.1 的 pi-ai 1.5.0 当前自动检测会生成 `store:false`。
-[#1690](https://github.com/weishixiao/DPSK/issues/1690) 报告该请求以
+[#1690](https://github.com/ccch1mneyyy/dsh-Go/issues/1690) 报告该请求以
 422 拒绝，错误位置为 `body.store`、输入值为 `false`。
 
 [Mistral 模型页](https://docs.mistral.ai/models/deepseek-v4-flash-1017)

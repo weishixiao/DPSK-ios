@@ -3,12 +3,12 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_chart.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin_controls.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin_row.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin_styles.dart';
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_chart.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin_controls.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin_row.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin_styles.dart';
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';

@@ -10,12 +10,12 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/ui/wallpaper/wallpaper_backdrop.dart';
-import 'package:dpsk_app/wallpaper/custom_wallpaper.dart';
-import 'package:dpsk_app/wallpaper/wallpaper_frames.dart';
-import 'package:dpsk_app/wallpaper/wallpaper_look.dart';
-import 'package:dpsk_app/wallpaper/wallpaper_render.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/wallpaper/wallpaper_backdrop.dart';
+import 'package:dsh_app/wallpaper/custom_wallpaper.dart';
+import 'package:dsh_app/wallpaper/wallpaper_frames.dart';
+import 'package:dsh_app/wallpaper/wallpaper_look.dart';
+import 'package:dsh_app/wallpaper/wallpaper_render.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

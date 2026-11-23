@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/ui/chat/artifact_preview.dart';
-import 'package:dpsk_app/ui/session/workspace_files.dart';
+import 'package:dsh_app/ui/chat/artifact_preview.dart';
+import 'package:dsh_app/ui/session/workspace_files.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

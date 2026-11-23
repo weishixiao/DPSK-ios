@@ -1,6 +1,6 @@
-# DPSK 使用说明（鸿蒙版） · User guide (HarmonyOS)
+# dsh-go 使用说明（鸿蒙版） · User guide (HarmonyOS)
 
-> DPSK 1.3.0
+> dsh-go 1.3.0
 
 ## 中文
 

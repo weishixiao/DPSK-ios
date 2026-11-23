@@ -1,4 +1,4 @@
-import 'package:dpsk_app/phone/android_shell_channel.dart';
+import 'package:dsh_app/phone/android_shell_channel.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

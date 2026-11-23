@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/plugins_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -167,7 +167,7 @@ void main() {
     expect(catalog.entries.every((entry) => entry.listing == null), isTrue);
     expect(
       server.paths,
-      unorderedEquals(['/market/index.json', '/market/DPSK.json']),
+      unorderedEquals(['/market/index.json', '/market/dsh-go.json']),
     );
   });
 }

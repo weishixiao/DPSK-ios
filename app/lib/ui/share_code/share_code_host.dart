@@ -1,5 +1,5 @@
-// Where share codes come in — `dpsk://share/…` links, the landing page's https
-// links (once App Links are verified) and `.dpsk` files opened with or shared
+// Where share codes come in — `dshgo://share/…` links, the landing page's https
+// links (once App Links are verified) and `.dshgo` files opened with or shared
 // to the app — and the confirm sheet they open. A conversation file opens its
 // replay instead (lib/ui/replay/).
 
@@ -53,7 +53,7 @@ Future<bool> openShareLink(BuildContext context, ShareLink link) async {
   return true;
 }
 
-/// Opens a `.dpsk` file's confirm sheet.
+/// Opens a `.dshgo` file's confirm sheet.
 Future<bool> openShareFile(BuildContext context, File file) async {
   final messenger = ScaffoldMessenger.maybeOf(context);
   try {
@@ -101,7 +101,7 @@ Future<void> _open(BuildContext context, Object decoded, {required ShareOrigin o
     : showShareImportSheet(context, decoded as SharePayload, origin: origin);
 
 /// Put it once inside the home route, next to [LinkHost]. It draws nothing:
-/// it registers the `share` host, the landing page and `.dpsk` files with
+/// it registers the `share` host, the landing page and `.dshgo` files with
 /// the link router.
 class ShareCodeHost extends ConsumerStatefulWidget {
   const ShareCodeHost({super.key});

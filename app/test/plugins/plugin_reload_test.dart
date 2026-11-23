@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/plugins/native/native_surface.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/plugin_reload.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/plugins/native/native_surface.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/plugin_reload.dart';
+import 'package:dsh_app/state/plugins_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

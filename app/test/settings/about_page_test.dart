@@ -1,12 +1,12 @@
 import 'dart:ui' show SemanticsAction;
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/star_prompt.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/ui/settings/about_page.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/star_prompt.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/ui/settings/about_page.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,8 +31,8 @@ class _StarStore implements StarPromptStore {
 
 const _profiles = [
   ('about-author-bilibili', 'https://b23.tv/9WBns6Y'),
-  ('about-author-x', 'https://x.com/cweishixiaoy'),
-  ('about-author-github', 'https://github.com/weishixiao'),
+  ('about-author-x', 'https://x.com/cccch1mneyyyy'),
+  ('about-author-github', 'https://github.com/ccch1mneyyy'),
 ];
 
 void main() {
@@ -100,11 +100,11 @@ void main() {
       testWidgets('author profiles fit 360dp at 1.3x in $locale $brightness', (tester) async {
         await pump(tester, locale: locale, brightness: brightness, scale: 1.3);
         final english = locale == AppLocale.en;
-        expect(find.text(english ? 'Original author of DPSK' : 'DPSK 原作者'), findsOneWidget);
-        expect(find.text('weishixiao'), findsOneWidget);
+        expect(find.text(english ? 'Original author of DSH Go' : 'DSH Go 原作者'), findsOneWidget);
+        expect(find.text('ccch1mneyyy'), findsOneWidget);
         expect(find.text('ccchimneyyy'), findsOneWidget);
-        expect(find.text('@cweishixiaoy'), findsOneWidget);
-        expect(find.text('@weishixiao'), findsOneWidget);
+        expect(find.text('@cccch1mneyyyy'), findsOneWidget);
+        expect(find.text('@ccch1mneyyy'), findsOneWidget);
         expect(find.text('1.0.2 (42)'), findsOneWidget);
         expect(find.byKey(const ValueKey('settings-star')), findsOneWidget);
         expect(find.text(english ? 'Bilibili profile' : 'B站主页'), findsOneWidget);
@@ -142,7 +142,7 @@ void main() {
   testWidgets('the separate project star still opens the repository', (tester) async {
     await pump(tester);
     await tap(tester, 'settings-star');
-    expect(opened.map((uri) => uri.toString()), ['https://github.com/weishixiao/DPSK']);
+    expect(opened.map((uri) => uri.toString()), ['https://github.com/ccch1mneyyy/dsh-go']);
     expect(store.writes.last.finished, isTrue);
   });
 

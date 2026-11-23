@@ -1,8 +1,8 @@
 // What goes on a share card: masking, images, code segments, the question
 // and stats from the conversation, keeping long replies whole.
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/share/share_content.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/share/share_content.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

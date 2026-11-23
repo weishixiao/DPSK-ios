@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/state/workshop_preferences.dart';
+import 'package:dsh_app/state/workshop_preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'workshop_auth_test_support.dart';

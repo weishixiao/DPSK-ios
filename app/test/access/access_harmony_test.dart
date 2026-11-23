@@ -2,22 +2,22 @@
 // the system's dialog, and only what works there is read or offered. Android
 // beside it wherever the OS is a parameter.
 
-import 'package:dpsk_app/notify/notify_channel.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/access_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/system_actions_state.dart';
-import 'package:dpsk_app/state/voice_model_state.dart';
-import 'package:dpsk_app/ui/access/access_walk.dart';
-import 'package:dpsk_app/ui/access/phone_mode_sheet.dart';
-import 'package:dpsk_app/ui/phone/phone_disclosure_sheet.dart';
-import 'package:dpsk_app/ui/features/feature_catalog.dart';
-import 'package:dpsk_app/ui/onboarding/access_step.dart';
-import 'package:dpsk_app/ui/settings/index/spots.dart';
-import 'package:dpsk_app/ui/settings/search/settings_search.dart';
-import 'package:dpsk_app/ui/settings/system_access_page.dart';
+import 'package:dsh_app/notify/notify_channel.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/access_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/system_actions_state.dart';
+import 'package:dsh_app/state/voice_model_state.dart';
+import 'package:dsh_app/ui/access/access_walk.dart';
+import 'package:dsh_app/ui/access/phone_mode_sheet.dart';
+import 'package:dsh_app/ui/phone/phone_disclosure_sheet.dart';
+import 'package:dsh_app/ui/features/feature_catalog.dart';
+import 'package:dsh_app/ui/onboarding/access_step.dart';
+import 'package:dsh_app/ui/settings/index/spots.dart';
+import 'package:dsh_app/ui/settings/search/settings_search.dart';
+import 'package:dsh_app/ui/settings/system_access_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -107,9 +107,9 @@ proot 在 seccomp 模式下只拦带路径的系统调用，但这些恰好是 D
 
 ### 3.2 `dsh web` 启动期路径缓存（运行时 r9）
 
-`runtime/boot/boot-cache.mjs`，装在 `/opt/DPSK/boot-cache.mjs`，由 `/usr/local/bin/dsh` shim 只在 `dsh web` 时 `--import` 预加载（安全模式、`dsh plugin` 等命令不加载；`DPSK_BOOT_CACHE=0` 可关）。
+`runtime/boot/boot-cache.mjs`，装在 `/opt/dsh-go/boot-cache.mjs`，由 `/usr/local/bin/dsh` shim 只在 `dsh web` 时 `--import` 预加载（安全模式、`dsh plugin` 等命令不加载；`DSH_GO_BOOT_CACHE=0` 可关）。
 
-- 只管三个只读目录：`/opt/dsh/`、`/opt/node/`、`/opt/DPSK/`。DSH 运行期间没人写它们（运行时升级只在 DSH 停着时替换），App 写的 `/opt/dsh-app/` 不在内。Direct 启动时没有 proot 的路径映射，这三个目录取 Direct preload 给出的物理 rootfs 前缀。
+- 只管三个只读目录：`/opt/dsh/`、`/opt/node/`、`/opt/dsh-go/`。DSH 运行期间没人写它们（运行时升级只在 DSH 停着时替换），App 写的 `/opt/dsh-app/` 不在内。Direct 启动时没有 proot 的路径映射，这三个目录取 Direct preload 给出的物理 rootfs 前缀。
 - 只接管四个调用：`realpathSync`、`realpathSync.native`、`existsSync`，以及 utf8 读 `package.json`。路径按「每个路径分量 lstat 一次」缓存，缺失的目录也记住，所以同一个包树只摸一遍。
 - 结果与 node:fs 逐项一致：符号链接（包括路径中间的目录链接，如 pnpm 的 `.pnpm` 链接）只在目标落在这三个目录内、且原 native 与 JS realpath 给出同一结果时才跟随，每个链接只核一次；其他形状（含 `.` / `..` 分量或相对路径、指向三个目录之外、悬空或循环链接、尾部斜杠、非字符串参数、非 utf8 编码）一律交回 node:fs。错误码与报错路径也按 node:fs 的规矩构造（JS realpath 报第一个缺失分量 / lstat，native 报原路径 / realpath）。
 - DSH 打印地址行（或 120 s 兜底）时自动卸下，之后全部直通 node:fs；启动期间被别的模块拿走的函数引用同样直通。

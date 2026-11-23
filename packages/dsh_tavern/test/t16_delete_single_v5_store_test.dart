@@ -301,7 +301,7 @@ void main() {
         'foreign': {
           'kept': [null, 4],
         },
-        'dpsk': {
+        'dshgo': {
           'branchName': 'B',
           'unknown': {'kept': true},
           'tavernState': {
@@ -344,7 +344,7 @@ void main() {
         // a nested mutation here must not alter the pre-encoded physical full.
         (state['variables']! as Map<String, Object?>)['n'] = 900;
         if (node.message.nodeId == child) {
-          final own = node.extra['dpsk']! as Map<String, Object?>;
+          final own = node.extra['dshgo']! as Map<String, Object?>;
           return jsonDecode(jsonEncode(own['tavernState'])) as Map<String, Object?>;
         }
         state['stChatIdHash'] = 0;
@@ -355,7 +355,7 @@ void main() {
     expect(full(child), physical[child]);
     expect(full(other), physical[other]);
     expect(extra(child), originalExtra);
-    expect((extra(other)['dpsk']! as Map<String, Object?>)['tavernState'], {
+    expect((extra(other)['dshgo']! as Map<String, Object?>)['tavernState'], {
       'variables': {'n': 900},
       'stChatIdHash': 0,
     });
@@ -375,7 +375,7 @@ void main() {
         'foreign': {
           'kept': [null, '海'],
         },
-        'dpsk': {
+        'dshgo': {
           'branchName': 'kept branch',
           'unknown': [1, 2],
           'tavernState': {
@@ -418,7 +418,7 @@ void main() {
         chat,
         target,
         capturePortableState: (node, state) {
-          final own = node.extra['dpsk']! as Map<String, Object?>;
+          final own = node.extra['dshgo']! as Map<String, Object?>;
           expect(own.containsKey('inspection'), !pending);
           return {
             'variables': {'n': 4},
@@ -429,7 +429,7 @@ void main() {
       );
       final after = raw(child);
       final expectedExtra = jsonDecode(jsonEncode(ownedExtra)) as Map<String, Object?>;
-      (expectedExtra['dpsk']! as Map<String, Object?>)['tavernState'] = {
+      (expectedExtra['dshgo']! as Map<String, Object?>)['tavernState'] = {
         'variables': {'n': 4},
         'stChatIdHash': 0,
         'captured': true,
@@ -438,7 +438,7 @@ void main() {
       expect(
         after['display_context'],
         jsonEncode({
-          'dpsk': {'tavernState': (expectedExtra['dpsk']! as Map<String, Object?>)['tavernState'], 'chatJsonl': null},
+          'dshgo': {'tavernState': (expectedExtra['dshgo']! as Map<String, Object?>)['tavernState'], 'chatJsonl': null},
           'scriptExtra': {'foreign': expectedExtra['foreign']},
         }),
       );

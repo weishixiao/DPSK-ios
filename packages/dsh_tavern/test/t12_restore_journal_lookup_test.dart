@@ -216,12 +216,12 @@ class _Fixture {
 
       final key = _rootKey(root);
       final id = sha256.convert(utf8.encode(key)).toString().substring(0, 16);
-      final work = await parent.createTemp('.dpsk-restore-$id-');
+      final work = await parent.createTemp('.dshgo-restore-$id-');
       await candidate.rename('${work.path}/incoming');
       final journal = _journalFile(root);
       await journal.writeAsString(
         jsonEncode({
-          'format': 'dpsk-tavern-restore',
+          'format': 'dshgo-tavern-restore',
           'version': 1,
           'root': key,
           'workName': work.uri.pathSegments.where((part) => part.isNotEmpty).last,
@@ -316,7 +316,7 @@ String _rootKey(Directory root) {
 
 File _journalFile(Directory root) {
   final id = sha256.convert(utf8.encode(_rootKey(root))).toString().substring(0, 16);
-  return File('${root.parent.path}/.dpsk-restore-$id.json');
+  return File('${root.parent.path}/.dshgo-restore-$id.json');
 }
 
 class _OpenAttempt {

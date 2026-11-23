@@ -264,7 +264,7 @@ void main() {
     store.initializeAuthoringAuthority();
     final pack = decodeGameplayPack(_zip(jsonEncode(_manifest(packId: 'commit')), const {}));
     final inspection = <String, Object?>{
-      'dpsk': inspectDshgoExtension(null, present: false).toJson(),
+      'dshgo': inspectDshgoExtension(null, present: false).toJson(),
       'resources': <Object?>[],
     };
     TavernPackImportResult? adopted;

@@ -81,7 +81,7 @@ final tavernChatToolTurnsProvider = FutureProvider.autoDispose.family<Map<String
 /// parsed or derived from the engine's ids (§2).
 String tavernNewId([Random? random]) {
   final r = random ?? Random.secure();
-  return 'dpsk-${[for (var i = 0; i < 16; i++) r.nextInt(256).toRadixString(16).padLeft(2, '0')].join()}';
+  return 'dshgo-${[for (var i = 0; i < 16; i++) r.nextInt(256).toRadixString(16).padLeft(2, '0')].join()}';
 }
 
 /// A memory decision as the player made it (§5.2): the proposal's version

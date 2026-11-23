@@ -429,7 +429,7 @@ class ScriptHost implements TavernScriptHost {
 }
 
 ScriptJson scriptStateExtension({int initial = 0}) => {
-  'dpsk': {
+  'dshgo': {
     'v': 1,
     'state': {
       'schema': {

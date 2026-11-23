@@ -3,7 +3,7 @@
 // crossed with the services really configured there.
 //
 // The catalogue is metadata, not a setting: settings/describe carries it on
-// the plugin's `services` field, `meta.extra["DPSK/media/catalog"]`, under
+// the plugin's `services` field, `meta.extra["dsh-go/media/catalog"]`, under
 // whatever namespace the host gave the plugin. A catalogue that is missing,
 // damaged or of an unknown version gives no generation mode (ordinary chat
 // still works); there is no built-in model table to fall back on. A model is
@@ -18,10 +18,10 @@ import 'package:dsh_client/dsh_client.dart';
 import '../ui/chat/media/generate_header.dart';
 
 /// The metadata key the catalogue sits under.
-const mediaCatalogMetaKey = 'DPSK/media/catalog';
+const mediaCatalogMetaKey = 'dsh-go/media/catalog';
 
 /// The catalogue contract this app reads.
-const mediaCatalogContract = 'DPSK/media/catalog';
+const mediaCatalogContract = 'dsh-go/media/catalog';
 const mediaCatalogVersion = 1;
 
 enum MediaCatalogStatus {
@@ -118,7 +118,7 @@ class MediaModel {
 }
 
 /// One provider template the plugin publishes in its catalogue
-/// (`meta.extra["DPSK/media/catalog"].presets[]`, plugin 0.3.0+): the
+/// (`meta.extra["dsh-go/media/catalog"].presets[]`, plugin 0.3.0+): the
 /// values a new service starts with, so the settings page never asks for a
 /// protocol id, an API root or a model list. Older catalogues carry none and
 /// [fallbackMediaPresets] keeps the page usable.

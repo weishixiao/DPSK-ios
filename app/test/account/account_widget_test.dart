@@ -1,14 +1,14 @@
 // Onboarding choice, signing-in state and account page, driven through the UI
 // with the real controller against an in-memory Host.
 
-import 'package:dpsk_app/state/account_state.dart';
-import 'package:dpsk_app/state/onboarding_state.dart';
-import 'package:dpsk_app/ui/account/account_page.dart';
-import 'package:dpsk_app/ui/account/account_widgets.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/onboarding/api_key_page.dart';
-import 'package:dpsk_app/ui/onboarding/connect_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/state/account_state.dart';
+import 'package:dsh_app/state/onboarding_state.dart';
+import 'package:dsh_app/ui/account/account_page.dart';
+import 'package:dsh_app/ui/account/account_widgets.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/onboarding/api_key_page.dart';
+import 'package:dsh_app/ui/onboarding/connect_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,7 +1,7 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/locale_state.dart';
-import 'package:dpsk_app/ui/settings/language_tile.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/locale_state.dart';
+import 'package:dsh_app/ui/settings/language_tile.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

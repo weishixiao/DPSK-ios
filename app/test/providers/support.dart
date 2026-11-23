@@ -2,13 +2,13 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/account_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/provider_keys.dart';
-import 'package:dpsk_app/state/providers_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/subscriptions_state.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/account_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/provider_keys.dart';
+import 'package:dsh_app/state/providers_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/subscriptions_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

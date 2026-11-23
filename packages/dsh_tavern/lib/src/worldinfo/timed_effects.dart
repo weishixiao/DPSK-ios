@@ -198,7 +198,7 @@ class _PackWorldInfoState {
     _invalid.add(source.source);
     issues.add({
       'code': 'pack_world_info_shape',
-      'path': '/dpskPackRuntime/bindings/${_worldInfoPointerToken(source.source.bindingId!)}/worldInfo$suffix',
+      'path': '/dshgoPackRuntime/bindings/${_worldInfoPointerToken(source.source.bindingId!)}/worldInfo$suffix',
       'message': 'The required saved world-info carrier is malformed and is preserved.',
       'source': source.source.toJson(),
       'resourceLocalId': source.resourceLocalId,

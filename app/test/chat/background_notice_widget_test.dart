@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/chat_list.dart';
-import 'package:dpsk_app/ui/chat/secret_mask.dart';
-import 'package:dpsk_app/ui/chat/widgets/background_task_notice.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/chat_list.dart';
+import 'package:dsh_app/ui/chat/secret_mask.dart';
+import 'package:dsh_app/ui/chat/widgets/background_task_notice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';

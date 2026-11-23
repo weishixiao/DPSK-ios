@@ -304,7 +304,7 @@ void main() {
         final metadata = _map(
           jsonDecode(db.select('SELECT metadata FROM chats WHERE id = ?', [chat]).single['metadata'] as String),
         );
-        final own = _map(metadata['dpsk']);
+        final own = _map(metadata['dshgo']);
         final provenance = _map(own['chatJsonl']);
         provenance['sources'] = {
           ..._map(provenance['sources']),
@@ -316,7 +316,7 @@ void main() {
           },
         };
         own['chatJsonl'] = provenance;
-        metadata['dpsk'] = own;
+        metadata['dshgo'] = own;
         metadata['chat_id_hash'] = 999;
         db.execute('UPDATE chats SET metadata = ? WHERE id = ?', [jsonEncode(metadata), chat]);
         db.execute('UPDATE node_states SET full_json = ?, delta_json = ? WHERE node_id = ?', [
@@ -327,7 +327,7 @@ void main() {
         db.execute('UPDATE nodes SET extra = ? WHERE id = ?', [
           jsonEncode({
             'foreign': ['unchanged'],
-            'dpsk': {'tavernState': portable, 'branchName': 'MARKED'},
+            'dshgo': {'tavernState': portable, 'branchName': 'MARKED'},
           }),
           child.nodeId,
         ]);
@@ -340,8 +340,8 @@ void main() {
         expect(row['deleted_by'], token);
         final extra = _map(jsonDecode(row['extra'] as String));
         expect(extra['foreign'], ['unchanged']);
-        expect(_map(extra['dpsk'])['branchName'], 'MARKED');
-        expect(_map(_map(extra['dpsk'])['tavernState']), {...portable, 'stChatIdHash': 41});
+        expect(_map(extra['dshgo'])['branchName'], 'MARKED');
+        expect(_map(_map(extra['dshgo'])['tavernState']), {...portable, 'stChatIdHash': 41});
         final saved = db.select('SELECT full_json FROM node_states WHERE node_id = ?', [child.nodeId]).single;
         expect(jsonDecode(saved['full_json'] as String), physical);
       });

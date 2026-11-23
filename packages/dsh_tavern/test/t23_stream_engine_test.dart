@@ -40,7 +40,7 @@ void main() {
       expect(h.events(id, 'text'), isEmpty);
       expect(h.events(id, 'extra'), isEmpty);
       expect((await h.engine.inspectTurn(h.chat, nodeId: id))!.reportedUsage!.promptTokens, 21);
-      expect(_extra(h.node(id))['dpsk'], isNot(contains('inspection')));
+      expect(_extra(h.node(id))['dshgo'], isNot(contains('inspection')));
       timers.single.fire();
       final checkpoint = (await h.engine.path(h.chat)).last;
       expect(checkpoint.text, List.filled(128, 'x').join());
@@ -215,8 +215,8 @@ void main() {
     'a rejected completed pointer rolls back the first final commit and saves failed evidence once',
     () => _withTimers((timers) async {
       h.execute(r'''CREATE TRIGGER reject_complete BEFORE UPDATE OF metadata ON chats
-      WHEN EXISTS(SELECT 1 FROM nodes WHERE id = json_extract(NEW.metadata, '$.dpsk.latestInspection.nodeId')
-        AND json_extract(extra, '$.dpsk.inspection.status') = 'completed')
+      WHEN EXISTS(SELECT 1 FROM nodes WHERE id = json_extract(NEW.metadata, '$.dshgo.latestInspection.nodeId')
+        AND json_extract(extra, '$.dshgo.inspection.status') = 'completed')
       BEGIN SELECT RAISE(ABORT, 'fixture_complete'); END''');
       final held = h.model.hold();
       final running = h.engine.send(h.chat, 'question').toList();
@@ -403,7 +403,7 @@ void main() {
       expect(timers, isEmpty);
       expect(h.rows('SELECT * FROM stream_audit'), isEmpty);
       expect(
-        h.rows("SELECT json_extract(metadata, '\$.dpsk.latestInspection') AS latest FROM chats WHERE id = ?", [
+        h.rows("SELECT json_extract(metadata, '\$.dshgo.latestInspection') AS latest FROM chats WHERE id = ?", [
           h.chat,
         ]).single['latest'],
         isNull,
@@ -434,7 +434,7 @@ void main() {
       expect(h.node(id)['stream_text'], isNull);
       expect(h.events(id, 'text'), [2]);
       expect(
-        (_extra(h.node(id))['dpsk']! as Map<String, Object?>)['inspection'],
+        (_extra(h.node(id))['dshgo']! as Map<String, Object?>)['inspection'],
         isA<Map<String, Object?>>().having((value) => value['status'], 'status', 'failed'),
       );
       await subscription.cancel();

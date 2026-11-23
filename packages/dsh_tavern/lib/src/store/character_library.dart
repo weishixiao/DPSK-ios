@@ -1,5 +1,5 @@
 // Uses the staging/rename and serialized-operation approach of
-// app/lib/pets/pet_library.dart at DPSK 1c5b220093295f8d069f6bfb06d8b4fc97b9e9c2.
+// app/lib/pets/pet_library.dart at dsh-Go 1c5b220093295f8d069f6bfb06d8b4fc97b9e9c2.
 // Pure Dart: the Flutter provider and image work stay outside the UI isolate.
 
 import 'dart:convert';

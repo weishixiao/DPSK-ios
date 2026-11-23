@@ -16,15 +16,15 @@
 
 | 形式 | 例子 | 用在 |
 |---|---|---|
-| App 链接 | `dpsk://share/<kind>?p=<code>` | App 之间直接打开 |
-| 大配置 | `dpsk://share/profile?gist=<id>&c=<sum>` | 内容放在私密 Gist 里 |
-| 着陆页 | `https://go.dshtui.com/share/#p=<code>`、`…/#gist=<id>&c=<sum>`（旧地址 `https://weishixiao.github.io/DPSK/share/` 仍能打开） | 复制链接、二维码、发到微信 |
-| 文件 | `DPSK-profile-20261024.dpsk`（`application/vnd.dpsk+json`） | 分享面板、存为文件、微信里转发 |
+| App 链接 | `dshgo://share/<kind>?p=<code>` | App 之间直接打开 |
+| 大配置 | `dshgo://share/profile?gist=<id>&c=<sum>` | 内容放在私密 Gist 里 |
+| 着陆页 | `https://go.dshtui.com/share/#p=<code>`、`…/#gist=<id>&c=<sum>`（旧地址 `https://ccch1mneyyy.github.io/dsh-go/share/` 仍能打开） | 复制链接、二维码、发到微信 |
+| 文件 | `dsh-go-profile-20261024.dshgo`（`application/vnd.dshgo+json`） | 分享面板、存为文件、微信里转发 |
 
 - `<kind>`：`plugin` / `profile` / `conversation`（对话见 §8，链接走托管，不内联）。着陆页链接不带 kind，解码后才知道。
 - 着陆页的内容全在 `#` 后面：浏览器不会把它发给服务器。
 - 换域名：改 `share_link.dart` 的 `shareLandingUrl`、`site/share/share.js` 里没有域名（只认相对路径），App Links 另见 §6。
-- 「复制链接」「二维码」「分享」用的都是着陆页链接：微信不打开自定义 scheme，https 在哪儿都能点；着陆页上的「用 DPSK 打开」再跳 `dpsk://`。
+- 「复制链接」「二维码」「分享」用的都是着陆页链接：微信不打开自定义 scheme，https 在哪儿都能点；着陆页上的「用 dsh-go 打开」再跳 `dshgo://`。
 
 ## 2. 编码
 
@@ -33,9 +33,9 @@
 ```
 
 - JSON 是紧凑 UTF-8；校验和覆盖解压后的 JSON 字节，截断、改字都会被发现（「这个分享码不完整或已损坏」）。
-- `v` 是格式版本，当前 1；比 App 新的版本拒绝（「需要更新 DPSK 才能打开」）。
+- `v` 是格式版本，当前 1；比 App 新的版本拒绝（「需要更新 dsh-go 才能打开」）。
 - 解压上限 1 MB（防压缩炸弹）。着陆页链接 ≤ 1800 字符时内联，二维码用 L 级纠错（> 600 字符）或 M 级，不放中心图标（理由见 community.md「二维码中心图标」）；更大的配置走文件或 Gist。
-- `.dpsk` 文件和 Gist 里放同一个 code，外面包一层可读的头：`{"dpsk": 1, "kind": "profile", "name": "…", "code": "<code>"}`。一条解码路径。
+- `.dshgo` 文件和 Gist 里放同一个 code，外面包一层可读的头：`{"dshgo": 1, "kind": "profile", "name": "…", "code": "<code>"}`。一条解码路径。
 - 着陆页用 `DecompressionStream('deflate-raw')` 和 `crypto.subtle` 解同一个格式。Python（zlib + hashlib）生成的 code 在 Dart 测试里能解；Dart 生成的 code 用 Node 跑过着陆页脚本（手动验证，没进测试）。
 
 ## 3. 内容
@@ -83,7 +83,7 @@
 
 ## 4. 打开与导入
 
-入口：`dpsk://share/…`、着陆页链接（App Links 验证之后）、`.dpsk` 文件（文件管理器「打开方式」或从微信「分享」给 DPSK，Manifest 里 VIEW / SEND 的 `application/vnd.dpsk+json`、`application/octet-stream`）。这些 intent filter 挂在不显示界面的 `LinkTrampolineActivity` 上：微信这类 App 不带 `NEW_TASK` 启动时，直接打到 `MainActivity` 会在微信的任务里再起一个 Flutter 界面；跳板把链接转给 App 自己的任务（`NEW_TASK | SINGLE_TOP | CLEAR_TOP`，连同 `content:` 的读权限），由 `LinksPlugin` 经 `onNewIntent` 或启动 intent 交给 Dart。`ShareCodeHost` 在启动时注册到 `LinkRouter`，冷启动带进来的链接也能接住。
+入口：`dshgo://share/…`、着陆页链接（App Links 验证之后）、`.dshgo` 文件（文件管理器「打开方式」或从微信「分享」给 dsh-go，Manifest 里 VIEW / SEND 的 `application/vnd.dshgo+json`、`application/octet-stream`）。这些 intent filter 挂在不显示界面的 `LinkTrampolineActivity` 上：微信这类 App 不带 `NEW_TASK` 启动时，直接打到 `MainActivity` 会在微信的任务里再起一个 Flutter 界面；跳板把链接转给 App 自己的任务（`NEW_TASK | SINGLE_TOP | CLEAR_TOP`，连同 `content:` 的读权限），由 `LinksPlugin` 经 `onNewIntent` 或启动 intent 交给 Dart。`ShareCodeHost` 在启动时注册到 `LinkRouter`，冷启动带进来的链接也能接住。
 
 确认弹层（`import_sheet.dart`）：
 
@@ -111,18 +111,18 @@
 
 ## 5. 着陆页
 
-`site/share/`：一个 `index.html`（样式内联）+ `share.js`，不用构建。读 `#p=` / `#gist=`，在浏览器里解压、校验、显示卡片（名称、来源、版本、里面有什么），两个按钮：「用 DPSK 打开」（`dpsk://…`）、「下载 DPSK」（`github.com/weishixiao/DPSK/releases/latest`）。浅色 / 深色跟系统。
+`site/share/`：一个 `index.html`（样式内联）+ `share.js`，不用构建。读 `#p=` / `#gist=`，在浏览器里解压、校验、显示卡片（名称、来源、版本、里面有什么），两个按钮：「用 dsh-go 打开」（`dshgo://…`）、「下载 dsh-go」（`github.com/ccch1mneyyy/dsh-go/releases/latest`）。浅色 / 深色跟系统。
 
 - 不上传任何东西；CSP 只允许自己的脚本，`connect-src` 只有 GitHub API（Gist 链接要取 Gist）。所有数据用 `textContent` 写进页面。
 - 微信内置浏览器打不开自定义 scheme：检测到时提示在浏览器中打开。
-- 浏览器不支持 `DecompressionStream` 时不显示内容，仍给「用 DPSK 打开」。
+- 浏览器不支持 `DecompressionStream` 时不显示内容，仍给「用 dsh-go 打开」。
 
 ## 6. App Links（https 直接进 App）
 
-现在只有 `dpsk://` 和文件能直接进 App；https 链接先到着陆页。要让 `https://<域名>/…/share/` 直接打开 App：
+现在只有 `dshgo://` 和文件能直接进 App；https 链接先到着陆页。要让 `https://<域名>/…/share/` 直接打开 App：
 
 1. 定下域名，改 `shareLandingUrl`；
-2. 在 `https://<域名>/.well-known/assetlinks.json` 放 `delegate_permission/common.handle_all_urls`，`package_name: com.dpsk.harness`，`sha256_cert_fingerprints` 填发布签名证书的指纹（GitHub Pages 的项目页做不到——`.well-known` 必须在域名根上，要用 `weishixiao.github.io` 用户站或自有域名）；
+2. 在 `https://<域名>/.well-known/assetlinks.json` 放 `delegate_permission/common.handle_all_urls`，`package_name: io.github.ccch1mneyyy.dsh_app`，`sha256_cert_fingerprints` 填发布签名证书的指纹（GitHub Pages 的项目页做不到——`.well-known` 必须在域名根上，要用 `ccch1mneyyy.github.io` 用户站或自有域名）；
 3. Manifest 里 `LinkTrampolineActivity` 加 `<intent-filter android:autoVerify="true">`：VIEW + DEFAULT + BROWSABLE，`scheme="https" host="<域名>" pathPrefix="/…/share"`。
 
 `LinkRouter` 已经按 `<host>/<path>` 注册了着陆页路由，第 3 步之后不用改 Dart。
@@ -132,7 +132,7 @@
 ```dart
 final router = ref.read(linkRouterProvider);
 final off = router.registerLinkHandler('forum/auth', (uri) async { …; return true; });
-router.registerFileHandler('dpsk', (fileUri) async => …);
+router.registerFileHandler('dshgo', (fileUri) async => …);
 router.context; // home 路由下的 BuildContext，开弹层用
 ```
 
@@ -142,7 +142,7 @@ router.context; // home 路由下的 BuildContext，开弹层用
 
 ## 8. 对话文件与回放
 
-> 2026-10-25。把一段对话分享出去：对方用 DPSK 打开能回放、接着聊；没装 App 的人用浏览器看。三种形式共用一份文件：`.dpsk` 文件、自包含 `.html`、托管链接（端到端加密）。
+> 2026-10-25。把一段对话分享出去：对方用 dsh-go 打开能回放、接着聊；没装 App 的人用浏览器看。三种形式共用一份文件：`.dshgo` 文件、自包含 `.html`、托管链接（端到端加密）。
 
 | 部分 | 文件 |
 |---|---|
@@ -158,7 +158,7 @@ router.context; // home 路由下的 BuildContext，开弹层用
 文件外层和 §2 一样是可读的信封，多了 `assets`：
 
 ```json
-{"dpsk": 2, "kind": "conversation", "name": "修复登录重复提交",
+{"dshgo": 2, "kind": "conversation", "name": "修复登录重复提交",
  "code": "<base64url(deflate-raw(body))>.<sum>",
  "assets": {"<id>": {"type": "image/jpeg", "w": 1600, "h": 900, "data": "<base64>"}}}
 ```
@@ -171,7 +171,7 @@ router.context; // home 路由下的 BuildContext，开弹层用
 
 ```json
 {"v": 2, "kind": "conversation", "schema": 1,
- "title": "…", "model": "deepseek-v4-pro", "app": "DPSK 1.0.0",
+ "title": "…", "model": "deepseek-v4-pro", "app": "dsh-go 1.0.0",
  "created": "…Z", "start": "…Z",
  "range": {"from": 2, "to": 3, "of": 5},
  "include": {"thinking": false, "tools": true},
@@ -202,7 +202,7 @@ router.context; // home 路由下的 BuildContext，开弹层用
 - 范围：这条回复（和上面的提问）、选中的消息、整段对话（`ConversationExport.build(only:)`）。选中消息时只收选中的提问和回复，工具、待办、目标只收选中回复所在的轮；`range` 记录覆盖到的轮次。一轮 = 一条提问到下一条提问之前；轮的开始取它那一轮的 `turn/start`。
 - 包含：思考过程、工具调用（关掉时整条调用连同参数、结果、待办、目标都不带）、图片（关掉时提问图片的引用和资产都不进文件）。打码始终进行（§8.3）。
 - 预览：用接收方看到的同一个回放页打开（没有「接着聊」）。
-- 文件形式：对话文件 `.dpsk`、网页 `.html`、Markdown（「接着聊」那份整理，不带思考和工具输出）。
+- 文件形式：对话文件 `.dshgo`、网页 `.html`、Markdown（「接着聊」那份整理，不带思考和工具输出）。
 - 超过 4 MB（对话文件、网页、链接）：一行「超过 4 MB，请缩小范围」，按钮不可用。
 
 ### 8.3 打码（`conversation_redact.dart`）
@@ -220,8 +220,8 @@ router.context; // home 路由下的 BuildContext，开弹层用
 
 | 来源 | 页面 | 数据从哪来 |
 |---|---|---|
-| 本地文件 | 着陆页 `index.html`（没有 `#` 参数时） | 选择或拖入 `.dpsk` |
-| 自包含网页 | App 导出的 `.html` | 页面里的 `<script type="application/json" id="dpsk-data">` |
+| 本地文件 | 着陆页 `index.html`（没有 `#` 参数时） | 选择或拖入 `.dshgo` |
+| 自包含网页 | App 导出的 `.html` | 页面里的 `<script type="application/json" id="dshgo-data">` |
 | 托管链接 | 分享域名的 `/c/<id>`（构建出的 `c.html`） | `GET /api/v1/c/<id>`，用 `#k=` 解密 |
 
 `app/tool/make_replay_viewer.py` 把源码内联成两个页面：`replay_viewer.g.dart`（App 填入标题和数据，`connect-src 'none'`）和 `<out>/c.html`（`connect-src 'self'`），并把着陆页文件一起拷到 `<out>/`（默认 `site/build/share/`，由分享服务发布）。内联脚本用 CSP 哈希锁定；数据只以文字节点和 `data:` 图片进入页面；嵌入的 JSON 把 `<` `>` `&` 转义。`test/share_code/replay_viewer_sync_test.dart` 检查生成文件和源码一致；`node site/share/test/viewer_test.mjs` 检查网页的解码、校验、解密，以及回放节奏与 App 逐项相同（共用 `app/test/replay/fixtures/timeline.json`）。
@@ -245,6 +245,6 @@ Markdown 和代码高亮是查看器自带的轻量实现（标题、列表、�
 
 ### 8.7 App 里打开
 
-`.dpsk` 文件（打开方式 / 系统分享进来）和 `dpsk://share/…` 链接都经 `share_code_host.dart`：先读信封，正文 `kind: conversation` 的进「对话回放」（`replay_page.dart`），其余照旧进导入确认。
+`.dshgo` 文件（打开方式 / 系统分享进来）和 `dshgo://share/…` 链接都经 `share_code_host.dart`：先读信封，正文 `kind: conversation` 的进「对话回放」（`replay_page.dart`），其余照旧进导入确认。
 
 回放页：顶栏返回 · 标题 · 全文；下面一枚胶囊：播放 / 暂停、进度条、时间、倍速。列表用聊天自己的行组件画（`deriveRows` + 同样的行组件和间距），图片从文件里读；待办和目标条跟着回放时刻变化。底部主按钮「接着聊」：新建对话，把这段对话整理成 Markdown（提问、回答、每次工具调用一行；不带思考和工具输出）作为附件，输入框预填「接着附件里这段对话聊：」，由人改完再发。DSH 没有导入对话的接口，所以不能原样续上同一个对话。

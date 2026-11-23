@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/features/schedule_editor/schedule_authorization.dart';
+import 'package:dsh_app/ui/features/schedule_editor/schedule_authorization.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 class _Carrier extends DshCarrier {
@@ -71,7 +71,7 @@ Map<String, Object?> scheduleQuestionFrame(
   String id, {
   String session = 's1',
   String purpose = 'schedule-authorization',
-  String prefix = 'DPSK-schedule-authorization-',
+  String prefix = 'dsh-go-schedule-authorization-',
 }) => {
   'type': 'waterfall',
   'event': 'user-questions/request',

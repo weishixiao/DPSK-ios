@@ -2,8 +2,8 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/launch/launch_state.dart';
-import 'package:dpsk_app/launch/startup_trace.dart';
+import 'package:dsh_app/launch/launch_state.dart';
+import 'package:dsh_app/launch/startup_trace.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

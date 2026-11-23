@@ -2,9 +2,9 @@
 // the app has asked the platform what it supports — without waiting for the
 // next resume.
 
-import 'package:dpsk_app/plugins/native/native_capabilities.dart';
-import 'package:dpsk_app/plugins/native/native_platform.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
+import 'package:dsh_app/plugins/native/native_capabilities.dart';
+import 'package:dsh_app/plugins/native/native_platform.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -5,10 +5,10 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/companion/companion_pack.dart';
-import 'package:dpsk_app/update/update_http.dart';
-import 'package:dpsk_app/workshop/workshop_http.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/companion/companion_pack.dart';
+import 'package:dsh_app/update/update_http.dart';
+import 'package:dsh_app/workshop/workshop_http.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as image;
 

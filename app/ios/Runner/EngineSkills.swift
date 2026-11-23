@@ -245,7 +245,7 @@ final class EngineSkills {
     else { return false }
     return normalized[normalized.index(normalized.startIndex, offsetBy: 4)..<end.lowerBound]
       .split(separator: "\n", omittingEmptySubsequences: false)
-      .contains { $0.drop(while: { $0 == " " || $0 == "\t" }).hasPrefix("# DPSK:managed") }
+      .contains { $0.drop(while: { $0 == " " || $0 == "\t" }).hasPrefix("# dsh-go:managed") }
   }
 
   private static func canonical(_ path: String) -> String? {
@@ -333,7 +333,7 @@ final class EngineSkills {
     let target = URL(fileURLWithPath: path)
     let directory = target.deletingLastPathComponent()
     try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let temporary = directory.appendingPathComponent(".DPSK-tmp-" + target.lastPathComponent)
+    let temporary = directory.appendingPathComponent(".dsh-go-tmp-" + target.lastPathComponent)
     defer { unlink(temporary.path) }
     // Atomic, so a link left at the temporary name is replaced rather than written through.
     try bytes.write(to: temporary, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])

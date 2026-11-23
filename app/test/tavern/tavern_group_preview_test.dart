@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/tavern/deferred_tavern.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/deferred_tavern.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter_test/flutter_test.dart';
 

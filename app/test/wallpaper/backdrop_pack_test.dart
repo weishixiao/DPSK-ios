@@ -6,8 +6,8 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/wallpaper/wallpaper_frames.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/wallpaper/wallpaper_frames.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

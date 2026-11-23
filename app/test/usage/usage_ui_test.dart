@@ -1,5 +1,5 @@
 // Where the person is told and can say no: first run's welcome page (over
-// 「开始」) and 设置 › 隐私与分享 › 改进 DPSK. Measured, not eyeballed: the
+// 「开始」) and 设置 › 隐私与分享 › 改进 DSH Go. Measured, not eyeballed: the
 // welcome row's text starts 16 in from the button's left edge and the switch
 // track ends 16 in from its right, both centred on the row, the row as far
 // from either screen edge; at 320 dp with large text in both languages
@@ -9,13 +9,13 @@
 //
 //   flutter test --update-goldens test/usage/usage_ui_test.dart
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/onboarding/usage_notice_row.dart';
-import 'package:dpsk_app/ui/onboarding/welcome_page.dart';
-import 'package:dpsk_app/ui/settings/usage_stats_section.dart';
-import 'package:dpsk_app/ui/settings/privacy_page.dart';
-import 'package:dpsk_app/usage/usage_stats.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/onboarding/usage_notice_row.dart';
+import 'package:dsh_app/ui/onboarding/welcome_page.dart';
+import 'package:dsh_app/ui/settings/usage_stats_section.dart';
+import 'package:dsh_app/ui/settings/privacy_page.dart';
+import 'package:dsh_app/usage/usage_stats.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

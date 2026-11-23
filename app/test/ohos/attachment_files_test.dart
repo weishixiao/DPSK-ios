@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/attachment_files_ohos.dart';
-import 'package:dpsk_app/state/attachments.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/attachment_files_ohos.dart';
+import 'package:dsh_app/state/attachments.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

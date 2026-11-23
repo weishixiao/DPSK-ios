@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/plugins/native/native_surface.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/ui/plugins/native/native_panel.dart';
-import 'package:dpsk_app/ui/plugins/native/native_taps.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/plugins/native/native_surface.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/ui/plugins/native/native_panel.dart';
+import 'package:dsh_app/ui/plugins/native/native_taps.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

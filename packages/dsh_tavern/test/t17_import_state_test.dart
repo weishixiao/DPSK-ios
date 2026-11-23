@@ -16,7 +16,7 @@ void main() {
         'data': {'first_mes': 'Hello', 'extensions': {}},
       }),
     );
-    for (final dpsk in <Object?>[
+    for (final dshgo in <Object?>[
       null,
       'opaque',
       <String, Object?>{},
@@ -40,12 +40,12 @@ void main() {
       final document = <String, Object?>{
         'data': {
           'first_mes': 'Hello',
-          'extensions': {'dpsk': dpsk},
+          'extensions': {'dshgo': dshgo},
         },
       };
       final before = jsonEncode(document);
       final report = _assess(document);
-      expect(_withoutFingerprint(report), baseline, reason: '$dpsk');
+      expect(_withoutFingerprint(report), baseline, reason: '$dshgo');
       expect(report.counts.keys.any((key) => key.startsWith('state')), isFalse);
       expect(jsonEncode(document), before);
     }
@@ -95,7 +95,7 @@ void main() {
       expect(report.verdict, TavernImportVerdict.partial, reason: '$schema');
       expect(report.findings, hasLength(1));
       expect(report.findings.single.code, 'schema_shape');
-      expect(report.findings.single.path, r'$.data.extensions.dpsk.state.schema');
+      expect(report.findings.single.path, r'$.data.extensions.dshgo.state.schema');
       expect(report.findings.single.kind, TavernImportFindingKind.invalid);
       expect(report.counts['stateDefinitions'], 1);
       expect(report.counts['stateDefinitionIssues'], 1);
@@ -109,18 +109,18 @@ void main() {
       {'v': 1},
       {'v': 1.0},
     ]) {
-      final dpsk = <String, Object?>{
+      final dshgo = <String, Object?>{
         ...version,
         'state': {
           'schema': {'type': 'object'},
         },
       };
-      final before = jsonEncode(dpsk);
-      final report = _assess(_document(dpsk));
+      final before = jsonEncode(dshgo);
+      final report = _assess(_document(dshgo));
       expect(report.verdict, TavernImportVerdict.usable);
       expect(report.findings, isEmpty);
-      expect(jsonEncode(dpsk), before);
-      expect(dpsk.containsKey('v'), version.containsKey('v'));
+      expect(jsonEncode(dshgo), before);
+      expect(dshgo.containsKey('v'), version.containsKey('v'));
     }
   });
 
@@ -136,7 +136,7 @@ void main() {
       final report = _assess(document);
       expect(report.verdict, TavernImportVerdict.partial, reason: '$version');
       expect(report.findings.single.code, 'state_version');
-      expect(report.findings.single.path, r'$.data.extensions.dpsk.v');
+      expect(report.findings.single.path, r'$.data.extensions.dshgo.v');
       expect(report.findings.single.kind, TavernImportFindingKind.invalid);
       expect(jsonEncode(document), before);
     }
@@ -160,8 +160,8 @@ void main() {
     expect(report.verdict, TavernImportVerdict.partial);
     expect(report.findings.map((issue) => issue.code), ['schema_unsupported', 'schema_unsupported']);
     expect(report.findings.map((issue) => issue.path), [
-      r'$.data.extensions.dpsk.state.schema.properties.a.pattern',
-      r'$.data.extensions.dpsk.state.schema.properties.b.$ref',
+      r'$.data.extensions.dshgo.state.schema.properties.a.pattern',
+      r'$.data.extensions.dshgo.state.schema.properties.b.$ref',
     ]);
     expect(report.findings.every((issue) => issue.kind == TavernImportFindingKind.unsupported), isTrue);
     expect(report.counts['stateDefinitionIssues'], 2);
@@ -253,13 +253,13 @@ void main() {
     };
     final data = <String, Object?>{
       'extensions': {
-        'dpsk': {'state': state},
+        'dshgo': {'state': state},
       },
     };
     for (final wrapped in [false, true]) {
       final document = wrapped ? <String, Object?>{'data': data} : data;
       final report = _assess(document, path: r'$[4]');
-      final prefix = wrapped ? r'$[4].data.extensions.dpsk.state' : r'$[4].extensions.dpsk.state';
+      final prefix = wrapped ? r'$[4].data.extensions.dshgo.state' : r'$[4].extensions.dshgo.state';
       expect(report.findings.map((issue) => issue.path), [
         '$prefix.schema.properties["a/b~c"].items.properties["0"].pattern',
         '$prefix.schema.properties["a/b~c"].items.properties["line\\n"].pattern',
@@ -302,11 +302,11 @@ void main() {
       'rule_shape',
     ]);
     expect(report.findings.map((issue) => issue.path), [
-      r'$.data.extensions.dpsk.state.rules[0]',
-      r'$.data.extensions.dpsk.state.rules[1]',
-      r'$.data.extensions.dpsk.state.rules[2].do[0]',
-      r'$.data.extensions.dpsk.state.rules[3].when',
-      r'$.data.extensions.dpsk.state.rules[4]',
+      r'$.data.extensions.dshgo.state.rules[0]',
+      r'$.data.extensions.dshgo.state.rules[1]',
+      r'$.data.extensions.dshgo.state.rules[2].do[0]',
+      r'$.data.extensions.dshgo.state.rules[3].when',
+      r'$.data.extensions.dshgo.state.rules[4]',
     ]);
     expect(report.counts['stateRules'], 5);
     expect(report.counts['stateDefinitionIssues'], 5);
@@ -326,7 +326,7 @@ void main() {
     final report = _assess(document);
     expect(report.verdict, TavernImportVerdict.partial);
     expect(report.findings.single.code, 'schema_limit');
-    expect(report.findings.single.path, r'$.data.extensions.dpsk.state.schema' + List.filled(65, '.items').join());
+    expect(report.findings.single.path, r'$.data.extensions.dshgo.state.schema' + List.filled(65, '.items').join());
     expect(report.counts['stateDefinitionIssues'], 1);
     expect(jsonEncode(document), before);
   });
@@ -344,7 +344,7 @@ void main() {
     final report = _assess(document);
     expect(report.counts['stateRules'], 257);
     expect(report.findings.single.code, 'rules_limit');
-    expect(report.findings.single.path, r'$.data.extensions.dpsk.state.rules');
+    expect(report.findings.single.path, r'$.data.extensions.dshgo.state.rules');
     expect(report.verdict, TavernImportVerdict.partial);
     expect(jsonEncode(document), before);
   });
@@ -366,7 +366,7 @@ void main() {
 
   test('state-shaped metadata in other import kinds remains outside the character state contract', () {
     final extensions = <String, Object?>{
-      'dpsk': {
+      'dshgo': {
         'state': {'schema': null},
       },
     };
@@ -383,7 +383,7 @@ void main() {
 
   test('actual card import persists definition findings through recheck export and reopening', () async {
     final h = await _open();
-    final dpsk = <String, Object?>{
+    final dshgo = <String, Object?>{
       'v': 1,
       'state': {
         'schema': {
@@ -400,7 +400,7 @@ void main() {
         },
       },
     };
-    final source = _cardBytes(dpsk);
+    final source = _cardBytes(dshgo);
     final card = await h.engine.importCard(source);
     final report = (await h.engine.readImportReport(TavernImportKind.character, card.id))!;
     expect(report.verdict, TavernImportVerdict.partial);
@@ -421,7 +421,7 @@ void main() {
     expect(fresh.stale, isFalse);
     expect(await current.readAsBytes(), before);
     final exported = const CardCodec().decode(await h.engine.exportCard(card.id, format: TavernCardFormat.json));
-    expect((exported.data['extensions']! as Map<String, Object?>)['dpsk'], dpsk);
+    expect((exported.data['extensions']! as Map<String, Object?>)['dshgo'], dshgo);
     expect(exported.json.containsKey('importReport'), isFalse);
     expect(h.engine.globalVariables, isEmpty);
     expect(h.model.calls, 0);
@@ -440,7 +440,7 @@ void main() {
       'messageVariables': {
         'stat_data': {'keep': 7},
       },
-      'dpskStateRuntime': {
+      'dshgoStateRuntime': {
         'version': 99,
         'firedRules': null,
         'future': {'keep': true},
@@ -461,7 +461,7 @@ void main() {
           'mes': 'existing',
           'send_date': _at.toIso8601String(),
           'extra': {
-            'dpsk': {'tavernState': saved},
+            'dshgo': {'tavernState': saved},
           },
         },
       ],
@@ -472,8 +472,8 @@ void main() {
     final before = _chatSnapshot(h);
     final state = _savedState(h, chatId);
     expect(state['messageVariables'], saved['messageVariables']);
-    expect(state['dpskStateRuntime'], saved['dpskStateRuntime']);
-    expect((state['messageVariables']! as Map<String, Object?>).containsKey('dpsk'), isFalse);
+    expect(state['dshgoStateRuntime'], saved['dshgoStateRuntime']);
+    expect((state['messageVariables']! as Map<String, Object?>).containsKey('dshgo'), isFalse);
     h.at = h.at.add(const Duration(days: 1));
     final fresh = await h.engine.recheckImport(TavernImportKind.character, card.id);
     expect(fresh.findings, isEmpty);
@@ -489,10 +489,10 @@ void main() {
 
 final _at = DateTime.utc(2026, 11, 10, 12);
 
-Map<String, Object?> _document(Map<String, Object?> dpsk) => {
+Map<String, Object?> _document(Map<String, Object?> dshgo) => {
   'data': {
     'first_mes': 'Hello',
-    'extensions': {'dpsk': dpsk},
+    'extensions': {'dshgo': dshgo},
   },
 };
 
@@ -535,9 +535,9 @@ Map<String, Object?> _dangerousDefinition() => {
   ],
 };
 
-Uint8List _cardBytes(Map<String, Object?> dpsk) {
+Uint8List _cardBytes(Map<String, Object?> dshgo) {
   final card = jsonDecode(utf8.decode(t24Card())) as Map<String, Object?>;
-  (card['data']! as Map<String, Object?>)['extensions'] = {'dpsk': dpsk};
+  (card['data']! as Map<String, Object?>)['extensions'] = {'dshgo': dshgo};
   return Uint8List.fromList(utf8.encode(jsonEncode(card)));
 }
 
@@ -609,6 +609,6 @@ Map<String, Object?> _savedState(_Harness h, String chatId) => _withDatabase(h, 
     chatId,
   ]).single;
   final extra = jsonDecode(row['extra']! as String) as Map<String, Object?>;
-  final own = extra['dpsk']! as Map<String, Object?>;
+  final own = extra['dshgo']! as Map<String, Object?>;
   return own['tavernState']! as Map<String, Object?>;
 });

@@ -8,7 +8,7 @@
 `tool/call` 和 `tool/result` 都带空 ID。JSONL V4 编码要求 `tool/result` 有非空且对得上的
 `toolCallId`，于是拒绝这一批，失败批次放回写队列队首，此后这个会话每一轮都报
 `format v4 tool/result ... requires toolCallId matching its tool source`
-（[#1661](https://github.com/weishixiao/DPSK/issues/1661)）。
+（[#1661](https://github.com/ccch1mneyyy/dsh-Go/issues/1661)）。
 
 ## 修法
 

@@ -1,12 +1,12 @@
 // 宠物设置's 「App 外显示」 group and the overlay flavour of the restricted-settings
 // guide (docs/design/pets.md §6.4, §8).
 
-import 'package:dpsk_app/companion/companion_float.dart';
-import 'package:dpsk_app/pets/pet_prefs.dart';
-import 'package:dpsk_app/ui/common/risk_notice.dart';
-import 'package:dpsk_app/ui/pets/overlay_settings_tile.dart';
-import 'package:dpsk_app/ui/phone/restricted_settings_guide.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/companion/companion_float.dart';
+import 'package:dsh_app/pets/pet_prefs.dart';
+import 'package:dsh_app/ui/common/risk_notice.dart';
+import 'package:dsh_app/ui/pets/overlay_settings_tile.dart';
+import 'package:dsh_app/ui/phone/restricted_settings_guide.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -281,8 +281,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(RestrictedSettingsGuidePage), findsOneWidget);
     expect(find.text('侧载的 App 要先放行这一项，悬浮窗开关才点得动'), findsOneWidget);
-    expect(find.textContaining('先去「悬浮窗」设置里点一次 DPSK 的开关'), findsOneWidget);
-    expect(find.text('回到「悬浮窗」设置，打开 DPSK。'), findsOneWidget);
+    expect(find.textContaining('先去「悬浮窗」设置里点一次 DSH Go 的开关'), findsOneWidget);
+    expect(find.text('回到「悬浮窗」设置，打开 DSH Go。'), findsOneWidget);
     expect(find.text('去开悬浮窗'), findsOneWidget);
   });
 

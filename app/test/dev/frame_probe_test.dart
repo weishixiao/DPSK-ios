@@ -5,7 +5,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/dev/frame_probe.dart';
+import 'package:dsh_app/dev/frame_probe.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -32,7 +32,7 @@ void main() {
       'top': [
         for (var i = 0; i < 4; i++)
           {
-            'site': 'package:dpsk_app/ui/chat/chat_list.dart 812:7 <- 工作区/笔记 ${'x' * 900} $i',
+            'site': 'package:dsh_app/ui/chat/chat_list.dart 812:7 <- 工作区/笔记 ${'x' * 900} $i',
             'samples': [i, 0, 1],
             'timer': [1, 2, 3, 4, 5, 6],
           },

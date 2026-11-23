@@ -4,9 +4,9 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -60,7 +60,7 @@ void main() {
 
     final skill = File('${dirOf(pluginSkillName).path}/SKILL.md');
     skill.writeAsStringSync(
-      skill.readAsStringSync().replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), ''),
+      skill.readAsStringSync().replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), ''),
     );
     expect(await installUiSkill(root, plugin), UiSkillInstallResult.userOwned);
   });

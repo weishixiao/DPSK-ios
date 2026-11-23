@@ -11,7 +11,7 @@ import 'connection.dart';
 import 'errors.dart';
 import 'session_api.dart';
 
-const _path = '/DPSK/v1/companion/auxiliary';
+const _path = '/dsh-go/v1/companion/auxiliary';
 const _maxInputBytes = 65536;
 const _maxLineBytes = 192 * 1024;
 const _maxStreamBytes = 8 * 1024 * 1024;

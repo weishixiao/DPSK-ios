@@ -14,7 +14,7 @@ final _at = DateTime.utc(2026, 11, 14, 8);
 void main() {
   test('draft export preserves selected candidates and native diagnostics without adoption', () async {
     final h = await ScriptFixture.open();
-    final dpsk = <String, Object?>{
+    final dshgo = <String, Object?>{
       'v': 1,
       'state': {
         'schema': {
@@ -30,7 +30,7 @@ void main() {
         'values': [1, 'untouched'],
       },
     };
-    final raw = _card(dpsk);
+    final raw = _card(dshgo);
     final data = scriptMap(raw['data']);
     data['character_book'] = {
       'name': 'Embedded source',
@@ -68,7 +68,7 @@ void main() {
         TavernAuthoringChange(
           id: 'schema',
           physicalResourceId: target.physicalResourceId,
-          path: '/data/extensions/dpsk/state/schema/properties/count/maximum',
+          path: '/data/extensions/dshgo/state/schema/properties/count/maximum',
           operation: TavernAuthoringChangeKind.set,
           value: 9,
         ),
@@ -127,8 +127,8 @@ void main() {
     expect(preview.mergedRaw['vendor'], {
       'complete': [null, 'preserved'],
     });
-    final exportedDshgo = scriptMap(preview.mergedRaw['dpsk']);
-    expect(exportedDshgo['future'], dpsk['future']);
+    final exportedDshgo = scriptMap(preview.mergedRaw['dshgo']);
+    expect(exportedDshgo['future'], dshgo['future']);
     expect(preview.mergedRaw['schemaPatches'], [
       {
         'path': '/count',
@@ -205,7 +205,7 @@ void main() {
         TavernAuthoringChange(
           id: 'schema',
           physicalResourceId: target.physicalResourceId,
-          path: '/data/extensions/dpsk/state/schema/properties/count/maximum',
+          path: '/data/extensions/dshgo/state/schema/properties/count/maximum',
           operation: TavernAuthoringChangeKind.set,
           value: 11,
         ),
@@ -282,7 +282,7 @@ void main() {
       reason: 'The complete unchanged seed keeps its original BOM, whitespace and unknown JSON.',
     );
     expect(decoded.files['assets/copied.bin'], payload);
-    expect(decoded.manifest['dpsk'], scriptMap(data['extensions'])['dpsk']);
+    expect(decoded.manifest['dshgo'], scriptMap(data['extensions'])['dshgo']);
     expect(_rows(h), beforeSeed);
 
     final none = _request(seed, [
@@ -360,7 +360,7 @@ TavernGameplayExportRequest _request(
   },
 );
 
-Map<String, Object?> _card(Map<String, Object?> dpsk) => {
+Map<String, Object?> _card(Map<String, Object?> dshgo) => {
   'spec': 'chara_card_v3',
   'spec_version': '3.0',
   'vendor': {'keep': true},
@@ -378,7 +378,7 @@ Map<String, Object?> _card(Map<String, Object?> dpsk) => {
     'tags': <String>[],
     'creator': '',
     'character_version': '',
-    'extensions': <String, Object?>{'dpsk': dpsk},
+    'extensions': <String, Object?>{'dshgo': dshgo},
   },
 };
 

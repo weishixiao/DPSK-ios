@@ -1,7 +1,7 @@
-import 'package:dpsk_app/tavern/tavern_sprites.dart';
-import 'package:dpsk_app/ui/companion/companion_log.dart';
-import 'package:dpsk_app/ui/tavern/tavern_vn_view.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_sprites.dart';
+import 'package:dsh_app/ui/companion/companion_log.dart';
+import 'package:dsh_app/ui/tavern/tavern_vn_view.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

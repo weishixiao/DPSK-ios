@@ -1,11 +1,11 @@
 // 始终允许: the two wire fields, the copies that must carry them, the
 // controller write, and the page (danger notice first, list and removal).
 
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/ui/phone/always_allow_page.dart';
-import 'package:dpsk_app/ui/phone/phone_control_screen.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/ui/phone/always_allow_page.dart';
+import 'package:dsh_app/ui/phone/phone_control_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -62,8 +62,8 @@ extension _GameplayCastOperations on TavernEngine {
       }
       final data = document['data']! as Map<String, Object?>;
       final extensions = data['extensions'];
-      final dpsk = extensions is Map<String, Object?> ? extensions['dpsk'] : null;
-      text = jsonEncode(_gameplayCastMember(dpsk, localCastId));
+      final dshgo = extensions is Map<String, Object?> ? extensions['dshgo'] : null;
+      text = jsonEncode(_gameplayCastMember(dshgo, localCastId));
       requiredSource = (id: card.target.id, expected: AuthoringExpectation(revision: expected, before: before));
       media = captured.copyMedia ? TavernAuthoringMediaSelection.currentSource : TavernAuthoringMediaSelection.none;
       mediaRefs = captured.copyMedia ? card.mediaRefs : const [];
@@ -82,7 +82,7 @@ extension _GameplayCastOperations on TavernEngine {
       }
       // Tombstones retain immutable originals and remain explicit import sources.
       if (captured.kind == TavernCastSourceKind.packManifest) {
-        text = jsonEncode(_gameplayCastMember(version.manifest['dpsk'], localCastId));
+        text = jsonEncode(_gameplayCastMember(version.manifest['dshgo'], localCastId));
       } else {
         final resource = _store.readGameplayPackResource(ref, localCastId);
         if (resource == null || resource.kind != 'castCard') {
@@ -219,8 +219,8 @@ TavernCastSource _gameplayCastSourceFromJson(Map<String, Object?> source) {
       : TavernCastSource.packResource(packRef: packRef, assetResourceIds: assets);
 }
 
-Map<String, Object?> _gameplayCastMember(Object? dpsk, String localCastId) {
-  final cast = dpsk is Map<String, Object?> ? dpsk['cast'] : null;
+Map<String, Object?> _gameplayCastMember(Object? dshgo, String localCastId) {
+  final cast = dshgo is Map<String, Object?> ? dshgo['cast'] : null;
   if (cast is! List<Object?>) {
     throw const TavernGameplayException(code: 'cast_not_found', message: 'The source does not contain a cast array.');
   }

@@ -76,7 +76,7 @@ void main() {
         'items': [null, '\ufeffkept'],
       },
       'scriptExtra': ['ordinary user key'],
-      'dpsk': {
+      'dshgo': {
         'inspection': {'private': 'prompt evidence'},
         'branchName': 'private label',
         'tavernState': {
@@ -127,7 +127,7 @@ void main() {
             )
             as Map<String, Object?>;
     expect(projected, {
-      'dpsk': {
+      'dshgo': {
         'tavernState': {
           'messageVariables': null,
           'other': [1, false],
@@ -141,7 +141,7 @@ void main() {
       expect(node.extra, {
         'foreign': extra['foreign'],
         'scriptExtra': extra['scriptExtra'],
-        'dpsk': {
+        'dshgo': {
           'tavernState': {
             'messageVariables': null,
             'other': [1, false],
@@ -178,7 +178,7 @@ void main() {
       text: 'Body',
       extra: {
         'foreign': [null, '\ufeffold'],
-        'dpsk': {
+        'dshgo': {
           'inspection': {'private': true},
         },
       },
@@ -251,7 +251,7 @@ void main() {
         chat,
         saved.nodeId,
         extra: {
-          'dpsk': {'tavernState': override},
+          'dshgo': {'tavernState': override},
         },
       );
       expect(store.scriptNodeState(chat, saved.nodeId), store.nodeState(chat, saved.nodeId));
@@ -260,7 +260,7 @@ void main() {
       chat,
       saved.nodeId,
       extra: {
-        'dpsk': {'tavernState': <String, Object?>{}},
+        'dshgo': {'tavernState': <String, Object?>{}},
       },
     );
     expect(store.scriptNodeState(chat, saved.nodeId), isEmpty);
@@ -272,7 +272,7 @@ void main() {
       chat,
       saved.nodeId,
       extra: {
-        'dpsk': {'tavernState': portable},
+        'dshgo': {'tavernState': portable},
       },
     );
     store.writeNodeState(chat, saved.nodeId, {

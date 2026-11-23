@@ -1,6 +1,6 @@
-import 'package:dpsk_app/state/workshop_account_state.dart';
-import 'package:dpsk_app/workshop/workshop_client.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/state/workshop_account_state.dart';
+import 'package:dsh_app/workshop/workshop_client.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 
 import '../workshop/support.dart' show workshopEntryJson, workshopSubmissionJson;
 import 'workshop_auth_test_support.dart';

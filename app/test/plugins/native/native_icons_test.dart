@@ -5,10 +5,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/plugins/native/native_icons.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_model.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/plugins/native/native_icons.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_model.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

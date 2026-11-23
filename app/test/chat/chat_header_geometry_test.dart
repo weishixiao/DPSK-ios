@@ -4,12 +4,12 @@
 // model chip's 「· 高」 first, then the title down to its first characters
 // and the host, then the model's name down to ✦ ⌄. Measured with real fonts.
 
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/ui/agents/header_agents.dart';
-import 'package:dpsk_app/ui/chat/chat_header.dart';
-import 'package:dpsk_app/ui/chat/model_sheet.dart';
-import 'package:dpsk_app/ui/common/status_dot.dart';
-import 'package:dpsk_app/ui/theme/theme.dart' show GlassSurface;
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/ui/agents/header_agents.dart';
+import 'package:dsh_app/ui/chat/chat_header.dart';
+import 'package:dsh_app/ui/chat/model_sheet.dart';
+import 'package:dsh_app/ui/common/status_dot.dart';
+import 'package:dsh_app/ui/theme/theme.dart' show GlassSurface;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

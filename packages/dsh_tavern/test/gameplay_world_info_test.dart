@@ -287,7 +287,7 @@ void main() {
       expect(missingDeadline.packIssues.single['code'], 'pack_world_info_shape');
       expect(
         missingDeadline.packIssues.single['path'],
-        '/dpskPackRuntime/bindings/a/worldInfo/entries/lore/entry/$type',
+        '/dshgoPackRuntime/bindings/a/worldInfo/entries/lore/entry/$type',
       );
       expect(missingDeadline.packWorldInfo.isEmpty, isTrue);
       expect(_merge(savedTimer, missingDeadline.packWorldInfo), savedTimer);

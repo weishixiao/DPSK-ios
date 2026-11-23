@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

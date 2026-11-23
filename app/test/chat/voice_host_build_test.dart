@@ -1,8 +1,8 @@
-import 'package:dpsk_app/state/draft_store.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_text_controller.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_controller.dart';
+import 'package:dsh_app/state/draft_store.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/mention/mention_text_controller.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/voice/voice_controller.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

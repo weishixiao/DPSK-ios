@@ -163,7 +163,7 @@
             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
         </activity-alias>
 
-        <!-- 分享码: dpsk:// links and .dpsk files, handed to MainActivity's own task
+        <!-- 分享码: dshgo:// links and .dshgo files, handed to MainActivity's own task
              (links/LinkTrampolineActivity.kt → links/LinksPlugin.kt). https App Links need an
              assetlinks.json on the landing domain first (docs/design/share-codes.md §6). -->
         <activity
@@ -177,19 +177,19 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="dpsk" />
+                <data android:scheme="dshgo" />
             </intent-filter>
             <!-- Opened from a file manager / chat app. (Shared ones come through ShareActivity:
                  one share target, not two.) -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="application/vnd.dpsk+json" />
+                <data android:mimeType="application/vnd.dshgo+json" />
                 <data android:mimeType="application/octet-stream" />
             </intent-filter>
         </activity>
 
-        <!-- The share sheet's target: text, photos, files (a lone .dpsk goes on to the share-code
+        <!-- The share sheet's target: text, photos, files (a lone .dshgo goes on to the share-code
              importer, the rest into a new conversation). share/ShareActivity.kt → SharePlugin.kt. -->
         <activity
             android:name=".share.ShareActivity"
@@ -316,7 +316,7 @@
             android:name=".phone.background.AdbPairingNotification$Receiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.dpsk.harness.PHONE_ADB_PAIR_CODE" />
+                <action android:name="io.github.ccch1mneyyy.dsh_app.PHONE_ADB_PAIR_CODE" />
             </intent-filter>
         </receiver>
 

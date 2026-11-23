@@ -1,10 +1,10 @@
 // What makes the shared UI feel at home on iOS, and stay as it was elsewhere.
 
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/overscroll_forwarder.dart';
-import 'package:dpsk_app/ui/theme/app_theme.dart';
-import 'package:dpsk_app/ui/theme/motion.dart';
-import 'package:dpsk_app/ui/theme/sheet_recede.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/overscroll_forwarder.dart';
+import 'package:dsh_app/ui/theme/app_theme.dart';
+import 'package:dsh_app/ui/theme/motion.dart';
+import 'package:dsh_app/ui/theme/sheet_recede.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemUiOverlayStyle;
 import 'package:flutter_test/flutter_test.dart';

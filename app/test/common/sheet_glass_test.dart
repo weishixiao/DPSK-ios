@@ -3,9 +3,9 @@
 //
 //   flutter test test/common/sheet_glass_test.dart
 
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/discard_guard.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/discard_guard.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -148,7 +148,7 @@ final class _AuthoringSecretProofs {
     // that projection for history; the exact raw before-image and restored
     // continuation target use preparation.rawExtra through the candidate.
     final historyExtra = _stateNodeExtra(anchor.extra, candidate.persistent, {
-      'secretBinding': _map(candidate.extra['dpsk'])['secretBinding'],
+      'secretBinding': _map(candidate.extra['dshgo'])['secretBinding'],
     });
     final nextHistory = List<StoredNode>.of(history);
     nextHistory[index] = StoredNode(

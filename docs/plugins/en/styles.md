@@ -124,4 +124,4 @@ Gradients, author-controlled opacity and animation parameters remain closed. Fix
 
 Old apps ignore unfamiliar `v`, `accent`, `style` and `spans` properties and draw existing `text` / `value` fields. Keeping those fallbacks allows the same style view to work there. New components additionally require degradation using `caps.components`. Tool cards persist in history, so retain all fields required by v1.
 
-The complete style dashboard is [`DPSK-example-styles`](../../../examples/plugins/DPSK-example-styles/README.en.md). Component and action documentation covers the additional interactive controls and their state budgets.
+The complete style dashboard is [`dsh-go-example-styles`](../../../examples/plugins/dsh-go-example-styles/README.en.md). Component and action documentation covers the additional interactive controls and their state budgets.

@@ -5,7 +5,7 @@ Use the full DSH Web interface inside the app, and switch back to the native int
 ## Switch interfaces
 
 <!-- nav: commonSettings,hubSettingsInterface -->
-`Settings › Interface` · [Open](dpsk://open/interface)
+`Settings › Interface` · [Open](dshgo://open/interface)
 
 Under **Home**, choose **Native** or **Web** to switch right away. You can also tap the button next to New chat at the top of the chat list to go straight to Web.
 

@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/ui/tavern/tavern_message_edit_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_preset_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_presets_page.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/ui/tavern/tavern_message_edit_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_preset_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_presets_page.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -144,7 +144,7 @@ Future<void> _center(WidgetTester tester, Finder target) async {
 }
 
 Map<String, Object?> _prefill(Map<String, Object?> raw) => switch (raw['extensions']) {
-  {'dpsk': {'prefill': final Map<String, Object?> p}} => p,
+  {'dshgo': {'prefill': final Map<String, Object?> p}} => p,
   _ => const {},
 };
 

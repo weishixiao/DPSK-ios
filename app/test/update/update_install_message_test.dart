@@ -1,6 +1,6 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/ui/update/update_sheet.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/ui/update/update_sheet.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

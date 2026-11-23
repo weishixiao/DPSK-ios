@@ -6,8 +6,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/ui/chat/chat_rows.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/ui/chat/chat_rows.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -207,7 +207,7 @@ void main() {
           '见 [报告](<out/Q3 report.pdf>) 和 ![图](chart%20v2.png "趋势")、'
           '[年报](https://example.com/a.pdf)、[锚点](#top)、[行](<src/a.py#L3-L9>)、'
           '[绝对](/sdcard/Download/DSH/x.xlsx)、[再提一次](<out/Q3 report.pdf>)、'
-          '[手机](/sdcard/Download/DPSK/y.pdf)。';
+          '[手机](/sdcard/Download/DSH-Go/y.pdf)。';
       expect(linkedPaths(reply, cwd: _ws), [
         '$_ws/out/Q3 report.pdf',
         '$_ws/chart v2.png',

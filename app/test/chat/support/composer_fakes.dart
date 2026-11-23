@@ -6,7 +6,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 typedef RpcHandler = Object? Function(Map<String, Object?> args);

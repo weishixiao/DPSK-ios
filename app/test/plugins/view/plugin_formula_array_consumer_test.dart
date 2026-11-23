@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_model.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin_formula.dart';
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_model.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin_formula.dart';
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 

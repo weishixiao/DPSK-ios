@@ -33,7 +33,7 @@ TavernScriptException _messageScriptError(
 
 Map<String, Object?> _scriptUserExtra(Map<String, Object?> extra) => {
   for (final entry in extra.entries)
-    if (entry.key != 'dpsk') entry.key: entry.value,
+    if (entry.key != 'dshgo') entry.key: entry.value,
 };
 
 class _ScriptProjection<T> {
@@ -110,7 +110,7 @@ extension _ScriptMessageOperations on _ScriptCoordinator {
       final previous = cache.states[nodeId];
       if (previous != null) return previous;
     }
-    final own = node.extra['dpsk'];
+    final own = node.extra['dshgo'];
     final override = own is Map<String, Object?> ? own['tavernState'] : null;
     final state = override is Map<String, Object?> ? override : engine._store.nodeState(chatId, nodeId);
     if (cache != null) cache.states[nodeId] = state;
@@ -353,13 +353,13 @@ extension _ScriptMessageOperations on _ScriptCoordinator {
   }
 
   void _checkUserExtra(String contextId, String operation, Object? value, String path) {
-    if (value is Map<String, Object?> && value.containsKey('dpsk')) {
+    if (value is Map<String, Object?> && value.containsKey('dshgo')) {
       throw _messageScriptError(
         contextId,
         operation,
         TavernScriptErrorCode.reservedField,
-        'extra.dpsk is owned by the engine; edit state through data.',
-        fieldPath: '$path/dpsk',
+        'extra.dshgo is owned by the engine; edit state through data.',
+        fieldPath: '$path/dshgo',
       );
     }
   }
@@ -631,9 +631,9 @@ extension _ScriptMessageOperations on _ScriptCoordinator {
         needsData &&
         patches.any(
           (patch) =>
-              patch.entryState?.containsKey('dpskPackDefinitionConfigId') == true ||
+              patch.entryState?.containsKey('dshgoPackDefinitionConfigId') == true ||
               patch.familyIds.any(
-                (id) => engine._stateAt(capture.chatId, id).containsKey('dpskPackDefinitionConfigId'),
+                (id) => engine._stateAt(capture.chatId, id).containsKey('dshgoPackDefinitionConfigId'),
               ),
         );
     final dataContext = needsData ? await _prepareDataContext(capture.chatId, forceGameplay: forceGameplay) : null;
@@ -719,7 +719,7 @@ extension _ScriptMessageOperations on _ScriptCoordinator {
         ? null
         : await _prepareDataContext(
             capture.chatId,
-            forceGameplay: engine._stateAt(capture.chatId, capturedParent).containsKey('dpskPackDefinitionConfigId'),
+            forceGameplay: engine._stateAt(capture.chatId, capturedParent).containsKey('dshgoPackDefinitionConfigId'),
           );
     final speakers = await _messageSpeakers(capture, [
       for (final draft in drafts) ?draft.speakerCharacterId,
@@ -1118,7 +1118,7 @@ class _ScriptMessagePlan {
   void setExtra(_ScriptWorkingPage target, Map<String, Object?> value) {
     final next = <String, Object?>{
       ..._copy(value),
-      if (target.extra.containsKey('dpsk')) 'dpsk': target.extra['dpsk'],
+      if (target.extra.containsKey('dshgo')) 'dshgo': target.extra['dshgo'],
     };
     if (_stateJsonEqual(target.extra, next)) {
       return;
@@ -1210,7 +1210,7 @@ class _ScriptMessagePlan {
         );
         add(value, parent);
         // An inherited object traverses the common validator without changing
-        // dpsk or its runtime. Absent/malformed historical data is inherited
+        // dshgo or its runtime. Absent/malformed historical data is inherited
         // verbatim, never silently replaced by an empty successful object.
         if (state['messageVariables'] case final Map<String, Object?> inherited) {
           setData(value, inherited, dataContext!);
@@ -1377,7 +1377,7 @@ class _ScriptMessagePlan {
     }
     final beforeChat = engine._store.chat(chatId);
     final storedLatest = removed.isEmpty ? null : engine._storedLatestInspection(beforeChat);
-    final latestPointer = _map(_map(beforeChat.metadata['dpsk'])['latestInspection'])['nodeId'];
+    final latestPointer = _map(_map(beforeChat.metadata['dshgo'])['latestInspection'])['nodeId'];
     final storedAnchor = storedLatest?.nodeId ?? storedLatest?.contextNodeId;
     final cachedLatest = engine._latestInspections[chatId];
     final cachedAnchor = cachedLatest?.nodeId ?? cachedLatest?.contextNodeId;
@@ -1478,7 +1478,7 @@ class _ScriptMessagePlan {
             if (originalLinks.containsKey(id)) id,
         },
         capturePortableState: (node, physical) {
-          final override = _map(node.extra['dpsk'])['tavernState'];
+          final override = _map(node.extra['dshgo'])['tavernState'];
           return engine._withStateHash(beforeChat, _copy(override is Map<String, Object?> ? override : physical));
         },
       );

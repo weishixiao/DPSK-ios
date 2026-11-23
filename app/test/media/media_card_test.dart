@@ -3,22 +3,22 @@
 // the reply's same-path image left out, geometry, the metadata line, save /
 // share from the original bytes, the viewer, and goldens.
 
-import 'package:dpsk_app/ui/fx/image_gen/image_generation.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/features_state.dart' show jobsProvider;
-import 'package:dpsk_app/ui/chat/chat_rows.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/media/generate_mode.dart' show GenerateCapsule;
-import 'package:dpsk_app/ui/chat/media/media_card.dart';
-import 'package:dpsk_app/ui/chat/media/media_format.dart' show chatTitleShown;
-import 'package:dpsk_app/ui/chat/media/media_grid.dart';
-import 'package:dpsk_app/ui/chat/media/media_viewer.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_image.dart';
-import 'package:dpsk_app/ui/chat/tool_view.dart';
-import 'package:dpsk_app/ui/chat/widgets/assistant_message.dart';
-import 'package:dpsk_app/ui/chat/widgets/user_bubble.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/fx/image_gen/image_generation.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/features_state.dart' show jobsProvider;
+import 'package:dsh_app/ui/chat/chat_rows.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/media/generate_mode.dart' show GenerateCapsule;
+import 'package:dsh_app/ui/chat/media/media_card.dart';
+import 'package:dsh_app/ui/chat/media/media_format.dart' show chatTitleShown;
+import 'package:dsh_app/ui/chat/media/media_grid.dart';
+import 'package:dsh_app/ui/chat/media/media_viewer.dart';
+import 'package:dsh_app/ui/chat/render/markdown_image.dart';
+import 'package:dsh_app/ui/chat/tool_view.dart';
+import 'package:dsh_app/ui/chat/widgets/assistant_message.dart';
+import 'package:dsh_app/ui/chat/widgets/user_bubble.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -104,16 +104,16 @@ void main() {
 
     test('unreadable metas are no card', () {
       expect(MediaMeta.fromToolMeta({'other': 1}), isNull);
-      expect(MediaMeta.fromToolMeta({'DPSK/media': 'x'}), isNull);
+      expect(MediaMeta.fromToolMeta({'dsh-go/media': 'x'}), isNull);
       expect(
         MediaMeta.fromToolMeta({
-          'DPSK/media': {'v': 1, 'status': 'done', 'items': []},
+          'dsh-go/media': {'v': 1, 'status': 'done', 'items': []},
         }),
         isNull,
       );
       expect(
         MediaMeta.fromToolMeta({
-          'DPSK/media': {
+          'dsh-go/media': {
             'v': 1,
             'kind': 'image',
             'status': 'done',

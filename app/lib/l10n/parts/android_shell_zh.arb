@@ -21,7 +21,7 @@
   "androidShellPaired": "ADB 已配对",
   "androidShellConnected": "ADB 已连接",
   "androidShellAuthorize": "申请 Shizuku 授权",
-  "androidShellAuthorizeHint": "先安装并启动 Shizuku，再点此按钮允许 DPSK。打开本页或刷新不会申请授权。",
+  "androidShellAuthorizeHint": "先安装并启动 Shizuku，再点此按钮允许 dsh-Go。打开本页或刷新不会申请授权。",
   "androidShellStatus": "执行状态",
   "androidShellUid": "实际 UID",
   "androidShellUidUnknown": "尚未报告",

@@ -4,10 +4,10 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/chat/tool_view.dart';
-import 'package:dpsk_app/ui/chat/turn_summary.dart';
-import 'package:dpsk_app/ui/chat/widgets/tool_row.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/chat/tool_view.dart';
+import 'package:dsh_app/ui/chat/turn_summary.dart';
+import 'package:dsh_app/ui/chat/widgets/tool_row.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

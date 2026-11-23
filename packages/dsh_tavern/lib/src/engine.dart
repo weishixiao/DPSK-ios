@@ -25,7 +25,7 @@ import 'authoring_simulation.dart';
 import 'backup.dart';
 import 'director.dart';
 import 'director/direct_tool.dart' as director_core;
-import 'dpsk_inspection.dart';
+import 'dshgo_inspection.dart';
 import 'gameplay.dart';
 import 'gameplay_bindings.dart';
 import 'gameplay_cast.dart';
@@ -986,7 +986,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
             : _stateAt(chat.id, leaf);
         final provenance =
             state['chatJsonlSourceFile'] ??
-            (chat == null ? null : _map(_map(chat.metadata['dpsk'])['chatJsonl'])['rootFile']);
+            (chat == null ? null : _map(_map(chat.metadata['dshgo'])['chatJsonl'])['rootFile']);
         final sourceFile = provenance is String ? provenance : null;
         final selection = _personas.resolve(personaId: chat?.personaId);
         final settings = _personaSettings(_effectiveReadSettings(chat, metadata), selection);
@@ -1407,7 +1407,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
             settings['stateEnabled'] != false,
             gameplay: gameplay,
           );
-          if (gameplay != null && state['dpskPackDefinitionConfigId'] == gameplay.effectiveConfigId) {
+          if (gameplay != null && state['dshgoPackDefinitionConfigId'] == gameplay.effectiveConfigId) {
             _ensureGameplayConfig(this, gameplay);
           }
           _store.append(
@@ -1684,7 +1684,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
     final result = <TavernTreeNode>[];
     for (final node in nodes) {
       final message = node.message;
-      final own = node.extra['dpsk'];
+      final own = node.extra['dshgo'];
       final name = own is Map<String, Object?> ? own['branchName'] : null;
       result.add(
         TavernTreeNode(
@@ -1966,12 +1966,12 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
   }
 
   void _guardPresetCarrier(Map<String, Object?> previous, Map<String, Object?> next) {
-    final before = _map(_map(previous['extensions'])['dpsk']);
-    final after = _map(_map(next['extensions'])['dpsk']);
+    final before = _map(_map(previous['extensions'])['dshgo']);
+    final after = _map(_map(next['extensions'])['dshgo']);
     const key = 'presetEnvelope';
     if (before.containsKey(key) != after.containsKey(key) || !_presetJsonEquals(before[key], after[key])) {
       throw ArgumentError(
-        'extensions.dpsk.presetEnvelope is an export-owned carrier; edit the preset fields instead.',
+        'extensions.dshgo.presetEnvelope is an export-owned carrier; edit the preset fields instead.',
       );
     }
   }
@@ -2476,7 +2476,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
   _DisplayContext _displayContext(_DisplayChatView view, String? leaf) => view.contexts.putIfAbsent(leaf, () {
     final chat = view.chat;
     final node = leaf == null ? null : view.node(_store, leaf);
-    final override = node == null ? null : _map(node.extra['dpsk'])['tavernState'];
+    final override = node == null ? null : _map(node.extra['dshgo'])['tavernState'];
     final state = node == null
         ? _store.groupInitialState(chat.id)
         : override is Map<String, Object?>
@@ -2703,14 +2703,14 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
 
   TavernTurnInspection? _nodeInspection(String chatId, String nodeId) {
     final node = _inspectionNode(chatId, nodeId);
-    final json = node == null ? null : _map(node.extra['dpsk'])['inspection'];
+    final json = node == null ? null : _map(node.extra['dshgo'])['inspection'];
     if (json is! Map<String, Object?>) return null;
     final value = TavernTurnInspection.fromJson(json);
     return value.chatId == chatId && value.nodeId == nodeId ? value : null;
   }
 
   TavernTurnInspection? _storedLatestInspection(StoredChat chat) {
-    final latest = _map(_map(chat.metadata['dpsk'])['latestInspection']);
+    final latest = _map(_map(chat.metadata['dshgo'])['latestInspection']);
     final nodeId = latest['nodeId'];
     if (nodeId is String) return _nodeInspection(chat.id, nodeId);
     final json = latest['snapshot'];
@@ -2732,17 +2732,17 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
 
   Map<String, Object?> _inspectionExtra(Map<String, Object?> extra, TavernTurnInspection value) => {
     ...extra,
-    'dpsk': {..._map(extra['dpsk']), 'inspection': value.toJson()},
+    'dshgo': {..._map(extra['dshgo']), 'inspection': value.toJson()},
   };
 
   Map<String, Object?> _latestInspectionMetadata(Map<String, Object?> metadata, TavernTurnInspection? value) {
-    final own = _map(metadata['dpsk']);
+    final own = _map(metadata['dshgo']);
     if (value == null) {
       own.remove('latestInspection');
     } else {
       own['latestInspection'] = value.nodeId == null ? {'snapshot': value.toJson()} : {'nodeId': value.nodeId};
     }
-    return {...metadata, 'dpsk': own};
+    return {...metadata, 'dshgo': own};
   }
 
   void _writeLatestInspection(String chatId, TavernTurnInspection? value) {
@@ -3093,7 +3093,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
           document = _decodeObject(decodeAuthoringText(utf8.encode(exactText)).text, 'Lorebook');
           actualRaw = _authoringBook(document);
           WorldInfoBook.fromJson(id: id, source: WorldInfoSource.global, json: actualRaw);
-          final enveloped = !document.containsKey('entries') && document['format'] == 'dpsk-lorebook';
+          final enveloped = !document.containsKey('entries') && document['format'] == 'dshgo-lorebook';
           sourceName = enveloped ? document['stWorldName'] as String? : null;
           report = enveloped && document['importReport'] != null
               ? TavernImportReport.fromJson(document['importReport']! as Map<String, Object?>)
@@ -3132,7 +3132,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
             ? actualRaw
             : {
                 ...?preservedEnvelope,
-                'format': 'dpsk-lorebook',
+                'format': 'dshgo-lorebook',
                 'version': 1,
                 'stWorldName': ?sourceName,
                 if (report != null) 'importReport': report.toJson(),
@@ -3448,7 +3448,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
     Map<String, Object?> value = document;
     String? sourceName;
     TavernImportReport? report;
-    if (!document.containsKey('entries') && document['format'] == 'dpsk-lorebook') {
+    if (!document.containsKey('entries') && document['format'] == 'dshgo-lorebook') {
       if (document['version'] != 1 ||
           document['book'] is! Map<String, Object?> ||
           (document['stWorldName'] != null && document['stWorldName'] is! String)) {
@@ -3634,7 +3634,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
     () => _withMutation(chatId, () {
       _store.transaction(() {
         final extra = _copy(_store.node(chatId, nodeId).extra);
-        final own = _map(extra['dpsk']);
+        final own = _map(extra['dshgo']);
         final label = name?.trim();
         if (label == null || label.isEmpty) {
           if (!own.containsKey('branchName')) {
@@ -3647,7 +3647,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
           }
           own['branchName'] = label;
         }
-        extra['dpsk'] = own;
+        extra['dshgo'] = own;
         _store.updateMessage(chatId, nodeId, extra: extra);
       });
     }),
@@ -3769,7 +3769,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
       nodeId,
       extra: {
         ...node.extra,
-        'dpsk': {..._map(node.extra['dpsk']), 'tavernState': _copy(state)},
+        'dshgo': {..._map(node.extra['dshgo']), 'tavernState': _copy(state)},
       },
     );
   }
@@ -3807,7 +3807,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
               chatId,
               nodeId,
               capturePortableState: (child, physicalState) {
-                final override = _map(child.extra['dpsk'])['tavernState'];
+                final override = _map(child.extra['dshgo'])['tavernState'];
                 final state = _copy(override is Map<String, Object?> ? override : physicalState);
                 // Resolve the child's own old source before any edge or current
                 // metadata changes. This callback never reads a hidden node via a
@@ -3912,7 +3912,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
 
   // Only full store.node snapshots belong here, never display/prompt views.
   Map<String, Object?> _stateFromNode(String chatId, StoredNode node, {StoredChat? chat}) {
-    final own = node.extra['dpsk'];
+    final own = node.extra['dshgo'];
     final override = own is Map<String, Object?> ? own['tavernState'] : null;
     final state = override is Map<String, Object?> ? _copy(override) : _store.nodeState(chatId, node.message.nodeId);
     // Older snapshots predate the explicit cache marker. Resolve their own
@@ -3987,7 +3987,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
     final leaf = chat.currentLeafId;
     final metadata = _chatCodec.metadataForNode(_store, chatId);
     final state = leaf == null && group == null ? _emptyChatState(metadata) : _stateAt(chatId, leaf);
-    final source = state['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dpsk'])['chatJsonl'])['rootFile'];
+    final source = state['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dshgo'])['chatJsonl'])['rootFile'];
     final sourceFile = source is String ? source : null;
     if (sourceFile != null) {
       state['chatJsonlSourceFile'] = sourceFile;
@@ -4007,12 +4007,12 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
     final previousGameplay = _gameplayHistoricalConfig(this, state).config;
     final gameplay =
         gameplayOverride ??
-        (admission.hasActivePacks || state.containsKey('dpskPackDefinitionConfigId')
+        (admission.hasActivePacks || state.containsKey('dshgoPackDefinitionConfigId')
             ? await _prepareGameplayRuntime(
                 this,
                 admission,
                 hostData: host?.card.data ?? record.card.data,
-                force: state.containsKey('dpskPackDefinitionConfigId'),
+                force: state.containsKey('dshgoPackDefinitionConfigId'),
                 settings: settings,
                 capturedCards: groupView == null
                     ? null
@@ -4114,8 +4114,8 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
     );
     final initializedGameplay =
         gameplay != null &&
-        !_map(state['messageVariables']).containsKey('dpsk') &&
-        _map(nextState['messageVariables']).containsKey('dpsk');
+        !_map(state['messageVariables']).containsKey('dshgo') &&
+        _map(nextState['messageVariables']).containsKey('dshgo');
     final narratorName = metadata['narrator_name'];
     final name = narrator
         ? speaker ?? (narratorName is String && narratorName.isNotEmpty ? narratorName : 'System')
@@ -4136,7 +4136,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
         text: expanded,
         extra: {
           if (narrator) 'type': 'narrator',
-          if (gameplayIssues.isNotEmpty) 'dpsk': {'stateIssues': gameplayIssues},
+          if (gameplayIssues.isNotEmpty) 'dshgo': {'stateIssues': gameplayIssues},
         },
         state: nextState,
       );
@@ -4282,7 +4282,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
               ? _store.groupInitialState(chatId)
               : _stateFromNode(chatId, sourceNode, chat: chat);
           final sourceFile =
-              sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dpsk'])['chatJsonl'])['rootFile'];
+              sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dshgo'])['chatJsonl'])['rootFile'];
           profile?.record('admission_context', contextStarted!);
           final running = _Turn(
             chat,
@@ -4369,7 +4369,7 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
         turn.metadata = _chatCodec.metadataForNode(_store, chatId, nodeId: turn.nodeId);
         final savedSource =
             _stateAt(chatId, turn.nodeId ?? turn.chat.currentLeafId)['chatJsonlSourceFile'] ??
-            _map(_map(turn.chat.metadata['dpsk'])['chatJsonl'])['rootFile'];
+            _map(_map(turn.chat.metadata['dshgo'])['chatJsonl'])['rootFile'];
         turn.sourceFile = savedSource is String ? savedSource : null;
         beforeGlobals = _globalVariables.revision;
         turn.originalVariables = _runtimeCopy(_liveVariables[chatId]?.values ?? turn.chat.variables);
@@ -4431,14 +4431,14 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
       turn.gameplayPreviousConfig = _gameplayHistoricalConfig(this, state).config;
       final gameplayAdmission = turn.gameplayAdmission!;
       if (turn.gameplay == null &&
-          (gameplayAdmission.hasActivePacks || state.containsKey('dpskPackDefinitionConfigId'))) {
+          (gameplayAdmission.hasActivePacks || state.containsKey('dshgoPackDefinitionConfigId'))) {
         turn.gameplay = await turn.cancellation.wait(
           _trackOperation(
             _prepareGameplayRuntime(
               this,
               gameplayAdmission,
               hostData: hostData,
-              force: state.containsKey('dpskPackDefinitionConfigId'),
+              force: state.containsKey('dshgoPackDefinitionConfigId'),
               settings: turn.settings,
               capturedCards: turn.groupView == null
                   ? null
@@ -4473,10 +4473,10 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
         target = restored;
         turn.originalTarget = restored;
       });
-      final hadGameplayValue = _map(turn.state['messageVariables']).containsKey('dpsk');
+      final hadGameplayValue = _map(turn.state['messageVariables']).containsKey('dshgo');
       _prepareStateTurn(turn, hostData);
       turn.gameplayInitialized =
-          turn.gameplay != null && !hadGameplayValue && _map(turn.state['messageVariables']).containsKey('dpsk');
+          turn.gameplay != null && !hadGameplayValue && _map(turn.state['messageVariables']).containsKey('dshgo');
       final spreset = turn.spreset ??= _createNativeSPreset(turn);
       final preset = ChatPreset(
         await spreset.preparePreset(
@@ -5470,8 +5470,8 @@ class TavernEngine implements Tavern, TavernSPresetLogApi, TavernSPresetPageLife
     _store.transaction(() {
       _ensureAdoptedGameplay(this, turn, settlement.state, null, settlement);
       final extra = _store.rawNodeExtra(chat.id, nodeId);
-      final own = _map(extra['dpsk']);
-      extra['dpsk'] = {
+      final own = _map(extra['dshgo']);
+      extra['dshgo'] = {
         ...own,
         ...?settlement.ownAudit,
         'tavernState': _copy(settlement.state),
@@ -6733,7 +6733,7 @@ Iterable<int> _preparePromptHistorySteps(
   for (var index = transformed.length - 1; index >= 0; index--) {
     final node = transformed[index];
     if (environment.groupNames != null) {
-      final provenance = _map(_map(node.extra['dpsk'])['group']);
+      final provenance = _map(_map(node.extra['dshgo'])['group']);
       if (node.message.speakerCharacterId != environment.characterId ||
           provenance['model'] != environment.config.model ||
           provenance['deepseek'] != environment.config.deepseek) {
@@ -6794,7 +6794,7 @@ Map<String, Object?> _emptyChatState(Map<String, Object?> metadata) {
     'variables': _map(metadata['variables']),
     for (final key in const ['timedWorldInfo', 'decoratorState', 'greetingIndex'])
       if (metadata.containsKey(key)) key: _runtimeValue(metadata[key]),
-    if (pack.exists) 'dpskPackRuntime': pack.raw,
+    if (pack.exists) 'dshgoPackRuntime': pack.raw,
     'stChatIdHash': _finiteNumber(metadata['chat_id_hash']),
   };
 }
@@ -6812,9 +6812,9 @@ Map<String, Object?> _runtimeMetadata(Map<String, Object?> metadata, Map<String,
   }
   final pack = _gameplayWorldInfoCarrier(state);
   if (pack.exists) {
-    result['dpskPackRuntime'] = pack.raw;
+    result['dshgoPackRuntime'] = pack.raw;
   } else {
-    result.remove('dpskPackRuntime');
+    result.remove('dshgoPackRuntime');
   }
   if (state.containsKey('stChatIdHash')) {
     final hash = _finiteNumber(state['stChatIdHash']);
@@ -6835,11 +6835,11 @@ String _macroChatIdentity(
   StoredNode? node,
 }) {
   if (state['stChatId'] case final String value) return value;
-  final own = _map(_map(chat.metadata['dpsk'])['chatJsonl']);
+  final own = _map(_map(chat.metadata['dshgo'])['chatJsonl']);
   final files = own['files'] is List<Object?>
       ? (own['files']! as List<Object?>).whereType<Map<String, Object?>>()
       : const Iterable<Map<String, Object?>>.empty();
-  final nodeOwn = _map(_map(node?.extra['dpsk'])['chatJsonl']);
+  final nodeOwn = _map(_map(node?.extra['dshgo'])['chatJsonl']);
   final originalName = nodeOwn['sourceFileName'];
   Map<String, Object?>? file = files.where((item) => item['key'] == sourceFile).firstOrNull;
   file ??= files.where((item) => originalName is String && item['fileName'] == originalName).firstOrNull;
@@ -6854,7 +6854,7 @@ String _macroChatIdentity(
     final header = _map(file['header']);
     final originalMetadata = _map(header['chat_metadata']);
     if (originalMetadata['main_chat'] case final String identity) return identity;
-    final label = _map(_map(originalMetadata['dpsk'])['chatJsonl'])['sourceFileName'] ?? file['fileName'];
+    final label = _map(_map(originalMetadata['dshgo'])['chatJsonl'])['sourceFileName'] ?? file['fileName'];
     if (label is String) return _chatLabel(label);
   }
   if (metadata['main_chat'] case final String identity) return identity;

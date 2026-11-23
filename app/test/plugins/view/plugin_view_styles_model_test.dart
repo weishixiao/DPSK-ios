@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_model.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_style.dart' show DshUiPalette;
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_model.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_style.dart' show DshUiPalette;
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 DshUiView parseStyle(Object view, {Object? data, PluginViewBudget budget = PluginViewBudget.panel}) {
@@ -57,7 +57,7 @@ void expectReadable(DshUiPluginStyle style) {
 void main() {
   test('schema is the source of the app typography, colours and bounds', () {
     final schema = jsonDecode(File('../sdk/plugin-kit/schema/view.schema.json').readAsStringSync()) as Map;
-    final spec = schema['x-DPSK']['v2Styles'] as Map;
+    final spec = schema['x-dsh-go']['v2Styles'] as Map;
     expect({for (final size in DshUiTextSize.values) size.name: size.pixels}, spec['fontPixels']);
     expect(DshUiTextWeight.values.map((weight) => weight.name).toList(), spec['weights']);
     expect({

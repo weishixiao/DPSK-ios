@@ -1,5 +1,5 @@
-// Where a shared conversation goes — a `.dpsk` file, a self-contained `.html`
-// or Markdown (the Android share sheet, or Download/DPSK), plain text, or a
+// Where a shared conversation goes — a `.dshgo` file, a self-contained `.html`
+// or Markdown (the Android share sheet, or Download/DSH-Go), plain text, or a
 // hosted link (the share host's client, app/lib/share_hosted/). Seams: tests
 // record instead.
 
@@ -24,7 +24,7 @@ export '../share_hosted/manage_links_button.dart' show ManageLinksButton;
 
 /// The file forms of a shared conversation.
 enum ConversationFormat {
-  /// `.dpsk`: opens in DPSK (replay, 「接着聊」) and on the landing page.
+  /// `.dshgo`: opens in dsh-go (replay, 「接着聊」) and on the landing page.
   file,
 
   /// `.html`: opens in any browser, offline.
@@ -45,7 +45,7 @@ enum ConversationFormat {
     markdown => 'text/markdown',
   };
 
-  /// Carries the `.dpsk` file (and so its size limit).
+  /// Carries the `.dshgo` file (and so its size limit).
   bool get carriesFile => this != markdown;
 }
 
@@ -65,7 +65,7 @@ class ConversationOut {
     await SharePlus.instance.share(params);
   }
 
-  /// 「修复登录重复提交.dpsk」.
+  /// 「修复登录重复提交.dshgo」.
   static String fileName(String title, ConversationFormat format) => '${fileStem(title)}.${format.extension}';
 
   /// Writes [content] into the cache's `conversation/` (keeping the last few).
@@ -94,7 +94,7 @@ class ConversationOut {
   /// The Android share sheet with a link.
   Future<void> shareText(String text) => _share(ShareParams(text: text));
 
-  /// Into `Download/DPSK`; returns where it landed.
+  /// Into `Download/DSH-Go`; returns where it landed.
   Future<String> save(String name, String content, ConversationFormat format) async {
     final dir = await Directory('${(await _cacheRoot()).path}/conversation').create(recursive: true);
     // A dismissed sheet can reopen before the native worker reads its source.
@@ -169,7 +169,7 @@ class ConversationLinkRestoreUnsaved implements Exception {
 }
 
 abstract class ConversationLinkMaker {
-  /// [fileBytes] is the `.dpsk` file's UTF-8 text; [title] names it in
+  /// [fileBytes] is the `.dshgo` file's UTF-8 text; [title] names it in
   /// 「我的分享链接」. Throws [HostedShareException] (its `message` is for the
   /// person).
   Future<ConversationLink> upload(Uint8List fileBytes, LinkExpiry expiry, {required String title});

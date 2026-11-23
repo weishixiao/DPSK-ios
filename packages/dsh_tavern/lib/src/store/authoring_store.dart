@@ -110,7 +110,7 @@ extension AuthoringStore on ChatStore {
         at: message.at,
         hidden: message.hidden,
         extra: {
-          'dpsk': {'tavernState': saved},
+          'dshgo': {'tavernState': saved},
         },
         state: saved,
       );

@@ -225,7 +225,7 @@ extension _SlashChatEffects on _ScriptCoordinator {
     final capturedParent = insertion == 0 ? null : admission.capture.path[insertion - 1].message.nodeId;
     final forceGameplay = engine
         ._stateAt(admission.capture.chatId, capturedParent)
-        .containsKey('dpskPackDefinitionConfigId');
+        .containsKey('dshgoPackDefinitionConfigId');
     final data = await owner.storage(
       _bridgeOperation(() => _prepareDataContext(admission.capture.chatId, forceGameplay: forceGameplay)),
     );

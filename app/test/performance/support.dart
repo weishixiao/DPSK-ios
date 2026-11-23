@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/performance/performance_state.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/performance/performance_state.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 PerformanceSnapshot snapshot(DeviceTier tier, {bool hot = false, int sequence = 1}) => PerformanceSnapshot(

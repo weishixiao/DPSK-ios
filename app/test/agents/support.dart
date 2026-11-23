@@ -2,8 +2,8 @@
 // DSH 0.2.1-rc.2's `session/list` (checked against a throwaway `dsh web`
 // running a scripted model), a team, and fakes for the team panel.
 
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

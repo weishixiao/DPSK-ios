@@ -1,8 +1,8 @@
 // A text field's own 粘贴 reads through flutter/platform. On HarmonyOS that one message is
 // answered through the system's paste button; everything else, and every other OS, is untouched.
 
-import 'package:dpsk_app/clipboard/paste_button_messenger.dart';
-import 'package:dpsk_app/clipboard/paste_reader.dart';
+import 'package:dsh_app/clipboard/paste_button_messenger.dart';
+import 'package:dsh_app/clipboard/paste_reader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

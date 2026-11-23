@@ -84,7 +84,7 @@ node tooling/ohos/prepare-node-fetch.mjs \
 - 原生二进制：74,215,504字节，SHA256 `d8c84738f4e3c5c5ce68c39501a887ccf5df1412938193b5a53583b45e44e48a`。
 - `config.gypi` SHA256 `d3978dded3bf3ed9e40c66b9a6509d57edfdbb3e2c7ba85348022e22dec6a174`。
 - 从该二进制的 `process.binding('natives')['internal/deps/undici/undici']` 读回768,798字节，SHA256 **正是** `db17946f41981758f1d4328836360fe3d62818b12b73eb12a7198b39e2e61630`；不是只核磁盘上的外部 bundle。
-- 真实运行报告 Node24.22.1、Undici7.30.1、V8 lite=1、`typeof WebAssembly === 'undefined'`；`DPSK_UNDICI_BUNDLE`、`NODE_OPTIONS`、`NODE_PATH` 均未设置。
+- 真实运行报告 Node24.22.1、Undici7.30.1、V8 lite=1、`typeof WebAssembly === 'undefined'`；`DSH_GO_UNDICI_BUNDLE`、`NODE_OPTIONS`、`NODE_PATH` 均未设置。
 
 第一次扩展矩阵使用裸 Linux 默认 Fetch，24个取消测试通过，但8个 FormData HTTP 测试失败；第二次仅加载网络 preload 仍相同。最小本地 GET 因果探针实得 `TypeError: fetch failed`，cause 是 `ReferenceError: WebAssembly is not defined`。源码表明 `installFetch()` 只在真实 `process.platform === 'openharmony'` 或显式测试 marker 下激活，Linux 单独 import 网络 preload 不生效。这两轮失败全部保留，不删除或淡化。
 

@@ -238,7 +238,7 @@ class SPresetLogBuffer {
   }) => {
     'schemaVersion': 1,
     'exportedAt': at.toUtc().toIso8601String(),
-    'client': {'name': 'SPreset', 'version': 'dpsk-native-1', 'presetName': presetName},
+    'client': {'name': 'SPreset', 'version': 'dshgo-native-1', 'presetName': presetName},
     'tavernHelper': redactSPresetLogValue(
       tavernHelper ?? const {'available': false, 'reason': 'App snapshot not supplied'},
     ),

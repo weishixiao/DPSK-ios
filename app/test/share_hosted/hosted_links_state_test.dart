@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/share_hosted/hosted_client.dart';
-import 'package:dpsk_app/share_hosted/hosted_crypto.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/share_hosted/hosted_client.dart';
+import 'package:dsh_app/share_hosted/hosted_crypto.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -38,7 +38,7 @@ HostedLink link(String id, {DateTime? expires, bool deleting = false, String? to
 );
 
 void main() {
-  final file = Uint8List.fromList(utf8.encode('{"dpsk":2,"kind":"conversation"}'));
+  final file = Uint8List.fromList(utf8.encode('{"dshgo":2,"kind":"conversation"}'));
 
   (ProviderContainer, FakeHost, MemoryStore) setUpContainer([List<HostedLink> saved = const []]) {
     final host = FakeHost();

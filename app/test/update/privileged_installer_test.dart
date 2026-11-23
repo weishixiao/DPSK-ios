@@ -1,4 +1,4 @@
-import 'package:dpsk_app/update/privileged_installer.dart';
+import 'package:dsh_app/update/privileged_installer.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

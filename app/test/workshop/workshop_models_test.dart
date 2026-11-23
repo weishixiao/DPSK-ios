@@ -1,5 +1,5 @@
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_repository.dart' show WorkshopPublication;
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_repository.dart' show WorkshopPublication;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';

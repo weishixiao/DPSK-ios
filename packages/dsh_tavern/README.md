@@ -61,7 +61,7 @@ sourceText 是不可编辑的导入原文，保留 BOM、空白和换行；raw �
 
 识别的增强格式为 [dsh-preset-enhance](https://github.com/bychv/dsh-preset-enhance/blob/a7717ddc76f3985cf6a71ac6ee463911886b15a5/PRESET_FORMAT.md) v1（MIT）。只按确切format识别；该格式的未知主版本拒绝，不悄悄当ST。其他原生ST未知format/version/preset字段仍保留。外层metadata、preset包装、prefill、tools和extensions均保留；保存不代表执行工具、DSML、动态模板或附件。
 
-ST原生导出在extensions.dpsk.presetEnvelope存去掉preset.data的外壳，从当前raw重建data，避免多次往返递归增长。当前独立envelope是外壳权威；其旧prefill开关不在重导入时覆盖已经编辑的dpsk配置。presetEnvelope是导出保留载体，updatePreset及从已有外壳派生的旧map桥接拒绝改变它；结构相同的完整raw回写允许。旧setPreset完整替换且无独立外壳时仍能原样导出旧未知值。
+ST原生导出在extensions.dshgo.presetEnvelope存去掉preset.data的外壳，从当前raw重建data，避免多次往返递归增长。当前独立envelope是外壳权威；其旧prefill开关不在重导入时覆盖已经编辑的dshgo配置。presetEnvelope是导出保留载体，updatePreset及从已有外壳派生的旧map桥接拒绝改变它；结构相同的完整raw回写允许。旧setPreset完整替换且无独立外壳时仍能原样导出旧未知值。
 
 导出不重新套新导入正规化，旧宽容helper接受的role/正文等值不会在出口静默改变。修改库名称会同步现有分享包metadata.name；原生ST名称由调用方导出文件名承载。连接字段也保留，但实际endpoint/model/key只由configure控制。
 
@@ -83,7 +83,7 @@ JSON解码和版本校验保持在读取异常分支之外；有效文档的未�
 
 ## 预填充通道与边界
 
-增强设置为extensions.dpsk.prefill的enabled和target。只有enabled为true才解释额外assistant_prefill，或采用明确的末尾预设assistant片段；enabled仅控制增强路径，ST原生正文前缀继续按既有规则。所有来源缺target默认content，以题面为准；增强参考实现自身的隐式reasoning默认不搬入。明确reasoning且当前回合开思考时，新前缀进入最后assistant的reasoning_content，content为空，prefix=true；关闭思考则原文留在content。
+增强设置为extensions.dshgo.prefill的enabled和target。只有enabled为true才解释额外assistant_prefill，或采用明确的末尾预设assistant片段；enabled仅控制增强路径，ST原生正文前缀继续按既有规则。所有来源缺target默认content，以题面为准；增强参考实现自身的隐式reasoning默认不搬入。明确reasoning且当前回合开思考时，新前缀进入最后assistant的reasoning_content，content为空，prefix=true；关闭思考则原文留在content。
 
 正文模式保留原文字节；思维模式只对选中的新片段处理参考实现的leading think/thinking包装，不扫描历史。新思维片段与历史assistant/CCV3正文前缀保持独立边界，不把合并后的历史整条搬进思维。API形状依DeepSeek官方 [Chat Completion](https://api-docs.deepseek.com/api/create-chat-completion/) 与 [前缀续写](https://api-docs.deepseek.com/guides/chat_prefix_completion/)，具体服务端兼容性未以真实付费模型调用测试。
 
@@ -305,7 +305,7 @@ T22 报告保持原件和检查时间；真实卡指纹改变后读取为 stale�
 
 单行 swipes 展开后，各节点的 original 仍保留原 swipes 数组，完整节点读取继续逐份解码。因此这部分载体可随兄弟数二次增长；本次只减少重复兄弟计数，不承诺完整 tree/JSONL 导出端到端线性，也不改变原件字段、存储格式或无损往返合同。
 
-分支名存于 `extra.dpsk.branchName`，仅合并这个字段。命名先取消并等待该聊天的活动回合，再读取最新 extra，因此不覆盖取消收尾写入的检视、使用量或状态。同名/清理本已缺失的字段不写；实际改名推进树版本，旧撤销 token 仍可恢复分支可见性，但不覆盖之后的选择。
+分支名存于 `extra.dshgo.branchName`，仅合并这个字段。命名先取消并等待该聊天的活动回合，再读取最新 extra，因此不覆盖取消收尾写入的检视、使用量或状态。同名/清理本已缺失的字段不写；实际改名推进树版本，旧撤销 token 仍可恢复分支可见性，但不覆盖之后的选择。
 
 | 操作 | 被移除的内容 | 选择和状态 | 撤销 |
 | --- | --- | --- | --- |
@@ -334,7 +334,7 @@ T22 报告保持原件和检查时间；真实卡指纹改变后读取为 stale�
 
 ## f. 外观与本地资源
 
-theme 是 `extensions.dpsk.theme` 的 JSON 深复制，对象、数组和标量都原样提供，缺失或 null 仍为 null，不解释颜色/字体、不增加默认值、不暴露其他 extensions。assets 保留对象成员的声明顺序，type/name/uri/ext 是字符串才投影；其余原值仍在完整卡 JSON 中。
+theme 是 `extensions.dshgo.theme` 的 JSON 深复制，对象、数组和标量都原样提供，缺失或 null 仍为 null，不解释颜色/字体、不增加默认值、不暴露其他 extensions。assets 保留对象成员的声明顺序，type/name/uri/ext 是字符串才投影；其余原值仍在完整卡 JSON 中。
 
 已物化的 `embeded://`、`embedded://`、`__asset:` 与 CHARX 安全相对引用给出当前角色目录中的 resources 路径；`ccdefault:` 在保有原 PNG 时指向 source.png，不拿 portrait.png 代替原始动画/容器。远程 URL 保持原 uri，localPath=null；不下载，不把 arbitrary file URI 当本地资源，不做 URI 百分号解码。路径只在记录运行时保存，不写入卡、metadata、摘要索引或报告；整库移动、T24 恢复到新根后，重读详情按新根生成路径。
 
@@ -360,13 +360,13 @@ ST 对照固定为 `7e8663cd9c184a550b37238218bdd32c6efc68e9`（AGPL-3.0）：[s
 
 DTO 的 JSON 在构造和读取两侧复制，调用者修改返回容器不会修改保存状态。schema 保留 `description`、`title`、`x-dsh-show` 等原字段，由 App 决定画法；本层增加布尔 `x-dsh-pin`，也接受 state 级 `pin` JSON Pointer 数组。`hiddenPaths` 表示主模型不可直接看见的路径，App 仍拿到原值，可以按产品需要显示或折叠。
 
-DSH 值保存在节点 effective state 的 `messageVariables.dpsk`。MVU 的 `stat_data` 及其他 messageVariables 邻项原样保留，ST 局部变量仍是独立的 `variables`。切回答、切分支、单删重挂、JSONL 的各个 swipe 都沿用 T16 的有效节点快照规则。状态运行账本另存 `dpskStateRuntime`；它不占用用户字段的 `dpsk` 对象，也不混入全局变量。
+DSH 值保存在节点 effective state 的 `messageVariables.dshgo`。MVU 的 `stat_data` 及其他 messageVariables 邻项原样保留，ST 局部变量仍是独立的 `variables`。切回答、切分支、单删重挂、JSONL 的各个 swipe 都沿用 T16 的有效节点快照规则。状态运行账本另存 `dshgoStateRuntime`；它不占用用户字段的 `dshgo` 对象，也不混入全局变量。
 
 没有显式 schema 的卡使用 legacy 面板，显示末节点已保存的 ST 局部变量；空选中路径为空。手改不展开宏、不访问 globalVariables，根指针只允许对象；已有非对象局部变量可用根对象显式修复。显式存在但无效的 schema 仍是 DSH 模式，带诊断，不能悄悄退回 ST 变量编辑。
 
 ## schema、初始化与只读边界
 
-版本键是 `extensions.dpsk.v`，缺省为 1。定义位于 `extensions.dpsk.state`，包含 `schema`、可选 `init`、`rules`、`summary`、`depth`、`role`、`pin`。本层本地 schema 子集支持七种 JSON 类型及 type 联合、properties、同质 items、required、布尔 additionalProperties、有限数值上下界与数值 exclusive 上下界、enum、default、title/description、数组长度及 Unicode code point 字符串长度。`x-dsh-step`、`x-dsh-by`、`x-dsh-hidden`、`x-dsh-show`、`x-dsh-pin`、`x-dsh-derive` 按本节执行；这不声称实现完整 JSON Schema 标准。
+版本键是 `extensions.dshgo.v`，缺省为 1。定义位于 `extensions.dshgo.state`，包含 `schema`、可选 `init`、`rules`、`summary`、`depth`、`role`、`pin`。本层本地 schema 子集支持七种 JSON 类型及 type 联合、properties、同质 items、required、布尔 additionalProperties、有限数值上下界与数值 exclusive 上下界、enum、default、title/description、数组长度及 Unicode code point 字符串长度。`x-dsh-step`、`x-dsh-by`、`x-dsh-hidden`、`x-dsh-show`、`x-dsh-pin`、`x-dsh-derive` 按本节执行；这不声称实现完整 JSON Schema 标准。
 
 不支持的已知约束使对应子树不可写，父对象替换或数组移位不能绕过；其他独立子树仍可操作。未知厂商注释保留原件并给 unknown 诊断。导入体检只编译定义，映射每项问题和数量，不运行初值、表达式、规则或模型；旧卡没有 schema 时不增加状态报告项。导入本身不初始化节点状态。
 
@@ -390,7 +390,7 @@ Pointer 只解码一次 `~0` 和 `~1`，不做 URL 解码；对象中的 `01` �
 
 `x-dsh-by` 在祖先与子节点之间取交集，默认 model/rules/user；空数组拒绝全部。hidden 对 model 形成额外拒绝，派生字段只由计算器写入。范围和 `x-dsh-step` 对显式新数值截断并记录 clamps；整数使用合法整数边界，number 的 exclusive 边界没有虚构的 epsilon。移动和数组移位保留既有负载，不通过改数字来“修好”结构操作。step 按固定路径的调用起点计算，跨多个工具调用和后续规则不重置；先删再建、父替换、移动都不能重置额度。下一次 continue 或用户编辑是新 invocation，才重新取基线。
 
-每次成功 invocation 的 own audit 写到当前节点 `extra.dpsk` 的 `stateInvocation/stateChanges/stateEffects/stateIssues`。changes 是基线到最终值的合并差分，包含 path、oldExists/old、newExists/new、actor、why；数值 1 与 1.0 相等，不伪造 `+0`。被后续操作覆盖的中间值保留在收据，不伪装成最后的增量。新节点不继承父节点的“本回合变化”；无效手改、取消或失败不擦掉原节点上一次成功 audit。user 的默认原因是“你改的”。
+每次成功 invocation 的 own audit 写到当前节点 `extra.dshgo` 的 `stateInvocation/stateChanges/stateEffects/stateIssues`。changes 是基线到最终值的合并差分，包含 path、oldExists/old、newExists/new、actor、why；数值 1 与 1.0 相等，不伪造 `+0`。被后续操作覆盖的中间值保留在收据，不伪装成最后的增量。新节点不继承父节点的“本回合变化”；无效手改、取消或失败不擦掉原节点上一次成功 audit。user 的默认原因是“你改的”。
 
 例如 `affection` 初值 0、step=5 时，模型提交以下操作会得到 5，并留下截断依据；下一条同次调用再加 5 也不能绕过同一上限：
 
@@ -426,7 +426,7 @@ Pointer 只解码一次 `~0` 和 `~1`，不做 URL 解码；对象中的 `01` �
 
 state 动作的 value 仍是字面 JSON，不把任意对象暗中当表达式。每条 once 只要至少一个操作被接受（含合法 no-op）或一个效果被接受，就记为消耗；全部拒绝不消耗。显式 id 的身份为 `id:<id>`，修改定义但保留 id 不重置 once；重复显式 id 的规则拒绝。无 id 规则按规范化自身内容及同内容序号识别，不使用整份定义 hash 导致无关编辑重跑。条件 false、已消耗、条件错误和执行结果都有有界 rule 收据。
 
-`dpskStateRuntime` 的 version=1，firedRules/pendingPrompts 缺失按空处理，未知字段保留；显式 null、错误字段类型、未来版本或重复 pending ID 使整个 session 只读。不会把坏账本清空后重新执行 once。effect 使用独立的 effectId/invocationId，保留 unlock 原来的业务 id；接受并保存效果不等于 App/T18 已显示、消费或执行外部动作。
+`dshgoStateRuntime` 的 version=1，firedRules/pendingPrompts 缺失按空处理，未知字段保留；显式 null、错误字段类型、未来版本或重复 pending ID 使整个 session 只读。不会把坏账本清空后重新执行 once。effect 使用独立的 effectId/invocationId，保留 unlock 原来的业务 id；接受并保存效果不等于 App/T18 已显示、消费或执行外部动作。
 
 pending 只消费本次最终请求实际包含、并且 stop/tool_calls 成功提交的旧集合。预算排除、增强关闭、impersonate、length/content_filter/null、取消、网络或 SQL 失败都保留它们；本次规则新产生的 prompt 留给下一次。导入的原始 ledger id 与组装器 source id 显式映射，新来源使用专用命名空间，避免把 `2_floating_prompt` 等合法原 ID 误当原生 ST 扩展。
 
@@ -495,7 +495,7 @@ await tavern.setSettings({
 }, chatId: chatId);
 ```
 
-开关应命名为“自动导演”：只有布尔 true 打开自动调用，缺省关闭；卡不能自行打开收费开关。全局与聊天覆盖按现有设置合并规则处理。关闭自动仍保留上次成功结果供下一回合使用，也保留显式手动入口。`every` 接受 1..1000 的整数；用户未提供时可读卡内 `extensions.dpsk.director.every`，两处均缺失则为 1。显式 null、字符串、零或其他非法值采用 1 并记录诊断，不用宽松数值转换猜测用户的收费频率。
+开关应命名为“自动导演”：只有布尔 true 打开自动调用，缺省关闭；卡不能自行打开收费开关。全局与聊天覆盖按现有设置合并规则处理。关闭自动仍保留上次成功结果供下一回合使用，也保留显式手动入口。`every` 接受 1..1000 的整数；用户未提供时可读卡内 `extensions.dshgo.director.every`，两处均缺失则为 1。显式 null、字符串、零或其他非法值采用 1 并记录诊断，不用宽松数值转换猜测用户的收费频率。
 
 仅成功提交且 `finish_reason` 明确为 `stop` 或 `tool_calls` 的 send、regenerate、continue 计入自动轮次。同一节点的两次 continue 是两个 invocation，不能用节点数量代替。impersonate、只发不回、旁白、失败、取消、length、content_filter 和缺失终态均不计入。计数以 `director.tick` 持久化，重开继续；只在当前自动设置开启时递增，手动不改计数。坏/未来计数行使自动触发暂不可用并给诊断，不清零后重新收费。
 
@@ -505,7 +505,7 @@ await tavern.setSettings({
 
 ## helper 的输入、传输与输出
 
-helper 输入为必要角色文字与 `extensions.dpsk.story/state/director`、当前人设、来源路径最新 12 个可见正文节点、至多 20 条已有合格摘要、源节点已保存的状态（含隐藏值/定义及旧卡局部变量）、上一份已发布笔记，以及实际已绑定世界书/记忆的标题目录。摘要的起止节点都必须位于该来源的有序祖先路径；本层不生成摘要，也不保证人工摘要在正文修改后语义上仍准确。
+helper 输入为必要角色文字与 `extensions.dshgo.story/state/director`、当前人设、来源路径最新 12 个可见正文节点、至多 20 条已有合格摘要、源节点已保存的状态（含隐藏值/定义及旧卡局部变量）、上一份已发布笔记，以及实际已绑定世界书/记忆的标题目录。摘要的起止节点都必须位于该来源的有序祖先路径；本层不生成摘要，也不保证人工摘要在正文修改后语义上仍准确。
 
 来源、设置、人设和配置在接纳时捕获；角色/世界书文件读取后使用副本。队列到头时读取上一份成功 notes，因此前一个 job 刚发布的笔记可以进入下一 job。helper 不复制历史 reasoning/tool_calls，不运行 ST 宏、规则或 derive，不把全局变量当成隐藏状态。目录最多 512 项，摘要截断有诊断；整个编码后的 helper 输入超过 1 MiB 即明确失败，不默默删掉隐藏真相以凑预算。历史指纹的计算与本地 JSON 组装仍在引擎所在 isolate，未声称手机耗时或进程总内存恒定。
 
@@ -549,7 +549,7 @@ beat 以 depth=1、system、`expandMacros:false` 的独立来源片段进入原�
 
 本层只读现有 `memories` 表，没有新增完整记忆 CRUD 或自动记忆生成器。`entry_json` 按原生 ST entry 解释；仅在原生字段缺失时，`keywords` 补 key、`pinned` 补 constant。`expiresAt` 缺失/null 表示不过期，整数 Unix 毫秒在等于或早于捕获时刻时到期；其他形状明确诊断并排除。坏 JSON、包含非有限数字的原件保留不改；解析成功与否用独立标志，不占用原件未知字段。
 
-有合格导演结果时，把该聊天全部有效、未过期记忆组成一次性的伪世界书，再与已绑定书按标准 WI 竞争；只有被授权的预取引用进入 external。伪书 id/stWorldName/world 为 `dpsk:memory:<chatId>`，uid 强制为原 row.id；原条目不能改写其身份。内部记忆用实际 book 对象身份识别，不把普通已绑定的 memory 来源书误认为内部表行，命名碰撞有诊断。临时书不进文件缓存，下一回合重新读取。
+有合格导演结果时，把该聊天全部有效、未过期记忆组成一次性的伪世界书，再与已绑定书按标准 WI 竞争；只有被授权的预取引用进入 external。伪书 id/stWorldName/world 为 `dshgo:memory:<chatId>`，uid 强制为原 row.id；原条目不能改写其身份。内部记忆用实际 book 对象身份识别，不把普通已绑定的 memory 来源书误认为内部表行，命名碰撞有诊断。临时书不进文件缓存，下一回合重新读取。
 
 记忆沿标准 WI 展开宏；导演只读标题时不展开宏。因此它不是 literal 记忆系统，literal 合同适用于生成的 notes/beat/suggestions。现有 memories 行属于聊天而没有节点锚，本层不宣称记忆随分支隔离。没有合格导演结果时不额外加载这些记忆，不改变默认关闭的旧回合。
 
@@ -577,7 +577,7 @@ T18 后续仍待做：剧本 outline/acts/tension 的章节、秘密/结局规�
 
 ## 卡声明与资源边界
 
-声明位于 `data.extensions.dpsk.story`，外层 `dpsk.v` 缺失按 1，当前支持版本 1。例如以下是 `data.extensions.dpsk` 的内容；条件中的变量需要卡另行声明的 T17 DSH schema/值：
+声明位于 `data.extensions.dshgo.story`，外层 `dshgo.v` 缺失按 1，当前支持版本 1。例如以下是 `data.extensions.dshgo` 的内容；条件中的变量需要卡另行声明的 T17 DSH schema/值：
 
 ```json
 {
@@ -636,7 +636,7 @@ final Map<String, Object?>? story = (await tavern.readDirector(chatId)).story;
 
 ## 分支保存、版本与审计
 
-运行时是有效节点快照中的 `dpskStoryRuntime`，沿既有 `extra.dpsk.tavernState` portable 载体保存、继承和导出；不借全 chat 的 director.tick 代替分支进度。regenerate 从目标父状态开始，continue 从目标自身开始，切支／重开读取该节点自己的账本。JSONL 保留节点载体，数据库 agent_runs 历史仍由整库备份保存，不混进 ST 正文。
+运行时是有效节点快照中的 `dshgoStoryRuntime`，沿既有 `extra.dshgo.tavernState` portable 载体保存、继承和导出；不借全 chat 的 director.tick 代替分支进度。regenerate 从目标父状态开始，continue 从目标自身开始，切支／重开读取该节点自己的账本。JSONL 保留节点载体，数据库 agent_runs 历史仍由整库备份保存，不混进 ST 正文。
 
 账本记录 version=1、definitionFingerprint、当前章、计数、completed、unlockedEndings 和 lastInvocationId。坏形状、未来版本、重复／未知结局或定义指纹不相容时，保留原值并拒绝结算，不清空 ledger 重新解锁。指纹包括未知注释；编辑剧本后没有自动迁移／重置旧进度。
 
@@ -656,7 +656,7 @@ helper 在既有输入中额外取得捕获源的 `storyProgress`，outline、�
 
 ## 卡声明：名称匹配与固定字面动作
 
-声明在 `data.extensions.dpsk.director.eventRules`，外层 `dpsk.v` 和 registry 的 `v` 均为 1。以下是 `data.extensions.dpsk` 的一个完整片段，配合原 T17 state 定义使用：
+声明在 `data.extensions.dshgo.director.eventRules`，外层 `dshgo.v` 和 registry 的 `v` 均为 1。以下是 `data.extensions.dshgo` 的一个完整片段，配合原 T17 state 定义使用：
 
 ```json
 {
@@ -747,7 +747,7 @@ do 沿用 state、prompt、notice、event、unlock 闭集。state 以原 rules a
 
 ## 分支账本、历史 once 与独立提示队列
 
-运行时是 portable 节点快照顶层的 `dpskDirectorEventRuntime`，含 version=1、consumed 的 `{eventId,handlerId}` 结构化对、firedHandlers 及 pendingPrompts。未知键与历史条目保留。坏形状、未来版本或重复身份只读并诊断，不自动清空。去重按事件/处理器二元组，once 按稳定 handler id；修改 handler 内容或 registry 指纹不会清除历史 once，表达新语义应使用新 id。
+运行时是 portable 节点快照顶层的 `dshgoDirectorEventRuntime`，含 version=1、consumed 的 `{eventId,handlerId}` 结构化对、firedHandlers 及 pendingPrompts。未知键与历史条目保留。坏形状、未来版本或重复身份只读并诊断，不自动清空。去重按事件/处理器二元组，once 按稳定 handler id；修改 handler 内容或 registry 指纹不会清除历史 once，表达新语义应使用新 id。
 
 后代继承已消费 pair 后不会重做；从未消费父节点走兄弟分支可以独立执行。continue 从目标自身继承，再生成从父路径开始。JSONL 保留 portable 账本，但没有原 agent_runs 提案就不能凭 ledger 或旧输出补造执行；整库备份保存数据库历史与账本。原 director.event 永远保持原始 pending proposal，不能用全局 executed 让另一个分支丢掉自己的机会。
 
@@ -857,7 +857,7 @@ await tavern.setSettings({
 
 ## 声明与固定权限
 
-以下是 `data.extensions.dpsk` 的最小完整例子：
+以下是 `data.extensions.dshgo` 的最小完整例子：
 
 ```json
 {
@@ -928,7 +928,7 @@ await tavern.setSettings({
 
 `TavernTurnInspection.state.secrets` 区分 offered、included、attempted：第一项保留本次提供的字面片段和身份；第二项只含最终请求来源实际保留的片段；第三项表示客户端尝试调用 provider，既不证明服务端收到，也不自动标记角色 knownBy。预算排除只有 offered；进程在终态持久化前崩溃可能没有完整尝试日志。绑定提案、失败与独立 bind 回执通过已有 `readAgentRuns` 读取，不增加 Tavern 公共方法或数据库 schema。
 
-账本保存在节点 `dpskSecretRuntime`，原始未知字段保留。JSONL 可携带该账本和私密值，但没有 agent_runs 的同 chat 证明时只能继续保护，不能自动 release；完整备份同时保存数据库证明，恢复后仍逐项核验。read/watch/export 不初始化、绑定或推进所谓知情进度。
+账本保存在节点 `dshgoSecretRuntime`，原始未知字段保留。JSONL 可携带该账本和私密值，但没有 agent_runs 的同 chat 证明时只能继续保护，不能自动 release；完整备份同时保存数据库证明，恢复后仍逐项核验。read/watch/export 不初始化、绑定或推进所谓知情进度。
 
 ## 本切片的边界
 
@@ -1070,7 +1070,7 @@ final oneSpeaker = tavern.sendGroup(groupId, '', speakerCharacterId: bobId);
 
 ## 持久化和 App 接合
 
-SQLite 注册迁移升至 7：group_chats、group_members、nodes.speaker_character_id；主持仍是 chats.character_id。旧单聊不变群，旧节点未知 ID 保持 null，新开场和生成填写已知 ID。聊天列表/角色统计同时识别主持和成员且每 chat 去重；消息/path/tree/search/流/终态及复制均透传 ID。JSONL 使用 `extra.dpsk.chatJsonl.speakerCharacterId` 保留每个 swipe 身份；本地 UUID 不能冒充 ST original_avatar。完整备份包含群表、初始状态和消息 ID；不宣称目前只有 JSONL 的接口能够完整互导 ST groups 定义，不能按同名自动映射跨库成员。
+SQLite 注册迁移升至 7：group_chats、group_members、nodes.speaker_character_id；主持仍是 chats.character_id。旧单聊不变群，旧节点未知 ID 保持 null，新开场和生成填写已知 ID。聊天列表/角色统计同时识别主持和成员且每 chat 去重；消息/path/tree/search/流/终态及复制均透传 ID。JSONL 使用 `extra.dshgo.chatJsonl.speakerCharacterId` 保留每个 swipe 身份；本地 UUID 不能冒充 ST original_avatar。完整备份包含群表、初始状态和消息 ID；不宣称目前只有 JSONL 的接口能够完整互导 ST groups 定义，不能按同名自动映射跨库成员。
 
 App 的 `DeferredTavern` 要转发所有新群方法，Preview 由 owner 按完整群事件序列模拟。本层没有读取或修改 App。`TavernChatSummary` 增加 kind 与不可变 memberCharacterIds；为复制列表，构造器不再 const，既有 `const TavernChatSummary(...)` 调用应移除 const。其 characterId 在群里表示主持，消息演员应读 nullable speakerCharacterId。新 DTO 字段均有单聊默认值；不把主持头像当成每条消息的发言人。
 
@@ -1111,7 +1111,7 @@ context 是当前 engine epoch 下的运行身份；`instanceId` 不是持久 sc
 
 ## 原始消息与 family 修改
 
-`setChatMessages`、`createChatMessages`、`deleteChatMessages`、`rotateChatMessages`、`selectSwipe` 都在完整预检后提交一笔 SQL；失败不留半批。raw setter 不运行宏或正则，默认不发送模型请求。extra 是用户投影，内部 `extra.dpsk` 保留且不可直接覆盖。显式 hidden 写同步已有历史 system 标记；raw `role=system` 是 comment/system，hidden=false 仍不进入模型；原 narrator 若只回写相同投影，不被改成 comment。
+`setChatMessages`、`createChatMessages`、`deleteChatMessages`、`rotateChatMessages`、`selectSwipe` 都在完整预检后提交一笔 SQL；失败不留半批。raw setter 不运行宏或正则，默认不发送模型请求。extra 是用户投影，内部 `extra.dshgo` 保留且不可直接覆盖。显式 hidden 写同步已有历史 system 标记；raw `role=system` 是 comment/system，hidden=false 仍不进入模型；原 narrator 若只回写相同投影，不被改成 comment。
 
 读消息同时给 `hasData/rawData/dataIssue`：缺少 messageVariables 的 data 投影为 `{}`；历史 null/数组/其他非对象原样保留，data 为 null 并报告形状。`getVariables` 对后者报 shapeMismatch；明确整对象替换可以按统一状态通道修复，不能默默把坏形状当成空值。
 
@@ -1143,7 +1143,7 @@ version 按具体持久目标独立计数，包含 engine epoch。settings/card 
 
 ## 同一个 message data / DSH 通道
 
-变量 message scope、set/data、swipesData 和 create/data 共用状态准备与提交。普通 sibling（例如 stat_data）整对象替换不另解析 MVU；dpsk 没变就不执行 rules、不中断原 runtime/秘密/事件/故事账本。已有 schema 且 dpsk 改变时走 user/source=script 的真实 StateSession，新 invocation 进行校验、clamp/derive/rules 后返回 actual、收据、问题和审计。省略已存在的 dpsk 按 remove_root 校验，拒绝时整笔/整批都不提交；不会先保存普通 sibling。无 schema 的 dpsk 仍是普通 JSON。
+变量 message scope、set/data、swipesData 和 create/data 共用状态准备与提交。普通 sibling（例如 stat_data）整对象替换不另解析 MVU；dshgo 没变就不执行 rules、不中断原 runtime/秘密/事件/故事账本。已有 schema 且 dshgo 改变时走 user/source=script 的真实 StateSession，新 invocation 进行校验、clamp/derive/rules 后返回 actual、收据、问题和审计。省略已存在的 dshgo 按 remove_root 校验，拒绝时整笔/整批都不提交；不会先保存普通 sibling。无 schema 的 dshgo 仍是普通 JSON。
 
 写历史页时先保全直接 physical children 的旧 checkpoint（含 retained deleted children），再写目标 state 和 portable/audit；不能用新父状态污染未修改子页。所有 DSH 文件准备在 chat gate 外，最终同步检查主持定义修订；SQL 内不等待角色文件队列。
 

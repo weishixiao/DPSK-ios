@@ -1,12 +1,12 @@
-/// A plugin entry's complete configuration through the DPSK bridge
+/// A plugin entry's complete configuration through the dsh-go bridge
 /// (PLUGIN-CONFIG-CONTRACT R1 §4, docs/design/plugin-config.md):
 ///
-/// * `GET  /DPSK/v1/plugin-config`: the profile's entries, each with
+/// * `GET  /dsh-go/v1/plugin-config`: the profile's entries, each with
 ///   whether its complete Config can be edited (and why not);
-/// * `GET  /DPSK/v1/plugin-config/<entryId>`: one entry's schemastery
+/// * `GET  /dsh-go/v1/plugin-config/<entryId>`: one entry's schemastery
 ///   schema (`{uid, refs}`, live nodes keep `meta.volatile`), its redacted
 ///   layers, secret facts and an opaque revision;
-/// * `POST /DPSK/v1/plugin-config/<entryId>`: `{revision, ops}` with the
+/// * `POST /dsh-go/v1/plugin-config/<entryId>`: `{revision, ops}` with the
 ///   `set` / `unset` path edits of `settings/mutate`, ordinary fields
 ///   included; answered once the Host reconciled, with the new entry.
 ///
@@ -28,12 +28,12 @@ import 'json.dart';
 import 'plugins_api.dart';
 import 'session_api.dart';
 
-const dshGoPluginConfigPath = '/DPSK/v1/plugin-config';
+const dshGoPluginConfigPath = '/dsh-go/v1/plugin-config';
 
 /// One entry's route: the profile id, percent-encoded as one segment.
 String dshGoPluginConfigEntryPath(String entryId) => '$dshGoPluginConfigPath/${Uri.encodeComponent(entryId)}';
 
-/// One entry of `GET /DPSK/v1/plugin-config`.
+/// One entry of `GET /dsh-go/v1/plugin-config`.
 ///
 /// Bridge R7 (runtime r14) also says who carries the entry and whether a
 /// write would be taken ([owner], [bundle], [kind], [source], [writable]),
@@ -146,7 +146,7 @@ class PluginConfigSecretFact {
   final bool writable;
 }
 
-/// `GET /DPSK/v1/plugin-config/<entryId>` (and a successful write's answer).
+/// `GET /dsh-go/v1/plugin-config/<entryId>` (and a successful write's answer).
 class PluginConfigEntryDetail {
   const PluginConfigEntryDetail({
     required this.entryId,
@@ -205,7 +205,7 @@ class PluginConfigEntryDetail {
 extension PluginConfigBridgeApi on DshClient {
   DshConnection get _bridge => (carrier as DshHttpCarrier).connection;
 
-  /// `GET /DPSK/v1/plugin-config`. Null when the Host has no such routes
+  /// `GET /dsh-go/v1/plugin-config`. Null when the Host has no such routes
   /// (404: no bridge, or an older one) or this carrier cannot reach the
   /// bridge (the relay). Throws [DshRemoteException] `plugin-config/<code>`.
   Future<List<PluginConfigEntrySummary>?> listPluginConfig({Duration timeout = const Duration(seconds: 10)}) async {
@@ -219,7 +219,7 @@ extension PluginConfigBridgeApi on DshClient {
     return [for (final e in list) ?PluginConfigEntrySummary.fromJson(e)];
   }
 
-  /// `GET /DPSK/v1/plugin-config/<entryId>`.
+  /// `GET /dsh-go/v1/plugin-config/<entryId>`.
   Future<PluginConfigEntryDetail> readPluginConfig(
     String entryId, {
     Duration timeout = const Duration(seconds: 10),
@@ -229,7 +229,7 @@ extension PluginConfigBridgeApi on DshClient {
     return _detail(path, response);
   }
 
-  /// `POST /DPSK/v1/plugin-config/<entryId>` with [revision] as read.
+  /// `POST /dsh-go/v1/plugin-config/<entryId>` with [revision] as read.
   /// Answers once the Host has reconciled; a timeout leaves the outcome
   /// unknown (read the entry again before writing again).
   Future<PluginConfigEntryDetail> writePluginConfig(

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/companion/companion_initiative.dart';
-import 'package:dpsk_app/companion/companion_initiative_owner.dart';
-import 'package:dpsk_app/companion/companion_elapsed_clock.dart';
+import 'package:dsh_app/companion/companion_initiative.dart';
+import 'package:dsh_app/companion/companion_initiative_owner.dart';
+import 'package:dsh_app/companion/companion_elapsed_clock.dart';
 import 'package:dsh_client/companion.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

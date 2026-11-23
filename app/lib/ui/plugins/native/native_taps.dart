@@ -426,7 +426,7 @@ Future<bool> _invoke(
   } on DshException catch (e) {
     if (!guard.current) return false;
     diagnostics.invoked(package, clock().difference(invokedAt));
-    final code = e is DshRemoteException && e.code.startsWith('DPSK/') ? e.code.substring(7) : null;
+    final code = e is DshRemoteException && e.code.startsWith('dsh-go/') ? e.code.substring(7) : null;
     final known = code != null && !code.startsWith('http-') && code != 'unsupported';
     diagnostics.report(package, '/runtime/$id', [
       NativeIssue('', nativeIssueText(known ? code : 'timeout'), code: known ? code : 'timeout'),

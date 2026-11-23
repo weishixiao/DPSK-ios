@@ -6,10 +6,10 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/theme/accent.dart';
-import 'package:dpsk_app/wallpaper/custom_wallpaper.dart';
-import 'package:dpsk_app/wallpaper/wallpaper_look.dart';
-import 'package:dpsk_app/wallpaper/wallpaper_render.dart';
+import 'package:dsh_app/ui/theme/accent.dart';
+import 'package:dsh_app/wallpaper/custom_wallpaper.dart';
+import 'package:dsh_app/wallpaper/wallpaper_look.dart';
+import 'package:dsh_app/wallpaper/wallpaper_render.dart';
 import 'package:flutter/material.dart';
 
 /// A pale seaside noon (JPEG, 720 × 1280): sky, sun, sea, sand and two dark rocks.

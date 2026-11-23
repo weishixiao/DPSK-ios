@@ -2,15 +2,15 @@
 // the goal bar (official ui-goal GoalBar) — what they say, the checklist that
 // opens in place, when they come and go, and the goal actions end to end.
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/dock/dock_pill.dart';
-import 'package:dpsk_app/ui/chat/dock/dock_stack.dart';
-import 'package:dpsk_app/ui/chat/dock/goal_bar.dart';
-import 'package:dpsk_app/ui/chat/dock/todo_bar.dart';
-import 'package:dpsk_app/ui/chat/run_info.dart';
-import 'package:dpsk_app/ui/chat/widgets/activity_strip.dart';
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/dock/dock_pill.dart';
+import 'package:dsh_app/ui/chat/dock/dock_stack.dart';
+import 'package:dsh_app/ui/chat/dock/goal_bar.dart';
+import 'package:dsh_app/ui/chat/dock/todo_bar.dart';
+import 'package:dsh_app/ui/chat/run_info.dart';
+import 'package:dsh_app/ui/chat/widgets/activity_strip.dart';
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

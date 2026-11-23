@@ -33,7 +33,7 @@ So make `title` a product name, not "Tap me" or "Important".
 
 ## Copy
 
-DPSK copy is short, confident and product-like. Plugins share the screen, so the same applies:
+dsh-go copy is short, confident and product-like. Plugins share the screen, so the same applies:
 
 | Do | Don't |
 |---|---|

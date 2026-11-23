@@ -53,7 +53,7 @@ Future<T24Harness> _open() async {
 Future<({String chat, String character})> _storyChat(T24Harness h, Json story) async {
   final raw = _map(jsonDecode(utf8.decode(t24Card())));
   _map(raw['data'])['extensions'] = {
-    'dpsk': {'v': 1, 'story': story},
+    'dshgo': {'v': 1, 'story': story},
   };
   final character = await h.engine.importCard(Uint8List.fromList(utf8.encode(jsonEncode(raw))));
   return (chat: await h.engine.createChat(character.id), character: character.id);
@@ -271,7 +271,7 @@ void main() {
     await h.engine.close();
     final file = File('${h.root.path}/characters/${context.character}/card.json');
     final raw = _map(jsonDecode(await file.readAsString()));
-    final own = _map(_map(_map(raw['data'])['extensions'])['dpsk']);
+    final own = _map(_map(_map(raw['data'])['extensions'])['dshgo']);
     own['v'] = 2;
     await file.writeAsString(jsonEncode(raw), flush: true);
     await h.reopen();
@@ -288,7 +288,7 @@ void main() {
     expect((await h.engine.readDirector(context.chat)).story!['initialized'], isFalse);
     expect(_runJson(h, run.id), savedRun);
     final reread = _map(jsonDecode(await file.readAsString()));
-    expect(_map(_map(_map(reread['data'])['extensions'])['dpsk'])['v'], 2);
+    expect(_map(_map(_map(reread['data'])['extensions'])['dshgo'])['v'], 2);
   });
 
   test('malformed or future captured phases remain readable without phase repair or injection', () async {

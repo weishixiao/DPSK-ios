@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
-import 'package:dpsk_app/performance/performance_state.dart';
-import 'package:dpsk_app/performance/refresh_rate.dart';
-import 'package:dpsk_app/state/android_features.dart';
+import 'package:dsh_app/performance/performance_state.dart';
+import 'package:dsh_app/performance/refresh_rate.dart';
+import 'package:dsh_app/state/android_features.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

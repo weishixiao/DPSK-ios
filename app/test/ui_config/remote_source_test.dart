@@ -4,7 +4,7 @@
 import 'dart:async';
 
 import 'package:dsh_client/dsh_client.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';
@@ -99,7 +99,7 @@ class FakeRemoteHost implements UiRemoteHost {
 }
 
 void main() {
-  const customPath = '/home/u/.dsh-custom/DPSK/ui.json';
+  const customPath = '/home/u/.dsh-custom/dsh-go/ui.json';
   const guessedPath = '/home/u/.dsh/dsh-go/ui.json';
 
   late FakeRemoteHost host;
@@ -286,7 +286,7 @@ void main() {
     };
     carrier.handlers['workspaceFiles/read'] = (args) {
       expect(args['workspaceFileScopeId'], 'new');
-      expect(args['path'], '/srv/dsh/DPSK/ui.json');
+      expect(args['path'], '/srv/dsh/dsh-go/ui.json');
       return {'text': '{"version": 1}', 'lines': 1, 'eof': true, 'offset': 1, 'version': 'v1', 'bytes': 14};
     };
     final client = DshClient.withCarrier(carrier);
@@ -298,7 +298,7 @@ void main() {
     final skill = await remote.skillFile('new');
     expect(skill, '/srv/dsh/skills/dsh-go-ui/SKILL.md');
     expect(dshHomeFromSkillPath(skill!), '/srv/dsh');
-    final page = await remote.read('new', '/srv/dsh/DPSK/ui.json');
+    final page = await remote.read('new', '/srv/dsh/dsh-go/ui.json');
     expect(page.text, '{"version": 1}');
     expect(page.version, 'v1');
     await client.mux.ready();

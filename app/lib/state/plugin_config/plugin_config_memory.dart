@@ -123,7 +123,7 @@ class MemoryPluginConfigApi implements PluginConfigApi {
   final Map<String, MemoryPluginEntry> entries;
   bool writable;
 
-  /// Serve forms one entry at a time, as the DPSK bridge does.
+  /// Serve forms one entry at a time, as the dsh-go bridge does.
   final bool lazy;
 
   /// Listed, not editable: entryId → (state, reason).

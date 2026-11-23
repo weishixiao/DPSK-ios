@@ -8,8 +8,8 @@
 `reasoningEfforts` 映射转换为 `reasoning: true`；pi-ai 1.5.0 原有自动检测
 没有识别这组端点，因而将系统指令写成 `developer`。
 
-[#1369](https://github.com/weishixiao/DPSK/issues/1369) 与
-[#1139](https://github.com/weishixiao/DPSK/issues/1139) 报告服务端拒绝该角色，
+[#1369](https://github.com/ccch1mneyyy/dsh-Go/issues/1369) 与
+[#1139](https://github.com/ccch1mneyyy/dsh-Go/issues/1139) 报告服务端拒绝该角色，
 并给出使用 `system` 成功的对照。该对照是报告人陈述。
 [百炼 Chat 官方文档](https://help.aliyun.com/zh/model-studio/qwen-api-via-openai-chat-completions/)
 将系统消息角色规定为 `system`，并列明旧 DashScope 域名与新的 workspace

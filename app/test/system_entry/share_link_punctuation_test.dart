@@ -1,19 +1,19 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/links/share_intake.dart';
-import 'package:dpsk_app/ui/web/web_home.dart';
-import 'package:dpsk_app/ui/web/dsh_web_launcher.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/links/share_intake.dart';
+import 'package:dsh_app/ui/web/web_home.dart';
+import 'package:dsh_app/ui/web/dsh_web_launcher.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import '../web/support/fake_webview.dart';
 
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/share_code/import_sheet.dart';
-import 'package:dpsk_app/ui/share_code/share_code_host.dart';
-import 'package:dpsk_app/ui/shell/system_entry_host.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/share_code/import_sheet.dart';
+import 'package:dsh_app/ui/share_code/share_code_host.dart';
+import 'package:dsh_app/ui/shell/system_entry_host.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -10,7 +10,7 @@ import 'support/t24_engine_harness.dart';
 
 typedef _Json = Map<String, Object?>;
 
-const _runtimeKey = 'dpskStoryRuntime';
+const _runtimeKey = 'dshgoStoryRuntime';
 
 _Json _map(Object? value) => value! as _Json;
 
@@ -26,7 +26,7 @@ Future<T24Harness> _open() async {
 Future<({String character, String chat})> _storyChat(T24Harness h) async {
   final raw = _map(jsonDecode(utf8.decode(t24Card())));
   _map(raw['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'story': {
         'outline': 'Private portable story',
@@ -66,7 +66,7 @@ Future<_Json> _story(TavernEngine engine, String chat) async => (await engine.re
 Future<_Json> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  final saved = _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  final saved = _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
   // The document is deeply read-only; mutation fixtures need detached JSON.
   return _map(jsonDecode(jsonEncode(saved)));
 }
@@ -86,8 +86,8 @@ Future<void> _replaceSaved(T24Harness h, String chat, _Json saved) async {
     final extra = _map(
       jsonDecode(db.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String),
     );
-    final own = extra['dpsk'];
-    extra['dpsk'] = {if (own is _Json) ...own, 'tavernState': saved};
+    final own = extra['dshgo'];
+    extra['dshgo'] = {if (own is _Json) ...own, 'tavernState': saved};
     db.execute('UPDATE nodes SET extra = ? WHERE id = ?', [jsonEncode(extra), leaf]);
   });
 }
@@ -98,7 +98,7 @@ Future<_Json> _own(T24Harness h, String chat) async {
     final extra = _map(
       jsonDecode(db.select('SELECT extra FROM nodes WHERE id = ?', [leaf]).single['extra']! as String),
     );
-    final own = extra['dpsk'];
+    final own = extra['dshgo'];
     return own == null ? <String, Object?>{} : _map(own);
   });
 }
@@ -128,7 +128,7 @@ Future<String> _importSaved(T24Harness h, String character, _Json saved) async {
         'send_date': T24Harness.at.toIso8601String(),
         if (saved.containsKey('messageVariables')) 'variables': [saved['messageVariables']],
         'extra': {
-          'dpsk': {'tavernState': saved},
+          'dshgo': {'tavernState': saved},
         },
       },
     ],

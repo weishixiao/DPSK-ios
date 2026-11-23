@@ -1,14 +1,14 @@
 // HarmonyOS only tells: the update sheet offers the release page the feed
 // names, never a download, and says the page may not have a package yet.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/ui/update/update_sheet.dart';
-import 'package:dpsk_app/ui/update/update_tiles.dart';
-import 'package:dpsk_app/update/release.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/ui/update/update_sheet.dart';
+import 'package:dsh_app/ui/update/update_tiles.dart';
+import 'package:dsh_app/update/release.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -21,7 +21,7 @@ ReleaseInfo _release({String? page}) => parseUpdateManifest({
   'notes': '- 新东西',
   'page': ?page,
   'assets': {
-    'arm64': {'name': 'DPSK-1.2.0-arm64.apk', 'url': 'https://go.dshtui.com/DPSK-1.2.0-arm64.apk', 'size': 1},
+    'arm64': {'name': 'dsh-go-1.2.0-arm64.apk', 'url': 'https://go.dshtui.com/dsh-go-1.2.0-arm64.apk', 'size': 1},
   },
 }, base: Uri.parse('https://go.dshtui.com/'));
 

@@ -2,13 +2,13 @@
 // geometry, and light / dark goldens. Regenerate the goldens with
 // `flutter test --update-goldens test/share_hosted/hosted_links_page_test.dart`.
 
-import 'package:dpsk_app/share_hosted/hosted_client.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/share_hosted/hosted_crypto.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/share_hosted/hosted_links_page.dart';
+import 'package:dsh_app/share_hosted/hosted_client.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/share_hosted/hosted_crypto.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/share_hosted/hosted_links_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +17,7 @@ import '../chat/support/harness.dart';
 import '../secrets/hosted_storage_recovery_test.dart' show FaultStorage;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
+import 'package:dsh_app/l10n/l10n.dart';
 
 import '../support/english_preview.dart' show useEnglish, inEnglish;
 import 'hosted_client_test.dart' show FakeHost;

@@ -500,7 +500,7 @@ void main() {
     final owner = await h.card(
       'Host',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'story': {
             'acts': [

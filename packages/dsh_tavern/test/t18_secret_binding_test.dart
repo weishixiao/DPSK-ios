@@ -165,7 +165,7 @@ Future<_Fixture> _ready({bool release = false}) async {
   await h.engine.setPreset(ChatPreset({...t24Preset().raw, 'continue_prefill': false}));
   final card = _map(jsonDecode(utf8.decode(t24Card())));
   _map(card['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'state': _definition(),
       'director': {'secretSlots': _slots(release: release)},
@@ -176,12 +176,12 @@ Future<_Fixture> _ready({bool release = false}) async {
   final saved = <String, Object?>{
     'variables': {'keptLocal': 7},
     'messageVariables': {
-      'dpsk': value,
+      'dshgo': value,
       'foreign': {
         'nested': [null, 'keep'],
       },
     },
-    'dpskStateRuntime': {'version': 1, 'firedRules': <Object?>[], 'pendingPrompts': <Object?>[]},
+    'dshgoStateRuntime': {'version': 1, 'firedRules': <Object?>[], 'pendingPrompts': <Object?>[]},
     'vendorState': {'keep': true},
   };
   final source = StChatDocument(
@@ -205,7 +205,7 @@ Future<_Fixture> _ready({bool release = false}) async {
           'vendorExtra': {
             'nested': [false, 'keep'],
           },
-          'dpsk': {
+          'dshgo': {
             'vendorOwn': {'keep': 19},
             'tavernState': saved,
           },
@@ -223,7 +223,7 @@ Future<_Fixture> _ready({bool release = false}) async {
   expect((await h.engine.path(chat)).single.text, _body);
   expect(_map((await h.engine.readState(chat)).values), value);
   expect(
-    _saved(f).containsKey('dpskSecretRuntime'),
+    _saved(f).containsKey('dshgoSecretRuntime'),
     isFalse,
     reason: 'Publishing a real helper proposal must not bind it.',
   );
@@ -377,9 +377,9 @@ _Json _node(_Fixture f, [String? nodeId]) => _db(
   ),
 );
 _Json _extra(_Fixture f, [String? nodeId]) => _map(jsonDecode(_node(f, nodeId)['extra']! as String));
-_Json _own(_Fixture f, [String? nodeId]) => _map(_extra(f, nodeId)['dpsk']);
+_Json _own(_Fixture f, [String? nodeId]) => _map(_extra(f, nodeId)['dshgo']);
 _Json _saved(_Fixture f, [String? nodeId]) => _map(_own(f, nodeId)['tavernState']);
-_Json _value(_Fixture f, [String? nodeId]) => _map(_map(_saved(f, nodeId)['messageVariables'])['dpsk']);
+_Json _value(_Fixture f, [String? nodeId]) => _map(_map(_saved(f, nodeId)['messageVariables'])['dshgo']);
 Object? _factAt(_Fixture f, [String? nodeId]) => _map(_value(f, nodeId)['private'])['fact'];
 _Json _physical(_Fixture f) => _db(
   f,
@@ -412,7 +412,7 @@ Future<TavernAgentRun> _expectBound(_Fixture f) async {
   expect(_factAt(f), _fact);
   expect(_map((await f.h.engine.readState(f.chatId)).values)['private'], {'fact': _fact});
   final saved = _saved(f);
-  final ledger = _map(saved['dpskSecretRuntime']);
+  final ledger = _map(saved['dshgoSecretRuntime']);
   expect(ledger['version'], 1);
   final binding = _maps(ledger['bindings']).single;
   expect(binding['slotId'], 'alibi');
@@ -557,7 +557,7 @@ void main() {
     f.h.model.atEntry = () {
       providerEntries++;
       expect(_factAt(f), _fact, reason: 'A second real SQLite connection must already see B at generate() entry.');
-      final ledger = _map(_saved(f)['dpskSecretRuntime']);
+      final ledger = _map(_saved(f)['dshgoSecretRuntime']);
       final persisted = _db(
         f,
         (db) => db.select("SELECT result_json FROM agent_runs WHERE chat_id = ? AND kind = 'director.secret_bind'", [
@@ -621,10 +621,10 @@ void main() {
       final active = await _start(f, f.h.engine.continueReply(f.chatId, f.sourceId));
       final bind = await _expectBound(f);
       final bindRow = _runRow(f, bind.id);
-      final bOwn = _map(bExtra['dpsk']);
+      final bOwn = _map(bExtra['dshgo']);
       final bSaved = _map(bOwn['tavernState']);
-      _map(_map(_map(bSaved['messageVariables'])['dpsk'])['private'])['fact'] = _fact;
-      bSaved['dpskSecretRuntime'] = _saved(f)['dpskSecretRuntime'];
+      _map(_map(_map(bSaved['messageVariables'])['dshgo'])['private'])['fact'] = _fact;
+      bSaved['dshgoSecretRuntime'] = _saved(f)['dshgoSecretRuntime'];
       bOwn['secretBinding'] = _own(f)['secretBinding'];
       expect(
         _map(_saved(f)['variables'])['keptLocal'],
@@ -685,8 +685,8 @@ void main() {
       final generated = f.h.model.generated;
       final sql = failAtNode
           ? "CREATE TRIGGER reject_secret_binding BEFORE UPDATE OF extra ON nodes "
-                r"WHEN json_extract(NEW.extra, '$.dpsk.tavernState.dpskSecretRuntime.version') = 1 "
-                r"AND json_type(OLD.extra, '$.dpsk.tavernState.dpskSecretRuntime') IS NULL "
+                r"WHEN json_extract(NEW.extra, '$.dshgo.tavernState.dshgoSecretRuntime.version') = 1 "
+                r"AND json_type(OLD.extra, '$.dshgo.tavernState.dshgoSecretRuntime') IS NULL "
                 "BEGIN SELECT RAISE(ABORT, 'controlled secret node update failure'); END"
           : "CREATE TRIGGER reject_secret_binding BEFORE INSERT ON agent_runs "
                 "WHEN NEW.kind = 'director.secret_bind' "

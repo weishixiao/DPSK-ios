@@ -144,8 +144,8 @@ String _repeat(String value, int count) => List<String>.filled(count, value).joi
 String _stem(String value) => value.substring(0, value.length - '.jsonl'.length);
 Map<String, Object?> _metadata(StChatDocument value) => value.header['chat_metadata']! as Map<String, Object?>;
 String _sourceName(StChatDocument value) {
-  final dpsk = _metadata(value)['dpsk']! as Map<String, Object?>;
-  final jsonl = dpsk['chatJsonl']! as Map<String, Object?>;
+  final dshgo = _metadata(value)['dshgo']! as Map<String, Object?>;
+  final jsonl = dshgo['chatJsonl']! as Map<String, Object?>;
   return jsonl['sourceFileName']! as String;
 }
 

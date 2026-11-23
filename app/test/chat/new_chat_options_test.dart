@@ -3,15 +3,15 @@
 // session before its prompt — and does not send under defaults the person
 // did not choose when applying fails, not even after a restart.
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/models_state.dart' show pendingModelProvider;
-import 'package:dpsk_app/state/new_chat_modes.dart';
-import 'package:dpsk_app/state/features_state.dart' show PermissionOption, PermissionState, agentPresetsProvider;
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/empty_actions.dart';
-import 'package:dpsk_app/ui/chat/model_sheet.dart' show ModelChip;
-import 'package:dpsk_app/ui/chat/new_chat_options.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/models_state.dart' show pendingModelProvider;
+import 'package:dsh_app/state/new_chat_modes.dart';
+import 'package:dsh_app/state/features_state.dart' show PermissionOption, PermissionState, agentPresetsProvider;
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/empty_actions.dart';
+import 'package:dsh_app/ui/chat/model_sheet.dart' show ModelChip;
+import 'package:dsh_app/ui/chat/new_chat_options.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +28,7 @@ class _Host {
     : presets = [
         {'id': 'standard', 'isDefault': !companionDefault},
         {'id': 'minimal'},
-        {'id': 'DPSK-companion-full', 'name': 'Companion', 'isDefault': companionDefault},
+        {'id': 'dsh-go-companion-full', 'name': 'Companion', 'isDefault': companionDefault},
       ];
 
   /// What `agentPresets/list` answers (a test may change it).
@@ -279,7 +279,7 @@ void main() {
   test('what a new session gets: the pick while offered, the offered default over a hidden one', () {
     const standard = AgentPresetInfo(id: 'standard', isDefault: true);
     const minimal = AgentPresetInfo(id: 'minimal');
-    const companion = AgentPresetInfo(id: 'DPSK-companion-full', isDefault: true);
+    const companion = AgentPresetInfo(id: 'dsh-go-companion-full', isDefault: true);
     const broken = AgentPresetInfo(id: 'broken', broken: 'missing');
     expect(newChatPresetToApply([standard, minimal], null), isNull);
     expect(newChatPresetToApply([standard, minimal], 'minimal'), 'minimal');
@@ -307,8 +307,8 @@ void main() {
     expect(
       newChatPresets([
         a,
-        const AgentPresetInfo(id: 'DPSK-companion-full'),
-        const AgentPresetInfo(id: 'DPSK-diagnostics'),
+        const AgentPresetInfo(id: 'dsh-go-companion-full'),
+        const AgentPresetInfo(id: 'dsh-go-diagnostics'),
       ]).map((p) => p.id),
       ['a'],
     );

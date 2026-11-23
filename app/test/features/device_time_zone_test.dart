@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/features/schedule_editor/time_zones.dart';
+import 'package:dsh_app/ui/features/schedule_editor/time_zones.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

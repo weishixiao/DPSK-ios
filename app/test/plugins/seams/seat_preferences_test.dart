@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/plugins/seams/seat_preferences.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/plugins/seams/seat_preferences.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

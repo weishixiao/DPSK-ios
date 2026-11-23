@@ -3,7 +3,7 @@
 //
 // Who pays decides the way there. The signed-in DeepSeek account's token never
 // leaves the engine, so those requests go through the bridge
-// (`/DPSK/v1/speech`, runtime/bridge/dsh-go-bridge/lib/speech.js), which
+// (`/dsh-go/v1/speech`, runtime/bridge/dsh-go-bridge/lib/speech.js), which
 // sends them with it. Without an account, the API key in 设置 goes straight to
 // api.deepseek.com from the phone. Account first: it is what 默认免配置 means.
 
@@ -34,7 +34,7 @@ const deepSeekAsrMaxSeconds = 118;
 const deepSeekAsrMaxBytes = 8 * 1024 * 1024;
 
 const _api = 'https://api.deepseek.com';
-const _bridge = '/DPSK/v1/speech';
+const _bridge = '/dsh-go/v1/speech';
 
 enum DeepSeekSpeechFailure {
   /// No account and no key: nothing to pay with.

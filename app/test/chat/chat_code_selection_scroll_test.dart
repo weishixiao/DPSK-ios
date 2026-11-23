@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/chat_list.dart';
-import 'package:dpsk_app/ui/chat/render/code_block.dart';
-import 'package:dpsk_app/ui/chat/widgets/message_menu.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/chat_list.dart';
+import 'package:dsh_app/ui/chat/render/code_block.dart';
+import 'package:dsh_app/ui/chat/widgets/message_menu.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

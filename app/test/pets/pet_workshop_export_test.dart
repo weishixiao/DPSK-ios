@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/pets/pet_library.dart';
-import 'package:dpsk_app/pets/pet_pack_validator.dart';
-import 'package:dpsk_app/workshop/workshop_receipt.dart';
+import 'package:dsh_app/pets/pet_library.dart';
+import 'package:dsh_app/pets/pet_pack_validator.dart';
+import 'package:dsh_app/workshop/workshop_receipt.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../workshop/support.dart';

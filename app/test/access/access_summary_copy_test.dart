@@ -2,8 +2,8 @@
 // the way there as the settings hub has it (系统权限 and 语音 sit under
 // 通用), in both languages (0.9.8 smoke 02w).
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/settings/index/spots.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/settings/index/spots.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

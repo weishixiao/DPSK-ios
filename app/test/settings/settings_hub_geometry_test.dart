@@ -3,14 +3,14 @@
 // group headings on the 24 line, rows 52 tall, the search capsule over the
 // overview card on the same edges; a group's discs share its hue.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/common/search_capsule.dart';
-import 'package:dpsk_app/ui/settings/settings_screen.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/common/search_capsule.dart';
+import 'package:dsh_app/ui/settings/settings_screen.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

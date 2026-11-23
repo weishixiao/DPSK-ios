@@ -10,10 +10,10 @@
 //
 //   flutter test test/shell/brand_mark_test.dart
 
-import 'package:dpsk_app/ui/share/share_card.dart';
-import 'package:dpsk_app/ui/shell/brand_glyph.g.dart';
-import 'package:dpsk_app/ui/shell/brand_mark.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/share/share_card.dart';
+import 'package:dsh_app/ui/shell/brand_glyph.g.dart';
+import 'package:dsh_app/ui/shell/brand_mark.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -119,8 +119,8 @@ void main() {
       await expectBrandLockup(tester, find.byType(BrandLockup));
     });
 
-    testWidgets('「DPSK」 at the share card\'s size: centred on the x-height', (tester) async {
-      await pumpLockup(tester, const BrandLockup(fontSize: 17, label: 'DPSK'));
+    testWidgets('「dsh-go」 at the share card\'s size: centred on the x-height', (tester) async {
+      await pumpLockup(tester, const BrandLockup(fontSize: 17, label: 'dsh-go'));
       await expectBrandLockup(tester, find.byType(BrandLockup));
     });
 
@@ -194,7 +194,7 @@ void main() {
                           const BrandMark(size: 52, tile: true),
                           const BrandMark(size: 64, tile: true),
                         ]),
-                        row(const [BrandLockup(height: 19), BrandLockup(fontSize: 17, label: 'DPSK')]),
+                        row(const [BrandLockup(height: 19), BrandLockup(fontSize: 17, label: 'dsh-go')]),
                       ],
                     ),
                   ),

@@ -4,11 +4,11 @@
 // detail sheet name a plugin by its own title, the package name only as the
 // quiet line in the sheet.
 
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/ui/plugins/installed_tab.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/ui/plugins/installed_tab.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

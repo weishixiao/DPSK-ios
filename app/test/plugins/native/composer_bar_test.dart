@@ -6,15 +6,15 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/plugins/native/composer_capsules.dart';
-import 'package:dpsk_app/ui/plugins/native/composer_strip.dart';
-import 'package:dpsk_app/ui/plugins/native/native_composer_bar.dart';
-import 'package:dpsk_app/ui/plugins/native/native_panel.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/plugins/native/composer_capsules.dart';
+import 'package:dsh_app/ui/plugins/native/composer_strip.dart';
+import 'package:dsh_app/ui/plugins/native/native_composer_bar.dart';
+import 'package:dsh_app/ui/plugins/native/native_panel.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -137,7 +137,7 @@ void main() {
     await tester.tap(find.text('译成英文'));
     await pumpFrames(tester);
     final call = bridge.invocations.single;
-    expect((call.pkg, call.id, call.surface), ('DPSK-example-quick', 'translate', 'composer.actions'));
+    expect((call.pkg, call.id, call.surface), ('dsh-go-example-quick', 'translate', 'composer.actions'));
     expect(call.scope, const DshGoScope(sessionId: 's1'));
     expect(call.stream, 'c1', reason: 'the stream connection a deferred result would come back on');
     expect(call.draft, isNull, reason: 'nothing it did not ask for');
@@ -176,7 +176,7 @@ void main() {
     await tester.tap(find.text('译成英文'));
     await pumpFrames(tester);
     expect(composer.inserted, isEmpty);
-    final issues = container.read(nativePluginDiagnosticsProvider('DPSK-example-quick')).issues;
+    final issues = container.read(nativePluginDiagnosticsProvider('dsh-go-example-quick')).issues;
     expect(issues.single.message, '点按 3 秒后才返回，已忽略');
     expect(issues.single.pointer, '/runtime/translate/effects');
   });
@@ -393,8 +393,8 @@ void main() {
   testWidgets('the status line shows the plugin data in its tone, and opens its panel', (tester) async {
     usePhoneView(tester);
     final bridge = FakeBridge(contributions([usagePlugin()]));
-    bridge.views['DPSK-example-usage/usage'] = const DshGoView(
-      pkg: 'DPSK-example-usage',
+    bridge.views['dsh-go-example-usage/usage'] = const DshGoView(
+      pkg: 'dsh-go-example-usage',
       id: 'usage',
       title: '用量',
       view: {'type': 'metric', 'label': '本对话', 'value': '¥0.42'},
@@ -469,7 +469,7 @@ void main() {
     unawaited(
       container
           .read(nativeSurfacePrefsProvider.notifier)
-          .set(container.read(activeHostProvider), 'DPSK-example-quick', NativeSurface.composerActions, false),
+          .set(container.read(activeHostProvider), 'dsh-go-example-quick', NativeSurface.composerActions, false),
     );
     await pumpFrames(tester);
     expect(capsuleLabels(tester), ['总结', '压缩']);

@@ -162,11 +162,11 @@ void main() {
             state: {
               'variables': {'old': 1},
               'messageVariables': {
-                'dpsk': {'score': 5},
+                'dshgo': {'score': 5},
               },
             },
             extra: {
-              'dpsk': {
+              'dshgo': {
                 'stateChanges': [
                   {'path': '/score', 'new': 5},
                 ],
@@ -196,7 +196,7 @@ void main() {
           state: {
             'messageVariables': {
               'stat_data': {'keep': 8},
-              'dpsk': {'score': 1},
+              'dshgo': {'score': 1},
             },
           },
         );
@@ -205,7 +205,7 @@ void main() {
       expect(h.store.nodeState(chat, 'node'), {
         'messageVariables': {
           'stat_data': {'keep': 8},
-          'dpsk': {'score': 1},
+          'dshgo': {'score': 1},
         },
       });
       expect(h.store.agentRuns(chat, nodeId: 'node').single.result['accepted'], isTrue);
@@ -220,7 +220,7 @@ void main() {
         'root',
         state: {
           'messageVariables': {
-            'dpsk': {'n': 1},
+            'dshgo': {'n': 1},
           },
         },
       );

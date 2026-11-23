@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_storybook.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_files.dart';
-import 'package:dpsk_app/ui/tavern/tavern_chat_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_storybook_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_storybook.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_files.dart';
+import 'package:dsh_app/ui/tavern/tavern_chat_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_storybook_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -30,7 +30,7 @@ TavernMessage _m(TavernRole role, String text, {String speaker = '林晚', bool 
       hidden: hidden,
     );
 
-const _words = TavernBookWords(language: 'zh-CN', contents: '目录', chapter: _chapter, madeWith: '用 DPSK 酒馆写成');
+const _words = TavernBookWords(language: 'zh-CN', contents: '目录', chapter: _chapter, madeWith: '用 DSH Go 酒馆写成');
 String _chapter(int n) => '第 $n 章';
 
 final _png = Uint8List.fromList([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0]);
@@ -72,8 +72,8 @@ void main() {
         you: '你',
       );
       expect(
-        buildTavernStoryText(story, madeWith: '用 DPSK 酒馆写成'),
-        '雨夜\n\n林晚 和 你 · 2026-11-09\n\n林晚：\n「炉子还热着。」\n\n你：\n外面怎么了？\n\n—— 用 DPSK 酒馆写成\n',
+        buildTavernStoryText(story, madeWith: '用 DSH Go 酒馆写成'),
+        '雨夜\n\n林晚 和 你 · 2026-11-09\n\n林晚：\n「炉子还热着。」\n\n你：\n外面怎么了？\n\n—— 用 DSH Go 酒馆写成\n',
       );
     });
   });

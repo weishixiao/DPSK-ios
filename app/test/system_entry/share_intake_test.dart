@@ -1,5 +1,5 @@
-import 'package:dpsk_app/links/share_intake.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
+import 'package:dsh_app/links/share_intake.dart';
+import 'package:dsh_app/share_code/share_link.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -66,21 +66,21 @@ void main() {
   });
 
   group('share codes', () {
-    test('a lone .dpsk file is a share code', () {
+    test('a lone .dshgo file is a share code', () {
       const byName = IncomingShare(
         files: [SharedFile(path: '/p/读书笔记.DSHGO', name: '读书笔记.DSHGO')],
       );
       const byType = IncomingShare(
-        files: [SharedFile(path: '/p/x', name: 'x', mime: 'application/vnd.dpsk+json')],
+        files: [SharedFile(path: '/p/x', name: 'x', mime: 'application/vnd.dshgo+json')],
       );
       expect(byName.shareCodeFile?.name, '读书笔记.DSHGO');
       expect(byType.shareCodeFile, isNotNull);
     });
 
-    test('a .dpsk among other files is just a file', () {
+    test('a .dshgo among other files is just a file', () {
       const share = IncomingShare(
         files: [
-          SharedFile(path: '/p/a.dpsk', name: 'a.dpsk'),
+          SharedFile(path: '/p/a.dshgo', name: 'a.dshgo'),
           SharedFile(path: '/p/b.png', name: 'b.png'),
         ],
       );
@@ -88,7 +88,7 @@ void main() {
     });
 
     test('a forwarded share link is found in the text', () {
-      final link = ShareLink.find('dpsk://share/plugin?p=abc.def12345');
+      final link = ShareLink.find('dshgo://share/plugin?p=abc.def12345');
       expect(link, isNotNull);
       final share = IncomingShare(text: '试试这个插件：${link!.webLink}');
       expect(share.shareLink?.webLink, link.webLink);

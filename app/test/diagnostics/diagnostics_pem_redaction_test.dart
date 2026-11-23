@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_export.dart';
-import 'package:dpsk_app/diagnostics/redact.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_export.dart';
+import 'package:dsh_app/diagnostics/redact.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/zip_reader.dart';

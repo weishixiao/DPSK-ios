@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/share/share_card.dart';
-import 'package:dpsk_app/ui/share/share_content.dart';
-import 'package:dpsk_app/ui/share/share_gallery.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/share/share_card.dart';
+import 'package:dsh_app/ui/share/share_content.dart';
+import 'package:dsh_app/ui/share/share_gallery.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

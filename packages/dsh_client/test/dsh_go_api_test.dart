@@ -14,7 +14,7 @@ const _contributions = {
   'limits': {'composerActions': 2},
   'plugins': [
     {
-      'pkg': 'DPSK-example-quick',
+      'pkg': 'dsh-go-example-quick',
       'version': '0.1.0',
       'title': '快捷指令',
       'icon': 'bolt',
@@ -97,7 +97,7 @@ void main() {
       final c = DshGoContributions.fromJson(_contributions)!;
       expect(c.rev, 'r1');
       expect(c.bridge, '0.2.0');
-      expect(c.plugins.map((p) => p.pkg), ['DPSK-example-quick', '@acme/usage', 'old-plugin']);
+      expect(c.plugins.map((p) => p.pkg), ['dsh-go-example-quick', '@acme/usage', 'old-plugin']);
       final quick = c.plugins.first;
       expect(quick.wants, {'clipboard', 'draft'});
       expect(quick.composerActions.map((a) => a.id), ['translate', 'hello']);
@@ -194,8 +194,8 @@ void main() {
     });
 
     test('a scoped package takes two path segments', () {
-      expect(dshGoViewPath('@acme/usage-meter', 'usage'), '/DPSK/v1/views/@acme/usage-meter/usage');
-      expect(dshGoViewPath('plain', 'a b'), '/DPSK/v1/views/plain/a%20b');
+      expect(dshGoViewPath('@acme/usage-meter', 'usage'), '/dsh-go/v1/views/@acme/usage-meter/usage');
+      expect(dshGoViewPath('plain', 'a b'), '/dsh-go/v1/views/plain/a%20b');
     });
 
     test('merge patch (RFC 7386)', () {
@@ -260,7 +260,7 @@ void main() {
       host.capabilities = {'v': 2};
       await expectLater(
         client.readDshGoBridgeCapabilities(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/unsupported-version')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/unsupported-version')),
       );
       for (final body in [
         {'bridge': '0.4.0', 'capabilities': []},
@@ -290,7 +290,7 @@ void main() {
         host.requests.clear();
         await expectLater(
           client.readDshGoContributions(),
-          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/not-found')),
+          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/not-found')),
         );
         expect(host.requests.map((r) => r.rawPath), [dshGoContributionsPath]);
       }
@@ -316,7 +316,7 @@ void main() {
       };
       await expectLater(
         client.readDshGoContributions(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/http-404')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/http-404')),
       );
       host.capabilities = null;
       expect(await client.readDshGoContributions(), isNull, reason: 'legacy unknown is not cached as absence');
@@ -328,7 +328,7 @@ void main() {
         host.capabilitiesStatus = status;
         await expectLater(
           client.readDshGoContributions(),
-          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/http-$status')),
+          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/http-$status')),
         );
       }
       host.capabilitiesStatus = 404;
@@ -337,7 +337,7 @@ void main() {
       });
       await expectLater(
         client.readDshGoContributions(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/not-found')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/not-found')),
       );
       host.capabilitiesBody = jsonEncode({
         'error': {'code': 'route-not-found', 'message': 'route missing'},
@@ -348,7 +348,7 @@ void main() {
       host.capabilities = {'v': 2};
       await expectLater(
         client.readDshGoContributions(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/unsupported-version')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/unsupported-version')),
       );
     });
 
@@ -362,7 +362,7 @@ void main() {
       host.contributions = {..._contributions, 'v': 2};
       await expectLater(
         client.readDshGoContributions(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/unsupported-version')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/unsupported-version')),
       );
       host.contributions = {'plugins': []};
       await expectLater(client.readDshGoContributions(), throwsA(isA<DshProtocolException>()));
@@ -393,7 +393,7 @@ void main() {
       host.body = 'forbidden';
       await expectLater(
         client.readDshGoContributions(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/http-403')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/http-403')),
       );
       host.status = null;
       host.body = '<html>';
@@ -422,7 +422,7 @@ void main() {
       expect((view.title, view.rev, view.live, view.bytes), ('用量', 'a7.3', true, 2140));
       expect(view.data, {'a': 1});
       final request = host.requests.last;
-      expect(request.rawPath, '/DPSK/v1/views/@acme/usage/usage');
+      expect(request.rawPath, '/dsh-go/v1/views/@acme/usage/usage');
       expect(request.query['sessionId'], 's1');
       expect(request.query['app'], '0.9.1');
     });
@@ -437,7 +437,7 @@ void main() {
       };
       final result = await client.invokeDshGo(
         const DshGoInvocation(
-          pkg: 'DPSK-example-quick',
+          pkg: 'dsh-go-example-quick',
           id: 'translate',
           surface: DshGoSurfaces.composerActions,
           scope: DshGoScope(sessionId: 's1'),
@@ -447,7 +447,7 @@ void main() {
       expect(result.effects.single, {'type': 'insert', 'text': 'Hello'});
       expect(host.lastBody, {
         'v': 1,
-        'pkg': 'DPSK-example-quick',
+        'pkg': 'dsh-go-example-quick',
         'id': 'translate',
         'surface': 'composer.actions',
         'scope': {'sessionId': 's1'},
@@ -460,7 +460,7 @@ void main() {
       });
       await expectLater(
         client.invokeDshGo(const DshGoInvocation(pkg: 'p', id: 'x', surface: 'composer.actions')),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/timeout')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/timeout')),
       );
     });
 
@@ -479,7 +479,7 @@ void main() {
           client.readDshGoView('p', 'view'),
           throwsA(
             isA<DshRemoteException>()
-                .having((e) => e.code, 'code', 'DPSK/invalid-config')
+                .having((e) => e.code, 'code', 'dsh-go/invalid-config')
                 .having((e) => e.message, 'message', 'check field'),
           ),
         );
@@ -491,7 +491,7 @@ void main() {
           client.readDshGoView('p', 'view'),
           throwsA(
             isA<DshRemoteException>()
-                .having((e) => e.code, 'code', 'DPSK/http-503')
+                .having((e) => e.code, 'code', 'dsh-go/http-503')
                 .having((e) => e.message, 'message', '${dshGoViewPath('p', 'view')}: HTTP 503'),
           ),
         );

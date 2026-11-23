@@ -6,7 +6,7 @@
 
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/shell/brand_mark.dart';
+import 'package:dsh_app/ui/shell/brand_mark.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 

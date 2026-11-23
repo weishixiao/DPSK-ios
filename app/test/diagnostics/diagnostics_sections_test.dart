@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/diagnostics/app_error_log.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_markdown.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_publish.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_sections.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/app_error_log.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/diagnostics/diagnostics_markdown.dart';
+import 'package:dsh_app/diagnostics/diagnostics_publish.dart';
+import 'package:dsh_app/diagnostics/diagnostics_sections.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 DiagnosticsSnapshot snapshot({List<String> engine = const [], Map<String, Object?>? evidence}) => DiagnosticsSnapshot(
@@ -26,7 +26,7 @@ DiagnosticsSnapshot snapshot({List<String> engine = const [], Map<String, Object
               'at': 123,
               'source': 'flutter',
               'errorType': 'StateError',
-              'stack': 'package:dpsk_app/speech/call/voice_call.dart:1:2',
+              'stack': 'package:dsh_app/speech/call/voice_call.dart:1:2',
               'message': 'PRIVATE_BODY',
             },
           ],
@@ -57,12 +57,12 @@ void main() {
     expect(text, isNot(contains('PRIVATE_')));
     expect(facts['app'], {'versionName': '1.0.16', 'versionCode': 123});
     expect(text, contains('playback_opening'));
-    expect(text, contains('package:dpsk_app/speech/call/voice_call.dart:1:2'));
+    expect(text, contains('package:dsh_app/speech/call/voice_call.dart:1:2'));
     expect((facts['evidence'] as Map)['availability'], containsPair('processExits', 'unsupported'));
   });
 
   test('all six tool sections are separately bounded valid JSON and preserve newest evidence', () {
-    final location = 'package:dpsk_app/${'a' * 105}.dart:1234567:1234567';
+    final location = 'package:dsh_app/${'a' * 105}.dart:1234567:1234567';
     final input = snapshot(
       engine: List.generate(2000, (i) => 'line $i ${'long log' * 100}'),
       evidence: {

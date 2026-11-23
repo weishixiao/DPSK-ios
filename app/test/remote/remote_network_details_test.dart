@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/remote/network_details_sheet.dart';
-import 'package:dpsk_app/ui/remote/remote_screen.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/remote/network_details_sheet.dart';
+import 'package:dsh_app/ui/remote/remote_screen.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

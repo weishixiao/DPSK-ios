@@ -437,7 +437,7 @@ extension _ScriptVariableOperations on _ScriptCoordinator {
           final ref = target.messageRef!;
           final dataContext = await _prepareDataContext(
             ref.chatId,
-            forceGameplay: engine._stateAt(ref.chatId, ref.nodeId).containsKey('dpskPackDefinitionConfigId'),
+            forceGameplay: engine._stateAt(ref.chatId, ref.nodeId).containsKey('dshgoPackDefinitionConfigId'),
           );
           saved = await _dataWrite(
             resolved.capture!,
@@ -774,7 +774,7 @@ extension _ScriptVariableOperations on _ScriptCoordinator {
       nodeId,
       extra: {
         ...extra,
-        'dpsk': {..._map(extra['dpsk']), ...?prepared.audit, 'tavernState': _copy(prepared.state)},
+        'dshgo': {..._map(extra['dshgo']), ...?prepared.audit, 'tavernState': _copy(prepared.state)},
       },
     );
     if (prepared.run case final run?) {
@@ -807,14 +807,14 @@ _ScriptPreparedData _prepareScriptMessageData(
   final oldObject = old is Map<String, Object?> ? old : null;
   final sameDshgo =
       oldObject != null &&
-      oldObject.containsKey('dpsk') == requested.containsKey('dpsk') &&
-      _stateJsonEqual(oldObject['dpsk'], requested['dpsk']);
+      oldObject.containsKey('dshgo') == requested.containsKey('dshgo') &&
+      _stateJsonEqual(oldObject['dshgo'], requested['dshgo']);
   final next = _copy(baseline)..['messageVariables'] = requested;
   if (sameDshgo ||
-      (oldObject == null && !baseline.containsKey('messageVariables') && !requested.containsKey('dpsk'))) {
+      (oldObject == null && !baseline.containsKey('messageVariables') && !requested.containsKey('dshgo'))) {
     return _ScriptPreparedData(next, null, null, null);
   }
-  final referenced = baseline.containsKey('dpskPackDefinitionConfigId');
+  final referenced = baseline.containsKey('dshgoPackDefinitionConfigId');
   if (context.gameplay == null && referenced) {
     throw _scriptError(
       TavernScriptErrorCode.revisionConflict,
@@ -844,10 +844,10 @@ _ScriptPreparedData _prepareScriptMessageData(
       packRuntimeExists: input.packRuntimeExists,
       packRuntime: input.packRuntime,
     );
-    final remove = !requested.containsKey('dpsk');
+    final remove = !requested.containsKey('dshgo');
     final operation = session.apply(
       [
-        {'op': remove ? 'remove' : 'set', 'path': '', 'why': 'script', if (!remove) 'value': requested['dpsk']},
+        {'op': remove ? 'remove' : 'set', 'path': '', 'why': 'script', if (!remove) 'value': requested['dshgo']},
       ],
       actor: state_core.StateActor.user,
       source: 'script',
@@ -872,7 +872,7 @@ _ScriptPreparedData _prepareScriptMessageData(
     applied ? _stateNodeExtra(extra, candidate, audit) : extra,
     context.definition,
     context.settings,
-    dpskOnly: context.gameplay != null || referenced,
+    dshgoOnly: context.gameplay != null || referenced,
     allowInitialPreview: context.gameplay == null && !referenced,
     protection: _SecretProtection(context.hostData, applied ? candidate : baseline, gameplay: context.gameplay),
   );

@@ -410,7 +410,7 @@ Map<String, Object?> _legacyRow(String table, Row row) {
   }
   if (table == 'nodes' && result.containsKey('display_context')) {
     expect(jsonDecode(result.remove('display_context')! as String), {
-      'dpsk': {'tavernState': null, 'chatJsonl': null},
+      'dshgo': {'tavernState': null, 'chatJsonl': null},
     });
   }
   if (table == 'memories' && result.containsKey('origin')) {
@@ -467,7 +467,7 @@ Database _createV5(String path) {
       [
         '{"promptTokens":4,"cacheHitTokens":1,"completionTokens":2}',
         '{"promptTokens":7,"cacheHitTokens":2,"completionTokens":5}',
-        '{ "dpsk" : {"opaque":true}, "vendor": 8 }',
+        '{ "dshgo" : {"opaque":true}, "vendor": 8 }',
         '{"preserved":true}',
       ],
     );

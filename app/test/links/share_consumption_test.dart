@@ -3,9 +3,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/links/share_intake.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/links/share_intake.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -166,12 +166,12 @@ void main() {
 
   test('file route captures its owner before awaiting the reader, even during router disposal', () async {
     final input = await _input();
-    final file = await _file(input, 'import.dpsk');
+    final file = await _file(input, 'import.dshgo');
     final share = await input.receive([file]);
     final links = StreamController<Uri>();
     final router = LinkRouter(links.stream);
     final entered = Completer<void>(), resume = Completer<void>();
-    router.registerFileHandler('dpsk', (_) async {
+    router.registerFileHandler('dshgo', (_) async {
       entered.complete();
       await resume.future;
       await file.readAsString();
@@ -193,7 +193,7 @@ void main() {
   test('unhandled file and disposed pending/held file queues complete only owned paths', () async {
     for (final kind in ['unhandled', 'pending', 'held']) {
       final input = await _input();
-      final file = await _file(input, 'queued.dpsk');
+      final file = await _file(input, 'queued.dshgo');
       await input.receive([file]);
       if (kind == 'held') {
         final links = AppLinks(channel: MethodChannel('test/held-${input.id}'));
@@ -221,11 +221,11 @@ void main() {
   test('a rejected or throwing owned file handler still completes its read attempt', () async {
     for (final throws in [false, true]) {
       final input = await _input();
-      final file = await _file(input, 'bad.dpsk');
+      final file = await _file(input, 'bad.dshgo');
       await input.receive([file]);
       final links = StreamController<Uri>();
       final router = LinkRouter(links.stream);
-      router.registerFileHandler('dpsk', (_) async {
+      router.registerFileHandler('dshgo', (_) async {
         if (throws) throw const FormatException('invalid share');
         return false;
       });

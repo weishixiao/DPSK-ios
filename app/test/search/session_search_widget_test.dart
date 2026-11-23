@@ -2,9 +2,9 @@
 //
 //   flutter test test/search
 
-import 'package:dpsk_app/state/session_search.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/shell/session_search_page.dart';
+import 'package:dsh_app/state/session_search.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/shell/session_search_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

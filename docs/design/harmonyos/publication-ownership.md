@@ -6,7 +6,7 @@ M3-1 的同目录临时文件 + `renameat2(RENAME_NOREPLACE)` 负责最终名称
 
 发布时先持久登记再 `open('wx')`，打开后记录设备号、inode，并向该文件写入随机归属标记。标记 fsync 与 identified 账本提交都成功后，才开始第一段内容复制。成功提交或失败删除临时文件后才注销登记。下一次主引擎启动，先获得真实内核排他锁，再恢复旧 owner 的记录，最后公布发布服务。
 
-只凭设备号 + inode 不足以跨进程证明归属：已经用真实中途 SIGKILL、删除旧临时文件并创建替代文件的实验复现 inode 被复用。旧候选会删除替代文件。当前实现追加文件自身的 `user.dpsk_ownership` xattr，值为该条记录的随机 UUID；新 inode 不会自然继承旧文件的标记。恢复要求路径、设备号、inode、标记全部吻合，同时持有已验证文件句柄直到检查和 unlink 完成。原反例及修正后的复核证据随交付包保存。
+只凭设备号 + inode 不足以跨进程证明归属：已经用真实中途 SIGKILL、删除旧临时文件并创建替代文件的实验复现 inode 被复用。旧候选会删除替代文件。当前实现追加文件自身的 `user.dsh_go_ownership` xattr，值为该条记录的随机 UUID；新 inode 不会自然继承旧文件的标记。恢复要求路径、设备号、inode、标记全部吻合，同时持有已验证文件句柄直到检查和 unlink 完成。原反例及修正后的复核证据随交付包保存。
 
 这是私有应用目录内、遵守同一协议的写入者之间的协议。它不防能任意改写账本或伪造 xattr 的同权限恶意代码。同步 lstat + unlink 也不是操作系统提供的原子 compare-inode-and-unlink；任意外部原生写入者不在已证明的竞争模型内。
 
@@ -41,7 +41,7 @@ M3-1 的同目录临时文件 + `renameat2(RENAME_NOREPLACE)` 负责最终名称
 宿主 linked NAPI 模块新增三个同步入口，原来的 `renameNoReplace` 保持原语义：
 
 - `lockExclusive(fd)`：真实非阻塞 flock。已有持有者的 EAGAIN / EWOULDBLOCK 转为账本 busy；其余错误保留。
-- `setOwnershipMarker(fd, token)`：`fsetxattr(..., "user.dpsk_ownership", token, XATTR_CREATE)`。只能创建，不覆盖已有标记。
+- `setOwnershipMarker(fd, token)`：`fsetxattr(..., "user.dsh_go_ownership", token, XATTR_CREATE)`。只能创建，不覆盖已有标记。
 - `getOwnershipMarker(fd)`：读取同一属性。仅 ENODATA 表示没有标记，返回 undefined；ENOTSUP、ERANGE、权限等错误继续抛出。
 
 不支持 xattr 时，不退回到存在已知误删反例的 inode-only 规则。identify 失败发生在第一段复制之前，本次若还能证明创建归属则正常清理；若进程此时死亡，重启只能保留 reserved 未决条目。缺失原生入口、缺失应用目录或账本损坏都阻止服务安装。恢复时标记读取失败保留该文件与条目，并报告 unresolved。

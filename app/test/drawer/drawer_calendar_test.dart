@@ -2,7 +2,7 @@
 // TZ=America/New_York flutter test test/drawer/drawer_calendar_test.dart
 import 'dart:io';
 
-import 'package:dpsk_app/state/drawer_view_state.dart';
+import 'package:dsh_app/state/drawer_view_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

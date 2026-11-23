@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/state/workshop_report_state.dart';
-import 'package:dpsk_app/state/workshop_submissions_state.dart';
-import 'package:dpsk_app/update/update_http.dart';
-import 'package:dpsk_app/workshop/workshop_client.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/state/workshop_report_state.dart';
+import 'package:dsh_app/state/workshop_submissions_state.dart';
+import 'package:dsh_app/update/update_http.dart';
+import 'package:dsh_app/workshop/workshop_client.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../workshop/support.dart';

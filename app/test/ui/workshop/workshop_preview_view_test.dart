@@ -4,12 +4,12 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/state/workshop_dependencies.dart';
-import 'package:dpsk_app/ui/plugins/plugin_widgets.dart' show PluginAvatar;
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/ui/workshop/workshop_widgets.dart';
-import 'package:dpsk_app/workshop/workshop_client.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/state/workshop_dependencies.dart';
+import 'package:dsh_app/ui/plugins/plugin_widgets.dart' show PluginAvatar;
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/workshop/workshop_widgets.dart';
+import 'package:dsh_app/workshop/workshop_client.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

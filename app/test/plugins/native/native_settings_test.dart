@@ -2,11 +2,11 @@
 // 「原生界面」 line that opens the problems with their paths. Plugins without
 // a native part get nothing.
 
-import 'package:dpsk_app/plugins/native/native_platform.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/ui/plugins/native/native_plugin_section.dart';
+import 'package:dsh_app/plugins/native/native_platform.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/ui/plugins/native/native_plugin_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -78,7 +78,7 @@ void main() {
       await pumpSection(
         tester,
         FakeBridge(contributions([voice])),
-        'DPSK-example-quick',
+        'dsh-go-example-quick',
         overrides: [
           operatingSystemProvider.overrideWithValue('android'),
           nativeMediaPlatformProvider.overrideWithValue(platform),
@@ -93,7 +93,7 @@ void main() {
       await pumpSection(
         tester,
         FakeBridge(contributions([voice])),
-        'DPSK-example-quick',
+        'dsh-go-example-quick',
         overrides: [
           operatingSystemProvider.overrideWithValue('ohos'),
           nativeMediaPlatformProvider.overrideWithValue(_Features(const {'audio', 'voice'})),
@@ -109,7 +109,7 @@ void main() {
       await pumpSection(
         tester,
         FakeBridge(contributions([voice])),
-        'DPSK-example-quick',
+        'dsh-go-example-quick',
         overrides: [
           operatingSystemProvider.overrideWithValue('ohos'),
           nativeMediaPlatformProvider.overrideWithValue(_Features(const {'audio'})),
@@ -124,7 +124,7 @@ void main() {
   });
 
   testWidgets('a switch per declared place, then the status line', (tester) async {
-    final container = await pumpSection(tester, FakeBridge(contributions([quickPlugin()])), 'DPSK-example-quick');
+    final container = await pumpSection(tester, FakeBridge(contributions([quickPlugin()])), 'dsh-go-example-quick');
     expect(find.text('输入框按钮'), findsOneWidget);
     expect(find.text('消息菜单'), findsOneWidget);
     expect(find.text('状态条'), findsNothing, reason: 'only what the plugin declares');

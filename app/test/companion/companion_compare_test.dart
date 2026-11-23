@@ -1,5 +1,5 @@
-import 'package:dpsk_app/companion/companion_host_tasks.dart';
-import 'package:dpsk_app/companion/companion_reminder.dart';
+import 'package:dsh_app/companion/companion_host_tasks.dart';
+import 'package:dsh_app/companion/companion_reminder.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

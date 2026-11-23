@@ -10,7 +10,7 @@ import '../../state/sessions_state.dart' show localWorkspaceDir;
 import 'render/code_block.dart' show languageForPath;
 import 'render/diff_view.dart';
 
-/// 插件工具的原生卡片(结果 meta 里的 `DPSK/view`,见
+/// 插件工具的原生卡片(结果 meta 里的 `dsh-go/view`,见
 /// `docs/design/native-plugins-views.md` §8):null = 没有;
 /// `DshUiInvalid` = 有但画不了。只在成功的调用上读;解析按 meta 对象缓存。
 DshUiParse? toolCardParse(ToolChatItem item) {
@@ -20,7 +20,7 @@ DshUiParse? toolCardParse(ToolChatItem item) {
   return parsePluginView(meta[toolCardViewKey], budget: PluginViewBudget.toolCard);
 }
 
-/// 生成的图片 / 视频(结果 meta 里的 `DPSK/media`,见
+/// 生成的图片 / 视频(结果 meta 里的 `dsh-go/media`,见
 /// `docs/design/media-generation.md` §2.5):null = 没有。任何状态都读(视频
 /// 先回一张「生成中」,失败也带原因);解析按 meta 对象缓存。
 MediaMeta? toolMedia(ToolChatItem item) {

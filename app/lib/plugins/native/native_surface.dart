@@ -229,8 +229,8 @@ class NativeSurfaceController extends Notifier<NativeSurfaceState> {
       if ((view.live || key.live) && stream != null && _sub == null) _follow(stream, data: view.data);
     } on DshException catch (e) {
       if (!ref.mounted || read != _reads) return;
-      final code = e is DshRemoteException && e.code.startsWith('DPSK/') && !e.code.startsWith('DPSK/http-')
-          ? e.code.substring('DPSK/'.length)
+      final code = e is DshRemoteException && e.code.startsWith('dsh-go/') && !e.code.startsWith('dsh-go/http-')
+          ? e.code.substring('dsh-go/'.length)
           : null;
       if (code != null) _issue(code);
       _set(state.copyWith(loading: false, offline: code == null, failure: code));

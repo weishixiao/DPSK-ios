@@ -2,7 +2,7 @@
 """Writes the SYNTHETIC media fixtures (session-log JSONL, one event a line).
 
 They follow the v1 contract of docs/design/media-generation.md §2.5 (the tool
-result's meta["DPSK/media"]) and the 2026-10-28 revision (generation mode
+result's meta["dsh-go/media"]) and the 2026-10-28 revision (generation mode
 sends an ordinary user message with a parameter header). The event shapes copy
 a real DSH 0.2.1-rc.2 log (test/plugins/view/fixtures/live_tool_card.jsonl).
 They are stand-ins until Pro's live `dsh headless` transcripts arrive: replace
@@ -69,7 +69,7 @@ def media(rid, items, request, prompt, revised=None, cost=None, status='done', j
         meta['job'] = job
     if error:
         meta['error'] = error
-    return {'DPSK/media': meta}
+    return {'dsh-go/media': meta}
 
 
 def picture(name, w, h, size):

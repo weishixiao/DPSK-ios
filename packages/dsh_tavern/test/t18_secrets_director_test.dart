@@ -289,8 +289,8 @@ void main() {
       final h = await _Harness.open();
       h.chatId = await _importSaved(h, h.characterId, {
         'variables': <String, Object?>{},
-        'messageVariables': {'dpsk': _value(fact: _fact)},
-        'dpskStateRuntime': {'version': 2, 'opaque': 'preserve-runtime'},
+        'messageVariables': {'dshgo': _value(fact: _fact)},
+        'dshgoStateRuntime': {'version': 2, 'opaque': 'preserve-runtime'},
       });
       final before = await _saved(h);
       final active = await h.manual();
@@ -312,7 +312,7 @@ void main() {
       final h = await _Harness.open();
       await _bind(h);
       final saved = await _saved(h);
-      expect(_maps(_map(saved['dpskSecretRuntime'])['bindings']), hasLength(1));
+      expect(_maps(_map(saved['dshgoSecretRuntime'])['bindings']), hasLength(1));
       final files = await h.engine.exportChat(h.chatId);
       final character = await h.engine.importCard(_card(withSlots: false, hidden: false));
       expect(character.id, isNot(h.characterId));
@@ -330,14 +330,14 @@ void main() {
       final body = h.model.ofKind(_main).last.body;
       expect(jsonEncode(body), isNot(contains(_fact)));
       expect(_toolNames(body), isNot(contains('update_state')));
-      final broken = _copy(saved)..['dpskSecretRuntime'] = {'version': 2, 'opaque': 'preserve-ledger'};
+      final broken = _copy(saved)..['dshgoSecretRuntime'] = {'version': 2, 'opaque': 'preserve-ledger'};
       h.chatId = await _importSaved(h, character.id, broken);
       final bad = await h.manual();
       _expectProtected(_input(bad.call));
       expect(_map(_input(bad.call)['state']).containsKey('value'), isFalse);
       final failedClosed = await _finishManual(bad, _output('ledger-unavailable'));
       expect(failedClosed.issues.map((issue) => issue['code']), contains('secret_ledger_unavailable'));
-      expect((await _saved(h))['dpskSecretRuntime'], broken['dpskSecretRuntime']);
+      expect((await _saved(h))['dshgoSecretRuntime'], broken['dshgoSecretRuntime']);
       expect(jsonEncode((await h.engine.readState(h.chatId)).values), contains(_fact));
     },
   );
@@ -557,7 +557,7 @@ Uint8List _card({bool arraySlot = false, bool withSlots = true, bool hidden = tr
         : _value(),
   };
   _map(raw['data'])['extensions'] = {
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'state': state,
       'director': {
@@ -644,7 +644,7 @@ Future<void> _bind(_Harness h) async {
 Future<_Json> _saved(_Harness h) async {
   final file = (await h.engine.exportChat(h.chatId)).single;
   final document = StChatDocument.decode(file.fileName, file.bytes);
-  return _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  return _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
 }
 
 Future<String> _importSaved(_Harness h, String characterId, _Json saved) async {
@@ -661,7 +661,7 @@ Future<String> _importSaved(_Harness h, String characterId, _Json saved) async {
         'send_date': T24Harness.at.toIso8601String(),
         'variables': [saved['messageVariables']],
         'extra': {
-          'dpsk': {'tavernState': saved},
+          'dshgo': {'tavernState': saved},
         },
       },
     ],

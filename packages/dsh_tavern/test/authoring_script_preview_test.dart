@@ -305,7 +305,7 @@ void main() {
           final before = await request.runtime.getVariables(parent);
           await expectLater(
             request.runtime.replaceVariables(parent, {
-              'dpsk': {'count': 'invalid'},
+              'dshgo': {'count': 'invalid'},
               'plain': 'LOST',
             }),
             throwsA(scriptError(TavernScriptErrorCode.stateValidation)),
@@ -314,7 +314,7 @@ void main() {
           expect(unchanged.value, before.value);
           expect(unchanged.version, before.version);
           final accepted = await request.runtime.replaceVariables(parent, {
-            'dpsk': {'count': 15},
+            'dshgo': {'count': 15},
             'plain': 'EDITED_PARENT',
           }, expectedVersion: before.version);
           expect(accepted.stateEdit!.applied, isTrue);
@@ -851,11 +851,11 @@ ScriptJson _message(String text, String phase, {bool user = false}) => {
   'send_date': _at.toIso8601String(),
   'mes': text,
   'extra': {
-    'dpsk': {
+    'dshgo': {
       'tavernState': {
         'variables': {'phase': phase},
         'messageVariables': {
-          'dpsk': {'count': 10},
+          'dshgo': {'count': 10},
           'plain': phase,
         },
       },

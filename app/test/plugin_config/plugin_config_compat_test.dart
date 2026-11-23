@@ -1,5 +1,5 @@
 // Hosts whose plugin-config list does not say who carries an entry — 0.9.9's
-// runtime r12 (no DPSK plugin-config routes: DSH's own settings/describe)
+// runtime r12 (no dsh-go plugin-config routes: DSH's own settings/describe)
 // and a bridge before R7 — see exactly what they saw before the R7 changes:
 // the same entries, the same names (a row's own title), no read-only mark,
 // the same page titles and search results. This file only uses what the app
@@ -8,17 +8,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_memory.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/engine_settings/engine_settings_hub.dart';
-import 'package:dpsk_app/ui/plugins/config/plugin_config_entries.dart';
-import 'package:dpsk_app/ui/plugins/config/plugin_config_page.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/settings/search/settings_search_page.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart' show SettingsTile;
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_memory.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/engine_settings/engine_settings_hub.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_entries.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_page.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/settings/search/settings_search_page.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart' show SettingsTile;
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -215,7 +215,7 @@ void main() {
       expect(shown, ['speech-to-text', 'speech-to-text-sensevoice', 'api-speech-to-text', 'local-notes']);
       expect(
         [for (final ns in shown) pluginConfigTitle(ns, bundles, state: state)],
-        ['语音识别', 'SenseVoice 本地识别', '语音转写接口', 'DPSK-fixture-local-notes'],
+        ['语音识别', 'SenseVoice 本地识别', '语音转写接口', 'dsh-go-fixture-local-notes'],
       );
     });
   });

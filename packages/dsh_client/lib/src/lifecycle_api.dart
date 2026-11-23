@@ -10,7 +10,7 @@ import 'errors.dart';
 import 'json.dart';
 import 'session_api.dart';
 
-const lifecyclePath = '/DPSK/v1/lifecycle';
+const lifecyclePath = '/dsh-go/v1/lifecycle';
 const lifecycleResultPath = '$lifecyclePath/result';
 const _safeInteger = 9007199254740991;
 

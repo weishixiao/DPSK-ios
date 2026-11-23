@@ -7,20 +7,20 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/draft_store.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/ui_mode_state.dart';
-import 'package:dpsk_app/state/voice_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/widgets/attachments.dart';
-import 'package:dpsk_app/ui/common/discard_guard.dart';
-import 'package:dpsk_app/ui/shell/system_entry_host.dart';
-import 'package:dpsk_app/ui/web/web_home.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/draft_store.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/ui_mode_state.dart';
+import 'package:dsh_app/state/voice_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/widgets/attachments.dart';
+import 'package:dsh_app/ui/common/discard_guard.dart';
+import 'package:dsh_app/ui/shell/system_entry_host.dart';
+import 'package:dsh_app/ui/web/web_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -499,16 +499,16 @@ void main() {
 
   testWidgets('a lone share-code file goes to the importer, not to a chat', (tester) async {
     natives(tester);
-    final code = cached('读书笔记.dpsk', utf8.encode('{"dpsk":1}'));
+    final code = cached('读书笔记.dshgo', utf8.encode('{"dshgo":1}'));
     final container = await _pump(tester, ChatHarness(session: 's1'));
     final opened = <Uri>[];
-    container.read(linkRouterProvider).registerFileHandler('dpsk', (uri) async {
+    container.read(linkRouterProvider).registerFileHandler('dshgo', (uri) async {
       opened.add(uri);
       return true;
     });
     await _shares.push({
       'files': [
-        {'path': code.path, 'name': '读书笔记.dpsk', 'mime': 'application/octet-stream'},
+        {'path': code.path, 'name': '读书笔记.dshgo', 'mime': 'application/octet-stream'},
       ],
     });
     await _settle(tester, () => opened.isNotEmpty);

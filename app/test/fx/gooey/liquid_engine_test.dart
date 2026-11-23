@@ -4,10 +4,10 @@
 // `simulate`, LiquidItem.tsx `mapMove` / `mapBend`, observer.ts `writeBlob`'s
 // move branch) in node on the same inputs.
 
-import 'package:dpsk_app/ui/fx/gooey/liquid.dart';
-import 'package:dpsk_app/ui/fx/gooey/liquid_engine.dart';
-import 'package:dpsk_app/ui/fx/gooey/liquid_presets.dart';
-import 'package:dpsk_app/ui/fx/gooey/liquid_transition.dart';
+import 'package:dsh_app/ui/fx/gooey/liquid.dart';
+import 'package:dsh_app/ui/fx/gooey/liquid_engine.dart';
+import 'package:dsh_app/ui/fx/gooey/liquid_presets.dart';
+import 'package:dsh_app/ui/fx/gooey/liquid_transition.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 

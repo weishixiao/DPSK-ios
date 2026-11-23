@@ -4,20 +4,20 @@
 //
 //   flutter test test/shell/shell_geometry_test.dart
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/onboarding/onboarding_scaffold.dart';
-import 'package:dpsk_app/ui/onboarding/runtime_setup_page.dart';
-import 'package:dpsk_app/ui/shell/brand_mark.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
-import 'package:dpsk_app/ui/shell/session_search_page.dart';
-import 'package:dpsk_app/ui/shell/sessions_drawer.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/onboarding/onboarding_scaffold.dart';
+import 'package:dsh_app/ui/onboarding/runtime_setup_page.dart';
+import 'package:dsh_app/ui/shell/brand_mark.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/ui/shell/session_search_page.dart';
+import 'package:dsh_app/ui/shell/sessions_drawer.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,6 +1,6 @@
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/plugins/market_tab.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/plugins/market_tab.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -7,13 +7,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/links/page_links.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/settings/index/spots.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/links/page_links.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/settings/index/spots.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -68,7 +68,7 @@ void main() {
     for (final MapEntry(key: path, value: text) in guide.files.entries) {
       for (final match in link.allMatches(text)) {
         final target = match[1]!;
-        if (RegExp(r'^(https?|mailto|dpsk):').hasMatch(target)) continue;
+        if (RegExp(r'^(https?|mailto|dshgo):').hasMatch(target)) continue;
         final resolved = Uri.parse(path).resolve(target.split('#').first).path;
         expect(guide.files.keys, contains(resolved), reason: '$path → $target');
       }
@@ -91,13 +91,13 @@ void main() {
     // The person deletes the managed line: the folder is theirs from now on.
     final skill = File('${installed().path}/SKILL.md');
     skill.writeAsStringSync(
-      skill.readAsStringSync().replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), ''),
+      skill.readAsStringSync().replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), ''),
     );
     page.writeAsStringSync('my notes');
     expect(await installUiSkill(root, guide), UiSkillInstallResult.userOwned);
     expect(page.readAsStringSync(), 'my notes');
     expect(skill.readAsStringSync(), isNot(contains(uiSkillManagedMarker)));
-    expect(installed().listSync(recursive: true).where((f) => f.path.endsWith('.DPSK-tmp')), isEmpty);
+    expect(installed().listSync(recursive: true).where((f) => f.path.endsWith('.dsh-go-tmp')), isEmpty);
   });
 
   test('no DSH home yet: nothing is created', () async {
@@ -133,7 +133,7 @@ void main() {
 
   group('on HarmonyOS', () {
     late UiSkillBundle harmony;
-    final pageLink = RegExp(r'dpsk://open/([a-z0-9-]+)');
+    final pageLink = RegExp(r'dshgo://open/([a-z0-9-]+)');
 
     setUpAll(() async => harmony = await loadUiSkillBundle(readAssetFromDisk, guideSkillName, 'ohos'));
 
@@ -145,8 +145,8 @@ void main() {
       expect(harmony.files['en/04-phone-control.md'], startsWith('# System actions'));
       expect(harmony.files['zh/09-appearance.md'], isNot(contains('跟随壁纸')));
       expect(harmony.files['en/09-appearance.md'], isNot(contains('Use wallpaper colors')));
-      expect(harmony.skillMd, contains('dpsk://open/system-actions'));
-      expect(harmony.skillMd, isNot(contains('dpsk://open/phone')));
+      expect(harmony.skillMd, contains('dshgo://open/system-actions'));
+      expect(harmony.skillMd, isNot(contains('dshgo://open/phone')));
       // A page HarmonyOS says nothing different about is the one page both read.
       expect(harmony.files['zh/02-models.md'], guide.files['zh/02-models.md']);
 

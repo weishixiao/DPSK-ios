@@ -65,7 +65,7 @@ void main() {
     expect(turn.whereType<TavernTurnDone>(), hasLength(1));
     await reply.seen.future;
     final saved = await _saved(h.engine, chat);
-    final runtime = _map(_map(saved['dpskPackRuntime'])['bindings']);
+    final runtime = _map(_map(saved['dshgoPackRuntime'])['bindings']);
     for (final id in bindings) {
       expect(_map(runtime[id])['rules'], ['shared-rule']);
     }
@@ -152,7 +152,7 @@ void main() {
       'Export conflicts',
       greeting: 'opening',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': {
             'schema': {
@@ -235,7 +235,7 @@ void main() {
             'formatVersion': 1,
             'packId': 'export-unreferenced-component',
             'packVersion': 'one',
-            'dpsk': {
+            'dshgo': {
               'v': 1,
               'components': {
                 'custom': [
@@ -291,32 +291,32 @@ void main() {
 
 void _checkMerged(Json raw, TavernGameplayExportPreview preview, Json original, List<String> bindings) {
   expect(raw['foreignRoot'], original['foreignRoot']);
-  expect(raw['dpsk_export_sources'], original['dpsk_export_sources']);
+  expect(raw['dshgo_export_sources'], original['dshgo_export_sources']);
   final data = _map(raw['data']);
   final old = _map(original['data']);
   expect(data['foreignData'], old['foreignData']);
   final extensions = _map(data['extensions']);
   final oldExtensions = _map(old['extensions']);
   expect(extensions['foreignExtension'], oldExtensions['foreignExtension']);
-  final dpsk = _map(extensions['dpsk']);
-  final oldDshgo = _map(oldExtensions['dpsk']);
-  final rules = _maps(_map(dpsk['state'])['rules']);
+  final dshgo = _map(extensions['dshgo']);
+  final oldDshgo = _map(oldExtensions['dshgo']);
+  final rules = _maps(_map(dshgo['state'])['rules']);
   expect(rules.singleWhere((rule) => rule['id'] == 'shared-rule'), _maps(_map(oldDshgo['state'])['rules']).single);
   expect(rules.map((rule) => rule['id']), containsAll(_mappedIds(preview, bindings, 'shared-rule')));
-  final events = _maps(_map(_map(dpsk['director'])['eventRules'])['rules']);
+  final events = _maps(_map(_map(dshgo['director'])['eventRules'])['rules']);
   expect(
     events.singleWhere((rule) => rule['id'] == 'shared-handler'),
     _maps(_map(_map(oldDshgo['director'])['eventRules'])['rules']).single,
   );
   expect(events.map((rule) => rule['id']), containsAll(_mappedIds(preview, bindings, 'shared-handler')));
   expect(events.map((rule) => rule['name']), containsAll(_mappedIds(preview, bindings, 'shared-event')));
-  final components = _maps(_map(dpsk['components'])['custom']);
+  final components = _maps(_map(dshgo['components'])['custom']);
   expect(
     components.singleWhere((item) => item['id'] == 'shared-component'),
     _maps(_map(oldDshgo['components'])['custom']).single,
   );
   expect(components.map((item) => item['id']), containsAll(_mappedIds(preview, bindings, 'shared-component')));
-  final skills = _map(_map(dpsk['dice'])['skills']);
+  final skills = _map(_map(dshgo['dice'])['skills']);
   expect(skills['shared-skill'], _map(_map(oldDshgo['dice'])['skills'])['shared-skill']);
   expect(skills.keys, containsAll(_mappedIds(preview, bindings, 'shared-skill')));
 
@@ -375,8 +375,8 @@ void _checkAssets(TavernCard card, TavernGameplayExportPreview preview, List<Str
     }
   }
   final winner = selected.singleWhere((row) => _map(row['source'])['bindingId'] == bindings.last);
-  final dpsk = _map(_map(card.data['extensions'])['dpsk']);
-  expect(_map(dpsk['theme'])['background'], winner['uri']);
+  final dshgo = _map(_map(card.data['extensions'])['dshgo']);
+  expect(_map(dshgo['theme'])['background'], winner['uri']);
 }
 
 List<String> _mappedIds(
@@ -405,7 +405,7 @@ Json _originalCard() => {
   'spec': 'chara_card_v3',
   'spec_version': '3.0',
   'foreignRoot': {'kept': null},
-  'dpsk_export_sources': {'legacy': 'DO-NOT-REPLACE'},
+  'dshgo_export_sources': {'legacy': 'DO-NOT-REPLACE'},
   'data': {
     'name': 'Base export',
     'first_mes': 'opening',
@@ -436,7 +436,7 @@ Json _originalCard() => {
           'unknown': null,
         },
       ],
-      'dpsk': {
+      'dshgo': {
         'v': 1,
         'state': {
           'schema': {
@@ -507,7 +507,7 @@ Future<TavernPackVersionRef> _install(
     'formatVersion': 1,
     'packId': id,
     'packVersion': 'one',
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'state': {
         'rules': [
@@ -641,7 +641,7 @@ Future<Map<String, List<int>>> _files(ScriptFixture h) async {
 Future<Json> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  return _map(_map(_map(document.messages.last['extra'])['dpsk'])['tavernState']);
+  return _map(_map(_map(document.messages.last['extra'])['dshgo'])['tavernState']);
 }
 
 TypeMatcher<TavernGameplayException> _error(String code) =>

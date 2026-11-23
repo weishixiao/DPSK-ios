@@ -1,6 +1,6 @@
-import 'package:dpsk_app/state/workshop_report_state.dart';
-import 'package:dpsk_app/state/workshop_submissions_state.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/state/workshop_report_state.dart';
+import 'package:dsh_app/state/workshop_submissions_state.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../support/workshop_page_samples.dart';

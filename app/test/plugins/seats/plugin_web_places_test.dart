@@ -3,10 +3,10 @@
 // (light + dark) and behaviour. Regenerate with
 // `flutter test --update-goldens test/plugins/seats/plugin_web_places_test.dart`.
 
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
-import 'package:dpsk_app/ui/plugins/seats/plugin_web_places.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/ui/plugins/seats/plugin_web_places.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

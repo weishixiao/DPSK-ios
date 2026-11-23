@@ -140,11 +140,11 @@ class _TavernPackPageState extends ConsumerState<TavernPackPage> {
     }
     final cast = tavernPackCast(version);
     final resources = tavernPackResources(version);
-    final dpsk = version.inspection['dpsk'];
+    final dshgo = version.inspection['dshgo'];
     final declarationIssues = [
-      if (dpsk is Map<String, Object?>) ...[
-        for (final issue in dpsk['issues'] as List<Object?>? ?? const []) issue! as Map<String, Object?>,
-        for (final block in dpsk['blocks'] as List<Object?>? ?? const [])
+      if (dshgo is Map<String, Object?>) ...[
+        for (final issue in dshgo['issues'] as List<Object?>? ?? const []) issue! as Map<String, Object?>,
+        for (final block in dshgo['blocks'] as List<Object?>? ?? const [])
           if (block case {'status': final status} when status != 'executable' && status != 'absent')
             block as Map<String, Object?>,
       ],

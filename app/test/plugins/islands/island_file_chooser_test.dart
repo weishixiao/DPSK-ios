@@ -4,9 +4,9 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/plugins/seams/seat_models.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/plugins/islands/islands.dart';
+import 'package:dsh_app/plugins/seams/seat_models.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/plugins/islands/islands.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

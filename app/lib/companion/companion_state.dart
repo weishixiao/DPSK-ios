@@ -1,5 +1,5 @@
 // Which conversation is the companion's on each host (full mode). It is an
-// ordinary session on that host, opened with the `DPSK-companion-full` Agent
+// ordinary session on that host, opened with the `dsh-go-companion-full` Agent
 // preset: her persona with the host's standard tools, and the phone's when phone
 // control is on. This file remembers its id, keeps it out of the chat drawer and
 // out of chat alerts. Hosts whose engine lacks the preset (an older runtime, a
@@ -20,7 +20,7 @@ import '../state/hosts_state.dart';
 import '../state/sessions_state.dart';
 
 /// Full mode's preset, declared in runtime/bridge/dsh-go-bridge/cordis.patch.yml.
-const companionPresetId = 'DPSK-companion-full';
+const companionPresetId = 'dsh-go-companion-full';
 
 const _sessionsKey = 'companion_sessions';
 const _lastSeenKey = 'companion_last_seen';

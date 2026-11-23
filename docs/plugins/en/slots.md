@@ -1,6 +1,6 @@
 # Slots
 
-Beyond tool cards, a plugin can appear in four native places in DPSK. The places are declared by the `dshGo` manifest in `package.json`; the content comes from the host half (the plugin's Node code in the engine) through `ctx.dshGo`. Spec: `docs/design/native-plugins-protocol.md`.
+Beyond tool cards, a plugin can appear in four native places in dsh-go. The places are declared by the `dshGo` manifest in `package.json`; the content comes from the host half (the plugin's Node code in the engine) through `ctx.dshGo`. Spec: `docs/design/native-plugins-protocol.md`.
 
 | Slot (surface) | Native place | Entry fields | Per plugin | Text limit | Tap |
 |---|---|---|---|---|---|
@@ -54,7 +54,7 @@ Icons (162, the same in the manifest and in views): bolt star sparkle heart flag
 
 ```js
 export function apply(ctx) {
-  ctx.inject(['dshGo'], (ctx) => {          // runs only on hosts with the DPSK bridge
+  ctx.inject(['dshGo'], (ctx) => {          // runs only on hosts with the dsh-go bridge
     ctx.dshGo.on('translate', (scope, event) => ({ insert: `Translate into English:\n\n${scope.clipboard}` }))
     ctx.dshGo.strip('today', (scope, emit, caps) => watch(() => emit({ text: label(caps.locale) })))
     ctx.dshGo.panel('usage', {

@@ -1,20 +1,20 @@
 import subprocess, sys, json
 cases = [
   ('hello', 'L'),
-  ('https://github.com/weishixiao/DPSK-ios', 'M'),
-  ('https://github.com/weishixiao/DPSK-ios', 'H'),
-  ('https://qm.qq.com/q/dpsk?from=app', 'Q'),
-  ('把 DSH 装进口袋：DPSK 社区交流群', 'M'),
+  ('https://github.com/ccch1mneyyy/dsh-go', 'M'),
+  ('https://github.com/ccch1mneyyy/dsh-go', 'H'),
+  ('https://qm.qq.com/q/dshgo?from=app', 'Q'),
+  ('把 DSH 装进口袋：dsh-go 社区交流群', 'M'),
   ('https://www.npmjs.com/package/@deepseek-ai/dsh-plugin-example-with-a-longer-name?activeTab=readme', 'M'),
   ('x' * 180, 'M'),
   ('https://example.com/' + 'a1b2c3d4' * 30, 'L'),
-  ('DPSK ' * 60, 'Q'),
+  ('dsh-go ' * 60, 'Q'),
   ('0123456789abcdef' * 40, 'M'),
   ('Q' * 1000, 'L'),
   ('Z' * 1800, 'L'),
   ('m' * 1500, 'M'),
   ('k' * 1250, 'H'),
-  ('https://t.me/dpsk', 'H'),
+  ('https://t.me/dshgo', 'H'),
 ]
 out = []
 for text, level in cases:

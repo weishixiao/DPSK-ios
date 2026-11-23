@@ -1,9 +1,9 @@
 // Regression based on the independent W1 review reproducer.
-import 'package:dpsk_app/state/bots_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/ui/bots/bot_details_page.dart';
+import 'package:dsh_app/state/bots_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/ui/bots/bot_details_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

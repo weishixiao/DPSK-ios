@@ -2,9 +2,9 @@
 // descriptions, builder shapes, drafts read from stored tasks, the rules a
 // save sends, validation and the next runs (in real IANA zones).
 
-import 'package:dpsk_app/ui/features/schedule_editor/cron.dart';
-import 'package:dpsk_app/ui/features/schedule_editor/schedule_draft.dart';
-import 'package:dpsk_app/ui/features/schedule_editor/time_zones.dart';
+import 'package:dsh_app/ui/features/schedule_editor/cron.dart';
+import 'package:dsh_app/ui/features/schedule_editor/schedule_draft.dart';
+import 'package:dsh_app/ui/features/schedule_editor/time_zones.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

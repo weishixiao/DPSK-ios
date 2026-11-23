@@ -55,10 +55,10 @@ private struct CompanionView: View {
           Image(systemName: index < entry.snapshot.bond ? "heart.fill" : "heart")
         }
         Spacer()
-        Text("DPSK").font(.caption2)
+        Text("DSH Go").font(.caption2)
       }.font(.caption2).foregroundColor(.white.opacity(0.65))
     }.foregroundColor(.white).padding(4)
-      .widgetURL(URL(string: "dpsk://open/companion"))
+      .widgetURL(URL(string: "dshgo://open/companion"))
   }
   var body: some View {
     if #available(iOS 17.0, *) {

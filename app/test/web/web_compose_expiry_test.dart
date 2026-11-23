@@ -1,8 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 
-import 'package:dpsk_app/ui/web/web_target.dart';
-import 'package:dpsk_app/ui/web/web_view_page.dart';
+import 'package:dsh_app/ui/web/web_target.dart';
+import 'package:dsh_app/ui/web/web_view_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

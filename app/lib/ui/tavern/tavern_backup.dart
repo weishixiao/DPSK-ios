@@ -63,7 +63,7 @@ String tavernSize(int bytes) =>
 /// A backup's file name, by when it was made.
 String tavernBackupName(DateTime at) {
   String two(int n) => n.toString().padLeft(2, '0');
-  return 'dpsk-tavern-${at.year}${two(at.month)}${two(at.day)}-${two(at.hour)}${two(at.minute)}.zip';
+  return 'dshgo-tavern-${at.year}${two(at.month)}${two(at.day)}-${two(at.hour)}${two(at.minute)}.zip';
 }
 
 /// Backs the tavern up and hands the ZIP on; says how it went.

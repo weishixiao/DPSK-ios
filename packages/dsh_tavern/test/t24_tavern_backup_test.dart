@@ -927,13 +927,13 @@ Future<List<Directory>> _snapshotDirectories(Directory workspace) async {
   final entries = await workspace.list(followLinks: false).toList();
   return entries
       .whereType<Directory>()
-      .where((entity) => entity.uri.pathSegments.any((part) => part.startsWith('.dpsk-tavern-backup-')))
+      .where((entity) => entity.uri.pathSegments.any((part) => part.startsWith('.dshgo-tavern-backup-')))
       .toList();
 }
 
 Future<List<FileSystemEntity>> _restoreArtifacts(Directory workspace) async {
   final entries = await workspace.list(followLinks: false).toList();
-  return entries.where((entity) => entity.uri.pathSegments.any((part) => part.startsWith('.dpsk-restore-'))).toList();
+  return entries.where((entity) => entity.uri.pathSegments.any((part) => part.startsWith('.dshgo-restore-'))).toList();
 }
 
 Future<void> _makeArchive(
@@ -953,7 +953,7 @@ Future<void> _makeArchive(
   }
   final orderedDirectories = directories.toList()..sort();
   final manifest = <String, Object?>{
-    'format': 'dpsk-tavern-backup',
+    'format': 'dshgo-tavern-backup',
     'version': 1,
     'createdAt': _createdAt.toIso8601String(),
     'sqliteUserVersion': sqliteVersion,
@@ -1006,7 +1006,7 @@ Future<({File file, Directory work})> _journal(
     rootKey = rootKey.toLowerCase();
   }
   final id = sha256.convert(utf8.encode(rootKey)).toString().substring(0, 16);
-  final workName = '.dpsk-restore-$id-testrecord';
+  final workName = '.dshgo-restore-$id-testrecord';
   final work = await Directory('${root.parent.path}/$workName').create();
   if (incoming != null) {
     await _identity(Directory('${work.path}/incoming'), incoming);
@@ -1014,10 +1014,10 @@ Future<({File file, Directory work})> _journal(
   if (previous != null) {
     await _identity(Directory('${work.path}/previous'), previous);
   }
-  final file = File('${root.parent.path}/.dpsk-restore-$id.json');
+  final file = File('${root.parent.path}/.dshgo-restore-$id.json');
   await file.writeAsString(
     jsonEncode({
-      'format': 'dpsk-tavern-restore',
+      'format': 'dshgo-tavern-restore',
       'version': 1,
       'root': rootKey,
       'workName': workName,

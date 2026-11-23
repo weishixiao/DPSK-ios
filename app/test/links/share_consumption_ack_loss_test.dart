@@ -2,8 +2,8 @@
 // a claim that HMS/device packet loss has been measured.
 import 'dart:io';
 
-import 'package:dpsk_app/links/share_intake.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
+import 'package:dsh_app/links/share_intake.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -27,7 +27,7 @@ String _directorHash(Object? value) =>
     crypto.sha256.convert(utf8.encode(jsonEncode(_directorCanonical(value)))).toString();
 
 Map<String, Object?> _directorCard(Map<String, Object?> data) {
-  final own = _readMap(_readMap(data['extensions'])['dpsk']);
+  final own = _readMap(_readMap(data['extensions'])['dshgo']);
   return _copy({
     for (final key in const [
       'name',
@@ -111,7 +111,7 @@ Map<String, Object?> _directorSourceFromFacts(
       if (input.valueExists) 'value': input.value,
       'variables': saved['variables'],
       'issues': input.issues,
-      if (saved.containsKey('dpskPackDefinitionConfigId')) 'definitionConfigId': saved['dpskPackDefinitionConfigId'],
+      if (saved.containsKey('dshgoPackDefinitionConfigId')) 'definitionConfigId': saved['dshgoPackDefinitionConfigId'],
     },
     if (saved.containsKey(_storyRuntimeKey)) 'storyRuntime': saved[_storyRuntimeKey],
     if (saved.containsKey(_secretRuntimeKey)) 'secretRuntime': saved[_secretRuntimeKey],
@@ -326,7 +326,7 @@ class _DirectorPrepared {
   final Set<String> allowed;
   final external = <WorldInfoEntryRef>{};
   final references = <Map<String, Object?>>[];
-  String get sourceId => 'dpsk.director.beat:${stored.id}';
+  String get sourceId => 'dshgo.director.beat:${stored.id}';
 }
 
 class _DirectorCoordinator {
@@ -512,7 +512,7 @@ class _DirectorCoordinator {
       final count = (old?['count'] as int? ?? 0) + 1;
       final own = _map(settings['director']);
       final cardOptions = turn.gameplay == null
-          ? _map(_map(_map(turn.directorCard?['extensions'])['dpsk'])['director'])
+          ? _map(_map(_map(turn.directorCard?['extensions'])['dshgo'])['director'])
           : _map(_map(turn.gameplay!.effectiveDefinitions['effective'])['director']);
       final cadence = director_core.directorEvery(settings: own, card: cardOptions);
       final every = cadence.every;
@@ -1265,7 +1265,7 @@ class _DirectorCoordinator {
               return _cardEventSnapshot(engine, chat, const {}, settings, gameplay: config);
             }
             final leaf = chat.currentLeafId;
-            final own = leaf == null ? <String, Object?>{} : _map(engine._store.node(chat.id, leaf).extra['dpsk']);
+            final own = leaf == null ? <String, Object?>{} : _map(engine._store.node(chat.id, leaf).extra['dshgo']);
             return _unresolvedGameplayEventSnapshot(leaf, saved, own, historical.issues);
           })
         : currentData == null
@@ -1422,7 +1422,7 @@ TavernDirectorEvent _directorEvent(StoredAgentRun stored) {
   }
 }
 
-String _directorMemoryId(String chatId) => 'dpsk:memory:$chatId';
+String _directorMemoryId(String chatId) => 'dshgo:memory:$chatId';
 
 ({WorldInfoBook? book, List<Map<String, Object?>> issues}) _directorMemoryBook(
   TavernEngine engine,
@@ -1488,7 +1488,7 @@ String _directorMemoryId(String chatId) => 'dpsk:memory:$chatId';
 
 String _rememberMemoryBookId(String chatId, List<WorldInfoBook> loaded) {
   final occupied = {for (final book in loaded) book.id};
-  final base = 'dpsk:remember:$chatId';
+  final base = 'dshgo:remember:$chatId';
   var id = base;
   var suffix = 1;
   while (occupied.contains(id)) {

@@ -272,7 +272,7 @@ extension _AuthoringSimulation on TavernEngine {
       if (_ownedTavernRoots.any(baseIdentity.startsWith)) {
         throw StateError('The system temporary directory is inside an owned tavern root.');
       }
-      final root = await base.createTemp('dpsk-authoring-');
+      final root = await base.createTemp('dshgo-authoring-');
       task.directory = root;
       task.cleanup['rootCreated'] = true;
       task.cancellation.check();

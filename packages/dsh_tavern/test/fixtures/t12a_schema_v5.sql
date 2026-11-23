@@ -122,24 +122,24 @@ ALTER TABLE nodes ADD COLUMN deleted_by TEXT REFERENCES deleted_subtrees(id) DEF
 CREATE INDEX nodes_deleted_by ON nodes(deleted_by) WHERE deleted_by IS NOT NULL;
 ALTER TABLE nodes ADD COLUMN reported_usage TEXT;
 UPDATE nodes SET reported_usage = CASE WHEN json_valid(extra) THEN CASE WHEN
-  json_type(extra, '$.dpsk.inspection') = 'object'
-  AND json_type(extra, '$.dpsk.inspection.version') IN ('integer', 'real')
-  AND json_extract(extra, '$.dpsk.inspection.version') = 1
-  AND json_type(extra, '$.dpsk.inspection.chatId') = 'text'
-  AND json_extract(extra, '$.dpsk.inspection.chatId') = chat_id
-  AND json_type(extra, '$.dpsk.inspection.nodeId') = 'text'
-  AND json_extract(extra, '$.dpsk.inspection.nodeId') = id
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage') = 'object'
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage.promptTokens') = 'integer'
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage.cacheHitTokens') = 'integer'
-  AND json_type(extra, '$.dpsk.inspection.reportedUsage.completionTokens') = 'integer'
-  AND (json_type(extra, '$.dpsk.inspection.reportedUsage.model') IS NULL
-    OR json_type(extra, '$.dpsk.inspection.reportedUsage.model') IN ('null', 'text'))
+  json_type(extra, '$.dshgo.inspection') = 'object'
+  AND json_type(extra, '$.dshgo.inspection.version') IN ('integer', 'real')
+  AND json_extract(extra, '$.dshgo.inspection.version') = 1
+  AND json_type(extra, '$.dshgo.inspection.chatId') = 'text'
+  AND json_extract(extra, '$.dshgo.inspection.chatId') = chat_id
+  AND json_type(extra, '$.dshgo.inspection.nodeId') = 'text'
+  AND json_extract(extra, '$.dshgo.inspection.nodeId') = id
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage') = 'object'
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage.promptTokens') = 'integer'
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage.cacheHitTokens') = 'integer'
+  AND json_type(extra, '$.dshgo.inspection.reportedUsage.completionTokens') = 'integer'
+  AND (json_type(extra, '$.dshgo.inspection.reportedUsage.model') IS NULL
+    OR json_type(extra, '$.dshgo.inspection.reportedUsage.model') IN ('null', 'text'))
   THEN json_object(
-    'promptTokens', json_extract(extra, '$.dpsk.inspection.reportedUsage.promptTokens'),
-    'cacheHitTokens', json_extract(extra, '$.dpsk.inspection.reportedUsage.cacheHitTokens'),
-    'completionTokens', json_extract(extra, '$.dpsk.inspection.reportedUsage.completionTokens'),
-    'model', json_extract(extra, '$.dpsk.inspection.reportedUsage.model'))
+    'promptTokens', json_extract(extra, '$.dshgo.inspection.reportedUsage.promptTokens'),
+    'cacheHitTokens', json_extract(extra, '$.dshgo.inspection.reportedUsage.cacheHitTokens'),
+    'completionTokens', json_extract(extra, '$.dshgo.inspection.reportedUsage.completionTokens'),
+    'model', json_extract(extra, '$.dshgo.inspection.reportedUsage.model'))
   END END;
 
 PRAGMA user_version = 5;

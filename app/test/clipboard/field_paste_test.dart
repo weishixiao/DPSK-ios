@@ -3,8 +3,8 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/ui/common/field_paste.dart';
-import 'package:dpsk_app/state/android_features.dart';
+import 'package:dsh_app/ui/common/field_paste.dart';
+import 'package:dsh_app/state/android_features.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

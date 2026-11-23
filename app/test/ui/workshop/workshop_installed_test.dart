@@ -3,18 +3,18 @@
 // first and passes the row's own object, what a refused or failed uninstall
 // says, and that no code or exception text reaches the screen.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/workshop_catalog_state.dart';
-import 'package:dpsk_app/state/workshop_install_state.dart';
-import 'package:dpsk_app/state/workshop_installed_state.dart';
-import 'package:dpsk_app/ui/common/empty_view.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/ui/workshop/workshop_installed.dart';
-import 'package:dpsk_app/ui/workshop/workshop_screen.dart';
-import 'package:dpsk_app/ui/workshop/workshop_installed_sheet.dart';
-import 'package:dpsk_app/ui/workshop/workshop_item_sheet.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_repository.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/workshop_catalog_state.dart';
+import 'package:dsh_app/state/workshop_install_state.dart';
+import 'package:dsh_app/state/workshop_installed_state.dart';
+import 'package:dsh_app/ui/common/empty_view.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/workshop/workshop_installed.dart';
+import 'package:dsh_app/ui/workshop/workshop_screen.dart';
+import 'package:dsh_app/ui/workshop/workshop_installed_sheet.dart';
+import 'package:dsh_app/ui/workshop/workshop_item_sheet.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

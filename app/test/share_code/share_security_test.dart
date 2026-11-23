@@ -1,7 +1,7 @@
-import 'package:dpsk_app/share_code/profile_export.dart';
-import 'package:dpsk_app/share_code/share_import.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/state/connection_state.dart';
+import 'package:dsh_app/share_code/profile_export.dart';
+import 'package:dsh_app/share_code/share_import.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/state/connection_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

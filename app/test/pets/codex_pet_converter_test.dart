@@ -4,10 +4,10 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/pets/codex_pet_converter.dart';
-import 'package:dpsk_app/pets/pet_library.dart' hide pngSize;
-import 'package:dpsk_app/pets/pet_pack_validator.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
+import 'package:dsh_app/pets/codex_pet_converter.dart';
+import 'package:dsh_app/pets/pet_library.dart' hide pngSize;
+import 'package:dsh_app/pets/pet_pack_validator.dart';
+import 'package:dsh_app/pets/pet_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as image;
 

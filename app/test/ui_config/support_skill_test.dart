@@ -1,7 +1,7 @@
 // The dsh-go-support skill: troubleshooting playbook + issue draft, reading the
 // diagnostics snapshot the app writes into the engine.
 
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';
@@ -14,7 +14,7 @@ void main() {
     expect(bundle.name, 'dsh-go-support');
     expect(bundle.files.keys, ['SKILL.md']);
     expect(bundle.skillMd.startsWith('---'), isTrue);
-    expect(bundle.skillMd, contains('# DPSK:managed'));
+    expect(bundle.skillMd, contains('# dsh-go:managed'));
     expect(bundle.skillMd, contains('name: dsh-go-support'));
   });
 

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/bots_state.dart';
-import 'package:dpsk_app/ui/bots/room_relay_limit_sheet.dart';
+import 'package:dsh_app/state/bots_state.dart';
+import 'package:dsh_app/ui/bots/room_relay_limit_sheet.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

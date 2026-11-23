@@ -1,10 +1,10 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/phone/dnd_mode_page.dart';
-import 'package:dpsk_app/ui/phone/phone_control_screen.dart';
-import 'package:dpsk_app/ui/phone/phone_self_check_panel.dart';
-import 'package:dpsk_app/ui/phone/phone_widgets.dart';
-import 'package:dpsk_app/ui/settings/index/settings_pages.dart';
-import 'package:dpsk_app/ui/settings/index/spot_anchor.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/phone/dnd_mode_page.dart';
+import 'package:dsh_app/ui/phone/phone_control_screen.dart';
+import 'package:dsh_app/ui/phone/phone_self_check_panel.dart';
+import 'package:dsh_app/ui/phone/phone_widgets.dart';
+import 'package:dsh_app/ui/settings/index/settings_pages.dart';
+import 'package:dsh_app/ui/settings/index/spot_anchor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

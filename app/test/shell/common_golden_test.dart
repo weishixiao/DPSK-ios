@@ -4,13 +4,13 @@
 //
 //   flutter test --update-goldens test/shell/common_golden_test.dart
 
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/empty_view.dart';
-import 'package:dpsk_app/ui/common/page_hero.dart';
-import 'package:dpsk_app/ui/common/status_dot.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/empty_view.dart';
+import 'package:dsh_app/ui/common/page_hero.dart';
+import 'package:dsh_app/ui/common/status_dot.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

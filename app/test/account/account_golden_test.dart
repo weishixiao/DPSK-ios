@@ -2,13 +2,13 @@
 //
 //   flutter test --update-goldens test/account
 
-import 'package:dpsk_app/state/account_state.dart';
-import 'package:dpsk_app/ui/account/account_page.dart';
-import 'package:dpsk_app/ui/account/account_widgets.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/onboarding/connect_page.dart';
-import 'package:dpsk_app/ui/onboarding/onboarding_scaffold.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/state/account_state.dart';
+import 'package:dsh_app/ui/account/account_page.dart';
+import 'package:dsh_app/ui/account/account_widgets.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/onboarding/connect_page.dart';
+import 'package:dsh_app/ui/onboarding/onboarding_scaffold.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

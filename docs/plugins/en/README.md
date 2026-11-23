@@ -1,12 +1,12 @@
-# Writing native plugins for DPSK
+# Writing native plugins for dsh-go
 
 Create, validate, install and publish a plugin from an empty directory: [From zero to the market](from-zero.md).
 
-**Not sure where to start?** Read [Choose a path](choose-path.md): an existing plugin, an existing web interface, or writing for DPSK from scratch. For what you can rely on, read the [stability promises](stability.md).
+**Not sure where to start?** Read [Choose a path](choose-path.md): an existing plugin, an existing web interface, or writing for dsh-go from scratch. For what you can rely on, read the [stability promises](stability.md).
 
 [中文](../README.md)
 
-The DPSK app can show a DSH plugin's content with native UI: tool results as cards, capsules above the composer, items in a reply's menu, a status strip and panels. The plugin stays an ordinary DSH plugin (an npm package whose logic runs in the engine); it only hands the app a **declaration** and some **JSON views**. The app draws them with its own components and never runs plugin code.
+The dsh-go app can show a DSH plugin's content with native UI: tool results as cards, capsules above the composer, items in a reply's menu, a status strip and panels. The plugin stays an ordinary DSH plugin (an npm package whose logic runs in the engine); it only hands the app a **declaration** and some **JSON views**. The app draws them with its own components and never runs plugin code.
 
 | You want | You write | Read |
 |---|---|---|
@@ -39,9 +39,9 @@ The DPSK app can show a DSH plugin's content with native UI: tool results as car
 
 ```
 plugin (a DSH plugin, runs in the engine)
- ├─ tool presentationMeta → { "DPSK/view": view }     ── conversation log ──▶ app: tool card (any host)
+ ├─ tool presentationMeta → { "dsh-go/view": view }     ── conversation log ──▶ app: tool card (any host)
  ├─ package.json "dshGo": capsules, menu, strip, panels ─┐
- └─ ctx.dshGo: views, data, tap handlers                 ├─ DPSK bridge ──▶ app: native slots (on-device engine)
+ └─ ctx.dshGo: views, data, tap handlers                 ├─ dsh-go bridge ──▶ app: native slots (on-device engine)
                                                          ─┘
 ```
 

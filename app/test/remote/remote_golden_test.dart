@@ -4,21 +4,21 @@
 //
 //   flutter test --update-goldens test/remote/remote_golden_test.dart
 
-import 'package:dpsk_app/remote/relay/relay_backend.dart';
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/remote/ssh/ssh_link.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/remote/host_key_dialog.dart';
-import 'package:dpsk_app/ui/remote/host_switcher.dart';
-import 'package:dpsk_app/ui/remote/remote_screen.dart';
-import 'package:dpsk_app/ui/remote/network_details_sheet.dart';
-import 'package:dpsk_app/ui/remote/ssh_host_form.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/remote/relay/relay_backend.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/remote/ssh/ssh_link.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/remote/host_key_dialog.dart';
+import 'package:dsh_app/ui/remote/host_switcher.dart';
+import 'package:dsh_app/ui/remote/remote_screen.dart';
+import 'package:dsh_app/ui/remote/network_details_sheet.dart';
+import 'package:dsh_app/ui/remote/ssh_host_form.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';

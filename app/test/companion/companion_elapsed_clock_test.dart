@@ -1,9 +1,9 @@
 import 'dart:ffi';
 
-import 'package:dpsk_app/companion/companion_elapsed_clock.dart';
-import 'package:dpsk_app/companion/companion_initiative.dart';
-import 'package:dpsk_app/companion/companion_initiative_owner.dart';
-import 'package:dpsk_app/companion/companion_signals.dart';
+import 'package:dsh_app/companion/companion_elapsed_clock.dart';
+import 'package:dsh_app/companion/companion_initiative.dart';
+import 'package:dsh_app/companion/companion_initiative_owner.dart';
+import 'package:dsh_app/companion/companion_signals.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

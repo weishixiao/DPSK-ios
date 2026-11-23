@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/common/scroll_edge_fade.dart';
+import 'package:dsh_app/ui/common/scroll_edge_fade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

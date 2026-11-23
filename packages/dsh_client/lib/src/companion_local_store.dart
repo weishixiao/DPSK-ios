@@ -235,7 +235,7 @@ class CompanionLocalStore {
 
   Future<Map<String, Object?>> exportCompanion() => _transaction(
     (doc, at) => {
-      'schema': 'DPSK/companion-export',
+      'schema': 'dsh-go/companion-export',
       ..._snapshotJson(doc, at),
       'exportedAt': at,
       'memories': _records(doc).map(_clone).toList(),

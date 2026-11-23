@@ -222,7 +222,7 @@ void main() {
           'assistant_prefill': 'NEW',
           'new_chat_prompt': '',
           'extensions': {
-            'dpsk': {
+            'dshgo': {
               'prefill': {'enabled': true, 'target': 'reasoning'},
             },
           },

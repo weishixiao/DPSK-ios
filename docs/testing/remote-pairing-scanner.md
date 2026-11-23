@@ -2,7 +2,7 @@
 
 ## Cause and scope
 
-[Issue #802](https://github.com/weishixiao/DPSK/issues/802) reports a blank camera preview and failed gallery decoding despite granted camera permission, with `MlKitContext has not been initialized`. The Android manifest deliberately removes `MlKitInitProvider` so disabled local OCR cannot initialize ML Kit at process startup. The Remote barcode scanner also needs that shared SDK, but previously only an admitted OCR job initialized it.
+[Issue #802](https://github.com/ccch1mneyyy/dsh-Go/issues/802) reports a blank camera preview and failed gallery decoding despite granted camera permission, with `MlKitContext has not been initialized`. The Android manifest deliberately removes `MlKitInitProvider` so disabled local OCR cannot initialize ML Kit at process startup. The Remote barcode scanner also needs that shared SDK, but previously only an admitted OCR job initialized it.
 
 Remote now prepares ML Kit through `dsh/app.initializePairingScanner` before mounting `MobileScanner` or analyzing a selected image. OCR and Remote share a synchronized, process-wide initialization gate. Success is reused; a failed attempt is not retried because the SDK may have partially initialized global state. Preparation errors return `scanner_initialization_failed` without native exception details.
 

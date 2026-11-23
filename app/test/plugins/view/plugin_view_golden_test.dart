@@ -3,10 +3,10 @@
 // chat stream; light and dark, plus an English set. Look at every image after
 // regenerating (`--update-goldens`).
 
-import 'package:dpsk_app/ui/chat/widgets/tool_row.dart';
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/chat/widgets/tool_row.dart';
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -57,7 +57,7 @@ class _RefreshKey extends StatelessWidget {
 }
 
 ToolChatItem pluginTool(String id, Object? view, {String city = '东京', String result = '{"ok":true}'}) =>
-    tool(id, 'weather', {'city': city, 'days': 3}, result: result, meta: {'DPSK/view': view, 'other': 1});
+    tool(id, 'weather', {'city': city, 'days': 3}, result: result, meta: {'dsh-go/view': view, 'other': 1});
 
 /// Tool rows the way the chat lays them out (StreamRow insets).
 Widget toolRows(List<ToolChatItem> items) => Column(

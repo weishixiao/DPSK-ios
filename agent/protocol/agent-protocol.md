@@ -1,7 +1,7 @@
 # Agent protocol
 
 The harness is the brain; it never touches another process. Every privileged
-action is a message to `dpsk-agentd`, a launchd daemon outside the app's
+action is a message to `dsh-go-agentd`, a launchd daemon outside the app's
 sandbox. The app carries the same messages over the same XPC connection, so what
 the AI can do is exactly what this document allows — there is no second path.
 
@@ -10,7 +10,7 @@ the AI can do is exactly what this document allows — there is no second path.
 One Mach service, one method:
 
 ```objc
-// NSXPC, name "com.dpsk.agentd", interface AgentServiceProtocol
+// NSXPC, name "io.github.ccch1mneyyy.dshgo.agentd", interface AgentServiceProtocol
 - (void)call:(NSData *)payload reply:(void (^)(NSData *reply))reply;
 ```
 
@@ -59,9 +59,9 @@ path exists, so a caller cannot mistake silence for success.
 
 ### Rules the service enforces itself
 
-These are not advice to the harness; they are checks in `DPSKAgentSafety`:
+These are not advice to the harness; they are checks in `DshGoAgentSafety`:
 
-1. **Allowlist.** `/var/mobile/Library/DPSKAgent/allowlist.json` holds
+1. **Allowlist.** `/var/mobile/Library/DshGoAgent/allowlist.json` holds
    `{"bundleIds":["..."],"paths":["..."]}`. No pid outside it is attached to.
    The daemon has the permission to inspect anything; the allowlist is what
    keeps that permission to the apps its owner builds.
@@ -73,7 +73,7 @@ These are not advice to the harness; they are checks in `DPSKAgentSafety`:
    `1...99999`. A malformed value is `ERR_BAD_PARAMS` and never reaches syscall.
 4. **No shell.** `tweak.compile` runs `/usr/bin/make` with an argv array. The
    project name must match `^[A-Za-z0-9._-]+$` and resolve inside
-   `/var/mobile/Library/DPSKAgent/projects`; nothing from a request is ever
+   `/var/mobile/Library/DshGoAgent/projects`; nothing from a request is ever
    concatenated into a command string.
 5. **Isolation.** The daemon catches every exception per request and answers an
    error: a bad message must not take down a daemon the whole workbench depends
@@ -81,6 +81,6 @@ These are not advice to the harness; they are checks in `DPSKAgentSafety`:
 
 ## Log
 
-Every request is appended to `/var/mobile/Library/DPSKAgent/agentd.log` as one
+Every request is appended to `/var/mobile/Library/DshGoAgent/agentd.log` as one
 line: time, id, method, target, outcome. The chat panel tails this file, so what
 the UI shows as tool output is the same record the daemon wrote.

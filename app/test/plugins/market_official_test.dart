@@ -2,20 +2,20 @@
 // leniently, the official entry winning over dshfind's, the three sections,
 // risk tags and the confirm before a risky install, the integrity check, the
 // minimum app version, 有更新 and withdrawn versions, and 提交插件. Fixtures
-// in fixtures/official-index.json and fixtures/DPSK.json follow §3.
+// in fixtures/official-index.json and fixtures/dsh-go.json follow §3.
 
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/plugins/installed_tab.dart';
-import 'package:dpsk_app/ui/plugins/market_tab.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/plugins/plugin_widgets.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/plugins/installed_tab.dart';
+import 'package:dsh_app/ui/plugins/market_tab.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/plugins/plugin_widgets.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -191,7 +191,7 @@ void main() {
       final index = jsonEncode(officialIndexJson());
       final sidecar = jsonEncode(officialSidecarJson());
       Never http(int status) => throw MarketFetchException('HTTP $status', statusCode: status);
-      // Both bases answer alike; [sidecarOf] stands in for DPSK.json.
+      // Both bases answer alike; [sidecarOf] stands in for dsh-go.json.
       MarketFileFetcher serve({Object? indexOf, Object? sidecarOf}) => (url, {etag}) async {
         final body = url.path.endsWith('index.json') ? indexOf : sidecarOf;
         if (body is Never Function()) body();
@@ -317,12 +317,12 @@ void main() {
 
     testWidgets('three sections; cards carry the section and the risk', (tester) async {
       await pumpScreen(tester);
-      for (final title in ['官方', '适配 DPSK', '全部']) {
+      for (final title in ['官方', '适配 DSH Go', '全部']) {
         expect(find.widgetWithText(Semantics, title), findsWidgets, reason: title);
       }
       expect(inCard('生图生视频', '官方'), findsOneWidget);
       expect(inCard('生图生视频', '中风险'), findsNothing, reason: 'low risk shows no tag');
-      expect(inCard('天气', '适配 DPSK'), findsOneWidget);
+      expect(inCard('天气', '适配 DSH Go'), findsOneWidget);
       expect(inCard('天气', '中风险'), findsOneWidget);
       expect(inCard('原生助手', '高风险'), findsOneWidget);
       // The tags' colours: amber for medium, red for high.
@@ -347,7 +347,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
       await tester.pumpAndSettle();
       expect(find.text('官方'), findsNothing);
-      expect(find.text('适配 DPSK'), findsWidgets);
+      expect(find.text('适配 DSH Go'), findsWidgets);
       expect(card('天气'), findsOneWidget);
     });
 
@@ -454,9 +454,9 @@ void main() {
     testWidgets('an app older than minApp shows the plugin but no install', (tester) async {
       await pumpScreen(tester);
       await openSheet(tester, '同声翻译');
-      final button = tester.widget<FilledButton>(find.widgetWithText(FilledButton, '需要 DPSK 9.0.0 或更高版本'));
+      final button = tester.widget<FilledButton>(find.widgetWithText(FilledButton, '需要 DSH Go 9.0.0 或更高版本'));
       expect(button.onPressed, isNull);
-      expect(find.text('需要 DPSK'), findsOneWidget);
+      expect(find.text('需要 DSH Go'), findsOneWidget);
       expect(find.text('安装到本机'), findsNothing);
     });
 

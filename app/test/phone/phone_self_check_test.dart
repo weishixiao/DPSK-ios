@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/diagnostics/diagnostics_markdown.dart' show diagnosticsMarkdownBytes;
-import 'package:dpsk_app/phone/phone_self_check.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/phone/phone_self_check_panel.dart';
+import 'package:dsh_app/diagnostics/diagnostics_markdown.dart' show diagnosticsMarkdownBytes;
+import 'package:dsh_app/phone/phone_self_check.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/phone/phone_self_check_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -457,7 +457,7 @@ void main() {
     await copied.future;
     expect(await File(path!).exists(), isTrue);
     expect(content, isNot(contains('never-export')));
-    reply.complete('Download/DPSK/dsh-phone-self-check.md');
+    reply.complete('Download/DSH-Go/dsh-phone-self-check.md');
     await done;
     expect(await File(path!).exists(), isFalse);
     expect(await root.list().toList(), isEmpty);

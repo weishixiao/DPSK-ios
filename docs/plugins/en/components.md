@@ -138,4 +138,4 @@ Too large, or nested deeper than 64: the whole block falls back. Everything else
 
 ## View-v2 inputs and structure
 
-The 24 input and structure components, forms, two-way bindings, bounded arithmetic, scheduling and profile budgets are documented in [Inputs, forms and local state](inputs.md); the empty state and the gallery are above. The [workbench example](../../../examples/plugins/DPSK-example-workbench/) is runnable.
+The 24 input and structure components, forms, two-way bindings, bounded arithmetic, scheduling and profile budgets are documented in [Inputs, forms and local state](inputs.md); the empty state and the gallery are above. The [workbench example](../../../examples/plugins/dsh-go-example-workbench/) is runnable.

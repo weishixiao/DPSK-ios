@@ -2,11 +2,11 @@
 // mirrored stepper and its two equal buttons, row heights, the trailing edge
 // shared by switches and capsules, and the 已修改 tag centred on its title.
 
-import 'package:dpsk_app/ui/engine_settings/field_row.dart';
-import 'package:dpsk_app/ui/engine_settings/field_sheets.dart';
-import 'package:dpsk_app/ui/engine_settings/general_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/runtime_settings_pages.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/engine_settings/field_row.dart';
+import 'package:dsh_app/ui/engine_settings/field_sheets.dart';
+import 'package:dsh_app/ui/engine_settings/general_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/runtime_settings_pages.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

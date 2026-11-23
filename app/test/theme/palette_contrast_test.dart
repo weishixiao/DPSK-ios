@@ -2,7 +2,7 @@
 // picks) keeps the contrast rules of docs/design/polish-guide.md §1.1, in
 // light and dark. Mist stays byte-identical to the original Mist Glass tokens.
 
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

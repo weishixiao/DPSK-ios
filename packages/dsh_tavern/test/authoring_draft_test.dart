@@ -50,7 +50,7 @@ void main() {
     await h.engine.putLorebook('harbor', {'entries': <String, Object?>{}});
     final bookFile = File('${h.root.path}/lorebooks/harbor.json');
     final book = <String, Object?>{
-      'format': 'dpsk-lorebook',
+      'format': 'dshgo-lorebook',
       'version': 1,
       'stWorldName': 'Harbor',
       'book': {
@@ -77,7 +77,7 @@ void main() {
     expect(_source(draft, resource).mediaRefs, ['notes.txt']);
     expect(_source(draft, resource).sourceFormat, 'json');
     expect(_source(draft, 'lorebook:harbor').base, book);
-    expect(_source(draft, 'lorebook:harbor').sourceFormat, 'dpsk-lorebook');
+    expect(_source(draft, 'lorebook:harbor').sourceFormat, 'dshgo-lorebook');
     for (final source in draft.sources) {
       expect(source.applySupported, isTrue);
       expect(source.authorityRevision, isNotNull);
@@ -175,7 +175,7 @@ void main() {
       'temperature': 0.8,
       'foreign': 'current',
       'extensions': {
-        'dpsk': {
+        'dshgo': {
           'prefill': {'enabled': false, 'target': 'content'},
         },
       },

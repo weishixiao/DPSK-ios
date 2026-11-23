@@ -5,23 +5,23 @@
 //
 //   flutter test test/drawer/drawer_geometry_test.dart
 
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/drawer_view_state.dart';
-import 'package:dpsk_app/state/session_attention_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
-import 'package:dpsk_app/ui/common/capsule_chip.dart';
-import 'package:dpsk_app/ui/common/empty_view.dart';
-import 'package:dpsk_app/ui/shell/drawer/drawer_filter_bar.dart';
-import 'package:dpsk_app/ui/shell/drawer/folder_header.dart';
-import 'package:dpsk_app/ui/shell/drawer/folder_mark.dart';
-import 'package:dpsk_app/ui/shell/drawer/selection_bars.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
-import 'package:dpsk_app/ui/shell/sessions_drawer.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/ui/workspace/workspace_switcher.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/drawer_view_state.dart';
+import 'package:dsh_app/state/session_attention_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
+import 'package:dsh_app/ui/common/capsule_chip.dart';
+import 'package:dsh_app/ui/common/empty_view.dart';
+import 'package:dsh_app/ui/shell/drawer/drawer_filter_bar.dart';
+import 'package:dsh_app/ui/shell/drawer/folder_header.dart';
+import 'package:dsh_app/ui/shell/drawer/folder_mark.dart';
+import 'package:dsh_app/ui/shell/drawer/selection_bars.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/ui/shell/sessions_drawer.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/workspace/workspace_switcher.dart';
 import 'package:dsh_client/dsh_client.dart' show SessionSummary;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

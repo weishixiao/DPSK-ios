@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/usage/usage_ledger.dart';
-import 'package:dpsk_app/usage/usage_v4_ledger.dart';
+import 'package:dsh_app/usage/usage_ledger.dart';
+import 'package:dsh_app/usage/usage_v4_ledger.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

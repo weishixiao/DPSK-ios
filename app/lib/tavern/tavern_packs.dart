@@ -42,8 +42,8 @@ List<Map<String, Object?>> tavernPackResources(TavernPackVersion version) => [
 typedef TavernPackCast = ({String localId, String name, bool resource});
 
 List<TavernPackCast> tavernPackCast(TavernPackVersion version) {
-  final dpsk = version.manifest['dpsk'];
-  final cast = dpsk is Map<String, Object?> ? dpsk['cast'] : null;
+  final dshgo = version.manifest['dshgo'];
+  final cast = dshgo is Map<String, Object?> ? dshgo['cast'] : null;
   return [
     if (cast is List<Object?>)
       for (final member in cast.whereType<Map<String, Object?>>())

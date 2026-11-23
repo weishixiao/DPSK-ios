@@ -20,7 +20,7 @@
 
 ## 深链与生命周期
 
-EntryAbility 增加 `singleton` 和 `dpsk` scheme 的 viewData/browsable skill，用于已有 `dpsk://forum/auth?...`、分享码和 App 页面入口。仅注册自己的自定义 scheme；没有未经域名配置的 https App Linking 声明。若系统显式送来 http/https viewData，通道按原样交给现有 Dart 路由器决定，原生层不消费登录凭证，不记录 URI。
+EntryAbility 增加 `singleton` 和 `dshgo` scheme 的 viewData/browsable skill，用于已有 `dshgo://forum/auth?...`、分享码和 App 页面入口。仅注册自己的自定义 scheme；没有未经域名配置的 https App Linking 声明。若系统显式送来 http/https viewData，通道按原样交给现有 Dart 路由器决定，原生层不消费登录凭证，不记录 URI。
 
 初始 Want 来自公开 `UIAbility.launchWant`；热启动来自 oh-flutter 的 `NewWantListener`。按 Ability 对象记录已取的冷启动，用弱引用集合避免长期持有旧窗口；有意重复到达的热链接不会按 URL 去重。等待队列在进程内保留，避免冷启动已取走、Dart ready 前引擎重建导致链接消失。队列交给当时已 ready 的 `dsh/links`，不是磁盘持久化；杀进程后的系统重放与多窗口路由仍需设备验证。
 
@@ -67,11 +67,11 @@ OHOS_TYPESCRIPT_PREFIX=/absolute/runtime/ohos/process \
 
 本版以c818155为基底，完整替换05号P3b，保留时区/前台/刷新率/登录回调边界。只处理公开 `ohos.want.action.viewData` 的单个 Want.uri，要求只读授权flag；系统真正允许读取与否以 fs.open 的结果为准，flag本身不是授权证明。没有读取猜测的Want.parameters键，没有申请广泛文件/媒体权限或持久URI权限。
 
-接收方声明 FileOpen：general.file、general.plain-text、application/octet-stream、application/pdf、image/*。这些是公开文件处理声明；具体文件管理器是否把某个扩展名匹配到本App，尤其.dpsk，以及目标SDK对混用UTD/MIME的匹配仍待主线实测，不声称全类型系统关联已完成。显式已授权Want的处理与该匹配门分开。
+接收方声明 FileOpen：general.file、general.plain-text、application/octet-stream、application/pdf、image/*。这些是公开文件处理声明；具体文件管理器是否把某个扩展名匹配到本App，尤其.dshgo，以及目标SDK对混用UTD/MIME的匹配仍待主线实测，不声称全类型系统关联已完成。显式已授权Want的处理与该匹配门分开。
 
 URI只接受外部 file:// authority；拒绝自身bundle（含大小写别名）、空authority、点段authority、百分号/凭据/端口authority、点路径分量、NUL、query/fragment。不接受原始路径或Android content URI。路径经OS按原始URI只读打开，不把外来路径拼进自己的源文件路径。fs.open含NONBLOCK，随后必须真实fstat为普通文件且不超过30MiB；对普通文件的有效授权和provider行为仍需设备测试。
 
-最多4个在途复制；后续文件明确unreadable，不额外持有FD。每次以公开mkdtemp创建独占私有cache目录，分块256KiB读写并处理短IO；零进展、提前EOF、复制前后size不一致、fsync失败均不交付成功。FD关闭后才可见成功事件。名称按UTF-8完整码点限制240字节，保留不超过32字节的扩展名，使合法长中文.dpsk文件仍进入原Dart扩展名路由。副本是本地空authority的file:/// URI，供Dart File读取；它不用于跨App授权，不能换成带bundle的OS fileUri URI。原始文件/临时授权消失后，完成的副本仍可读。
+最多4个在途复制；后续文件明确unreadable，不额外持有FD。每次以公开mkdtemp创建独占私有cache目录，分块256KiB读写并处理短IO；零进展、提前EOF、复制前后size不一致、fsync失败均不交付成功。FD关闭后才可见成功事件。名称按UTF-8完整码点限制240字节，保留不超过32字节的扩展名，使合法长中文.dshgo文件仍进入原Dart扩展名路由。副本是本地空authority的file:/// URI，供Dart File读取；它不用于跨App授权，不能换成带bundle的OS fileUri URI。原始文件/临时授权消失后，完成的副本仍可读。
 
 全部到达先占一个顺序位置。慢文件复制期间，后来的链接等待；复制完成/失败后从队头依次交给当前ready引擎。引擎更换保留在途结果及到达顺序；冷启动Want按Ability只消费一次，热到达不误去重。新引擎不回放已交付事件，旧engine detach不会抹掉新接收者。文件读FD立即请求，不等待先前文件完成才开始申请授权。
 

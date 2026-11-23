@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/diagnostics/app_error_log.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/app_error_log.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -43,13 +43,13 @@ void main() {
     log.record(
       AppErrorSource.platform,
       StateError('PRIVATE_CHAT token=PRIVATE_TOKEN'),
-      StackTrace.fromString('#0 synthetic (package:dpsk_app/main.dart:12:3)\nPRIVATE_AUDIO\n/home/private.dart:1:2'),
+      StackTrace.fromString('#0 synthetic (package:dsh_app/main.dart:12:3)\nPRIVATE_AUDIO\n/home/private.dart:1:2'),
     );
     await Future<void>.value();
     expect(channel.records.single, {
       'source': 'platform',
       'errorType': 'StateError',
-      'stack': 'package:dpsk_app/main.dart:12:3',
+      'stack': 'package:dsh_app/main.dart:12:3',
     });
     expect(jsonEncode(channel.records), isNot(contains('PRIVATE_')));
     channel.fail = true;

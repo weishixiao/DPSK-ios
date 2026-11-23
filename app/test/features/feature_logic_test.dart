@@ -5,15 +5,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/commands_state.dart';
-import 'package:dpsk_app/ui/chat/slash_palette.dart';
-import 'package:dpsk_app/ui/engine_settings/runtime_settings_pages.dart';
-import 'package:dpsk_app/links/page_links.dart';
-import 'package:dpsk_app/ui/features/feature_catalog.dart';
-import 'package:dpsk_app/ui/features/feature_format.dart';
-import 'package:dpsk_app/ui/settings/index/spots.dart';
-import 'package:dpsk_app/ui/terminal/terminal_page.dart';
-import 'package:dpsk_app/ui/web/web_target.dart';
+import 'package:dsh_app/state/commands_state.dart';
+import 'package:dsh_app/ui/chat/slash_palette.dart';
+import 'package:dsh_app/ui/engine_settings/runtime_settings_pages.dart';
+import 'package:dsh_app/links/page_links.dart';
+import 'package:dsh_app/ui/features/feature_catalog.dart';
+import 'package:dsh_app/ui/features/feature_format.dart';
+import 'package:dsh_app/ui/settings/index/spots.dart';
+import 'package:dsh_app/ui/terminal/terminal_page.dart';
+import 'package:dsh_app/ui/web/web_target.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

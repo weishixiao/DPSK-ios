@@ -204,7 +204,7 @@ void main() {
           {'value': '海'},
         ],
       },
-      'dpsk': {
+      'dshgo': {
         'other': {'keep': true},
         'inspection': {
           'version': 1,
@@ -267,12 +267,12 @@ void main() {
         [pending.message.text, pending.message.reasoning, pending.message.usage, pending.message.reportedUsage],
         ['', null, null, null],
       );
-      final own = pending.extra['dpsk']! as Map<String, Object?>;
+      final own = pending.extra['dshgo']! as Map<String, Object?>;
       expect(own.containsKey('inspection'), isFalse);
       expect(own['other'], {'keep': true});
       expect(pending.extra['foreign'], extra['foreign']);
       expect(pending.original, original);
-      expect((store.rawNodeExtra(chat, 'full')['dpsk']! as Map<String, Object?>).containsKey('inspection'), isTrue);
+      expect((store.rawNodeExtra(chat, 'full')['dshgo']! as Map<String, Object?>).containsKey('inspection'), isTrue);
       expect(store.path(chat).first.text, '');
       store.writeStreamingBody(chat, 'full', text: '\ufeffdraft', reasoning: '\ufeffthought');
       final next = store.allNodes(chat).first.message;

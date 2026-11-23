@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/providers_state.dart';
-import 'package:dpsk_app/state/read_list_cache.dart';
-import 'package:dpsk_app/state/read_list_identity.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/providers_state.dart';
+import 'package:dsh_app/state/read_list_cache.dart';
+import 'package:dsh_app/state/read_list_identity.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

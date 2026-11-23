@@ -2,17 +2,17 @@
 
 [English](en/from-zero.md)
 
-这篇从空目录做一个可安装的 DSH 插件。它统计输入文本的 Unicode 码点、UTF-8 字节和行数，在 DPSK 中显示原生卡片，同时保留模型和网页版可读的普通工具结果。示例不联网、不写文件、不读剪贴板；输出只含计数。
+这篇从空目录做一个可安装的 DSH 插件。它统计输入文本的 Unicode 码点、UTF-8 字节和行数，在 dsh-go 中显示原生卡片，同时保留模型和网页版可读的普通工具结果。示例不联网、不写文件、不读剪贴板；输出只含计数。
 
 完成路径是：写出 bundle → 跑测试和原生视图检查 → 安装到主机 → 检查发布 tarball → 发布自己的包 → 核对市场索引。每一步都可以单独确认。
 
 ## 1. 准备开发环境
 
-示例基于 **DSH / dsh-tools 0.2.1-rc.4**，需要 Node 22.19 或以上（本文在 Node 24 上验证）。DPSK 现在内置 0.2.2-rc.1（要求 Node 24.9 或以上），仓库里的示例插件也在它上面跑测试。
+示例基于 **DSH / dsh-tools 0.2.1-rc.4**，需要 Node 22.19 或以上（本文在 Node 24 上验证）。DSH Go 现在内置 0.2.2-rc.1（要求 Node 24.9 或以上），仓库里的示例插件也在它上面跑测试。
 
 `engines.dsh` 和 dsh-tools 的依赖写**验证过的版本范围**，和仓库里的示例插件一样：`">=0.2.1-rc.2 <0.3.0-0"`。DSH 安装时按 semver 比较，写成一个精确版本，引擎一升级（例如 rc.2 → rc.4）插件就会被拒装，哪怕代码一行没变。下限写你测过的最低版本；上限停在下一个次版本之前，因为 0.x 的次版本可以有破坏性改动。要支持范围以外的版本，先在那个版本上跑一遍同样的测试，再放宽。
 
-需要一个已安装的 `dsh` CLI，以及一份包含 `sdk/plugin-kit/` 的 DPSK 开发源码。SDK 目前随仓库分发，没有发布到 npm；不要把示例中的名称 `@dsh-go/plugin-kit` 当成可直接安装的公共包。本文直接调用源码中的检查器，插件运行时只依赖 DSH 提供的 `dsh-tools`。
+需要一个已安装的 `dsh` CLI，以及一份包含 `sdk/plugin-kit/` 的 dsh-go 开发源码。SDK 目前随仓库分发，没有发布到 npm；不要把示例中的名称 `@dsh-go/plugin-kit` 当成可直接安装的公共包。本文直接调用源码中的检查器，插件运行时只依赖 DSH 提供的 `dsh-tools`。
 
 ```sh
 node --version
@@ -20,8 +20,8 @@ npm --version
 pnpm --version
 dsh --version
 
-# 替换成你取得的完整 DPSK 开发源码根目录。
-DSHGO_DEV_ROOT=/absolute/path/to/DPSK
+# 替换成你取得的完整 dsh-go 开发源码根目录。
+DSHGO_DEV_ROOT=/absolute/path/to/dsh-go
 mkdir -p dsh-text-metrics-demo/lib dsh-text-metrics-demo/test
 cd dsh-text-metrics-demo
 ```
@@ -107,7 +107,7 @@ export function toolCard(build) {
     try {
       const json = JSON.stringify(build(args, value))
       if (json === undefined || Buffer.byteLength(json, 'utf8') > 8 * 1024) return {}
-      return { 'DPSK/view': JSON.parse(json) }
+      return { 'dsh-go/view': JSON.parse(json) }
     } catch {
       return {}
     }
@@ -192,8 +192,8 @@ test('real defineTool output validates and carries both model text and a card', 
     const value = await tool.execute(args)
     assert.deepEqual(validateJsonSchemaValue(tool.output.schema, value, 'value'), [])
     const meta = tool.output.presentationMeta(args, value)
-    assert.deepEqual(meta['DPSK/view'], metricsView(value))
-    assert.ok(Buffer.byteLength(JSON.stringify(meta['DPSK/view']), 'utf8') < 8192)
+    assert.deepEqual(meta['dsh-go/view'], metricsView(value))
+    assert.ok(Buffer.byteLength(JSON.stringify(meta['dsh-go/view']), 'utf8') < 8192)
     assert.equal(tool.output.render(args, value)[0].type, 'text')
     assert.ok(!JSON.stringify(meta).includes(args.text))
   }
@@ -213,7 +213,7 @@ test('a broken or oversized card does not fail the tool result', () => {
 # Text metrics / 文本统计
 
 The `text_metrics` tool counts Unicode code points, UTF-8 bytes and lines.
-It does not store the input or make network requests. DPSK shows a native
+It does not store the input or make network requests. dsh-go shows a native
 card; the DSH web client keeps the ordinary text result.
 
 `text_metrics` 统计码点、UTF-8 字节和行数，不保存输入、不发网络请求。
@@ -353,9 +353,9 @@ npm view @your-scope/dsh-text-metrics name version repository dist.integrity --j
 
 示例没有 `prepare`/`prepublishOnly` 等构建脚本，所以这里明确关闭脚本；将来依赖这些脚本构建时，先完成构建与测试再采用相应发布流程。不要仅把 GitHub 源码仓库上传成功当成 npm 包已可安装。npm 的[发布说明](https://docs.npmjs.com/cli/v11/commands/npm-publish/)是账号操作和参数的依据。
 
-## 7. 核对 DPSK 实际使用的市场索引
+## 7. 核对 dsh-go 实际使用的市场索引
 
-> 官方市场（DPSK-market）的投稿与上架规则见[发布与上架](market.md)。本节只讲默认的发现索引。
+> 官方市场（dsh-go-market）的投稿与上架规则见[发布与上架](market.md)。本节只讲默认的发现索引。
 
 当前 App 默认读取 dshfind 的 **format-1 索引**：`https://api.dshfind.com/market/dsh-index.json`。dshfind 网站目录发现和这个索引有不同的准入规则。
 
@@ -375,7 +375,7 @@ console.log(entry ? JSON.stringify(entry, null, 2) : 'Not in this index yet')
 JS
 ```
 
-最后在 App 的插件市场搜索包名，核对显示的版本、来源和安装目标主机，安装后再做一次工具调用。网站已有页面、npm 已发布、索引已有条目、App 已能安装是四个独立的状态，逐一确认即可。若迟迟未被收录，可附上公开仓库地址、准确的 npm 版本和索引查询结果，通过 dshfind 的反馈渠道联系；无需在 DPSK 提交上架申请。
+最后在 App 的插件市场搜索包名，核对显示的版本、来源和安装目标主机，安装后再做一次工具调用。网站已有页面、npm 已发布、索引已有条目、App 已能安装是四个独立的状态，逐一确认即可。若迟迟未被收录，可附上公开仓库地址、准确的 npm 版本和索引查询结果，通过 dshfind 的反馈渠道联系；无需在 dsh-go 提交上架申请。
 
 ## 8. 常见问题
 
@@ -391,6 +391,6 @@ JS
 
 ## 参考
 
-实现细节可对照仓库的[快速开始](quickstart.md)、[主机覆盖](hosts.md)、[自查清单](checklist.md)，以及 SDK 和 [weather 示例](../../examples/plugins/DPSK-example-weather/)源码。
+实现细节可对照仓库的[快速开始](quickstart.md)、[主机覆盖](hosts.md)、[自查清单](checklist.md)，以及 SDK 和 [weather 示例](../../examples/plugins/dsh-go-example-weather/)源码。
 
 发布层参考 [DSH 官方 bundle/profile 教程](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/develop/basic/publish.md)。市场条件来自 [dshfind 发现说明](https://github.com/hikariming/dshfind/blob/3ee8543f3ec60792cae0523d4a149cba0d68770c/README.zh-CN.md)及[索引生成器](https://github.com/hikariming/dshfind/blob/3ee8543f3ec60792cae0523d4a149cba0d68770c/scripts/lib/dsh-index.mjs)。

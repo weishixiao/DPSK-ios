@@ -13,7 +13,7 @@ export 'src/authoring_seed.dart';
 export 'src/authoring_simulation.dart';
 export 'src/backup.dart';
 export 'src/director.dart';
-export 'src/dpsk_inspection.dart';
+export 'src/dshgo_inspection.dart';
 export 'src/engine.dart';
 export 'src/gameplay.dart';
 export 'src/gameplay_bindings.dart';

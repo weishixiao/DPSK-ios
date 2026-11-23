@@ -4,9 +4,9 @@
 
 ## 实际接线
 
-RuntimePaths.linuxDirectory 固定为 App filesDir/linux-tools。RuntimeController.start 创建该目录并传给 HostOptions.linuxDirectory；N-API和HostCore要求它是现存、无链接的规范绝对目录，不能与已发布runtime根或DSH guest根双向嵌套。宿主只通过受保护的 DPSK_OHOS_LINUX_DIRECTORY 交给唯一preload，Dart传入的env不能覆盖它。
+RuntimePaths.linuxDirectory 固定为 App filesDir/linux-tools。RuntimeController.start 创建该目录并传给 HostOptions.linuxDirectory；N-API和HostCore要求它是现存、无链接的规范绝对目录，不能与已发布runtime根或DSH guest根双向嵌套。宿主只通过受保护的 DSH_GO_OHOS_LINUX_DIRECTORY 交给唯一preload，Dart传入的env不能覆盖它。
 
-runtime/ohos/preload.mjs 在插件执行前捕获宿主目录与原生库目录。实际OH SubprocessRuntime 注册 /DPSK/v1/linux，复用已有connection的token→cookie与请求鉴权。后续插件改env不改已捕获的目录；Worker不拥有第二个Linux owner。GET不读资产、不联网、不导入原生库、不建立VM，App状态查询也不调用运行时安装/恢复的initialize()。
+runtime/ohos/preload.mjs 在插件执行前捕获宿主目录与原生库目录。实际OH SubprocessRuntime 注册 /dsh-go/v1/linux，复用已有connection的token→cookie与请求鉴权。后续插件改env不改已捕获的目录；Worker不拥有第二个Linux owner。GET不读资产、不联网、不导入原生库、不建立VM，App状态查询也不调用运行时安装/恢复的initialize()。
 
 签名runtime内的六资产入口固定为 runtime/ohos/linux/assets/；首次显式开启才读取清单、下载固定华为源归档、校验字节并安装。实际opened后才开放作业准入，目录、库或HTTP202存在均不能作READY。下载和安装进度来自实际阶段；开关关闭在安装中触发取消。已发布可写instance不会被停止操作删除，也不会在下次开启时被新安装覆盖。
 

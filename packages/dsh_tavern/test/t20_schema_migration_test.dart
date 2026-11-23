@@ -342,7 +342,7 @@ void _expectUpgradedLegacyData(Database database, Object? expected) {
     expect(row.remove('source_epoch'), 0);
     expect(row.remove('content_version'), 1);
     expect(jsonDecode(row.remove('display_context')! as String), {
-      'dpsk': {'tavernState': null, 'chatJsonl': null},
+      'dshgo': {'tavernState': null, 'chatJsonl': null},
     });
   }
   for (final row in actual['memories']! as List<Map<String, Object?>>) {

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-DPSK 是 DeepSeek Harness 的手机应用：Flutter 原生界面 + 纯 Dart 客户端 + 打过补丁的 DSH 引擎运行时。Android 版在 PRoot 里运行 `dsh web`；鸿蒙版共用同一套 Dart，宿主是 ArkTS（`app/ohos/`），引擎跑在 App 进程内的 Node 里（`runtime/ohos/`，见 [docs/architecture.md §3B](docs/architecture.md)）。改动前先读 [CONTRIBUTING.md](CONTRIBUTING.md)（贡献与验证契约）与 [docs/architecture.md](docs/architecture.md)。
+dsh-Go 是 DeepSeek Harness 的手机应用：Flutter 原生界面 + 纯 Dart 客户端 + 打过补丁的 DSH 引擎运行时。Android 版在 PRoot 里运行 `dsh web`；鸿蒙版共用同一套 Dart，宿主是 ArkTS（`app/ohos/`），引擎跑在 App 进程内的 Node 里（`runtime/ohos/`，见 [docs/architecture.md §3B](docs/architecture.md)）。改动前先读 [CONTRIBUTING.md](CONTRIBUTING.md)（贡献与验证契约）与 [docs/architecture.md](docs/architecture.md)。
 
 ## 仓库布局
 
@@ -11,7 +11,7 @@ app/ohos/                    鸿蒙 ArkTS 宿主工程（Android 不读）
 packages/dsh_client/         纯 Dart 客户端：HTTP/SSE、mux、会话与删除 API
 packages/dsh_remote/         远程传输：WebRTC / LAN / TURN / 中继
 runtime/                     打补丁的 DSH 引擎运行时
-runtime/bridge/dsh-go-bridge/  App ↔ 引擎的 HTTP 桥（/DPSK/v1/*，含会话删除路由）
+runtime/bridge/dsh-go-bridge/  App ↔ 引擎的 HTTP 桥（/dsh-go/v1/*，含会话删除路由）
 runtime/patches/             引擎补丁及其 pins.json（补丁与版本钉死，targetSets 分 android / ohos）
 runtime/ohos/                鸿蒙本机引擎：Node 宿主、虚拟进程、生命周期、运行时组成
 sdk/plugin-kit/              插件 SDK

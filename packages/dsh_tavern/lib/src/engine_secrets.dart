@@ -1,6 +1,6 @@
 part of 'engine.dart';
 
-const _secretRuntimeKey = 'dpskSecretRuntime';
+const _secretRuntimeKey = 'dshgoSecretRuntime';
 
 bool _secretsEnabled(Map<String, Object?> settings) =>
     settings['stateEnabled'] != false &&
@@ -8,7 +8,7 @@ bool _secretsEnabled(Map<String, Object?> settings) =>
     _map(settings['director'])['secretsEnabled'] == true;
 
 state_core.SecretDefinition _secretDefinition(Map<String, Object?> data) {
-  final own = _readMap(_readMap(data['extensions'])['dpsk']);
+  final own = _readMap(_readMap(data['extensions'])['dshgo']);
   return state_core.SecretDefinition.parse(
     _readMap(own['director'])['secretSlots'],
     state: _stateDefinition(data),
@@ -204,7 +204,7 @@ List<state_core.SecretRelease> _secretReleases(
         if (configId == null) {
           return null;
         }
-        return _gameplayHistoricalConfig(engine, {'dpskPackDefinitionConfigId': configId}).config?.secrets;
+        return _gameplayHistoricalConfig(engine, {'dshgoPackDefinitionConfigId': configId}).config?.secrets;
       },
     );
     if (release == null) {
@@ -356,14 +356,14 @@ _SecretInputPreparation _prepareSecretInput(
 }) {
   final state = _copy(_map(source['state']));
   final saved = <String, Object?>{
-    'messageVariables': {if (state['valueExists'] == true) 'dpsk': state['value']},
+    'messageVariables': {if (state['valueExists'] == true) 'dshgo': state['value']},
     if (source.containsKey('secretRuntime')) _secretRuntimeKey: source['secretRuntime'],
   };
   final protection = _SecretProtection(data, saved, gameplay: gameplay);
   final authorization = authorizationSource ?? source;
   final authorizationState = _map(authorization['state']);
   final authorizationSaved = <String, Object?>{
-    'messageVariables': {if (authorizationState['valueExists'] == true) 'dpsk': authorizationState['value']},
+    'messageVariables': {if (authorizationState['valueExists'] == true) 'dshgo': authorizationState['value']},
     if (authorization.containsKey('secretRuntime')) _secretRuntimeKey: authorization['secretRuntime'],
   };
   final currentProtection = _SecretProtection(data, authorizationSaved, gameplay: gameplay);
@@ -535,7 +535,7 @@ List<PromptInjection> _secretTurnInjections(TavernEngine engine, _Turn turn, Map
 List<PromptInjection> _secretReleaseInjections(_Turn turn, List<state_core.SecretRelease> releases) {
   final result = <PromptInjection>[];
   for (final release in releases) {
-    final sourceId = 'dpsk.secret.release:${_directorHash(_secretKnowledge(release))}';
+    final sourceId = 'dshgo.secret.release:${_directorHash(_secretKnowledge(release))}';
     turn.secretOffered[sourceId] = {...release.toJson(), 'sourceId': sourceId, 'knowledge': _secretKnowledge(release)};
     if (release.text.isEmpty) continue;
     result.add(
@@ -678,7 +678,7 @@ state_core.SecretCapability? _captureSecretCapability(_DirectorJob job) {
   final state = _map(job.source['state']);
   if (_stateRows(state['issues']).isNotEmpty || state['valueExists'] != true) return null;
   final saved = <String, Object?>{
-    'messageVariables': {'dpsk': state['value']},
+    'messageVariables': {'dshgo': state['value']},
     if (job.source.containsKey('secretRuntime')) _secretRuntimeKey: job.source['secretRuntime'],
   };
   final protection = _SecretProtection(data, saved, gameplay: job.gameplay);
@@ -955,7 +955,7 @@ state_core.SecretCapability? _secretBindingCapability(
   _SecretProtection protection,
   Map<String, Object?> rawExtra,
 ) {
-  if (rawExtra.containsKey('dpsk') && rawExtra['dpsk'] is! Map<String, Object?>) {
+  if (rawExtra.containsKey('dshgo') && rawExtra['dshgo'] is! Map<String, Object?>) {
     turn.secretIssues.add(_directorIssue('secret_extra_unavailable', id: proposal.id));
     return null;
   }
@@ -1058,12 +1058,12 @@ _SecretBindingCandidate _buildSecretBindingCandidate(
       },
   ];
   final persistent = _copy(saved);
-  persistent['messageVariables'] = {..._map(persistent['messageVariables']), 'dpsk': prepared.value};
+  persistent['messageVariables'] = {..._map(persistent['messageVariables']), 'dshgo': prepared.value};
   if (prepared.runtimeExists) {
-    persistent['dpskStateRuntime'] = prepared.runtime;
+    persistent['dshgoStateRuntime'] = prepared.runtime;
   }
   if (prepared.packRuntimeExists) {
-    persistent['dpskPackRuntime'] = prepared.packRuntime;
+    persistent['dshgoPackRuntime'] = prepared.packRuntime;
   }
   persistent[_secretRuntimeKey] = protection.ledger.adding(bindings);
   _stampGameplayConfig(turn.gameplay, persistent);
@@ -1072,11 +1072,11 @@ _SecretBindingCandidate _buildSecretBindingCandidate(
   });
   final generation = _copy(turn.state);
   generation['messageVariables'] = _copy(_map(persistent['messageVariables']));
-  if (persistent.containsKey('dpskStateRuntime')) {
-    generation['dpskStateRuntime'] = _secretCopy(persistent['dpskStateRuntime']);
+  if (persistent.containsKey('dshgoStateRuntime')) {
+    generation['dshgoStateRuntime'] = _secretCopy(persistent['dshgoStateRuntime']);
   }
-  if (persistent.containsKey('dpskPackRuntime')) {
-    generation['dpskPackRuntime'] = _secretCopy(persistent['dpskPackRuntime']);
+  if (persistent.containsKey('dshgoPackRuntime')) {
+    generation['dshgoPackRuntime'] = _secretCopy(persistent['dshgoPackRuntime']);
   }
   generation[_secretRuntimeKey] = _secretCopy(persistent[_secretRuntimeKey]);
   _stampGameplayConfig(turn.gameplay, generation);

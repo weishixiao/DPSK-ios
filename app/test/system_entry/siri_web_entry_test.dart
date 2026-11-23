@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/ui_mode_state.dart';
-import 'package:dpsk_app/ui/common/discard_guard.dart';
-import 'package:dpsk_app/ui/web/web_home.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/ui_mode_state.dart';
+import 'package:dsh_app/ui/common/discard_guard.dart';
+import 'package:dsh_app/ui/web/web_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

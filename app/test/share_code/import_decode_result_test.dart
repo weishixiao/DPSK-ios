@@ -3,20 +3,20 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/share_code/conversation_share.dart';
-import 'package:dpsk_app/share_code/share_code_state.dart';
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/share_hosted/hosted_client.dart';
-import 'package:dpsk_app/share_hosted/hosted_crypto.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/replay/replay_page.dart';
-import 'package:dpsk_app/ui/share_code/import_sheet.dart';
-import 'package:dpsk_app/ui/share_code/share_code_host.dart';
-import 'package:dpsk_app/ui/share_hosted/hosted_link_host.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/share_code/conversation_share.dart';
+import 'package:dsh_app/share_code/share_code_state.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/share_hosted/hosted_client.dart';
+import 'package:dsh_app/share_hosted/hosted_crypto.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/replay/replay_page.dart';
+import 'package:dsh_app/ui/share_code/import_sheet.dart';
+import 'package:dsh_app/ui/share_code/share_code_host.dart';
+import 'package:dsh_app/ui/share_hosted/hosted_link_host.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
@@ -64,7 +64,7 @@ Future<void> _until(WidgetTester tester, Finder finder) async {
 Future<File> _file(WidgetTester tester, List<int> bytes) async {
   final dir = (await tester.runAsync(() => Directory.systemTemp.createTemp('share-decode-')))!;
   addTearDown(() => dir.deleteSync(recursive: true));
-  return File('${dir.path}/share.dpsk')..writeAsBytesSync(bytes);
+  return File('${dir.path}/share.dshgo')..writeAsBytesSync(bytes);
 }
 
 void main() {

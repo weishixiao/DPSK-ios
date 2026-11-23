@@ -79,7 +79,7 @@ final slotAdapterRegistryProvider = Provider<SlotAdapterRegistry>((ref) => SlotA
 final islandBudgetProvider = Provider<IslandBudget>((ref) => ref.watch(liveIslandBudgetProvider));
 
 /// What [host]'s bridge says about its route guard (`routeGuard` in
-/// `/DPSK/v1/inventory`); null for a host other than the active one, or
+/// `/dsh-go/v1/inventory`); null for a host other than the active one, or
 /// without the bridge. The islands' security gate reads it
 /// (`islandRouteGuardReportProvider`).
 final seatRouteGuardReportProvider = Provider.family<bool?, HostRef>((ref, host) {

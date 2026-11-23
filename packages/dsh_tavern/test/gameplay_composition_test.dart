@@ -40,7 +40,7 @@ void main() {
         },
       },
     };
-    final character = await h.card('Schema composition', extensions: {'dpsk': original});
+    final character = await h.card('Schema composition', extensions: {'dshgo': original});
     final chat = await h.engine.createGroupChat([character], hostCharacterId: character, addGreetings: false);
     final low = await _install(h, 'child-low', {
       'schemaPatches': [
@@ -196,7 +196,7 @@ void main() {
     final base = await h.card(
       'Rules',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'state': {
             'schema': {'type': 'object'},
@@ -208,7 +208,7 @@ void main() {
     );
     final chat = await h.engine.createGroupChat([base], hostCharacterId: base, addGreetings: false);
     final borrowed = await _install(h, 'rules-only', {
-      'dpsk': {
+      'dshgo': {
         'v': 1.0,
         'state': {
           'rules': [_rule('shared')],
@@ -237,7 +237,7 @@ void main() {
           'node': {'type': 'object'},
         },
       ],
-      'dpsk': {
+      'dshgo': {
         'state': {
           'rules': [_rule('only')],
         },
@@ -274,7 +274,7 @@ void main() {
     expect(carrier.rawPresent, isFalse);
 
     final nullState = await _install(h, 'null-state', {
-      'dpsk': {'state': null},
+      'dshgo': {'state': null},
       'schemaPatches': [
         {
           'path': '/null-source',
@@ -283,7 +283,7 @@ void main() {
       ],
     });
     final future = await _install(h, 'future-source', {
-      'dpsk': {'v': 2},
+      'dshgo': {'v': 2},
       'schemaPatches': [
         {
           'path': '/future-source',
@@ -309,12 +309,12 @@ void main() {
     expect(_state(invalid)['compositionEligible'], isFalse);
     expect(invalid.currentState!.validated, isFalse);
     expect(invalid.currentState!.value, <String, Object?>{});
-    expect(invalid.conflicts.map((row) => row['code']), containsAll(['state_source_shape', 'dpsk_source_version']));
+    expect(invalid.conflicts.map((row) => row['code']), containsAll(['state_source_shape', 'dshgo_source_version']));
 
     final budget = await h.card(
       'Full original list',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'state': {
             'schema': {'type': 'object'},
             'rules': [_rule('duplicate'), for (var i = 1; i < 256; i++) null, _rule('duplicate')],
@@ -323,7 +323,7 @@ void main() {
       },
     );
     final tail = await _install(h, 'tail', {
-      'dpsk': {
+      'dshgo': {
         'state': {
           'rules': [_rule('tail')],
         },
@@ -357,7 +357,7 @@ void main() {
     final host = await h.card(
       'Host',
       extensions: {
-        'dpsk': {
+        'dshgo': {
           'state': {
             'schema': {'type': 'object'},
             'init': <String, Object?>{},
@@ -426,7 +426,7 @@ void main() {
           {'localId': 'asset', 'kind': 'asset', 'path': 'asset.bin'},
           {'localId': 'cast', 'kind': 'castCard', 'path': 'cast.json'},
         ],
-        'dpsk': {
+        'dshgo': {
           'state': {
             'rules': [
               {

@@ -51,7 +51,7 @@ void main() {
     final context = await h.context(chat, characterId: actor);
     final host = SlashHost()..onResolve = (_, _) async => null;
     h.bridge.attachHost(host);
-    const marker = '\u0000dpskSlash:0\u0000';
+    const marker = '\u0000dshgoSlash:0\u0000';
     final execution = await h.bridge.triggerSlash(
       context.id,
       'f={: /setglobalvar key=called BAD | /pass TYPED_TARGET :} '

@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/settings/background_guide_page.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/settings/background_guide_page.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -52,7 +52,7 @@ void main() {
         case 'openBackgroundProtectionSettings':
           return opens;
         case 'backgroundSettings':
-          return {'vendor': 'vivo', 'label': 'DPSK'};
+          return {'vendor': 'vivo', 'label': 'DSH Go'};
         default:
           return null;
       }

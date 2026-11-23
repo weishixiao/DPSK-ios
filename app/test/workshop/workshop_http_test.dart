@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/workshop/workshop_http.dart';
+import 'package:dsh_app/workshop/workshop_http.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';

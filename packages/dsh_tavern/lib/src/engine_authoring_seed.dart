@@ -56,8 +56,8 @@ extension _AuthoringSeeds on TavernEngine {
       source.addAll({
         'base': document,
         'rawText': text.rawText,
-        'sourceFormat': !document.containsKey('entries') && document['format'] == 'dpsk-lorebook'
-            ? 'dpsk-lorebook'
+        'sourceFormat': !document.containsKey('entries') && document['format'] == 'dshgo-lorebook'
+            ? 'dshgo-lorebook'
             : 'st-json',
       });
       blobs['original.json'] = bytes;

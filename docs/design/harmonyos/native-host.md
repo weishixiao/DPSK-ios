@@ -25,7 +25,7 @@ P2 v6 的 `guestRoot` 固定为同一个 ApplicationContext 的 `filesDir + '/ru
 | `DSH_AGENTS_HOME`、共享 skills / AGENTS.md | `root/.agents` |
 | 唯一工作区 | `root/workspace` |
 | 托管技能 | `root/.dsh/skills/<固定 name>` |
-| 给用户交付的输出目录 | `root/workspace/DPSK` |
+| 给用户交付的输出目录 | `root/workspace/DSH-Go` |
 
 运行时代码仍放在原来的 `filesDir/dsh-runtime/tree`，不移进 guestRoot。托管技能的许可、取消和逐文件提交见 `managed-skills.md`；输出目录策略由文件通道负责。
 
@@ -34,7 +34,7 @@ P2 v6 的 `guestRoot` 固定为同一个 ApplicationContext 的 `filesDir + '/ru
 ## 启动前提逐项落地
 
 1. runtime/home/cache/workspace 必须是已存在的绝对目录，不能是文件系统根；固定入口文件 canonical path 必须仍在 runtimeRoot 内。缓存的子目录不能被 symlink 重定向。
-2. `NODE_OPTIONS` 必须缺省或严格为空。空格也拒绝。调用方不能覆盖 `HOME`、`TMPDIR`、`DSH_HOME`、`DSH_AGENTS_HOME`、`NODE_*`、`UV_*`、动态加载器变量、`DPSK_*`、`NARB_*` 或 OpenSSL 配置入口。
+2. `NODE_OPTIONS` 必须缺省或严格为空。空格也拒绝。调用方不能覆盖 `HOME`、`TMPDIR`、`DSH_HOME`、`DSH_AGENTS_HOME`、`NODE_*`、`UV_*`、动态加载器变量、`DSH_GO_*`、`NARB_*` 或 OpenSSL 配置入口。
 3. 命令行固定为下面的 13 个参数，只有一个 `--import`，不提供额外 CLI 参数接口：
 
    ```text
@@ -72,7 +72,7 @@ P2 的 rawfile manifest 按文件哈希描述 JS/JSON 等普通资源，安装�
 
 P1B v2 要求 P2 v5 从自己的可信 Context 生成 `nativeLibraryDir`：普通自有 Context 的 `bundleCodeDir` 加上 `applicationInfo.nativeLibraryPath` 的相对路径组件。公开 6.1 源码中后者不是绝对路径。Ark 必须拒绝空值、绝对 nativeLibraryPath、NUL、空组件、`.` 和 `..`，不接受 Dart 或配置传入的覆盖，也不硬编码安装路径。entry 模块固定 `extractNativeLibs: true`、`libIsolation: false`；这些 Ark 和模块字段由 P2 v5 提供。
 
-Host 再 canonicalize 已存在的非根目录，要求 `libdsh_flock.so` 和 `libdsh_require_builtin.so` 是固定名字的普通文件，且两者 realpath 恰为目录加固定名字，拒绝库文件 symlink。失败返回 `ERR_OHOS_NATIVE_LIBRARY_PATH`，不消耗一次启动。引擎存活期间设置受保护的 `DPSK_OHOS_NATIVE_LIBRARY_DIR`，退出前恢复先前环境。O2 的固定助手仅接受这两个 product 并从该目录 `process.dlopen`；不复制 ELF 进入数据树、不读任意产品名或额外搜索路径。
+Host 再 canonicalize 已存在的非根目录，要求 `libdsh_flock.so` 和 `libdsh_require_builtin.so` 是固定名字的普通文件，且两者 realpath 恰为目录加固定名字，拒绝库文件 symlink。失败返回 `ERR_OHOS_NATIVE_LIBRARY_PATH`，不消耗一次启动。引擎存活期间设置受保护的 `DSH_GO_OHOS_NATIVE_LIBRARY_DIR`，退出前恢复先前环境。O2 的固定助手仅接受这两个 product 并从该目录 `process.dlopen`；不复制 ELF 进入数据树、不读任意产品名或额外搜索路径。
 
 这闭合了源码与 Linux 路径契约；它没有证明设备安装所得路径或目标 ABI。系统返回字段、HAP 提取路径/只读属性、改名后的两库及 libnode 在 Ark 同进程实际绑定，仍需 SDK/HAP/设备验证。路径检查本身不解析 ELF 或证明 N-API 改名，实际符号门继续由 P1C 构建配方负责。
 

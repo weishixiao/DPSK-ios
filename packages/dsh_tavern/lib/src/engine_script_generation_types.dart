@@ -145,7 +145,7 @@ class _ScriptPreparedGeneration {
   Set<String> get chatTargets => {
     if (capture.local.hasIntents) 'local',
     ...stateUpdates.keys,
-    if (packWorldInfo?.isEmpty == false) 'dpskPackWorldInfo',
+    if (packWorldInfo?.isEmpty == false) 'dshgoPackWorldInfo',
     if (hasHashUpdate) 'stChatIdHash',
   };
 }

@@ -3,9 +3,9 @@
 
 import 'dart:ui' show DisplayFeature, DisplayFeatureState, DisplayFeatureType;
 
-import 'package:dpsk_app/ui/common/keyboard_motion.dart';
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/theme/app_theme.dart';
+import 'package:dsh_app/ui/common/keyboard_motion.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

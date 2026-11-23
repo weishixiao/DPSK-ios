@@ -1,19 +1,19 @@
-// `dpsk://open/<page>`: only pages from the fixed list open, pushed over the
+// `dshgo://open/<page>`: only pages from the fixed list open, pushed over the
 // home route; anything else gets the router's toast and nothing else happens,
 // and a page HarmonyOS doesn't have yet says that.
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/links/page_links.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/features/feature_catalog.dart';
-import 'package:dpsk_app/ui/phone/phone_control_screen.dart';
-import 'package:dpsk_app/ui/phone/system_actions_page.dart';
-import 'package:dpsk_app/ui/settings/index/settings_pages.dart';
-import 'package:dpsk_app/ui/settings/index/spot_anchor.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/links/page_links.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/features/feature_catalog.dart';
+import 'package:dsh_app/ui/phone/phone_control_screen.dart';
+import 'package:dsh_app/ui/phone/system_actions_page.dart';
+import 'package:dsh_app/ui/settings/index/settings_pages.dart';
+import 'package:dsh_app/ui/settings/index/spot_anchor.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,36 +22,36 @@ import '../phone/support.dart' show FixedActiveHost;
 
 void main() {
   group('pageLinkId', () {
-    test('accepts exactly dpsk://open/<known page>', () {
-      expect(pageLinkId(Uri.parse('dpsk://open/engine')), 'engine');
-      expect(pageLinkId(Uri.parse('dpsk://open/engine/')), 'engine');
+    test('accepts exactly dshgo://open/<known page>', () {
+      expect(pageLinkId(Uri.parse('dshgo://open/engine')), 'engine');
+      expect(pageLinkId(Uri.parse('dshgo://open/engine/')), 'engine');
       expect(pageLinkId(Uri.parse('DSHGO://OPEN/phone')), 'phone');
-      expect(pageLinkId(Uri.parse('dpsk://open/appearance')), 'appearance');
+      expect(pageLinkId(Uri.parse('dshgo://open/appearance')), 'appearance');
     });
 
     test('rejects other schemes, extra parts and unknown pages', () {
       for (final link in [
         'https://open/engine',
-        'dpsk://share/engine',
-        'dpsk://open',
-        'dpsk://open/',
-        'dpsk://open/engine/logs',
-        'dpsk://open/engine?x=1',
-        'dpsk://open/engine#top',
-        'dpsk://me@open/engine',
-        'dpsk://open:8080/engine',
-        'dpsk://open/Engine',
-        'dpsk://open/nope',
+        'dshgo://share/engine',
+        'dshgo://open',
+        'dshgo://open/',
+        'dshgo://open/engine/logs',
+        'dshgo://open/engine?x=1',
+        'dshgo://open/engine#top',
+        'dshgo://me@open/engine',
+        'dshgo://open:8080/engine',
+        'dshgo://open/Engine',
+        'dshgo://open/nope',
         // 全部功能 entries that are actions, web pages or need a conversation.
-        'dpsk://open/search',
-        'dpsk://open/share-profile',
-        'dpsk://open/cot-translation',
-        'dpsk://open/reference',
-        'dpsk://open/voice-input',
-        'dpsk://open/web',
-        'dpsk://open/files',
-        'dpsk://open/session-detail',
-        'dpsk://open/plugin-panel:pkg%23main',
+        'dshgo://open/search',
+        'dshgo://open/share-profile',
+        'dshgo://open/cot-translation',
+        'dshgo://open/reference',
+        'dshgo://open/voice-input',
+        'dshgo://open/web',
+        'dshgo://open/files',
+        'dshgo://open/session-detail',
+        'dshgo://open/plugin-panel:pkg%23main',
       ]) {
         expect(pageLinkId(Uri.parse(link)), isNull, reason: link);
       }
@@ -134,7 +134,7 @@ void main() {
                   const LinkHost(),
                   Builder(
                     builder: (context) => TextButton(
-                      onPressed: () => openReplyPageLink(context, 'dpsk://open/phone'),
+                      onPressed: () => openReplyPageLink(context, 'dshgo://open/phone'),
                       child: const Text('reply link'),
                     ),
                   ),
@@ -149,7 +149,7 @@ void main() {
 
     testWidgets('a known page opens over the home route with the open conversation', (tester) async {
       await pumpHome(tester);
-      expect(await router.open(Uri.parse('dpsk://open/engine')), isTrue);
+      expect(await router.open(Uri.parse('dshgo://open/engine')), isTrue);
       await tester.pumpAndSettle();
       expect(find.text('page engine'), findsOneWidget);
       expect(opened, [('engine', 's1')]);
@@ -157,7 +157,7 @@ void main() {
 
     testWidgets('an unknown page shows one line and opens nothing', (tester) async {
       await pumpHome(tester);
-      expect(await router.open(Uri.parse('dpsk://open/nope')), isFalse);
+      expect(await router.open(Uri.parse('dshgo://open/nope')), isFalse);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(find.text('无法打开这个链接'), findsOneWidget);
@@ -187,7 +187,7 @@ void main() {
 
       testWidgets('a page only Android has says it isn\'t available here', (tester) async {
         await pumpHarmony(tester);
-        expect(await router.open(Uri.parse('dpsk://open/phone-files')), isTrue);
+        expect(await router.open(Uri.parse('dshgo://open/phone-files')), isTrue);
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 500));
         expect(find.text(zh.harmonyPageUnavailable), findsOneWidget);
@@ -195,7 +195,7 @@ void main() {
 
       testWidgets('手机操控\'s link opens 系统操作 there, not a page that isn\'t', (tester) async {
         await pumpHarmony(tester);
-        expect(await router.open(Uri.parse('dpsk://open/phone')), isTrue);
+        expect(await router.open(Uri.parse('dshgo://open/phone')), isTrue);
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 500));
         expect(find.byType(SystemActionsPage), findsOneWidget);
@@ -213,7 +213,7 @@ void main() {
 
       testWidgets('a page nobody has is still the router\'s to say', (tester) async {
         await pumpHarmony(tester);
-        expect(await router.open(Uri.parse('dpsk://open/nope')), isFalse);
+        expect(await router.open(Uri.parse('dshgo://open/nope')), isFalse);
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 500));
         expect(find.text('无法打开这个链接'), findsOneWidget);
@@ -223,7 +223,7 @@ void main() {
 
     testWidgets('a link that arrives from outside opens the page too', (tester) async {
       await pumpHome(tester, session: null);
-      links.add(Uri.parse('dpsk://open/models'));
+      links.add(Uri.parse('dshgo://open/models'));
       await tester.pumpAndSettle();
       expect(find.text('page models'), findsOneWidget);
       expect(opened, [('models', null)]);
@@ -237,7 +237,7 @@ void main() {
 
       final context = tester.element(find.byType(LinkHost, skipOffstage: false));
       expect(openReplyPageLink(context, 'https://example.com'), isFalse);
-      expect(openReplyPageLink(context, 'dpsk://share/abc'), isFalse);
+      expect(openReplyPageLink(context, 'dshgo://share/abc'), isFalse);
       expect(openReplyPageLink(context, 'not a link'), isFalse);
       expect(opened, [('phone', 's1')]);
     });

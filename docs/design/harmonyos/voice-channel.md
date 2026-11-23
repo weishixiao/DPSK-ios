@@ -86,7 +86,7 @@ v2 在该 await 后、进入两种权限 UI API 前，重新核对同一个 Flut
 
 # 合入 main-dd130b31：语音输入的新方式与语音输出
 
-main 的语音输入多了 **DeepSeek** 和 **其他云端服务** 两种识别方式，自动模式在登录 DeepSeek 账号或填了 API Key 时先用 DeepSeek。两种方式都只用本通道已有的 `startRecorder`（带 `maxSeconds`）和 `stop` 取 WAV，再由 Dart 发给服务，所以鸿蒙版照常可用；账号付费的请求经本机引擎桥的 `/DPSK/v1/speech`（`runtime/bridge/dsh-go-bridge/lib/speech.js`，随 HAP 运行时打包，未在设备上验证其出站 `fetch`）。鸿蒙本机的「自动」不再说成只用系统识别，文案见 `harmonyVoiceAutoHint`。
+main 的语音输入多了 **DeepSeek** 和 **其他云端服务** 两种识别方式，自动模式在登录 DeepSeek 账号或填了 API Key 时先用 DeepSeek。两种方式都只用本通道已有的 `startRecorder`（带 `maxSeconds`）和 `stop` 取 WAV，再由 Dart 发给服务，所以鸿蒙版照常可用；账号付费的请求经本机引擎桥的 `/dsh-go/v1/speech`（`runtime/bridge/dsh-go-bridge/lib/speech.js`，随 HAP 运行时打包，未在设备上验证其出站 `fetch`）。鸿蒙本机的「自动」不再说成只用系统识别，文案见 `harmonyVoiceAutoHint`。
 
 以下 main 功能鸿蒙版还没有原生侧，按 `androidSystemFeaturesProvider` 隐藏入口：
 

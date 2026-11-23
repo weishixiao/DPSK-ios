@@ -13,7 +13,7 @@ PiP does not approve tools, disable safe mode or resume a phone task you manuall
 ## Linux and Python on iPhone
 
 <!-- nav: commonSettings,hubSettingsEngine -->
-`Settings › Local engine` · [Open](dpsk://open/engine)
+`Settings › Local engine` · [Open](dshgo://open/engine)
 
 On iPhone, find the **Linux environment** section on that page.
 
@@ -42,11 +42,11 @@ You can add DSH to this phone anytime: tap **Install runtime** on the engine pag
 ## This phone's engine
 
 <!-- nav: commonSettings,hubSettingsEngine -->
-`Settings › Local engine` · [Open](dpsk://open/engine)
+`Settings › Local engine` · [Open](dshgo://open/engine)
 
 - **Start**, **Stop**, **Restart**: stopping asks first; both stopping and restarting interrupt active chats.
 - If the engine fails to start, the page shows the cause and ways to fix it, such as retrying, **Start in Safe mode** or viewing logs.
-- **Start when DPSK opens**: on by default. As long as DSH is installed on this phone, opening the app starts it, even while you use a remote host. Turn it off if you don't need that.
+- **Start when DSH Go opens**: on by default. As long as DSH is installed on this phone, opening the app starts it, even while you use a remote host. Turn it off if you don't need that.
 - **Automatic Safe mode**: on by default. After two failed starts in a row, starts without plugins.
 - **Start in Safe mode**: enter Safe mode by hand. Once fixed, tap **Return to normal mode**. Entering and leaving both restart the engine.
 - **Logs**: the engine's live output.
@@ -77,7 +77,7 @@ With the defaults, chats, workspaces, plugins and settings are deleted, includin
 <!-- nav: commonSettings,hubSettingsEngine,localEnvUninstall -->
 `Settings › Local engine › Uninstall runtime`
 
-Frees up storage. Chats, workspaces, plugins, settings, interface settings and skills on this phone are all deleted, and nothing is reinstalled. To use this phone's engine again, tap **Install runtime** on the same page. If you only need a break, stop the engine and turn off **Start when DPSK opens**.
+Frees up storage. Chats, workspaces, plugins, settings, interface settings and skills on this phone are all deleted, and nothing is reinstalled. To use this phone's engine again, tap **Install runtime** on the same page. If you only need a break, stop the engine and turn off **Start when DSH Go opens**.
 
 ## Switch hosts
 
@@ -86,7 +86,7 @@ Open the chat list and tap the current host's name at the bottom to open **Switc
 Tap the icon to the left of the host name for details: remote hosts show their name, connection status and current network path, with an on-demand latency measurement where supported. For this phone, it opens **Local engine**. The host name and dropdown arrow still switch hosts.
 
 <!-- nav: remoteSwitchHost,remoteManageHosts -->
-`Switch host › Manage remote hosts` · [Open](dpsk://open/remote)
+`Switch host › Manage remote hosts` · [Open](dshgo://open/remote)
 
 It's in Settings too:
 

@@ -16,7 +16,7 @@ extension _GameplayDraftExports on TavernEngine {
     if (primary == null || primary.target.kind != TavernAuthoringTargetKind.character) {
       _invalidGameplayExport('The primary draft resource must be an actual character candidate.');
     }
-    const reserved = {'formatVersion', 'packId', 'packVersion', 'dpsk', 'schemaPatches', 'resources', 'references'};
+    const reserved = {'formatVersion', 'packId', 'packVersion', 'dshgo', 'schemaPatches', 'resources', 'references'};
     if (request.manifestFields.keys.any(reserved.contains)) {
       _invalidGameplayExport('Additional manifest fields cannot replace protocol fields.');
     }
@@ -40,8 +40,8 @@ extension _GameplayDraftExports on TavernEngine {
         ),
       );
     }
-    final present = extensions is Map<String, Object?> && extensions.containsKey('dpsk');
-    final raw = extensions is Map<String, Object?> ? extensions['dpsk'] : null;
+    final present = extensions is Map<String, Object?> && extensions.containsKey('dshgo');
+    final raw = extensions is Map<String, Object?> ? extensions['dshgo'] : null;
     final schemaPatches = _gameplayDraftSchemaPatches(raw, request.schemaRoots, primarySource, issues);
     final declarations = <Map<String, Object?>>[];
     final mappings = <Map<String, Object?>>[];
@@ -208,7 +208,7 @@ extension _GameplayDraftExports on TavernEngine {
       'formatVersion': 1,
       'packId': request.packId,
       'packVersion': request.packVersion,
-      if (present) 'dpsk': _authoringCopy(raw),
+      if (present) 'dshgo': _authoringCopy(raw),
       'schemaPatches': schemaPatches,
       'resources': declarations,
       'references': request.references,
@@ -236,15 +236,15 @@ extension _GameplayDraftExports on TavernEngine {
             'candidateHash': _directorHash(candidates[source.physicalResourceId]),
             if (source.authorityRevision != null)
               'authorityRevision': _authoringRevisionJson(source.authorityRevision!),
-            if (source.physicalResourceId == primaryId && inspection != null) 'inspection': inspection['dpsk'],
+            if (source.physicalResourceId == primaryId && inspection != null) 'inspection': inspection['dshgo'],
           },
     ];
     if (inspection != null) {
-      final declaration = inspection['dpsk']! as Map<String, Object?>;
+      final declaration = inspection['dshgo']! as Map<String, Object?>;
       for (final issue in (declaration['issues']! as List<Object?>).cast<Map<String, Object?>>()) {
         issues.add({
           ..._gameplayExportIssue(
-            'export_dpsk_diagnostic',
+            'export_dshgo_diagnostic',
             'The original DSH declaration has a native diagnostic.',
             blocking: false,
             source: primarySource,

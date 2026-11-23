@@ -121,7 +121,7 @@ PromptAssembly _assemble(
       'show_thoughts': true,
       'assistant_prefill': 'P',
       'extensions': {
-        'dpsk': {
+        'dshgo': {
           'prefill': {'enabled': true, 'target': 'reasoning'},
         },
       },

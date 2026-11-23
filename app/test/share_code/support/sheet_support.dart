@@ -2,22 +2,22 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/guest_fs.dart';
-import 'package:dpsk_app/share_code/profile_export.dart';
-import 'package:dpsk_app/share_code/share_code_state.dart';
-import 'package:dpsk_app/share_code/share_import.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/share_code/share_net.dart';
-import 'package:dpsk_app/state/artifacts.dart' show FilesChannel;
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/share_code/share_out.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/share_code/guest_fs.dart';
+import 'package:dsh_app/share_code/profile_export.dart';
+import 'package:dsh_app/share_code/share_code_state.dart';
+import 'package:dsh_app/share_code/share_import.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/share_code/share_net.dart';
+import 'package:dsh_app/state/artifacts.dart' show FilesChannel;
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/share_code/share_out.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
-import 'package:dpsk_app/state/plugins_state.dart' show MarketEntry;
+import 'package:dsh_app/state/plugins_state.dart' show MarketEntry;
 
 import 'fake_engine.dart';
 
@@ -122,7 +122,7 @@ class RecordingShareOut extends ShareOut {
   Future<String> save(String name, String content) async {
     final file = await write(name, content);
     saved.add(file.path);
-    return 'Download/DPSK/$name';
+    return 'Download/DSH-Go/$name';
   }
 }
 

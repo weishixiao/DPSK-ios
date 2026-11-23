@@ -291,7 +291,7 @@ class _Probe {
     final useful = frames.where((line) => !line.contains('package:flutter/')).toList();
     final app = useful.where(
       (line) =>
-          line.contains('package:dpsk_app/') ||
+          line.contains('package:dsh_app/') ||
           line.contains('package:dsh_client/') ||
           line.contains('package:dsh_remote/'),
     );

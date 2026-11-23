@@ -2,9 +2,9 @@
 // person's palette, still corrected to ≥ 4.5:1 on every painted background,
 // and parses again when the palette changes.
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_model.dart';
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_model.dart';
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

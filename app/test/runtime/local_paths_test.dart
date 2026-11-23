@@ -1,6 +1,6 @@
-import 'package:dpsk_app/runtime/local_paths.dart';
-import 'package:dpsk_app/state/sessions_state.dart' show localWorkspaceDir;
-import 'package:dpsk_app/ui/workspace/workspace_format.dart' show displayPath, localHome;
+import 'package:dsh_app/runtime/local_paths.dart';
+import 'package:dsh_app/state/sessions_state.dart' show localWorkspaceDir;
+import 'package:dsh_app/ui/workspace/workspace_format.dart' show displayPath, localHome;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

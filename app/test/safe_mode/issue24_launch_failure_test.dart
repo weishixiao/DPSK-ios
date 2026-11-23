@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/safe_mode_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/engine/engine_status.dart';
-import 'package:dpsk_app/ui/remote/remote_screen.dart';
-import 'package:dpsk_app/ui/safe_mode/engine_failure_card.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/safe_mode_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/engine/engine_status.dart';
+import 'package:dsh_app/ui/remote/remote_screen.dart';
+import 'package:dsh_app/ui/safe_mode/engine_failure_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

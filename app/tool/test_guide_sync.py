@@ -9,7 +9,7 @@ import guide_sync
 REPO = Path(__file__).resolve().parents[2]
 
 SKILL = """---
-# DPSK:managed — the DPSK app keeps this skill up to date
+# dsh-go:managed — the dsh-go app keeps this skill up to date
 name: dsh-go-guide
 description: The guide.
 whenToUse: How to use the app.
@@ -19,8 +19,8 @@ Read [README](README.md).
 """
 
 PAGE = {
-    'zh': '# 引擎\n\n<!-- nav: commonSettings,hubSettingsEngine -->\n`设置 › 引擎` · [打开](dpsk://open/engine)\n\n点**启动**，或点**停止操作**。见 [设置](02-settings.md)。\n',
-    'en': '# Engine\n\n<!-- nav: commonSettings,hubSettingsEngine -->\n`Settings › Engine` · [Open](dpsk://open/engine)\n\nTap **Start**, or **Stop actions**. See [Settings](02-settings.md).\n',
+    'zh': '# 引擎\n\n<!-- nav: commonSettings,hubSettingsEngine -->\n`设置 › 引擎` · [打开](dshgo://open/engine)\n\n点**启动**，或点**停止操作**。见 [设置](02-settings.md)。\n',
+    'en': '# Engine\n\n<!-- nav: commonSettings,hubSettingsEngine -->\n`Settings › Engine` · [Open](dshgo://open/engine)\n\nTap **Start**, or **Stop actions**. See [Settings](02-settings.md).\n',
 }
 
 PAGE_LINKS = """const catalogPageLinks = <String>{
@@ -57,7 +57,7 @@ class GuideSyncTest(unittest.TestCase):
         self.write('app/lib/links/page_links.dart', PAGE_LINKS)
         self.write('app/lib/ui/settings/index/spots.dart', SPOTS)
         self.write('docs/guide/SKILL.md', SKILL)
-        self.write('docs/guide/README.md', '# Guide\n\n> DPSK 0.9.2\n\n- [引擎](zh/01-engine.md)\n- [Engine](en/01-engine.md)\n')
+        self.write('docs/guide/README.md', '# Guide\n\n> dsh-go 0.9.2\n\n- [引擎](zh/01-engine.md)\n- [Engine](en/01-engine.md)\n')
         for locale, text in PAGE.items():
             self.write(f'docs/guide/{locale}/01-engine.md', text)
             self.write(f'docs/guide/{locale}/02-settings.md', '# Settings\n')
@@ -115,7 +115,7 @@ class GuideSyncTest(unittest.TestCase):
     def test_harmony_page_ships_beside_the_one_it_replaces(self):
         self.harmony_pages()
         self.write('docs/guide/harmony/SKILL.md', SKILL)
-        self.write('docs/guide/harmony/README.md', '# Guide\n\n> DPSK 0.9.2\n\n[引擎](zh/01-engine.md)\n')
+        self.write('docs/guide/harmony/README.md', '# Guide\n\n> dsh-go 0.9.2\n\n[引擎](zh/01-engine.md)\n')
         self.assertEqual(guide_sync.run(self.repo, write=True), [])
         self.assertEqual(guide_sync.run(self.repo, write=False), [])
         assets = self.repo / 'app/assets/skills/dsh-go-guide'
@@ -153,10 +153,10 @@ class GuideSyncTest(unittest.TestCase):
         self.assertFails('broken link 06-pets.md')
 
     def test_harmony_skill_and_readme_are_checked_too(self):
-        self.write('docs/guide/harmony/README.md', '# Guide\n\n> DPSK 0.1.0\n')
-        self.assertFails('harmony/README.md: want one line `> DPSK 0.9.2`')
-        self.write('docs/guide/harmony/SKILL.md', SKILL.replace('# DPSK:managed', '# managed'))
-        self.assertFails('harmony/SKILL.md: front matter needs the # DPSK:managed line')
+        self.write('docs/guide/harmony/README.md', '# Guide\n\n> dsh-go 0.1.0\n')
+        self.assertFails('harmony/README.md: want one line `> dsh-go 0.9.2`')
+        self.write('docs/guide/harmony/SKILL.md', SKILL.replace('# dsh-go:managed', '# managed'))
+        self.assertFails('harmony/SKILL.md: front matter needs the # dsh-go:managed line')
 
     def test_stray_file_under_harmony_fails(self):
         self.write('docs/guide/harmony/notes.txt', 'x')
@@ -195,25 +195,25 @@ class GuideSyncTest(unittest.TestCase):
     def test_links_must_resolve_and_page_links_must_be_allowed(self):
         self.write('docs/guide/zh/02-settings.md', '# 设置\n\n见 [宠物](06-pets.md)。\n')
         self.assertFails('broken link 06-pets.md')
-        self.write('docs/guide/zh/02-settings.md', '# 设置\n\n[打开](dpsk://open/terminal)\n')
-        self.assertFails('dpsk://open/terminal is not a page link')
-        self.write('docs/guide/zh/02-settings.md', '# 设置\n\n[打开](dpsk://open/settings)\n')
+        self.write('docs/guide/zh/02-settings.md', '# 设置\n\n[打开](dshgo://open/terminal)\n')
+        self.assertFails('dshgo://open/terminal is not a page link')
+        self.write('docs/guide/zh/02-settings.md', '# 设置\n\n[打开](dshgo://open/settings)\n')
         self.assertEqual(self.errors(), [])
         # A row's link and a 全部功能 page open too.
-        self.write('docs/guide/zh/02-settings.md', '# 设置\n\n[深色](dpsk://open/dark-mode) [自动化](dpsk://open/schedules)\n')
+        self.write('docs/guide/zh/02-settings.md', '# 设置\n\n[深色](dshgo://open/dark-mode) [自动化](dshgo://open/schedules)\n')
         self.assertEqual(self.errors(), [])
 
     def test_version_must_match_pubspec(self):
         self.write('app/pubspec.yaml', 'version: 0.9.3+1\n')
-        self.assertFails('`> DPSK 0.9.3`')
+        self.assertFails('`> dsh-go 0.9.3`')
 
     def test_both_languages_hold_the_same_pages(self):
         (self.guide / 'en/02-settings.md').unlink()
         self.assertFails('zh/en pages differ')
 
     def test_skill_front_matter(self):
-        self.write('docs/guide/SKILL.md', SKILL.replace('# DPSK:managed — the DPSK app keeps this skill up to date\n', ''))
-        self.assertFails('# DPSK:managed')
+        self.write('docs/guide/SKILL.md', SKILL.replace('# dsh-go:managed — the dsh-go app keeps this skill up to date\n', ''))
+        self.assertFails('# dsh-go:managed')
         self.write('docs/guide/SKILL.md', SKILL.replace('whenToUse', 'when'))
         self.assertFails('needs whenToUse')
         self.write('docs/guide/SKILL.md', SKILL.replace('description: The guide.', 'description: The guide: where things are.'))

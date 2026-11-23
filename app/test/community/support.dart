@@ -5,7 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/update/update_http.dart';
+import 'package:dsh_app/update/update_http.dart';
 
 /// Everything filled in (example values, not the shipped ones).
 String sampleFeed({int revision = 7, String tagline = '开源项目，欢迎点星'}) => jsonEncode({
@@ -32,7 +32,7 @@ String sampleFeed({int revision = 7, String tagline = '开源项目，欢迎点�
       'url': 'https://qm.qq.com/q/example',
       'copy': '123456789',
     },
-    {'kind': 'wechat', 'title': '微信公众号', 'subtitle': '搜索「DPSK」', 'qr': 'https://example.com/wechat'},
+    {'kind': 'wechat', 'title': '微信公众号', 'subtitle': '搜索「dsh-go」', 'qr': 'https://example.com/wechat'},
     {'kind': 'telegram', 'title': 'Telegram', 'subtitle': 't.me/example', 'url': 'https://t.me/example'},
     {'kind': 'qq', 'title': '没填的群', 'url': '', 'qr': '', 'copy': ''},
     {'kind': 'forum', 'title': '不安全的链接', 'url': 'http://example.com/forum'},
@@ -41,7 +41,7 @@ String sampleFeed({int revision = 7, String tagline = '开源项目，欢迎点�
     {'date': '2026-10-20', 'title': '插件广场', 'summary': '一键装进本机或远程主机。'},
     {
       'date': '2026-10-24',
-      'title': 'DPSK 1.0',
+      'title': 'dsh-go 1.0',
       'summary': '本机运行 DSH、远程主机、插件广场。',
       'url': 'https://example.com/releases',
     },

@@ -2,7 +2,7 @@
 // window, four levels with hysteresis), and the compaction flag, fed the
 // events ChatController sees.
 
-import 'package:dpsk_app/state/run_pulse.dart';
+import 'package:dsh_app/state/run_pulse.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/share_hosted/hosted_client.dart';
-import 'package:dpsk_app/share_hosted/hosted_crypto.dart';
-import 'package:dpsk_app/share_hosted/hosted_link.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/share_hosted/hosted_client.dart';
+import 'package:dsh_app/share_hosted/hosted_crypto.dart';
+import 'package:dsh_app/share_hosted/hosted_link.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'hosted_client_test.dart' show FakeHost;
 
 const _channel = MethodChannel('plugins.it_nomads.com/flutter_secure_storage');
-final _file = Uint8List.fromList(utf8.encode('{"dpsk":2,"kind":"conversation"}'));
+final _file = Uint8List.fromList(utf8.encode('{"dshgo":2,"kind":"conversation"}'));
 final _old = HostedLink(
   id: 'z000000099',
   key: encodeHostedKey(Uint8List(32)),

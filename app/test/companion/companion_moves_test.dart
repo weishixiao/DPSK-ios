@@ -1,6 +1,6 @@
-import 'package:dpsk_app/companion/companion_moves.dart';
-import 'package:dpsk_app/companion/companion_reply.dart';
-import 'package:dpsk_app/companion/companion_state.dart';
+import 'package:dsh_app/companion/companion_moves.dart';
+import 'package:dsh_app/companion/companion_reply.dart';
+import 'package:dsh_app/companion/companion_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

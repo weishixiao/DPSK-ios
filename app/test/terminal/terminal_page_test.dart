@@ -4,15 +4,15 @@
 
 import 'dart:ui' show Tristate;
 
-import 'package:dpsk_app/l10n/l10n.dart';
+import 'package:dsh_app/l10n/l10n.dart';
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/runtime_capabilities_state.dart';
-import 'package:dpsk_app/state/terminal_state.dart';
-import 'package:dpsk_app/ui/terminal/terminal_keys.dart';
-import 'package:dpsk_app/ui/terminal/terminal_page.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/runtime_capabilities_state.dart';
+import 'package:dsh_app/state/terminal_state.dart';
+import 'package:dsh_app/ui/terminal/terminal_keys.dart';
+import 'package:dsh_app/ui/terminal/terminal_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dsh_client/dsh_client.dart' show RuntimeCapabilities, RuntimeShellCapabilities, RuntimeSupport;

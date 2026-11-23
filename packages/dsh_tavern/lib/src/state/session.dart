@@ -373,14 +373,14 @@ List<_Json> _runtimeIssues(bool exists, Object? runtime) {
     return [
       _issue(
         'runtime_version',
-        '/dpskStateRuntime',
+        '/dshgoStateRuntime',
         'Existing runtime must be an object with version 1; the session is read-only.',
       ),
     ];
   }
   if (!_finiteJson(runtime)) {
     return [
-      _issue('runtime_json', '/dpskStateRuntime', 'Runtime must contain finite JSON; the session is read-only.'),
+      _issue('runtime_json', '/dshgoStateRuntime', 'Runtime must contain finite JSON; the session is read-only.'),
     ];
   }
   if (runtime.containsKey('firedRules')) {
@@ -389,7 +389,7 @@ List<_Json> _runtimeIssues(bool exists, Object? runtime) {
       return [
         _issue(
           'runtime_fired_rules',
-          '/dpskStateRuntime/firedRules',
+          '/dshgoStateRuntime/firedRules',
           'Existing firedRules must be an array of strings; the session is read-only.',
         ),
       ];
@@ -402,7 +402,7 @@ List<_Json> _runtimeIssues(bool exists, Object? runtime) {
       return [
         _issue(
           'runtime_pending_prompts',
-          '/dpskStateRuntime/pendingPrompts',
+          '/dshgoStateRuntime/pendingPrompts',
           'Existing pendingPrompts must be an array; the session is read-only.',
         ),
       ];
@@ -412,7 +412,7 @@ List<_Json> _runtimeIssues(bool exists, Object? runtime) {
         return [
           _issue(
             'runtime_pending_prompts',
-            '/dpskStateRuntime/pendingPrompts',
+            '/dshgoStateRuntime/pendingPrompts',
             'Pending prompts require unique string ids and string text; the session is read-only.',
           ),
         ];

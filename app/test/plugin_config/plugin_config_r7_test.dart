@@ -3,7 +3,7 @@
 // session search switched on, a local bundle with covered and uncovered rows,
 // the App's phone control and an observer as overlays):
 //
-//   fixtures/bridge_catalog_r14.json          GET /DPSK/v1/plugin-config
+//   fixtures/bridge_catalog_r14.json          GET /dsh-go/v1/plugin-config
 //   fixtures/plugin_bundles_r14.json          pluginManager/listBundles, same
 //                                             moment (icons cut to "<icon>",
 //                                             the run's paths to /root/plugins)
@@ -21,9 +21,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/plugin_config/plugin_config_state.dart';
-import 'package:dpsk_app/ui/plugins/config/plugin_config_entries.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_state.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_entries.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -518,7 +518,7 @@ void main() {
           [
             for (final id in [..._voice, 'local-notes']) pluginConfigTitle(id, bundles, state: state, l10n: l),
           ],
-          ['语音识别', 'SenseVoice 本地识别', '语音转写接口', 'DPSK-fixture-local-notes'],
+          ['语音识别', 'SenseVoice 本地识别', '语音转写接口', 'dsh-go-fixture-local-notes'],
         );
       }
       // The R7 Host's own list: named by bundle.

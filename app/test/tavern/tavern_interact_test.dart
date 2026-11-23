@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dpsk_app/tavern/tavern_interact.dart';
-import 'package:dpsk_app/ui/tavern/tavern_interact_view.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_interact.dart';
+import 'package:dsh_app/ui/tavern/tavern_interact_view.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';

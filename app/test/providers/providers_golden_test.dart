@@ -3,18 +3,18 @@
 //
 //   flutter test --update-goldens test/providers
 
-import 'package:dpsk_app/ui/providers/provider_detail_page.dart';
-import 'package:dpsk_app/ui/providers/provider_form_page.dart';
-import 'package:dpsk_app/ui/providers/providers_page.dart';
-import 'package:dpsk_app/ui/providers/subscription_page.dart';
-import 'package:dpsk_app/ui/providers/subscription_sheet.dart';
+import 'package:dsh_app/ui/providers/provider_detail_page.dart';
+import 'package:dsh_app/ui/providers/provider_form_page.dart';
+import 'package:dsh_app/ui/providers/providers_page.dart';
+import 'package:dsh_app/ui/providers/subscription_page.dart';
+import 'package:dsh_app/ui/providers/subscription_sheet.dart';
 import 'package:dsh_client/dsh_client.dart' show DshClient, ModelCatalog, ModelInfo, ProviderGroup;
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/read_list_identity.dart';
-import 'package:dpsk_app/state/account_state.dart' show accountBrowserProvider;
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/providers_state.dart';
-import 'package:dpsk_app/state/subscriptions_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/read_list_identity.dart';
+import 'package:dsh_app/state/account_state.dart' show accountBrowserProvider;
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/providers_state.dart';
+import 'package:dsh_app/state/subscriptions_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

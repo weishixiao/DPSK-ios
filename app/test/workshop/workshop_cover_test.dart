@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_preview.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_preview.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image/image.dart' as image;
 

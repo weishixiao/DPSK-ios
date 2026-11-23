@@ -3,15 +3,15 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/forum/discourse_client.dart';
-import 'package:dpsk_app/forum/forum_models.dart';
-import 'package:dpsk_app/forum/forum_share.dart';
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/ui/forum/forum_composer_sheet.dart';
-import 'package:dpsk_app/ui/forum/forum_home_page.dart';
-import 'package:dpsk_app/ui/forum/forum_link_host.dart';
-import 'package:dpsk_app/ui/forum/forum_topic_page.dart';
+import 'package:dsh_app/forum/discourse_client.dart';
+import 'package:dsh_app/forum/forum_models.dart';
+import 'package:dsh_app/forum/forum_share.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/ui/forum/forum_composer_sheet.dart';
+import 'package:dsh_app/ui/forum/forum_home_page.dart';
+import 'package:dsh_app/ui/forum/forum_link_host.dart';
+import 'package:dsh_app/ui/forum/forum_topic_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -214,7 +214,7 @@ void main() {
 
     testWidgets('附上分享码 takes the share link from the clipboard', (tester) async {
       final link = samplePluginLink();
-      mockClipboard(tester, '来自 DPSK 的分享：${link.webLink} 点开就能装');
+      mockClipboard(tester, '来自 dsh-go 的分享：${link.webLink} 点开就能装');
       await openReply(tester, FakeForumApi(signedIn: true));
       await tester.enterText(find.byType(TextField), '推荐这个');
       await tester.tap(find.text('附上分享码'));
@@ -261,12 +261,12 @@ void main() {
   });
 
   group('links', () {
-    test('dpsk://forum paths', () {
-      expect(forumRouteFor(Uri.parse('dpsk://forum')), isNotNull);
-      expect(forumRouteFor(Uri.parse('dpsk://forum/t/101/3')), isNotNull);
-      expect(forumRouteFor(Uri.parse('dpsk://forum/t/some-slug/101')), isNotNull);
-      expect(forumRouteFor(Uri.parse('dpsk://forum/u/someone')), isNull);
-      expect(forumRouteFor(Uri.parse('dpsk://forum/t/x')), isNull);
+    test('dshgo://forum paths', () {
+      expect(forumRouteFor(Uri.parse('dshgo://forum')), isNotNull);
+      expect(forumRouteFor(Uri.parse('dshgo://forum/t/101/3')), isNotNull);
+      expect(forumRouteFor(Uri.parse('dshgo://forum/t/some-slug/101')), isNotNull);
+      expect(forumRouteFor(Uri.parse('dshgo://forum/u/someone')), isNull);
+      expect(forumRouteFor(Uri.parse('dshgo://forum/t/x')), isNull);
     });
 
     testWidgets('ForumLinkHost takes the sign-in redirect and topic links', (tester) async {
@@ -279,12 +279,12 @@ void main() {
         ...forumOverrides(FakeForumApi(), authController: () => auth = _RecordingAuth()),
         linkRouterProvider.overrideWithValue(router),
       ]);
-      links.add(Uri.parse('dpsk://forum/auth?payload=abc'));
+      links.add(Uri.parse('dshgo://forum/auth?payload=abc'));
       await settle(tester);
       expect(auth.redirects.single.queryParameters['payload'], 'abc');
       expect(find.text('已登录论坛'), findsOneWidget);
 
-      links.add(Uri.parse('dpsk://forum/t/101'));
+      links.add(Uri.parse('dshgo://forum/t/101'));
       await settle(tester);
       expect(find.byType(ForumTopicPage), findsOneWidget);
     });

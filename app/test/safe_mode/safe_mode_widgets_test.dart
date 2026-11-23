@@ -1,19 +1,19 @@
 // Safe mode UI: the failure card's buttons, the banner, the repair draft, notices,
 // and goldens of the engine page in both states.
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/safe_mode_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/engine/engine_screen.dart';
-import 'package:dpsk_app/ui/engine/log_view.dart';
-import 'package:dpsk_app/ui/safe_mode/engine_failure_card.dart';
-import 'package:dpsk_app/ui/safe_mode/recovery_actions.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_actions.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_banner.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_card.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_notice_listener.dart';
-import 'package:dpsk_app/ui/safe_mode/safe_mode_settings.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/safe_mode_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/engine/engine_screen.dart';
+import 'package:dsh_app/ui/engine/log_view.dart';
+import 'package:dsh_app/ui/safe_mode/engine_failure_card.dart';
+import 'package:dsh_app/ui/safe_mode/recovery_actions.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_actions.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_banner.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_card.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_notice_listener.dart';
+import 'package:dsh_app/ui/safe_mode/safe_mode_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

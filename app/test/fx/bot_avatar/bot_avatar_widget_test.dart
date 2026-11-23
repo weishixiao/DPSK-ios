@@ -1,6 +1,6 @@
 // Portions derived from Libraries.dev Bot avatars (https://github.com/Jakubantalik/Libraries.dev), MIT, Copyright (c) 2026 Jakub Antalik. See THIRD_PARTY_NOTICES.md.
 
-import 'package:dpsk_app/ui/fx/bot_avatar/bot_avatar.dart';
+import 'package:dsh_app/ui/fx/bot_avatar/bot_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

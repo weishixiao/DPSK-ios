@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_agent.dart';
-import 'package:dpsk_app/companion/companion_agent_tools.dart';
-import 'package:dpsk_app/companion/companion_light.dart';
-import 'package:dpsk_app/companion/companion_local.dart';
-import 'package:dpsk_app/companion/companion_memory.dart';
+import 'package:dsh_app/companion/companion_agent.dart';
+import 'package:dsh_app/companion/companion_agent_tools.dart';
+import 'package:dsh_app/companion/companion_light.dart';
+import 'package:dsh_app/companion/companion_local.dart';
+import 'package:dsh_app/companion/companion_memory.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;

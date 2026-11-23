@@ -3,12 +3,12 @@
 // written as 「### 中文 … ### English …」, Chinese when the release has
 // nothing in the app's language. The split survives the cached offer.
 
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/ui/update/update_sheet.dart';
-import 'package:dpsk_app/update/release.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/ui/update/update_sheet.dart';
+import 'package:dsh_app/update/release.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -25,8 +25,8 @@ ReleaseInfo _release({String notes = _both, Map<String, String>? byLocale}) => p
   'notesByLocale': ?byLocale,
   'assets': {
     'arm64': {
-      'name': 'DPSK-0.9.2-arm64.apk',
-      'url': 'https://go.dshtui.com/beta/0.9.2/DPSK-0.9.2-arm64.apk',
+      'name': 'dsh-go-0.9.2-arm64.apk',
+      'url': 'https://go.dshtui.com/beta/0.9.2/dsh-go-0.9.2-arm64.apk',
       'size': 1,
     },
   },

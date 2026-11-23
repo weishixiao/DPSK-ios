@@ -7,12 +7,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:dpsk_app/forum/forum_auth.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/secrets/secure_storage.dart';
-import 'package:dpsk_app/share_hosted/hosted_links_state.dart';
-import 'package:dpsk_app/state/provider_keys.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/forum/forum_auth.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/secrets/secure_storage.dart';
+import 'package:dsh_app/share_hosted/hosted_links_state.dart';
+import 'package:dsh_app/state/provider_keys.dart';
+import 'package:dsh_app/state/settings_state.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

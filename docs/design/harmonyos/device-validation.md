@@ -60,7 +60,7 @@ R04 的“终止”要记录真实方式；如果只是正常关句柄/新建对
 |---|---|---|
 | F01 | 工作区内中文/特殊字符文件、父目录换链、叶 symlink、FIFO/目录 | native 安全 opener 只接受授权根的普通 FD；拒绝路径逃逸，不依赖 File.path 的字符串 realpath |
 | F02 | 打开后同名路径被替换、同 inode 合法写者并发修改 | 前者读原 FD 身份；后者如实记录可能混合/提前 EOF，不冒称内容事务快照 |
-| F03 | DSH_HOME/.agents 与用户输出 | 用户导出不进入私有 home；listOutputs 只枚举 DPSK；AGENTS managed 标记与自有文本保持；技能根与实际消费者一致 |
+| F03 | DSH_HOME/.agents 与用户输出 | 用户导出不进入私有 home；listOutputs 只枚举 DSH-Go；AGENTS managed 标记与自有文本保持；技能根与实际消费者一致 |
 | F04 | 托管技能 start/cancel、旧 owner、旧 token、旧 Node 世代、发布失败 | 旧授权不写新世代；取消不留下半个可用技能；失败恢复不删未知目录；engine/Ability 更换的归属与协议一致 |
 | F05 | publication 首次实际 link/rename、目标已存在、竞争发布 | 记录实际方法、errno、final/source 字节及挂载；只有真实 NOREPLACE 成功才支持 available；普通 rename 成功不能代替 |
 | F06 | 持久 trying 后终止、相同/新系统身份恢复 | 相同版本 disabled-after-crash 后不再试 rename；旧 final 保留；新系统身份可靠变化才讨论重试。残留 trying 不是 SIGSYS 证明 |

@@ -421,7 +421,7 @@ def build_font(names, codepoints):
         'psName': f'{FAMILY}-Regular',
         'version': 'Version 1.000',
         'copyright': 'Glyphs from Phosphor Icons, Copyright (c) 2023 Phosphor Icons, MIT License.',
-        'description': f'DPSK icon subset of Phosphor Icons {PHOSPHOR_VERSION} Regular and Fill, '
+        'description': f'dsh-go icon subset of Phosphor Icons {PHOSPHOR_VERSION} Regular and Fill, '
                        'made by tool/make_icon_font.py.',
     })
     fb.setupOS2(version=4, sTypoAscender=EM, sTypoDescender=0, sTypoLineGap=0,

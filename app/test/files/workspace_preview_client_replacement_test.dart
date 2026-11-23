@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/state/balance_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/workspace_state.dart';
-import 'package:dpsk_app/ui/chat/artifact_preview.dart';
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/session/workspace_files.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/state/balance_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/workspace_state.dart';
+import 'package:dsh_app/ui/chat/artifact_preview.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/session/workspace_files.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/foundation.dart' show FlutterError, FlutterErrorDetails, debugPrintSynchronously;
 import 'package:flutter/material.dart';

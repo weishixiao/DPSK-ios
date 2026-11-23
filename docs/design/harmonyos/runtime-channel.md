@@ -14,7 +14,7 @@
 
 ## 方法全集
 
-来源：`app/lib/runtime/runtime_bridge.dart` 和 `app/android/app/src/main/kotlin/com/dpsk/harness/runtime/RuntimePlugin.kt`，包含 Kotlin 额外接收的两个方法。已知但未支持的方法返回 `PlatformException(code: "ohos_unsupported", message: 中文原因及替代路径)`；未知方法才使用 `notImplemented()`。
+来源：`app/lib/runtime/runtime_bridge.dart` 和 `app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/runtime/RuntimePlugin.kt`，包含 Kotlin 额外接收的两个方法。已知但未支持的方法返回 `PlatformException(code: "ohos_unsupported", message: 中文原因及替代路径)`；未知方法才使用 `notImplemented()`。
 
 | 方法 | 鸿蒙行为与返回 |
 | --- | --- |
@@ -90,7 +90,7 @@
 
 实现采用**固定代码目录、安装归属记录、逐文件原子替换**：开始前原子持久写入 installing.json，其中保存当前与历次未完成安装的 ownedPaths/stagingHashes；先按深路径优先清理本版已退役的登记文件和空祖先目录，遇到当前版本需要的目录则保留，未知内容不递归删除。逐个核已有文件的 size/SHA256，相同则复用，不重复读取 HAP 内容；变更文件从 RawFd 的 `{fd,offset,length}` 分块读出，写同文件系统的 staging 临时文件，核摘要后 rename；最后清理登记的临时文件、提交安装记录并清掉 installing 标记。任何中断都保留“待续装”状态，start 必须拒绝；换 HAP 版本后也继承未完成事务的归属记录，再按新版本清单续装。这样升级只写变化部分，不承诺旧版本即时回滚，也不在已经启动过 Node 的 App 进程内换代码。
 
-`guestRoot = context.filesDir + '/runtime/rootfs'`；`HOME`、`DSH_HOME`、`DSH_AGENTS_HOME` 分别为其下的 `root`、`root/.dsh`、`root/.agents`，唯一 workspaceRoot 为 `root/workspace`。交付文件放 `root/workspace/DPSK`；缓存仍放 `context.cacheDir`。`rootfs` 只是目录名，没有 Linux guest。运行时代码仍在 `context.filesDir + '/dsh-runtime/tree'`，不在 workspaceRoots 中。任何安装/首次启动的目录创建失败均明确失败，不回退到 `/` 或 `process.cwd()`。
+`guestRoot = context.filesDir + '/runtime/rootfs'`；`HOME`、`DSH_HOME`、`DSH_AGENTS_HOME` 分别为其下的 `root`、`root/.dsh`、`root/.agents`，唯一 workspaceRoot 为 `root/workspace`。交付文件放 `root/workspace/DSH-Go`；缓存仍放 `context.cacheDir`。`rootfs` 只是目录名，没有 Linux guest。运行时代码仍在 `context.filesDir + '/dsh-runtime/tree'`，不在 workspaceRoots 中。任何安装/首次启动的目录创建失败均明确失败，不回退到 `/` 或 `process.cwd()`。
 
 ## 公开 API 依据与设备待验
 
@@ -118,7 +118,7 @@ v3的反例为drain返回旧批次之后原生线程完成尾日志和exit；随
 
 新增 `HostOptions.nativeLibraryDir`，只来自当前应用 Context：`bundleCodeDir` 是安装代码根，`applicationInfo.nativeLibraryPath` 按文档是相对此根的安装库路径，但 HarmonyOS 7.0.0.111 真机给的是此根下的绝对路径（`/data/storage/el1/bundle/libs/arm64`），所以以「根 + /」开头时先去掉这个前缀，再按相对路径检查。`resolveNativeLibraryDir` 要求根是非根绝对路径且无 NUL；相对路径可去一个末尾斜杠，随后不允许空分量、`.`、`..`、NUL 或前导斜杠。错误返回 `ohos_native_library_path`，不回退硬编码的 `/data/...`，不消耗唯一 Node 启动机会。
 
-显式设置 `module.json5` 的 `extractNativeLibs:true`、`libIsolation:false`，让固定两库使用同一已解压的安装目录；具体 HAP 布局仍须主线核验。P1B v2 必须接收这个必填字段，canonicalize 并检查目录、固定 `libdsh_require_builtin.so` 和 `libdsh_flock.so` 为普通非链接文件，再写受保护的 `DPSK_OHOS_NATIVE_LIBRARY_DIR`。本 ArkTS 部分不自行 dlopen、不把 ELF 拷进可写 rawfile 运行时、不代替 C++ 的真实文件校验。已有 env 校验拒绝全部 `DPSK_OHOS_*`，包括此字段，不能由 Dart env 覆盖。
+显式设置 `module.json5` 的 `extractNativeLibs:true`、`libIsolation:false`，让固定两库使用同一已解压的安装目录；具体 HAP 布局仍须主线核验。P1B v2 必须接收这个必填字段，canonicalize 并检查目录、固定 `libdsh_require_builtin.so` 和 `libdsh_flock.so` 为普通非链接文件，再写受保护的 `DSH_GO_OHOS_NATIVE_LIBRARY_DIR`。本 ArkTS 部分不自行 dlopen、不把 ELF 拷进可写 rawfile 运行时、不代替 C++ 的真实文件校验。已有 env 校验拒绝全部 `DSH_GO_OHOS_*`，包括此字段，不能由 Dart env 覆盖。
 
 公开依据固定为 interface_sdk-js `8a86234f0d542e5062e24e948652f5a484d90904` 的 [ApplicationInfo](https://github.com/openharmony/interface_sdk-js/blob/8a86234f0d542e5062e24e948652f5a484d90904/api/bundleManager/ApplicationInfo.d.ts) 与 [Context](https://github.com/openharmony/interface_sdk-js/blob/8a86234f0d542e5062e24e948652f5a484d90904/api/application/Context.d.ts)。[MainThread](https://raw.githubusercontent.com/openharmony/ability_ability_runtime/OpenHarmony-v6.1-Release/frameworks/native/appkit/app/main_thread.cpp) 实际拼 `LOCAL_CODE_PATH + nativeLibraryPath`，文件 SHA256 `fa2073829e92d5a66bd8d32b85d9235e37591abaa062120e3432c0786fed6d24`；[固定 ContextImpl](https://raw.githubusercontent.com/openharmony/ability_ability_runtime/8222796f651bb5c19a91dbf927795ceb149c0e97/frameworks/native/appkit/ability_runtime/context/context_impl.cpp) 的普通自有 Context.GetBundleCodeDir 返回同一根，SHA256 `eb4ec82bc1ec88ca260c380677fb99caa5cab5412f1e497231fe8802a410c537`。这支持拼接关系，不能代替目标设备值测量。
 

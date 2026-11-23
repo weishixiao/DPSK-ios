@@ -1,9 +1,9 @@
-import 'package:dpsk_app/runtime/continued_run.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/read_list_identity.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
+import 'package:dsh_app/runtime/continued_run.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/read_list_identity.dart';
+import 'package:dsh_app/state/sessions_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

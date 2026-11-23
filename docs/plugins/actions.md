@@ -94,7 +94,7 @@ ctx.dshGo.on('translate', (scope) => ({
 
 - `insert` 是在**结果到达时**插到光标处：用户这期间可能已经改了输入框，所以只插入，不要假设输入框是空的。
 - 用到模型就会消耗用户的额度：只在用户点按后调用，一次点按一次调用，提示里写清在做什么（如「正在翻译」）。
-- 示例：[`examples/plugins/DPSK-example-quick`](../../examples/plugins/DPSK-example-quick/) 的「译成英文」用 DSH 里设的默认模型翻译剪贴板，没有模型服务时退回成「把请求放进输入框」。
+- 示例：[`examples/plugins/dsh-go-example-quick`](../../examples/plugins/dsh-go-example-quick/) 的「译成英文」用 DSH 里设的默认模型翻译剪贴板，没有模型服务时退回成「把请求放进输入框」。
 
 ## 在测试里看效果
 

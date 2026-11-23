@@ -132,7 +132,7 @@ void main() {
     expect(calls, 1);
     expect(store.message(chat, child.nodeId).parentId, isNull);
     expect(_nodeBytes(database, child.nodeId), before);
-    final own = store.node(chat, child.nodeId).extra['dpsk']! as Map<String, Object?>;
+    final own = store.node(chat, child.nodeId).extra['dshgo']! as Map<String, Object?>;
     expect(own['tavernState'], {'copiedText': text});
     expect(store.nodeState(chat, child.nodeId), {'physical': '\ufeffkept'});
   });

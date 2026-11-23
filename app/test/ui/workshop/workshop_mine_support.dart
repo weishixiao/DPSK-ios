@@ -2,10 +2,10 @@
 // client that never opens a socket (test/state/workshop_personal_test_support):
 // what the page shows is what the state layer really does with each answer.
 
-import 'package:dpsk_app/state/workshop_account_state.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/workshop_dependencies.dart';
-import 'package:dpsk_app/state/workshop_preferences.dart';
+import 'package:dsh_app/state/workshop_account_state.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/workshop_dependencies.dart';
+import 'package:dsh_app/state/workshop_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';

@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/engine_settings_state.dart';
-import 'package:dpsk_app/ui/engine_settings/engine_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_documentation.dart';
-import 'package:dpsk_app/ui/engine_settings/schema_fields.dart' show FieldCopy, hintFor, labelFor, plainSchemaText;
-import 'package:dpsk_app/ui/plugins/plugin_inventory_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/engine_settings_state.dart';
+import 'package:dsh_app/ui/engine_settings/engine_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/schema_documentation.dart';
+import 'package:dsh_app/ui/engine_settings/schema_fields.dart' show FieldCopy, hintFor, labelFor, plainSchemaText;
+import 'package:dsh_app/ui/plugins/plugin_inventory_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -244,7 +244,7 @@ void main() {
     const markdown = '''[Web](https://example.test/manual)
 [Relative](/settings)
 [File](file:///tmp/private)
-[App](dpsk://open/settings)
+[App](dshgo://open/settings)
 ![image](https://example.test/pixel.png)
 <img src="https://example.test/html.png">
 ```dsh-ui
@@ -278,7 +278,7 @@ void main() {
     for (final link in [
       '/settings',
       'file:///tmp/private',
-      'dpsk://open/settings',
+      'dshgo://open/settings',
       '//example.test/path',
       'https://user:secret@example.test',
     ]) {

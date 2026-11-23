@@ -153,7 +153,7 @@ extension _GameplayPackOperations on TavernEngine {
       });
     }
     return {
-      'dpsk': inspectDshgoExtension(manifest['dpsk'], present: manifest.containsKey('dpsk')).toJson(),
+      'dshgo': inspectDshgoExtension(manifest['dshgo'], present: manifest.containsKey('dshgo')).toJson(),
       'resources': resources,
     };
   }

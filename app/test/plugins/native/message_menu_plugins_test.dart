@@ -2,10 +2,10 @@
 // name, after the menu's own; a tap goes to the plugin with the reply's id
 // (and its text, only after the one-time 「要读取这条回复」).
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/widgets/assistant_message.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/plugins/native/native_composer_bar.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/widgets/assistant_message.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/plugins/native/native_composer_bar.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -92,7 +92,7 @@ void main() {
     await tester.tap(find.text('要点'));
     await tester.pumpAndSettle();
     final call = bridge.invocations.single;
-    expect((call.pkg, call.id, call.surface), ('DPSK-example-quick', 'summary', 'message.actions'));
+    expect((call.pkg, call.id, call.surface), ('dsh-go-example-quick', 'summary', 'message.actions'));
     expect(call.scope, const DshGoScope(sessionId: 's1', messageId: 'm18'));
     expect(call.message, isNull, reason: 'the text only for a plugin that wants it');
     expect(composer.inserted, ['要点：一、二、三']);

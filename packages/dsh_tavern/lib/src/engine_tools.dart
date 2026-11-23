@@ -74,8 +74,8 @@ void _commitOrdinaryToolFinal(
         }
         final inspectionStarted = turn.profile?.now;
         final extra = engine._inspectionExtra(engine._store.node(turn.chat.id, message.nodeId).extra, inspection);
-        extra['dpsk'] = {
-          ...(extra['dpsk'] as Map<String, Object?>),
+        extra['dshgo'] = {
+          ...(extra['dshgo'] as Map<String, Object?>),
           ...?ownAudit,
           ...?storySettlement?.ownAudit,
           'tavernState': state,
@@ -1143,7 +1143,7 @@ int _sealOrdinaryToolPreparation(TavernEngine engine, _Turn turn) {
             ? engine._store.groupInitialState(chat.id)
             : engine._stateFromNode(chat.id, sourceNode, chat: chat);
         final source =
-            sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dpsk'])['chatJsonl'])['rootFile'];
+            sourceState['chatJsonlSourceFile'] ?? _map(_map(chat.metadata['dshgo'])['chatJsonl'])['rootFile'];
         return _ToolPreparationSnapshot(
           metadata,
           source is String ? source : null,
@@ -1340,9 +1340,9 @@ void _bindOrdinaryToolReply(
 }) {
   final extra = turn.kind == _TurnKind.continueReply ? _copy(target!.extra) : _groupReplyExtra(turn);
   if (turn.kind == _TurnKind.continueReply) {
-    extra['dpsk'] = {..._map(extra['dpsk']), 'tavernState': turn.currentState};
+    extra['dshgo'] = {..._map(extra['dshgo']), 'tavernState': turn.currentState};
     if (turn.groupView != null) {
-      final own = _map(extra['dpsk']);
+      final own = _map(extra['dshgo']);
       own['group'] = {
         ..._map(own['group']),
         'version': 1,
@@ -1350,7 +1350,7 @@ void _bindOrdinaryToolReply(
         'model': turn.config.model,
         'deepseek': turn.config.deepseek,
       };
-      extra['dpsk'] = own;
+      extra['dshgo'] = own;
     }
   }
   engine._store.bindToolCandidate<_ToolReplyBinding>(

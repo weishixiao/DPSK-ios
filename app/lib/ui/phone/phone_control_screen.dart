@@ -791,7 +791,7 @@ class _PhoneControlScreenState extends ConsumerState<PhoneControlScreen> {
 
   Future<void> _setSystemIsland(bool on) => ref.read(phoneOverlayPrefsProvider.notifier).setSystemIsland(on);
 
-  /// 悬浮条: 闲置时不透明度, 闲置时自动收起, 屏幕边缘光效, 用系统灵动岛显示, 完成后返回 DPSK.
+  /// 悬浮条: 闲置时不透明度, 闲置时自动收起, 屏幕边缘光效, 用系统灵动岛显示, 完成后返回 dsh-go.
   Widget _floatingBar() {
     final overlay = ref.watch(phoneOverlayPrefsProvider);
     final returnAfterDone = ref.watch(phoneReturnPrefProvider);

@@ -59,7 +59,7 @@ void main() {
       hidden: true,
       usage: const TavernUsage(promptTokens: 13, cacheHitTokens: 5, completionTokens: 8),
       extra: {
-        'dpsk': {'macroHash': 0},
+        'dshgo': {'macroHash': 0},
         'opaque': {
           'values': [1, null, 'x'],
         },
@@ -87,7 +87,7 @@ void main() {
     expect(selected.message.siblingIndex, 0);
     expect(selected.message.siblingCount, 2);
     expect(selected.extra, {
-      'dpsk': {'macroHash': 0},
+      'dshgo': {'macroHash': 0},
       'opaque': {
         'values': [1, null, 'x'],
       },
@@ -237,7 +237,7 @@ void main() {
       hidden: true,
       usage: const TavernUsage(promptTokens: 7, cacheHitTokens: 2, completionTokens: 3, model: 'estimate'),
       extra: {
-        'dpsk': {
+        'dshgo': {
           'inspection': {
             'version': 1,
             'chatId': id,
@@ -299,12 +299,12 @@ void main() {
     expect(node.message.usage, isNull);
     expect(node.message.reportedUsage, isNull);
     expect(node.extra, {
-      'dpsk': {'keep': 1},
+      'dshgo': {'keep': 1},
       'opaque': opaque,
     });
     expect(node.original, {'vendor': 'preserved', 'opaque': opaque});
     expect(jsonDecode(database.select('SELECT extra FROM nodes WHERE id = ?', ['reply']).single['extra'] as String), {
-      'dpsk': {
+      'dshgo': {
         'inspection': {
           'version': 1,
           'chatId': id,

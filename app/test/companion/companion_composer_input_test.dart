@@ -1,9 +1,9 @@
 // The composer owns its own text: a key rebuilds it, not her room. The send /
 // stop / voice key follows the field (a composing IME included) and a clear.
 
-import 'package:dpsk_app/l10n/gen/app_localizations.dart';
-import 'package:dpsk_app/ui/companion/companion_chrome.dart';
-import 'package:dpsk_app/ui/theme/app_theme.dart';
+import 'package:dsh_app/l10n/gen/app_localizations.dart';
+import 'package:dsh_app/ui/companion/companion_chrome.dart';
+import 'package:dsh_app/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

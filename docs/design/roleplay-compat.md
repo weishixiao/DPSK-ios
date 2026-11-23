@@ -5,7 +5,7 @@
 ## 0. 结论
 
 - **目标**：同一张卡、同一个预设、同一段对话，我们发给 DeepSeek 的请求和 ST 发的逐字一致；同一条消息显示出来一样；酒馆助手和 MVU 的卡能玩。
-- **怎么做到**：ST 是 AGPL-3.0，和 DPSK 一样，组装、宏、正则、显示这几块复用 ST 的实现（版权与来源见 THIRD_PARTY_NOTICES.md）。酒馆助手按公开文档重写同名接口。MVU 是 MIT，引擎照它的源码原生实现变量协议（§5.3）。
+- **怎么做到**：ST 是 AGPL-3.0，和 dsh-Go 一样，组装、宏、正则、显示这几块复用 ST 的实现（版权与来源见 THIRD_PARTY_NOTICES.md）。酒馆助手按公开文档重写同名接口。MVU 是 MIT，引擎照它的源码原生实现变量协议（§5.3）。
 - **对拍**：让 ST 连一个只录请求的假接口，录下它发出去的东西，和我们的逐字比较（§10）。
 - **不弹授权。** ST 对卡和预设里的正则会问一次「允许吗」，我们默认就开（owner 定的）。
 - **只做对话补全（Chat Completion）。** ST 的文本补全和 instruct 模板不做：DeepSeek 和主流接口都是对话补全，中文社区的预设也都是对话补全的。
@@ -41,7 +41,7 @@
   - `creation_date`、`modification_date` 是 Unix **秒**，0 表示不知道；用户不能改，导出时更新 `modification_date`。
   - `source` 只追加，不改。
   - `creator_notes_multilingual` 按界面语言挑，没有就用 `creator_notes`。
-- `extensions.dpsk` 放我们自己的东西（agent §10）。不认识的扩展原样保留、原样导出：`regex_scripts`、`depth_prompt`、`world`、`talkativeness`、`tavern_helper`（酒馆助手的脚本和变量）等。导入再导出，别家的数据一个字节不丢。
+- `extensions.dshgo` 放我们自己的东西（agent §10）。不认识的扩展原样保留、原样导出：`regex_scripts`、`depth_prompt`、`world`、`talkativeness`、`tavern_helper`（酒馆助手的脚本和变量）等。导入再导出，别家的数据一个字节不丢。
 
 ### 2.2 导入导出
 
@@ -66,7 +66,7 @@ V3 的 `assets` 每项是 `{type, uri, name, ext}`：
 ### 2.4 伙伴和卡
 
 - 伙伴「她的设定」里的用户块（名字、怎么叫你、人设全文）就是卡的 `name`、`description`。App 固定追加的规则块（表情动作标记、旁白说明）不进卡。
-- **请进小屋**：任何一张卡都能成为伙伴。卡的设定替换她的设定，开场白当第一次见面的问候；用卡里的 Live2D（`extensions.dpsk.live2d`），没有就用现在的鲸鱼娘。伙伴一次只有一个。
+- **请进小屋**：任何一张卡都能成为伙伴。卡的设定替换她的设定，开场白当第一次见面的问候；用卡里的 Live2D（`extensions.dshgo.live2d`），没有就用现在的鲸鱼娘。伙伴一次只有一个。
 
 ## 3. 预设和提示词组装
 
@@ -185,7 +185,7 @@ ST 有两套宏引擎。1.17.0 起新装默认用新引擎（「Macros 2.0」，
 | 角色 | 卡的 `extensions.tavern_helper.variables` | 卡里，原样 |
 | 预设 | 预设的扩展字段 | 预设文件里，原样 |
 
-增强层的状态放在消息变量的 `dpsk` 键下（agent §2.1），和 MVU 的 `stat_data` 并排。
+增强层的状态放在消息变量的 `dshgo` 键下（agent §2.1），和 MVU 的 `stat_data` 并排。
 
 ### 5.3 MVU
 
@@ -202,7 +202,7 @@ MVU（MagVarUpdate，MIT）是中文卡里最常见的变量框架。它是一�
 - **原先的打算是让 MVU 自己的脚本跑**，取了 master 的构建看过后放弃：它运行时 import 51 个远程模块（各家模型的适配、mathjs 等），还直接读写 ST 的内部对象（`SillyTavern.chat`、`saveChat`、`registerMacro`、`loadWorldInfo` 等 22 种），离线做不到，要模拟的东西太多，还跟着上游变。
 - **改成引擎原生实现 MVU 的变量协议**（MIT，照它的源码移植语义，版权与来源记进 THIRD_PARTY_NOTICES.md）：`[initvar]` 初始值、楼层里的 `stat_data`、`<UpdateVariable>` 和 `<JSONPatch>` 的解析、相关的宏和事件。MVU 的「额外模型解析」和它的设置面板不做。
 - 卡脚本 import MVU 的地址时，App 换成本地的小模块，挂出全局 `Mvu`（`getMvuData`、`replaceMvuData`、`parseMessage`、事件名），接到引擎上。前端块照常用 `getVariables` 或 `Mvu.getMvuData` 读。
-- **App 怎么接（2026-11 阶段四）**：卡里（脚本、正则、开场白）出现 MagVarUpdate，或 `extensions.dpsk.mvu.enabled` 为真，就算用 MVU。聊天页对这类卡调一次 `setMvuEnabled` 打开这段对话的原生 MVU（不管用哪种显示方式），之后每条回复由引擎算变量。整页画布里卡脚本照常跑：MVU 的 import 换成本地 `Mvu`，事件监听改过的候选随 Ack 交回引擎。默认的岛屿不跑卡脚本，但状态栏这类读变量的前端块会拿到本楼层的只读变量（`getVariables`、`Mvu.getMvuData`、`getCurrentMessageId`、`waitGlobalInitialized('Mvu')`），写操作会被拒绝并说明要去整页画布；岛屿里也带上 jQuery 和 lodash。
+- **App 怎么接（2026-11 阶段四）**：卡里（脚本、正则、开场白）出现 MagVarUpdate，或 `extensions.dshgo.mvu.enabled` 为真，就算用 MVU。聊天页对这类卡调一次 `setMvuEnabled` 打开这段对话的原生 MVU（不管用哪种显示方式），之后每条回复由引擎算变量。整页画布里卡脚本照常跑：MVU 的 import 换成本地 `Mvu`，事件监听改过的候选随 Ack 交回引擎。默认的岛屿不跑卡脚本，但状态栏这类读变量的前端块会拿到本楼层的只读变量（`getVariables`、`Mvu.getMvuData`、`getCurrentMessageId`、`waitGlobalInitialized('Mvu')`），写操作会被拒绝并说明要去整页画布；岛屿里也带上 jQuery 和 lodash。
 - **原生状态面板**能直接读 `stat_data`（ui §8 的变量树视图），整理者也能读。
 - **zod 版**（`StageDog/tavern_resource` 的 `mvu_zod`）是 PolyForm NonCommercial：卡自己引入时照常从网上加载（能不能跑看它用到的接口），我们不打包；它的 schema 校验先不支持。
 
@@ -265,7 +265,7 @@ ST 的聊天记录是 `.jsonl`：第一行是头，之后每行一条消息。
 
 **导入**：一个文件变成一段对话；同一角色的一批文件（ST 导出的整个文件夹）里，`main_chat` 指过来的分支按共同的前缀接到树上，变成一段对话的不同分支。`swipes` 变成兄弟节点，`variables[i]` 变成第 i 个兄弟的状态。
 
-**导出**：当前这条路写成主文件；每个节点的兄弟写进 `swipes`（`swipe_id` 指当前那个）；别的分支各写成一个分支文件，`main_chat` 指回主文件，来源消息的 `extra.branches` 记上——和 ST 自己存分支的方式一样。增强层的东西放在 `extra.dpsk`，ST 读到会忽略。`integrity` 每次导出新生成。
+**导出**：当前这条路写成主文件；每个节点的兄弟写进 `swipes`（`swipe_id` 指当前那个）；别的分支各写成一个分支文件，`main_chat` 指回主文件，来源消息的 `extra.branches` 记上——和 ST 自己存分支的方式一样。增强层的东西放在 `extra.dshgo`，ST 读到会忽略。`integrity` 每次导出新生成。
 
 ## 8. 酒馆助手
 

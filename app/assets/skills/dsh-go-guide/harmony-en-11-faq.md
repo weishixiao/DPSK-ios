@@ -11,7 +11,7 @@ Check the host status at the bottom of the chat list.
 Reset and uninstall both delete data on this phone; you rarely need them to fix a problem.
 
 <!-- nav: commonSettings,phoneEngineDiagnostics -->
-`Settings › Diagnostics` · [Open](dpsk://open/diagnostics)
+`Settings › Diagnostics` · [Open](dshgo://open/diagnostics)
 
 To report a problem, export a diagnostics bundle here. It includes the version, device, bounded engine logs and captured errors, not all system logs or a complete crash history. The app attempts to remove keys and tokens; still inspect the bundle before sharing it.
 
@@ -30,7 +30,7 @@ After reproducing it, tap **Export recent keyboard geometry** under **This app's
 ## The engine stops in the background, or notifications don't arrive
 
 <!-- nav: commonSettings,phoneEngineKeepAlive -->
-`Settings › Background running` · [Open](dpsk://open/background)
+`Settings › Background running` · [Open](dshgo://open/background)
 
 The system may suspend the app soon after it leaves the screen. Background running offers an opt-in long-running task protection switch, off by default. Only while a local task is running and this build has the required system eligibility does the app request continuous execution and report its actual state. Turning it off or ending the task releases protection.
 
@@ -38,7 +38,7 @@ Turning the switch on is not system approval. Missing ordinary permissions, rest
 
 To keep it going, keep the app on screen, or run it on a connected remote host. HarmonyOS has no battery-optimization or lock-in-Recents steps to try.
 
-Alerts need the app running, and none go out while it's suspended; also turn on the alerts you want in the app's **Notifications** and allow DPSK notifications in system settings. Scheduled tasks on this phone only fire while the app is running too, and won't run on time while it's suspended.
+Alerts need the app running, and none go out while it's suspended; also turn on the alerts you want in the app's **Notifications** and allow DSH Go notifications in system settings. Scheduled tasks on this phone only fire while the app is running too, and won't run on time while it's suspended.
 
 ## The engine keeps failing to start
 
@@ -65,7 +65,7 @@ Adding the app's sign-in patch alone does not enable the services that headless 
 The top of the system actions page says where things stand:
 
 - **On, waiting for the local engine**: start the local engine.
-- **On, works once you're back in DPSK**: the system doesn't let background apps do these, so come back to DPSK.
+- **On, works once you're back in DSH Go**: the system doesn't let background apps do these, so come back to DSH Go.
 - **On, can't connect right now, retrying**: give it a moment.
 - **Not available in this version**: this version doesn't support system actions.
 - **You're connected to a remote host**: switch to **This phone**.
@@ -98,12 +98,12 @@ See [Pets](06-pets.md).
 
 ## A plugin is installed but doesn't show up
 
-Check that the plugin is enabled, and restart the engine if asked. A plugin's native UI needs the DPSK bridge on the host: this phone's engine has it built in, remote hosts usually don't. A display place may also be turned off in the plugin's details. Plugin panels without a native UI appear in the Plugins group of All features, opening in the app or as Web entries. See [Plugins](08-plugins.md).
+Check that the plugin is enabled, and restart the engine if asked. A plugin's native UI needs the dsh-go bridge on the host: this phone's engine has it built in, remote hosts usually don't. A display place may also be turned off in the plugin's details. Plugin panels without a native UI appear in the Plugins group of All features, opening in the app or as Web entries. See [Plugins](08-plugins.md).
 
 ## What the app sends
 
 <!-- nav: commonSettings,hubPrivacy,usageStatsTitle -->
-`Settings › Privacy and sharing › Send anonymous usage stats` · [Open](dpsk://open/usage-stats)
+`Settings › Privacy and sharing › Send anonymous usage stats` · [Open](dshgo://open/usage-stats)
 
 Usage statistics aren't sent on HarmonyOS for now. The switch is off and locked, and neither the welcome screen nor an upgrade notice offers it.
 

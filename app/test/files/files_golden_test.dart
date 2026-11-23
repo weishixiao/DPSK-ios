@@ -1,8 +1,8 @@
 // Goldens (light + dark) for the 文件 page and the file previews. Regenerate
 // with `flutter test --update-goldens test/files/files_golden_test.dart`.
 
-import 'package:dpsk_app/ui/files/files_page.dart';
-import 'package:dpsk_app/ui/session/workspace_files.dart';
+import 'package:dsh_app/ui/files/files_page.dart';
+import 'package:dsh_app/ui/session/workspace_files.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

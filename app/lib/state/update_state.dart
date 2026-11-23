@@ -970,12 +970,12 @@ class AppUpdateController extends Notifier<AppUpdateState> {
     return _installer.openWithSystemInstaller(apk.file.path);
   }
 
-  /// 「导出安装包」: copies the verified download into `Download/DPSK`, so it can
+  /// 「导出安装包」: copies the verified download into `Download/DSH-Go`, so it can
   /// be signed and installed by hand — the way out for a phone whose system
   /// refuses a first install (a vendor block) and whose owner signs it with
   /// MT Manager or the like.
   ///
-  /// Returns where it landed (`Download/DPSK/DPSK-1.2.0-arm64.apk`), null
+  /// Returns where it landed (`Download/DSH-Go/dsh-go-1.2.0-arm64.apk`), null
   /// when there is nothing to copy or the copy failed. A package signed by hand
   /// is one no later update can cover: the signature check stays, so that phone
   /// goes on signing and installing every version itself.

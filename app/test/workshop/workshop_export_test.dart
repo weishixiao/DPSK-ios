@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_pack.dart';
-import 'package:dpsk_app/pets/pet_library.dart';
-import 'package:dpsk_app/workshop/workshop_export.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
+import 'package:dsh_app/companion/companion_pack.dart';
+import 'package:dsh_app/pets/pet_library.dart';
+import 'package:dsh_app/workshop/workshop_export.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';

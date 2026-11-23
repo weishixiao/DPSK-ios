@@ -11,18 +11,18 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/plugins/seams/seams.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/plugins/islands/islands.dart';
-import 'package:dpsk_app/ui/plugins/native/chat_plugins_sheet.dart';
-import 'package:dpsk_app/ui/plugins/native/composer_capsules.dart';
-import 'package:dpsk_app/ui/plugins/native/native_composer_bar.dart';
-import 'package:dpsk_app/ui/plugins/seats/seat_links.dart' show seatWebOpenerProvider;
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
-import 'package:dpsk_app/ui/theme/glass.dart';
-import 'package:dpsk_app/ui/web/web_target.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/plugins/seams/seams.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/plugins/islands/islands.dart';
+import 'package:dsh_app/ui/plugins/native/chat_plugins_sheet.dart';
+import 'package:dsh_app/ui/plugins/native/composer_capsules.dart';
+import 'package:dsh_app/ui/plugins/native/native_composer_bar.dart';
+import 'package:dsh_app/ui/plugins/seats/seat_links.dart' show seatWebOpenerProvider;
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/theme/glass.dart';
+import 'package:dsh_app/ui/web/web_target.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,7 +40,7 @@ FakeBridge _bridge({bool panels = true, int capsules = 0}) {
   final bridge = FakeBridge(
     contributions([
       plugin(
-        'DPSK-example-usage',
+        'dsh-go-example-usage',
         title: '用量',
         icon: 'chart',
         panels: [
@@ -54,7 +54,7 @@ FakeBridge _bridge({bool panels = true, int capsules = 0}) {
         ],
       ),
       plugin(
-        'DPSK-example-album',
+        'dsh-go-example-album',
         title: '相册',
         icon: 'gallery',
         panels: [
@@ -82,8 +82,8 @@ FakeBridge _bridge({bool panels = true, int capsules = 0}) {
     ]),
   );
   for (final (pkg, id, label, value) in [
-    ('DPSK-example-usage', 'usage', '本对话', '¥0.42'),
-    ('DPSK-example-album', 'album', '今日', '12 张'),
+    ('dsh-go-example-usage', 'usage', '本对话', '¥0.42'),
+    ('dsh-go-example-album', 'album', '今日', '12 张'),
   ]) {
     bridge.views['$pkg/$id'] = DshGoView(
       pkg: pkg,

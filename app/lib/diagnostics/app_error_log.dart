@@ -90,7 +90,7 @@ class AppErrorLog {
   Future<void> _persist(AppErrorRecord record, Object error) async {
     try {
       final type = error.runtimeType.toString();
-      final locations = RegExp(r'\((package:(?:dpsk_app|flutter)/[A-Za-z0-9_/.-]{1,120}\.dart:[0-9]{1,7}:[0-9]{1,7})\)');
+      final locations = RegExp(r'\((package:(?:dsh_app|flutter)/[A-Za-z0-9_/.-]{1,120}\.dart:[0-9]{1,7}:[0-9]{1,7})\)');
       final stack = locations.allMatches(record.stack).take(6).map((m) => m[1]!).join('\n');
       await _diagnostics.recordAppError(
         source: record.source.name,

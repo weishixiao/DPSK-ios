@@ -223,7 +223,7 @@ class ShareBuild {
   /// The pictures the file carries, by asset id (for its replay preview).
   final Map<String, ConversationAsset> assets;
 
-  /// The `.dpsk` file (and what a link uploads).
+  /// The `.dshgo` file (and what a link uploads).
   final ShareFileText file;
 
   ShareFileText? _page;
@@ -517,7 +517,7 @@ class SharePanelModel extends ChangeNotifier {
       tools: _privacy.tools,
       images: _privacy.images,
       now: _clock(),
-      app: 'DPSK ${AppInfo.version.split('+').first}',
+      app: 'dsh-go ${AppInfo.version.split('+').first}',
     );
     final built = ShareBuild(share, export.file(share), assets: {for (final a in export.assets) a.id: a});
     // Changed while building: the newer request answers.

@@ -4,21 +4,21 @@
 // early waits on its own page; a sign-in waits for the runtime; failures,
 // resuming after the app went away, and the remote way.
 
-import 'package:dpsk_app/performance/performance_state.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/appearance_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/onboarding_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/onboarding/access_step.dart';
-import 'package:dpsk_app/ui/onboarding/appearance_step.dart';
-import 'package:dpsk_app/ui/onboarding/connect_page.dart';
-import 'package:dpsk_app/ui/onboarding/onboarding_flow.dart';
-import 'package:dpsk_app/ui/onboarding/runtime_setup_page.dart';
-import 'package:dpsk_app/ui/onboarding/setup_progress.dart';
-import 'package:dpsk_app/ui/remote/remote_screen.dart';
-import 'package:dpsk_app/ui/shell/root_gate.dart';
+import 'package:dsh_app/performance/performance_state.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/appearance_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/onboarding_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/onboarding/access_step.dart';
+import 'package:dsh_app/ui/onboarding/appearance_step.dart';
+import 'package:dsh_app/ui/onboarding/connect_page.dart';
+import 'package:dsh_app/ui/onboarding/onboarding_flow.dart';
+import 'package:dsh_app/ui/onboarding/runtime_setup_page.dart';
+import 'package:dsh_app/ui/onboarding/setup_progress.dart';
+import 'package:dsh_app/ui/remote/remote_screen.dart';
+import 'package:dsh_app/ui/shell/root_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -108,7 +108,7 @@ void main() {
   group('本机: set up while it unpacks', () {
     testWidgets('starts the unpack once, then 外观 with the unpack in a capsule', (tester) async {
       final rig = await pumpGate(tester);
-      expect(find.text('想怎么用 DPSK？'), findsOneWidget);
+      expect(find.text('想怎么用 dsh-Go？'), findsOneWidget);
       expect(find.byKey(_capsule), findsNothing);
 
       await chooseThisPhone(tester);
@@ -142,14 +142,14 @@ void main() {
       expect(rig.runtime.calls, ['install']);
     });
 
-    testWidgets('after 外观, what DPSK should do: step 3 of 4, beside the unpack, kept on a relaunch', (tester) async {
+    testWidgets('after 外观, what DSH Go should do: step 3 of 4, beside the unpack, kept on a relaunch', (tester) async {
       final rig = await pumpGate(tester);
       await chooseThisPhone(tester);
       rig.runtime.unpack(0.3);
       await tester.tap(find.widgetWithText(FilledButton, '继续'));
       await frames(tester);
       expect(find.byType(AccessStepPage), findsOneWidget);
-      expect(find.text('想让 DPSK 帮你做哪些事'), findsOneWidget);
+      expect(find.text('想让 DSH Go 帮你做哪些事'), findsOneWidget);
       expect(find.bySemanticsLabel('第 3 步，共 4 步'), findsOneWidget);
       expect(_capsuleText('运行环境 30%'), findsOneWidget);
       expect(rig.prefs.setupStep, SetupStep.access);

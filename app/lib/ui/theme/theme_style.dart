@@ -363,9 +363,7 @@ ColorScheme applyThemePackScheme(ColorScheme base, ThemePack? pack) {
 }
 
 DshColors applyThemePackColors(DshColors base, ThemePack? pack, Brightness brightness) {
-  // DPSK: theme packs are retained for storage/compat, but the app is strictly
-  // monochrome, so their colour payload is ignored at the point of application.
-  return base;
+  if (pack == null) return base;
   final isDark = brightness == Brightness.dark;
   final o = isDark ? pack.palette.dark : pack.palette.light;
   if (o.isEmpty) return base;
@@ -388,9 +386,7 @@ DshSurfaces applyThemePackSurfaces(
   Brightness brightness, {
   required bool blurEnabled,
 }) {
-  // DPSK: theme packs are retained for storage/compat, but the app is strictly
-  // monochrome, so their colour payload is ignored at the point of application.
-  return base;
+  if (pack == null) return base;
   final isDark = brightness == Brightness.dark;
   final n = NeutralTones.forAccent(base.accent);
   final o = isDark ? pack.palette.dark : pack.palette.light;

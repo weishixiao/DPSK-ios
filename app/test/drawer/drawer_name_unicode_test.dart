@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/state/drawer_view_state.dart';
+import 'package:dsh_app/state/drawer_view_state.dart';
 import 'package:flutter/foundation.dart' show debugPrintSynchronously;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

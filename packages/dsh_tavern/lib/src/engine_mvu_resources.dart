@@ -152,7 +152,7 @@ extension _ScriptMvuResources on _ScriptCoordinator {
     check();
     final dataContext = await _prepareDataContext(
       chatId,
-      forceGameplay: state.containsKey('dpskPackDefinitionConfigId'),
+      forceGameplay: state.containsKey('dshgoPackDefinitionConfigId'),
     );
     check();
     _checkDataContext(dataContext);
@@ -248,7 +248,7 @@ extension _ScriptMvuResources on _ScriptCoordinator {
         metadata = engine._chatCodec.metadataForCapturedNode(engine._store, chat, null);
       } else {
         final node = engine._store.displayNode(chatId, leaf);
-        final own = node.extra['dpsk'];
+        final own = node.extra['dshgo'];
         final override = own is Map<String, Object?> ? own['tavernState'] : null;
         // This is the metadata reader's effective state, without the MVU
         // state reader's legacy hash backfill.

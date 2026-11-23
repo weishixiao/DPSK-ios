@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:dpsk_app/voice/streaming_asr.dart';
+import 'package:dsh_app/voice/streaming_asr.dart';
 
 StreamingAsrDecoder _fakeDecoder(StreamingAsrModel model) {
   File(model.tokens).writeAsStringSync('${model.joiner}:loading\n', mode: FileMode.append);

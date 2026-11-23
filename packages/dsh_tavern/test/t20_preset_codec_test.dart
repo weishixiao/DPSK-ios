@@ -86,7 +86,7 @@ void main() {
       jsonEncode(
         _raw({
           'extensions': {
-            'dpsk': {
+            'dshgo': {
               'prefill': {'enabled': true},
             },
           },
@@ -100,7 +100,7 @@ void main() {
     final wrapped = _wrapper(
       raw: _raw({
         'extensions': {
-          'dpsk': {
+          'dshgo': {
             'sibling': 7,
             'prefill': {
               'enabled': true,
@@ -118,11 +118,11 @@ void main() {
       'target': 'content',
       'future': {'x': null},
     });
-    expect(_object(_object(decoded.raw['extensions'])['dpsk'])['sibling'], 7);
+    expect(_object(_object(decoded.raw['extensions'])['dshgo'])['sibling'], 7);
     expect(
       decoded.issues.any(
         (issue) =>
-            issue.path == r'$.preset.data.extensions.dpsk.prefill' &&
+            issue.path == r'$.preset.data.extensions.dshgo.prefill' &&
             issue.severity == TavernPresetIssueSeverity.normalized,
       ),
       isTrue,
@@ -134,7 +134,7 @@ void main() {
       final wrapped = _wrapper(
         raw: _raw({
           'extensions': {
-            'dpsk': {
+            'dshgo': {
               'prefill': {'enabled': true, 'target': 'reasoning'},
             },
           },
@@ -337,7 +337,7 @@ void main() {
     expect(_object(_array(raw['prompts'])[1]).containsKey('role'), isFalse);
     final oldReservedKey = <String, Object?>{
       'extensions': {
-        'dpsk': {'presetEnvelope': 'old opaque value'},
+        'dshgo': {'presetEnvelope': 'old opaque value'},
       },
     };
     expect(jsonDecode(_codec.encode(oldReservedKey)), oldReservedKey);
@@ -358,7 +358,7 @@ void main() {
     var output = initial;
     for (var cycle = 0; cycle < 4; cycle++) {
       decoded = _codec.decode(output);
-      final snapshot = _object(_object(_object(decoded.raw['extensions'])['dpsk'])['presetEnvelope']);
+      final snapshot = _object(_object(_object(decoded.raw['extensions'])['dshgo'])['presetEnvelope']);
       expect(_object(snapshot['preset']).containsKey('data'), isFalse);
       expect(snapshot['topUnknown'], wrapper['topUnknown']);
       expect(snapshot['tools'], wrapper['tools']);
@@ -384,7 +384,7 @@ void main() {
     final original = jsonEncode(outer);
     expect(
       () => _codec.decode(original),
-      _hasError(r'$.preset.data.extensions.dpsk.presetEnvelope', 'conflicting-envelope-carrier'),
+      _hasError(r'$.preset.data.extensions.dshgo.presetEnvelope', 'conflicting-envelope-carrier'),
     );
     expect(jsonEncode(outer), original);
   });
@@ -399,16 +399,16 @@ void main() {
       'second': 'kept',
     };
     final raw = _object(jsonDecode(_codec.encode(_raw(), envelope: outer)));
-    final dpsk = _object(_object(raw['extensions'])['dpsk']);
-    final carrier = _object(dpsk['presetEnvelope']);
+    final dshgo = _object(_object(raw['extensions'])['dshgo']);
+    final carrier = _object(dshgo['presetEnvelope']);
     final reordered = _object(_reverseObjectKeys(carrier));
     expect(jsonEncode(reordered), isNot(jsonEncode(carrier)));
-    dpsk['presetEnvelope'] = reordered;
+    dshgo['presetEnvelope'] = reordered;
     _object(outer['preset'])['data'] = raw;
     final decoded = _codec.decode(jsonEncode(outer));
-    expect(_object(_object(decoded.raw['extensions'])['dpsk'])['presetEnvelope'], carrier);
+    expect(_object(_object(decoded.raw['extensions'])['dshgo'])['presetEnvelope'], carrier);
     final exported = _object(jsonDecode(_codec.encode(decoded.raw, envelope: decoded.envelope)));
-    final saved = _object(_object(_object(exported['extensions'])['dpsk'])['presetEnvelope']);
+    final saved = _object(_object(_object(exported['extensions'])['dshgo'])['presetEnvelope']);
     expect(saved, carrier);
     expect(saved['unknown'], outer['unknown']);
     expect(_object(saved['preset']).containsKey('data'), isFalse);
@@ -416,19 +416,19 @@ void main() {
 
   test('saved shells containing their own data are rejected instead of discarded', () {
     final raw = _object(jsonDecode(_codec.encode(_raw(), envelope: _wrapper())));
-    final carrier = _object(_object(_object(raw['extensions'])['dpsk'])['presetEnvelope']);
+    final carrier = _object(_object(_object(raw['extensions'])['dshgo'])['presetEnvelope']);
     _object(carrier['preset'])['data'] = {'opaque': 'DO_NOT_DROP'};
     expect(
       () => _codec.decode(jsonEncode(raw)),
-      _hasError(r'$.extensions.dpsk.presetEnvelope.preset.data', 'noncanonical-envelope-carrier'),
+      _hasError(r'$.extensions.dshgo.presetEnvelope.preset.data', 'noncanonical-envelope-carrier'),
     );
     expect(
       () => _codec.validate(raw, envelope: _wrapper()),
-      _hasError(r'$.extensions.dpsk.presetEnvelope.preset.data', 'noncanonical-envelope-carrier'),
+      _hasError(r'$.extensions.dshgo.presetEnvelope.preset.data', 'noncanonical-envelope-carrier'),
     );
     expect(
       () => _codec.decode(jsonEncode(_wrapper(raw: raw))),
-      _hasError(r'$.preset.data.extensions.dpsk.presetEnvelope.preset.data', 'noncanonical-envelope-carrier'),
+      _hasError(r'$.preset.data.extensions.dshgo.presetEnvelope.preset.data', 'noncanonical-envelope-carrier'),
     );
     expect(jsonDecode(_codec.encode(raw)), raw);
   });
@@ -450,12 +450,12 @@ void main() {
     final decoded = _codec.decode(jsonEncode(_wrapper()));
     final raw = decoded.raw;
     raw['extensions'] = {
-      'dpsk': 'foreign scalar',
+      'dshgo': 'foreign scalar',
       'other': [1, 2],
     };
-    expect(() => _codec.encode(raw, envelope: decoded.envelope), _hasError(r'$.extensions.dpsk', 'object-required'));
+    expect(() => _codec.encode(raw, envelope: decoded.envelope), _hasError(r'$.extensions.dshgo', 'object-required'));
     expect(raw['extensions'], {
-      'dpsk': 'foreign scalar',
+      'dshgo': 'foreign scalar',
       'other': [1, 2],
     });
     expect(jsonDecode(_codec.encode(raw)), raw);
@@ -464,25 +464,25 @@ void main() {
   test('new validation checks saved carrier structure even with an authoritative envelope', () {
     final decoded = _codec.decode(jsonEncode(_wrapper()));
     final raw = decoded.raw;
-    _object(_object(raw['extensions'])['dpsk'])['presetEnvelope'] = 'bad carrier';
+    _object(_object(raw['extensions'])['dshgo'])['presetEnvelope'] = 'bad carrier';
     expect(
       () => _codec.validate(raw, envelope: decoded.envelope),
-      _hasError(r'$.extensions.dpsk.presetEnvelope', 'object-required'),
+      _hasError(r'$.extensions.dshgo.presetEnvelope', 'object-required'),
     );
     expect(jsonDecode(_codec.encode(raw)), raw);
     expect(
       () => _codec.decode(jsonEncode(_wrapper(raw: raw))),
-      _hasError(r'$.preset.data.extensions.dpsk.presetEnvelope', 'object-required'),
+      _hasError(r'$.preset.data.extensions.dshgo.presetEnvelope', 'object-required'),
     );
   });
 
   test('saved unknown envelope version is still rejected instead of being dropped', () {
     final exported = _object(jsonDecode(_codec.encode(_raw(), envelope: _wrapper())));
-    final snapshot = _object(_object(_object(exported['extensions'])['dpsk'])['presetEnvelope']);
+    final snapshot = _object(_object(_object(exported['extensions'])['dshgo'])['presetEnvelope']);
     snapshot['version'] = 2;
     expect(
       () => _codec.decode(jsonEncode(exported)),
-      _hasError(r'$.extensions.dpsk.presetEnvelope.version', 'unsupported-envelope-version'),
+      _hasError(r'$.extensions.dshgo.presetEnvelope.version', 'unsupported-envelope-version'),
     );
   });
 
@@ -623,7 +623,7 @@ Object? _reverseObjectKeys(Object? value) {
 
 Map<String, Object?> _prompt(DecodedPreset preset) => _object(_array(preset.raw['prompts']).first);
 Map<String, Object?> _prefill(Map<String, Object?> raw) =>
-    _object(_object(_object(raw['extensions'])['dpsk'])['prefill']);
+    _object(_object(_object(raw['extensions'])['dshgo'])['prefill']);
 
 Matcher _hasError(String path, String code, {String? id}) => throwsA(
   isA<TavernPresetImportError>().having(

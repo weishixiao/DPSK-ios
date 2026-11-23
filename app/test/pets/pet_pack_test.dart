@@ -7,8 +7,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math' as math;
 
-import 'package:dpsk_app/pets/pet_pack.dart';
-import 'package:dpsk_app/pets/pet_state.dart';
+import 'package:dsh_app/pets/pet_pack.dart';
+import 'package:dsh_app/pets/pet_state.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
 

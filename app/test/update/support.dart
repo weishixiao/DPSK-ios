@@ -7,8 +7,8 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/update/installer.dart';
-import 'package:dpsk_app/update/update_http.dart';
+import 'package:dsh_app/update/installer.dart';
+import 'package:dsh_app/update/update_http.dart';
 
 String fixture(String name) => File('test/update/fixtures/$name').readAsStringSync();
 
@@ -76,7 +76,7 @@ class FakeInstaller implements UpdateInstaller {
     this.canInstall = true,
     this.inspection = const ApkInspection(
       valid: true,
-      packageName: 'com.dpsk.harness',
+      packageName: 'io.github.ccch1mneyyy.dsh_app',
       signatureMatches: true,
     ),
     this.result = const InstallResult(InstallStatus.success),

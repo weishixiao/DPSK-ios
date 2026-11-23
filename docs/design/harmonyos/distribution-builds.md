@@ -11,7 +11,7 @@ tooling/ohos/build-hap.sh --release --distribution device
 tooling/ohos/build-hap.sh --release --distribution store
 ```
 
-旧调用不带`--distribution`时保持生成unsigned HAP，并使用store权限集合。以上显式distribution调用只有签名及verify-app实际成功才报告signed HAP；目标为`app/build/hap/DPSK-<distribution>-signed.hap`。device模式不接受Flutter debug构建。脚本不申请AGC账号权限、不生成授权Profile、不把应用自动发布到设备或市场。
+旧调用不带`--distribution`时保持生成unsigned HAP，并使用store权限集合。以上显式distribution调用只有签名及verify-app实际成功才报告signed HAP；目标为`app/build/hap/dsh-go-<distribution>-signed.hap`。device模式不接受Flutter debug构建。脚本不申请AGC账号权限、不生成授权Profile、不把应用自动发布到设备或市场。
 
 Linux 上没有 OHOS 版 `flutter build hap`，HAP 由 `check-arkts.sh --full` 打出，所以它也有同样的选项：
 

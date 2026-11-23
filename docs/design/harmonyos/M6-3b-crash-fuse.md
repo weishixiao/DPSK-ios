@@ -117,7 +117,7 @@ LD_PRELOAD="$NATIVE_BUILD/libpublication-test-linked.so" \
   runtime/tests/ohos/publication-ledger-lifecycle.test.mjs
 
 LD_PRELOAD="$NATIVE_BUILD/libpublication-test-linked.so" \
-  DPSK_OHOS_SIM_PLATFORM=openharmony \
+  DSH_GO_OHOS_SIM_PLATFORM=openharmony \
   "$NODE_ROOT/bin/node" --jitless --import "$SIM_PRELOAD" \
   --test --test-isolation=none \
   runtime/tests/ohos/publication-atomic-fuse.test.mjs \

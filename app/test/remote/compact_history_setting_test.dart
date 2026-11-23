@@ -1,6 +1,6 @@
-import 'package:dpsk_app/remote/relay/dsh_remote_backend.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
+import 'package:dsh_app/remote/relay/dsh_remote_backend.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/state/hosts_state.dart';
 import 'package:dsh_remote/dsh_remote.dart' as remote;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

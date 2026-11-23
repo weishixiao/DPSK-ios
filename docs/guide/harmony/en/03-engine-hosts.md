@@ -15,11 +15,11 @@ You can add DSH to this phone anytime: tap **Install runtime** on the engine pag
 ## This phone's engine
 
 <!-- nav: commonSettings,hubSettingsEngine -->
-`Settings › Local engine` · [Open](dpsk://open/engine)
+`Settings › Local engine` · [Open](dshgo://open/engine)
 
 - **Start**, **Stop**, **Restart**: stopping asks first; both stopping and restarting interrupt active chats.
 - If the engine fails to start, the page shows the cause and ways to fix it, such as retrying, **Enter Safe mode**, **Restore configuration** or viewing logs.
-- **Start when DPSK opens**: on by default. As long as DSH is installed on this phone, opening the app starts it, even while you use a remote host. Turn it off if you don't need that.
+- **Start when DSH Go opens**: on by default. As long as DSH is installed on this phone, opening the app starts it, even while you use a remote host. Turn it off if you don't need that.
 - **Start in Safe mode**: enter Safe mode by hand. It starts with the default configuration that comes with the app, without the plugins you installed. Your chats stay and your own configuration isn't changed, though a global patch or `.env` can still affect the start. Once fixed, tap **Return to normal mode**. If the engine has already started since the app opened, entering and leaving both reopen the app; the dialog says so.
 - Safe mode never starts by itself. After several unclean exits in a row the engine won't start on its own, and the failure card offers **Restore configuration**, **Enter Safe mode** and **Retry**.
 - **Logs**: the engine's live output.
@@ -69,7 +69,7 @@ With the defaults, chats, workspaces, plugins and settings are deleted, includin
 <!-- nav: commonSettings,hubSettingsEngine,localEnvUninstall -->
 `Settings › Local engine › Uninstall runtime`
 
-Deletes the unpacked runtime and local data. Chats, workspaces, plugins, settings, interface settings and skills on this phone are all deleted, the app reopens, and nothing is reinstalled. The copy of the runtime inside the app package stays; only uninstalling the app frees it. To use this phone's engine again, tap **Install runtime** on the same page. If you only need a break, stop the engine and turn off **Start when DPSK opens**.
+Deletes the unpacked runtime and local data. Chats, workspaces, plugins, settings, interface settings and skills on this phone are all deleted, the app reopens, and nothing is reinstalled. The copy of the runtime inside the app package stays; only uninstalling the app frees it. To use this phone's engine again, tap **Install runtime** on the same page. If you only need a break, stop the engine and turn off **Start when DSH Go opens**.
 
 ## Switch hosts
 
@@ -78,7 +78,7 @@ Open the chat list and tap the current host's name at the bottom to open **Switc
 Tap the icon to the left of the host name for details: remote hosts show their name, connection status and current network path, with an on-demand latency measurement where supported. For this phone, it opens **Local engine**. The host name and dropdown arrow still switch hosts.
 
 <!-- nav: remoteSwitchHost,remoteManageHosts -->
-`Switch host › Manage remote hosts` · [Open](dpsk://open/remote)
+`Switch host › Manage remote hosts` · [Open](dshgo://open/remote)
 
 It's in Settings too:
 
@@ -114,7 +114,7 @@ No network setup, end-to-end encrypted. Good for computers on another network.
 2. On the remote hosts page, choose the same sign-in provider you used on that host, for example “Continue with GitHub”, and sign in with the same account. If the page lists no providers and shows only **Sign in in browser**, tap that button.
 3. Select an online host. On first connection, check that the identity fingerprint matches the one the host's remote plugin shows, then tap **Trust and connect**.
 
-When the server supports it, the remote hosts page shows **Pair a computer by scanning**: sign in to DeepSeek in the app, tap **Scan** to open the system scanner, scan the code shown by the computer’s Remote plugin, check the computer fingerprint, then enter the verification code as prompted. The scanner is the system’s own page and uses the camera itself, so DPSK asks for no camera permission; if the code is in a screenshot, pick it from photos inside that page. You can also copy the pairing link and tap **Paste pairing link**. If the system scanner can't open, the app tells you to paste the link instead.
+When the server supports it, the remote hosts page shows **Pair a computer by scanning**: sign in to DeepSeek in the app, tap **Scan** to open the system scanner, scan the code shown by the computer’s Remote plugin, check the computer fingerprint, then enter the verification code as prompted. The scanner is the system’s own page and uses the camera itself, so DSH Go asks for no camera permission; if the code is in a screenshot, pick it from photos inside that page. You can also copy the pairing link and tap **Paste pairing link**. If the system scanner can't open, the app tells you to paste the link instead.
 
 This version goes through the relay, end-to-end encrypted the whole way, not over LAN, P2P or TURN. Tap the route label on the connection card or beside a Host to see the actual route, connection time and available round-trip latency. Unmeasured values are not shown as zero.
 

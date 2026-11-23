@@ -1,23 +1,23 @@
 // One smoke check per kind of theme-pack field that reaches the screen:
 // tokens, shapes, typography, and each chat component that reads them.
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/chat_header.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/empty_actions.dart';
-import 'package:dpsk_app/ui/chat/empty_state.dart';
-import 'package:dpsk_app/ui/chat/model_sheet.dart';
-import 'package:dpsk_app/ui/chat/render/code_block.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_blocks.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/chat/widgets/assistant_message.dart';
-import 'package:dpsk_app/ui/chat/widgets/attachments.dart';
-import 'package:dpsk_app/ui/chat/widgets/user_bubble.dart';
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
-import 'package:dpsk_app/ui/common/status_dot.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/chat_header.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/empty_actions.dart';
+import 'package:dsh_app/ui/chat/empty_state.dart';
+import 'package:dsh_app/ui/chat/model_sheet.dart';
+import 'package:dsh_app/ui/chat/render/code_block.dart';
+import 'package:dsh_app/ui/chat/render/markdown_blocks.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/chat/widgets/assistant_message.dart';
+import 'package:dsh_app/ui/chat/widgets/attachments.dart';
+import 'package:dsh_app/ui/chat/widgets/user_bubble.dart';
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/ui/common/status_dot.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

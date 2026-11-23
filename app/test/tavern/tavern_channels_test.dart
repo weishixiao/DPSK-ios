@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/tavern/tavern_channels.dart';
-import 'package:dpsk_app/tavern/tavern_generation.dart';
-import 'package:dpsk_app/tavern/tavern_preview.dart';
-import 'package:dpsk_app/tavern/tavern_provider.dart';
-import 'package:dpsk_app/tavern/tavern_settings.dart';
-import 'package:dpsk_app/ui/tavern/tavern_channels_page.dart';
-import 'package:dpsk_app/ui/tavern/tavern_number_tile.dart';
-import 'package:dpsk_app/ui/tavern/tavern_settings_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/tavern/tavern_channels.dart';
+import 'package:dsh_app/tavern/tavern_generation.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_provider.dart';
+import 'package:dsh_app/tavern/tavern_settings.dart';
+import 'package:dsh_app/ui/tavern/tavern_channels_page.dart';
+import 'package:dsh_app/ui/tavern/tavern_number_tile.dart';
+import 'package:dsh_app/ui/tavern/tavern_settings_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_tavern/dsh_tavern.dart' show TavernModelConfig;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

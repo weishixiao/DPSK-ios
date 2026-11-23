@@ -1,8 +1,8 @@
 // The lineage, header facts and team roster derived from the host session
 // list (support.dart mirrors DSH 0.2.1-rc.2's `session/list`).
 
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

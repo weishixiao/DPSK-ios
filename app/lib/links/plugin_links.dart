@@ -1,6 +1,6 @@
 // A plugin's page in the official market: `https://go.dshtui.com/p/<name>`
 // (docs/design/plugin-market.md §6). The page itself is the share host's;
-// its 「用 DPSK 打开」 hands over `dpsk://go.dshtui.com/p/<name>`, the
+// its 「用 DSH Go 打开」 hands over `dshgo://go.dshtui.com/p/<name>`, the
 // same scheme as hosted conversation links, and both open the plugin's
 // detail sheet here.
 
@@ -19,10 +19,10 @@ import 'app_links.dart';
 final _packageName = RegExp(r'^(?:@[a-z0-9][a-z0-9._~-]*/)?[a-z0-9][a-z0-9._~-]*$');
 
 /// The page of [name] in the official market, the package name encoded as
-/// one path segment (`/p/%40DPSK%2Fmedia`).
+/// one path segment (`/p/%40dsh-go%2Fmedia`).
 String marketPluginLink(String name) => '$shareHostOrigin/p/${Uri.encodeComponent(name)}';
 
-/// The package a plugin link names — https or `dpsk://`, on the share host,
+/// The package a plugin link names — https or `dshgo://`, on the share host,
 /// the name encoded or not (`/p/@dsh-go/media`); null for anything else.
 String? marketPluginLinkName(Uri uri) {
   final scheme = uri.scheme.toLowerCase();
@@ -74,7 +74,7 @@ Future<bool> openMarketPluginLink(BuildContext context, Uri uri) async {
   return true;
 }
 
-/// Registers `<share host>/p` with [router] (https and `dpsk://` alike).
+/// Registers `<share host>/p` with [router] (https and `dshgo://` alike).
 /// [LinkHost] calls it. Returns the unregister function.
 VoidCallback registerPluginLinks(LinkRouter router) =>
     router.registerLinkHandler('${Uri.parse(shareHostOrigin).host}/p', (uri) async {

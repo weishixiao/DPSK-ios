@@ -4,10 +4,10 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/session_search.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/shell/session_search_page.dart' show searchDateLabel;
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/session_search.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/shell/session_search_page.dart' show searchDateLabel;
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

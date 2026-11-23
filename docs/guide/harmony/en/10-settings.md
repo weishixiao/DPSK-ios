@@ -3,7 +3,7 @@
 Tap the gear at the bottom of the chat list to open Settings; touch and hold it to search right away. The round button beside it opens All features, which ends with shortcuts to settings. In Web mode, tap the app logo and choose **App settings**.
 
 <!-- nav: commonSettings -->
-`Settings` · [Open](dpsk://open/settings)
+`Settings` · [Open](dshgo://open/settings)
 
 Settings come in six groups, by what you want to do: AI, Capabilities, Appearance, General, Hosts, and Help and about. Each row that opens a page shows where it stands on the right.
 
@@ -45,7 +45,7 @@ Shows your DeepSeek account or API key and balance; tap it to open your account.
 - **Voice**: how voice input recognizes speech: **Automatic**, **DeepSeek**, **System** or **Another cloud service**. **Automatic** uses DeepSeek when you're signed in or have an API key, otherwise the system's recognition; with DeepSeek or another cloud service, the recording is sent to that service. HarmonyOS's own engine has no voice model; **Voice model** is offered only while connected to a remote host. This page also has **Reading voice** (for reading replies aloud and voice calls), **Live captions** (the HarmonyOS recognizer, showing whether it's available, with no model to download), and for voice calls **Call background**, **Interrupt by speaking**, **Pause before she answers**, **Spoken answers**, **Speakerphone by default** and **Thinking sound**.
 - **Performance**: **Auto**, **Full** or **Light**, plus glass blur, interface motion, fluid motion **Refresh rate** (Auto / Max / System) and **Frame cache**.
 - **Background running**: what happens to chats on this phone once the app leaves the screen; see [FAQ](11-faq.md).
-- **System permissions**: what each feature needs from HarmonyOS. [Open](dpsk://open/system-permissions)
+- **System permissions**: what each feature needs from HarmonyOS. [Open](dshgo://open/system-permissions)
 - **Privacy and sharing**:
   - **My shared links**: see [Sharing and replay](07-sharing.md).
   - **Share configuration**: select the current host's settings, plugins, skills and personal preferences to share, and share them as a link, QR code or file.
@@ -55,24 +55,24 @@ Shows your DeepSeek account or API key and balance; tap it to open your account.
 ## Hosts
 
 - **Local engine** and **Remote host**: see [Engine and remote hosts](03-engine-hosts.md).
-- **Engine parameters**: the current host's engine parameters. **Runtime** has **Subagent**, **Agent loop** and **Command execution**; **Plugins** has **Plugin inventory** and plugins' own settings. [Open](dpsk://open/engine-settings)
+- **Engine parameters**: the current host's engine parameters. **Runtime** has **Subagent**, **Agent loop** and **Command execution**; **Plugins** has **Plugin inventory** and plugins' own settings. [Open](dshgo://open/engine-settings)
 
 ## Help and about
 
 - **Help**: takes "what can this app do" to a new chat, where the AI answers from this guide. Not shown in Web mode.
 - **Community**: chat groups and the forum.
 - **Diagnostics**: inspect the environment, export a bundle, or **Let the AI read diagnostics**, and enable **Automatic failure analysis** (off by default); when the keyboard covers the input, **This app's keyboard geometry** exports where the keyboard sat in the last two minutes, without anything typed. See [FAQ](11-faq.md).
-- **About DPSK**:
+- **About DSH Go**:
   - **Version**: the app version, such as 0.9.2 (10251234), with the build number in parentheses. When there's a new version, this row on the Settings page says **Update available**.
   - **Check for updates**: HarmonyOS can't update inside the app. A new version opens the update window with **What’s new**, and the release page says how to get it; it may not have a HarmonyOS package yet. To pass on this version, tap **Skip this version**.
   - **Check automatically**: on by default; checks when the app opens, at most once a day. A new version opens the update window, unless you're on another page or typing, in which case **Check for updates** shows it. Skipped versions aren't offered again, and nothing downloads or installs.
-  - **Star DPSK on GitHub**: opens the project page, where you can star it or share it with friends.
+  - **Star DSH Go on GitHub**: opens the project page, where you can star it or share it with friends.
   - **Open-source licenses**.
 
 ## Permissions
 
 <!-- nav: commonSettings,featuresPermissions -->
-`Settings › Permissions` · [Open](dpsk://open/permission)
+`Settings › Permissions` · [Open](dshgo://open/permission)
 
 - **Current chat**: shown with a chat open; changes that chat only.
 - **Default for new chats**: **Read only**, **Workspace write** or **Full access**. Choosing **Full access** asks **Turn on Full access?** first. On this phone's engine it is what used to be "Auto-run commands": in chats and automations you create in the native interface on this phone's engine, the AI no longer asks before running commands or changing files. Remote hosts, Web mode, Safe mode and existing chats aren't affected. Switching back doesn't change chats created while it was on; change those in the chat's permissions.

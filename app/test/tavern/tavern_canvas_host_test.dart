@@ -5,8 +5,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/tavern/tavern_canvas.dart';
-import 'package:dpsk_app/tavern/tavern_canvas_host.dart';
+import 'package:dsh_app/tavern/tavern_canvas.dart';
+import 'package:dsh_app/tavern/tavern_canvas_host.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

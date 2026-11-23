@@ -5,7 +5,7 @@
 // Since the 2026-10-28 revision a generation goes out as an ordinary chat
 // message with a parameter header (grammar v1, §4.6,
 // `ui/chat/media/generate_header.dart`); the plugin's tool answers with the
-// v1 `meta["DPSK/media"]`.
+// v1 `meta["dsh-go/media"]`.
 
 import 'dart:async';
 import 'dart:convert';

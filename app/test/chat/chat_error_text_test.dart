@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/chat_error_text.dart';
+import 'package:dsh_app/state/chat_error_text.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_float.dart';
-import 'package:dpsk_app/companion/companion_pack.dart';
+import 'package:dsh_app/companion/companion_float.dart';
+import 'package:dsh_app/companion/companion_pack.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

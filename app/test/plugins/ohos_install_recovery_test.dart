@@ -1,6 +1,6 @@
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

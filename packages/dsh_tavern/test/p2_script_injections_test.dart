@@ -698,11 +698,11 @@ void main() {
         UPDATE chats SET metadata =
           CASE json_extract(NEW.variables, '\$.sourcePhase')
             WHEN 'branch-b' THEN json_set(metadata,
-              '\$.dpsk.chatJsonl.sources.branch.chat_metadata.script_injects.shared.value', 'BRANCH_B')
+              '\$.dshgo.chatJsonl.sources.branch.chat_metadata.script_injects.shared.value', 'BRANCH_B')
             WHEN 'branch-a' THEN json_set(metadata,
-              '\$.dpsk.chatJsonl.sources.branch.chat_metadata.script_injects.shared.value', 'BRANCH_A')
+              '\$.dshgo.chatJsonl.sources.branch.chat_metadata.script_injects.shared.value', 'BRANCH_A')
             WHEN 'main-only' THEN json_set(metadata,
-              '\$.dpsk.chatJsonl.sources.main.chat_metadata.script_injects.shared.value', 'MAIN_CHANGED')
+              '\$.dshgo.chatJsonl.sources.main.chat_metadata.script_injects.shared.value', 'MAIN_CHANGED')
             ELSE metadata
           END
         WHERE id = NEW.id;
@@ -892,7 +892,7 @@ Future<({String chatId, String mainRoot, String mainLeaf, String branchRoot, Str
 
 Object? _storedSourceValue(ScriptFixture h, String chat, String source) => h.inspect(
   (db) => db.select('SELECT json_extract(metadata, ?) AS value FROM chats WHERE id = ?', [
-    '\$.dpsk.chatJsonl.sources.$source.chat_metadata.script_injects.shared.value',
+    '\$.dshgo.chatJsonl.sources.$source.chat_metadata.script_injects.shared.value',
     chat,
   ]).single['value'],
 );

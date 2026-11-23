@@ -1,5 +1,5 @@
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_chart.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_skeleton.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_chart.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_skeleton.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -9,12 +9,12 @@
 
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/links/app_links.dart';
-import 'package:dpsk_app/links/page_links.dart';
-import 'package:dpsk_app/state/cot_translation_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/ui/chat/render/markdown_body.dart';
-import 'package:dpsk_app/ui/chat/widgets/thinking_pill.dart';
+import 'package:dsh_app/links/app_links.dart';
+import 'package:dsh_app/links/page_links.dart';
+import 'package:dsh_app/state/cot_translation_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/ui/chat/render/markdown_body.dart';
+import 'package:dsh_app/ui/chat/widgets/thinking_pill.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -137,7 +137,7 @@ void main() {
                 const LinkHost(),
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: ThinkingPill(reasoning: '先看看[打开手机操控](dpsk://open/phone)再决定。\n\n第二段。'),
+                  child: ThinkingPill(reasoning: '先看看[打开手机操控](dshgo://open/phone)再决定。\n\n第二段。'),
                 ),
               ],
             ),

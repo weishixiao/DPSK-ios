@@ -1,7 +1,7 @@
 // Share links (docs/design/share-codes.md).
 //
-//   dpsk://share/<kind>?p=<code>                app link, code inline
-//   dpsk://share/profile?gist=<id>&c=<sum>      a profile too large to inline
+//   dshgo://share/<kind>?p=<code>                app link, code inline
+//   dshgo://share/profile?gist=<id>&c=<sum>      a profile too large to inline
 //   <shareLandingUrl>#p=<code>                    the same on the landing page
 //   <shareLandingUrl>#gist=<id>&c=<sum>
 //
@@ -19,7 +19,7 @@ const shareLandingUrl = '$shareHostOrigin/share/';
 
 /// Where the landing page used to live. That site stays up, so links made
 /// there keep opening in browsers, and the app still reads them.
-const legacyShareLandingUrls = ['https://weishixiao.github.io/DPSK/share/'];
+const legacyShareLandingUrls = ['https://ccch1mneyyy.github.io/dsh-go/share/'];
 
 /// The current landing page first, then the old ones.
 const _landingUrls = [shareLandingUrl, ...legacyShareLandingUrls];
@@ -28,7 +28,7 @@ const _landingUrls = [shareLandingUrl, ...legacyShareLandingUrls];
 const shareLinkHost = 'share';
 
 /// Longest web link carried inline (comfortable in a QR code); a larger
-/// profile goes to a Gist or a `.dpsk` file.
+/// profile goes to a Gist or a `.dshgo` file.
 const maxInlineLinkChars = 1800;
 
 /// GitHub Gist ids are hex.
@@ -54,7 +54,7 @@ class ShareLink {
 
   bool get isGist => gistId != null;
 
-  /// `dpsk://share/…`.
+  /// `dshgo://share/…`.
   Uri get appLink => isGist
       ? Uri(
           scheme: appLinkScheme,

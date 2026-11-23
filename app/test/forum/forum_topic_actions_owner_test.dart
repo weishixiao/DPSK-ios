@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/forum/discourse_client.dart';
-import 'package:dpsk_app/forum/forum_auth.dart';
-import 'package:dpsk_app/forum/forum_config.dart';
-import 'package:dpsk_app/forum/forum_state.dart';
-import 'package:dpsk_app/remote/secret_store.dart';
+import 'package:dsh_app/forum/discourse_client.dart';
+import 'package:dsh_app/forum/forum_auth.dart';
+import 'package:dsh_app/forum/forum_config.dart';
+import 'package:dsh_app/forum/forum_state.dart';
+import 'package:dsh_app/remote/secret_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;

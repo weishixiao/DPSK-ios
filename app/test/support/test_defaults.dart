@@ -2,12 +2,12 @@
 // `test/flutter_test_config.dart` when a file has a process to itself, and
 // again before each file of a bundle (`support/bundle.dart`).
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/performance/performance_state.dart';
-import 'package:dpsk_app/pets/pet_sheets.dart';
-import 'package:dpsk_app/state/locale_state.dart';
-import 'package:dpsk_app/ui/chat/empty_actions.dart' show tipStart;
-import 'package:dpsk_app/ui_config/ui_config_state.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/performance/performance_state.dart';
+import 'package:dsh_app/pets/pet_sheets.dart';
+import 'package:dsh_app/state/locale_state.dart';
+import 'package:dsh_app/ui/chat/empty_actions.dart' show tipStart;
+import 'package:dsh_app/ui_config/ui_config_state.dart';
 
 import 'english_preview.dart';
 import 'quiet_performance.dart';

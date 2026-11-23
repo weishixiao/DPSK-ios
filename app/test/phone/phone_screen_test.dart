@@ -2,20 +2,20 @@
 // (未就绪 / safe mode / remote host), permission rows with fixes, the test read,
 // a running task, the recent log and live status events.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/compose_inbox.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/ui/common/list_page_row.dart';
-import 'package:dpsk_app/ui/common/overview_card.dart';
-import 'package:dpsk_app/ui/phone/action_log_page.dart';
-import 'package:dpsk_app/ui/phone/dnd_mode_page.dart';
-import 'package:dpsk_app/ui/phone/phone_control_screen.dart';
-import 'package:dpsk_app/ui/phone/phone_background_guide.dart';
-import 'package:dpsk_app/ui/phone/phone_widgets.dart';
-import 'package:dpsk_app/ui/phone/restricted_settings_guide.dart';
-import 'package:dpsk_app/ui/settings/background_guide_page.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/compose_inbox.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/ui/common/list_page_row.dart';
+import 'package:dsh_app/ui/common/overview_card.dart';
+import 'package:dsh_app/ui/phone/action_log_page.dart';
+import 'package:dsh_app/ui/phone/dnd_mode_page.dart';
+import 'package:dsh_app/ui/phone/phone_control_screen.dart';
+import 'package:dsh_app/ui/phone/phone_background_guide.dart';
+import 'package:dsh_app/ui/phone/phone_widgets.dart';
+import 'package:dsh_app/ui/phone/restricted_settings_guide.dart';
+import 'package:dsh_app/ui/settings/background_guide_page.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

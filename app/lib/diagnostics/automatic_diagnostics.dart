@@ -261,7 +261,7 @@ class AutomaticDiagnostics extends ChangeNotifier {
       }
       if (!current() || signatures.isEmpty) return;
       final prompt =
-          '请仅根据以下结构化 DPSK 故障事实进行分析，给出证据、不确定性和最小手动恢复步骤。'
+          '请仅根据以下结构化 dsh-Go 故障事实进行分析，给出证据、不确定性和最小手动恢复步骤。'
           '不要调用工具、执行命令、改权限、读取其他文件、创建计划或向 GitHub 外发；未授权进一步采集。\n'
           '${jsonEncode(diagnosticsAnalysisFacts(snapshot))}';
       await send(prompt, current, (id, cancel) async {
@@ -372,7 +372,7 @@ Future<void> sendDiagnosticAnalysis(
   }
 
   guard();
-  const preset = 'DPSK-diagnostics';
+  const preset = 'dsh-go-diagnostics';
   final session = await client.createSession(cwd: '/root/workspace', agentPreset: preset).timeout(rpcWait);
   guard();
   if (session.sessionId.isEmpty || session.agentPreset != preset) {

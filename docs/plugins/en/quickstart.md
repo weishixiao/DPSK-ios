@@ -1,8 +1,8 @@
 # Quick start: a native tool card for your plugin
 
-Five minutes. You need a DSH plugin that registers a tool with `defineTool`. Afterwards the tool shows as a native card in the DPSK app; the DSH web UI keeps its generic card.
+Five minutes. You need a DSH plugin that registers a tool with `defineTool`. Afterwards the tool shows as a native card in the dsh-go app; the DSH web UI keeps its generic card.
 
-A complete, runnable example: [`examples/plugins/DPSK-example-weather`](../../../examples/plugins/DPSK-example-weather/).
+A complete, runnable example: [`examples/plugins/dsh-go-example-weather`](../../../examples/plugins/dsh-go-example-weather/).
 
 ## 1. Write a view function
 
@@ -44,7 +44,7 @@ ctx.tools.register(defineTool({
 }))
 ```
 
-`toolCard()` puts the view under `{ "DPSK/view": view }` and guards against three things that **fail the whole tool call**:
+`toolCard()` puts the view under `{ "dsh-go/view": view }` and guards against three things that **fail the whole tool call**:
 
 | DSH rule | What `toolCard()` does |
 |---|---|
@@ -61,7 +61,7 @@ export function toolCard(build, maxBytes = 8 * 1024) {
     try {
       const text = JSON.stringify(build(args, value))
       if (text === undefined || Buffer.byteLength(text, 'utf8') > maxBytes) return {}
-      return { 'DPSK/view': JSON.parse(text) }
+      return { 'dsh-go/view': JSON.parse(text) }
     } catch {
       return {}
     }
@@ -72,7 +72,7 @@ export function toolCard(build, maxBytes = 8 * 1024) {
 ## 3. Check it
 
 ```sh
-node sdk/plugin-kit/bin/check.mjs card.json --lang en     # one view; { "DPSK/view": … } files get tool-card limits
+node sdk/plugin-kit/bin/check.mjs card.json --lang en     # one view; { "dsh-go/view": … } files get tool-card limits
 node sdk/plugin-kit/bin/check.mjs . --load --lang en      # plugin dir: package.json, manifest, and loads your code
 ```
 

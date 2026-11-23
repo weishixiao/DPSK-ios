@@ -273,7 +273,7 @@ void main() {
     expect(displays, hasLength(2));
     expect(displays.map((page) => page.nativeRole), everyElement(TavernRole.system));
     expect(displays.map((page) => page.extra['type']), ['generic', 'generic']);
-    expect(displays.map((page) => page.extra['dpsk_display']), [
+    expect(displays.map((page) => page.extra['dshgo_display']), [
       {'textKind': 'html', 'renderMarkdown': true},
       {'textKind': 'plain', 'renderMarkdown': false},
     ]);

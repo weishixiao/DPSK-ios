@@ -4,9 +4,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
-import 'package:dpsk_app/companion/companion_pack.dart';
-import 'package:dpsk_app/workshop/workshop_receipt.dart';
-import 'package:dpsk_app/workshop/workshop_repository.dart' show workshopLocalError;
+import 'package:dsh_app/companion/companion_pack.dart';
+import 'package:dsh_app/workshop/workshop_receipt.dart';
+import 'package:dsh_app/workshop/workshop_repository.dart' show workshopLocalError;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../workshop/support.dart';

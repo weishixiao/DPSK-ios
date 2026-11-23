@@ -8,7 +8,7 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, Object?> text([String value = 'hello']) => {'type': 'text', 'text': value};

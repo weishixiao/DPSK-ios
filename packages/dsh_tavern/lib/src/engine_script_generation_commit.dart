@@ -44,7 +44,7 @@ extension _ScriptGenerationCommit on _ScriptCoordinator {
             : chat.variables;
         return _scriptRuntimeFingerprint([chat.variables, local]);
       }
-      if (field == 'dpskPackWorldInfo') {
+      if (field == 'dshgoPackWorldInfo') {
         final projected = _gameplayWorldInfoCarrier(state, includeIdentityOnly: false);
         return _scriptRuntimeFingerprint([projected.exists, projected.raw]);
       }
@@ -195,7 +195,7 @@ extension _ScriptGenerationCommit on _ScriptCoordinator {
             'timedWorldInfo',
             'decoratorState',
             'stChatIdHash',
-            'dpskPackWorldInfo',
+            'dshgoPackWorldInfo',
           ])
             target: _generationFieldVersion(chat.id, target),
       },

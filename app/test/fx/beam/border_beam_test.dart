@@ -1,7 +1,7 @@
 // Portions derived from Libraries.dev Border beam (https://github.com/Jakubantalik/Libraries.dev), MIT, Copyright (c) 2026 Jakub Antalik. See THIRD_PARTY_NOTICES.md.
 
-import 'package:dpsk_app/ui/fx/beam/beam_painter.dart';
-import 'package:dpsk_app/ui/fx/beam/border_beam.dart';
+import 'package:dsh_app/ui/fx/beam/beam_painter.dart';
+import 'package:dsh_app/ui/fx/beam/border_beam.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,5 +1,5 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/ui/engine/engine_status.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/ui/engine/engine_status.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -2,8 +2,8 @@
 // first, so a write that fails leaves the old skill where the engine reads it.
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/guest_fs.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
+import 'package:dsh_app/share_code/guest_fs.dart';
+import 'package:dsh_app/share_code/share_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/fake_engine.dart';

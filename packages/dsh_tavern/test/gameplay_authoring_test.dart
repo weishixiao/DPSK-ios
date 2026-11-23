@@ -21,7 +21,7 @@ void main() {
       greeting: 'hello',
       description: 'LIVE_DESCRIPTION',
       extensions: {
-        'dpsk': {'v': 1, 'state': _state()},
+        'dshgo': {'v': 1, 'state': _state()},
       },
     );
     final chat = await h.engine.createChat(character);
@@ -81,11 +81,11 @@ void main() {
     final first = await h.engine.send(chat, '').toList();
     expect(first.whereType<TavernTurnFailed>(), isEmpty);
     final saved = await _saved(h.engine, chat);
-    expect(scriptMap(saved['messageVariables'])['dpsk'], {'n': 1});
+    expect(scriptMap(saved['messageVariables'])['dshgo'], {'n': 1});
     final binding = bound.createdBindings['rule']!;
-    expect(scriptMap(scriptMap(scriptMap(saved['dpskPackRuntime'])['bindings'])[binding])['rules'], ['once']);
+    expect(scriptMap(scriptMap(scriptMap(saved['dshgoPackRuntime'])['bindings'])[binding])['rules'], ['once']);
     expect(
-      (scriptMap(saved['dpskStateRuntime'])['pendingPrompts']! as List<Object?>).map(scriptMap).single['text'],
+      (scriptMap(saved['dshgoStateRuntime'])['pendingPrompts']! as List<Object?>).map(scriptMap).single['text'],
       'PACK_ONCE_LITERAL',
     );
     final database = _rows(h);
@@ -119,9 +119,9 @@ void main() {
     expect(second.whereType<TavernTurnFailed>(), isEmpty);
     expect((await h.engine.inspectTurn(chat))!.prompt!.body, preview.assembly!.body);
     final after = await _saved(h.engine, chat);
-    expect(scriptMap(after['messageVariables'])['dpsk'], {'n': 1});
-    expect(scriptMap(after['dpskStateRuntime'])['pendingPrompts'], isEmpty);
-    expect(scriptMap(scriptMap(scriptMap(after['dpskPackRuntime'])['bindings'])[binding])['rules'], ['once']);
+    expect(scriptMap(after['messageVariables'])['dshgo'], {'n': 1});
+    expect(scriptMap(after['dshgoStateRuntime'])['pendingPrompts'], isEmpty);
+    expect(scriptMap(scriptMap(scriptMap(after['dshgoPackRuntime'])['bindings'])[binding])['rules'], ['once']);
   });
 
   test('simulation copies only its real binding closure into a new domain and keeps missing history missing', () async {
@@ -130,7 +130,7 @@ void main() {
       'Simulation',
       greeting: 'HISTORICAL_GREETING',
       extensions: {
-        'dpsk': {'v': 1, 'state': _state()},
+        'dshgo': {'v': 1, 'state': _state()},
       },
     );
     final globalRef = await _install(h, 'global-simulation', increment: 1, prompt: 'GLOBAL_PACK_PROMPT');
@@ -161,7 +161,7 @@ void main() {
     expect(reset.snapshot.bindings.single.onceEpoch, 2);
     final chat = await h.engine.createChat(character);
     final saved = await _saved(h.engine, chat);
-    final historicalId = saved['dpskPackDefinitionConfigId']! as String;
+    final historicalId = saved['dshgoPackDefinitionConfigId']! as String;
     final historical = h.inspect(
       (db) => Map<String, Object?>.from(
         db.select('SELECT * FROM gameplay_effective_configs WHERE config_id = ?', [historicalId]).single,
@@ -185,13 +185,13 @@ void main() {
           final state = _stateFromExtra(
             db.select('SELECT extra FROM nodes WHERE text = ?', ['SIM_ONE']).single['extra'],
           );
-          expect(scriptMap(state['messageVariables'])['dpsk'], {'n': 11});
-          final bindings = scriptMap(scriptMap(state['dpskPackRuntime'])['bindings']);
+          expect(scriptMap(state['messageVariables'])['dshgo'], {'n': 11});
+          final bindings = scriptMap(scriptMap(state['dshgoPackRuntime'])['bindings']);
           expect(scriptMap(bindings[globalBinding.createdBindings['global']!])['onceEpoch'], 1);
           expect(scriptMap(bindings[characterBindingId])['onceEpoch'], 2);
           expect(scriptMap(bindings[globalBinding.createdBindings['global']!])['rules'], ['once']);
           expect(scriptMap(bindings[characterBindingId])['rules'], ['once']);
-          final adoptedId = state['dpskPackDefinitionConfigId']! as String;
+          final adoptedId = state['dshgoPackDefinitionConfigId']! as String;
           expect(adoptedId, isNot(historicalId));
           expect(
             db.select('SELECT config_id FROM gameplay_effective_configs WHERE config_id = ?', [adoptedId]),
@@ -268,7 +268,7 @@ void main() {
     // A foreign explanation ID is copied as an observed absence, never filled
     // with a current live row merely to make the temporary history readable.
     const missingId = 'foreign:configuration:not-present';
-    final unresolved = {...saved, 'dpskPackDefinitionConfigId': missingId};
+    final unresolved = {...saved, 'dshgoPackDefinitionConfigId': missingId};
     expect(
       h.inspect((db) => db.select('SELECT config_id FROM gameplay_effective_configs WHERE config_id = ?', [missingId])),
       isEmpty,
@@ -285,8 +285,8 @@ void main() {
           final inherited = _stateFromExtra(
             db.select('SELECT extra FROM nodes WHERE text = ?', ['SAMPLE_HISTORY']).single['extra'],
           );
-          expect(inherited['dpskPackDefinitionConfigId'], missingId);
-          expect(scriptMap(inherited['messageVariables'])['dpsk'], {'n': 0});
+          expect(inherited['dshgoPackDefinitionConfigId'], missingId);
+          expect(scriptMap(inherited['messageVariables'])['dshgo'], {'n': 0});
         } finally {
           db.close();
         }
@@ -338,7 +338,7 @@ Future<TavernPackVersionRef> _install(
     'resources': [
       {'localId': 'asset', 'kind': 'asset', 'path': 'assets/note.txt'},
     ],
-    'dpsk': {
+    'dshgo': {
       'v': 1,
       'state': {
         'rules': [
@@ -436,12 +436,12 @@ String _promptText(ScriptJson body) =>
     (body['messages']! as List<Object?>).map(scriptMap).map((message) => message['content']).join('\n');
 
 ScriptJson _stateFromExtra(Object? extra) =>
-    scriptMap(scriptMap(scriptMap(jsonDecode(extra! as String))['dpsk'])['tavernState']);
+    scriptMap(scriptMap(scriptMap(jsonDecode(extra! as String))['dshgo'])['tavernState']);
 
 Future<ScriptJson> _saved(TavernEngine engine, String chat) async {
   final files = await engine.exportChat(chat);
   final document = StChatDocument.decode(files.first.fileName, files.first.bytes);
-  return scriptMap(scriptMap(scriptMap(document.messages.last['extra'])['dpsk'])['tavernState']);
+  return scriptMap(scriptMap(scriptMap(document.messages.last['extra'])['dshgo'])['tavernState']);
 }
 
 ScriptJson _rows(ScriptFixture h) => h.inspect(

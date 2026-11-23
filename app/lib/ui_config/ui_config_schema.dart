@@ -1,4 +1,4 @@
-// The fixed vocabulary of `$DSH_HOME/DPSK/ui.json` v1. The same lists and
+// The fixed vocabulary of `$DSH_HOME/dsh-go/ui.json` v1. The same lists and
 // limits are in the skill's `schema.json` (assets/skills/dsh-go-ui/), which the
 // zero-dependency checker `check.mjs` reads;
 // test/ui_config/schema_sync_test.dart keeps the two equal, and the shared

@@ -2,8 +2,8 @@
 // be taken), the step says so with 重试, and 继续 works again instead of
 // staying pressed for good.
 
-import 'package:dpsk_app/state/access_state.dart';
-import 'package:dpsk_app/ui/onboarding/access_step.dart';
+import 'package:dsh_app/state/access_state.dart';
+import 'package:dsh_app/ui/onboarding/access_step.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

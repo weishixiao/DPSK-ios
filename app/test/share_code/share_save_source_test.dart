@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/ui/common/pressable.dart';
-import 'package:dpsk_app/ui/share_code/share_code_panel.dart';
-import 'package:dpsk_app/ui/share_code/share_out.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/ui/common/pressable.dart';
+import 'package:dsh_app/ui/share_code/share_code_panel.dart';
+import 'package:dsh_app/ui/share_code/share_out.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -43,7 +43,7 @@ void main() {
       } else {
         secondDone.complete();
       }
-      return 'Download/DPSK/$name';
+      return 'Download/DSH-Go/$name';
     });
     addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, null));
     final out = ShareOut(
@@ -80,7 +80,7 @@ void main() {
       await firstDone.future;
     });
     await tester.pump();
-    expect(names, ['DPSK-profile-20261024.dpsk', 'DPSK-profile-20261024.dpsk']);
+    expect(names, ['dsh-go-profile-20261024.dshgo', 'dsh-go-profile-20261024.dshgo']);
     expect((decodeShareFile(firstContent!) as ProfileShare).skills.single.name, 'first');
     await tester.pumpWidget(const SizedBox());
   });
@@ -147,9 +147,9 @@ void main() {
       () => TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null),
     );
     final out = ShareOut(files: const FilesChannel(channel), cacheRoot: () async => cache);
-    final unrelated = await out.write('previous.dpsk', 'previous content');
+    final unrelated = await out.write('previous.dshgo', 'previous content');
     await expectLater(
-      out.save('profile.dpsk', 'original content'),
+      out.save('profile.dshgo', 'original content'),
       throwsA(isA<PlatformException>().having((e) => e.code, 'code', 'permission')),
     );
     expect(source, isNotNull);

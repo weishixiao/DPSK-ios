@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/goal_dock_state.dart';
+import 'package:dsh_app/state/goal_dock_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 /// A goal as the `goal` projection carries it.

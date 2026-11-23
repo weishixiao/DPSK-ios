@@ -5,7 +5,7 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 

@@ -7,17 +7,17 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/launch/custom_launch.dart';
-import 'package:dpsk_app/launch/launch_import.dart';
-import 'package:dpsk_app/state/app_icon_state.dart';
-import 'package:dpsk_app/state/launch_screen_state.dart';
-import 'package:dpsk_app/launch/launch_media.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/launch/launch_editor_page.dart';
-import 'package:dpsk_app/ui/launch/launch_overlay.dart';
-import 'package:dpsk_app/ui/settings/appearance/appearance_page.dart';
-import 'package:dpsk_app/ui/settings/appearance/launch_screen_section.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/launch/custom_launch.dart';
+import 'package:dsh_app/launch/launch_import.dart';
+import 'package:dsh_app/state/app_icon_state.dart';
+import 'package:dsh_app/state/launch_screen_state.dart';
+import 'package:dsh_app/launch/launch_media.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/launch/launch_editor_page.dart';
+import 'package:dsh_app/ui/launch/launch_overlay.dart';
+import 'package:dsh_app/ui/settings/appearance/appearance_page.dart';
+import 'package:dsh_app/ui/settings/appearance/launch_screen_section.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

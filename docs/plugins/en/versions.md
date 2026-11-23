@@ -88,7 +88,7 @@ Tool cards have no `caps` (they are stored in the log and future apps must draw 
 
 ## Tool cards stay drawable
 
-Cards live in the conversation log; a chat opened a year later must still draw. The app only adds to `meta["DPSK/view"]`, never removes, and draws old formats forever. On your side:
+Cards live in the conversation log; a chat opened a year later must still draw. The app only adds to `meta["dsh-go/view"]`, never removes, and draws old formats forever. On your side:
 
 - When you change a card's structure, keep what old fields meant;
 - Don't put expiring things in a card (temporary links, time-limited image URLs).
@@ -97,7 +97,7 @@ Cards live in the conversation log; a chat opened a year later must still draw. 
 
 | DSH | Status |
 |---|---|
-| 0.2.2-rc.1 | The engine DPSK ships: the slot catalog (109 slots) and the web island recipes are checked against it |
+| 0.2.2-rc.1 | The engine DSH Go ships: the slot catalog (109 slots) and the web island recipes are checked against it |
 | 0.2.1-rc.4 | Development baseline: the slot catalog (103 slots) and the web island recipes are checked against it |
 | 0.2.1-rc.2 | Verified (tool card path, plugin install, bridge) |
 | Other 0.2.x | Declare in `engines.dsh`; `presentationMeta` exists since 0.2.0 |

@@ -7,8 +7,8 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:dpsk_app/ui/fx/waves/distortion_wave.dart';
-import 'package:dpsk_app/ui/fx/waves/wave_stage.dart';
+import 'package:dsh_app/ui/fx/waves/distortion_wave.dart';
+import 'package:dsh_app/ui/fx/waves/wave_stage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';

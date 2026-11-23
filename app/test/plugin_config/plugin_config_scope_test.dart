@@ -5,7 +5,7 @@
 // after the person switched on the official voice-input kit and installed a
 // local plugin (`local-notes`):
 //
-//   fixtures/bridge_catalog_r13.json   GET /DPSK/v1/plugin-config, as served
+//   fixtures/bridge_catalog_r13.json   GET /dsh-go/v1/plugin-config, as served
 //   fixtures/plugin_bundles_r13.json   pluginManager/listBundles, same moment
 //                                      (`meta.icon` data URLs cut to "<icon>",
 //                                      the local plugin's source path shortened)
@@ -17,8 +17,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/plugin_config/plugin_config_state.dart';
-import 'package:dpsk_app/ui/plugins/config/plugin_config_entries.dart';
+import 'package:dsh_app/state/plugin_config/plugin_config_state.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_entries.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -133,7 +133,7 @@ void main() {
 
   test('a market plugin is a plugin like a local one', () {
     final raw = _rawBundles();
-    final local = raw.firstWhere((b) => b['name'] == 'DPSK-fixture-local-notes');
+    final local = raw.firstWhere((b) => b['name'] == 'dsh-go-fixture-local-notes');
     final market = {
       ...local,
       'name': 'dsh-hooks',
@@ -228,12 +228,12 @@ void main() {
 
     test('a chosen bundle claiming a core id under another module does not make it a plugin', () {
       final raw = _rawBundles();
-      final local = raw.firstWhere((b) => b['name'] == 'DPSK-fixture-local-notes');
+      final local = raw.firstWhere((b) => b['name'] == 'dsh-go-fixture-local-notes');
       final claim = {
         ...local,
         'rows': [
           ...(local['rows']! as List),
-          {'rowId': 'webserver', 'moduleName': 'DPSK-fixture-local-notes'},
+          {'rowId': 'webserver', 'moduleName': 'dsh-go-fixture-local-notes'},
         ],
       };
       final state = _state(_bundles([...raw.where((b) => b != local), claim]));
@@ -246,7 +246,7 @@ void main() {
       // The review's observation, asserted the right way round: the core
       // (dsh-web-app) declares `webserver` too: the id is not the chosen bundle's alone.
       final raw = _rawBundles();
-      final local = raw.firstWhere((b) => b['name'] == 'DPSK-fixture-local-notes');
+      final local = raw.firstWhere((b) => b['name'] == 'dsh-go-fixture-local-notes');
       final claim = {
         ...local,
         'rows': [
@@ -264,7 +264,7 @@ void main() {
 
     test('one id inserted by two chosen bundles: neither', () {
       final raw = _rawBundles();
-      final local = raw.firstWhere((b) => b['name'] == 'DPSK-fixture-local-notes');
+      final local = raw.firstWhere((b) => b['name'] == 'dsh-go-fixture-local-notes');
       final twin = {...local, 'name': 'another-notes', 'source': 'another-notes@1.0.0'};
       expect(
         pluginConfigEntries(_state(_bundles([...raw, twin]))),

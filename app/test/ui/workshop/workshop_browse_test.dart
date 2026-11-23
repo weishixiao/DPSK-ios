@@ -4,15 +4,15 @@
 // (and a refusal is said), the replacement question, and that nothing on
 // screen is an error code.
 
-import 'package:dpsk_app/state/workshop_catalog_state.dart';
-import 'package:dpsk_app/state/workshop_install_state.dart';
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
-import 'package:dpsk_app/ui/workshop/workshop_screen.dart';
-import 'package:dpsk_app/workshop/workshop_client.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_receipt.dart';
-import 'package:dpsk_app/workshop/workshop_repository.dart';
+import 'package:dsh_app/state/workshop_catalog_state.dart';
+import 'package:dsh_app/state/workshop_install_state.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/workshop/workshop_screen.dart';
+import 'package:dsh_app/workshop/workshop_client.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_receipt.dart';
+import 'package:dsh_app/workshop/workshop_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -345,7 +345,7 @@ void main() {
     await pump(tester, catalog([WorkshopItemState(entry: cat, unavailable: 'workshop_min_app')]));
     await tester.tap(find.text('小猫'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('需要 DPSK'), findsOneWidget);
+    expect(find.textContaining('需要 DSH Go'), findsOneWidget);
     expect(tester.widget<FilledButton>(find.widgetWithText(FilledButton, '获取').last).onPressed, isNull);
   });
 

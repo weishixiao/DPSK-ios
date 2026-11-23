@@ -8,7 +8,7 @@ import 'carrier.dart';
 import 'errors.dart';
 import 'session_api.dart';
 
-const _path = '/DPSK/v1/companion/usage';
+const _path = '/dsh-go/v1/companion/usage';
 const _maxSafe = 9007199254740991;
 const _components = ['input_uncached', 'input_cache_read', 'input_cache_write', 'output_tokens'];
 const _rawComponents = ['input_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens', 'output_tokens'];

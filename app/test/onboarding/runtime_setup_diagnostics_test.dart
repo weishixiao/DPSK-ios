@@ -2,24 +2,24 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_export.dart';
-import 'package:dpsk_app/runtime/local_footprint.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/onboarding_state.dart';
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/common/side_insets.dart';
-import 'package:dpsk_app/ui/engine/diagnostics_export_card.dart';
-import 'package:dpsk_app/ui/onboarding/runtime_setup_page.dart';
-import 'package:dpsk_app/ui/shell/root_gate.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/diagnostics/diagnostics_export.dart';
+import 'package:dsh_app/runtime/local_footprint.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/onboarding_state.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/common/side_insets.dart';
+import 'package:dsh_app/ui/engine/diagnostics_export_card.dart';
+import 'package:dsh_app/ui/onboarding/runtime_setup_page.dart';
+import 'package:dsh_app/ui/shell/root_gate.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -119,7 +119,7 @@ class _Files extends FilesChannel {
   @override
   Future<String> saveToDownloads(String hostPath, {required String name, required String mime}) async {
     saved.add((name: name, mime: mime, bytes: await File(hostPath).readAsBytes()));
-    return 'Download/DPSK/$name';
+    return 'Download/DSH-Go/$name';
   }
 }
 
@@ -338,14 +338,14 @@ void main() {
     await fixture.export(tester, '存到「下载」');
 
     final saved = fixture.files.saved.single;
-    expect(saved.name, 'DPSK-diagnostics-20261105-123456.zip');
+    expect(saved.name, 'dsh-go-diagnostics-20261105-123456.zip');
     expect(saved.mime, 'application/zip');
     _expectBundle(saved.bytes, status: status, log: _diskLog, hasNativeFacts: true);
     expect(fixture.native.infoReads, 1);
     expect(fixture.native.logReads, 1);
     expect(fixture.bridge.logReads, 0);
     expect(find.byType(BottomSheet), findsNothing);
-    expect(find.text('已存到 下载/DPSK/${saved.name}'), findsOneWidget);
+    expect(find.text('已存到 下载/DSH-Go/${saved.name}'), findsOneWidget);
     expect(fixture.cache.listSync(recursive: true).whereType<File>(), isEmpty);
     expect(find.byType(RuntimeSetupPage), findsOneWidget);
     fixture.expectNoExportSideEffects();
@@ -370,7 +370,7 @@ void main() {
 
     final shared = fixture.shared.single;
     expect(shared.params.files!.single.mimeType, 'application/zip');
-    expect(shared.params.fileNameOverrides, ['DPSK-diagnostics-20261105-123456.zip']);
+    expect(shared.params.fileNameOverrides, ['dsh-go-diagnostics-20261105-123456.zip']);
     _expectBundle(shared.bytes, status: status, log: _memoryLog, hasNativeFacts: false);
     expect(fixture.native.infoReads, 1);
     expect(fixture.native.logReads, 1);

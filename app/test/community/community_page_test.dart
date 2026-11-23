@@ -5,12 +5,12 @@
 //
 //   flutter test --update-goldens test/community/community_page_test.dart
 
-import 'package:dpsk_app/state/community_state.dart';
-import 'package:dpsk_app/state/safe_mode_state.dart';
-import 'package:dpsk_app/ui/community/community_page.dart';
-import 'package:dpsk_app/ui/community/community_widgets.dart';
-import 'package:dpsk_app/ui/share/qr_code.dart';
-import 'package:dpsk_app/ui/shell/brand_mark.dart';
+import 'package:dsh_app/state/community_state.dart';
+import 'package:dsh_app/state/safe_mode_state.dart';
+import 'package:dsh_app/ui/community/community_page.dart';
+import 'package:dsh_app/ui/community/community_widgets.dart';
+import 'package:dsh_app/ui/share/qr_code.dart';
+import 'package:dsh_app/ui/shell/brand_mark.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -91,7 +91,7 @@ void main() {
   testWidgets('without the forum hook the lead card is the project', (tester) async {
     await pump(tester);
     expect(find.text('论坛'), findsNothing);
-    expect(find.text('DPSK'), findsOneWidget);
+    expect(find.text('DSH Go'), findsOneWidget);
     expect(find.text('开源项目，欢迎点星'), findsOneWidget);
     // The brand glyph sits on its visual centre in the avatar circle.
     final mark = tester.getRect(find.byType(BrandMark));

@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/artifact_files.dart';
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/ui/chat/widgets/artifact_card.dart';
+import 'package:dsh_app/state/artifact_files.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/ui/chat/widgets/artifact_card.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -120,7 +120,7 @@ void main() {
       nativeEntered[index].complete(args);
       try {
         await nativeRelease[index].future;
-        return 'Download/DPSK/${args['name']}';
+        return 'Download/DSH-Go/${args['name']}';
       } finally {
         nativeFinished[index].complete();
       }

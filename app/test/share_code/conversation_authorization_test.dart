@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/share_code/conversation_export.dart';
-import 'package:dpsk_app/share_code/conversation_redact.dart';
-import 'package:dpsk_app/share_code/conversation_share.dart';
-import 'package:dpsk_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/conversation_export.dart';
+import 'package:dsh_app/share_code/conversation_redact.dart';
+import 'package:dsh_app/share_code/conversation_share.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

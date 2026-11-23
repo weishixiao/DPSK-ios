@@ -210,8 +210,8 @@ class StateEventFinishResult {
   Map<String, Object?> toJson() => {'state': state.toJson(), 'events': events.toJson()};
 }
 
-/// Compiles extensions.dpsk.director.eventRules without evaluating anything.
-/// [version] is the enclosing dpsk.v, separate from the registry's own v.
+/// Compiles extensions.dshgo.director.eventRules without evaluating anything.
+/// [version] is the enclosing dshgo.v, separate from the registry's own v.
 class CardEventDefinition {
   CardEventDefinition.parse(Object? rawRegistry, {Object? version = 1})
     : _raw = _eventCopy(rawRegistry),
@@ -221,7 +221,7 @@ class CardEventDefinition {
       return;
     }
     if (_version != 1) {
-      _issues.add(_issue('card_events_version', '', 'Only enclosing dpsk version 1 is executable.'));
+      _issues.add(_issue('card_events_version', '', 'Only enclosing dshgo version 1 is executable.'));
       return;
     }
     if (_raw is! _Json || !_finiteJson(_raw)) {
@@ -552,7 +552,7 @@ bool _eventEqual(Object? left, Object? right) {
   return false;
 }
 
-const _eventRuntimePath = '/dpskDirectorEventRuntime';
+const _eventRuntimePath = '/dshgoDirectorEventRuntime';
 
 List<_Json> _eventRuntimeIssues(bool exists, Object? runtime) {
   if (!exists) {
@@ -707,7 +707,7 @@ class _CardEventSettlement {
       invalid.add(
         _issue(
           'card_event_pack_baseline',
-          '/dpskPackRuntime',
+          '/dshgoPackRuntime',
           'The admitted event batch must use the state session original pack carrier.',
         ),
       );

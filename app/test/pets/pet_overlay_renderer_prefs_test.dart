@@ -1,4 +1,4 @@
-import 'package:dpsk_app/pets/pet_prefs.dart';
+import 'package:dsh_app/pets/pet_prefs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

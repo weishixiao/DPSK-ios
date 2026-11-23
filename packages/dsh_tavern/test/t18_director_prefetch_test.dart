@@ -301,10 +301,10 @@ void main() {
     final hits = h.engine.inspect(h.chatId)!.worldInfo.activated;
     expect(hits.map((hit) => hit.uid), unorderedEquals(['alias-key', 'alias-pinned', 'real-row']));
     expect(
-      hits.every((hit) => hit.bookId == 'dpsk:memory:${h.chatId}' && hit.source == WorldInfoSource.memory),
+      hits.every((hit) => hit.bookId == 'dshgo:memory:${h.chatId}' && hit.source == WorldInfoSource.memory),
       isTrue,
     );
-    expect(hits.singleWhere((hit) => hit.uid == 'real-row').entry.stKey, 'dpsk:memory:${h.chatId}.real-row');
+    expect(hits.singleWhere((hit) => hit.uid == 'real-row').entry.stKey, 'dshgo:memory:${h.chatId}.real-row');
     expect(_memoryBytes(h), before);
   });
 
@@ -325,7 +325,7 @@ void main() {
         (
           'sentinel',
           {
-            '_dpskInvalidMemoryJson': true,
+            '_dshgoInvalidMemoryJson': true,
             'unknown': {'literal': 'keep'},
           },
         ),
@@ -468,11 +468,11 @@ void main() {
     expect(firstBody, contains('FIRST_CURRENT'));
     expect(firstBody, isNot(contains('FIRST_OLD')));
     expect(firstBody, isNot(contains('OTHER_ONLY')));
-    expect(h.engine.inspect(h.chatId)!.worldInfo.activated.single.bookId, 'dpsk:memory:${h.chatId}');
+    expect(h.engine.inspect(h.chatId)!.worldInfo.activated.single.bookId, 'dshgo:memory:${h.chatId}');
     final otherBody = _bodyText(await _main(h, chatId: other));
     expect(otherBody, contains('OTHER_ONLY'));
     expect(otherBody, isNot(contains('FIRST_CURRENT')));
-    expect(h.engine.inspect(other)!.worldInfo.activated.single.bookId, 'dpsk:memory:$other');
+    expect(h.engine.inspect(other)!.worldInfo.activated.single.bookId, 'dshgo:memory:$other');
   });
 
   test('memory catalog preparation is inert while selected memory content runs the standard WI macro pass', () async {

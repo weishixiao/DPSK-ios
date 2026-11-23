@@ -1,10 +1,10 @@
 import 'dart:async';
 
 // ignore_for_file: depend_on_referenced_packages
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/web/dsh_web_launcher.dart';
-import 'package:dpsk_app/ui/web/web_home.dart';
-import 'package:dpsk_app/ui/web/web_view_page.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/web/dsh_web_launcher.dart';
+import 'package:dsh_app/ui/web/web_home.dart';
+import 'package:dsh_app/ui/web/web_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';

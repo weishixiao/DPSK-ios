@@ -21,7 +21,7 @@
 
 聊天页输入框上方胶囊行的最后一枚胶囊「插件」（拼图图标）打开这个对话的插件弹层。它只在弹层有内容时出现，不占胶囊 8 个的名额，生成回复时和整行一起让位。
 
-若要隐藏这个 App 绘制的入口，在 `$DSH_HOME/DPSK/ui.json` 的现有 `hide` 数组中加上 `pluginCapsule`，例如 `{"version":1,"hide":["pluginCapsule"]}`。删除这一项或在界面配置页恢复默认即可重新显示。它不停用插件，不隐藏插件自己的快捷胶囊，也不移除「全部功能」或「对话详情」中的面板。`plugins.seats` 控制插件槽位；`chat.panel` 和 `DPSK.panel` 都不是这枚 App 胶囊的名字。
+若要隐藏这个 App 绘制的入口，在 `$DSH_HOME/dsh-go/ui.json` 的现有 `hide` 数组中加上 `pluginCapsule`，例如 `{"version":1,"hide":["pluginCapsule"]}`。删除这一项或在界面配置页恢复默认即可重新显示。它不停用插件，不隐藏插件自己的快捷胶囊，也不移除「全部功能」或「对话详情」中的面板。`plugins.seats` 控制插件槽位；`chat.panel` 和 `dsh-go.panel` 都不是这枚 App 胶囊的名字。
 
 弹层里先是原生面板（`placement: "chat.panel"`，按插件名排），再是网页插件放在聊天页的部件：这 7 个 slot 的第三方条目——`conversation.session.header.actions`、`conversation.session.header.utilities`、`conversation.input.dock`、`conversation.input.left`、`conversation.input.right`、`conversation.input.overlay`、`conversation.composer.dock`。它们装在**一个**面板岛里，按网页上的顺序竖排，官方条目已遮掉；岛上方一行写着是哪些插件的。
 
@@ -48,16 +48,16 @@
 
 在插件详情启用后，App 只允许该包被启用的 `shell.overlay` cell 显示；官方、未启用包及无法确认归属的条目不会一起放出来。开关是**本机、按主机保存的偏好**，切换主机分别生效，不改写主机配置。`ui.json` 的 `plugins.seats` 里对该 slot / 包显式配置的值优先于本机开关；被配置控制时，应先修改那份配置。
 
-例如，主机配置 `{"version":1,"plugins":{"seats":{"shell.overlay":{"DPSK-example-overlay":"island"}}}}` 显式启用该示例；把 `island` 改为 `hidden` 则关闭。合并到现有配置，不覆盖其他键。
+例如，主机配置 `{"version":1,"plugins":{"seats":{"shell.overlay":{"dsh-go-example-overlay":"island"}}}}` 显式启用该示例；把 `island` 改为 `hidden` 则关闭。合并到现有配置，不覆盖其他键。
 
 - 浮层挂在 `HomeShell.chat` 内的 `ChatScreen`，视口由 `ClipRect` 严格裁在原生顶栏与输入框之间的聊天内容区，不覆盖原生 chrome、抽屉、右侧详情或原生模态。有未决审批或未答问题时停止浮层；离开聊天页也不显示。它不是 Android 跨 App 悬浮窗。
 - 空白区向下穿透，命中的是网页上报的**矩形区域**，不是按图片 alpha 或像素透明度抠图。透明图片的矩形内部仍可能接走触摸；快速运动时触点 / 命中区会有采样和桥接滞后，不保证紧贴动画。
 - 插件应让根容器不接触摸（`pointer-events: none`），只给真实可交互元素设置 `pointer-events: auto`，不要用透明的全屏元素挡住聊天页。保持交互区域小而稳定。
-- 键盘出现时，可用聊天内容区随原生布局收缩，浮层视口也跟着缩小。CSS `--DPSK-island-top` / `--DPSK-island-bottom`（像素 inset，网页里用 `0px` 回退）仍可读取；在已保留原生 chrome 的内容区内可以为 `0`，不要再扣一次顶栏 / 输入框高度。这不是插件可控制的原生布局。
+- 键盘出现时，可用聊天内容区随原生布局收缩，浮层视口也跟着缩小。CSS `--dsh-go-island-top` / `--dsh-go-island-bottom`（像素 inset，网页里用 `0px` 回退）仍可读取；在已保留原生 chrome 的内容区内可以为 `0`，不要再扣一次顶栏 / 输入框高度。这不是插件可控制的原生布局。
 - 仍需本机引擎、可核对的桥接占用表、路由守卫和资源预算；启用偏好不绕过这些条件。失败时保留网页版入口。
 - 音频仍遵守现有 WebView 用户手势要求，不自动开启免手势播放。本轮不是新增原生 `pets` / `bubbles` / `actions` 协议。
 
-参见无额外依赖、无构建链的[网页浮层与三槽示例](../../examples/plugins/DPSK-example-overlay/README.md)。本轮没有安装或运行该插件，也未做真机验证。
+参见无额外依赖、无构建链的[网页浮层与三槽示例](../../examples/plugins/dsh-go-example-overlay/README.md)。本轮没有安装或运行该插件，也未做真机验证。
 
 ## 完整网页版的触控尺寸
 
@@ -89,4 +89,4 @@
 
 ## 尚未开放
 
-此入口没有增加 `ui.json` 的 `plugin:` 页面引用、跨插件 `open` 别名或 `DPSK://panel/…` 深链。原生 `open` 效果仍只能打开 App 支持的页面或本插件的 `panel:<id>`。这些能力需要另行定义可校验的目标、生命周期和权限边界。
+此入口没有增加 `ui.json` 的 `plugin:` 页面引用、跨插件 `open` 别名或 `dsh-go://panel/…` 深链。原生 `open` 效果仍只能打开 App 支持的页面或本插件的 `panel:<id>`。这些能力需要另行定义可校验的目标、生命周期和权限边界。

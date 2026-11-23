@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/settings_sanitizer.dart';
-import 'package:dpsk_app/share_code/share_codec.dart';
-import 'package:dpsk_app/share_code/share_link.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
+import 'package:dsh_app/share_code/settings_sanitizer.dart';
+import 'package:dsh_app/share_code/share_codec.dart';
+import 'package:dsh_app/share_code/share_link.dart';
+import 'package:dsh_app/share_code/share_models.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -94,10 +94,10 @@ void main() {
       expect(() => decodeShareCode(encode({'v': 1, 'kind': 'theme'})), throwsA(isA<ShareFormatException>()));
     });
 
-    test('a .dpsk file holds the code in a readable envelope', () {
+    test('a .dshgo file holds the code in a readable envelope', () {
       final text = encodeShareFile(_profile());
       final json = jsonDecode(text) as Map<String, Object?>;
-      expect(json['dpsk'], 1);
+      expect(json['dshgo'], 1);
       expect(json['kind'], 'profile');
       expect(json['name'], '写作配置');
       expect((decodeShareFile(text) as ProfileShare).name, '写作配置');
@@ -186,7 +186,7 @@ void main() {
     test('app link and landing link carry the same code', () {
       final code = encodeShareCode(const PluginShare(_plugin));
       final link = ShareLink.inline(ShareKind.plugin, code);
-      expect(link.appLink.toString(), 'dpsk://share/plugin?p=$code');
+      expect(link.appLink.toString(), 'dshgo://share/plugin?p=$code');
       expect(link.webLink, '$shareLandingUrl#p=$code');
 
       final fromApp = ShareLink.parse(link.appLink)!;
@@ -201,25 +201,25 @@ void main() {
 
     test('gist links', () {
       const link = ShareLink.gist('aa5a315d61ae9438b18d', 'AbCdEf12');
-      expect(link.appLink.toString(), 'dpsk://share/profile?gist=aa5a315d61ae9438b18d&c=AbCdEf12');
+      expect(link.appLink.toString(), 'dshgo://share/profile?gist=aa5a315d61ae9438b18d&c=AbCdEf12');
       final back = ShareLink.parse(Uri.parse(link.webLink))!;
       expect(back.gistId, 'aa5a315d61ae9438b18d');
       expect(back.gistSum, 'AbCdEf12');
-      expect(ShareLink.parse(Uri.parse('dpsk://share/profile?gist=../../x&c=AbCdEf12')), isNull);
+      expect(ShareLink.parse(Uri.parse('dshgo://share/profile?gist=../../x&c=AbCdEf12')), isNull);
     });
 
     test('other hosts and links are not share links', () {
-      expect(ShareLink.parse(Uri.parse('dpsk://forum/auth?p=a.b')), isNull);
-      expect(ShareLink.parse(Uri.parse('https://evil.example/DPSK/share/#p=a.b')), isNull);
-      expect(ShareLink.parse(Uri.parse('dpsk://share/plugin')), isNull);
-      expect(isLandingUri(Uri.parse('https://weishixiao.github.io/DPSK/sharer/')), isFalse);
+      expect(ShareLink.parse(Uri.parse('dshgo://forum/auth?p=a.b')), isNull);
+      expect(ShareLink.parse(Uri.parse('https://evil.example/dsh-go/share/#p=a.b')), isNull);
+      expect(ShareLink.parse(Uri.parse('dshgo://share/plugin')), isNull);
+      expect(isLandingUri(Uri.parse('https://ccch1mneyyy.github.io/dsh-go/sharer/')), isFalse);
     });
 
     test('finds the link in a pasted message', () {
       final code = encodeShareCode(const PluginShare(_plugin));
       final text = '试试这个插件：$shareLandingUrl#p=$code 很好用';
       expect(ShareLink.find(text)?.code, code);
-      expect(ShareLink.find('dpsk://share/plugin?p=$code\n')?.kind, ShareKind.plugin);
+      expect(ShareLink.find('dshgo://share/plugin?p=$code\n')?.kind, ShareKind.plugin);
       expect(ShareLink.find('没有链接'), isNull);
     });
   });

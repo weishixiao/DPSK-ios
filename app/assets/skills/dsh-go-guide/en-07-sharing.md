@@ -25,7 +25,7 @@ Pick a template and whether to show the **Question** and **Model and steps**, th
 
 ### File
 
-Choose a **Chat file** (`.dpsk`, to replay and continue in DPSK), a **Web page** (opens in any browser, even offline) or Markdown (plain text, readable anywhere). **Preview** it if you like, then **Save** (to Download/DPSK) or **Share**.
+Choose a **Chat file** (`.dshgo`, to replay and continue in DSH Go), a **Web page** (opens in any browser, even offline) or Markdown (plain text, readable anywhere). **Preview** it if you like, then **Save** (to Download/DSH-Go) or **Share**.
 
 ### Text
 
@@ -38,7 +38,7 @@ Sharing always masks keys, tokens and passwords in URLs, and replaces your user 
 ## Manage shared links
 
 <!-- nav: commonSettings,hubPrivacy,remoteHostedMyLinks -->
-`Settings › Privacy and sharing › My shared links` · [Open](dpsk://open/shared-links)
+`Settings › Privacy and sharing › My shared links` · [Open](dshgo://open/shared-links)
 
 Lists links made on this phone, with their expiry. A link can be deleted only from the phone that made it: after uninstalling the app, clearing its data or switching phones, it can't be deleted, and a **Forever** link stays up. After you delete one and confirm, it disappears right away and you have 4 seconds to tap **Undo**; if you don't, deletion starts after that window and the link stops working once deletion succeeds. If deleting fails, the link comes back with the reason. Expired links leave the list after 30 days.
 
@@ -46,7 +46,7 @@ If you change the range or options after creating a link, the link on the panel 
 
 ## Replay and continue
 
-Open a `.dpsk` file or DPSK share link with DPSK to replay it:
+Open a `.dshgo` file or DSH Go share link with DSH Go to replay it:
 
 - It plays automatically. Pause, drag the progress bar, and switch between 1×, 2× and 4×. When it ends, tap **Replay**.
 - Tap **Full chat** to see the whole conversation at once.

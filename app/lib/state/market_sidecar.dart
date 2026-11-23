@@ -1,6 +1,6 @@
-// The DPSK sidecar of the official plugin index, `DPSK.json`
+// The DSH Go sidecar of the official plugin index, `dsh-go.json`
 // (docs/design/plugin-market.md §3): what format 1 has no room for — the
-// tier, the zh/en title and summary, screenshots, the DPSK protocol
+// tier, the zh/en title and summary, screenshots, the DSH Go protocol
 // declaration, the risk the market's checks found, the npm integrity and the
 // withdrawn versions. Read leniently like the index: an entry that breaks a
 // rule is skipped, the rest of the file still counts.
@@ -62,7 +62,7 @@ class DshGoListing {
   /// https only.
   final List<Uri> screenshots;
 
-  /// Uses the DPSK native protocol (cards, forms, settings pages).
+  /// Uses the DSH Go native protocol (cards, forms, settings pages).
   final bool adapted;
 
   /// Older apps show the plugin but can't install it.
@@ -81,7 +81,7 @@ class DshGoListing {
   /// Withdrawn versions: people who have one installed are warned.
   final Set<String> blockedVersions;
 
-  /// Goes under 「适配 DPSK」 (a community entry): declares the protocol and
+  /// Goes under 「适配 DSH Go」 (a community entry): declares the protocol and
   /// the checks didn't flag it as not adapted.
   bool get isAdapted => adapted && !flags.contains('not-adapted');
 
@@ -104,7 +104,7 @@ class MarketSidecar {
 
 final _integrity = RegExp(r'^sha(?:256|384|512)-[A-Za-z0-9+/]+={0,2}$');
 
-/// Reads a decoded `DPSK.json`. Throws [MarketIndexException] only when it
+/// Reads a decoded `dsh-go.json`. Throws [MarketIndexException] only when it
 /// isn't a schema-1 sidecar at all; a bad entry is skipped and recorded.
 MarketSidecar parseMarketSidecar(Object? json) {
   if (json is! Map) throw const MarketIndexException(r'$', 'must be an object');

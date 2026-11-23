@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/tavern/tavern_vn_view.dart';
+import 'package:dsh_app/ui/tavern/tavern_vn_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// [n] sentences of about 25 characters each.

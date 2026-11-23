@@ -6,9 +6,9 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/ssh/remote_bootstrap.dart';
-import 'package:dpsk_app/remote/ssh/remote_shell.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/ssh/remote_bootstrap.dart';
+import 'package:dsh_app/remote/ssh/remote_shell.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// A stand-in `dsh`: records its args and normally delays the launch line.

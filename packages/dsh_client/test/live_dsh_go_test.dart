@@ -1,14 +1,14 @@
-/// The DPSK client against a real `dsh web` with the DPSK bridge and the
+/// The dsh-go client against a real `dsh web` with the dsh-go bridge and the
 /// usage and quick example plugins (examples/plugins): contributions with
 /// ETag, a panel view, the stream (hello → welcome conn, a status line's
 /// data), taps (a deferred one, a static one the bridge refuses).
 ///
-/// Skipped unless `DPSK_LIVE_URL` holds the launch URL (with `?token=`).
+/// Skipped unless `DSH_GO_LIVE_URL` holds the launch URL (with `?token=`).
 /// Boot the host as examples/plugins/e2e/host-e2e.sh does (throwaway
 /// DSH_HOME, `dsh plugin --profile web add <example>`, `dsh web --patch`
 /// with the bridge), then:
 /// ```sh
-/// DPSK_LIVE_URL='http://127.0.0.1:38251/?token=...' dart test test/live_dpsk_test.dart
+/// DSH_GO_LIVE_URL='http://127.0.0.1:38251/?token=...' dart test test/live_dsh_go_test.dart
 /// ```
 @Tags(['live'])
 library;
@@ -19,11 +19,11 @@ import 'package:dsh_client/dsh_client.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final url = Platform.environment['DPSK_LIVE_URL'];
-  final skip = url == null ? 'set DPSK_LIVE_URL to run against a live bridge' : null;
+  final url = Platform.environment['DSH_GO_LIVE_URL'];
+  final skip = url == null ? 'set DSH_GO_LIVE_URL to run against a live bridge' : null;
   const caps = DshGoCaps(app: '0.9.1', locale: 'zh-CN', components: ['stack', 'text', 'metric']);
 
-  group('live DPSK bridge', skip: skip, () {
+  group('live dsh-go bridge', skip: skip, () {
     late DshClient client;
 
     setUpAll(() async => client = await DshClient.connect(launchUrl: url));
@@ -32,8 +32,8 @@ void main() {
     test('contributions: the two examples, localised, ready; 304 on a re-read', () async {
       final c = await client.readDshGoContributions(caps: caps);
       expect(c, isNotNull, reason: 'the bridge serves dshGo');
-      final quick = c!.plugins.firstWhere((p) => p.pkg == 'DPSK-example-quick');
-      final usage = c.plugins.firstWhere((p) => p.pkg == 'DPSK-example-usage');
+      final quick = c!.plugins.firstWhere((p) => p.pkg == 'dsh-go-example-quick');
+      final usage = c.plugins.firstWhere((p) => p.pkg == 'dsh-go-example-usage');
       expect((quick.state, quick.native, quick.title), ('ok', true, '快捷'));
       expect(quick.wants, containsAll(['clipboard', 'message']));
       final summarize = quick.composerActions.firstWhere((a) => a.id == 'summarize');
@@ -52,7 +52,7 @@ void main() {
     });
 
     test('a panel view with its first data', () async {
-      final view = await client.readDshGoView('DPSK-example-usage', 'usage', caps: caps);
+      final view = await client.readDshGoView('dsh-go-example-usage', 'usage', caps: caps);
       expect(view.view, isA<Map<String, Object?>>());
       expect(view.live, isTrue);
       stdout.writeln('view ${view.bytes} B, rev ${view.rev}, title ${view.title}');
@@ -65,7 +65,7 @@ void main() {
       expect(conn, isNotNull, reason: 'bridge ≥ 0.3.0 says its connection id');
       stdout.writeln('bridge ${stream.bridge}, conn $conn');
       final first = await stream
-          .subscribe(pkg: 'DPSK-example-usage', id: 'today')
+          .subscribe(pkg: 'dsh-go-example-usage', id: 'today')
           .firstWhere((e) => e is DshGoData)
           .timeout(const Duration(seconds: 5));
       stdout.writeln('strip data ${(first as DshGoData).data}');
@@ -78,7 +78,7 @@ void main() {
       final conn = await stream.hold(timeout: const Duration(seconds: 5));
       final result = await client.invokeDshGo(
         DshGoInvocation(
-          pkg: 'DPSK-example-quick',
+          pkg: 'dsh-go-example-quick',
           id: 'translate',
           surface: DshGoSurfaces.composerActions,
           clipboard: '你好，世界',
@@ -98,9 +98,9 @@ void main() {
 
       await expectLater(
         client.invokeDshGo(
-          const DshGoInvocation(pkg: 'DPSK-example-quick', id: 'summarize', surface: DshGoSurfaces.composerActions),
+          const DshGoInvocation(pkg: 'dsh-go-example-quick', id: 'summarize', surface: DshGoSurfaces.composerActions),
         ),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/no-handler')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/no-handler')),
       );
     });
 
@@ -108,7 +108,7 @@ void main() {
       try {
         final result = await client.invokeDshGo(
           const DshGoInvocation(
-            pkg: 'DPSK-example-quick',
+            pkg: 'dsh-go-example-quick',
             id: 'copy-md',
             surface: DshGoSurfaces.messageActions,
             scope: DshGoScope(sessionId: 'live-session', messageId: 'm1'),

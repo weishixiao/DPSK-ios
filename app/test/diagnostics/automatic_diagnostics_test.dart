@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/diagnostics/automatic_diagnostics.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/automatic_diagnostics.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -454,7 +454,7 @@ void main() {
     for (final returned in [null, 'standard']) {
       final client = AnalysisClient()..returnedPreset = returned;
       await expectLater(sendDiagnosticAnalysis(client, 'facts', () => true, (_, _) async {}), throwsStateError);
-      expect(client.calls, ['create:DPSK-diagnostics']);
+      expect(client.calls, ['create:dsh-go-diagnostics']);
       await client.close();
     }
   });
@@ -464,7 +464,7 @@ void main() {
     await sendDiagnosticAnalysis(client, 'facts', () => true, (id, _) async {
       expect(id, 'analysis');
     });
-    expect(client.calls, ['create:DPSK-diagnostics', 'projections', 'rename', 'watch', 'prompt:facts']);
+    expect(client.calls, ['create:dsh-go-diagnostics', 'projections', 'rename', 'watch', 'prompt:facts']);
     expect(client.cancels, 0);
     await client.close();
   });
@@ -472,7 +472,7 @@ void main() {
   test('sender refuses a substituted projection without sending facts', () async {
     final client = AnalysisClient()..projectionPreset = 'standard';
     await expectLater(sendDiagnosticAnalysis(client, 'facts', () => true, (_, _) async {}), throwsStateError);
-    expect(client.calls, ['create:DPSK-diagnostics', 'projections']);
+    expect(client.calls, ['create:dsh-go-diagnostics', 'projections']);
     await client.close();
   });
 
@@ -528,8 +528,8 @@ void main() {
 class AnalysisClient extends DshClient {
   AnalysisClient() : super(DshConnection(Uri.parse('http://127.0.0.1:9')));
   final calls = <String>[];
-  String? returnedPreset = 'DPSK-diagnostics';
-  String? projectionPreset = 'DPSK-diagnostics';
+  String? returnedPreset = 'dsh-go-diagnostics';
+  String? projectionPreset = 'dsh-go-diagnostics';
   final events = StreamController<DshEvent>.broadcast();
   Completer<void>? promptGate;
   void Function()? onPrompt;

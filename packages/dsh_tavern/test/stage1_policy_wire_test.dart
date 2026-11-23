@@ -81,7 +81,7 @@ void main() {
     );
     final card = captureToolCardPolicy({
       'extensions': {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'tools': {
             'roll': {'disabled': false},
@@ -102,7 +102,7 @@ void main() {
     );
     final actor = captureToolCardPolicy({
       'extensions': {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'tools': {
             'roll': {'disabled': 'bad'},
@@ -113,7 +113,7 @@ void main() {
     }, characterId: 'actor');
     final partlyInvalid = captureToolPolicy(scope: enabled, host: card, actor: actor);
     expect((partlyInvalid.rollAllowed, partlyInvalid.rememberAllowed), (false, true));
-    expect(partlyInvalid.diagnostics.single['fieldPath'], 'extensions.dpsk.tools.roll.disabled');
+    expect(partlyInvalid.diagnostics.single['fieldPath'], 'extensions.dshgo.tools.roll.disabled');
     final malformedParent = captureToolCardPolicy({'extensions': null}, characterId: 'bad-host');
     final unavailable = captureToolPolicy(scope: enabled, host: malformedParent, actor: card);
     expect((unavailable.rollAllowed, unavailable.rememberAllowed), (false, false));
@@ -126,14 +126,14 @@ void main() {
       'disabled': false,
       'vendor': {'kept': 7},
     };
-    final dpsk = <String, Object?>{
+    final dshgo = <String, Object?>{
       'v': 1,
       'tools': {'roll': rawTool},
       'state': {'secret': 'HIDDEN_STATE_MUST_NOT_BE_CAPTURED'},
     };
     final data = <String, Object?>{
       'description': 'PROMPT_MUST_NOT_BE_CAPTURED',
-      'extensions': {'dpsk': dpsk},
+      'extensions': {'dshgo': dshgo},
     };
     final host = captureToolCardPolicy(data, characterId: 'host');
     final policy = captureToolPolicy(
@@ -141,7 +141,7 @@ void main() {
       host: host,
     );
     rawTool['disabled'] = true;
-    dpsk.clear();
+    dshgo.clear();
     data.clear();
     expect(policy.rollAllowed, isTrue);
     final encoded = jsonEncode(policy.toJson());

@@ -1,4 +1,4 @@
-import 'package:dpsk_app/runtime/ohos_idle_diagnostics.dart';
+import 'package:dsh_app/runtime/ohos_idle_diagnostics.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

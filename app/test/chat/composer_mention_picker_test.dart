@@ -3,18 +3,18 @@
 // by tap / send key / hardware keys, opening folders, and what is sent.
 // Goldens: `flutter test --update-goldens test/chat/composer_mention_picker_test.dart`.
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/mention_state.dart';
-import 'package:dpsk_app/state/voice_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_chip.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_picker.dart';
-import 'package:dpsk_app/ui/chat/slash_palette.dart';
-import 'package:dpsk_app/ui/chat/voice/voice_bridge.dart';
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/mention_state.dart';
+import 'package:dsh_app/state/voice_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/mention/mention_chip.dart';
+import 'package:dsh_app/ui/chat/mention/mention_picker.dart';
+import 'package:dsh_app/ui/chat/slash_palette.dart';
+import 'package:dsh_app/ui/chat/voice/voice_bridge.dart';
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

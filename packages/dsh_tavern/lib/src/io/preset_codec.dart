@@ -57,7 +57,7 @@ final class PresetCodec {
         (outer['preset']! as Map<String, Object?>).remove('data');
         if (!_sameJson(saved, outer)) {
           validation.add(
-            r'$.preset.data.extensions.dpsk.presetEnvelope',
+            r'$.preset.data.extensions.dshgo.presetEnvelope',
             'conflicting-envelope-carrier',
             '内嵌载体与当前分享外壳不同，无法无损确定外壳来源。',
           );
@@ -75,7 +75,7 @@ final class PresetCodec {
   }
 
   /// A retained envelope is descriptive data: its old prefill switch never
-  /// overrides the edited document's current extensions.dpsk configuration.
+  /// overrides the edited document's current extensions.dshgo configuration.
   DecodedPreset validate(Map<String, Object?> raw, {Map<String, Object?>? envelope}) {
     final value = _jsonCopy(raw);
     final wrapper = envelope == null ? null : _jsonCopy(envelope);
@@ -106,9 +106,9 @@ final class PresetCodec {
       if (extensions != null && extensions is! Map<String, Object?>) {
         validation.add(r'$.extensions', 'object-required', '保存分享外壳需要对象类型的 extensions。');
       }
-      final dpsk = extensions is Map<String, Object?> ? extensions['dpsk'] : null;
-      if (dpsk != null && dpsk is! Map<String, Object?>) {
-        validation.add(r'$.extensions.dpsk', 'object-required', '保存分享外壳需要对象类型的 dpsk。');
+      final dshgo = extensions is Map<String, Object?> ? extensions['dshgo'] : null;
+      if (dshgo != null && dshgo is! Map<String, Object?>) {
+        validation.add(r'$.extensions.dshgo', 'object-required', '保存分享外壳需要对象类型的 dshgo。');
       }
       validation.throwIfInvalid();
       (retained['preset']! as Map<String, Object?>).remove('data');
@@ -149,20 +149,20 @@ final class _Validation {
     if (extension != null && extension is! Map<String, Object?>) {
       add('$path.extensions', 'object-required', 'extensions 必须是对象或 null。');
     }
-    final dpsk = extension is Map<String, Object?> ? extension['dpsk'] : null;
-    if (dpsk != null && dpsk is! Map<String, Object?>) {
-      add('$path.extensions.dpsk', 'object-required', 'dpsk 扩展必须是对象或 null。');
+    final dshgo = extension is Map<String, Object?> ? extension['dshgo'] : null;
+    if (dshgo != null && dshgo is! Map<String, Object?>) {
+      add('$path.extensions.dshgo', 'object-required', 'dshgo 扩展必须是对象或 null。');
     }
-    if (dpsk is Map<String, Object?> && dpsk.containsKey('prefill')) {
-      final prefill = dpsk['prefill'];
+    if (dshgo is Map<String, Object?> && dshgo.containsKey('prefill')) {
+      final prefill = dshgo['prefill'];
       if (prefill is! Map<String, Object?>) {
-        add('$path.extensions.dpsk.prefill', 'object-required', '增强预填充设置必须是对象。');
+        add('$path.extensions.dshgo.prefill', 'object-required', '增强预填充设置必须是对象。');
       } else {
         if (prefill.containsKey('enabled') && prefill['enabled'] is! bool) {
-          add('$path.extensions.dpsk.prefill.enabled', 'boolean-required', 'enabled 必须是布尔值。');
+          add('$path.extensions.dshgo.prefill.enabled', 'boolean-required', 'enabled 必须是布尔值。');
         }
         if (prefill.containsKey('target') && !const ['content', 'reasoning'].contains(prefill['target'])) {
-          add('$path.extensions.dpsk.prefill.target', 'invalid-prefill-target', 'target 必须为 content 或 reasoning。');
+          add('$path.extensions.dshgo.prefill.target', 'invalid-prefill-target', 'target 必须为 content 或 reasoning。');
         }
       }
     }
@@ -384,26 +384,26 @@ final class _Validation {
     if (issues.any((issue) => issue.severity == TavernPresetIssueSeverity.error)) {
       return;
     }
-    final dpsk = _namespace(raw);
-    final previous = dpsk['prefill'];
+    final dshgo = _namespace(raw);
+    final previous = dshgo['prefill'];
     final current = previous is Map<String, Object?> ? previous : <String, Object?>{};
     final enabled = attached['enabled'];
     final target = raw['dsh_prefill_target'] ?? 'content';
     if ((current.containsKey('enabled') && current['enabled'] != enabled) ||
         (current.containsKey('target') && current['target'] != target)) {
-      normalized(r'$.preset.data.extensions.dpsk.prefill', '附带的接口开关与目标已替换旧增强配置；未知增强字段保留。');
+      normalized(r'$.preset.data.extensions.dshgo.prefill', '附带的接口开关与目标已替换旧增强配置；未知增强字段保留。');
     }
-    dpsk['prefill'] = {...current, 'enabled': enabled, 'target': target};
+    dshgo['prefill'] = {...current, 'enabled': enabled, 'target': target};
   }
 
   Map<String, Object?>? savedEnvelope(Map<String, Object?> raw, {bool reportFeatures = true, String rawPath = r'$'}) {
     final extension = raw['extensions'];
-    final dpsk = extension is Map<String, Object?> ? extension['dpsk'] : null;
-    if (dpsk is! Map<String, Object?> || !dpsk.containsKey('presetEnvelope')) {
+    final dshgo = extension is Map<String, Object?> ? extension['dshgo'] : null;
+    if (dshgo is! Map<String, Object?> || !dshgo.containsKey('presetEnvelope')) {
       return null;
     }
-    final saved = dpsk['presetEnvelope'];
-    final path = '$rawPath.extensions.dpsk.presetEnvelope';
+    final saved = dshgo['presetEnvelope'];
+    final path = '$rawPath.extensions.dshgo.presetEnvelope';
     if (saved is! Map<String, Object?>) {
       add(path, 'object-required', '保存的分享外壳必须是对象。');
       return null;
@@ -453,8 +453,8 @@ bool _sameJson(Object? left, Object? right) {
 
 Map<String, Object?> _namespace(Map<String, Object?> raw) {
   final extensions = raw['extensions'] ??= <String, Object?>{};
-  final dpsk = (extensions as Map<String, Object?>)['dpsk'] ??= <String, Object?>{};
-  return dpsk as Map<String, Object?>;
+  final dshgo = (extensions as Map<String, Object?>)['dshgo'] ??= <String, Object?>{};
+  return dshgo as Map<String, Object?>;
 }
 
 void _syncEnvelope(Map<String, Object?>? envelope, Map<String, Object?> raw) {

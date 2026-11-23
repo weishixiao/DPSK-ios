@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:dpsk_app/state/bots_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/drawer_view_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/models_state.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/providers_state.dart';
-import 'package:dpsk_app/state/read_list_cache.dart';
-import 'package:dpsk_app/state/read_list_identity.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
+import 'package:dsh_app/state/bots_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/drawer_view_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/models_state.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/providers_state.dart';
+import 'package:dsh_app/state/read_list_cache.dart';
+import 'package:dsh_app/state/read_list_identity.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;

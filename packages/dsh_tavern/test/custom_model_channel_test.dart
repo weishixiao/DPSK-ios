@@ -557,7 +557,7 @@ class _Fixture {
 }
 
 _Json _stateExtensions({required bool secrets}) => {
-  'dpsk': {
+  'dshgo': {
     'v': 1,
     'state': {
       'schema': {

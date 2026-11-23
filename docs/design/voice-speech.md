@@ -1,6 +1,6 @@
 # 朗读、语音输入与语音通话
 
-2026-11-13 DeepSeek 开放平台发布了语音接口（[语音合成](https://api-docs.deepseek.com/zh-cn/guides/tts)、[语音识别](https://api-docs.deepseek.com/zh-cn/guides/asr)，参考实现 [deepseek-ai/chat-demo](https://github.com/deepseek-ai/chat-demo) 的 `src/services/speech/`）。这份设计把它接进 DPSK：默认用用户登录的 DeepSeek 账号付费，免配置；每个地方都能换成别的渠道。
+2026-11-13 DeepSeek 开放平台发布了语音接口（[语音合成](https://api-docs.deepseek.com/zh-cn/guides/tts)、[语音识别](https://api-docs.deepseek.com/zh-cn/guides/asr)，参考实现 [deepseek-ai/chat-demo](https://github.com/deepseek-ai/chat-demo) 的 `src/services/speech/`）。这份设计把它接进 dsh-go：默认用用户登录的 DeepSeek 账号付费，免配置；每个地方都能换成别的渠道。
 
 ## 1. DeepSeek 给了什么
 
@@ -16,7 +16,7 @@
 
 ## 2. 谁付钱：凭据怎么走
 
-- **登录的账号**：token 只在引擎里（`deepseekAccount.resolveToken(url)`，对推理源返回 token，请求头 `x-dsh-auth-token`，见引擎 `dsh-web-search-deepseek`）。App 拿不到也不该拿到，所以由 bridge 代发：`/DPSK/v1/speech`（合同见第 7 节，实现 `runtime/bridge/dsh-go-bridge/lib/speech.js`）。
+- **登录的账号**：token 只在引擎里（`deepseekAccount.resolveToken(url)`，对推理源返回 token，请求头 `x-dsh-auth-token`，见引擎 `dsh-web-search-deepseek`）。App 拿不到也不该拿到，所以由 bridge 代发：`/dsh-go/v1/speech`（合同见第 7 节，实现 `runtime/bridge/dsh-go-bridge/lib/speech.js`）。
 - **API Key**：设置里填的 DeepSeek Key，App 直连 `api.deepseek.com`，音频边到边播。
 - **主机的 Key**：主机配了 Key 但 App 没填时，也走 bridge。bridge 用引擎自己的 `credentials.resolve('DEEPSEEK_API_KEY')` 取值（引用名可用 bridge 配置 `speech.apiKeyEnv` 改），每次请求现取，不缓存、不记录。账号被上游拒绝时不会自动换 Key 重试（免得多扣一次）。
 
@@ -59,7 +59,7 @@
 
 - 通话期间：音频切到通话模式，默认免提，有耳机用耳机；屏幕常亮；占用 App 唯一的麦克风（`MicArbiter`，插件的听声会先让出）。
 - 识别：按识别方式的设置找一个能识别录音的（系统识别不行）：选定的云端 → DeepSeek → 引擎语音模型；都没有就结束并说明。
-- **已登录却付不了语音**（2026-11-14 用户反馈「明明登录了还提示缺语音渠道」）：账号语音要走主机上的桥接（`/DPSK/v1/speech`），1.0.16 及更早的运行环境里没有这条路由，经 DSH Remote 中继时也走不了。这时不再提示「先登录 DeepSeek 账号」，而是说明是这次连接用不了账号付费，给出填 API Key / 下载语音模型的办法（`DeepSeekSpeechFailure.accountUnusable`）；通话里 DeepSeek 的声音没人付费时，她改用手机自带的声音照常说话。用旧运行环境打的测试包都会这样，要换成带新桥接的运行环境才能用账号付语音。
+- **已登录却付不了语音**（2026-11-14 用户反馈「明明登录了还提示缺语音渠道」）：账号语音要走主机上的桥接（`/dsh-go/v1/speech`），1.0.16 及更早的运行环境里没有这条路由，经 DSH Remote 中继时也走不了。这时不再提示「先登录 DeepSeek 账号」，而是说明是这次连接用不了账号付费，给出填 API Key / 下载语音模型的办法（`DeepSeekSpeechFailure.accountUnusable`）；通话里 DeepSeek 的声音没人付费时，她改用手机自带的声音照常说话。用旧运行环境打的测试包都会这样，要换成带新桥接的运行环境才能用账号付语音。
 - **口语回答**（默认开）：通话的第一条消息前面加一句「这是语音通话……请简短口语化回答，不要用 Markdown」。这句和下面「告诉模型听到哪」那句都包在 `<dsh-note>` 里随消息发出：模型看得到，对话、编辑重发、导出分享里都不显示（`state/app_notes.dart`；DSH 没有「只给模型看」的字段，只能这样）。
 - 要批准或回答问题时，卡片直接出现在通话页（复用伙伴小屋的 `CompanionAsk`）。
 - 短于 350 ms 的声音不算话（咳嗽、敲桌）；识别为空不发。轻点光球跳过当前这段回答（只是不读，回答照常写完）。
@@ -94,11 +94,11 @@
 - **背景**：右上角可换**深海**（默认的深色底）、**我的图片**（模糊、压暗，字幕看得清）、**伙伴**（伙伴小屋的角色以 bare 模式站在深色底上，`mood` 跟着通话状态走，`mouth` 每 50 ms 跟一次声音大小）。设置 › 语音里也能改。
 - **切到后台通话就结束**：Android 不给后台 App 麦克风，硬撑只会录到静音。要后台通话得加麦克风类型的前台服务，留作后续。
 
-## 7. bridge 合同（`/DPSK/v1/speech`，能力名 `speech`）
+## 7. bridge 合同（`/dsh-go/v1/speech`，能力名 `speech`）
 
-1. `GET /DPSK/v1/speech` → `{"v":1,"credential":"account"|"api-key"|null}`，不发上游请求。
-2. `POST /DPSK/v1/speech/tts`，JSON `{text, voice}` → `200 application/octet-stream`，边收边转上游 PCM；App 断开时中止上游；上游中途断开就销毁响应。
-3. `POST /DPSK/v1/speech/asr`，体是音频（`audio/wav` / `audio/ogg`，≤8 MiB）→ `{text, duration_ms}`。
+1. `GET /dsh-go/v1/speech` → `{"v":1,"credential":"account"|"api-key"|null}`，不发上游请求。
+2. `POST /dsh-go/v1/speech/tts`，JSON `{text, voice}` → `200 application/octet-stream`，边收边转上游 PCM；App 断开时中止上游；上游中途断开就销毁响应。
+3. `POST /dsh-go/v1/speech/asr`，体是音频（`audio/wav` / `audio/ogg`，≤8 MiB）→ `{text, duration_ms}`。
 4. 错误 `{"error":{"code","message"}}`：`speech/no-credential` 401、`speech/sign-in-required` 401、`speech/unauthorized` 401、`speech/insufficient-balance` 402、`speech/rate-limited` 429、`speech/rejected` 400、`speech/too-large` 413、`speech/busy`（上游的 5xx 原样带回）、`speech/upstream-unreachable` 502。不记录、不回显凭据。
 
 旧引擎没有这组路由时，探测失败按「没有账号路线」处理，App 的 Key 照常可用。

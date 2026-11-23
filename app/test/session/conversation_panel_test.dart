@@ -1,23 +1,23 @@
 // A phone's header and side panel: the title gets the header's width, the model moves
 // beside the composer, and the panel shows the conversation's panes.
 
-import 'package:dpsk_app/plugins/native/native_model.dart';
-import 'package:dpsk_app/plugins/native/native_state.dart';
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/quick_panel_state.dart';
-import 'package:dpsk_app/ui/chat/chat_header.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/composer.dart';
-import 'package:dpsk_app/ui/chat/empty_state.dart' show chatClock;
-import 'package:dpsk_app/ui/chat/model_sheet.dart';
-import 'package:dpsk_app/ui/chat/widgets/attachments.dart' show AttachButton;
-import 'package:dpsk_app/ui/session/conversation_overview.dart';
-import 'package:dpsk_app/ui/session/conversation_panel.dart';
-import 'package:dpsk_app/ui/session/conversation_panes.dart';
-import 'package:dpsk_app/ui/session/session_tab.dart';
-import 'package:dpsk_app/ui/shell/drawer/drawer_destination.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/plugins/native/native_model.dart';
+import 'package:dsh_app/plugins/native/native_state.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/quick_panel_state.dart';
+import 'package:dsh_app/ui/chat/chat_header.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/composer.dart';
+import 'package:dsh_app/ui/chat/empty_state.dart' show chatClock;
+import 'package:dsh_app/ui/chat/model_sheet.dart';
+import 'package:dsh_app/ui/chat/widgets/attachments.dart' show AttachButton;
+import 'package:dsh_app/ui/session/conversation_overview.dart';
+import 'package:dsh_app/ui/session/conversation_panel.dart';
+import 'package:dsh_app/ui/session/conversation_panes.dart';
+import 'package:dsh_app/ui/session/session_tab.dart';
+import 'package:dsh_app/ui/shell/drawer/drawer_destination.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' show ProviderScope;

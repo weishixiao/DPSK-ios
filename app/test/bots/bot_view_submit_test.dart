@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/ui/bots/bot_chat_kit.dart';
-import 'package:dpsk_app/ui/bots/bot_chat_page.dart';
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/bots_state.dart';
+import 'package:dsh_app/ui/bots/bot_chat_kit.dart';
+import 'package:dsh_app/ui/bots/bot_chat_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/bots_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dsh_client/dsh_client.dart';

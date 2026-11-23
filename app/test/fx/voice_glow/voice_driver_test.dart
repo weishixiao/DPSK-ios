@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
-import 'package:dpsk_app/ui/fx/voice_glow/voice_driver.dart';
-import 'package:dpsk_app/ui/fx/voice_glow/voice_style.dart';
+import 'package:dsh_app/ui/fx/voice_glow/voice_driver.dart';
+import 'package:dsh_app/ui/fx/voice_glow/voice_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

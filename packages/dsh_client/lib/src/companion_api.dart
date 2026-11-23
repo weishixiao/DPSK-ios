@@ -1,11 +1,11 @@
-/// 伙伴小屋's state on the Host, through the DPSK bridge
+/// 伙伴小屋's state on the Host, through the dsh-go bridge
 /// (runtime/bridge/dsh-go-bridge/lib/companion/, contract in
 /// docs/design/companion.md):
 ///
-/// * `GET  /DPSK/v1/companion`: identity, versions and her state now;
-/// * `POST /DPSK/v1/companion/events`: `visit` / `pet` / `snack` / `play` /
+/// * `GET  /dsh-go/v1/companion`: identity, versions and her state now;
+/// * `POST /dsh-go/v1/companion/events`: `visit` / `pet` / `snack` / `play` /
 ///   `rest`, with the store id and revision as read;
-/// * `GET  /DPSK/v1/companion/memories`, `POST .../memories` (add or replace
+/// * `GET  /dsh-go/v1/companion/memories`, `POST .../memories` (add or replace
 ///   one, by a client-made id), `POST .../memories/delete`, `.../clear`.
 ///
 /// Writes carry `storeId` + `expectedRevision`; a 409 means someone else wrote
@@ -23,7 +23,7 @@ import 'models.dart';
 import 'mux.dart';
 import 'session_api.dart';
 
-const dshGoCompanionPath = '/DPSK/v1/companion';
+const dshGoCompanionPath = '/dsh-go/v1/companion';
 
 /// Her state as the Host projects it at [asOf].
 class CompanionVitals {
@@ -573,7 +573,7 @@ extension CompanionApi on DshClient {
     return value;
   }
 
-  /// `GET /DPSK/v1/companion`. Null when this Host can't keep her state:
+  /// `GET /dsh-go/v1/companion`. Null when this Host can't keep her state:
   /// the relay, or a bridge without these routes.
   Future<CompanionSnapshot?> companionSnapshot({Duration timeout = const Duration(seconds: 8)}) async {
     if (!canReachDshGo) return null;
@@ -582,7 +582,7 @@ extension CompanionApi on DshClient {
     return _snapshot(dshGoCompanionPath, response);
   }
 
-  /// `POST /DPSK/v1/companion/events`.
+  /// `POST /dsh-go/v1/companion/events`.
   Future<CompanionSnapshot> companionEvent(
     CompanionSnapshot read,
     String type, {

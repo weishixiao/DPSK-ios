@@ -225,7 +225,7 @@ void main() {
           TavernAuthoringChange(
             id: 'host-state',
             physicalResourceId: 'character:$host',
-            path: '/data/extensions/dpsk',
+            path: '/data/extensions/dshgo',
             operation: TavernAuthoringChangeKind.set,
             value: {
               'v': 1,

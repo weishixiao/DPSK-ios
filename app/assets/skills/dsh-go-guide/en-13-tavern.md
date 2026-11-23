@@ -23,7 +23,7 @@ Tap the **Switch mode** key at the top of the chat list and pick **Tavern** unde
 <!-- nav: tavernTitle,tavernImport,tavernImportFromDeepSeek -->
 `Tavern › Import › Bring over from DeepSeek`
 
-A long chat that DeepSeek's own app won't continue can be carried over and continued here. Export all chats in DeepSeek's settings to get a ZIP, then either share that file to DPSK from a file manager, or tap **Bring over from DeepSeek** under **Import** in the tavern and pick it.
+A long chat that DeepSeek's own app won't continue can be carried over and continued here. Export all chats in DeepSeek's settings to get a ZIP, then either share that file to dsh-Go from a file manager, or tap **Bring over from DeepSeek** under **Import** in the tavern and pick it.
 
 The list is sorted by length with the longest chat already ticked; the button at the bottom opens it, ready for your next line. Each chat becomes a character on the shelf, with the branches left by regenerating and editing kept; replies that were withdrawn or never finished stay, but are no longer sent to the model. A chat brought over before isn't copied again: tapping it opens it.
 

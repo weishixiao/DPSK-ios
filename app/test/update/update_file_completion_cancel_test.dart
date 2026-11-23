@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/update/update_config.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/update/update_config.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'support.dart';
 
-const _name = 'DPSK-1.2.0-arm64.apk';
-const _url = 'https://github.com/weishixiao/DPSK/releases/download/v1.2.0/$_name';
+const _name = 'dsh-go-1.2.0-arm64.apk';
+const _url = 'https://github.com/ccch1mneyyy/dsh-go/releases/download/v1.2.0/$_name';
 final _bytes = utf8.encode('PK a complete update awaiting its file operation');
 
 enum _Operation { close, rename }

@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   check-contributor:
-    if: github.repository == 'weishixiao/DPSK'
+    if: github.repository == 'ccch1mneyyy/dsh-Go'
     runs-on: ubuntu-latest
     permissions:
       contents: read

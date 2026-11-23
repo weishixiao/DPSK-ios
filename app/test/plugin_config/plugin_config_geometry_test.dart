@@ -4,9 +4,9 @@
 // same column as the fields; and a narrow phone at large text that neither
 // overflows nor squeezes the buttons apart.
 
-import 'package:dpsk_app/ui/plugins/config/plugin_config_page.dart';
-import 'package:dpsk_app/ui/plugins/config/plugin_config_save_bar.dart';
-import 'package:dpsk_app/ui/theme/theme.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_page.dart';
+import 'package:dsh_app/ui/plugins/config/plugin_config_save_bar.dart';
+import 'package:dsh_app/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

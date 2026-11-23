@@ -4,12 +4,12 @@
 // Regenerate with
 // `flutter test --update-goldens test/plugins/view/plugin_view_figures_test.dart`.
 
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_blocks.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_model.dart';
-import 'package:dpsk_app/ui/chat/dsh_ui/dsh_ui_plugin_figures.dart';
-import 'package:dpsk_app/ui/chat/media/media_viewer.dart';
-import 'package:dpsk_app/ui/chat/widgets/image_actions.dart' show GallerySaveButton;
-import 'package:dpsk_app/ui/plugins/view/plugin_view.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_blocks.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_model.dart';
+import 'package:dsh_app/ui/chat/dsh_ui/dsh_ui_plugin_figures.dart';
+import 'package:dsh_app/ui/chat/media/media_viewer.dart';
+import 'package:dsh_app/ui/chat/widgets/image_actions.dart' show GallerySaveButton;
+import 'package:dsh_app/ui/plugins/view/plugin_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

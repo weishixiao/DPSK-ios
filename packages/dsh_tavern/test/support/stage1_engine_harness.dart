@@ -50,7 +50,7 @@ class Stage1Harness {
       final card = jsonDecode(utf8.decode(t24Card())) as Map<String, Object?>;
       final data = card['data']! as Map<String, Object?>;
       data['extensions'] = {
-        'dpsk': {
+        'dshgo': {
           'v': 1,
           'tools': ?cardTools,
           if (state)

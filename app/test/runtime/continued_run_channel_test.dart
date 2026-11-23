@@ -1,5 +1,5 @@
-import 'package:dpsk_app/runtime/continued_run.dart';
-import 'package:dpsk_app/state/android_features.dart';
+import 'package:dsh_app/runtime/continued_run.dart';
+import 'package:dsh_app/state/android_features.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

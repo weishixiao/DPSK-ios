@@ -143,7 +143,7 @@ final class ChatJsonlCodec {
         selectedRootId: ids[tree.selectedRoot],
         selectedChildren: {for (final node in tree.nodes) ids[node.id]!: ids[tree.choices[node.id]]},
       );
-      final own = _map(_map(metadata['dpsk'])[_namespace]);
+      final own = _map(_map(metadata['dshgo'])[_namespace]);
       own.addAll({
         'version': 1,
         'rootFile': tree.root.key,
@@ -163,7 +163,7 @@ final class ChatJsonlCodec {
             },
         ],
       });
-      metadata['dpsk'] = {..._map(metadata['dpsk']), _namespace: own};
+      metadata['dshgo'] = {..._map(metadata['dshgo']), _namespace: own};
       final leaf = tree.currentLeaf;
       final variables = leaf == null ? _map(tree.root.metadata['variables']) : _map(leaf.state['variables']);
       store.updateChat(chatId, metadata: metadata, variables: variables);
@@ -267,7 +267,7 @@ final class ChatJsonlCodec {
       // same-key, same-context mirror follows this edit; a historical context
       // with the same label remains independent. Apply the context delta once,
       // preserving the catalogue's variables, navigation and unknown fields.
-      final own = _view(_view(result['dpsk'])[_namespace]);
+      final own = _view(_view(result['dshgo'])[_namespace]);
       final files = own['files'];
       final beforeContext = _contextMetadata(before);
       final afterContext = _contextMetadata(after);
@@ -365,7 +365,7 @@ final class _ExportTree {
         return _sourceHeader(header);
       }
     }
-    final own = _map(_map(chat.metadata['dpsk'])[_namespace]);
+    final own = _map(_map(chat.metadata['dshgo'])[_namespace]);
     for (final file in sourceFiles) {
       if (file['key'] == own['rootFile']) {
         return {..._sourceHeader(_map(file['header'])), 'chat_metadata': _clone(chat.metadata)};
@@ -550,21 +550,21 @@ final class _ExportTree {
     } else if (!job.keepEmptyVariables) {
       metadata.remove('variables');
     }
-    final dpsk = _map(metadata['dpsk']);
+    final dshgo = _map(metadata['dshgo']);
     if (isMain) {
-      final latest = _map(chat.metadata['dpsk']);
+      final latest = _map(chat.metadata['dshgo']);
       if (latest.containsKey('latestInspection')) {
-        dpsk['latestInspection'] = latest['latestInspection'];
+        dshgo['latestInspection'] = latest['latestInspection'];
       }
     }
-    dpsk[_namespace] = {
-      ..._map(dpsk[_namespace]),
+    dshgo[_namespace] = {
+      ..._map(dshgo[_namespace]),
       'version': 1,
       'path': [for (final node in job.path) node.message.nodeId],
       'sourceFileName': job.sourceFileName,
       'runtimeContext': _canonical(_contextMetadata(metadata)),
     };
-    metadata['dpsk'] = dpsk;
+    metadata['dshgo'] = dshgo;
     final integrity = createIntegrity();
     if (integrity.isEmpty || integrity == metadata['integrity'] || !integrities.add(integrity)) {
       throw StateError('The integrity generator must return a fresh, nonempty value for every file.');
@@ -647,10 +647,10 @@ final class _ExportTree {
       }
       result['branches'] = links;
     }
-    final dpsk = _map(result['dpsk']);
-    final own = _map(dpsk[_namespace]);
+    final dshgo = _map(result['dshgo']);
+    final own = _map(dshgo[_namespace]);
     if (own.isNotEmpty && own['version'] != 1) {
-      throw StateError('Unsupported stored dpsk.chatJsonl version.');
+      throw StateError('Unsupported stored dshgo.chatJsonl version.');
     }
     own.remove('speakerCharacterId');
     final state = _state(node);
@@ -670,11 +670,11 @@ final class _ExportTree {
       'hasMessageVariables': state.containsKey('messageVariables'),
       'sourceHeader': _runtimeSourceHeader(_headerFor(node)),
     });
-    if (own.containsKey('opaqueInspection') && !dpsk.containsKey('inspection')) {
-      dpsk['inspection'] = own['opaqueInspection'];
+    if (own.containsKey('opaqueInspection') && !dshgo.containsKey('inspection')) {
+      dshgo['inspection'] = own['opaqueInspection'];
     }
-    dpsk.addAll({_namespace: own, 'tavernState': _clone(state)});
-    result['dpsk'] = dpsk;
+    dshgo.addAll({_namespace: own, 'tavernState': _clone(state)});
+    result['dshgo'] = dshgo;
     return result;
   }
 
@@ -738,7 +738,7 @@ bool _samePath(List<StoredNode> first, List<StoredNode> second) =>
     ).every((equal) => equal);
 
 String _originalLabel(Map<String, Object?> header, String fallback) {
-  final own = _map(_map(_map(header['chat_metadata'])['dpsk'])[_namespace]);
+  final own = _map(_map(_map(header['chat_metadata'])['dshgo'])[_namespace]);
   return own['sourceFileName'] is String ? own['sourceFileName'] as String : fallback;
 }
 
@@ -792,7 +792,7 @@ final class _SourceFile {
     context = _canonical(_contextMetadata(metadata));
     runtimeHeader = _runtimeSourceHeader(document.header);
     unchangedRuntimeContext = _sameRuntimeContext(
-      _view(_view(metadata['dpsk'])[_namespace])['runtimeContext'],
+      _view(_view(metadata['dshgo'])[_namespace])['runtimeContext'],
       metadata,
     );
     for (var index = 0; index < document.messages.length; index++) {
@@ -898,15 +898,15 @@ final class _Variant {
     final isSelected = swipe == line.selected;
     info = _map(infoValue);
     extra = _checkedMap(isSelected ? raw['extra'] : info['extra'], file.document, number, 'extra');
-    final dpsk = _checkedMap(extra['dpsk'], file.document, number, 'extra.dpsk');
-    final own = _checkedEnvelope(dpsk[_namespace], file.document, number);
+    final dshgo = _checkedMap(extra['dshgo'], file.document, number, 'extra.dshgo');
+    final own = _checkedEnvelope(dshgo[_namespace], file.document, number);
     final ownHeader = own['version'] == 1 ? own['sourceHeader'] : null;
     final rawHeader = ownHeader is Map<String, Object?> && (!isSelected || file.unchangedRuntimeContext)
         ? ownHeader
         : file.runtimeHeader;
     final sourceMetadata = _checkedMap(rawHeader['chat_metadata'], file.document, number, 'source chat_metadata');
     _validateMetadataFields(sourceMetadata, file.document, number);
-    final sourceDshgo = _checkedMap(sourceMetadata['dpsk'], file.document, number, 'source chat_metadata.dpsk');
+    final sourceDshgo = _checkedMap(sourceMetadata['dshgo'], file.document, number, 'source chat_metadata.dshgo');
     _checkedEnvelope(sourceDshgo[_namespace], file.document, number);
     sourceHeader = _runtimeSourceHeader(rawHeader);
     final portable = own['version'] == 1 ? _map(own['message']) : <String, Object?>{};
@@ -982,7 +982,7 @@ final class _Variant {
         '${portableDate == null ? 'import time' : 'the portable timestamp'}.',
       );
     }
-    state = _checkedMap(dpsk['tavernState'], file.document, number, 'extra.dpsk.tavernState');
+    state = _checkedMap(dshgo['tavernState'], file.document, number, 'extra.dshgo.tavernState');
     if (state['variables'] != null && state['variables'] is! Map<String, Object?>) {
       _error(file.document, number, 'State variables must be an object.');
     }
@@ -1196,7 +1196,7 @@ final class _ImportTree {
       }
     }
     for (final file in files) {
-      final own = _map(_map(file.metadata['dpsk'])[_namespace]);
+      final own = _map(_map(file.metadata['dshgo'])[_namespace]);
       final oldPath = own['path'];
       if (oldPath is! List<Object?>) {
         continue;
@@ -1286,8 +1286,8 @@ Map<String, Object?> _checkedMetadata(StChatDocument document) {
   final line = document.headerLineNumber;
   final metadata = _checkedMap(document.header['chat_metadata'], document, line, 'chat_metadata');
   _validateMetadataFields(metadata, document, line);
-  final dpsk = _checkedMap(metadata['dpsk'], document, line, 'chat_metadata.dpsk');
-  _checkedEnvelope(dpsk[_namespace], document, line);
+  final dshgo = _checkedMap(metadata['dshgo'], document, line, 'chat_metadata.dshgo');
+  _checkedEnvelope(dshgo[_namespace], document, line);
   return metadata;
 }
 
@@ -1307,9 +1307,9 @@ void _validateMetadataFields(Map<String, Object?> metadata, StChatDocument docum
 }
 
 Map<String, Object?> _checkedEnvelope(Object? value, StChatDocument document, int line) {
-  final result = _checkedMap(value, document, line, 'dpsk.chatJsonl');
+  final result = _checkedMap(value, document, line, 'dshgo.chatJsonl');
   if (result.isNotEmpty && result['version'] != 1) {
-    _error(document, line, 'Unsupported dpsk.chatJsonl version; no part of this batch was imported.');
+    _error(document, line, 'Unsupported dshgo.chatJsonl version; no part of this batch was imported.');
   }
   for (final key in [
     'nodeId',
@@ -1405,9 +1405,9 @@ Map<String, Object?> _extraIdentity(Map<String, Object?> extra) {
   if (result['branches'] == null || result['branches'] is List<Object?>) {
     result.remove('branches');
   }
-  final dpsk = _map(result['dpsk']);
-  dpsk.remove('tavernState');
-  final own = _map(dpsk[_namespace]);
+  final dshgo = _map(result['dshgo']);
+  dshgo.remove('tavernState');
+  final own = _map(dshgo[_namespace]);
   for (final key in [
     'version',
     'nodeId',
@@ -1424,14 +1424,14 @@ Map<String, Object?> _extraIdentity(Map<String, Object?> extra) {
     own.remove(key);
   }
   if (own.isEmpty) {
-    dpsk.remove(_namespace);
+    dshgo.remove(_namespace);
   } else {
-    dpsk[_namespace] = own;
+    dshgo[_namespace] = own;
   }
-  if (dpsk.isEmpty) {
-    result.remove('dpsk');
+  if (dshgo.isEmpty) {
+    result.remove('dshgo');
   } else {
-    result['dpsk'] = dpsk;
+    result['dshgo'] = dshgo;
   }
   return result;
 }
@@ -1444,19 +1444,19 @@ Map<String, Object?> _contextMetadata(Map<String, Object?> metadata) {
   for (final key in _terminalStateKeys) {
     result.remove(key);
   }
-  final dpsk = _map(result['dpsk'])..remove('latestInspection');
-  final own = _map(dpsk[_namespace])
+  final dshgo = _map(result['dshgo'])..remove('latestInspection');
+  final own = _map(dshgo[_namespace])
     ..remove('sourceFileName')
     ..remove('version');
   if (own.isEmpty) {
-    dpsk.remove(_namespace);
+    dshgo.remove(_namespace);
   } else {
-    dpsk[_namespace] = own;
+    dshgo[_namespace] = own;
   }
-  if (dpsk.isEmpty) {
-    result.remove('dpsk');
+  if (dshgo.isEmpty) {
+    result.remove('dshgo');
   } else {
-    result['dpsk'] = dpsk;
+    result['dshgo'] = dshgo;
   }
   return result;
 }
@@ -1499,10 +1499,10 @@ void _projectRuntimeState(Map<String, Object?> metadata, Map<String, Object?> st
 Map<String, Object?> _sourceHeader(Map<String, Object?> header, {bool keepSourceFileName = false}) {
   final result = _clone(header);
   final metadata = _map(result['chat_metadata']);
-  final dpsk = _map(metadata['dpsk']);
-  final own = _map(dpsk[_namespace]);
-  if (own.containsKey('opaqueLatestInspection') && !dpsk.containsKey('latestInspection')) {
-    dpsk['latestInspection'] = own['opaqueLatestInspection'];
+  final dshgo = _map(metadata['dshgo']);
+  final own = _map(dshgo[_namespace]);
+  if (own.containsKey('opaqueLatestInspection') && !dshgo.containsKey('latestInspection')) {
+    dshgo['latestInspection'] = own['opaqueLatestInspection'];
   }
   for (final key in [
     'version',
@@ -1520,14 +1520,14 @@ Map<String, Object?> _sourceHeader(Map<String, Object?> header, {bool keepSource
     own.remove('sourceFileName');
   }
   if (own.isEmpty) {
-    dpsk.remove(_namespace);
+    dshgo.remove(_namespace);
   } else {
-    dpsk[_namespace] = {'version': 1, ...own};
+    dshgo[_namespace] = {'version': 1, ...own};
   }
-  if (dpsk.isEmpty && !metadata.containsKey('dpsk')) {
-    metadata.remove('dpsk');
+  if (dshgo.isEmpty && !metadata.containsKey('dshgo')) {
+    metadata.remove('dshgo');
   } else {
-    metadata['dpsk'] = dpsk;
+    metadata['dshgo'] = dshgo;
   }
   if (result.containsKey('chat_metadata') || metadata.isNotEmpty) {
     result['chat_metadata'] = metadata;
@@ -1547,11 +1547,11 @@ Map<String, Object?> _runtimeSourceHeader(Map<String, Object?> header) {
   for (final key in _terminalStateKeys) {
     metadata.remove(key);
   }
-  final dpsk = _map(metadata['dpsk'])..remove('latestInspection');
-  if (dpsk.isEmpty) {
-    metadata.remove('dpsk');
+  final dshgo = _map(metadata['dshgo'])..remove('latestInspection');
+  if (dshgo.isEmpty) {
+    metadata.remove('dshgo');
   } else {
-    metadata['dpsk'] = dpsk;
+    metadata['dshgo'] = dshgo;
   }
   if (result.containsKey('chat_metadata') || metadata.isNotEmpty) {
     result['chat_metadata'] = metadata;
@@ -1560,7 +1560,7 @@ Map<String, Object?> _runtimeSourceHeader(Map<String, Object?> header) {
 }
 
 List<Map<String, Object?>> _sourceFiles(Map<String, Object?> metadata) {
-  final own = _view(_view(metadata['dpsk'])[_namespace]);
+  final own = _view(_view(metadata['dshgo'])[_namespace]);
   final files = own['files'];
   return files is List<Object?> ? files.whereType<Map<String, Object?>>().map(_clone).toList() : [];
 }
@@ -1573,7 +1573,7 @@ Map<String, Object?>? _sourceFor(Map<String, Object?> metadata, Object? key) {
 
 ChatJsonlMetadataSource _metadataSource(Map<String, Object?> metadata, Object? key) {
   if (key is! String) return const ChatJsonlMetadataSource._(ChatJsonlMetadataCarrier.root, null, null);
-  final own = _view(_view(metadata['dpsk'])[_namespace]);
+  final own = _view(_view(metadata['dshgo'])[_namespace]);
   final source = _view(own['sources'])[key];
   if (source is Map<String, Object?>) {
     return ChatJsonlMetadataSource._(ChatJsonlMetadataCarrier.sources, key, null);
@@ -1591,7 +1591,7 @@ ChatJsonlMetadataSource _metadataSource(Map<String, Object?> metadata, Object? k
 }
 
 Map<String, Object?>? _metadataSourceHeader(Map<String, Object?> metadata, ChatJsonlMetadataSource source) {
-  final own = _view(_view(metadata['dpsk'])[_namespace]);
+  final own = _view(_view(metadata['dshgo'])[_namespace]);
   if (source.carrier == ChatJsonlMetadataCarrier.sources) {
     final header = _view(own['sources'])[source.sourceFile];
     return header is Map<String, Object?> ? header : null;
@@ -1641,13 +1641,13 @@ Map<String, Object?> _metadataContextDelta(
 }
 
 Map<String, Object?> _effectiveState(ChatStore store, String chatId, StoredNode node) {
-  final override = _view(node.extra['dpsk'])['tavernState'];
+  final override = _view(node.extra['dshgo'])['tavernState'];
   return override is Map<String, Object?> ? _clone(override) : store.nodeState(chatId, node.message.nodeId);
 }
 
 Map<String, Object?> _withState(Map<String, Object?> extra, Map<String, Object?> state) => {
   ..._clone(extra),
-  'dpsk': {..._map(extra['dpsk']), 'tavernState': _clone(state)},
+  'dshgo': {..._map(extra['dshgo']), 'tavernState': _clone(state)},
 };
 
 Map<String, Object?> _quarantineExtra(Map<String, Object?> extra) =>
@@ -1656,12 +1656,12 @@ Map<String, Object?> _quarantineMetadata(Map<String, Object?> metadata) =>
     _quarantine(metadata, 'latestInspection', 'opaqueLatestInspection');
 Map<String, Object?> _quarantine(Map<String, Object?> value, String key, String archive) {
   final result = _clone(value);
-  final dpsk = _map(result['dpsk']);
-  if (dpsk.containsKey(key)) {
-    final own = _map(dpsk[_namespace]);
-    own.addAll({'version': 1, archive: dpsk.remove(key)});
-    dpsk[_namespace] = own;
-    result['dpsk'] = dpsk;
+  final dshgo = _map(result['dshgo']);
+  if (dshgo.containsKey(key)) {
+    final own = _map(dshgo[_namespace]);
+    own.addAll({'version': 1, archive: dshgo.remove(key)});
+    dshgo[_namespace] = own;
+    result['dshgo'] = dshgo;
   }
   return result;
 }

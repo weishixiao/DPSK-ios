@@ -4,8 +4,8 @@
 
 import 'dart:typed_data';
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/state/regenerate.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/state/regenerate.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

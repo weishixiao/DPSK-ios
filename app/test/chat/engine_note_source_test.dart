@@ -3,10 +3,10 @@
 // the model, never the person's words: they must not show as "my" bubble with
 // 撤回, and the next send must not carry or move them (0.9.8 smoke 06g/06h/06r).
 
-import 'package:dpsk_app/state/chat_state.dart';
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/widgets/background_task_notice.dart';
-import 'package:dpsk_app/ui/chat/widgets/user_bubble.dart';
+import 'package:dsh_app/state/chat_state.dart';
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/widgets/background_task_notice.dart';
+import 'package:dsh_app/ui/chat/widgets/user_bubble.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 

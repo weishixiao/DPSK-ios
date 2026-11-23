@@ -118,7 +118,7 @@ final class TavernGameplayExportRequest {
   final String? draftId;
   final int? draftRevision;
 
-  /// The character candidate whose complete dpsk declaration seeds the pack.
+  /// The character candidate whose complete dshgo declaration seeds the pack.
   final String? physicalResourceId;
   final List<String> changeIds;
   final String? packId;

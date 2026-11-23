@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-import 'package:dpsk_app/companion/companion_memory_embeddings.dart';
+import 'package:dsh_app/companion/companion_memory_embeddings.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

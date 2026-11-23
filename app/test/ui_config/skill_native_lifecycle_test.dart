@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support.dart' show tempRootfs;
 
 UiSkillBundle bundle([String name = uiSkillName]) =>
-    UiSkillBundle({'SKILL.md': '---\n# DPSK:managed\nname: $name\n---\nfixture\n'}, name: name);
+    UiSkillBundle({'SKILL.md': '---\n# dsh-go:managed\nname: $name\n---\nfixture\n'}, name: name);
 
 class Runtime extends LocalRuntimeController {
   @override

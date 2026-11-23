@@ -60,7 +60,7 @@ class IoUsageHttp implements UsageHttp {
     final client = HttpClient()
       ..connectionTimeout = timeout
       ..idleTimeout = const Duration(seconds: 1)
-      ..userAgent = 'DPSK';
+      ..userAgent = 'dsh-go';
     try {
       return await () async {
         final request = await client.postUrl(url);

@@ -2,15 +2,15 @@
 // for the engine), and the layer over the app comes and goes without the page under it losing
 // its state.
 
-import 'package:dpsk_app/app.dart';
-import 'package:dpsk_app/launch/launch_state.dart';
-import 'package:dpsk_app/launch/startup_trace.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/launch/launch_overlay.dart';
-import 'package:dpsk_app/ui/shell/root_gate.dart';
-import 'package:dpsk_app/ui/theme/theme_reveal.dart';
+import 'package:dsh_app/app.dart';
+import 'package:dsh_app/launch/launch_state.dart';
+import 'package:dsh_app/launch/startup_trace.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/launch/launch_overlay.dart';
+import 'package:dsh_app/ui/shell/root_gate.dart';
+import 'package:dsh_app/ui/theme/theme_reveal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

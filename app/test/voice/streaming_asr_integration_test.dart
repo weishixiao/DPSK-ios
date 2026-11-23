@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:dpsk_app/voice/streaming_asr.dart';
+import 'package:dsh_app/voice/streaming_asr.dart';
 
 void main() {
   final modelDirectory = Platform.environment['DSH_ASR_MODEL_DIR'];

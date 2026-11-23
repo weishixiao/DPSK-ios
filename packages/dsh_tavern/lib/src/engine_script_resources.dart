@@ -206,7 +206,7 @@ extension _ScriptRawResources on _ScriptCoordinator {
     Map<String, Object?> raw = decoded;
     Map<String, Object?>? envelope;
     String? source;
-    if (!decoded.containsKey('entries') && decoded['format'] == 'dpsk-lorebook') {
+    if (!decoded.containsKey('entries') && decoded['format'] == 'dshgo-lorebook') {
       if (decoded['version'] != 1 ||
           decoded['book'] is! Map<String, Object?> ||
           (decoded['stWorldName'] != null && decoded['stWorldName'] is! String)) {

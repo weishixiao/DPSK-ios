@@ -3,11 +3,11 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/runtime/ios_guest.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/ios_guest_state.dart';
-import 'package:dpsk_app/ui/engine/linux_section.dart';
+import 'package:dsh_app/runtime/ios_guest.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/ios_guest_state.dart';
+import 'package:dsh_app/ui/engine/linux_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

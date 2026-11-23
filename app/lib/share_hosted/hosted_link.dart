@@ -124,8 +124,8 @@ class HostedLink {
 const hostedOrigins = [shareHostOrigin];
 
 /// The id and key in a hosted link: `https://<host>/c/<id>#k=<key>`, or the
-/// same as an app link, `dpsk://<host>/c/<id>#k=<key>` (what the web viewer's
-/// 「用 DPSK 打开」 hands over). Null for anything else; [origin] limits it to
+/// same as an app link, `dshgo://<host>/c/<id>#k=<key>` (what the web viewer's
+/// 「用 dsh-go 打开」 hands over). Null for anything else; [origin] limits it to
 /// one host.
 ({String origin, String id, String key})? parseHostedUrl(String text, {String? origin}) {
   final uri = Uri.tryParse(text.trim());

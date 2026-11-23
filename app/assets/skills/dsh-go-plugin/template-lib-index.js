@@ -1,9 +1,9 @@
-// A local DPSK plugin. Runs inside the DSH engine (Node); the DPSK app draws
+// A local dsh-go plugin. Runs inside the DSH engine (Node); the dsh-go app draws
 // what package.json "dshGo" declares and calls these handlers when tapped.
 export const name = 'local-my-plugin'
 
 export function apply(ctx) {
-  // Runs only on hosts with the DPSK bridge. Write ['dshGo'], never ['dshGo?'].
+  // Runs only on hosts with the dsh-go bridge. Write ['dshGo'], never ['dshGo?'].
   ctx.inject(['dshGo'], (ctx) => {
     ctx.dshGo.on('paste-quote', (scope, event) => {
       const zh = !String(event.locale).startsWith('en')

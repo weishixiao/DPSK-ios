@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:dpsk_app/ui/engine_settings/engine_settings_page.dart';
-import 'package:dpsk_app/ui/engine_settings/web_search_page.dart';
+import 'package:dsh_app/ui/engine_settings/engine_settings_page.dart';
+import 'package:dsh_app/ui/engine_settings/web_search_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

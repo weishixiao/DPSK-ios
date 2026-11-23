@@ -126,7 +126,7 @@ void main() {
     final raw = jsonDecode(utf8.decode(t24Card())) as Map<String, Object?>;
     final data = raw['data']! as Map<String, Object?>;
     data['extensions'] = {
-      'dpsk': {
+      'dshgo': {
         'v': 1,
         'state': {
           'schema': {

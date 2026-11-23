@@ -1,4 +1,4 @@
-// The DPSK bridge's plugin-config routes (PLUGIN-CONFIG-CONTRACT R1 §4)
+// The dsh-go bridge's plugin-config routes (PLUGIN-CONFIG-CONTRACT R1 §4)
 // against a fake Host over real HTTP: the list (and its absence), one entry
 // with the live marker, secret facts and an opaque revision, a write, and
 // every refusal: 400 invalid-operation, 404 entry-unavailable, 409 conflict /

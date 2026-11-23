@@ -1,8 +1,8 @@
 // What each feature needs on each maker's phone, the walk's order, the
 // states, the restricted-settings steps, and what first run keeps.
 
-import 'package:dpsk_app/phone/phone_channel.dart';
-import 'package:dpsk_app/state/access_state.dart';
+import 'package:dsh_app/phone/phone_channel.dart';
+import 'package:dsh_app/state/access_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

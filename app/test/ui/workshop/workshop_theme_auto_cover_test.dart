@@ -4,11 +4,11 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:archive/archive.dart';
-import 'package:dpsk_app/themes/theme_library.dart';
-import 'package:dpsk_app/themes/theme_pack.dart';
-import 'package:dpsk_app/ui/workshop/workshop_theme_auto_cover.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_preview.dart';
+import 'package:dsh_app/themes/theme_library.dart';
+import 'package:dsh_app/themes/theme_pack.dart';
+import 'package:dsh_app/ui/workshop/workshop_theme_auto_cover.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_preview.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

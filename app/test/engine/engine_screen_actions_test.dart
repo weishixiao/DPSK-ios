@@ -1,9 +1,9 @@
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/engine/engine_screen.dart';
-import 'package:dpsk_app/ui/engine/log_view.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/engine/engine_screen.dart';
+import 'package:dsh_app/ui/engine/log_view.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

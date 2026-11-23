@@ -4,7 +4,7 @@
 //   <base64url(deflate-raw(json))>.<base64url(sha256(json)[0..6])>
 //
 // The landing page (site/share/) decodes the same string with
-// DecompressionStream('deflate-raw') and SubtleCrypto. A `.dpsk` file and a
+// DecompressionStream('deflate-raw') and SubtleCrypto. A `.dshgo` file and a
 // Gist hold that string in a small JSON envelope, so there is one decoder.
 
 import 'dart:convert';
@@ -32,7 +32,7 @@ const maxShareBodyBytes = 1024 * 1024;
 const maxShareCodeChars = 1024 * 1024;
 
 /// The same two limits for a conversation (`conversation_share.dart`): its
-/// text is longer, and a `.dpsk` file of one stays under
+/// text is longer, and a `.dshgo` file of one stays under
 /// `maxConversationFileBytes`.
 const maxConversationBodyBytes = 16 * 1024 * 1024;
 const maxConversationCodeChars = 6 * 1024 * 1024;
@@ -152,26 +152,26 @@ class _LimitedSink implements Sink<List<int>> {
 
 // ── File / Gist envelope ─────────────────────────────────────────────────────
 
-/// MIME type of `.dpsk` files.
-const shareFileMime = 'application/vnd.dpsk+json';
+/// MIME type of `.dshgo` files.
+const shareFileMime = 'application/vnd.dshgo+json';
 
 /// File extension (without the dot).
-const shareFileExtension = 'dpsk';
+const shareFileExtension = 'dshgo';
 
-/// A `.dpsk` file (also the Gist file): readable header, the code inside.
+/// A `.dshgo` file (also the Gist file): readable header, the code inside.
 /// A conversation's file is written by `encodeConversationFile`.
 String encodeShareFile(SharePayload payload, {String? code}) {
   final name = switch (payload) {
     PluginShare(:final plugin) => plugin.displayTitle,
     ProfileShare(:final name) => name,
   };
-  return '${const JsonEncoder.withIndent('  ').convert({'dpsk': shareFormatVersion, 'kind': payload.kind.name, 'name': ?name, 'code': code ?? encodeShareCode(payload)})}\n';
+  return '${const JsonEncoder.withIndent('  ').convert({'dshgo': shareFormatVersion, 'kind': payload.kind.name, 'name': ?name, 'code': code ?? encodeShareCode(payload)})}\n';
 }
 
-/// Reads a `.dpsk` file's text (or a bare share code pasted into one).
+/// Reads a `.dshgo` file's text (or a bare share code pasted into one).
 SharePayload decodeShareFile(String text) => decodeShareCode(readShareEnvelope(text).code);
 
-/// What a `.dpsk` file holds around its code: the readable header and, for a
+/// What a `.dshgo` file holds around its code: the readable header and, for a
 /// conversation, its pictures (`assets`, checked by `decodeConversationFile`).
 class ShareEnvelope {
   const ShareEnvelope({required this.code, this.kind, this.name, this.assets});
@@ -186,7 +186,7 @@ class ShareEnvelope {
   final Map<Object?, Object?>? assets;
 }
 
-/// Reads a `.dpsk` file's envelope (a bare code is an envelope without a
+/// Reads a `.dshgo` file's envelope (a bare code is an envelope without a
 /// header).
 ShareEnvelope readShareEnvelope(String text) {
   final trimmed = text.trim();
@@ -197,8 +197,8 @@ ShareEnvelope readShareEnvelope(String text) {
   } on FormatException {
     throw const ShareDecodeException('not JSON');
   }
-  if (json is! Map || json['dpsk'] is! int || json['code'] is! String) {
-    throw const ShareDecodeException('not a DPSK file');
+  if (json is! Map || json['dshgo'] is! int || json['code'] is! String) {
+    throw const ShareDecodeException('not a dsh-go file');
   }
   final assets = json['assets'];
   return ShareEnvelope(

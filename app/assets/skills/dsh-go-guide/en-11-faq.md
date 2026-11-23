@@ -11,7 +11,7 @@ Check the host status at the bottom of the chat list.
 Reset and uninstall both delete data on this phone; you rarely need them to fix a problem.
 
 <!-- nav: commonSettings,phoneEngineDiagnostics -->
-`Settings › Diagnostics` · [Open](dpsk://open/diagnostics)
+`Settings › Diagnostics` · [Open](dshgo://open/diagnostics)
 
 To report a problem, export a diagnostics bundle here. It includes the version, device, bounded engine logs and captured errors, not all system logs or a complete crash history. The app attempts to remove keys and tokens; still inspect the bundle before sharing it.
 
@@ -40,19 +40,19 @@ Results stay in app memory. Only **Let the AI read diagnostics** or a manual bun
 ## The engine stops in the background, or notifications don't arrive
 
 <!-- nav: commonSettings,phoneEngineKeepAlive -->
-`Settings › Background running` · [Open](dpsk://open/background)
+`Settings › Background running` · [Open](dshgo://open/background)
 
 Android: follow the guide to turn off battery optimization, keep the "engine running" notification, and lock the app in Recents. After system reclamation of the whole app, a local engine with saved launch options requests restoration. A manual stop is not revived, and launches with temporary environment overrides do not restore automatically. This restarts the engine, not interrupted commands or phone actions. Vendor restrictions still apply.
 
 On supported Android app versions, **Silent audio protection** and **Background location protection** can be enabled separately. Both switches are off by default and work only while a local task runs and the app is in the background. They may use more battery and do not prevent the system from pausing or stopping a task. Older app versions don’t show these switches.
 
-Turning on location protection asks for approximate location if it hasn’t already been granted. On Android 10 and later, select “Allow all the time.” If the prompt doesn’t offer it or you only allowed access while using the app, tap **Current status** to open system settings and choose “Allow all the time” under Location in DPSK’s Permissions. Denying access leaves the preference on but location protection inactive. If system location services are off, tap the status to open their settings. This feature doesn’t save or send coordinates. Turning the switch off stops location updates without revoking system permission; revoke it in system settings.
+Turning on location protection asks for approximate location if it hasn’t already been granted. On Android 10 and later, select “Allow all the time.” If the prompt doesn’t offer it or you only allowed access while using the app, tap **Current status** to open system settings and choose “Allow all the time” under Location in DSH Go’s Permissions. Denying access leaves the preference on but location protection inactive. If system location services are off, tap the status to open their settings. This feature doesn’t save or send coordinates. Turning the switch off stops location updates without revoking system permission; revoke it in system settings.
 
 iOS: this page offers separate audio and location protection switches, both off by default. They are used only while a local task is running in the background, and released when the task ends, the engine stops or the switch is turned off. Audio protection plays silence, uses more battery and yields to recording, calls or other audio use. Location protection needs Always location access and uses extra power and location permissions, but does not store coordinates. If access is denied, this page links to system settings.
 
 The iOS 26 system continued task remains the default path; the system can refuse, cancel or expire it. Enhanced protection is also best-effort, not unlimited background execution or survival after force quit. Keep long tasks in the foreground or use a remote host when reliable execution matters.
 
-For notifications, also turn on the alerts you want in the app's **Notifications** and allow DPSK notifications in system settings. Alerts from remote hosts need the app running and the connection online.
+For notifications, also turn on the alerts you want in the app's **Notifications** and allow DSH Go notifications in system settings. Alerts from remote hosts need the app running and the connection online.
 
 ## The engine keeps failing to start
 
@@ -99,14 +99,14 @@ See [Pets](06-pets.md).
 
 ## A plugin is installed but doesn't show up
 
-Check that the plugin is enabled, and restart the engine if asked. A plugin's native UI needs the DPSK bridge on the host: this phone's engine has it built in, remote hosts usually don't. A display place may also be turned off in the plugin's details. Plugin panels without a native UI appear in the Plugins group of All features, opening in the app or as Web entries. See [Plugins](08-plugins.md).
+Check that the plugin is enabled, and restart the engine if asked. A plugin's native UI needs the dsh-go bridge on the host: this phone's engine has it built in, remote hosts usually don't. A display place may also be turned off in the plugin's details. Plugin panels without a native UI appear in the Plugins group of All features, opening in the app or as Web entries. See [Plugins](08-plugins.md).
 
 ## What the app sends
 
 <!-- nav: commonSettings,hubPrivacy,usageStatsTitle -->
-`Settings › Privacy and sharing › Send anonymous usage stats` · [Open](dpsk://open/usage-stats)
+`Settings › Privacy and sharing › Send anonymous usage stats` · [Open](dshgo://open/usage-stats)
 
-DPSK’s own anonymous usage statistics are on by default; the switch is on the welcome screen the first time you open the app. If you updated from an earlier version, a one-time notice at the bottom of the home screen tells you, and can turn it off right there. While it's on, the app sends anonymous stats for the days before, at most once a day, and only this: app and Android version, CPU architecture, phone maker and model (such as `V2405A`, from 1.0.15), the maker's system and its version (such as OriginOS 5.0, from 1.0.15), app language, how the local engine was started, and that day's number of messages, voice inputs (speech typed into the message box, not voice calls), phone control tasks, generations, shares and installed plugins. From 1.0.17 also: messages sent in the tavern, visits to the companion room, voice calls that connected, and the day's total input and output tokens that model replies reported (only the numbers the provider gives in its replies; channels that give none are not counted, and nothing is estimated). Devices are told apart by a random ID that changes every 90 days.
+dsh-go’s own anonymous usage statistics are on by default; the switch is on the welcome screen the first time you open the app. If you updated from an earlier version, a one-time notice at the bottom of the home screen tells you, and can turn it off right there. While it's on, the app sends anonymous stats for the days before, at most once a day, and only this: app and Android version, CPU architecture, phone maker and model (such as `V2405A`, from 1.0.15), the maker's system and its version (such as OriginOS 5.0, from 1.0.15), app language, how the local engine was started, and that day's number of messages, voice inputs (speech typed into the message box, not voice calls), phone control tasks, generations, shares and installed plugins. From 1.0.17 also: messages sent in the tavern, visits to the companion room, voice calls that connected, and the day's total input and output tokens that model replies reported (only the numbers the provider gives in its replies; channels that give none are not counted, and nothing is estimated). Devices are told apart by a random ID that changes every 90 days.
 
 On Android, daily totals also include foreground activity, the first day of collection, reported model usage, feature outcomes, and crashes or hangs confirmed by Android. Collection is on by default; showing the notice only informs you and does not change when it starts. These reports cannot measure who is online now.
 

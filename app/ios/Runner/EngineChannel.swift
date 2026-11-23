@@ -458,7 +458,7 @@ private final class EngineLifecycle: NSObject, URLSessionTaskDelegate {
   }
 
   private func send(origin: String, revision: Int, current: @escaping () -> Bool, done: @escaping (String?) -> Void) {
-    guard let url = URL(string: origin + "/DPSK/v1/lifecycle"), let cookie else { return done("ios_lifecycle_endpoint") }
+    guard let url = URL(string: origin + "/dsh-go/v1/lifecycle"), let cookie else { return done("ios_lifecycle_endpoint") }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue(cookie, forHTTPHeaderField: "Cookie")
@@ -690,7 +690,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
   private var dshHome: URL { home.appendingPathComponent(".dsh", isDirectory: true) }
   private var agentsHome: URL { home.appendingPathComponent(".agents", isDirectory: true) }
   private var workspace: URL { home.appendingPathComponent("workspace", isDirectory: true) }
-  private var outputs: URL { workspace.appendingPathComponent("DPSK", isDirectory: true) }
+  private var outputs: URL { workspace.appendingPathComponent("DSH-Go", isDirectory: true) }
   private var cache: URL {
     (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
       ?? URL(fileURLWithPath: NSTemporaryDirectory()))
@@ -993,7 +993,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
 
   /// Relative to the guest root, as on Android. None lies inside another.
   private static let keepable = [
-    "uiAndSkills": ["root/.dsh/DPSK", "root/.dsh/skills", "root/.agents/skills"],
+    "uiAndSkills": ["root/.dsh/dsh-go", "root/.dsh/skills", "root/.agents/skills"],
     "pluginsAndSettings": ["root/.dsh/profiles", "root/.dsh/cordis.patch.yml", "root/.dsh/.env"],
   ]
 
@@ -1191,7 +1191,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
     ]
     var result: [String: String] = [:]
     for (key, value) in env ?? [:] {
-      guard let text = value as? String, !text.contains("\0"), !reserved.contains(key), !key.hasPrefix("DPSK_"),
+      guard let text = value as? String, !text.contains("\0"), !reserved.contains(key), !key.hasPrefix("DSH_GO_"),
         key.range(of: #"^[A-Za-z_][A-Za-z0-9_]*$"#, options: .regularExpression) != nil
       else {
         throw EngineFailure("ios_invalid_env", "环境变量无效或试图覆盖宿主的固定配置。")
@@ -1511,7 +1511,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
       if let prepared {
         entries = [[
           "insert": [[
-            "id": "DPSK-ios-phone",
+            "id": "dsh-go-ios-phone",
             "name": target.appendingPathComponent("plugin.mjs").path,
             "config": ["directory": prepared.directory.path, "runId": prepared.runId],
           ]],

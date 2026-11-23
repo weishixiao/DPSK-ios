@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/ssh/remote_shell.dart';
-import 'package:dpsk_app/remote/ssh/ssh_host_config.dart';
-import 'package:dpsk_app/remote/ssh/ssh_transport.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/ssh/remote_shell.dart';
+import 'package:dsh_app/remote/ssh/ssh_host_config.dart';
+import 'package:dsh_app/remote/ssh/ssh_transport.dart';
 import 'package:dsh_client/dsh_client.dart';
 
 /// Imitates the remote machine: dsh-app's managed `dsh web` and its log.

@@ -4,17 +4,17 @@
 // Goldens: the skill sheet, light and dark. Regenerate with
 // `flutter test --update-goldens test/features/skill_use_test.dart`.
 
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/agents_state.dart';
-import 'package:dpsk_app/state/composer_insert.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/features_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/workspaces_state.dart';
-import 'package:dpsk_app/ui/common/app_sheet.dart';
-import 'package:dpsk_app/ui/engine_settings/field_sheets.dart' show SheetActions;
-import 'package:dpsk_app/ui/features/skill_use.dart';
-import 'package:dpsk_app/ui/features/skills_page.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/agents_state.dart';
+import 'package:dsh_app/state/composer_insert.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/features_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/workspaces_state.dart';
+import 'package:dsh_app/ui/common/app_sheet.dart';
+import 'package:dsh_app/ui/engine_settings/field_sheets.dart' show SheetActions;
+import 'package:dsh_app/ui/features/skill_use.dart';
+import 'package:dsh_app/ui/features/skills_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

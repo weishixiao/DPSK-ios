@@ -5,11 +5,11 @@
 
 import 'dart:async';
 
-import 'package:dpsk_app/phone/phone_channel.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/access_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/phone/phone_channel.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/access_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter/services.dart' show PlatformException;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -20,7 +20,7 @@ import '../shell/golden_harness.dart';
 /// Every item off, on a phone that reports them all.
 const offPhone = AccessReadings(
   vendor: 'vivo',
-  appLabel: 'DPSK',
+  appLabel: 'DSH Go',
   mic: false,
   storage: false,
   notifications: false,

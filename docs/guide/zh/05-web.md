@@ -5,7 +5,7 @@
 ## 切换界面
 
 <!-- nav: commonSettings,hubSettingsInterface -->
-`设置 › 界面` · [打开](dpsk://open/interface)
+`设置 › 界面` · [打开](dshgo://open/interface)
 
 在**首页**里选**原生**或**网页**，立即切换。也可以点对话列表顶部「新对话」旁的按钮，直接切到网页界面。
 

@@ -10,10 +10,10 @@ import 'package:dartssh2/dartssh2.dart';
 import 'package:dartssh2/src/message/msg_channel.dart';
 // ignore: implementation_imports
 import 'package:dartssh2/src/ssh_channel.dart';
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/ssh/remote_bootstrap.dart';
-import 'package:dpsk_app/remote/ssh/remote_shell.dart';
-import 'package:dpsk_app/remote/ssh/ssh_transport.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/ssh/remote_bootstrap.dart';
+import 'package:dsh_app/remote/ssh/remote_shell.dart';
+import 'package:dsh_app/remote/ssh/ssh_transport.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

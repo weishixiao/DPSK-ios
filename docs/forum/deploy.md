@@ -1,4 +1,4 @@
-# 自建 DPSK 论坛（可选）
+# 自建 dsh-go 论坛（可选）
 
 > 2026-10-24。用 Discourse 自建论坛的模板，配置文件都在 `infra/forum/`。不自建论坛的话，App 照常可用。
 > 所有要你填的值都标成 `<<FILL: …>>`，汇总表在文末。
@@ -14,7 +14,7 @@
 | `infra/forum/settings/secrets.example.yml` | OAuth / S3 密钥模板，复制成 `secrets.yml` 填写（不进仓库） |
 | `infra/forum/scripts/apply.sh` | 把上面三份设置写进论坛，可重复执行 |
 | `infra/forum/scripts/install_theme.sh` | 安装 / 更新分享码卡片主题组件 |
-| `infra/forum/theme-dpsk/` | 主题组件：帖子里的 DPSK 分享链接显示成安装卡片 |
+| `infra/forum/theme-dshgo/` | 主题组件：帖子里的 dsh-go 分享链接显示成安装卡片 |
 
 ## 1. 服务器放哪里
 
@@ -224,8 +224,8 @@ sudo /opt/dsh-app/infra/forum/scripts/apply.sh
 - [ ] 第三方登录失败时：后台 → 日志 → 错误日志。LINUX DO 可以临时把 `openid_connect_verbose_logging` 改成 `true`，Gitee 改 `oauth2_debug_auth`，然后重试。
 
 这些设置会写入：
-- App 登录：`allowed_user_api_auth_redirects` 加入 `dpsk://forum/auth`；授权范围 `read,write,notifications,session_info`；0 级新用户也能在 App 里登录。
-- 帖子里的 `dpsk://` 链接保留可点（`allowed_href_schemes` 加入 `dpsk`）。
+- App 登录：`allowed_user_api_auth_redirects` 加入 `dshgo://forum/auth`；授权范围 `read,write,notifications,session_info`；0 级新用户也能在 App 里登录。
+- 帖子里的 `dshgo://` 链接保留可点（`allowed_href_schemes` 加入 `dshgo`）。
 - 默认中文、中文分词搜索。中文的最短标题 / 正文 / 搜索词等默认值要显式写入：用环境变量锁定语言时 Discourse 仍按 en 计算这些默认值（2026.10 实测），`site_settings.yml` 的「中文默认值」一节已逐项列出。
 - 新分类的「关于」帖按站点语言生成；写完分类会清分类缓存（否则匿名 `/site.json` 约 30 分钟内还是旧分类）。
 - 新社区的信任等级和反垃圾设置、每日备份。每一项在 `site_settings.yml` 里都有注释。
@@ -236,15 +236,15 @@ sudo /opt/dsh-app/infra/forum/scripts/apply.sh
 sudo /opt/dsh-app/infra/forum/scripts/install_theme.sh
 ```
 
-- [ ] 后台 → 外观 → 主题 → 组件 →「DPSK 分享码卡片」→ 设置：
-  - `download_url`：`<<FILL: DPSK 下载页，https 开头>>`（留空则不显示「下载 DPSK」按钮）；
-  - `landing_urls`：分享码落地页地址，默认 `https://go.dshtui.com/share/|https://weishixiao.github.io/DPSK/share/`（新域名在前，旧的 github.io 地址保留，老链接照样认）。要与 App 里 `app/lib/share_code/share_link.dart` 的 `shareLandingUrl` 一致，换域名时两边一起改。
-- [ ] 发一个带分享链接的测试帖，确认显示成卡片，「用 DPSK 安装」能拉起 App。
+- [ ] 后台 → 外观 → 主题 → 组件 →「dsh-go 分享码卡片」→ 设置：
+  - `download_url`：`<<FILL: dsh-go 下载页，https 开头>>`（留空则不显示「下载 dsh-go」按钮）；
+  - `landing_urls`：分享码落地页地址，默认 `https://go.dshtui.com/share/|https://ccch1mneyyy.github.io/dsh-go/share/`（新域名在前，旧的 github.io 地址保留，老链接照样认）。要与 App 里 `app/lib/share_code/share_link.dart` 的 `shareLandingUrl` 一致，换域名时两边一起改。
+- [ ] 发一个带分享链接的测试帖，确认显示成卡片，「用 dsh-go 安装」能拉起 App。
 - [ ] 以后改了组件，重新执行上面的脚本即可更新。
 
 ## 8. App 侧
 
-- [ ] DPSK 里论坛地址的常量是 `https://<论坛域名>`（`app/lib/forum/forum_config.dart` 的 `forumDefaultBaseUrl`，当前 `https://forum.dshtui.com`；App 里「论坛设置」也能临时改）。
+- [ ] dsh-go 里论坛地址的常量是 `https://<论坛域名>`（`app/lib/forum/forum_config.dart` 的 `forumDefaultBaseUrl`，当前 `https://forum.dshtui.com`；App 里「论坛设置」也能临时改）。
 - [ ] 在 App 里走一遍：浏览 → 登录（会打开浏览器授权页，确认后回到 App）→ 发帖 → 退出登录。
 
 ## 9. 备份
@@ -323,7 +323,7 @@ oauth2_button_title: "LINUX DO"
 | LINUX DO Client ID / Secret | `secrets.yml` |
 | Gitee Client ID / Secret | `secrets.yml` |
 | dsh-app 仓库地址（服务器上拉取配置用） | 第 3.2 步 |
-| DPSK 下载页地址 | 主题组件设置 `download_url` |
+| dsh-go 下载页地址 | 主题组件设置 `download_url` |
 | 分享码落地页地址（如果换了） | 主题组件设置 `landing_urls`，并与 App 的 `shareLandingUrl` 一致 |
 | 可选：S3 访问密钥、区域、桶名、端点 | `secrets.yml` + `site_settings.yml` `backup_location` |
 | 可选：MaxMind 账号 ID / License Key | `app.yml` |

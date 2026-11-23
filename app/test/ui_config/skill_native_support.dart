@@ -2,9 +2,9 @@
 // seam here; actual native worker/activation ordering is tested in Kotlin.
 import 'dart:io';
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/ui_config/ui_skill.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/ui_config/ui_skill.dart';
 
 class SkillFileBridge extends RuntimeBridge {
   @override

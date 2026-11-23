@@ -90,7 +90,7 @@ void main() {
           'tool_choice': 'required',
           'assistant_prefill': 'MAIN_PREFIX',
           'extensions': {
-            'dpsk': {
+            'dshgo': {
               'prefill': {'enabled': true, 'target': 'content'},
             },
           },
@@ -998,7 +998,7 @@ class _Harness {
     final raw = _map(jsonDecode(utf8.decode(t24Card())));
     if (cardDirector != null) {
       _map(raw['data'])['extensions'] = {
-        'dpsk': {'director': cardDirector},
+        'dshgo': {'director': cardDirector},
       };
     }
     final card = await h.engine.importCard(Uint8List.fromList(utf8.encode(jsonEncode(raw))));

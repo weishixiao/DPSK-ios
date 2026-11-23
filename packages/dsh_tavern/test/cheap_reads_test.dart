@@ -113,7 +113,7 @@ void main() {
       chat,
       continued,
       extra: {
-        'dpsk': {
+        'dshgo': {
           'inspection': {
             'version': 1,
             'chatId': chat,
@@ -303,7 +303,7 @@ class _Fixture {
           extra: reported == null
               ? const {}
               : {
-                  'dpsk': {
+                  'dshgo': {
                     'inspection': {'version': 1, 'chatId': chat, 'nodeId': node, 'reportedUsage': reported},
                   },
                 },

@@ -217,7 +217,7 @@ void main() {
       'keywords': ['alias'],
       'constant': false,
       'pinned': true,
-      '_dpskInvalidMemoryJson': true,
+      '_dshgoInvalidMemoryJson': true,
       'content': '{{incvar::not-run}}',
       'future': {
         'nested': <Object?>[null, '海'],

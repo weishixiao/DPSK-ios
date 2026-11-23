@@ -31,7 +31,7 @@ Future<void> _startApp() async {
   // MIT / OFL notices must ship with the APK, not just the sources.
   registerThirdPartyLicenses();
   registerFontLicenses();
-  // dpsk://open/tavern: the page lives in ui/, which links/ does not import.
+  // dshgo://open/tavern: the page lives in ui/, which links/ does not import.
   registerPageLink(tavernPageLink, () => const TavernHomePage());
   // The effects' shaders load now, so the first wave or metal word is not a plain fallback.
   unawaited(DistortionWave.precache());

@@ -343,7 +343,7 @@ Future<List<_GameplayLegacyResource>> _captureGameplayLegacyResources({
         continue;
       }
       final raw = _authoringBook(document);
-      final envelope = !document.containsKey('entries') && document['format'] == 'dpsk-lorebook';
+      final envelope = !document.containsKey('entries') && document['format'] == 'dshgo-lorebook';
       final book = WorldInfoBook.fromJson(
         id: link.id,
         source: bucket,

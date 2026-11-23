@@ -1,8 +1,8 @@
 // 设置 → 通知, back from the system page where 实时活动 was just allowed: the
 // running activity is offered again instead of waiting for it to change.
-import 'package:dpsk_app/state/live_activity_state.dart';
-import 'package:dpsk_app/state/notify_state.dart';
-import 'package:dpsk_app/ui/settings/notification_settings.dart';
+import 'package:dsh_app/state/live_activity_state.dart';
+import 'package:dsh_app/state/notify_state.dart';
+import 'package:dsh_app/ui/settings/notification_settings.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../access/support.dart' show awayAndBack;

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
-import 'package:dpsk_app/voice/voice_model_download.dart';
+import 'package:dsh_app/voice/voice_model_download.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// A file server like ModelScope's: ranges (206 + Content-Range), or 200 when
@@ -240,13 +240,13 @@ void main() {
     await downloadVoiceFiles([job('model.onnx', model), job('vad.onnx', vad)], onProgress: progress.add);
     expect(File('${dir.path}/models/model.onnx').readAsBytesSync(), model);
     expect(File('${dir.path}/models/vad.onnx').readAsBytesSync(), vad);
-    expect(File('${dir.path}/models/model.onnx.DPSK.part').existsSync(), isFalse);
+    expect(File('${dir.path}/models/model.onnx.dsh-go.part').existsSync(), isFalse);
     expect(progress.last, model.length + vad.length);
     expect(progress, orderedEquals([...progress]..sort()));
   });
 
   test('a partial file resumes with a range and the result is still checked whole', () async {
-    final part = File('${dir.path}/models/model.onnx.DPSK.part')..createSync(recursive: true);
+    final part = File('${dir.path}/models/model.onnx.dsh-go.part')..createSync(recursive: true);
     part.writeAsBytesSync(model.sublist(0, 100000));
     await downloadVoiceFiles([job('model.onnx', model)], onProgress: (_) {});
     expect(server.requests.single, ('/model.onnx', 'bytes=100000-'));
@@ -254,7 +254,7 @@ void main() {
   });
 
   test('a whole .part (killed before its check) is checked and renamed without the network', () async {
-    final part = File('${dir.path}/models/model.onnx.DPSK.part')..createSync(recursive: true);
+    final part = File('${dir.path}/models/model.onnx.dsh-go.part')..createSync(recursive: true);
     part.writeAsBytesSync(model);
     await downloadVoiceFiles([
       job('model.onnx', model, urls: [Uri.parse('http://127.0.0.1:9/unreachable')]),
@@ -264,7 +264,7 @@ void main() {
   });
 
   test('a whole .part with wrong content is thrown away; the next run downloads the file again', () async {
-    final part = File('${dir.path}/models/model.onnx.DPSK.part')..createSync(recursive: true);
+    final part = File('${dir.path}/models/model.onnx.dsh-go.part')..createSync(recursive: true);
     part.writeAsBytesSync(Uint8List(model.length));
     await expectLater(
       downloadVoiceFiles([job('model.onnx', model)], onProgress: (_) {}),
@@ -279,7 +279,7 @@ void main() {
 
   test('a server without ranges starts the file over', () async {
     server.ranges = false;
-    File('${dir.path}/models/model.onnx.DPSK.part')
+    File('${dir.path}/models/model.onnx.dsh-go.part')
       ..createSync(recursive: true)
       ..writeAsBytesSync(model.sublist(0, 4096));
     await downloadVoiceFiles([job('model.onnx', model)], onProgress: (_) {});
@@ -300,7 +300,7 @@ void main() {
       throwsA(isA<VoiceDownloadException>().having((e) => e.kind, 'kind', VoiceDownloadError.integrity)),
     );
     expect(File('${dir.path}/models/model.onnx').existsSync(), isFalse);
-    expect(File('${dir.path}/models/model.onnx.DPSK.part').existsSync(), isFalse);
+    expect(File('${dir.path}/models/model.onnx.dsh-go.part').existsSync(), isFalse);
   });
 
   test('the next mirror is tried when one answers 404', () async {
@@ -330,7 +330,7 @@ void main() {
       downloadVoiceFiles([job('model.onnx', model)], onProgress: (_) {}, stall: const Duration(milliseconds: 300)),
       throwsA(isA<VoiceDownloadException>().having((e) => e.kind, 'kind', VoiceDownloadError.timeout)),
     );
-    expect(File('${dir.path}/models/model.onnx.DPSK.part').lengthSync(), 50000);
+    expect(File('${dir.path}/models/model.onnx.dsh-go.part').lengthSync(), 50000);
     server.stallAfter = null;
     await downloadVoiceFiles([job('model.onnx', model)], onProgress: (_) {});
     expect(server.requests.last.$2, 'bytes=50000-');

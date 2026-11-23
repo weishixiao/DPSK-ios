@@ -6,19 +6,19 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/state/star_prompt.dart';
-import 'package:dpsk_app/state/update_state.dart';
-import 'package:dpsk_app/ui/settings/about_page.dart';
-import 'package:dpsk_app/ui/settings/settings_screen.dart';
-import 'package:dpsk_app/ui/settings/settings_widgets.dart';
-import 'package:dpsk_app/ui/shell/page_frame.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/update/update_launch_check.dart';
-import 'package:dpsk_app/ui/update/update_tiles.dart';
-import 'package:dpsk_app/update/release.dart';
-import 'package:dpsk_app/update/version.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/state/star_prompt.dart';
+import 'package:dsh_app/state/update_state.dart';
+import 'package:dsh_app/ui/settings/about_page.dart';
+import 'package:dsh_app/ui/settings/settings_screen.dart';
+import 'package:dsh_app/ui/settings/settings_widgets.dart';
+import 'package:dsh_app/ui/shell/page_frame.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/update/update_launch_check.dart';
+import 'package:dsh_app/ui/update/update_tiles.dart';
+import 'package:dsh_app/update/release.dart';
+import 'package:dsh_app/update/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
@@ -87,7 +87,7 @@ class FakeUpdate extends AppUpdateController {
   }
 
   /// What [exportApk] answers; null = the copy failed. Counts the calls.
-  String? exportResult = 'Download/DPSK/DPSK-1.2.0-arm64.apk';
+  String? exportResult = 'Download/DSH-Go/dsh-go-1.2.0-arm64.apk';
   int exports = 0;
 
   @override
@@ -340,7 +340,7 @@ void main() {
       await tester.tap(find.descendant(of: find.byType(AlertDialog), matching: find.text('导出安装包')));
       await tester.pumpAndSettle();
       expect(update.exports, 1);
-      expect(find.text('已存到 下载/DPSK/DPSK-1.2.0-arm64.apk'), findsOneWidget);
+      expect(find.text('已存到 下载/DSH-Go/dsh-go-1.2.0-arm64.apk'), findsOneWidget);
     });
 
     testWidgets('nothing was downloaded, so nothing is offered for signing', (tester) async {
@@ -377,7 +377,7 @@ void main() {
     });
   });
 
-  testWidgets('设置 marks 关于 DPSK; the rows are on that page', (tester) async {
+  testWidgets('设置 marks 关于 DSH Go; the rows are on that page', (tester) async {
     usePhoneSurface(tester);
     await tester.pumpWidget(
       goldenApp(
@@ -390,9 +390,9 @@ void main() {
     await tester.drag(find.byType(CustomScrollView), const Offset(0, -5000));
     await tester.pump(const Duration(milliseconds: 600));
     expect(find.widgetWithText(UpdateBadge, '有新版本'), findsOneWidget);
-    await tester.ensureVisible(find.text('关于 DPSK'));
+    await tester.ensureVisible(find.text('关于 DSH Go'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('关于 DPSK'));
+    await tester.tap(find.text('关于 DSH Go'));
     await tester.pumpAndSettle();
     expect(find.byType(AboutPage), findsOneWidget);
     expect(find.byType(AppUpdateTiles), findsOneWidget);

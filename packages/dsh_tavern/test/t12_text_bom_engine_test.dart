@@ -60,7 +60,7 @@ void main() {
     _expectRow(exported.messages.single, _body, _reasoning, speaker: _speaker);
     expect(exported.messages.single['unknown_message'], _unknown);
     expect(_map(exported.messages.single['extra'])['foreign'], _unknown);
-    expect(_map(_map(exported.messages.single['extra'])['dpsk'])['branchName'], 'kept branch');
+    expect(_map(_map(exported.messages.single['extra'])['dshgo'])['branchName'], 'kept branch');
     expect(exported.messages.single['is_system'], isFalse);
     expect(h.model.generated, 0);
 
@@ -305,7 +305,7 @@ void _expectRow(Map<String, Object?> row, String text, String? reasoning, {Strin
   expect(row['swipes'], [text]);
   final extra = _map(row['extra']);
   expect(extra['reasoning'], reasoning);
-  expect(_map(_map(extra['dpsk'])['chatJsonl'])['text'], text);
+  expect(_map(_map(extra['dshgo'])['chatJsonl'])['text'], text);
   final infos = row['swipe_info']! as List<Object?>;
   expect(_map(_map(infos.single)['extra'])['reasoning'], reasoning);
 }
@@ -313,7 +313,7 @@ void _expectRow(Map<String, Object?> row, String text, String? reasoning, {Strin
 Future<Map<String, Object?>> _exportedRow(T24Harness h, String chat, String nodeId) async {
   for (final file in await h.engine.exportChat(chat)) {
     for (final row in StChatDocument.decode(file.fileName, file.bytes).messages) {
-      if (_map(_map(_map(row['extra'])['dpsk'])['chatJsonl'])['nodeId'] == nodeId) return row;
+      if (_map(_map(_map(row['extra'])['dshgo'])['chatJsonl'])['nodeId'] == nodeId) return row;
     }
   }
   throw TestFailure('Export did not contain node $nodeId.');

@@ -1,10 +1,10 @@
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/links/page_links.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/ui/features/feature_catalog.dart';
-import 'package:dpsk_app/ui/phone/system_actions_page.dart';
-import 'package:dpsk_app/ui/settings/index/spots.dart';
-import 'package:dpsk_app/ui/settings/search/settings_search.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/links/page_links.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/ui/features/feature_catalog.dart';
+import 'package:dsh_app/ui/phone/system_actions_page.dart';
+import 'package:dsh_app/ui/settings/index/spots.dart';
+import 'package:dsh_app/ui/settings/search/settings_search.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,4 +1,4 @@
-import 'package:dpsk_app/tavern/tavern_preview.dart';
+import 'package:dsh_app/tavern/tavern_preview.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// The preview's part of the engine's T17/T18 surface: what it keeps it does

@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dpsk_app/state/workshop_account_state.dart';
-import 'package:dpsk_app/state/workshop_dependencies.dart';
-import 'package:dpsk_app/state/workshop_preferences.dart';
-import 'package:dpsk_app/state/workshop_publication.dart';
-import 'package:dpsk_app/state/workshop_publish_sources.dart';
-import 'package:dpsk_app/state/workshop_publish_state.dart';
-import 'package:dpsk_app/workshop/workshop_client.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_repository.dart';
+import 'package:dsh_app/state/workshop_account_state.dart';
+import 'package:dsh_app/state/workshop_dependencies.dart';
+import 'package:dsh_app/state/workshop_preferences.dart';
+import 'package:dsh_app/state/workshop_publication.dart';
+import 'package:dsh_app/state/workshop_publish_sources.dart';
+import 'package:dsh_app/state/workshop_publish_state.dart';
+import 'package:dsh_app/workshop/workshop_client.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'workshop_auth_test_support.dart';

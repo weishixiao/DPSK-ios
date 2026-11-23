@@ -4,8 +4,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/plugins/seams/slot_catalog.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/plugins/seams/slot_catalog.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';
@@ -13,7 +13,7 @@ import 'support.dart';
 void main() {
   final schema = jsonDecode(File('$appDir/assets/skills/dsh-go-ui/schema.json').readAsStringSync()) as Map;
   final defs = schema[r'$defs'] as Map;
-  final x = schema['x-DPSK'] as Map;
+  final x = schema['x-dsh-go'] as Map;
   List<Object?> enumOf(String def) => (defs[def] as Map)['enum'] as List;
 
   test('value lists match UiSchema', () {
@@ -118,7 +118,7 @@ void main() {
     expect(RegExp(r'^name: dsh-go-ui$', multiLine: true).hasMatch(skill), isTrue);
     expect(RegExp(r'^description: \S', multiLine: true).hasMatch(skill), isTrue);
     expect(isManagedUiSkill(skill), isTrue);
-    expect(isManagedUiSkill(skill.replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), '')), isFalse);
+    expect(isManagedUiSkill(skill.replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), '')), isFalse);
   });
 
   test('the examples apply without issues', () {

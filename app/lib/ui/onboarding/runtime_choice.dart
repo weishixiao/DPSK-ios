@@ -1,7 +1,7 @@
 // The first-run question 「DSH 在哪里运行？」 — on this phone (install the runtime) or
 // on a remote host — with what each costs. On first run a third way is offered
 // beside them, 和角色聊天: 酒馆 alone, which needs neither, and the question
-// becomes 「想怎么用 DPSK？」.
+// becomes 「想怎么用 dsh-Go？」.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

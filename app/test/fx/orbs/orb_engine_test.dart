@@ -1,8 +1,8 @@
 // Portions derived from Libraries.dev Thinking orbs (https://github.com/Jakubantalik/Libraries.dev), MIT, Copyright (c) 2026 Jakub Antalik. See THIRD_PARTY_NOTICES.md.
 
-import 'package:dpsk_app/ui/fx/orbs/orb_core.dart';
-import 'package:dpsk_app/ui/fx/orbs/orb_modes.dart';
-import 'package:dpsk_app/ui/fx/orbs/orb_presets.dart';
+import 'package:dsh_app/ui/fx/orbs/orb_core.dart';
+import 'package:dsh_app/ui/fx/orbs/orb_modes.dart';
+import 'package:dsh_app/ui/fx/orbs/orb_presets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'orb_golden.dart';

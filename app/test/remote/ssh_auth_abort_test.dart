@@ -3,10 +3,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dartssh2/dartssh2.dart';
-import 'package:dpsk_app/remote/link_status.dart';
-import 'package:dpsk_app/remote/ssh/ssh_host_config.dart';
-import 'package:dpsk_app/remote/ssh/ssh_link.dart';
-import 'package:dpsk_app/remote/ssh/ssh_transport.dart';
+import 'package:dsh_app/remote/link_status.dart';
+import 'package:dsh_app/remote/ssh/ssh_host_config.dart';
+import 'package:dsh_app/remote/ssh/ssh_link.dart';
+import 'package:dsh_app/remote/ssh/ssh_transport.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,6 +1,6 @@
-import 'package:dpsk_app/state/phone_state.dart';
-import 'package:dpsk_app/ui/phone/a11y_restore_sheet.dart';
-import 'package:dpsk_app/ui/phone/phone_control_screen.dart';
+import 'package:dsh_app/state/phone_state.dart';
+import 'package:dsh_app/ui/phone/a11y_restore_sheet.dart';
+import 'package:dsh_app/ui/phone/phone_control_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'harness.dart';
 import 'support.dart';
 
-const command = 'adb shell pm grant com.dpsk.harness android.permission.WRITE_SECURE_SETTINGS';
+const command = 'adb shell pm grant io.github.ccch1mneyyy.dsh_app android.permission.WRITE_SECURE_SETTINGS';
 
 void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));

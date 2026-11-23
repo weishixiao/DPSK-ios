@@ -1,11 +1,11 @@
 // First run with only a custom provider: 「其他模型渠道」 on the connect step
 // opens the add form; saving finishes the step and stops it coming back.
 
-import 'package:dpsk_app/state/account_state.dart';
-import 'package:dpsk_app/state/onboarding_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/onboarding/connect_page.dart';
-import 'package:dpsk_app/ui/providers/provider_form_page.dart';
+import 'package:dsh_app/state/account_state.dart';
+import 'package:dsh_app/state/onboarding_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/onboarding/connect_page.dart';
+import 'package:dsh_app/ui/providers/provider_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

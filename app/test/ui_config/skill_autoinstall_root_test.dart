@@ -4,11 +4,11 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/shell/root_gate.dart';
-import 'package:dpsk_app/ui_config/ui_config.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/shell/root_gate.dart';
+import 'package:dsh_app/ui_config/ui_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -100,7 +100,7 @@ void main() {
     await installUiSkill(root, plugin);
     final mine = skillMd(pluginSkillName)
         .readAsStringSync()
-        .replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), '');
+        .replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), '');
     skillMd(pluginSkillName).writeAsStringSync('$mine\n我的补充\n');
 
     await pumpRoot(tester, RuntimePhase.running);

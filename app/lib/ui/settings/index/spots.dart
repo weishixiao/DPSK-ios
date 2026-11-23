@@ -1,7 +1,7 @@
 // The settings index: every settings page and every row on them that a
 // person may look for, in one table. A row takes its title from here (the
 // `spot:` of SettingsTile and friends), so the page and the index can't drift
-// apart; search, page links (`dpsk://open/<id>`) and the guide's paths all
+// apart; search, page links (`dshgo://open/<id>`) and the guide's paths all
 // read the same entries. docs/design/settings-ia.md §4.5.
 //
 // Pure data: no page widgets here (they are in settings_pages.dart), so any
@@ -147,7 +147,7 @@ class SettingsPageMeta {
   final Label? ohosKeywords;
   final Freq freq;
 
-  /// `dpsk://open/<id>` names, old ones included.
+  /// `dshgo://open/<id>` names, old ones included.
   final List<String> links;
   final SpotCondition? condition;
 
@@ -219,7 +219,7 @@ class SettingSpot {
   final Label? ohosKeywords;
   final Freq freq;
 
-  /// `dpsk://open/<link>` opens [page] at this row.
+  /// `dshgo://open/<link>` opens [page] at this row.
   final String? link;
   final SpotCondition? condition;
 
@@ -280,10 +280,10 @@ abstract final class SettingsIndex {
   /// The spots on [page], entries to its child pages included.
   static Iterable<SettingSpot> on(SettingsPageId page) => spots.where((s) => s.page == page);
 
-  /// The page a `dpsk://open/<id>` link names, by its page links.
+  /// The page a `dshgo://open/<id>` link names, by its page links.
   static SettingsPageMeta? pageForLink(String id) => _pages.where((p) => p.links.contains(id)).firstOrNull;
 
-  /// The row a `dpsk://open/<id>` link names.
+  /// The row a `dshgo://open/<id>` link names.
   static SettingSpot? spotForLink(String id) => _rows.where((s) => s.link == id).firstOrNull;
 
   /// The row showing the engine setting [path] of namespace [ns].
@@ -297,14 +297,14 @@ abstract final class SettingsIndex {
   /// Search leaves these out on HarmonyOS (androidSystemFeaturesProvider).
   static bool androidOnly(SettingSpot spot) => spot.androidOnly || chain(spot.page).any((p) => page(p).androidOnly);
 
-  /// Whether the `dpsk://open/<id>` link [id] leads to something [androidOnly]
+  /// Whether the `dshgo://open/<id>` link [id] leads to something [androidOnly]
   /// (on [ios], also to what it lacks: [SettingSpot.iosLacks]).
   static bool androidOnlyLink(String id, {bool ios = false}) {
     final spot = pageForLink(id)?.entry ?? spotForLink(id);
     return spot != null && (androidOnly(spot) && !(ios && spot.iosToo) || ios && spot.iosLacks);
   }
 
-  /// Whether the `dpsk://open/<id>` link [id] leads to what only HarmonyOS has.
+  /// Whether the `dshgo://open/<id>` link [id] leads to what only HarmonyOS has.
   static bool ohosOnlyLink(String id) => pageForLink(id)?.ohosOnly ?? false;
 
   /// The link to follow on HarmonyOS for [id]: 系统操作 stands in for 手机操控
@@ -1215,7 +1215,7 @@ abstract final class Spots {
     condition: SpotCondition.engineField,
   );
 
-  // 关于 DPSK.
+  // 关于 dsh-go.
   static final version = SettingSpot(
     'version',
     page: SettingsPageId.about,

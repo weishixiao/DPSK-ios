@@ -4,8 +4,8 @@
 // replaying it.
 //
 // The body is a share code like any other (`v: 2`, `kind: conversation`).
-// Pictures travel next to the code in the `.dpsk` envelope (`assets`), each
-// named by its own hash. The same file goes out three ways: as a `.dpsk`
+// Pictures travel next to the code in the `.dshgo` envelope (`assets`), each
+// named by its own hash. The same file goes out three ways: as a `.dshgo`
 // file, inside a self-contained `.html`, or encrypted on the share host
 // behind a link (`app/lib/share_hosted/`).
 
@@ -25,7 +25,7 @@ const conversationBodyVersion = 2;
 /// Version of the conversation schema below. A reader refuses newer ones.
 const conversationSchema = 1;
 
-/// Largest `.dpsk` / `.html` file a conversation export makes (the file
+/// Largest `.dshgo` / `.html` file a conversation export makes (the file
 /// opener on Android hands over files up to 4 MB, LinksPlugin.kt).
 const maxConversationFileBytes = 4 * 1024 * 1024;
 
@@ -450,7 +450,7 @@ class ConversationShare {
   /// The model of its last reply.
   final String? model;
 
-  /// `DPSK 1.0.0`.
+  /// `dsh-go 1.0.0`.
   final String? app;
 
   /// When it was exported.
@@ -569,14 +569,14 @@ Map<String, ConversationAsset> readConversationAssets(Map<Object?, Object?>? raw
   return out;
 }
 
-/// A `.dpsk` file for [share]: the readable header, the code, the pictures.
+/// A `.dshgo` file for [share]: the readable header, the code, the pictures.
 String encodeConversationFile(ConversationShare share, Iterable<ConversationAsset> assets, {String? code}) {
   final used = {for (final image in share.images) image.id};
   final kept = {
     for (final a in assets)
       if (used.contains(a.id)) a.id: a.toJson(),
   };
-  return '${jsonEncode({'dpsk': conversationBodyVersion, 'kind': 'conversation', 'name': share.title, 'code': code ?? encodeShareJson(share.toJson()), if (kept.isNotEmpty) 'assets': kept})}\n';
+  return '${jsonEncode({'dshgo': conversationBodyVersion, 'kind': 'conversation', 'name': share.title, 'code': code ?? encodeShareJson(share.toJson()), if (kept.isNotEmpty) 'assets': kept})}\n';
 }
 
 /// Reads a conversation file's text.

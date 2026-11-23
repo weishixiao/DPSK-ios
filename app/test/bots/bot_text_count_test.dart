@@ -1,4 +1,4 @@
-import 'package:dpsk_app/ui/bots/bot_text_count.dart';
+import 'package:dsh_app/ui/bots/bot_text_count.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

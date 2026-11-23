@@ -1,8 +1,8 @@
 // On iOS a tap on the status bar goes to the top of the conversation.
 
-import 'package:dpsk_app/ui/chat/chat_list.dart' show StatusBarTop;
-import 'package:dpsk_app/ui/chat/chat_screen.dart';
-import 'package:dpsk_app/ui/chat/widgets/whale_tail.dart';
+import 'package:dsh_app/ui/chat/chat_list.dart' show StatusBarTop;
+import 'package:dsh_app/ui/chat/chat_screen.dart';
+import 'package:dsh_app/ui/chat/widgets/whale_tail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

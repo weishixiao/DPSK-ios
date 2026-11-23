@@ -5,17 +5,17 @@
 
 import 'dart:convert';
 
-import 'package:dpsk_app/update/checker.dart';
-import 'package:dpsk_app/update/release.dart';
-import 'package:dpsk_app/update/update_config.dart';
+import 'package:dsh_app/update/checker.dart';
+import 'package:dsh_app/update/release.dart';
+import 'package:dsh_app/update/update_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';
 
-const _api = 'https://api.github.com/repos/weishixiao/DPSK/releases/latest';
-const _apk = 'DPSK-0.9.0-arm64.apk';
-const _githubApk = 'https://github.com/weishixiao/DPSK/releases/download/v0.9.0/$_apk';
-const _manifest = 'https://github.com/weishixiao/DPSK/releases/latest/download/update.json';
+const _api = 'https://api.github.com/repos/ccch1mneyyy/dsh-go/releases/latest';
+const _apk = 'dsh-go-0.9.0-arm64.apk';
+const _githubApk = 'https://github.com/ccch1mneyyy/dsh-go/releases/download/v0.9.0/$_apk';
+const _manifest = 'https://github.com/ccch1mneyyy/dsh-go/releases/latest/download/update.json';
 const _dlFeed = 'https://dl.dshtui.com/update.json';
 const _dlApk = 'https://dl.dshtui.com/download/0.9.0/$_apk';
 const _mirror = 'https://dl.example.com';
@@ -29,7 +29,7 @@ void main() {
     test('dl.dshtui.com, then GitHub and the accelerators, the API last; nothing on go.dshtui.com', () {
       expect(sources.channel, isNull);
       expect(sources.feed.toString(), _dlFeed);
-      expect(sources.mirrors.map((m) => m.id), ['dpsk', 'github', 'ghfast', 'gh-proxy']);
+      expect(sources.mirrors.map((m) => m.id), ['dshgo', 'github', 'ghfast', 'gh-proxy']);
       final endpoints = sources.metadataEndpoints();
       expect(endpoints.map((e) => e.id), ['feed', 'manifest:github', 'manifest:ghfast', 'manifest:gh-proxy', 'api']);
       expect(endpoints.map((e) => e.url.toString()).take(3), [_dlFeed, _manifest, 'https://ghfast.top/$_manifest']);
@@ -112,7 +112,7 @@ void main() {
 
     test('its update.json comes first, then GitHub; downloads try it first', () {
       expect(sources.feed.toString(), _mirrorFeed);
-      expect(sources.mirrors.map((m) => m.id), ['dpsk', 'github', 'ghfast', 'gh-proxy']);
+      expect(sources.mirrors.map((m) => m.id), ['dshgo', 'github', 'ghfast', 'gh-proxy']);
       final urls = sources.downloadUrls([Uri.parse(_githubApk)]);
       expect(urls.map((u) => u.url.toString()), [
         _mirrorApk,
@@ -181,8 +181,8 @@ void main() {
 
     test('tag → version directory', () {
       expect(
-        mirror.rewrite(githubReleaseAsset('v1.3.0-beta.1', 'DPSK-1.3.0-beta.1-x64.apk')).toString(),
-        '$_mirror/download/1.3.0-beta.1/DPSK-1.3.0-beta.1-x64.apk',
+        mirror.rewrite(githubReleaseAsset('v1.3.0-beta.1', 'dsh-go-1.3.0-beta.1-x64.apk')).toString(),
+        '$_mirror/download/1.3.0-beta.1/dsh-go-1.3.0-beta.1-x64.apk',
       );
     });
 
@@ -199,7 +199,7 @@ void main() {
       final sources = buildUpdateSources(feed: 'https://update.example.com/dsh/update.json');
       expect(sources.feed.toString(), 'https://update.example.com/dsh/update.json');
       expect(sources.metadataEndpoints().first.id, 'feed');
-      expect(sources.mirrors.first.id, 'dpsk');
+      expect(sources.mirrors.first.id, 'dshgo');
       expect(buildUpdateSources(feed: '').feed, isNull);
       expect(buildUpdateSources(mirror: _mirror, feed: '').feed, isNull);
     });
@@ -218,11 +218,11 @@ void main() {
 
     test('accelerators replaced or dropped', () {
       expect(buildUpdateSources(accelerators: 'https://a.example/').mirrors.map((m) => m.id), [
-        'dpsk',
+        'dshgo',
         'github',
         'custom0',
       ]);
-      expect(buildUpdateSources(accelerators: '').mirrors.map((m) => m.id), ['dpsk', 'github']);
+      expect(buildUpdateSources(accelerators: '').mirrors.map((m) => m.id), ['dshgo', 'github']);
     });
   });
 }

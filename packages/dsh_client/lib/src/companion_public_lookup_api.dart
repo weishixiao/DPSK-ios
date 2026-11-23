@@ -10,7 +10,7 @@ import 'connection.dart';
 import 'errors.dart';
 import 'session_api.dart';
 
-const _path = '/DPSK/v1/companion/lookup';
+const _path = '/dsh-go/v1/companion/lookup';
 typedef _Row = Map<String, Object?>;
 
 class CompanionLookupCapability {

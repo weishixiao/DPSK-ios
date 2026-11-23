@@ -6,7 +6,7 @@ App 以 APK 分发、不上商店，更新靠 App 自己查 GitHub Releases、�
 
 ## 资产约定
 
-每个版本一个 GitHub Release，仓库 `weishixiao/DPSK`，必须公开（私有仓库匿名访问一律 404，App 只会显示「暂时检查不了」）。同一组文件也放在公开下载桶：`https://dl.dshtui.com/download/<版本>/<文件>`，最新版的清单在 `https://dl.dshtui.com/update.json`（见「公开下载桶 dl」）。
+每个版本一个 GitHub Release，仓库 `ccch1mneyyy/dsh-go`，必须公开（私有仓库匿名访问一律 404，App 只会显示「暂时检查不了」）。同一组文件也放在公开下载桶：`https://dl.dshtui.com/download/<版本>/<文件>`，最新版的清单在 `https://dl.dshtui.com/update.json`（见「公开下载桶 dl」）。
 
 正式版统一提供 arm64 安装包。`update.json` 供更新清单回退读取，`SHA256SUMS` 供缺少 GitHub digest 时校验 APK，`*.dshdelta` 是从最近几个旧版升上来的增量补丁（`docs/design/delta-update.md`），都由 App 自己用，不要求用户手动下载。GitHub 自动生成的 Source code 压缩包是源码快照，不是安装包。
 
@@ -15,10 +15,10 @@ App 以 APK 分发、不上商店，更新靠 App 自己查 GitHub Releases、�
 | 版本名 | `app/pubspec.yaml` 的 `version: X.Y.Z[-pre]`，即 versionName；后面的 `+1` 只是占位 | `1.2.0` |
 | 构建号 | Android versionCode，由 `tooling/build-apk.sh` 按构建时间生成，见「构建号」 | `10251234` |
 | tag | `v` + 版本名（不带 `+N`） | `v1.2.0`、`v1.3.0-beta.1` |
-| APK | `DPSK-<版本名>-<flavor>.apk`，正式版 flavor 固定为 `arm64`；文件名不带 `+N`（GitHub 会改写 `+`） | `DPSK-1.2.0-arm64.apk` |
-| iOS 安装包 | `DPSK-<版本名>-ios-unsigned.ipa`：iOS 编译工作流 `ios-unsigned-ipa` 产物里的 `DPSK-unsigned.ipa`（必须是发版提交上的那次运行，且「Archive as for TestFlight, and look inside」这一步通过；归档检查失败时 IPA 照样会上传，那份不能用），上传 Release 时改成这个名字；只挂在 GitHub Release，不进 `SHA256SUMS` 和 `update.json` | `DPSK-1.2.0-ios-unsigned.ipa` |
-| 增量补丁 | `DPSK-<版本名>-from-<旧版本名>-arm64.dshdelta`，只发不到整包 60 % 的 | `DPSK-1.2.0-from-1.1.0-arm64.dshdelta` |
-| 校验和 | `SHA256SUMS`，`sha256sum` 的标准输出，APK 和补丁都在里面 | `<hex>  DPSK-1.2.0-arm64.apk` |
+| APK | `dsh-go-<版本名>-<flavor>.apk`，正式版 flavor 固定为 `arm64`；文件名不带 `+N`（GitHub 会改写 `+`） | `dsh-go-1.2.0-arm64.apk` |
+| iOS 安装包 | `dsh-go-<版本名>-ios-unsigned.ipa`：iOS 编译工作流 `ios-unsigned-ipa` 产物里的 `DSH-Go-unsigned.ipa`（必须是发版提交上的那次运行，且「Archive as for TestFlight, and look inside」这一步通过；归档检查失败时 IPA 照样会上传，那份不能用），上传 Release 时改成这个名字；只挂在 GitHub Release，不进 `SHA256SUMS` 和 `update.json` | `dsh-go-1.2.0-ios-unsigned.ipa` |
+| 增量补丁 | `dsh-go-<版本名>-from-<旧版本名>-arm64.dshdelta`，只发不到整包 60 % 的 | `dsh-go-1.2.0-from-1.1.0-arm64.dshdelta` |
+| 校验和 | `SHA256SUMS`，`sha256sum` 的标准输出，APK 和补丁都在里面 | `<hex>  dsh-go-1.2.0-arm64.apk` |
 | 清单 | `update.json`（schema 1），镜像和自托管源都读它 | 见下 |
 | 更新说明 | Release 正文（Markdown），App 弹窗里原样渲染 | |
 
@@ -32,14 +32,14 @@ App 以 APK 分发、不上商店，更新靠 App 自己查 GitHub Releases、�
   "title": "DSH 1.2.0",
   "publishedAt": "2026-11-01T08:00:00Z",
   "notes": "## 新功能\n…",
-  "page": "https://github.com/weishixiao/DPSK/releases/tag/v1.2.0",
+  "page": "https://github.com/ccch1mneyyy/dsh-go/releases/tag/v1.2.0",
   "assets": {
-    "arm64": { "name": "DPSK-1.2.0-arm64.apk", "size": 180107933, "sha256": "…" }
+    "arm64": { "name": "dsh-go-1.2.0-arm64.apk", "size": 180107933, "sha256": "…" }
   },
   "patches": {
     "arm64": [
       { "from": "<1.1.0 APK 的 SHA-256>", "fromVersion": "1.1.0+10201200",
-        "name": "DPSK-1.2.0-from-1.1.0-arm64.dshdelta", "size": 13278848, "sha256": "…" }
+        "name": "dsh-go-1.2.0-from-1.1.0-arm64.dshdelta", "size": 13278848, "sha256": "…" }
     ]
   }
 }
@@ -77,7 +77,7 @@ versionCode = (年 - 2026) × 10^8 + MMDDhhmm      时钟固定按 UTC+8
 ## 发版步骤
 
 1. **改版本名**：`app/pubspec.yaml` 的 `version:`，版本名按 semver 升；`+1` 不动。之后打的开发包也带新版本名，不会被提示「更新」到这一版。
-   - **同步使用说明**：按本版界面改动更新 `docs/guide/`，把 `docs/guide/README.md` 的 `> DPSK X.Y.Z` 改成新版本名，`python3 app/tool/guide_sync.py` 重新生成 App 内置技能，`python3 app/tool/guide_sync.py --check` 通过再打包（它核对入口路径、界面文字、页面链接与版本号）。
+   - **同步使用说明**：按本版界面改动更新 `docs/guide/`，把 `docs/guide/README.md` 的 `> dsh-go X.Y.Z` 改成新版本名，`python3 app/tool/guide_sync.py` 重新生成 App 内置技能，`python3 app/tool/guide_sync.py --check` 通过再打包（它核对入口路径、界面文字、页面链接与版本号）。
 2. **只打包 arm64 正式版**（运行时要先 `runtime/build-runtime.sh` 产出 `runtime/out/`）。x64 仅供必要的本地模拟器验证，不上传、不放入正式更新清单：
 
    ```sh
@@ -96,11 +96,11 @@ versionCode = (年 - 2026) × 10^8 + MMDDhhmm      时钟固定按 UTC+8
    python3 tooling/release_assets.py --notes notes.md      # 产物在 dist/
    ```
 
-   顺带为最近 3 个已发布版本各做一个增量补丁（`--delta-from N`，`0` 不做、不联网）：用 `gh` 取各版的 arm64 APK（缓存在 `~/.cache/dpsk-release/apk/`，按该版的 `SHA256SUMS` 核对），只留不到整包 60 % 的，写进 `dist/`、`SHA256SUMS` 和 `update.json` 的 `patches`。换了运行时的版本补丁接近整包，会全部被丢掉，正常。格式、App 端回落规则和实测大小见 `docs/design/delta-update.md`。
+   顺带为最近 3 个已发布版本各做一个增量补丁（`--delta-from N`，`0` 不做、不联网）：用 `gh` 取各版的 arm64 APK（缓存在 `~/.cache/dshgo-release/apk/`，按该版的 `SHA256SUMS` 核对），只留不到整包 60 % 的，写进 `dist/`、`SHA256SUMS` 和 `update.json` 的 `patches`。换了运行时的版本补丁接近整包，会全部被丢掉，正常。格式、App 端回落规则和实测大小见 `docs/design/delta-update.md`。
 
    > **不要只跑 `gh release create`。** 它只更新 GitHub；内测通道的 `beta/update.json` 会停在旧版本。带着内测令牌装的旧版本会先问内测通道，于是报「已是最新」（1.0.4 卡住就是这个原因）。公测发版一律走下面这个脚本：它同时写 R2、GitHub（`--github`）并回下载核对。
 5. **上传并上线**：`services/share-worker/scripts/publish-release.sh`，`SHA256SUMS` 里的每个文件（APK、补丁）一次传到所有线路（R2、公开下载桶 dl、香港桶、GitHub Release），分别下载回来核对，全部一致才上线。见下面「发版到三条线路」。
-   - 公测起加 `--github`：GitHub Release 由脚本建（标题 `DPSK <版本>`，正文取 `docs/changelog.md` 对应一节）。`release_assets.py` 最后打印的 `gh release create …` 不用再手动跑。
+   - 公测起加 `--github`：GitHub Release 由脚本建（标题 `DSH Go <版本>`，正文取 `docs/changelog.md` 对应一节）。`release_assets.py` 最后打印的 `gh release create …` 不用再手动跑。
    - 测试版（版本名带 `-`）脚本自动加 `--prerelease`：`releases/latest` 和 `releases/latest/download/…` 都跳过预发布，公开下载桶根目录的 `update.json` 也不换，只有正式版会推给用户。
 6. **内测期间**（`DOWNLOAD_ACCESS=key`）不加 `--github`，见下面「内测通道」。
 7. **验证**：在装着上一版的手机上 设置 → 关于 → 检查更新，走完下载和安装。
@@ -111,13 +111,13 @@ versionCode = (年 - 2026) × 10^8 + MMDDhhmm      时钟固定按 UTC+8
 
 | 文件（脚本的默认位置，权限 600） | 内容 | 用在 |
 |---|---|---|
-| `~/keys/dpsk-beta-secret` | Worker secret `BETA_SECRET`：密钥哈希的盐、下载链接的签名钥 | `beta-keys.sh` |
-| `~/keys/dpsk-beta-channel.token` | 通道令牌（`dshc_…`） | `build-apk.sh --beta` 才编进内测包（公测包不带）；`publish-release.sh` 实测 |
+| `~/keys/dshgo-beta-secret` | Worker secret `BETA_SECRET`：密钥哈希的盐、下载链接的签名钥 | `beta-keys.sh` |
+| `~/keys/dshgo-beta-channel.token` | 通道令牌（`dshc_…`） | `build-apk.sh --beta` 才编进内测包（公测包不带）；`publish-release.sh` 实测 |
 | Cloudflare API token | 部署、写 R2 / KV | 各脚本的 `CF_TOKEN_FILE` |
-| `~/keys/dpsk-cloudflare-account-id` | Cloudflare 账号 id（32 位十六进制）。公开仓库的 `wrangler.jsonc` 只有占位符（`tooling/oss-redact.txt`），R2 的地址和部署靠它 | 所有用到账号的脚本（`scripts/cloudflare.sh`）；也可以用 `CF_ACCOUNT_ID` 直接给 |
-| `~/keys/dpsk-cloudflare-kv-quota-id` | KV 命名空间 `dpsk-share-quota` 的 id（32 位十六进制），`wrangler.jsonc` 里同样只有占位符；`provision.sh apply` 发现或新建 KV 时写这个文件 | `provision.sh`、`beta-keys.sh`；也可以用 `CF_KV_QUOTA_ID` 直接给 |
+| `~/keys/dshgo-cloudflare-account-id` | Cloudflare 账号 id（32 位十六进制）。公开仓库的 `wrangler.jsonc` 只有占位符（`tooling/oss-redact.txt`），R2 的地址和部署靠它 | 所有用到账号的脚本（`scripts/cloudflare.sh`）；也可以用 `CF_ACCOUNT_ID` 直接给 |
+| `~/keys/dshgo-cloudflare-kv-quota-id` | KV 命名空间 `dshgo-share-quota` 的 id（32 位十六进制），`wrangler.jsonc` 里同样只有占位符；`provision.sh apply` 发现或新建 KV 时写这个文件 | `provision.sh`、`beta-keys.sh`；也可以用 `CF_KV_QUOTA_ID` 直接给 |
 
-部署和管密钥（`provision.sh`、`beta-keys.sh`）在公开仓库里就能跑：两个 id 只写进 `wrangler.jsonc` 旁边的临时副本（`.wrangler-*.json`，`wrangler --config` 用它，退出即删），跟踪的 `wrangler.jsonc` 不改；读到的是占位符时，什么都不做就报错。`provision.sh` 还会核对：账号是不是 `dshtui.com` 所在的账号、KV id 是不是 `dpsk-share-quota` 的。
+部署和管密钥（`provision.sh`、`beta-keys.sh`）在公开仓库里就能跑：两个 id 只写进 `wrangler.jsonc` 旁边的临时副本（`.wrangler-*.json`，`wrangler --config` 用它，退出即删），跟踪的 `wrangler.jsonc` 不改；读到的是占位符时，什么都不做就报错。`provision.sh` 还会核对：账号是不是 `dshtui.com` 所在的账号、KV id 是不是 `dshgo-share-quota` 的。
 
 **一次性开通**（每台发版机器一次）：
 
@@ -155,11 +155,11 @@ CF_TOKEN_FILE=<token 文件> scripts/beta-keys.sh add beta-1 --out <文件>   # 
 | 换掉所有密钥 | `init --rotate` 换 `BETA_SECRET`，旧密钥全部失效（通道令牌不受影响），再 `add` 新的 |
 | 通道令牌 | `channel-add <标签>` / `channel-list` / `channel-revoke <标签>`。换令牌：新令牌另存一个文件，`BETA_TOKEN_FILE=<新文件> … channel-add app-2`，之后的包用新令牌（`DSH_BETA_TOKEN_FILE=<新文件> tooling/build-apk.sh --beta`）；等旧包的人都升级了再吊销 `app-1`，否则他们就收不到更新了 |
 
-**回滚**：把上一版的清单重新设为最新，新版文件留着不影响（在 `services/share-worker` 下，环境变量 `CLOUDFLARE_API_TOKEN` 取自 token 文件，`CLOUDFLARE_ACCOUNT_ID` 取自 `~/keys/dpsk-cloudflare-account-id`）。公开下载桶、GitHub 和香港桶见「发版到三条线路」的回滚表。
+**回滚**：把上一版的清单重新设为最新，新版文件留着不影响（在 `services/share-worker` 下，环境变量 `CLOUDFLARE_API_TOKEN` 取自 token 文件，`CLOUDFLARE_ACCOUNT_ID` 取自 `~/keys/dshgo-cloudflare-account-id`）。公开下载桶、GitHub 和香港桶见「发版到三条线路」的回滚表。
 
 ```sh
-npx wrangler r2 object get dpsk-share/beta/<上一版>/update.json --file prev.json --remote
-npx wrangler r2 object put dpsk-share/beta/update.json --file prev.json --content-type 'application/json; charset=utf-8' --remote
+npx wrangler r2 object get dshgo-share/beta/<上一版>/update.json --file prev.json --remote
+npx wrangler r2 object put dshgo-share/beta/update.json --file prev.json --content-type 'application/json; charset=utf-8' --remote
 ```
 
 **限制**：令牌编在 APK 里，拿到 APK 的人能取出来，所以它挡的是「没有安装包的人」，不是装过的人；泄露了就按上表换令牌。没有令牌的旧包（包括 0.9.1）不会走内测通道，要用户在页面上手动下载一次带令牌的新包。
@@ -171,8 +171,8 @@ npx wrangler r2 object put dpsk-share/beta/update.json --file prev.json --conten
 | 线路 | 下载地址 | 存在哪 | 谁默认用它 |
 |---|---|---|---|
 | 国内线路 | `<CN_BASE_URL><版本>/<文件>` | 香港对象存储（阿里云 OSS 或腾讯云 COS），公共读 | `request.cf.country` 为 `CN` |
-| 海外线路 | 公开模式 `https://dl.dshtui.com/download/<版本>/<文件>`（清单 `routes` 里没有 `dl` 的旧版本是 `/download/<版本>/<文件>`）；密钥模式是 10 分钟的签名链接 | 公开模式：公开 R2 桶 `dpsk-dl`，字节不经 Worker；旧版本和密钥模式：R2 `beta/<版本>/`，经 Worker | 其他地区 |
-| GitHub | `github.com/weishixiao/DPSK/releases/download/v<版本>/<文件>` | GitHub Release | 手动切换 |
+| 海外线路 | 公开模式 `https://dl.dshtui.com/download/<版本>/<文件>`（清单 `routes` 里没有 `dl` 的旧版本是 `/download/<版本>/<文件>`）；密钥模式是 10 分钟的签名链接 | 公开模式：公开 R2 桶 `dshgo-dl`，字节不经 Worker；旧版本和密钥模式：R2 `beta/<版本>/`，经 Worker | 其他地区 |
+| GitHub | `github.com/ccch1mneyyy/dsh-go/releases/download/v<版本>/<文件>` | GitHub Release | 手动切换 |
 
 - 页面上用分段按钮切换（纯 CSS，不跑脚本）；`?via=cn|global|github` 直接指定线路，`?lang=zh|en` 指定语言（默认跟浏览器）。
 - 一条线路只在**配置了**并且**这一版确实传上去了**时出现：`beta/update.json` 的 `routes` 由发布脚本在下载核对之后写入。`CN_BASE_URL` 为空时国内线路整项隐藏；没有 `routes` 的旧清单只给海外线路。
@@ -181,7 +181,7 @@ npx wrangler r2 object put dpsk-share/beta/update.json --file prev.json --conten
 
 ### 公开下载桶 dl（dl.dshtui.com）
 
-只放发版文件的 R2 桶 `dpsk-dl`，绑自定义域名 `https://dl.dshtui.com`，公开读。海外线路的下载直接从这里出，不经 Worker（不占 Worker 请求、没有 Worker 的 CPU / 时长限制），R2 出口流量不收费。用户上传的分享链接所在的 `dpsk-share` 保持私有：它要是公开了，拿到对象键的人就能绕过 Worker 的过期和额度。
+只放发版文件的 R2 桶 `dshgo-dl`，绑自定义域名 `https://dl.dshtui.com`，公开读。海外线路的下载直接从这里出，不经 Worker（不占 Worker 请求、没有 Worker 的 CPU / 时长限制），R2 出口流量不收费。用户上传的分享链接所在的 `dshgo-share` 保持私有：它要是公开了，拿到对象键的人就能绕过 Worker 的过期和额度。
 
 | 路径 | 内容 | `Cache-Control` |
 |---|---|---|
@@ -189,8 +189,8 @@ npx wrangler r2 object put dpsk-share/beta/update.json --file prev.json --conten
 | `update.json` | 最新正式版的清单（schema 1，`release_assets.py` 的内容 + 更新日志的 `notes` / `notesByLocale`，`assets.*.url` 是上面的绝对地址，`patches` 原样）；预发布版不换它 | `public, max-age=300` |
 
 - 页面上：`wrangler.jsonc` 的 `DL_BASE_URL`（`https://dl.dshtui.com/`）配了、且这一版的 `routes` 有 `dl`，海外按钮（经 `/download/get` 计数）才 302 到这里；否则还是 `/download/<版本>/<文件>`。Worker 的 `/download/<版本>/<文件>` 一直保留，给已经发出去的链接。
-- 脚本：`publish-release.sh` 默认就传（`DL_BUCKET` 默认 `dpsk-dl`，`DL_BASE_URL` 默认读 `wrangler.jsonc`），`--no-dl` 跳过。用的是 R2 那把 token 派生的 S3 凭据，token 要有账号级的 Workers R2 Storage:Edit。
-- **一次性开通**（后台操作，脚本不建）：R2 新建桶 `dpsk-dl`，在桶的设置里给它连接自定义域名 `dl.dshtui.com`（DNS 记录由 Cloudflare 自动建）；不要开 `r2.dev` 公开地址。之后 `curl -I https://dl.dshtui.com/update.json` 是 404 就对了，第一次发版后变成 200。
+- 脚本：`publish-release.sh` 默认就传（`DL_BUCKET` 默认 `dshgo-dl`，`DL_BASE_URL` 默认读 `wrangler.jsonc`），`--no-dl` 跳过。用的是 R2 那把 token 派生的 S3 凭据，token 要有账号级的 Workers R2 Storage:Edit。
+- **一次性开通**（后台操作，脚本不建）：R2 新建桶 `dshgo-dl`，在桶的设置里给它连接自定义域名 `dl.dshtui.com`（DNS 记录由 Cloudflare 自动建）；不要开 `r2.dev` 公开地址。之后 `curl -I https://dl.dshtui.com/update.json` 是 404 就对了，第一次发版后变成 200。
 
 ### 开关：DOWNLOAD_ACCESS
 
@@ -220,7 +220,7 @@ Worker 变量，写在 `services/share-worker/wrangler.jsonc` 的 `vars` 里：
 | | 阿里云 OSS | 腾讯云 COS |
 |---|---|---|
 | 地域 | 中国香港，`cn-hongkong` | 中国香港，`ap-hongkong` |
-| 桶名 | 例如 `dpsk-cn` | 例如 `dpsk-cn-<APPID>`（COS 桶名带 APPID） |
+| 桶名 | 例如 `dshgo-cn` | 例如 `dshgo-cn-<APPID>`（COS 桶名带 APPID） |
 | 读写权限 | 公共读（先关掉「阻止公共访问」） | 公有读私有写 |
 | `CN_BASE_URL` | `https://<桶名>.oss-cn-hongkong.aliyuncs.com/` | `https://<桶名>.cos.ap-hongkong.myqcloud.com/` |
 | 命令行 | ossutil 2.x（`ossutil version` 显示 2.x） | coscli |
@@ -228,7 +228,7 @@ Worker 变量，写在 `services/share-worker/wrangler.jsonc` 的 `vars` 里：
 
 要交给发版机器的：桶名、地域、`CN_BASE_URL`，以及 AccessKey 的 ID 和 Secret（各存一个文件，权限 600）。另外建议在控制台设**费用 / 流量告警**：香港桶的外网流量按量计费（价格以控制台为准），180 MB 的包下载 1000 次约 180 GB；公共读地址谁都能刷。
 
-阿里云 RAM 自定义策略（`dpsk-cn` 换成桶名）：
+阿里云 RAM 自定义策略（`dshgo-cn` 换成桶名）：
 
 ```json
 {
@@ -236,7 +236,7 @@ Worker 变量，写在 `services/share-worker/wrangler.jsonc` 的 `vars` 里：
   "Statement": [{
     "Effect": "Allow",
     "Action": ["oss:PutObject", "oss:GetObject", "oss:ListObjects", "oss:ListParts", "oss:AbortMultipartUpload"],
-    "Resource": ["acs:oss:*:*:dpsk-cn", "acs:oss:*:*:dpsk-cn/*"]
+    "Resource": ["acs:oss:*:*:dshgo-cn", "acs:oss:*:*:dshgo-cn/*"]
   }]
 }
 ```
@@ -251,7 +251,7 @@ Worker 变量，写在 `services/share-worker/wrangler.jsonc` 的 `vars` 里：
     "action": ["name/cos:HeadBucket", "name/cos:PutObject", "name/cos:HeadObject", "name/cos:GetObject",
                "name/cos:InitiateMultipartUpload", "name/cos:UploadPart", "name/cos:CompleteMultipartUpload",
                "name/cos:AbortMultipartUpload", "name/cos:ListParts", "name/cos:ListMultipartUploads"],
-    "resource": ["qcs::cos:ap-hongkong:uid/<APPID>:dpsk-cn-<APPID>/*", "qcs::cos:ap-hongkong:uid/<APPID>:dpsk-cn-<APPID>/"]
+    "resource": ["qcs::cos:ap-hongkong:uid/<APPID>:dshgo-cn-<APPID>/*", "qcs::cos:ap-hongkong:uid/<APPID>:dshgo-cn-<APPID>/"]
   }]
 }
 ```
@@ -263,7 +263,7 @@ Worker 变量，写在 `services/share-worker/wrangler.jsonc` 的 `vars` 里：
 ```sh
 cd services/share-worker
 export CF_TOKEN_FILE=<Cloudflare token 文件>
-export CN_PROVIDER=oss CN_BUCKET=dpsk-cn CN_REGION=cn-hongkong          # COS：cos、dpsk-cn-<APPID>、ap-hongkong
+export CN_PROVIDER=oss CN_BUCKET=dshgo-cn CN_REGION=cn-hongkong          # COS：cos、dshgo-cn-<APPID>、ap-hongkong
 export CN_ACCESS_KEY_ID_FILE=<AccessKey ID 文件> CN_ACCESS_KEY_SECRET_FILE=<AccessKey Secret 文件>
 scripts/publish-release.sh ../../dist --github --dry-run    # 先看一遍要做什么
 scripts/publish-release.sh ../../dist --github
@@ -271,7 +271,7 @@ scripts/publish-release.sh ../../dist --github
 
 | 步骤 | 做什么 |
 |---|---|
-| 1 R2 | `SHA256SUMS` 里的每个文件（APK、补丁）和 `SHA256SUMS` → `dpsk-share/beta/<版本>/`，以及公开桶 `dpsk-dl/download/<版本>/`（带 immutable 的 Cache-Control）。rclone 分片续传，没有就 wrangler |
+| 1 R2 | `SHA256SUMS` 里的每个文件（APK、补丁）和 `SHA256SUMS` → `dshgo-share/beta/<版本>/`，以及公开桶 `dshgo-dl/download/<版本>/`（带 immutable 的 Cache-Control）。rclone 分片续传，没有就 wrangler |
 | 2 国内 | 同样这些 → 香港桶 `<版本>/`（`ossutil cp` / `coscli cp`，带 Content-Type 和 Cache-Control）。`CN_BASE_URL` 为空时跳过 |
 | 3 GitHub | `gh release create v<版本> … --draft`：arm64 APK、补丁、`SHA256SUMS`、`update.json`（不带 `url`，App 自己拼 GitHub 地址），正文先提供 arm64 直接下载链接，并说明清单、校验文件和补丁无需手动下载，再列更新日志的「中文」「English」两节；正式版没有 x64 下载入口 |
 | 4 核对 | 每条线路、每个文件下载回来比大小和 SHA-256：R2 用通道令牌，公开桶和香港桶用公开地址，GitHub 草稿用 API |
@@ -289,8 +289,8 @@ scripts/publish-release.sh ../../dist --github
 | `CN_PROVIDER` `CN_BUCKET` `CN_REGION` | 香港桶：`oss`/`cos`、桶名、地域 |
 | `CN_ACCESS_KEY_ID_FILE` `CN_ACCESS_KEY_SECRET_FILE` | 只写这个桶的 AccessKey，各一个文件 |
 | `CN_BASE_URL` | 默认读 `wrangler.jsonc`，脚本和页面用同一个值 |
-| `DL_BUCKET` `DL_BASE_URL` | 公开下载桶，默认 `dpsk-dl` 和 `wrangler.jsonc` 的 `DL_BASE_URL`；任一为空就不传 |
-| `CF_ACCOUNT_ID` `CF_ACCOUNT_ID_FILE` | R2 所在的账号；不设时读 `~/keys/dpsk-cloudflare-account-id`，再不行才读 `wrangler.jsonc`。读到的是占位符就在第一步之前报错 |
+| `DL_BUCKET` `DL_BASE_URL` | 公开下载桶，默认 `dshgo-dl` 和 `wrangler.jsonc` 的 `DL_BASE_URL`；任一为空就不传 |
+| `CF_ACCOUNT_ID` `CF_ACCOUNT_ID_FILE` | R2 所在的账号；不设时读 `~/keys/dshgo-cloudflare-account-id`，再不行才读 `wrangler.jsonc`。读到的是占位符就在第一步之前报错 |
 | `GH_TOKEN_FILE` | 可选；不设就用 `gh auth login` 的登录（要有仓库写权限） |
 | `BETA_TOKEN_FILE` `BETA_KEY_FILE` | 通道令牌（读回 R2）；密钥模式下还要一把有效密钥（核对 `/beta`） |
 
@@ -304,8 +304,8 @@ scripts/publish-release.sh ../../dist --github
 | 撤回什么 | 做法 |
 |---|---|
 | 页面和带令牌的 App | 上一版的清单设为最新（「内测通道」的回滚两行）。上一版若是旧脚本发的、清单里没有 `routes`，回滚后页面只给海外线路 |
-| 公开桶的 `update.json` | `npx wrangler r2 object get dpsk-dl/download/<上一版>/update.json --file prev.json --remote`，再 `npx wrangler r2 object put dpsk-dl/update.json --file prev.json --content-type 'application/json; charset=utf-8' --cache-control 'public, max-age=300' --remote`（环境变量同上）；边缘最多再给 5 分钟旧的。上一版没传过公开桶（回滚的是第一个走 dl 的版本）时没有可回的清单，删掉 `dpsk-dl/update.json` 即可 |
-| GitHub 上的这一版 | `gh release edit v<版本> --repo weishixiao/DPSK --draft=true` 撤回成草稿，`releases/latest` 回到上一版；彻底删除用 `gh release delete v<版本> --repo weishixiao/DPSK --cleanup-tag` |
+| 公开桶的 `update.json` | `npx wrangler r2 object get dshgo-dl/download/<上一版>/update.json --file prev.json --remote`，再 `npx wrangler r2 object put dshgo-dl/update.json --file prev.json --content-type 'application/json; charset=utf-8' --cache-control 'public, max-age=300' --remote`（环境变量同上）；边缘最多再给 5 分钟旧的。上一版没传过公开桶（回滚的是第一个走 dl 的版本）时没有可回的清单，删掉 `dshgo-dl/update.json` 即可 |
+| GitHub 上的这一版 | `gh release edit v<版本> --repo ccch1mneyyy/dsh-go --draft=true` 撤回成草稿，`releases/latest` 回到上一版；彻底删除用 `gh release delete v<版本> --repo ccch1mneyyy/dsh-go --cleanup-tag` |
 | 香港桶 | 不用动：页面跟着清单走，不再指向新版；要删就删 `<版本>/` |
 | 公开下载 | `DOWNLOAD_ACCESS` 改回 `"key"` 再部署 |
 
@@ -321,7 +321,7 @@ scripts/publish-release.sh ../../dist --github
    ```sh
    cd services/share-worker
    (umask 077; openssl rand -base64 32 | tr '+/' '-_' | tr -d '=\n' > <USAGE_SECRET 文件>)
-   CLOUDFLARE_API_TOKEN="$(cat <token 文件>)" CLOUDFLARE_ACCOUNT_ID="$(cat ~/keys/dpsk-cloudflare-account-id)" \
+   CLOUDFLARE_API_TOKEN="$(cat <token 文件>)" CLOUDFLARE_ACCOUNT_ID="$(cat ~/keys/dshgo-cloudflare-account-id)" \
      npx wrangler secret put USAGE_SECRET < <USAGE_SECRET 文件>
    CF_TOKEN_FILE=<token 文件> scripts/provision.sh deploy   # 默认绑定 DOWNLOADS、CHECKS、USAGE（数据集第一次写入时自动建）
    ```
@@ -416,7 +416,7 @@ App 的签名预检认 lineage：新包的签名历史里含已装版本的签�
 - **跳过这个版本**：这个版本不再自动弹，有更新的版本照常提醒；「关于」里显示「已跳过」。手动检查仍会打开弹窗。
 - **稍后**：只关弹窗，下次自动检查（次日）还会提醒。
 - **上次的结果会缓存**：重启后不联网也能看到「新版本」标记；装好新版后自动清掉缓存和残留安装包。
-- **导出安装包**：「可以安装」，或签名不一致 / 安装被拦截的失败界面，可以「导出安装包」：把校验过的包复制到 `Download/DPSK/`（MediaStore，文件名就是清单里的资产名）。这是给「首次安装被厂商拦、只能自己重签」的人兜底，不是常规更新路径——重签后的包和官方签名不同，App 内更新会一直停在「签名不一致」，以后每版都得手动重签覆盖装。能走 Shizuku / 本机 ADB 就别走这条路。导出只是复制，`cache/updates/` 里的原文件、安装和清理逻辑都不变（提权安装器要求文件直接在 `cache/updates` 下，别把下载目录搬走）。
+- **导出安装包**：「可以安装」，或签名不一致 / 安装被拦截的失败界面，可以「导出安装包」：把校验过的包复制到 `Download/DSH-Go/`（MediaStore，文件名就是清单里的资产名）。这是给「首次安装被厂商拦、只能自己重签」的人兜底，不是常规更新路径——重签后的包和官方签名不同，App 内更新会一直停在「签名不一致」，以后每版都得手动重签覆盖装。能走 Shizuku / 本机 ADB 就别走这条路。导出只是复制，`cache/updates/` 里的原文件、安装和清理逻辑都不变（提权安装器要求文件直接在 `cache/updates` 下，别把下载目录搬走）。
 - **磁盘**：开始下载前要求可用空间 ≥ 安装包 × 2 + 64 MB（下载 + 安装暂存）。走补丁也是这个门槛：补丁拼完就删，峰值仍是安装暂存那一刻。
 - 安装用 PackageInstaller 会话（把文件流写进会话），不用 FileProvider，也不需要 `content://`。
 

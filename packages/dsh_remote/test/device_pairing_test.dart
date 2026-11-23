@@ -38,7 +38,7 @@ Map<String, Object?> sessionJson({String secret = ticket, Map<String, Object?>? 
 
 const phone = PairingDevice(
   deviceId: '019a0000-0000-7000-8000-0000000000bb',
-  name: 'DPSK',
+  name: 'DSH Go',
   role: 'client',
   platform: 'dsh-app-android',
   identityKey: phoneKey,
@@ -102,7 +102,7 @@ void main() {
       ('another version', 'https://dsh.r2049.cn/pair#v2.$ticket'),
       ('a non-canonical ticket', 'https://dsh.r2049.cn/pair#v1.${ticket.substring(0, 42)}B'),
       ('a short ticket', 'https://dsh.r2049.cn/pair#v1.${ticket.substring(1)}'),
-      ('another scheme', 'dpsk://pair#v1.$ticket'),
+      ('another scheme', 'dshgo://pair#v1.$ticket'),
       ('no host', 'https:///pair#v1.$ticket'),
       ('no authority', 'https:/pair#v1.$ticket'),
       ('plain text', 'hello'),
@@ -173,7 +173,7 @@ void main() {
     test('the claim body is serialized once, in a fixed order', () {
       expect(
         pairingClaimBody(scanSecret: ticket, device: phone, deepseekUserId: 'u-1'),
-        '{"scanSecret":"$ticket","device":{"deviceId":"${phone.deviceId}","name":"DPSK","role":"client",'
+        '{"scanSecret":"$ticket","device":{"deviceId":"${phone.deviceId}","name":"DSH Go","role":"client",'
         '"platform":"dsh-app-android","identityKey":"$phoneKey"},"deepseekUserId":"u-1"}',
       );
       expect(pairingClaimBody(scanSecret: ticket, device: phone), isNot(contains('deepseekUserId')));

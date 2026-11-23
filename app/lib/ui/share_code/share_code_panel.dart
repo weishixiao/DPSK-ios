@@ -1,7 +1,7 @@
 // The second half of every 「分享…」 sheet — the code made, then its ways out in
 // one row of round keys, as on the share panel: 复制链接 · 二维码 · (图片) · 分享,
 // and for a profile 存为文件. A plugin's link always fits, so it has no file key;
-// a profile too large for a link goes out as a `.dpsk` file, or as a Gist link
+// a profile too large for a link goes out as a `.dshgo` file, or as a Gist link
 // when a GitHub token is given.
 
 import 'dart:async';

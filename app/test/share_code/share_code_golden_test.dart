@@ -4,12 +4,12 @@
 
 import 'dart:io';
 
-import 'package:dpsk_app/share_code/guest_fs.dart';
-import 'package:dpsk_app/share_code/profile_export.dart';
-import 'package:dpsk_app/share_code/share_models.dart';
-import 'package:dpsk_app/ui/share_code/import_sheet.dart';
-import 'package:dpsk_app/ui/share_code/plugin_share_sheet.dart';
-import 'package:dpsk_app/ui/share_code/profile_share_sheet.dart';
+import 'package:dsh_app/share_code/guest_fs.dart';
+import 'package:dsh_app/share_code/profile_export.dart';
+import 'package:dsh_app/share_code/share_models.dart';
+import 'package:dsh_app/ui/share_code/import_sheet.dart';
+import 'package:dsh_app/ui/share_code/plugin_share_sheet.dart';
+import 'package:dsh_app/ui/share_code/profile_share_sheet.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

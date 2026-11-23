@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/state/mention_state.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_controller.dart';
-import 'package:dpsk_app/ui/chat/mention/mention_text_controller.dart';
+import 'package:dsh_app/state/mention_state.dart';
+import 'package:dsh_app/ui/chat/mention/mention_controller.dart';
+import 'package:dsh_app/ui/chat/mention/mention_text_controller.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -104,7 +104,7 @@ final class _GameplayExportProjection {
       'resourceLocalId': resourceLocalId,
       'localId': localId,
     });
-    final base = 'dpsk_export_${kind}_${digest.substring(0, 20)}';
+    final base = 'dshgo_export_${kind}_${digest.substring(0, 20)}';
     var value = base;
     var suffix = 1;
     while (_legacyIds.contains(value) || !used.add(value)) {

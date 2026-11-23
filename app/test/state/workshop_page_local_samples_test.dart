@@ -1,8 +1,8 @@
-import 'package:dpsk_app/state/workshop_catalog_state.dart';
-import 'package:dpsk_app/state/workshop_install_state.dart';
-import 'package:dpsk_app/state/workshop_installed_state.dart';
-import 'package:dpsk_app/workshop/workshop_models.dart';
-import 'package:dpsk_app/workshop/workshop_repository.dart';
+import 'package:dsh_app/state/workshop_catalog_state.dart';
+import 'package:dsh_app/state/workshop_install_state.dart';
+import 'package:dsh_app/state/workshop_installed_state.dart';
+import 'package:dsh_app/workshop/workshop_models.dart';
+import 'package:dsh_app/workshop/workshop_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../support/workshop_page_samples.dart';

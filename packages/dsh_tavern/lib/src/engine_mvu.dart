@@ -3,7 +3,7 @@ part of 'engine.dart';
 const _mvuFields = ['stat_data', 'schema', 'initialized_lorebooks', 'display_data', 'delta_data'];
 
 bool _mvuDeclared(Map<String, Object?> data) =>
-    _readMap(_readMap(_readMap(data['extensions'])['dpsk'])['mvu'])['enabled'] == true;
+    _readMap(_readMap(_readMap(data['extensions'])['dshgo'])['mvu'])['enabled'] == true;
 
 List<TavernScriptIssue> _mvuIssues(
   List<mvu_core.MvuIssue> issues, {
@@ -217,7 +217,7 @@ extension _NativeMvuStorage on _ScriptCoordinator {
   // body. This accepts only the store's detached display projection.
   Map<String, Object?> _mvuState(String chatId, StoredNode? node, {StoredChat? chat}) {
     if (node == null) return engine._store.groupInitialState(chatId);
-    final own = node.extra['dpsk'];
+    final own = node.extra['dshgo'];
     final override = own is Map<String, Object?> ? own['tavernState'] : null;
     final state = override is Map<String, Object?>
         ? _copy(override)
@@ -355,7 +355,7 @@ extension _NativeMvuStorage on _ScriptCoordinator {
             data.remove(field);
           }
         }
-        // The MVU fields leave dpsk unchanged, so preparation returns before
+        // The MVU fields leave dshgo unchanged, so preparation returns before
         // consuming extra. The commit still merges the fresh full raw extra.
         final next = _prepareMessageData(resources.dataContext, nodeId: frame.nodeId, baseline: state, data: data);
         if (!_stateJsonEqual(expansion.localBefore, expansion.environment.local)) {

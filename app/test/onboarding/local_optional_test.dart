@@ -5,30 +5,30 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dpsk_app/remote/secret_store.dart';
-import 'package:dpsk_app/runtime/local_footprint.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/account_state.dart';
-import 'package:dpsk_app/state/app_mode_state.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/onboarding_state.dart';
-import 'package:dpsk_app/state/sessions_state.dart';
-import 'package:dpsk_app/state/settings_state.dart';
-import 'package:dpsk_app/ui/chat/empty_state.dart';
-import 'package:dpsk_app/ui/engine/engine_screen.dart';
-import 'package:dpsk_app/ui/onboarding/connect_page.dart';
-import 'package:dpsk_app/ui/onboarding/local_install.dart';
-import 'package:dpsk_app/ui/onboarding/onboarding_flow.dart';
-import 'package:dpsk_app/ui/onboarding/runtime_choice.dart';
-import 'package:dpsk_app/ui/onboarding/runtime_setup_page.dart';
-import 'package:dpsk_app/ui/remote/host_switcher.dart';
-import 'package:dpsk_app/ui/remote/remote_screen.dart';
-import 'package:dpsk_app/ui/shell/home_shell.dart';
-import 'package:dpsk_app/ui/shell/root_gate.dart';
-import 'package:dpsk_app/ui/theme/app_icons.dart';
-import 'package:dpsk_app/ui/web/local_web_screen.dart';
+import 'package:dsh_app/remote/secret_store.dart';
+import 'package:dsh_app/runtime/local_footprint.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/account_state.dart';
+import 'package:dsh_app/state/app_mode_state.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/onboarding_state.dart';
+import 'package:dsh_app/state/sessions_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
+import 'package:dsh_app/ui/chat/empty_state.dart';
+import 'package:dsh_app/ui/engine/engine_screen.dart';
+import 'package:dsh_app/ui/onboarding/connect_page.dart';
+import 'package:dsh_app/ui/onboarding/local_install.dart';
+import 'package:dsh_app/ui/onboarding/onboarding_flow.dart';
+import 'package:dsh_app/ui/onboarding/runtime_choice.dart';
+import 'package:dsh_app/ui/onboarding/runtime_setup_page.dart';
+import 'package:dsh_app/ui/remote/host_switcher.dart';
+import 'package:dsh_app/ui/remote/remote_screen.dart';
+import 'package:dsh_app/ui/shell/home_shell.dart';
+import 'package:dsh_app/ui/shell/root_gate.dart';
+import 'package:dsh_app/ui/theme/app_icons.dart';
+import 'package:dsh_app/ui/web/local_web_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -333,7 +333,7 @@ void main() {
 
     testWidgets('远程主机 → pick a host → home, nothing installed', (tester) async {
       final (runtime, container) = await pumpGate(tester);
-      expect(find.text('想怎么用 DPSK？'), findsOneWidget);
+      expect(find.text('想怎么用 dsh-Go？'), findsOneWidget);
       await chooseRemote(tester);
       expect(find.byType(RemoteScreen), findsOneWidget);
 
@@ -352,7 +352,7 @@ void main() {
       await tester.binding.handlePopRoute();
       await _frames(tester);
       expect(find.byType(RemoteScreen), findsNothing);
-      expect(find.text('想怎么用 DPSK？'), findsOneWidget);
+      expect(find.text('想怎么用 dsh-Go？'), findsOneWidget);
       expect(container.read(onboardingPrefsProvider).localDeclined, isFalse);
       expect(runtime.calls, isEmpty);
     });

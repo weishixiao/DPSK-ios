@@ -2,17 +2,17 @@
 // offered to fail, no relay command is shown, and a refusal that still gets
 // through never shows its raw diagnostic. On Android none of this changes.
 
-import 'package:dpsk_app/l10n/l10n.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/bots_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/media_generation.dart';
-import 'package:dpsk_app/state/plugins_state.dart';
-import 'package:dpsk_app/state/runtime_capabilities_state.dart';
-import 'package:dpsk_app/ui/bots/install_card.dart';
-import 'package:dpsk_app/ui/plugins/plugin_detail_sheet.dart';
-import 'package:dpsk_app/ui/plugins/plugins_screen.dart';
-import 'package:dpsk_app/ui/settings/media_settings_page.dart';
+import 'package:dsh_app/l10n/l10n.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/bots_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/media_generation.dart';
+import 'package:dsh_app/state/plugins_state.dart';
+import 'package:dsh_app/state/runtime_capabilities_state.dart';
+import 'package:dsh_app/ui/bots/install_card.dart';
+import 'package:dsh_app/ui/plugins/plugin_detail_sheet.dart';
+import 'package:dsh_app/ui/plugins/plugins_screen.dart';
+import 'package:dsh_app/ui/settings/media_settings_page.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

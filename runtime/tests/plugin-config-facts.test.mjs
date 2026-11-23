@@ -7,7 +7,7 @@ import {pathToFileURL} from 'node:url';
 import {createPluginConfig,pluginConfigUnavailable} from '../bridge/dsh-go-bridge/lib/plugin-config.js';
 import {withSources} from './plugin-config-source-fixture.mjs';
 const {default:z}=await import(pathToFileURL(join(resolve(process.env.DSH_PREFIX),'node_modules/@deepseek-ai/schemastery/lib/index.mjs')));
-const BASE='/DPSK/v1/plugin-config',SAMPLE='SYNTHETIC_R6_PRIVATE_DEFAULT';
+const BASE='/dsh-go/v1/plugin-config',SAMPLE='SYNTHETIC_R6_PRIVATE_DEFAULT';
 function fixture(schema,raw={},extra={}){
  const entry={options:{id:'fixture',name:'fixture-package',config:raw},fiber:{state:2,runtime:{Config:schema,callback(){}},config:schema(raw)}};
  let writable=true,edits=0;

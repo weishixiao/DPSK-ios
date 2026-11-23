@@ -12,7 +12,7 @@ const util = await import(new URL("util.js", LIB));
 const { NativeCore } = await import(new URL("core.js", LIB));
 const { LIMITS, SURFACES } = await import(new URL("limits.js", LIB));
 
-const tmp = mkdtempSync(join(tmpdir(), "DPSK-native-seams-"));
+const tmp = mkdtempSync(join(tmpdir(), "dsh-go-native-seams-"));
 process.on("exit", () => rmSync(tmp, { recursive: true, force: true }));
 
 function pkgDir(name, dshGo) {

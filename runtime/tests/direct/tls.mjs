@@ -5,7 +5,7 @@ import https from 'node:https';
 import cp from 'node:child_process';
 import { promisify } from 'node:util';
 
-const root = process.env.DPSK_DIRECT_ROOTFS;
+const root = process.env.DSH_GO_DIRECT_ROOTFS;
 assert(root, 'use the generated direct node wrapper');
 const base = fs.mkdtempSync(`${root}/tmp/direct-tls-`);
 const guest = base.slice(root.length);

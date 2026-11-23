@@ -1,7 +1,7 @@
 // Test-only native plugin (runtime/tests/native-bridge.mjs). Panel "usage" has a view function and
 // a data feed the test drives through /native-fixture/emit; strip "cost" mirrors it; panel "plain"
 // is a view without data. /native-fixture/* also toggles loader entries (cache invalidation test).
-export const name = "DPSK-fixture-usage";
+export const name = "dsh-go-fixture-usage";
 
 const state = { feeds: new Map(), dataStarts: 0, dataCancels: 0, viewCalls: 0, lastCaps: null };
 

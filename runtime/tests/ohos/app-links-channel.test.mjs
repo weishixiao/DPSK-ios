@@ -53,10 +53,10 @@ function fixture({ start = () => Promise.resolve(), zone = () => 'Asia/Shanghai'
   });
   const engine = { getBinaryMessenger: () => ({}) };
   const ability = {
-    launchWant: view('dpsk://forum/auth?payload=cold-secret'),
+    launchWant: view('dshgo://forum/auth?payload=cold-secret'),
     context: {
       cacheDir,
-      abilityInfo: { name: 'EntryAbility', bundleName: 'com.dpsk.harness' },
+      abilityInfo: { name: 'EntryAbility', bundleName: 'io.github.ccch1mneyyy.dsh_app' },
       startAbility(want) { starts.push(plain(want)); return start(); },
     },
   };
@@ -96,11 +96,11 @@ test('exact channel names, IANA timezone and missing methods', async () => {
 test('cold and warm links wait for ready, use the actual Dart map contract and keep arrival order', async () => {
   const f = fixture();
   f.plugin.onAttachedToAbility(f.binding);
-  f.plugin.onNewWant(view('dpsk://open/new'), {});
+  f.plugin.onNewWant(view('dshgo://open/new'), {});
   assert.deepEqual(f.sent, []);
   assert.deepEqual(await f.call('dsh/links', 'ready'), { value: true });
   assert.deepEqual(f.sent.map(v => v.args), [
-    { uri: 'dpsk://forum/auth?payload=cold-secret' }, { uri: 'dpsk://open/new' },
+    { uri: 'dshgo://forum/auth?payload=cold-secret' }, { uri: 'dshgo://open/new' },
   ]);
   assert(f.sent.every(v => v.channel === 'dsh/links' && v.method === 'link'));
   await f.call('dsh/links', 'ready');
@@ -127,7 +127,7 @@ test('engine replacement before ready preserves the unconsumed launch without re
   const replacement = f.make();
   replacement.onAttachedToAbility(f.binding);
   await f.call('dsh/links', 'ready');
-  assert.deepEqual(f.sent.map(v => v.args), [{ uri: 'dpsk://forum/auth?payload=cold-secret' }]);
+  assert.deepEqual(f.sent.map(v => v.args), [{ uri: 'dshgo://forum/auth?payload=cold-secret' }]);
   replacement.onDetachedFromEngine(f.engine);
   f.plugin.onAttachedToEngine(f.engine);
   f.plugin.onAttachedToAbility(f.binding);
@@ -140,7 +140,7 @@ test('detach unregisters listeners and method handlers; retired arrivals cannot 
   f.plugin.onAttachedToAbility(f.binding);
   await f.call('dsh/links', 'ready');
   f.plugin.onDetachedFromEngine(f.engine);
-  f.plugin.onNewWant(view('dpsk://ignored'), {});
+  f.plugin.onNewWant(view('dshgo://ignored'), {});
   assert.equal(f.sent.length, 1);
   assert.equal(f.listeners.size, 0);
   assert(f.channels.every(c => c.handler === null));
@@ -151,11 +151,11 @@ test('ignores non-view intents, unknown schemes, missing colon and oversize inpu
   f.ability.launchWant = {};
   f.plugin.onAttachedToAbility(f.binding);
   await f.call('dsh/links', 'ready');
-  for (const want of [{ uri: 'dpsk://x' }, view('javascript:alert(1)'), view('dpskX'), view('httpsX'), view('dpsk:' + 'x'.repeat(65536))]) {
+  for (const want of [{ uri: 'dshgo://x' }, view('javascript:alert(1)'), view('dshgoX'), view('httpsX'), view('dshgo:' + 'x'.repeat(65536))]) {
     f.plugin.onNewWant(want, {});
   }
   assert.deepEqual(f.sent, []);
-  f.plugin.onNewWant(view('file://external/not-owned.dpsk'), {});
+  f.plugin.onNewWant(view('file://external/not-owned.dshgo'), {});
   await f.waitSent(1);
   assert.deepEqual(f.sent.map(v => v.args), [{ error: 'unreadable', name: null }]);
 });
@@ -165,7 +165,7 @@ test('foreground launch targets only the attached own ability and reports platfo
   assert.equal((await f.call('dsh/app', 'bringToFront')).error, 'no_ability');
   f.plugin.onAttachedToAbility(f.binding);
   assert.deepEqual(await f.call('dsh/app', 'bringToFront', { bundleName: 'attacker' }), { value: null });
-  assert.deepEqual(JSON.parse(JSON.stringify(f.starts)), [{ bundleName: 'com.dpsk.harness', abilityName: 'EntryAbility' }]);
+  assert.deepEqual(JSON.parse(JSON.stringify(f.starts)), [{ bundleName: 'io.github.ccch1mneyyy.dsh_app', abilityName: 'EntryAbility' }]);
   const denied = fixture({ start: () => Promise.reject(new Error('background start denied')) });
   denied.plugin.onAttachedToAbility(denied.binding);
   assert.equal((await denied.call('dsh/app', 'bringToFront')).error, 'ohos_foreground');
@@ -222,7 +222,7 @@ async function fileFixture(t, options = {}) {
     finally { for (const fd of fds) { try { fs.closeSync(fd); } catch {} } await fsp.rm(root, { recursive: true, force: true }); }
   });
   return { ...f, root, cacheDir, opens, fds, mapped,
-    async source(name = '中文 空格.dpsk', contents = '原始内容') {
+    async source(name = '中文 空格.dshgo', contents = '原始内容') {
       const path = join(root, name); await fsp.writeFile(path, contents);
       const uri = 'file://sender.example/files/' + encodeURIComponent(name); mapped.set(uri, path);
       return { uri, path, want: { ...view(uri), flags: 1 } };
@@ -232,14 +232,14 @@ async function fileFixture(t, options = {}) {
 
 test('incoming copied file is a real stable local file URI with original Chinese extension and bounded short IO', async t => {
   const f = await fileFixture(t, { maxRead: 14003, maxWrite: 7001 });
-  const bytes = Buffer.alloc(700003, 42); const source = await f.source('中文 空格.dpsk', bytes);
+  const bytes = Buffer.alloc(700003, 42); const source = await f.source('中文 空格.dshgo', bytes);
   f.plugin.onNewWant(source.want, {});
   await f.call('dsh/links', 'ready'); await f.waitSent(1);
   assert.equal(typeof f.sent[0].args.uri, 'string', 'must deliver a copied local file, not unreadable');
   const output = new URL(f.sent[0].args.uri);
   assert.equal(output.protocol, 'file:'); assert.equal(output.host, '');
   const path = fileURLToPath(output);
-  assert(path.startsWith(f.cacheDir + '/dsh-incoming-')); assert.equal(basename(path), '中文 空格.dpsk');
+  assert(path.startsWith(f.cacheDir + '/dsh-incoming-')); assert.equal(basename(path), '中文 空格.dshgo');
   await fsp.unlink(source.path);
   assert.deepEqual(await fsp.readFile(path), bytes);
   assert.equal(f.fds.size, 0);
@@ -252,14 +252,14 @@ test('slow incoming file keeps link arrival order across engine replacement', { 
   const source = await f.source();
   f.ability.launchWant = source.want;
   f.plugin.onDetachedFromAbility(); f.plugin.onAttachedToAbility(f.binding);
-  f.plugin.onNewWant(view('dpsk://open/new'), {});
+  f.plugin.onNewWant(view('dshgo://open/new'), {});
   await f.call('dsh/links', 'ready'); await entered.promise;
   assert.deepEqual(f.sent, []);
   f.plugin.onDetachedFromEngine(f.engine);
   const replacement = f.make(); replacement.onAttachedToAbility(f.binding);
   await f.call('dsh/links', 'ready'); release.resolve(); await f.waitSent(2);
   assert.equal(await fsp.readFile(fileURLToPath(f.sent[0].args.uri), 'utf8'), '原始内容');
-  assert.deepEqual(f.sent[1].args, { uri: 'dpsk://open/new' });
+  assert.deepEqual(f.sent[1].args, { uri: 'dshgo://open/new' });
   assert.equal(f.sent.length, 2); assert.equal(f.fds.size, 0);
 });
 
@@ -267,7 +267,7 @@ test('own, empty, encoded and credential-bearing authorities and missing read gr
   const f = await fileFixture(t); await f.call('dsh/links', 'ready');
   let count = 0;
   for (const uri of [
-    'file:///data/private', 'file://com.dpsk.harness/data/private',
+    'file:///data/private', 'file://io.github.ccch1mneyyy.dsh_app/data/private',
     'file://' + f.ability.context.abilityInfo.bundleName.toUpperCase() + '/data/private', 'file://%73ender.example/private',
     'file://user@sender.example/private', 'file://sender.example:99/private',
     'file://../data/private', 'file://sender.example/data/%2e%2e/private', 'file://sender.example/data/a%00b',
@@ -298,12 +298,12 @@ test('at most four external file copies hold descriptors and later ordinary link
   const f = await fileFixture(t, { beforeRead: async () => { if (++started === 4) entered.resolve(); await release.promise; } });
   const source = await f.source(); await f.call('dsh/links', 'ready');
   for (let i = 0; i < 5; i++) f.plugin.onNewWant(source.want, {});
-  f.plugin.onNewWant(view('dpsk://open/last'), {});
+  f.plugin.onNewWant(view('dshgo://open/last'), {});
   await entered.promise; assert.equal(f.opens.filter(x => x.path.startsWith('file:')).length, 4);
   release.resolve(); await f.waitSent(6);
   assert(f.sent.slice(0, 4).every(x => x.args.uri.startsWith('file:///')));
   assert.equal(f.sent[4].args.error, 'unreadable');
-  assert.equal(f.sent[5].args.uri, 'dpsk://open/last'); assert.equal(f.fds.size, 0);
+  assert.equal(f.sent[5].args.uri, 'dshgo://open/last'); assert.equal(f.fds.size, 0);
 });
 
 test('empty files remain valid and a source growing during copying is rejected', async t => {
@@ -319,9 +319,9 @@ test('empty files remain valid and a source growing during copying is rejected',
 });
 
 test('a valid long Chinese filename keeps its routing extension after UTF-8 truncation', async t => {
-  const f = await fileFixture(t); const source = await f.source('文'.repeat(80) + '.dpsk', 'archive');
+  const f = await fileFixture(t); const source = await f.source('文'.repeat(80) + '.dshgo', 'archive');
   await f.call('dsh/links', 'ready'); f.plugin.onNewWant(source.want, {}); await f.waitSent(1);
   const path = fileURLToPath(f.sent[0].args.uri), name = basename(path);
-  assert(name.endsWith('.dpsk')); assert(Buffer.byteLength(name) <= 240); assert(!name.includes('\uFFFD'));
+  assert(name.endsWith('.dshgo')); assert(Buffer.byteLength(name) <= 240); assert(!name.includes('\uFFFD'));
   assert.equal(await fsp.readFile(path, 'utf8'), 'archive');
 });

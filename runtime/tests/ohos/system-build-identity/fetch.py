@@ -20,7 +20,7 @@ def main():
             data = target.read_bytes()
             origin = 'existing-cache'
         else:
-            request = urllib.request.Request(row['url'], headers={'User-Agent': 'DPSK-source-research'})
+            request = urllib.request.Request(row['url'], headers={'User-Agent': 'dsh-go-source-research'})
             with urllib.request.urlopen(request, timeout=30) as response:
                 if response.status != 200:
                     raise RuntimeError('Unexpected HTTP status for ' + row['name'])

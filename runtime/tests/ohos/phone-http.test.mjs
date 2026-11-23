@@ -56,7 +56,7 @@ async function fixture(t) {
   const cookie = login.headers['set-cookie'][0].split(';')[0];
   const owner = { v: 1, engineId: state.engineId, bridgeGeneration: 1, owner: proof };
   const headers = { cookie, 'content-type': 'application/json' };
-  const post = (action, body = {}, extra = {}) => request(origin + '/DPSK/v1/phone/' + action,
+  const post = (action, body = {}, extra = {}) => request(origin + '/dsh-go/v1/phone/' + action,
     { method: 'POST', headers: { ...headers, ...extra }, body: JSON.stringify({ ...owner, ...body }) });
   let calls = 0;
   const enqueue = () => {
@@ -89,12 +89,12 @@ test('actual signed cookie plus distinct native owner is required on every phone
 
 test('method, unknown fields, malformed UTF8 and oversized controls reject before native admission', async t => {
   const f = await fixture(t);
-  assert.equal((await request(f.origin + '/DPSK/v1/phone/next', { headers: f.headers })).status, 405);
+  assert.equal((await request(f.origin + '/dsh-go/v1/phone/next', { headers: f.headers })).status, 405);
   assert.equal((await f.post('next', { args: { forged: true } })).status, 400);
   assert.equal((await f.post('next', { v: 2 })).status, 400);
   assert.equal((await f.post('next', {}, { 'content-type': 'text/plain' })).status, 415);
   for (const body of [Buffer.from([0xff]), Buffer.alloc(16_385, 0x20)]) {
-    const result = await request(f.origin + '/DPSK/v1/phone/next', { method: 'POST', headers: f.headers, body });
+    const result = await request(f.origin + '/dsh-go/v1/phone/next', { method: 'POST', headers: f.headers, body });
     assert.equal(result.status, body.length > 16_384 ? 413 : 400);
   }
   assert.equal(f.seen.claims, 0);
@@ -129,7 +129,7 @@ test('unauthorized polling cannot replace a legitimate long read; reconnect repl
 
 test('closing a real client socket releases its waiting subscription and timeout', async t => {
   const f = await fixture(t), ready = f.subscribed(), removed = f.removed();
-  const req = http.request(f.origin + '/DPSK/v1/phone/next', { method: 'POST', headers: f.headers });
+  const req = http.request(f.origin + '/dsh-go/v1/phone/next', { method: 'POST', headers: f.headers });
   const closed = once(req, 'error'); req.end(JSON.stringify(f.owner)); await ready;
   req.destroy(new Error('intentional unit client disconnect')); await closed; await removed;
   assert.equal(f.queue.status().listeners, 0); assert.equal(f.queue.status().timer, false);

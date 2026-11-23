@@ -187,7 +187,7 @@ test('a second storage instance cannot overtake a parent deletion during child c
 for (const point of ['file', 'directory']) {
   test(`cascade ${point} sync failure leaves every log intact and a reopened retry completes`, async t => {
     const f = await fixture(t, { realChild: true });
-    const slot = join(f.root, '.DPSK-lifecycle', createHash('sha256').update(f.fork.id).digest('hex'));
+    const slot = join(f.root, '.dsh-go-lifecycle', createHash('sha256').update(f.fork.id).digest('hex'));
     const originalOpen = fs.open;
     const fault = Object.assign(new Error(`controlled cascade ${point} sync failure`), { code: 'EIO' });
     let fail = true;

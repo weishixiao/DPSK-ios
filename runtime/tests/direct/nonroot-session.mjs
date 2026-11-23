@@ -9,7 +9,7 @@ export function apply(ctx) {
   ctx.inject(['webServer', 'agents', 'sessionController'], (probe) => {
     async function preflight() {
       if (process.geteuid() === 0) throw new Error('probe requires a non-root effective UID');
-      const root = process.env.DPSK_DIRECT_ROOTFS;
+      const root = process.env.DSH_GO_DIRECT_ROOTFS;
       const hostRoot = await stat('/root');
       let hostRootWritable = true;
       try { await access('/root', constants.W_OK | constants.X_OK); }
@@ -30,7 +30,7 @@ export function apply(ctx) {
 
     async function files(agent) {
       if (process.geteuid() === 0) throw new Error('probe requires a non-root effective UID');
-      const root = process.env.DPSK_DIRECT_ROOTFS;
+      const root = process.env.DSH_GO_DIRECT_ROOTFS;
       const cwd = await agent.ctx.get('workingDirectory').ensure(agent, AbortSignal.timeout(5000));
       if (cwd !== `${root}/root/workspace`) throw new Error(`unexpected writable fixture cwd: ${cwd}`);
       const tools = agent.ctx.get('tools');

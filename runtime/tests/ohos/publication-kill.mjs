@@ -89,7 +89,7 @@ if (process.argv[2] === 'child') {
   async function run(config, stopAtGate) {
     const path = join(directory, `config-${randomUUID()}.json`); await fs.writeFile(path, JSON.stringify(config));
     const env = { PATH: process.env.PATH, LANG: 'C.UTF-8', LD_PRELOAD: args.get('linked-lib'),
-      DPSK_OHOS_SIM_PLATFORM: 'openharmony', DSH_HOME: config.home };
+      DSH_GO_OHOS_SIM_PLATFORM: 'openharmony', DSH_HOME: config.home };
     const argv = ['--jitless', '--import', args.get('simulation'), '--import', publicationPreload, self, 'child', path];
     const child = spawn(args.get('node'), argv, { env, stdio: ['ignore', 'pipe', 'pipe'] });
     let stdout = '', stderr = '', killedAtGate = false, timedOut = false;

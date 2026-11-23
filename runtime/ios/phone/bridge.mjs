@@ -5,7 +5,7 @@ import { actionFor } from './actions.mjs';
 
 const result = (text, isError = false) => ({ content: [{ type: 'text', text }], isError });
 const failure = (code, text) => result(`${code}: ${text}`, true);
-// These need nobody on screen in DPSK, and answer with a page or a screenshot, a good deal
+// These need nobody on screen in DSH Go, and answer with a page or a screenshot, a good deal
 // larger than anything else here.
 const isBrowser = request => /^(browser|runner)-/.test(request.action.kind);
 const isSystem = request => request.action.kind.startsWith('system-');

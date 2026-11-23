@@ -16,7 +16,7 @@ else:argv+=['--import',str(Path(a.marker_preload).resolve())]
 argv+=['--test','--test-isolation=none','--test-reporter=tap',str(test)]
 if a.mode=='strict':argv=[sys.executable,str(root/'runtime/tests/ohos/process-link-fixture.py'),'--evidence',str(out/'host-link-fixture.json'),'--',*argv]
 overrides={'NODE_OPTIONS':'','DSH_TEST_PUBLICATION_BINDING':str(Path(a.native).resolve())}
-if a.mode=='strict':overrides.update({'DPSK_OHOS_SIM_PLATFORM':'openharmony','DPSK_OHOS_SIM_ADDONS':json.dumps([str(Path(a.native).resolve())])})
+if a.mode=='strict':overrides.update({'DSH_GO_OHOS_SIM_PLATFORM':'openharmony','DSH_GO_OHOS_SIM_ADDONS':json.dumps([str(Path(a.native).resolve())])})
 home=None
 if a.suite=='share':
  home=Path(tempfile.mkdtemp(prefix='dsh-owned-share-'));overrides.update({'DSH_HOME':str(home),'LD_PRELOAD':str(Path(a.linked).resolve())})

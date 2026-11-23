@@ -16,7 +16,7 @@ async function model(schema,raw){
  editor.edit=async(_entry,change)=>{current=await change(structuredClone(current),structuredClone(current));entry.options.config=current;entry.fiber.config=schema(structuredClone(current));};
  const ctx={get:key=>key==='configEditor'?editor:key==='loader'?{entries:()=>[entry]}:undefined};withSources(ctx,[entry]);
  let answer;const api=createPluginConfig(ctx,{send(_res,status,body){answer={status,body};},readBody:async req=>Buffer.from(JSON.stringify(req.input))});
- const request=async(method,input)=>{await api.handle({method,input,headers:{'content-type':'application/json'},resume(){}},{},'/DPSK/v1/plugin-config/callback-fixture');return answer;};
+ const request=async(method,input)=>{await api.handle({method,input,headers:{'content-type':'application/json'},resume(){}},{},'/dsh-go/v1/plugin-config/callback-fixture');return answer;};
  return {request,entry,editor};
 }
 for(const scenario of makeCases(z))test(scenario.name+' source is redacted only in secret context',async()=>{

@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/media/video.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/artifact_files.dart';
-import 'package:dpsk_app/state/artifacts.dart';
-import 'package:dpsk_app/state/connection_state.dart';
+import 'package:dsh_app/media/video.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/artifact_files.dart';
+import 'package:dsh_app/state/artifacts.dart';
+import 'package:dsh_app/state/connection_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';

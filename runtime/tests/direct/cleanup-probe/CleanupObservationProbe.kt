@@ -1,4 +1,4 @@
-package com.dpsk.harness.runtime
+package io.github.ccch1mneyyy.dsh_app.runtime
 
 import android.content.Context
 import android.system.Os
@@ -15,7 +15,7 @@ fun main(args: Array<String>) {
         val childRoot = if (scenario == "other-root") Files.createTempDirectory(output.toPath(), "other-").toFile() else root
         val logs = mutableListOf<String>()
         val child = ProcessBuilder("/bin/sleep", "30").directory(childRoot).apply {
-            environment()["DPSK_RUNTIME_ROOT"] = childRoot.canonicalPath
+            environment()["DSH_GO_RUNTIME_ROOT"] = childRoot.canonicalPath
         }.start()
         val pid = child.pid().toInt()
         File(root, "tmp").mkdir()

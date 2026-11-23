@@ -280,7 +280,7 @@ try {
     return next(); // No wrapping, extra await, delay or replacement iterator.
   }, { global: true });
   ctx.on('session/disposed', session => event('session-disposed', { id: session.id }));
-  ctx.on('DPSK/session-deleted', id => event('permanent-deletion-event', { id }));
+  ctx.on('dsh-go/session-deleted', id => event('permanent-deletion-event', { id }));
   ctx.on('agent/error', ({ agent, error }) => result.agentErrors.push({ id: agent?.id, message: String(error) }));
   ctx.on('session/event', (session, value) => {
     if (['user/message', 'session/title-llm-request', 'assistant/message', 'turn/end'].includes(value.type))
@@ -288,11 +288,11 @@ try {
   });
   const origin = ctx.webServer.getOrigin();
   result.webOrigin = origin; result.providerURL = providerURL;
-  assert.equal((await httpCall(new URL('/DPSK/v1/sessions/deletion', origin))).status, 401);
+  assert.equal((await httpCall(new URL('/dsh-go/v1/sessions/deletion', origin))).status, 401);
   const launch = new URL(ctx.connection.authenticatedUrl(origin)); launch.pathname = '/connect';
   const auth = await httpCall(launch); assert.equal(auth.status, 302);
   const cookie = auth.headers['set-cookie'].map(value => value.split(';', 1)[0]).join('; ');
-  const capability = await httpCall(new URL('/DPSK/v1/sessions/deletion', origin), { cookie });
+  const capability = await httpCall(new URL('/dsh-go/v1/sessions/deletion', origin), { cookie });
   assert.equal(capability.status, 200); assert.deepEqual(JSON.parse(capability.body), { supported: true, version: 1 });
   result.authentication = { unauthenticatedStatus: 401, tokenExchangeStatus: 302, capabilityStatus: 200,
     credentialsArePrivateSynthetic: true };
@@ -335,7 +335,7 @@ try {
     const before = result.publicCleanupObserver.length;
     assert.equal(peerEntries.find(entry => entry.row.connection === target).socket.readyState, 1);
     const started = event('authenticated-delete-start', { id: ids[key], piUnmounted });
-    const response = await httpCall(new URL('/DPSK/v1/sessions/delete', origin), { cookie, body: { sessionId: ids[key] } });
+    const response = await httpCall(new URL('/dsh-go/v1/sessions/delete', origin), { cookie, body: { sessionId: ids[key] } });
     const returned = event('authenticated-delete-response', { id: ids[key], status: response.status });
     assert.equal(response.status, 200); assert.deepEqual(JSON.parse(response.body), { deleted: true, sessionId: ids[key] });
     assert.equal(ctx.sessionPersistence.dshGoDeletion.deleted(ids[key]), true);
@@ -366,7 +366,7 @@ try {
   assert.equal((await import(pathToFileURL(bridgePath))).apply, bridge.apply);
   result.publicModule.sameFunctionAfterPiUnmount = true;
   result.bridgeLifetime = { fiberStillActive: bridgeFiber.state === 2, sameModuleApply: true,
-    routeStillRegistered: ctx.webServer.prefixes.has('/DPSK') };
+    routeStillRegistered: ctx.webServer.prefixes.has('/dsh-go') };
   assert(result.bridgeLifetime.fiberStillActive && result.bridgeLifetime.routeStillRegistered);
   await remove('B', true);
   assert.equal(result.requests.length, 5); assert.equal(result.httpFallbackRequests, 0);

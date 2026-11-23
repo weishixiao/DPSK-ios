@@ -11,7 +11,7 @@ const integration = (name, run) => test(name, {
   skip: !process.env.DSH_PREFIX && 'Set DSH_PREFIX to the actual runtime including companion-auxiliary-single-request.diff',
   concurrency: false, timeout: 15000,
 }, run);
-const path = '/DPSK/v1/companion/auxiliary';
+const path = '/dsh-go/v1/companion/auxiliary';
 
 async function fixture(t, options) {
   const f = await createFixture(options);

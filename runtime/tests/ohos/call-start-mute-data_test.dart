@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:dpsk_app/speech/call/voice_call.dart';
-import 'package:dpsk_app/speech/speech_audio.dart';
-import 'package:dpsk_app/state/android_features.dart';
+import 'package:dsh_app/speech/call/voice_call.dart';
+import 'package:dsh_app/speech/speech_audio.dart';
+import 'package:dsh_app/state/android_features.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

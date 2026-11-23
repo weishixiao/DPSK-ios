@@ -21,7 +21,7 @@ patches=[{'id':x,'disabled':True} for x in ['session-title-llm','llm-pi-ai','llm
 patches += [{'insert':[{'id':'dsh-go-bridge','name':str(active/'lib/index.js')},{'id':'r5-core-observer','name':str(observer/'observer.mjs')}]}]
 (profile/'cordis.patch.yml').write_text(json.dumps(patches))
 env={k:os.environ[k] for k in ['PATH','LANG','LC_ALL','TMPDIR'] if k in os.environ};env.update({'TZ':'Asia/Shanghai','DSH_HOME':str(home),'DSH_AGENTS_HOME':str(agents),'DSH_TELEMETRY_DISABLED':'1','UV_USE_IO_URING':'0','CORE_FIXTURE_BRIDGE':str(active)})
-base='http://127.0.0.1:'+str(a.port);route='/DPSK/v1/plugin-config';audit=[];snapshots=[];cleanup=[];core=['webserver','connection','credentials','sandbox-policy','fs-sandbox','approval','system-prompt'];old={}
+base='http://127.0.0.1:'+str(a.port);route='/dsh-go/v1/plugin-config';audit=[];snapshots=[];cleanup=[];core=['webserver','connection','credentials','sandbox-policy','fs-sandbox','approval','system-prompt'];old={}
 sha=lambda data:hashlib.sha256(data).hexdigest()
 def identity(pid):
  try:
@@ -84,7 +84,7 @@ def after(op,stage,proof):
  status,changed=request(op,stage,route+'/own-config-plugin',{'revision':own['revision'],'ops':[{'op':'set','path':['title'],'value':'saved externally owned plugin'},{'op':'set','path':['count'],'value':2}]});assert status==200 and changed['value']['count']==2
  assert request(op,stage,route+'/own-config-plugin',{'revision':own['revision'],'ops':[{'op':'set','path':['count'],'value':3}]})[0]==409
  assert request(op,stage,route+'/own-config-plugin',{'revision':changed['revision'],'ops':[{'op':'set','path':['secret'],'value':'SYNTHETIC_DENIED'}]})[0]==400
- status,media=request(op,stage,route+'/dsh-media');assert status==200 and media['owner']=='dsh-media' and 'DPSK/media/catalog' in json.dumps(media['schema'])
+ status,media=request(op,stage,route+'/dsh-media');assert status==200 and media['owner']=='dsh-media' and 'dsh-go/media/catalog' in json.dumps(media['schema'])
  status,media2=request(op,stage,route+'/dsh-media',{'revision':media['revision'],'ops':[{'op':'set','path':['limits','maxImages'],'value':1}]});assert status==200 and media2['value']['limits']['maxImages']==1
  assert request(op,stage,route+'/dsh-media',{'revision':media2['revision'],'ops':[{'op':'set','path':['credentials','slot1','apiKey'],'value':'SYNTHETIC_DENIED'}]})[0]==400
  assert request(op,stage,route,headers={'Origin':'https://evil.invalid'})[0]==403

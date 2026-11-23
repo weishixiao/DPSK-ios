@@ -14,8 +14,8 @@ function actor(mode, directory, admissionResult) {
   const command = mode === 'capture' ? [fileURLToPath(new URL('./linux-instance-host-capture.mjs', import.meta.url)), directory] : admissionResult ? [fileURLToPath(new URL('./linux-instance-admission.mjs', import.meta.url)), mode,
     fileURLToPath(new URL('../../../', import.meta.url)), directory, admissionResult] : [childPath, mode, directory];
   const argv = ['--jitless', '--import', preload, ...command];
-  const processChild = spawn(process.execPath, argv, { env: { ...process.env, DPSK_OHOS_SIM_PLATFORM: 'openharmony', DPSK_OHOS_SIM_ADDONS: '[]',
-    DPSK_OHOS_LINUX_DIRECTORY: directory, DPSK_OHOS_NATIVE_LIBRARY_DIR: '/trusted/native' }, stdio: ['pipe', 'pipe', 'pipe'] });
+  const processChild = spawn(process.execPath, argv, { env: { ...process.env, DSH_GO_OHOS_SIM_PLATFORM: 'openharmony', DSH_GO_OHOS_SIM_ADDONS: '[]',
+    DSH_GO_OHOS_LINUX_DIRECTORY: directory, DSH_GO_OHOS_NATIVE_LIBRARY_DIR: '/trusted/native' }, stdio: ['pipe', 'pipe', 'pipe'] });
   let stderr = '', buffer = '', exit;
   processChild.stderr.setEncoding('utf8'); processChild.stderr.on('data', value => stderr += value);
   const messages = [], waiters = [];

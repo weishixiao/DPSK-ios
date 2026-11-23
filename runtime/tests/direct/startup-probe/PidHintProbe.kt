@@ -1,4 +1,4 @@
-package com.dpsk.harness.runtime
+package io.github.ccch1mneyyy.dsh_app.runtime
 
 import android.content.Context
 import android.os.Process as AndroidProcess
@@ -37,7 +37,7 @@ fun main(args: Array<String>) {
     })
     val state = RuntimeProcessOwnership.cleanupState(root.canonicalPath, AndroidProcess.myUid())
     val child = if (case != "visible-owned") null else ProcessBuilder("/bin/sleep", "45")
-        .directory(root).apply { environment()["DPSK_RUNTIME_ROOT"] = root.canonicalPath }.start()
+        .directory(root).apply { environment()["DSH_GO_RUNTIME_ROOT"] = root.canonicalPath }.start()
     child?.let { Os.permittedSignalPids += it.pid().toInt() }
     // Keep the hidden-PID fault and our real child visible, not host-runner daemons.
     Os.beforeStat = { observed ->

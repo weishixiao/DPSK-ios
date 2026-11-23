@@ -2,7 +2,7 @@
 import {createHmac, randomBytes} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {isDeepStrictEqual} from 'node:util';
-const BASE='/DPSK/v1/plugin-config';
+const BASE='/dsh-go/v1/plugin-config';
 const BAD=new Set(['__proto__','prototype','constructor','__jsExpr']);
 const TYPES=new Set(['object','dict','array','string','number','boolean','const','union','intersect','transform']);
 const VOLATILE=Symbol.for('cosmokit.volatile.write');
@@ -31,7 +31,7 @@ function validationPath(error,ops){
  for(const op of ops){const known=publicPath(op.path);if(known&&known.slice(0,Math.min(known.length,path.length)).every((x,i)=>x===path[i]))return known;}
 }
 export function pluginConfigUnavailable(req){
- let path;try{path=new URL(req.url??'/', 'http://DPSK.invalid').pathname;}catch{return;}
+ let path;try{path=new URL(req.url??'/', 'http://dsh-go.invalid').pathname;}catch{return;}
  if(path===BASE||path.startsWith(BASE+'/'))return {v:1,error:{code:'host-unavailable',message:MESSAGES['host-unavailable']}};
 }
 function labelOf(title,entry){

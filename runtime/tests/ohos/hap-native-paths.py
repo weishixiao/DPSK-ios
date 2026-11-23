@@ -43,16 +43,16 @@ def main():
     here = Path(__file__).resolve().parent
     sim = here.parents[1] / 'ohos/sim/preload.mjs'
     base_env = {'PATH': os.environ['PATH'], 'LANG': 'C.UTF-8',
-                'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'NARB_DISABLE_NATIVE_CACHE': '1',
-                'DPSK_OHOS_SIM_ADDONS': json.dumps([str(p) for p in libraries.iterdir()])}
-    native_key = 'DPSK_OHOS_NATIVE_LIBRARY_DIR'
+                'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'NARB_DISABLE_NATIVE_CACHE': '1',
+                'DSH_GO_OHOS_SIM_ADDONS': json.dumps([str(p) for p in libraries.iterdir()])}
+    native_key = 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR'
     cases = [
         ('valid', {native_key: str(libraries)}, None),
         ('missing-directory', {}, 'ERR_OHOS_NATIVE_LIBRARY_DIRECTORY'),
         ('relative-directory', {native_key: '../libs'}, 'ERR_OHOS_NATIVE_LIBRARY_DIRECTORY'),
         ('missing-library', {native_key: str(empty)}, 'ERR_OHOS_NATIVE_LIBRARY_PATH'),
         ('linked-library', {native_key: str(linked)}, 'ERR_OHOS_NATIVE_LIBRARY_PATH'),
-        ('no-allowlist', {native_key: str(libraries), 'DPSK_OHOS_SIM_ADDONS': '[]'}, 'ERR_OHOS_SIM_DLOPEN'),
+        ('no-allowlist', {native_key: str(libraries), 'DSH_GO_OHOS_SIM_ADDONS': '[]'}, 'ERR_OHOS_SIM_DLOPEN'),
         ('nodeabi', {native_key: str(libraries), 'NARB_BACKEND': 'nodeabi'}, 'ERR_OHOS_NATIVE_BACKEND'),
     ]
     rows = []

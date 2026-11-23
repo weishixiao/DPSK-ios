@@ -48,7 +48,7 @@ async function fixture(t, initial) {
     rmSync(dir, { recursive: true, force: true });
   });
   const get = async (locale = 'en') => {
-    const res = await fetch(`http://127.0.0.1:${server.address().port}/DPSK/v1/views/static-cache-test/panel?locale=${locale}`);
+    const res = await fetch(`http://127.0.0.1:${server.address().port}/dsh-go/v1/views/static-cache-test/panel?locale=${locale}`);
     return { status: res.status, ...await res.json() };
   };
   return { file, write, core, service, get };

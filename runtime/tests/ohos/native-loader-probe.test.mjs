@@ -21,9 +21,9 @@ const probe = fileURLToPath(new URL('../../ohos/native/loader/probe.cjs', import
 const environment = {
   ...process.env,
   NODE_OPTIONS: '',
-  DPSK_OHOS_SIM: '1',
-  DPSK_OHOS_SIM_PLATFORM: 'openharmony',
-  DPSK_OHOS_SIM_ADDONS: JSON.stringify([addon]),
+  DSH_GO_OHOS_SIM: '1',
+  DSH_GO_OHOS_SIM_PLATFORM: 'openharmony',
+  DSH_GO_OHOS_SIM_ADDONS: JSON.stringify([addon]),
   NARB_DISABLE_NATIVE_CACHE: '1',
 };
 const cases = [

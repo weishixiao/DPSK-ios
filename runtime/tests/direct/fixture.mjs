@@ -10,12 +10,12 @@ export function apply(ctx) {
       const tools = agent.ctx.get('tools');
       if (!tools) throw new Error('session tools provider absent');
       const id = randomUUID();
-      const filename = process.env.DPSK_HOST_PROBE_FILE ?? `/root/workspace/direct-probe-${id}.txt`;
+      const filename = process.env.DSH_GO_HOST_PROBE_FILE ?? `/root/workspace/direct-probe-${id}.txt`;
       const content = `direct-tool-write-read:${id}\n`;
       // The timed operation updates an existing observed file in both modes.
       // New-file creation with PRoot link2symlink is covered separately: its
       // directory-entry/identity mismatch must not be hidden in a timing test.
-      const observed = process.env.DPSK_HOST_PROBE_FILE ? await tools.execute({ callId: `${id}:observe`, name: 'read', agent,
+      const observed = process.env.DSH_GO_HOST_PROBE_FILE ? await tools.execute({ callId: `${id}:observe`, name: 'read', agent,
         arguments: { file_path: filename }, signal: AbortSignal.timeout(5000) }) : null;
       const start = performance.now();
       const write = await tools.execute({ callId: `${id}:write`, name: 'write', agent,

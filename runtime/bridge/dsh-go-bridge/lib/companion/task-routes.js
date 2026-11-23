@@ -3,7 +3,7 @@ import { findDraftSupported } from './find-draft.js';
 import { compareDraftSupported } from './compare-drafts.js';
 import { receiptsToSheetSupported, receiptInputFormats } from './receipts-to-sheet.js';
 
-const ROOT = '/DPSK/v1/companion/tasks';
+const ROOT = '/dsh-go/v1/companion/tasks';
 const jsonType = req => String(req.headers['content-type'] ?? '').split(';', 1)[0].trim().toLowerCase() === 'application/json';
 
 export function createCompanionTaskRoutes({ctx, send, readJson}) {
@@ -73,7 +73,7 @@ export function createCompanionTaskRoutes({ctx, send, readJson}) {
           return true;
         }
         if (!store || store.stopping) throw taskError(503, 'unavailable', 'The durable task service is unavailable');
-        const url = new URL(req.url, 'http://DPSK.invalid');
+        const url = new URL(req.url, 'http://dsh-go.invalid');
         const part = path.slice(ROOT.length).split('/').filter(Boolean).map(decodeURIComponent);
         if (part.length && part[0] !== 'folders' && !taskId.safeParse(part[0]).success)
           throw taskError(400, 'invalid-request', 'Invalid task identity');

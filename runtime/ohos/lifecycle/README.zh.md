@@ -14,7 +14,7 @@
 
 使用项目 profile 的原有插入操作加入该条目；不要替换其他插件，也不要把测试 observer 加入产品配置。宿主前后台事件应调用本模块的鉴权接口。这个包不修改 ArkTS 生命周期回调、UI、Android、宿主 CMake 或 Node 构建。
 
-产品入口只接受真实 `process.platform === 'openharmony'`，或 O0 测试 preload 安装的 `Symbol.for('dsh.go.ohos.sim')`。环境字符串 `DPSK_OHOS_SIM=1` 不能开启它。未安装服务时，补丁保持原调度和超时路径；服务安装后不可无声卸载并退回无日志分派。关闭后的全局 owner 仍在，后续调度明确失败。
+产品入口只接受真实 `process.platform === 'openharmony'`，或 O0 测试 preload 安装的 `Symbol.for('dsh.go.ohos.sim')`。环境字符串 `DSH_GO_OHOS_SIM=1` 不能开启它。未安装服务时，补丁保持原调度和超时路径；服务安装后不可无声卸载并退回无日志分派。关闭后的全局 owner 仍在，后续调度明确失败。
 
 O6 的 `background.resume` 每次查询已安装 `ohosLifecycle` 服务：协议为 1 且状态未关闭、未因持久化故障阻断时报告 `reconcile`；缺失、异常、关闭或阻断时为 `none`。它只表示引擎工具边界的对账能力，不表示宿主回调已经接好、系统允许后台持续计算或设备已经验证。`computePermission` 仍是 `unknown`，`policy` 仍是 `may-freeze`。
 
@@ -91,11 +91,11 @@ O6 的 `background.resume` 每次查询已安装 `ohosLifecycle` 服务：协议
 
 | 请求 | 参数和结果 |
 |---|---|
-| `GET /DPSK/v1/lifecycle` | 全引擎视图；可选唯一 `sessionId` 查询参数过滤会话 |
-| `POST /DPSK/v1/lifecycle` | JSON `{"operation":"pause"}` 或 `{"operation":"resume"}`；控制整个引擎 |
+| `GET /dsh-go/v1/lifecycle` | 全引擎视图；可选唯一 `sessionId` 查询参数过滤会话 |
+| `POST /dsh-go/v1/lifecycle` | JSON `{"operation":"pause"}` 或 `{"operation":"resume"}`；控制整个引擎 |
 | 同上 | JSON `{"operation":"cancel","sessionId":"…"}` |
 | 同上 | JSON `{"operation":"acknowledgeUnknown","sessionId":"…"}`；显式保留历史并放弃追认旧未知 |
-| `GET /DPSK/v1/lifecycle/result?sessionId=…&callSeq=…` | `identity`、`final`、原始/最终 `result`；final 时另含确切 `sessionData` 和已知 `resources` |
+| `GET /dsh-go/v1/lifecycle/result?sessionId=…&callSeq=…` | `identity`、`final`、原始/最终 `result`；final 时另含确切 `sessionData` 和已知 `resources` |
 
 状态字段包括 `v:1`、`bootId`、六态 `state`、`closed`、`paused`、`confirmedPause`、`blocked`、`corruption`、`controlVersion`、`activeBudgetCount`、`calls`、`transport`。每条 call 有原身份、边界 phase、是否仍待结算 active、是否仍在原 dispatch 中 dispatchActive、保存结果标志以及恢复依据。六态为 `running`、`paused`、`cancelling`、`terminated`、`completed`、`result-unknown`；未知事实优先于暂停显示。
 

@@ -8,7 +8,7 @@
 
 配置只在本次 Node／App 引擎会话内有效。引擎重启后回到 `inherit`、revision 0；UI／调用方若要延续用户选择，需重新提供配置。本补丁不新增磁盘保存、明文密码文件、Flutter UI 或系统代理设置。
 
-鉴权后的现有 `POST /DPSK/v1/linux` 接收：
+鉴权后的现有 `POST /dsh-go/v1/linux` 接收：
 
 ```json
 {"v":1,"instanceId":"当前 GET 的服务身份","attemptId":null,"action":"setProxy","proxy":{"mode":"direct"}}

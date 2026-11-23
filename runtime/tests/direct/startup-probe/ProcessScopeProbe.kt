@@ -1,4 +1,4 @@
-package com.dpsk.harness.runtime
+package io.github.ccch1mneyyy.dsh_app.runtime
 
 import android.content.Context
 import android.os.Process as AndroidProcess
@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
         }
     }
     val child = ProcessBuilder("/bin/sleep", "45").directory(root).apply {
-        environment()["DPSK_RUNTIME_ROOT"] = root.canonicalPath
+        environment()["DSH_GO_RUNTIME_ROOT"] = root.canonicalPath
     }.start()
     val pid = child.pid().toInt()
     val started = RuntimeProcessOwnership.stat(File("/proc/$pid/stat").readText())!!.second

@@ -54,9 +54,9 @@ async function run(NativeToolExecutor) {
   finally { await ctx.fiber.dispose(); }
 }
 for (const value of ['linux', 'android']) test(`${value}: environment string cannot install lifecycle; exact scheduler trace and wall timeout stay on original path`, async () => {
-  const previousEnv = process.env.DPSK_OHOS_SIM;
+  const previousEnv = process.env.DSH_GO_OHOS_SIM;
   Object.defineProperty(process, 'platform', { ...platform, value });
-  process.env.DPSK_OHOS_SIM = '1';
+  process.env.DSH_GO_OHOS_SIM = '1';
   globalThis[key] = new Proxy({}, { get() { throw new Error('non-OH path consulted lifecycle'); } });
   try {
     await lifecyclePlugin.apply(new Proxy({}, { get() { throw new Error('non-OH path touched a service'); } }));
@@ -65,6 +65,6 @@ for (const value of ['linux', 'android']) test(`${value}: environment string can
     await wait(50); assert.equal(timeout.timeoutOf(d.signal)?.code, 'TOOL_TIMEOUT'); d[Symbol.dispose]();
   } finally {
     delete globalThis[key]; Object.defineProperty(process, 'platform', platform);
-    if (previousEnv === undefined) delete process.env.DPSK_OHOS_SIM; else process.env.DPSK_OHOS_SIM = previousEnv;
+    if (previousEnv === undefined) delete process.env.DSH_GO_OHOS_SIM; else process.env.DSH_GO_OHOS_SIM = previousEnv;
   }
 });

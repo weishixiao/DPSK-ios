@@ -41,7 +41,7 @@ async function check(t, config) {
   const host = config.host === 'interface' ? interfaceAddress : config.host;
   const target = `${config.tls ? 'https' : 'http'}://${host}:${origin.address().port}/fixture`;
   const env = { ...process.env };
-  for (const key of ['HTTP_PROXY', 'http_proxy', 'HTTPS_PROXY', 'https_proxy', 'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy', 'NODE_USE_ENV_PROXY', 'DPSK_OHOS_SIM']) delete env[key];
+  for (const key of ['HTTP_PROXY', 'http_proxy', 'HTTPS_PROXY', 'https_proxy', 'ALL_PROXY', 'all_proxy', 'NO_PROXY', 'no_proxy', 'NODE_USE_ENV_PROXY', 'DSH_GO_OHOS_SIM']) delete env[key];
   env.HTTP_PROXY = proxyUrl; env.HTTPS_PROXY = proxyUrl;
   if (config.optIn !== undefined) env.NODE_USE_ENV_PROXY = config.optIn;
   if (config.noProxy) env.NO_PROXY = host;

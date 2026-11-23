@@ -11,8 +11,8 @@ if (isMainThread) {
   const config = JSON.parse(process.env.OHOS_STARTUP_CASE);
   // This is the first application/plugin-phase lookup. Mutate env before the
   // lookup so a late capture cannot accidentally pass the ordering check.
-  process.env.DPSK_OHOS_LINUX_DIRECTORY = '/later-plugin-directory';
-  process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR = '/later-plugin-native';
+  process.env.DSH_GO_OHOS_LINUX_DIRECTORY = '/later-plugin-directory';
+  process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR = '/later-plugin-native';
   const { linuxHostPaths } = await import('../../ohos/linux/host-paths.mjs');
   const network = globalThis[Symbol.for('dsh.go.ohos.net')];
   const publication = globalThis[Symbol.for('dsh.go.ohos.publication')];

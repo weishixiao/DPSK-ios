@@ -27,7 +27,7 @@ async function fixture(t){
   files.set(id,(await writer.sessionPersistence.stat(id)).location.path);
  }
  await writer.fiber.dispose();contexts.splice(contexts.indexOf(writer),1);
- return{store,control:join(store,'.DPSK-lifecycle'),ids,files,context};
+ return{store,control:join(store,'.dsh-go-lifecycle'),ids,files,context};
 }
 test('public list preserves sessions without enumerating the reserved lifecycle tree',options,async t=>{
  const f=await fixture(t),ctx=await f.context();

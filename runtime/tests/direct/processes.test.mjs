@@ -8,7 +8,7 @@ import { once } from 'node:events';
 import { promisify } from 'node:util';
 import { pathToFileURL } from 'node:url';
 
-const root = process.env.DPSK_DIRECT_ROOTFS;
+const root = process.env.DSH_GO_DIRECT_ROOTFS;
 assert(root, 'use the generated node wrapper');
 const config = JSON.parse(fs.readFileSync(`${root}/opt/dsh-app/direct/config.json`, 'utf8'));
 const adapter = globalThis[Symbol.for('dsh.go.direct')];
@@ -36,7 +36,7 @@ test('physical and legacy paths retain one spelling; unbound storage stays insid
 
 test('process.execPath spawns recursively and module hooks accept old absolute paths', () => {
   assert.equal(process.execPath, `${config.bin}/node`);
-  fs.writeFileSync(`${base}/child.mjs`, `import cp from 'node:child_process';\nconsole.log(JSON.stringify({execPath:process.execPath,cwd:process.cwd(),main:process.env.DPSK_DIRECT_MAIN??null,nested:cp.execFileSync(process.execPath,['-p','6*7'],{encoding:'utf8'}).trim()}));`);
+  fs.writeFileSync(`${base}/child.mjs`, `import cp from 'node:child_process';\nconsole.log(JSON.stringify({execPath:process.execPath,cwd:process.cwd(),main:process.env.DSH_GO_DIRECT_MAIN??null,nested:cp.execFileSync(process.execPath,['-p','6*7'],{encoding:'utf8'}).trim()}));`);
   const value = JSON.parse(run(process.execPath, [`${guestBase}/child.mjs`], { cwd: pathToFileURL(base) }));
   assert.equal(value.execPath, process.execPath);
   assert.equal(value.cwd, base);

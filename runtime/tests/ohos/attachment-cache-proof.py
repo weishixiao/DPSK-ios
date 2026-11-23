@@ -63,7 +63,7 @@ def main():
         delta = {'DSH_PREFIX': str(prefix), 'DSH_HOME': str(destination / 'home'),
                  'DSH_IMAGE_PROOF_OUT': str(destination), 'DSH_IMAGE_PROOF_CASE': case,
                  'DSH_IMAGE_PROOF_ORACLE': str(oracle), 'DSH_IMAGE_TEST_TRACE': str(destination / 'SDK-TRACE.jsonl'),
-                 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native), 'LD_PRELOAD': str(publication)}
+                 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native), 'LD_PRELOAD': str(publication)}
         save(destination / 'COMMAND.json', {'argv': argv, 'environment': delta})
         with (destination / 'test.log').open('wb') as log:
             code = subprocess.run(argv, env=environment | delta, stdout=log, stderr=subprocess.STDOUT,

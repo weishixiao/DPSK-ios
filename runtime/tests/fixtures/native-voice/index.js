@@ -1,6 +1,6 @@
 // Test-only native plugin (runtime/tests/native-capabilities-live.mjs): a 0.3 s WAV made on the
 // Host, a caption channel that emits much faster than 10 Hz, and a record of capability events.
-export const name = "DPSK-fixture-voice";
+export const name = "dsh-go-fixture-voice";
 
 const V = (globalThis.__dshGoFixtureVoice ??= { events: [], media: 0, keys: [] });
 

@@ -62,7 +62,7 @@ integration('fixture 7 shared golden reaches actual engine bytes and same HTTP e
 });
 
 integration('fixture 7 actual process restart rejects old instance and never restores phone data into final requests', async t => {
-  const home = await mkdtemp(join(tmpdir(), 'DPSK-phone-restart-'));
+  const home = await mkdtemp(join(tmpdir(), 'dsh-go-phone-restart-'));
   t.after(() => rm(home, { recursive: true, force: true }));
   const checkpoint = join(home, 'synthetic-phone-checkpoint.json');
   const firstPath = join(home, 'first-result.json'), secondPath = join(home, 'second-result.json');

@@ -34,7 +34,7 @@ async function fixture(t){
  const route=createCompanionRoutes({ctx,send});
  const server=createServer((req,res)=>route.handle(req,res,new URL(req.url,'http://local').pathname).catch(error=>{res.statusCode=500;res.end(String(error));}));
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
- const base=`http://127.0.0.1:${server.address().port}/DPSK/v1/companion/tasks`;
+ const base=`http://127.0.0.1:${server.address().port}/dsh-go/v1/companion/tasks`;
  t.after(async()=>{route.dispose();await new Promise(resolve=>server.close(resolve));await store.close();await backend.close();await rm(root,{recursive:true,force:true});});
  const request=async(path='',body,headers={})=>{const response=await fetch(base+path,{method:body===undefined?'GET':'POST',headers:{authorization:'owner',...body===undefined?{}:{'content-type':'application/json'},...headers},...body===undefined?{}:{body:typeof body==='string'?body:JSON.stringify(body)}});return {status:response.status,body:await response.json()};};
  const cap=(await request('/capabilities')).body;

@@ -75,13 +75,13 @@ def main():
     save(out / 'test-inputs.json', rewrite)
     commands = []
     environment = os.environ.copy()
-    environment.pop('DPSK_OHOS_SIM', None)
+    environment.pop('DSH_GO_OHOS_SIM', None)
     environment['OHOS_TEST_PROCESS_PREFIX'] = str(payload)
     for mode in ('jit', 'strict'):
         env = {**environment, 'M4_DIAGNOSTICS_MODE': mode}
         flags = ['--import', str(ROOT / 'runtime/ohos/sim/marker.mjs')]
         if mode == 'strict':
-            env.update(DPSK_OHOS_SIM_PLATFORM='openharmony', DPSK_OHOS_SIM_ADDONS='[]')
+            env.update(DSH_GO_OHOS_SIM_PLATFORM='openharmony', DSH_GO_OHOS_SIM_ADDONS='[]')
             flags = ['--jitless', '--import', str(ROOT / 'runtime/ohos/sim/preload.mjs')]
         argv = [str(node), *flags, '--import', str(payload / 'runtime/ohos/process/child-process.mjs'),
                 '--import', str(payload / 'runtime/ohos/process/node-worker-preload.mjs'),
@@ -95,8 +95,8 @@ def main():
             result = subprocess.run(argv, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT)
         commands.append({'argv': argv, 'cwd': str(ROOT), 'mode': mode, 'exitCode': result.returncode,
                          'environment': {key: env[key] for key in ['OHOS_TEST_PROCESS_PREFIX', 'M4_DIAGNOSTICS_MODE',
-                            'DPSK_OHOS_SIM_PLATFORM', 'DPSK_OHOS_SIM_ADDONS'] if key in env},
-                         'removedEnvironment': ['DPSK_OHOS_SIM']})
+                            'DSH_GO_OHOS_SIM_PLATFORM', 'DSH_GO_OHOS_SIM_ADDONS'] if key in env},
+                         'removedEnvironment': ['DSH_GO_OHOS_SIM']})
         save(out / 'commands.json', commands)
         print(mode, result.returncode, flush=True)
         result.check_returncode()

@@ -6,7 +6,7 @@ import { recallError } from "./recall-schema.js";
 import { createCompanionAuxiliaryRoutes } from './auxiliary.js';
 import { createCompanionLookupRoutes } from './lookup.js';
 
-const ROOT = "/DPSK/v1/companion";
+const ROOT = "/dsh-go/v1/companion";
 
 // Recall requests are flat objects. Reject duplicate keys before a
 // JSON parser's last-value-wins rule can make a CAS target ambiguous. Strings
@@ -88,7 +88,7 @@ export function createCompanionRoutes({ send, store = createCompanionStore(), si
       throw new CompanionError(admission?.rejection ?? 403, 'usage-forbidden', 'Companion usage observations require the host owner');
     }
     if (req.method !== 'GET') throw new CompanionError(405, 'usage-invalid-request', 'Use GET');
-    const params = new URL(req.url, 'http://DPSK.invalid').searchParams;
+    const params = new URL(req.url, 'http://dsh-go.invalid').searchParams;
     const names = ['instanceId', 'sessionId', 'requestId'];
     if ([...params.keys()].some(name => !names.includes(name)) ||
         names.some(name => params.getAll(name).length !== 1 || !contextId(params.get(name)))) {
@@ -117,7 +117,7 @@ export function createCompanionRoutes({ send, store = createCompanionStore(), si
       }
       body = validatePromptContext(await readJson(req, 32768));
     }
-    const sessionId = body?.sessionId ?? new URL(req.url, 'http://DPSK.invalid').searchParams.get('sessionId');
+    const sessionId = body?.sessionId ?? new URL(req.url, 'http://dsh-go.invalid').searchParams.get('sessionId');
     if (!contextId(sessionId)) throw invalid();
     const controller = ctx.get('sessionController'), presets = ctx.get('agentPresets');
     if (typeof controller?.resolveAgent !== 'function' || typeof presets?.presetForSession !== 'function') {
@@ -192,7 +192,7 @@ export function createCompanionRoutes({ send, store = createCompanionStore(), si
           if (!res.destroyed) send(res, 200, result);
           return true;
         }
-        const statusMatch = path.match(/^\/DPSK\/v1\/companion\/recall\/bindings\/([^/]+)$/);
+        const statusMatch = path.match(/^\/dsh-go\/v1\/companion\/recall\/bindings\/([^/]+)$/);
         const route = path === `${ROOT}/memories`
           ? (req.method === "GET" ? { method: "GET", run: () => store.getMemories() }
             : { method: "POST", run: (body) => recall.mutateMemory("upsertMemory", body) })

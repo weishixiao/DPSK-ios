@@ -63,7 +63,7 @@ async function probe(mode, dir) {
     await once(server, 'listening');
     const origin = `http://127.0.0.1:${server.address().port}`;
     const request = async (path, body, contentType = 'application/json') => {
-      const response = await fetch(`${origin}/DPSK/v1/${path}`, {
+      const response = await fetch(`${origin}/dsh-go/v1/${path}`, {
         method: 'POST', headers: {'content-type': contentType},
         body: contentType === 'application/json' ? JSON.stringify(body) : body,
       });
@@ -110,7 +110,7 @@ async function probe(mode, dir) {
     });
     service.on('healthy', () => ({toast: 'still serving'}));
 
-    ws = new WebSocket(origin.replace('http:', 'ws:') + '/DPSK/v1/stream');
+    ws = new WebSocket(origin.replace('http:', 'ws:') + '/dsh-go/v1/stream');
     const welcome = new Promise((resolve, reject) => {
       ws.addEventListener('error', reject, {once: true});
       ws.addEventListener('message', event => {

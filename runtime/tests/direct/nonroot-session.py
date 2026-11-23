@@ -53,7 +53,7 @@ def main():
     root = args.rootfs.resolve()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
-    assert root != Path('/') and (root / 'opt/DPSK/direct/preload.mjs').is_file()
+    assert root != Path('/') and (root / 'opt/dsh-go/direct/preload.mjs').is_file()
     assert not any((root / 'root/.l2s').iterdir()), 'use a disposable fixture without fake hard links'
     uid = 65534 if os.geteuid() == 0 else os.geteuid()
     gid = 65534 if os.geteuid() == 0 else os.getegid()
@@ -99,7 +99,7 @@ def main():
         (fixture / 'probe.patch.yml').write_text('- insert:\n    - id: dsh-direct-nonroot-test\n      name: ' + fixture_guest + '/fixture.mjs\n')
         tail[-1] = tail[-1].replace('dsh-web.patch.yml', 'dsh-web.patch.yml --patch ' + fixture_guest + '/probe.patch.yml')
         shell_at = tail.index('/bin/sh')
-        tail[shell_at:shell_at] = ['DSH_HOME=' + profile_guest, 'DPSK_RUNTIME_ROOT=' + str(root),
+        tail[shell_at:shell_at] = ['DSH_HOME=' + profile_guest, 'DSH_GO_RUNTIME_ROOT=' + str(root),
                                  'DEEPSEEK_API_KEY=sk-nonroot-fixture-not-a-real-key']
         argv = [str(args.proot.resolve()), '--kill-on-exit', '--link2symlink', '--sysvipc', '-L', '-0',
                 '--rootfs=' + str(root), '--cwd=/root', '-b', '/dev', '-b', '/proc', *tail]
@@ -114,7 +114,7 @@ def main():
         assert planned.returncode == 0, planned.stderr
         selection = json.loads((plan / 'selection.json').read_text())
         assert selection['actual'] == 'direct' and selection['fallbackReason'] is None, selection
-        assert (root / 'root/.DPSK-direct-path-alias').read_text() == 'v1\n' + str(root) + '\n'
+        assert (root / 'root/.dsh-go-direct-path-alias').read_text() == 'v1\n' + str(root) + '\n'
         result['physicalAliasPersistedWithHome'] = True
         argv = nul(plan / 'argv.nul')
         environment = dict(item.split('=', 1) for item in nul(plan / 'env.nul'))

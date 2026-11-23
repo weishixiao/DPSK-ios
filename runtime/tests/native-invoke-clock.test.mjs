@@ -138,7 +138,7 @@ async function fixture(t) {
         const error = new FixtureError(label, cause); trace.push({ ...at, error: label, entered: counts.get(pkg) });
         reject(error); req?.destroy();
       };
-      req = request({ host: '127.0.0.1', port, path: '/DPSK/v1/invoke', method: 'POST', agent: false, headers: { 'content-type': 'application/json', 'content-length': Buffer.byteLength(wire), connection: 'close' } }, res => {
+      req = request({ host: '127.0.0.1', port, path: '/dsh-go/v1/invoke', method: 'POST', agent: false, headers: { 'content-type': 'application/json', 'content-length': Buffer.byteLength(wire), connection: 'close' } }, res => {
         responseSeen = true; const chunks = [];
         res.on('data', chunk => chunks.push(chunk));
         res.on('aborted', () => fail('response aborted'));

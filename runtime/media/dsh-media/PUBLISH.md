@@ -1,8 +1,8 @@
 # 发包准备与执行说明
 
-> 0.3.0 待发布：npm 正式发布并核验 tarball 后，把 `market/plugins/@weishixiao__dsh-media.json` 的 `version` 改为 `0.3.0`，再按 `market/VERIFICATION.md` 重建索引；在 npm 发布前不要把 market 指向 0.3.0。
+> 0.3.0 待发布：npm 正式发布并核验 tarball 后，把 `market/plugins/@ccch1mneyyy__dsh-media.json` 的 `version` 改为 `0.3.0`，再按 `market/VERIFICATION.md` 重建索引；在 npm 发布前不要把 market 指向 0.3.0。
 
-当前版本 `@weishixiao/dsh-media@0.2.1` 已于 2026-10-31（Asia/Singapore）通过具备直发权限的 granular token 正式发布到 npm。HTTP 202 接受后，2026-10-30 19:55:51 UTC 匿名精确版本查询与公开 tarball 下载均为 200，registry SHA512 与本地 SHA256 双重核验通过。无需人工暂存审批。包名使用用户授权的备用组织；设置 namespace / bundle entry ID 保持 `dsh-media`，现有 App 支持 `/dsh-media` 包名，不需要发 App 新版。
+当前版本 `@ccch1mneyyy/dsh-media@0.2.1` 已于 2026-10-31（Asia/Singapore）通过具备直发权限的 granular token 正式发布到 npm。HTTP 202 接受后，2026-10-30 19:55:51 UTC 匿名精确版本查询与公开 tarball 下载均为 200，registry SHA512 与本地 SHA256 双重核验通过。无需人工暂存审批。包名使用用户授权的备用组织；设置 namespace / bundle entry ID 保持 `dsh-media`，现有 App 支持 `/dsh-media` 包名，不需要发 App 新版。
 
 发布包为 48,019 bytes、19 个常规文件，SHA256 为 `9829f5106dec8cb354c203c74cc0510656f0f94538c36abf0fb80226388d13c9`。与 306/306 通过的版本逐文件对比，只有 package.json 的版本从 0.2.0 变为 0.2.1，运行时代码完全一致。显式 files 清单不含测试、凭据、私有日志或开发依赖。
 
@@ -35,7 +35,7 @@ printf '%s\n' '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > "$media_npmrc"
 read -rsp 'npm token: ' NPM_TOKEN
 export NPM_TOKEN
 NPM_CONFIG_USERCONFIG="$media_npmrc" npm whoami
-NPM_CONFIG_USERCONFIG="$media_npmrc" npm publish /absolute/private/release-dir/weishixiao-dsh-media-0.2.1.tgz --access public
+NPM_CONFIG_USERCONFIG="$media_npmrc" npm publish /absolute/private/release-dir/ccch1mneyyy-dsh-media-0.2.1.tgz --access public
 ```
 
 根据组织的 2FA / granular token 策略完成认证；不预设可以绕过组织策略。环境变量引用的 `.npmrc` 用法见 [npm token 文档](https://docs.npmjs.com/private-modules/ci-server-config/)。本机普通令牌发布不声称带 CI provenance。
@@ -48,7 +48,7 @@ npm stage download 87e228cd-1e3b-4014-8410-f49ab24581af
 npm stage approve 87e228cd-1e3b-4014-8410-f49ab24581af --auth-type=web
 ```
 
-也可在 npm 网页的 Staged Packages 标签中审批 `@weishixiao/dsh-media@0.2.0`。官方要求维护者在正式审批时完成账号 2FA；Bypass 2FA 的 GAT 不能替代此步骤。首发 staging 可能生成 npm 管理的 `0.0.0-stage`，它不包含待发布版本内容，不是本插件可安装版本。见 [官方 staged publishing](https://docs.npmjs.com/staged-publishing/)。
+也可在 npm 网页的 Staged Packages 标签中审批 `@ccch1mneyyy/dsh-media@0.2.0`。官方要求维护者在正式审批时完成账号 2FA；Bypass 2FA 的 GAT 不能替代此步骤。首发 staging 可能生成 npm 管理的 `0.0.0-stage`，它不包含待发布版本内容，不是本插件可安装版本。见 [官方 staged publishing](https://docs.npmjs.com/staged-publishing/)。
 
 ## 可选 GitHub Actions provenance 模板（未启用）
 

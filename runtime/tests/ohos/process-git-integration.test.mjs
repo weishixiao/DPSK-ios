@@ -77,7 +77,7 @@ async function seed(f) {
 }
 
 test('真实worker的direct git与bash git共享注册，保留中文与NUL字节', async () => fixture(async f => {
-  assert.equal(await f.runtime.resolveExecutable('git'), '/DPSK/ohos/bin/git');
+  assert.equal(await f.runtime.resolveExecutable('git'), '/dsh-go/ohos/bin/git');
   assert.ok(f.runtime.capabilities.commands.includes('git'));
   await seed(f);
   const log = await f.run(['bash', '-c', 'git log --oneline -1']);

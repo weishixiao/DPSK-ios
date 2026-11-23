@@ -139,16 +139,16 @@ if (isMainThread) {
       await check('late env/loader/binding replacement cannot redirect captured authority or Worker native path', async () => {
         const loader = require('@dsh-go/ohos-native'); const originalLoad = loader.load;
         const binding = originalLoad('workspace-grants').binding;
-        const oldSnapshot = binding.snapshot, oldIssue = binding.issue, oldDirectory = process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR;
+        const oldSnapshot = binding.snapshot, oldIssue = binding.issue, oldDirectory = process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR;
         try {
           binding.snapshot = () => []; binding.issue = () => { throw Error('late replacement'); };
           loader.load = () => { throw Error('late loader replacement'); };
-          process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR = '/fixture-not-native';
+          process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR = '/fixture-not-native';
           assert.equal(borrowProcessGrantAuthority().snapshot().some(grant => grant.mountPoint === logical), true);
-          success(await run('cat marker', { env: { DPSK_OHOS_NATIVE_LIBRARY_DIR: '/caller-not-native' } }), 'GRANT\n');
+          success(await run('cat marker', { env: { DSH_GO_OHOS_NATIVE_LIBRARY_DIR: '/caller-not-native' } }), 'GRANT\n');
         } finally {
           binding.snapshot = oldSnapshot; binding.issue = oldIssue; loader.load = originalLoad;
-          process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR = oldDirectory;
+          process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR = oldDirectory;
         }
       });
       await check('actual other N-API Worker cannot snapshot/issue/rebind the main owner', async () => {

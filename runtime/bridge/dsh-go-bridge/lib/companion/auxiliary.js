@@ -4,7 +4,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { CompanionError, fields, isObject } from './schema.js';
 import { contextId, FULL_PRESET } from './prompt-context.js';
 
-const ROOT = '/DPSK/v1/companion/auxiliary';
+const ROOT = '/dsh-go/v1/companion/auxiliary';
 const MAX_BYTES = 65536;
 const MAX_RECEIPTS = 4096;
 const DEADLINE_MS = 90000;
@@ -258,7 +258,7 @@ export function createCompanionAuxiliaryRoutes({ ctx, send, readJson, instanceId
       if (path !== ROOT && !path.startsWith(`${ROOT}/`)) return false;
       try {
         admit(req);
-        const url = new URL(req.url, 'http://DPSK.invalid');
+        const url = new URL(req.url, 'http://dsh-go.invalid');
         if (path === ROOT && req.method === 'GET') {
           req.resume();
           const target = await resolve(url.searchParams.get('sessionId'));

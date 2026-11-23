@@ -6,7 +6,7 @@ import { pathToFileURL } from 'node:url';
 import OhSubprocessRuntime from '../../ohos/process/index.mjs';
 import OhSandboxProvider from '../../ohos/process/sandbox.mjs';
 
-process.env.DPSK_OHOS_SIM = '1';
+process.env.DSH_GO_OHOS_SIM = '1';
 assert.notEqual(globalThis[Symbol.for('dsh.go.ohos.sim')], true, 'Android 对照不加载仿真预载，旧环境变量不得启用它');
 const base = createRequire(join(resolve(process.env.OHOS_TEST_BASE_PREFIX), 'package.json'));
 const patched = createRequire(join(resolve(process.env.OHOS_TEST_PROCESS_PREFIX), 'package.json'));

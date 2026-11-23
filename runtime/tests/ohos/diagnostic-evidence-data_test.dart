@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/diagnostics/automatic_diagnostics.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_sections.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/diagnostics/automatic_diagnostics.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/diagnostics/diagnostics_sections.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -43,7 +43,7 @@ void main() {
     });
     expect((native.evidence['processExits'] as List).last, {'at': 200, 'source': 'hiAppEvent', 'event': 'APP_FREEZE'});
     expect((native.evidence['availability'] as Map)['processExits'], 'available');
-    await channel.recordAppError(source: 'flutter', errorType: 'StateError', stack: 'package:dpsk_app/main.dart:12:4');
+    await channel.recordAppError(source: 'flutter', errorType: 'StateError', stack: 'package:dsh_app/main.dart:12:4');
     await channel.recordVoiceStage('failed', backend: 'system', code: 7);
     expect(calls.map((call) => call.method), ['info', 'recordAppError', 'recordVoiceStage']);
     expect(calls.last.arguments, {'stage': 'failed', 'backend': 'system', 'code': 7});

@@ -60,7 +60,7 @@ def main():
                                  'outsideEvaluated': evaluated, 'pass': passed})
     report = {
         'rootfs': str(root), 'wrapperSha256': hashlib.sha256(wrapper.read_bytes()).hexdigest(),
-        'preloadSha256': hashlib.sha256((root / 'opt/DPSK/direct/preload.mjs').read_bytes()).hexdigest(),
+        'preloadSha256': hashlib.sha256((root / 'opt/dsh-go/direct/preload.mjs').read_bytes()).hexdigest(),
         'probeSha256': hashlib.sha256(source.read_bytes()).hexdigest(),
         'rows': rows,
         'scope': 'Real pinned Node 24.22.1, production generated wrapper/preload, own benign temporary modules; no Android claim.',

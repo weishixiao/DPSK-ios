@@ -46,22 +46,22 @@ def prepare_bridge_fixture(runtime, dsh, out):
     plugin = private / 'config-plugin'
     plugin.mkdir()
     (plugin / 'index.mjs').write_text('import z from ' + json.dumps(schema) + ';\n'
-        "export const name='DPSK-fixture-host-config';\n"
+        "export const name='dsh-go-fixture-host-config';\n"
         "export const Config=z.object({label:z.string().default('initial-label')});\n"
         'export function apply(){}\n')
-    save(plugin / 'package.json', {'name': 'DPSK-fixture-host-config', 'version': '1.0.0', 'type': 'module',
+    save(plugin / 'package.json', {'name': 'dsh-go-fixture-host-config', 'version': '1.0.0', 'type': 'module',
         'exports': {'.': './index.mjs', './package.json': './package.json'}})
     bundle = private / 'config-bundle'
     bundle.mkdir()
     (bundle / 'index.mjs').write_text('export function apply(){}\n')
-    save(bundle / 'package.json', {'name': 'DPSK-fixture-host-config-bundle', 'version': '1.0.0',
+    save(bundle / 'package.json', {'name': 'dsh-go-fixture-host-config-bundle', 'version': '1.0.0',
         'type': 'module', 'exports': {'.': './index.mjs', './package.json': './package.json',
         './cordis.patch.yml': './cordis.patch.yml'},
-        'dependencies': {'DPSK-fixture-host-config': 'file:' + str(plugin)},
+        'dependencies': {'dsh-go-fixture-host-config': 'file:' + str(plugin)},
         'dsh': {'bundle': {'patch': './cordis.patch.yml'}}})
-    save(bundle / 'cordis.patch.yml', [{'insert': [{'id': 'add12-owned-config', 'name': 'DPSK-fixture-host-config'}]}])
+    save(bundle / 'cordis.patch.yml', [{'insert': [{'id': 'add12-owned-config', 'name': 'dsh-go-fixture-host-config'}]}])
     (bundle / 'node_modules').mkdir()
-    (bundle / 'node_modules/DPSK-fixture-host-config').symlink_to(plugin, target_is_directory=True)
+    (bundle / 'node_modules/dsh-go-fixture-host-config').symlink_to(plugin, target_is_directory=True)
 
     profile = dsh / 'profiles/web'
     profile.mkdir(parents=True, exist_ok=True)
@@ -71,9 +71,9 @@ def prepare_bridge_fixture(runtime, dsh, out):
         'dsh': {'profile': {'bundles': ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app']}}}
     assert manifest['dsh']['profile']['bundles'] == ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app']
     assert manifest['dependencies'] == {}, 'Only the newly created private profile is eligible'
-    manifest['dependencies'] = {'DPSK-fixture-host-config': 'file:' + str(plugin),
-                               'DPSK-fixture-host-config-bundle': 'file:' + str(bundle)}
-    manifest['dsh']['profile']['bundles'].append('DPSK-fixture-host-config-bundle')
+    manifest['dependencies'] = {'dsh-go-fixture-host-config': 'file:' + str(plugin),
+                               'dsh-go-fixture-host-config-bundle': 'file:' + str(bundle)}
+    manifest['dsh']['profile']['bundles'].append('dsh-go-fixture-host-config-bundle')
     save(manifest_path, manifest)
     patch = profile / 'cordis.patch.yml'
     # dsh-app-boot creates this commented empty template during --dump-config.
@@ -86,7 +86,7 @@ def prepare_bridge_fixture(runtime, dsh, out):
     # This fixture never inserts the bridge. Only the production Host profile may do so.
     modules = profile / 'node_modules'
     modules.mkdir(exist_ok=True)
-    for name, target in [('DPSK-fixture-host-config', plugin), ('DPSK-fixture-host-config-bundle', bundle)]:
+    for name, target in [('dsh-go-fixture-host-config', plugin), ('dsh-go-fixture-host-config-bundle', bundle)]:
         (modules / name).symlink_to(target, target_is_directory=True)
     files = {}
     for root in [private, profile]:
@@ -98,6 +98,6 @@ def prepare_bridge_fixture(runtime, dsh, out):
                                     'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
     save(out / 'bridge-fixture-input.json', files)
     save(out / 'attachment-fixture-input.json', attachments)
-    return {'pkg': 'DPSK-fixture-host-bridge', 'entryId': 'add12-owned-config',
+    return {'pkg': 'dsh-go-fixture-host-bridge', 'entryId': 'add12-owned-config',
             'nativeEntryId': 'add12-owned-fixture', 'attachments': attachments,
             'assetSHA256': hashlib.sha256(asset.read_bytes()).hexdigest(), 'assetBytes': len(image)}

@@ -24,7 +24,7 @@ async function fixture(t) {
   const server=createServer((req,res)=>{const u=new URL(req.url,'http://local');void routes.handle(req,res,u.pathname,u)});
   server.on('upgrade',(req,s,h)=>routes.upgrade(req,s,h));
   server.listen(0,'127.0.0.1');await once(server,'listening');
-  const ws=new WebSocket(`ws://127.0.0.1:${server.address().port}/DPSK/v1/stream`);
+  const ws=new WebSocket(`ws://127.0.0.1:${server.address().port}/dsh-go/v1/stream`);
   const events=[],queued=[],waiters=[];
   ws.addEventListener('message',e=>{
     const m=JSON.parse(e.data);events.push(m);

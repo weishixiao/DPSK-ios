@@ -2,7 +2,7 @@ import { STATUS_CODES } from 'node:http';
 import { randomUUID } from 'node:crypto';
 import { runtimeCapabilities } from './snapshot.mjs';
 
-export const name = 'DPSK-ohos-runtime-capabilities';
+export const name = 'dsh-go-ohos-runtime-capabilities';
 const simulationSymbol = Symbol.for('dsh.go.ohos.sim');
 let bootId;
 
@@ -12,7 +12,7 @@ export function apply(ctx) {
   ctx.inject(['webServer'], webCtx => {
     webCtx.effect(() => webCtx.webServer.register({
       kind: 'exact',
-      path: '/DPSK/v1/runtime-capabilities',
+      path: '/dsh-go/v1/runtime-capabilities',
       handler(req, res) {
         // Use the existing connection's Host/Origin/authentication decision,
         // including its not-ready state. A read-only route gets no exemption.

@@ -25,7 +25,7 @@ async function fixture(t){
  server.on('upgrade',(req,socket,head)=>routes.upgrade(req,socket,head));server.listen(0,'127.0.0.1');await once(server,'listening');
  const port=server.address().port,sockets=[];
  async function stream(){
-  const ws=new WebSocket(`ws://127.0.0.1:${port}/DPSK/v1/stream`);sockets.push(ws);
+  const ws=new WebSocket(`ws://127.0.0.1:${port}/dsh-go/v1/stream`);sockets.push(ws);
   const messages=[],waiters=[];
   ws.addEventListener('message',e=>{const m=JSON.parse(e.data),i=waiters.findIndex(w=>w.p(m));if(i<0)messages.push(m);else{const [w]=waiters.splice(i,1);clearTimeout(w.timer);w.resolve(m)}});
   await once(ws,'open');
@@ -34,11 +34,11 @@ async function fixture(t){
   return {welcome,next,send:m=>ws.send(JSON.stringify(m))};
  }
  async function invoke(w,composer=false){
-  const response=await fetch(`http://127.0.0.1:${port}/DPSK/v1/invoke`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({v:1,pkg:'generation-test',id:composer?'go':'panel',surface:composer?'composer.actions':'panel',...(composer?{}:{action:'save'}),scope:{sessionId:'s'},stream:w?.welcome.conn})});return {status:response.status,...await response.json()};
+  const response=await fetch(`http://127.0.0.1:${port}/dsh-go/v1/invoke`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({v:1,pkg:'generation-test',id:composer?'go':'panel',surface:composer?'composer.actions':'panel',...(composer?{}:{action:'save'}),scope:{sessionId:'s'},stream:w?.welcome.conn})});return {status:response.status,...await response.json()};
  }
  async function feed(id='panel'){const f=core.feed('generation-test',id,'panel',normalizeScope({sessionId:'s'}),'');f.pin();await f.waitFirst(1000);return f}
  t.after(async()=>{for(const w of sockets)w.close();routes.dispose();core.dispose();while(disposers.length)disposers.pop()();server.closeAllConnections();await new Promise(r=>server.close(r));rmSync(dir,{recursive:true,force:true})});
- async function view(){const response=await fetch(`http://127.0.0.1:${port}/DPSK/v1/views/generation-test/panel?sessionId=s`);return {status:response.status,...await response.json()}}
+ async function view(){const response=await fetch(`http://127.0.0.1:${port}/dsh-go/v1/views/generation-test/panel?sessionId=s`);return {status:response.status,...await response.json()}}
  return {core,service,invoke,feed,stream,entry,warnings,routes,view};
 }
 const value=f=>(f.pending?.value??f.data).generation;

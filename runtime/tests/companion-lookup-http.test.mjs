@@ -10,7 +10,7 @@ import { auxiliarySse, piAiSourceFixture } from './fixtures/companion-auxiliary-
 import { chatSourceFixture } from './fixtures/companion-chat-usage-source.mjs';
 import { estimateLookupInputTokens } from '../bridge/dsh-go-bridge/lib/companion/lookup-input.js';
 
-const PATH = '/DPSK/v1/companion/lookup';
+const PATH = '/dsh-go/v1/companion/lookup';
 const webSource = process.env.DSH_LOOKUP_SOURCE, llmSource = process.env.DSH_AUXILIARY_SOURCES;
 const sourceTest = (name, fn) => test(name, { skip: webSource ? false : 'Set DSH_LOOKUP_SOURCE to the verified E01 plugin source' }, fn);
 const answerTest = (name, fn) => test(name, { skip: webSource && llmSource ? false : 'Set DSH_LOOKUP_SOURCE and DSH_AUXILIARY_SOURCES to verified sources' }, fn);

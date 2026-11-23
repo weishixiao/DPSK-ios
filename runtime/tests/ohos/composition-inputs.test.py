@@ -210,7 +210,7 @@ class DeletionVariantTests(unittest.TestCase):
         self.addCleanup(temporary.cleanup)
         self.root = Path(temporary.name)
         self.prefix = self.root / 'prefix'
-        self.companion = self.prefix / 'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs'
+        self.companion = self.prefix / 'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs'
         self.companion.parent.mkdir(parents=True)
         shutil.copyfile(ROOT / 'runtime/session-deletion/core.mjs', self.companion)
         self.output = self.root / 'generated'

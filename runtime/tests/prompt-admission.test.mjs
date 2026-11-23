@@ -27,7 +27,7 @@ const { createUserMessage } = await load('dsh-llm');
 const { SessionProjectionRegistry } = await load('dsh-session-projection');
 const { AgentLoop, ReactLoopInbox, ReactLoopAgent, inboxProjectionDefinition, RuntimeContextProjection, SystemPromptProjection } = await expose('dsh-agent-loop', 'ReactLoopInbox, ReactLoopAgent, inboxProjectionDefinition, RuntimeContextProjection, SystemPromptProjection');
 const { SessionCommandController, ApiSessionAgentController } = await expose('dsh-api-session-controller', 'SessionCommandController, ApiSessionAgentController');
-symlinkSync(join(base, 'dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs'), join(temporary, 'DPSK-deletion.mjs'));
+symlinkSync(join(base, 'dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs'), join(temporary, 'dsh-go-deletion.mjs'));
 const { SessionWriteLease } = await expose('dsh-session-persistence-jsonl', 'SessionWriteLease');
 const png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGP4//8/AAX+Av6nNYGEAAAAAElFTkSuQmCC';
 function deferred() {

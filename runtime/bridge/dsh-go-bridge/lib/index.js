@@ -1,13 +1,13 @@
 import { mountCompanionTasks } from "./companion/task-service.js";
 // dsh-go-bridge, host half (docs/design/plugin-seams.md §5.2, §9.2).
 //
-//   GET  /DPSK/v1/inventory   wire format v1: release, packages with browser halves, the last
+//   GET  /dsh-go/v1/inventory   wire format v1: release, packages with browser halves, the last
 //                               slot occupancy report and `routeGuard`, measured on every
 //                               read (see probeGuard)
-//   POST /DPSK/v1/occupancy   the browser half reports the live slot composition of its page
-//   GET  /DPSK/v1/capabilities protocol major and implemented route families (not permissions)
+//   POST /dsh-go/v1/occupancy   the browser half reports the live slot composition of its page
+//   GET  /dsh-go/v1/capabilities protocol major and implemented route families (not permissions)
 //
-//   /DPSK/v1/{contributions,views,invoke,assets} + WS /DPSK/v1/stream
+//   /dsh-go/v1/{contributions,views,invoke,assets} + WS /dsh-go/v1/stream
 //                               native plugin protocol v1 (docs/design/native-plugins-protocol.md),
 //                               backed by the `dshGo` service plugins get with ctx.inject(['dshGo'])
 //
@@ -40,9 +40,9 @@ import { STREAM_PATH, createNativeRoutes } from "./native/routes.js";
 
 export const name = "dsh-go-bridge";
 
-const PREFIX = "/DPSK";
+const PREFIX = "/dsh-go";
 /** Unauthenticated canary route: the guard self-test expects it to be refused without credentials. */
-const CANARY = "/DPSK-guard-canary";
+const CANARY = "/dsh-go-guard-canary";
 const GUARD_PROBE_TTL_MS = 10000;
 const VERSION = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version;
 const CAPABILITIES = [
@@ -51,7 +51,7 @@ const CAPABILITIES = [
   "speech",
 ];
 const ORIGINAL = Symbol.for("cordis.original");
-const GUARDED = Symbol.for("DPSK.guarded");
+const GUARDED = Symbol.for("dsh-go.guarded");
 const DEFAULT_OPEN_ROUTES = ["exact /connect", "exact /oauth/callback"];
 const MAX_BODY = 512 * 1024;
 const MAX_SLOTS = 400;
@@ -191,7 +191,7 @@ function installFallbackGuard(webCtx, open) {
         const status = rejectionOf(webCtx, req);
         if (status !== undefined) {
           const unavailable = status === 503 && (sessionDeletionUnavailable(req) || pluginConfigUnavailable(req));
-          res.writeHead(status, { "cache-control": "no-store", "content-type": unavailable ? "application/json; charset=utf-8" : "text/plain; charset=utf-8", "x-DPSK-guard": "reject" });
+          res.writeHead(status, { "cache-control": "no-store", "content-type": unavailable ? "application/json; charset=utf-8" : "text/plain; charset=utf-8", "x-dsh-go-guard": "reject" });
           res.end(req.method === "HEAD" ? undefined : unavailable ? JSON.stringify(unavailable) : `${STATUS_CODES[status]}\n`);
           return;
         }
@@ -423,7 +423,7 @@ export function apply(ctx, config) {
     const handler = async (req, res) => {
       const rejection = rejectionOf(webCtx, req);
       if (rejection !== undefined) return send(res, rejection, rejection === 503 && (sessionDeletionUnavailable(req) || pluginConfigUnavailable(req)) || STATUS_CODES[rejection]);
-      const url = new URL(req.url ?? "/", "http://DPSK.invalid");
+      const url = new URL(req.url ?? "/", "http://dsh-go.invalid");
       const path = url.pathname;
       if (path === `${PREFIX}/v1/usage/collect`) {
         if (req.method !== "POST") return send(res, 405);
@@ -471,6 +471,6 @@ export function apply(ctx, config) {
       return send(res, 404, { error: { code: "route-not-found", message: "not found" } });
     };
 
-    webCtx.effect(() => webCtx.webServer.register({ kind: "prefix", path: PREFIX, handler }), "dsh-go-bridge: /DPSK routes");
+    webCtx.effect(() => webCtx.webServer.register({ kind: "prefix", path: PREFIX, handler }), "dsh-go-bridge: /dsh-go routes");
   });
 }

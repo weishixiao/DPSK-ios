@@ -480,7 +480,7 @@ def main():
                                     'productionPayloadModified': False, 'admission': selection['admission']})
         commands = build_commands(selection, native)
         node_delta = {'TMPDIR': str(args.out / 'tmp'), 'DSH_HOME': str(args.out / 'home'),
-                      'DSH_PREFIX': str(view), 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native),
+                      'DSH_PREFIX': str(view), 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native),
                       'DSH_IMAGE_TEST_OUT': str(args.out), 'DSH_IMAGE_TEST_TRACE': str(args.out / 'SDK-TRACE.jsonl'),
                       'LD_PRELOAD': str(selection['publication'])}
         commands.append({'name': 'node', 'argv': [str(selection['node']), *(['--jitless'] if args.jitless else []),

@@ -38,7 +38,7 @@ async function fixture(t, declaration = manifest) {
   apply(ctx, { persist: false, guardRoutes: false });
   const responses = []; let holdMedia = false, mediaRouteGate;
   const server = createServer(async (req, res) => {
-    if (req.url.startsWith('/DPSK/v1/media/')) {
+    if (req.url.startsWith('/dsh-go/v1/media/')) {
       const gate = mediaRouteGate; mediaRouteGate = undefined;
       if (gate) { gate.arrived.resolve(res); await gate.resume.promise; }
       responses.push(res);
@@ -78,11 +78,11 @@ async function fixture(t, declaration = manifest) {
         if (op === 1) deliver(JSON.parse(data.toString()));
       }
     });
-    socket.write('GET /DPSK/v1/stream HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
+    socket.write('GET /dsh-go/v1/stream HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
     const out = { socket, messages, send: m => socket.write(encodeFrame(1, JSON.stringify(m), { mask: true })), next(p) { const i = messages.findIndex(p); if (i >= 0) return Promise.resolve(messages.splice(i, 1)[0]); return new Promise((r, reject) => { const w = { p, r }; w.timer = setTimeout(() => reject(new Error('message timeout')), 1500); waiters.push(w); }); } };
     out.send({ t: 'hello', v: [1], ...(features === undefined ? {} : { features }) }); out.welcome = await out.next(m => m.t === 'welcome'); return out;
   }
-  const request = (path, options = {}) => fetch(`http://127.0.0.1:${port}/DPSK/v1/${path}`, { ...options, headers: { authorization: 'Bearer test', ...options.headers } });
+  const request = (path, options = {}) => fetch(`http://127.0.0.1:${port}/dsh-go/v1/${path}`, { ...options, headers: { authorization: 'Bearer test', ...options.headers } });
   const invoke = async (w, scope = { sessionId: 's1' }, pkg = 'voice-test') => { const response = await request('invoke', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ v: 1, pkg, id: 'go', surface: 'composer.actions', scope, stream: w?.welcome.conn }) }); return { status: response.status, ...await response.json() }; };
   const mediaPath = (e, pkg = 'voice-test') => `media/${pkg}/clip?lease=${e.lease}${e.key === undefined ? '' : `&key=${e.key}`}`;
   t.after(async () => { for (const s of sockets) s.destroy(); while (disposers.length) disposers.pop()(); server.closeAllConnections(); await new Promise(r => server.close(r)); rmSync(dir, { recursive: true, force: true }); });
@@ -162,7 +162,7 @@ test('media disconnected before dispatch leaves its plugin slot available', asyn
   const gate = f.holdNextMediaRoute();
   const socket = connect(f.port, '127.0.0.1'); t.after(() => socket.destroy());
   await once(socket, 'connect');
-  socket.write(`GET /DPSK/v1/${path} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\n\r\n`);
+  socket.write(`GET /dsh-go/v1/${path} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\n\r\n`);
   const response = await gate.arrived, closed = once(response, 'close');
   socket.destroy(); await closed;
   assert.equal(response.destroyed, true);
@@ -346,7 +346,7 @@ async function unfinishedMedia(t, f, effect, producerReady) {
   f.holdNextMediaResponse();
   const count = f.responses.length;
   const socket = connect(f.port, '127.0.0.1'); t.after(() => socket.destroy()); await once(socket, 'connect');
-  socket.pause(); socket.write(`GET /DPSK/v1/${f.mediaPath(effect)} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nConnection: close\r\n\r\n`);
+  socket.pause(); socket.write(`GET /dsh-go/v1/${f.mediaPath(effect)} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nConnection: close\r\n\r\n`);
   if (producerReady) {
     await producerReady;
     // Let the actual transfer continuation write its headers and first body byte.

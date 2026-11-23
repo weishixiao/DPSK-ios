@@ -112,7 +112,7 @@ async function fixture(t) {
       }
     } catch (error) { fail(error); }
   });
-  socket.write('GET /DPSK/v1/stream HTTP/1.1\r\nHost: localhost\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
+  socket.write('GET /dsh-go/v1/stream HTTP/1.1\r\nHost: localhost\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
   const send = message => socket.write(encodeFrame(1, JSON.stringify(message), { mask: true }));
   send({ t: 'hello', v: [1], features: ['voice', 'micro'] });
   const welcome = await next(message => message.t === 'welcome');
@@ -123,7 +123,7 @@ async function fixture(t) {
     const body = JSON.stringify({ v: 1, pkg, id: 'go', surface: 'composer.actions',
       scope: { sessionId: 's1' }, stream: welcome.conn });
     const result = await new Promise((resolve, reject) => {
-      const req = request({ host: '127.0.0.1', port, path: '/DPSK/v1/invoke', method: 'POST', agent: false,
+      const req = request({ host: '127.0.0.1', port, path: '/dsh-go/v1/invoke', method: 'POST', agent: false,
         headers: { 'content-type': 'application/json', 'content-length': Buffer.byteLength(body) } }, res => {
         const chunks = [];
         res.on('data', chunk => chunks.push(chunk));

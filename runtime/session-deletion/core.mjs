@@ -12,7 +12,7 @@ const key = (id) => createHash('sha256').update(id).digest('hex');
 
 export function createDeletionSeam(storage, { acquire, parseGeneration, notFound }) {
   const root = resolve(storage.root);
-  const control = join(root, '.DPSK-lifecycle');
+  const control = join(root, '.dsh-go-lifecycle');
   const pending = new Set();
   const draining = new Map();
   const context = new AsyncLocalStorage();
@@ -44,7 +44,7 @@ export function createDeletionSeam(storage, { acquire, parseGeneration, notFound
     }
     let lock;
     for (let attempt = 0; ; attempt++) {
-      try { lock = await acquire(join(control, '_mutations'), 'DPSK-mutations'); break; }
+      try { lock = await acquire(join(control, '_mutations'), 'dsh-go-mutations'); break; }
       catch (error) {
         if (error?.name !== 'SessionAlreadyOwnedError' || attempt >= 500) throw error;
         await delay(20);
@@ -184,7 +184,7 @@ export function createDeletionSeam(storage, { acquire, parseGeneration, notFound
       });
       // Workspace cleanup can wait for a stop provider that needs the mutation lease.
       await hooks.cleanup?.(id);
-      storage.ctx.emit('DPSK/session-deleted', id);
+      storage.ctx.emit('dsh-go/session-deleted', id);
     } finally {
       try { await artifact?.release(); }
       finally {
@@ -226,7 +226,7 @@ export function createDeletionSeam(storage, { acquire, parseGeneration, notFound
       try {
         // The per-session leases below do not span siblings or storage instances.
         // Keep one owner of this parent's retry record until all cleanup completes.
-        operation = await acquire(join(slot(id), 'deletion'), 'DPSK-deletion');
+        operation = await acquire(join(slot(id), 'deletion'), 'dsh-go-deletion');
         const children = savedCascade(id);
         const retry = deleted(id);
         const live = storage.ctx.get('sessions')?.list() ?? [];

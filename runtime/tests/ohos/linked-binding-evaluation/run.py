@@ -66,7 +66,7 @@ assert 'node::AddLinkedBinding' in symbols and 'node::GetCurrentEnvironment' in 
 cases=[]
 base_env={**os.environ,'NODE_OPTIONS':'','DSH_M6_TEST_ADDON':str(addon)}
 base_env.pop('LD_PRELOAD',None)
-for key in ['DPSK_OHOS_SIM','DPSK_OHOS_SIM_PLATFORM','DPSK_OHOS_SIM_ADDONS']:
+for key in ['DSH_GO_OHOS_SIM','DSH_GO_OHOS_SIM_PLATFORM','DSH_GO_OHOS_SIM_ADDONS']:
  base_env.pop(key,None)
 def disable_core():resource.setrlimit(resource.RLIMIT_CORE,(0,0))
 def run_case(name,args,env,wanted=0,contains=None,sentinel_absent=None,expect_sim=None):
@@ -90,12 +90,12 @@ def run_case(name,args,env,wanted=0,contains=None,sentinel_absent=None,expect_si
     assertions['simMarker']=value.get('sim')==expect_sim
     if expect_sim:assertions['wasmAbsent']=value.get('wasmAbsent') is True
   except (ValueError,IndexError):assertions['jsonObservation']=False
- record={'name':name,'argv':[str(node),*map(str,args)],'env':{k:env[k] for k in ['NODE_OPTIONS','LD_PRELOAD','DSH_M6_TEST_ADDON','DPSK_OHOS_SIM','DPSK_OHOS_SIM_PLATFORM','DPSK_OHOS_SIM_ADDONS','DSH_HOME','DSH_M6_BOOTSTRAP_SENTINEL','DSH_M6_TEST_RUNTIME','DSH_M6_TEST_FIXTURES','DSH_M6_TEST_REGISTER'] if k in env},'returncode':r.returncode,'expectedReturncode':wanted,'assertions':assertions,'result':value,'elapsedSeconds':time.monotonic()-start,'pass':all(assertions.values())}
+ record={'name':name,'argv':[str(node),*map(str,args)],'env':{k:env[k] for k in ['NODE_OPTIONS','LD_PRELOAD','DSH_M6_TEST_ADDON','DSH_GO_OHOS_SIM','DSH_GO_OHOS_SIM_PLATFORM','DSH_GO_OHOS_SIM_ADDONS','DSH_HOME','DSH_M6_BOOTSTRAP_SENTINEL','DSH_M6_TEST_RUNTIME','DSH_M6_TEST_FIXTURES','DSH_M6_TEST_REGISTER'] if k in env},'returncode':r.returncode,'expectedReturncode':wanted,'assertions':assertions,'result':value,'elapsedSeconds':time.monotonic()-start,'pass':all(assertions.values())}
  cases.append(record)
  print(json.dumps({'name':name,'returncode':r.returncode,'pass':record['pass']}),flush=True)
  return record
 sim=runtime/'sim/preload.mjs'
-strict={**base_env,'DPSK_OHOS_SIM':'1','DPSK_OHOS_SIM_PLATFORM':'openharmony','DPSK_OHOS_SIM_ADDONS':json.dumps([str(addon)])}
+strict={**base_env,'DSH_GO_OHOS_SIM':'1','DSH_GO_OHOS_SIM_PLATFORM':'openharmony','DSH_GO_OHOS_SIM_ADDONS':json.dumps([str(addon)])}
 for mode,flags_for_node,env in [('jit',[],base_env),('strict',['--jitless','--import',sim],strict)]:
  for scenario in ['main','inherit','late-parent','worker-local','legacy-late','publication']:
   run_case(mode+'-'+scenario,[*flags_for_node,here/'main.mjs',scenario],env,expect_sim=(mode=='strict'))

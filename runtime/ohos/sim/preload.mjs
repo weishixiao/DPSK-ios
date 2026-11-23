@@ -7,9 +7,9 @@ import { syncBuiltinESMExports } from 'node:module';
 
 import './marker.mjs';
 
-const allowed = JSON.parse(process.env.DPSK_OHOS_SIM_ADDONS || '[]');
+const allowed = JSON.parse(process.env.DSH_GO_OHOS_SIM_ADDONS || '[]');
 if (!Array.isArray(allowed) || allowed.some((path) => typeof path !== 'string' || !isAbsolute(path))) {
-  throw new TypeError('DPSK_OHOS_SIM_ADDONS must be a JSON array of absolute addon paths');
+  throw new TypeError('DSH_GO_OHOS_SIM_ADDONS must be a JSON array of absolute addon paths');
 }
 const addons = new Set(allowed.map((path) => fs.realpathSync(path)));
 const write = fs.writeSync;
@@ -58,10 +58,10 @@ fs.symlink = function (source, target, type, callback) {
 };
 fs.symlinkSync = function () { throw failure('link', 'fs.symlinkSync', 'EACCES'); };
 fsp.symlink = async function () { throw failure('link', 'fs.promises.symlink', 'EACCES'); };
-if (process.env.DPSK_OHOS_SIM_PLATFORM === 'openharmony') {
+if (process.env.DSH_GO_OHOS_SIM_PLATFORM === 'openharmony') {
   Object.defineProperty(process, 'platform', { value: 'openharmony' });
-} else if (process.env.DPSK_OHOS_SIM_PLATFORM) {
-  throw new TypeError('DPSK_OHOS_SIM_PLATFORM may only be openharmony or empty');
+} else if (process.env.DSH_GO_OHOS_SIM_PLATFORM) {
+  throw new TypeError('DSH_GO_OHOS_SIM_PLATFORM may only be openharmony or empty');
 }
 if (!Reflect.deleteProperty(globalThis, 'WebAssembly')) throw new Error('cannot disable WebAssembly');
 syncBuiltinESMExports();

@@ -4,7 +4,7 @@ import { isAbsolute } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { SIGNAL_EVENT_BYTES, projectRunResult } from './signals-schema.js';
 
-const ROOT = '/DPSK/v1/companion/signals';
+const ROOT = '/dsh-go/v1/companion/signals';
 const ORIGINAL = Symbol.for('cordis.original');
 const MAX_STREAMS = 8;
 const raw = (value) => value?.[ORIGINAL] ?? value;

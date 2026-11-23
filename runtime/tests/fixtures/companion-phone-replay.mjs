@@ -24,12 +24,12 @@ export async function phoneHttp(f) {
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const port = server.address().port;
   return {
-    url: 'http://127.0.0.1:' + port + '/DPSK/v1/companion/prompt-context',
+    url: 'http://127.0.0.1:' + port + '/dsh-go/v1/companion/prompt-context',
     request(value) {
       const get = typeof value === 'string', data = get ? '' : JSON.stringify(value);
       return new Promise((resolve, reject) => {
         const req = httpRequest({ host: '127.0.0.1', port,
-          path: '/DPSK/v1/companion/prompt-context' + (get ? '?sessionId=' + encodeURIComponent(value) : ''),
+          path: '/dsh-go/v1/companion/prompt-context' + (get ? '?sessionId=' + encodeURIComponent(value) : ''),
           method: get ? 'GET' : 'POST',
           headers: get ? {} : { 'content-type': 'application/json', 'content-length': Buffer.byteLength(data) },
         }, res => {

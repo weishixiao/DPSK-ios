@@ -109,7 +109,7 @@ async function http(t, f, store = f.store) {
   return body => new Promise((resolve, reject) => {
     const data = JSON.stringify(body);
     const req = httpRequest({ host: '127.0.0.1', port: server.address().port,
-      path: '/DPSK/v1/companion/prompt-context', method: 'POST',
+      path: '/dsh-go/v1/companion/prompt-context', method: 'POST',
       headers: { 'content-type': 'application/json', 'content-length': Buffer.byteLength(data) },
     }, res => {
       const chunks = []; res.on('data', value => chunks.push(value));
@@ -207,7 +207,7 @@ integration('same-id replacement Session and new bridge policy never copy old si
   const oldTicket = s.captureMemory(agent);
   await f.bind(agent.id);
   agent.session = f.engine.session.Session.create(agent.id);
-  agent.session.append('agent-preset/selected', { agentPreset: 'DPSK-companion-full' });
+  agent.session.append('agent-preset/selected', { agentPreset: 'dsh-go-companion-full' });
   try {
     assert.equal(f.coordinator.allowsQueryContext(agent), false);
     assert.equal(s.info(agent).memoryMode, 'automatic');

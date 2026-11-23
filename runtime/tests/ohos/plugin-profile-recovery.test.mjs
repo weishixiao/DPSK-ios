@@ -11,7 +11,7 @@ const actor = fileURLToPath(new URL('./plugin-profile-recovery-actor.mjs', impor
 const preload = process.env.DSH_PLUGIN_SIM_PRELOAD ?? fileURLToPath(new URL('../../ohos/sim/preload.mjs', import.meta.url));
 function invoke(mode, statePath, prefix) {
   return spawnSync(process.execPath, ['--jitless', '--import', preload, actor, mode], {
-    env: { ...process.env, DSH_PREFIX: prefix, DPSK_OHOS_SIM_PLATFORM: 'openharmony',
+    env: { ...process.env, DSH_PREFIX: prefix, DSH_GO_OHOS_SIM_PLATFORM: 'openharmony',
       DSH_PLUGIN_CRASH_STATE: statePath, DSH_PLUGIN_CONTRACT_REPORT: '' },
     encoding: 'utf8', timeout: 20000,
   });

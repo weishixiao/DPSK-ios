@@ -1,4 +1,4 @@
-package com.dpsk.harness.runtime
+package io.github.ccch1mneyyy.dsh_app.runtime
 
 import android.content.Context
 import android.os.Process as AndroidProcess
@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
     executable(File(root, DirectLaunch.loaderPath("x86_64")))
     executable(File(root, "opt/node/bin/node"))
     for (name in listOf("preload.mjs", "dns.mjs", "modules.mjs", "native-addons.json")) {
-        File(root, "opt/DPSK/direct/$name").apply { parentFile.mkdirs(); writeText("fixture") }
+        File(root, "opt/dsh-go/direct/$name").apply { parentFile.mkdirs(); writeText("fixture") }
     }
     // Minimal static ELF64 metadata for the real DirectLaunch planner.
     File(root, "opt/dsh/node_modules/@vscode/ripgrep-linux-x64/bin/rg").apply {
@@ -58,8 +58,8 @@ fun main(args: Array<String>) {
         override fun onExit(source: DshProcess, code: Int, expected: Boolean) { check(code == 0); done.countDown() }
     })
     val child = ProcessBuilder("/bin/sleep", "45").directory(if (captured) root else other).apply {
-        if (captured) environment()["DPSK_RUNTIME_ROOT"] = root.canonicalPath
-        else environment().remove("DPSK_RUNTIME_ROOT")
+        if (captured) environment()["DSH_GO_RUNTIME_ROOT"] = root.canonicalPath
+        else environment().remove("DSH_GO_RUNTIME_ROOT")
     }.start()
     val pid = child.pid().toInt()
     Os.permittedSignalPids += pid

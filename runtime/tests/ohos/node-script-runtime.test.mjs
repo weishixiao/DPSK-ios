@@ -39,7 +39,7 @@ test('actual runtime advertises only the inherited Worker backend and preserves 
   const f = await fixture(t);
   assert.equal(nodeScriptAvailable(), true);
   assert.equal(f.runtime.capabilities.nodeScripts, 'worker-rebased');
-  assert.equal(await f.runtime.resolveExecutable('node', {}), '/DPSK/ohos/bin/node');
+  assert.equal(await f.runtime.resolveExecutable('node', {}), '/dsh-go/ohos/bin/node');
   await writeFile(join(f.work, '依赖.cjs'), 'module.exports="相对模块";');
   await writeFile(join(f.work, '依赖.mjs'), 'export default "相对模块";');
   const originalCwd = process.cwd();

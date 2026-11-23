@@ -12,7 +12,7 @@ mkdir -p "$OUT"
 ROOT="$(CDPATH= cd "$ROOT" && pwd -P)"
 OUT="$(CDPATH= cd "$OUT" && pwd -P)"
 command -v java >/dev/null || { echo 'java required' >&2; exit 1; }
-[[ -x "$PROOT" && -f "$ROOT/opt/DPSK/direct/preload.mjs" ]] || { echo 'built direct rootfs and host PRoot required' >&2; exit 1; }
+[[ -x "$PROOT" && -f "$ROOT/opt/dsh-go/direct/preload.mjs" ]] || { echo 'built direct rootfs and host PRoot required' >&2; exit 1; }
 
 bash "$HERE/compile-host-plan.sh" "$OUT/host-plan.jar" > "$OUT/planner-compile.log" 2>&1
 python3 "$HERE/startup-policy.py" --output "$OUT/startup-policy" > "$OUT/startup-policy.log" 2>&1

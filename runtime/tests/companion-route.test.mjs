@@ -8,10 +8,10 @@ import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
 import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
 
-const ROOT = '/DPSK/v1/companion';
+const ROOT = '/dsh-go/v1/companion';
 const AUTH = 'Bearer synthetic-companion-test';
 async function fixture(t, { connection = true } = {}) {
-  const home = await mkdtemp(join(tmpdir(), 'DPSK-companion-route-'));
+  const home = await mkdtemp(join(tmpdir(), 'dsh-go-companion-route-'));
   const path = join(home, 'companion', 'state.json');
   const routes = [], disposals = [], guarded = [];
   const ctx = {

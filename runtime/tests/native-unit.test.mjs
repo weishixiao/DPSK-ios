@@ -20,7 +20,7 @@ const { WsConnection, encodeFrame } = await import(new URL("ws.js", LIB));
 
 const CAPS = { versions: [1], app: "0.10.0", locale: "zh-CN", key: "k" };
 const LIVE0 = { panels: new Map(), strips: new Set(), handlers: new Set(), degraded: false, runtimeIssues: [] };
-const tmp = mkdtempSync(join(tmpdir(), "DPSK-native-unit-"));
+const tmp = mkdtempSync(join(tmpdir(), "dsh-go-native-unit-"));
 process.on("exit", () => rmSync(tmp, { recursive: true, force: true }));
 const codes = (issues) => issues.map((i) => `${i.code}@${i.path}`);
 
@@ -688,7 +688,7 @@ test("core: completed first-data deadlines release their waiters while the feed 
   const sub = { id: "panel", send: (message) => messages.push(message) };
   feed.attach(sub);
   for (let i = 0; i < 3; i++) {
-    const url = new URL("http://local/DPSK/v1/views/waiter-a/p");
+    const url = new URL("http://local/dsh-go/v1/views/waiter-a/p");
     let status;
     let body;
     const res = { headersSent: false, writeHead(code) { status = code; this.headersSent = true; }, end(value) { body = JSON.parse(value); } };

@@ -375,7 +375,7 @@ def deletion_variants(repo: Path, prefix: Path, output: Path):
     """Generate only the two OH deletion variants; never rewrite shared Android inputs."""
     rows = [
         ('runtime/session-deletion/core.mjs',
-         'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs', 'core.mjs',
+         'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs', 'core.mjs',
          '25a4da7393ed29ec1427862796ea310c55e32368e616b6ab43e36a3a56976430',
          'db7fd228ef4190023ac37850f47a61b0a0f0e9111428fe61bec956017e295bf6'),
         ('runtime/bridge/dsh-go-bridge/lib/session-deletion.js',

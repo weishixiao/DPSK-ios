@@ -15,7 +15,7 @@ import { createRecallContexts } from '../../bridge/dsh-go-bridge/lib/companion/r
 import { createCompanionPromptContext } from '../../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
 import { companionFullDefault, companionFullRules } from '../../bridge/dsh-go-bridge/lib/companion/full-persona.js';
 
-const FULL_PRESET = 'DPSK-companion-full';
+const FULL_PRESET = 'dsh-go-companion-full';
 const personaText = companionFullDefault;
 const personaRules = companionFullRules;
 
@@ -61,7 +61,7 @@ export async function createFixture({ prefix, home: existingHome, keepHome = fal
   // One Host owns DSH_HOME in a process. Tests of independent Hosts use child
   // processes, rather than pretending a mutable process-global home is scoped.
   if (environmentOwner) throw new Error('Independent recall Hosts require independent fixture processes');
-  const home = existingHome ?? await mkdtemp(join(tmpdir(), 'DPSK-recall-engine-'));
+  const home = existingHome ?? await mkdtemp(join(tmpdir(), 'dsh-go-recall-engine-'));
   await mkdir(home, { recursive: true });
   const token = {};
   environmentOwner = token;

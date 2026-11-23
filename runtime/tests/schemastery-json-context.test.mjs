@@ -130,11 +130,11 @@ for (const [name, z] of modules) {
       send(_res, status, body) { response = { status, body }; },
       readBody() { throw Error('GET only'); },
     });
-    await api.handle({ method: 'GET' }, {}, '/DPSK/v1/plugin-config/broken');
+    await api.handle({ method: 'GET' }, {}, '/dsh-go/v1/plugin-config/broken');
     assert.equal(response.status, 404);
     assert.equal(response.body.error.code, 'entry-unavailable');
     // No test-side cleanup between the failed and successful public operations.
-    await api.handle({ method: 'GET' }, {}, '/DPSK/v1/plugin-config/healthy');
+    await api.handle({ method: 'GET' }, {}, '/dsh-go/v1/plugin-config/healthy');
     assert.equal(response.status, 200);
     assert.deepEqual(response.body.value, { visible: 'healthy' });
     assert.ok(response.body.schema.refs);

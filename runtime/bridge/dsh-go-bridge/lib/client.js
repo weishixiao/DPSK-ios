@@ -36,15 +36,15 @@ window.__ModuleLoader__.load({
 		//    of the registering Loader entry. Cordis starts the service's consumers one microtask after
 		//    `internal/service` fires, so every consumer is stamped if this plugin is running by then;
 		//    hence no `inject` and `dsh.client.immediately`.
-		// 2. Occupancy: reports every slot's entries to POST /DPSK/v1/occupancy (debounced, deduped).
-		// 3. Island mode (`#DPSK-island=<slot>[,<slot>...]` or `window.__dshGoBridge.mask([...])`):
+		// 2. Occupancy: reports every slot's entries to POST /dsh-go/v1/occupancy (debounced, deduped).
+		// 3. Island mode (`#dsh-go-island=<slot>[,<slot>...]` or `window.__dshGoBridge.mask([...])`):
 		//    shadows the official entries of those list / keyed slots with empty ones at a lower
 		//    priority. Outlets that render entry components (input dock, header actions) then show only
 		//    third-party entries; menus whose owner draws entry labels itself (sidebar.panellist,
 		//    settings navigation) keep a stub row per masked cell, which the island's CSS must hide.
 		// 4. Right pane tabs: a `sidebar.right.pane.tab(.title)` entry is keyed by a tab type id whose
 		//    name lives in the `sidebarRightTabs` registry, not in the slot. Reports carry that type
-		//    (`tab`, and `label` = its name); `openTab(id)` / `#DPSK-tab=<id>` opens it on screen.
+		//    (`tab`, and `label` = its name); `openTab(id)` / `#dsh-go-tab=<id>` opens it on screen.
 		const NAME = "dsh-go-bridge";
 		const ORIGINAL = Symbol.for("cordis.original");
 		const MASK_PRIORITY = -1000000007;
@@ -85,7 +85,7 @@ window.__ModuleLoader__.load({
 		}
 
 		function islandSlots() {
-			return (hashParam("DPSK-island") || "").split(",").map((s) => s.trim()).filter(Boolean);
+			return (hashParam("dsh-go-island") || "").split(",").map((s) => s.trim()).filter(Boolean);
 		}
 
 		const RIGHT_TAB_SLOTS = new Set(["sidebar.right.pane.tab", "sidebar.right.pane.tab.title"]);
@@ -254,7 +254,7 @@ window.__ModuleLoader__.load({
 				const body = JSON.stringify({ bootRev: boot.rev, attribution: stampedFrom, unresolved: collected.unresolved, slots: collected.slots });
 				if (body === lastSent) return;
 				try {
-					const response = await fetch(new URL("DPSK/v1/occupancy", document.baseURI), {
+					const response = await fetch(new URL("dsh-go/v1/occupancy", document.baseURI), {
 						method: "POST",
 						credentials: "same-origin",
 						headers: { "content-type": "application/json" },
@@ -323,7 +323,7 @@ window.__ModuleLoader__.load({
 				}
 				return { ok: false, reason: lastError };
 			};
-			const pendingTab = hashParam("DPSK-tab");
+			const pendingTab = hashParam("dsh-go-tab");
 			if (pendingTab) {
 				ctx.effect(() => {
 					let cancelled = false;

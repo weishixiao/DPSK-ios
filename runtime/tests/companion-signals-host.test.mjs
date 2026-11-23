@@ -10,7 +10,7 @@ import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/rou
 import { createCompanionSignals } from '../bridge/dsh-go-bridge/lib/companion/signals.js';
 import { apply as applyBridge } from '../bridge/dsh-go-bridge/lib/index.js';
 
-const ROOT = '/DPSK/v1/companion/signals';
+const ROOT = '/dsh-go/v1/companion/signals';
 const AUTH = 'Bearer synthetic-c760-http';
 const integration = (name, run) => test(name, { skip: !process.env.DSH_PREFIX, timeout: 20000, concurrency: false }, run);
 const send = (res, status, body) => { res.writeHead(status, { 'content-type': 'application/json' }); res.end(JSON.stringify(body)); };

@@ -3,7 +3,7 @@ import { realpath } from 'node:fs/promises';
 import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { STATUS_CODES } from 'node:http';
 
-export const name = 'DPSK-ohos-lifecycle';
+export const name = 'dsh-go-ohos-lifecycle';
 export const inject = ['sessions', 'sessionPersistence', 'agents', 'subprocess', 'jobs'];
 const lifecycleSymbol = Symbol.for('dsh.go.ohos.lifecycle');
 const simulationSymbol = Symbol.for('dsh.go.ohos.sim');
@@ -103,7 +103,7 @@ export function registerLifecycleRoutes(ctx, coordinator, transport) {
         message: STATUS_CODES[status] ?? 'Lifecycle operation failed' } });
     }
   };
-  for (const [path, result] of [['/DPSK/v1/lifecycle', false], ['/DPSK/v1/lifecycle/result', true]]) {
+  for (const [path, result] of [['/dsh-go/v1/lifecycle', false], ['/dsh-go/v1/lifecycle/result', true]]) {
     ctx.effect(() => ctx.webServer.register({ kind: 'exact', path, handler: handler(result) }), 'ohos lifecycle ' + path);
   }
 }

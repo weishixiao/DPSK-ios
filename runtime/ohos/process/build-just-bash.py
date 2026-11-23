@@ -111,7 +111,7 @@ def build(package: Path, output: Path, config: Path) -> dict:
     files.update(transformed)
     files["LICENSE"] = license_bytes
     files["package.json"] = (json.dumps({
-        "name": "DPSK-ohos-just-bash", "version": "3.6.0-ohos.1",
+        "name": "dsh-go-ohos-just-bash", "version": "3.6.0-ohos.1",
         "private": True, "type": "module", "license": "Apache-2.0",
         "exports": "./index.js",
     }, sort_keys=True, indent=2) + "\n").encode()

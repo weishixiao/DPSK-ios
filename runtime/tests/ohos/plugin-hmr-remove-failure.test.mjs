@@ -13,7 +13,7 @@ for (const mode of ['terminal', 'zero', 'healthy']) {
     assert.equal(process.platform, 'linux', 'this resource-limit fixture requires Linux');
     const child = spawn(process.execPath, ['--jitless', '--experimental-import-meta-resolve',
       '--import', preload, actor, mode], {
-      env: { ...process.env, DPSK_OHOS_SIM_PLATFORM: 'openharmony', DSH_PLUGIN_CONTRACT_REPORT: '' },
+      env: { ...process.env, DSH_GO_OHOS_SIM_PLATFORM: 'openharmony', DSH_PLUGIN_CONTRACT_REPORT: '' },
       stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
     });
     t.after(() => { if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); });

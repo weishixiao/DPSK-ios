@@ -4,12 +4,12 @@
 
 ## M3-3 仿真入口迁移（基底 c0949d6）
 
-`DPSK_OHOS_SIM=1` 不再启用任何生产分支或仿真限制。调用方必须明确预加载：
+`DSH_GO_OHOS_SIM=1` 不再启用任何生产分支或仿真限制。调用方必须明确预加载：
 
 - `--import runtime/ohos/sim/marker.mjs` 只在当前 JavaScript isolate 设置 `globalThis[Symbol.for('dsh.go.ohos.sim')] = true`，用于保留 JIT 的网络、虚拟进程对照。
 - `--jitless --import runtime/ohos/sim/preload.mjs` 设置同一标记并施加完整 O0 限制。`run.sh` 使用这个入口；`round.mjs --mode sim` 也明确加载它，不再写入旧开关。
 
-`DPSK_OHOS_SIM_PLATFORM` 和 `DPSK_OHOS_SIM_ADDONS` 仍是完整预加载器的测试配置：前者选择是否模拟 `openharmony` 平台，后者给出原生插件绝对路径白名单。仅设置这些环境变量不会装入预加载器。普通 Android 的网络模块只判断平台和已经由测试预加载器设立的布尔标记。
+`DSH_GO_OHOS_SIM_PLATFORM` 和 `DSH_GO_OHOS_SIM_ADDONS` 仍是完整预加载器的测试配置：前者选择是否模拟 `openharmony` 平台，后者给出原生插件绝对路径白名单。仅设置这些环境变量不会装入预加载器。普通 Android 的网络模块只判断平台和已经由测试预加载器设立的布尔标记。
 
 Worker 的全局对象不共享标记。Node 24.22.1 的真实 Worker 测试验证了默认继承 `--import` 时会在新 isolate 再次运行预加载，既保留 marker-only 的 JIT 对照，也传播完整 O0 限制。自行覆写 Worker 的 `execArgv` 时必须明确保留测试预加载；环境变量不能替代它。此工具用于测试约束，不是安全沙箱。
 

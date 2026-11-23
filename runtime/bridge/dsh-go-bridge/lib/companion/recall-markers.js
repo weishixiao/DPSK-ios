@@ -7,7 +7,7 @@ import { fields } from './schema.js';
 import { canonicalUuid, recallError, validRecallSessionId } from './recall-schema.js';
 import { RECALL_SELECTOR } from './recall-selector.js';
 
-export const RECALL_MARKER_SCHEMA = 'DPSK/companion-recall-session';
+export const RECALL_MARKER_SCHEMA = 'dsh-go/companion-recall-session';
 const MAX_BYTES = 4096;
 const unavailable = () => recallError(503, 'tag-unavailable', 'Companion recall session marker is unavailable');
 

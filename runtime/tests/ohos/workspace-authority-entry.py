@@ -105,8 +105,8 @@ def main():
             env = {'PATH': '/usr/bin:/bin', 'HOME': str(destination / 'home'), 'TMPDIR': str(destination / 'tmp'),
                    'LANG': 'C.UTF-8', 'LD_PRELOAD': str(native / 'libdsh_host.so') + ':' + str(args.publication_fixture.resolve()),
                    'DSH_HOME': str(destination / 'home'), 'NARB_DISABLE_NATIVE_CACHE': '1',
-                   'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native), 'DPSK_OHOS_LINUX_DIRECTORY': str(destination / 'linux-tools'),
-                   'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'OHOS_932_CONFIG': str(destination / 'CONFIG.json'),
+                   'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native), 'DSH_GO_OHOS_LINUX_DIRECTORY': str(destination / 'linux-tools'),
+                   'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'OHOS_932_CONFIG': str(destination / 'CONFIG.json'),
                    'OHOS_TYPESCRIPT_PREFIX': str(args.typescript_prefix.resolve()),
                    'OHOS_WORKSPACE_GRANTS_ADDON': str(native / 'workspace-publisher.node')}
             if scenario == 'late-host':

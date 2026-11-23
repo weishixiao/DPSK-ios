@@ -52,7 +52,7 @@ export async function loadChatSource(root, fetch, lookupWindow = false) {
     LlmAdapter: class {}, isAttachmentError: () => false,
   };
   const source = [
-    between(llm, '//#region DPSK companion recall admission', '//#endregion'),
+    between(llm, '//#region dsh-go companion recall admission', '//#endregion'),
     ...['message', 'error', 'content', 'attribution', 'call-config', 'adapter-failure'].map(name => region(llm, name)),
     between(llm, 'var LlmError = class', '/**\n* Accept one supplied credential'),
     between(llm, 'let LlmRuntime = (() =>', '/** Copy a directory entry'),

@@ -8,7 +8,7 @@ import { Worker } from 'node:worker_threads';
 import { pathToFileURL } from 'node:url';
 
 const require = createRequire(import.meta.url);
-const root = process.env.DPSK_DIRECT_ROOTFS;
+const root = process.env.DSH_GO_DIRECT_ROOTFS;
 assert(root, 'production direct wrapper required');
 const base = fs.mkdtempSync(`${root}/tmp/direct-native-`);
 const outside = fs.mkdtempSync('/tmp/direct-native-outside-');

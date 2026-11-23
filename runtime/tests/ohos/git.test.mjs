@@ -262,11 +262,11 @@ test('cancellation during add cannot publish a partly staged user index', async 
 }));
 
 test('workspace temporaryRoot is gated; missing OHOS private root fails explicitly', () => {
-  const platform = Object.getOwnPropertyDescriptor(process, 'platform'), sim = process.env.DPSK_OHOS_SIM;
+  const platform = Object.getOwnPropertyDescriptor(process, 'platform'), sim = process.env.DSH_GO_OHOS_SIM;
   const key = Symbol.for('dsh.go.ohos.sim'), marker = Object.getOwnPropertyDescriptor(globalThis, key);
   try {
     delete globalThis[key];
-    process.env.DPSK_OHOS_SIM = '1';
+    process.env.DSH_GO_OHOS_SIM = '1';
     for (const target of ['linux', 'android']) {
       Object.defineProperty(process, 'platform', { ...platform, value: target });
       assert.equal(typeof provider.workspaceTemporaryRoot({ subprocess: {} }), 'string');
@@ -277,7 +277,7 @@ test('workspace temporaryRoot is gated; missing OHOS private root fails explicit
   } finally {
     Object.defineProperty(process, 'platform', platform);
     if (marker) Object.defineProperty(globalThis, key, marker); else delete globalThis[key];
-    if (sim === undefined) delete process.env.DPSK_OHOS_SIM; else process.env.DPSK_OHOS_SIM = sim;
+    if (sim === undefined) delete process.env.DSH_GO_OHOS_SIM; else process.env.DSH_GO_OHOS_SIM = sim;
   }
 });
 

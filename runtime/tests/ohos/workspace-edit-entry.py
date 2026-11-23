@@ -198,9 +198,9 @@ def main():
             'HOME': str(output / 'home'), 'TMPDIR': str(output / 'tmp'), 'LANG': 'C.UTF-8',
             'LD_PRELOAD': str(native / 'libdsh_host.so') + ':' + str(publication),
             'DSH_HOME': str(output / 'home'), 'NARB_DISABLE_NATIVE_CACHE': '1',
-            'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native),
-            'DPSK_OHOS_LINUX_DIRECTORY': str(output / 'linux-tools'),
-            'DPSK_OHOS_SIM_PLATFORM': 'openharmony',
+            'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native),
+            'DSH_GO_OHOS_LINUX_DIRECTORY': str(output / 'linux-tools'),
+            'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony',
             'OHOS_938_EDIT_CONFIG': str(output / 'CONFIG.json'),
             'OHOS_TYPESCRIPT_PREFIX': str(typescript),
             'OHOS_WORKSPACE_GRANTS_ADDON': str(native / 'workspace-publisher.node'),
@@ -218,7 +218,7 @@ def main():
             'scope': 'Selected product payload SHA/size match the supplied actual manifest. No prepare/archive/full-build verification. Old read tests are unchanged references, not executed by this runner.'})
         save(output / 'COMMAND.json', {'argv': command, 'cwd': str(output), 'environment': environment,
             'environmentSource': 'Complete literal child environment; no os.environ inheritance',
-            'instrumentationAdds': {'DPSK_OHOS_SIM_ADDONS': [str(native / name) for name in
+            'instrumentationAdds': {'DSH_GO_OHOS_SIM_ADDONS': [str(native / name) for name in
                 ['libdsh_flock.so', 'libdsh_require_builtin.so', 'libdsh_workspace_grants.so', 'workspace-publisher.node']]},
             'nativeBuild': 'None: reuse five input libraries and the existing linked publication fixture'})
         started, timeout = time.monotonic(), False

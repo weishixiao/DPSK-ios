@@ -66,7 +66,7 @@ def main():
             (directory / 'node_modules').symlink_to(args.prefix / 'node_modules', target_is_directory=True)
             module = directory / 'index.mjs'
             module.write_bytes(raw + b'\nexport { publishOhosExclusive };\n')
-            companion = original.with_name('DPSK-deletion.mjs')
+            companion = original.with_name('dsh-go-deletion.mjs')
             if companion.exists(): shutil.copy2(companion, directory / companion.name)
             modules[provider] = str(module)
             inputs[provider] = {'path': str(original), 'sha256': digest(raw),
@@ -81,7 +81,7 @@ def main():
             env = {'PATH': os.environ.get('PATH', ''), 'LANG': 'C.UTF-8',
                    'LD_PRELOAD': str(args.linked_lib), 'DSH_HOME': config['home'],
                    'M6_FUSE_TEST_CONFIG': str(config_path),
-                   'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DPSK_OHOS_SIM_ADDONS': '[]'}
+                   'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_GO_OHOS_SIM_ADDONS': '[]'}
             argv = [str(args.node)]
             if args.mode == 'strict': argv += ['--jitless', '--import', str(args.simulation)]
             else: argv += ['--import', str(args.marker)]

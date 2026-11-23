@@ -462,6 +462,6 @@ function ohosReadCharEnd(s,count){let end=0,characters=0;while(end<s.length&&cha
     change(codec, 'let e="";for(let o=0;o<t.length;o++)e+=String.fromCharCode(t[o]);return e',
            'return ohosBuffer.from(t).toString("latin1")')
 
-    notice = ('/* Modified for DPSK OHOS: permission diagnostics, typed output and statement delivery.\n'
+    notice = ('/* Modified for dsh-go OHOS: permission diagnostics, typed output and statement delivery.\n'
               ' * Derived from just-bash 3.6.0; Apache-2.0. See LICENSE and PROVENANCE.json. */\n')
     return {name: (notice + text).encode('utf-8') for name, text in texts.items()}

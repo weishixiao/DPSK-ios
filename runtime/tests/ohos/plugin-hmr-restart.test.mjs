@@ -16,7 +16,7 @@ test('successful real HMR update keeps v1 until a fresh process boots and execut
   });
   for (const mode of ['update', 'boot']) {
     const child = spawnSync(process.execPath, ['--jitless', '--import', preload, actor, mode], {
-      env: { ...process.env, DPSK_OHOS_SIM_PLATFORM: 'openharmony', DSH_PLUGIN_HMR_STATE: statePath, DSH_PLUGIN_CONTRACT_REPORT: '' },
+      env: { ...process.env, DSH_GO_OHOS_SIM_PLATFORM: 'openharmony', DSH_PLUGIN_HMR_STATE: statePath, DSH_PLUGIN_CONTRACT_REPORT: '' },
       encoding: 'utf8', timeout: 25000,
     });
     t.diagnostic(child.stdout);

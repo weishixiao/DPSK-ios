@@ -1,6 +1,6 @@
 # O6：运行时能力及发布熔断的 HTTP 读取
 
-本目录实现 O6 v1 约定中的 **GET `/DPSK/v1/runtime-capabilities`**。第二波在已有发布熔断片段上接入实际 Cordis 执行/锁能力和纯 Dart 模型/API。没有观测依据的原生模块、后台授权仍为 null/unknown；真机验证未执行。字段来源、旧引擎兼容和 Dart 使用约定见 [capabilities-v1.md](../../../docs/design/harmonyos/capabilities-v1.md) 第八节。
+本目录实现 O6 v1 约定中的 **GET `/dsh-go/v1/runtime-capabilities`**。第二波在已有发布熔断片段上接入实际 Cordis 执行/锁能力和纯 Dart 模型/API。没有观测依据的原生模块、后台授权仍为 null/unknown；真机验证未执行。字段来源、旧引擎兼容和 Dart 使用约定见 [capabilities-v1.md](../../../docs/design/harmonyos/capabilities-v1.md) 第八节。
 
 ## 装配
 
@@ -19,7 +19,7 @@
 ]
 ```
 
-需要同包的 `snapshot.mjs`、`publication/capabilities.mjs`、M6-3b 发布核心以及 M6-3b 原生第五个方法。会话锁的准确观测需在 `--target ohos` 下应用 `zzzzzzzzzzzz-ohos-runtime-capabilities.diff`；Android target 未选择它，其输入摘要不变。普通 Linux / Android 即使遗留旧 `DPSK_OHOS_SIM=1`，也不注册路由；只有实际平台 openharmony 或显式仿真 Symbol 才注册。完整鸿蒙 profile 的最终裁剪仍属 O1/O2；本项给出明确插入项，并已在真实 DSH profile 上执行。
+需要同包的 `snapshot.mjs`、`publication/capabilities.mjs`、M6-3b 发布核心以及 M6-3b 原生第五个方法。会话锁的准确观测需在 `--target ohos` 下应用 `zzzzzzzzzzzz-ohos-runtime-capabilities.diff`；Android target 未选择它，其输入摘要不变。普通 Linux / Android 即使遗留旧 `DSH_GO_OHOS_SIM=1`，也不注册路由；只有实际平台 openharmony 或显式仿真 Symbol 才注册。完整鸿蒙 profile 的最终裁剪仍属 O1/O2；本项给出明确插入项，并已在真实 DSH profile 上执行。
 
 ## 鉴权与响应
 

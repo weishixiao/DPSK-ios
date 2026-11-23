@@ -1,4 +1,4 @@
-package com.dpsk.harness.runtime
+package io.github.ccch1mneyyy.dsh_app.runtime
 
 import android.content.Context
 import android.system.Os
@@ -29,8 +29,8 @@ fun main(args: Array<String>) {
     else { stale.mkdirs(); File(stale, "placeholder").writeText("temporary") }
     val unknown = case == "observation-gap"
     val child = ProcessBuilder("/bin/sleep", "45").directory(other).apply {
-        if (case == "other-runtime") environment()["DPSK_RUNTIME_ROOT"] = other.canonicalPath
-        else environment().remove("DPSK_RUNTIME_ROOT")
+        if (case == "other-runtime") environment()["DSH_GO_RUNTIME_ROOT"] = other.canonicalPath
+        else environment().remove("DSH_GO_RUNTIME_ROOT")
     }.start()
     val pid = child.pid().toInt()
     Os.permittedSignalPids += pid

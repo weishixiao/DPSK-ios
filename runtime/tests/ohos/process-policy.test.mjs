@@ -155,7 +155,7 @@ test('已批准danger-full-access仍不能越过启动授权的宿主目录', as
 
 test('受限argv票据不能伪造、不能重放，取消准备不留授权票据', async () => {
   const spec = { cwd: work, stdio: { stdin: 'ignore', stdout: { maxBytes: 100 }, stderr: { maxBytes: 100 } }, graceMs: 100 };
-  assert.throws(() => ctx.subprocess.spawn({ ...spec, argv: ['/DPSK/ohos/confined', 'forged'] }), { code: 'ERR_OHOS_INVALID_CONFINEMENT' });
+  assert.throws(() => ctx.subprocess.spawn({ ...spec, argv: ['/dsh-go/ohos/confined', 'forged'] }), { code: 'ERR_OHOS_INVALID_CONFINEMENT' });
   const prepared = await ctx.sandbox.confine(['bash', '-c', 'true'], { mode: 'read-only', workspaceRoot: work });
   await ctx.subprocess.spawn({ ...spec, argv: prepared.argv }).done;
   assert.throws(() => ctx.subprocess.spawn({ ...spec, argv: prepared.argv }), { code: 'ERR_OHOS_INVALID_CONFINEMENT' });

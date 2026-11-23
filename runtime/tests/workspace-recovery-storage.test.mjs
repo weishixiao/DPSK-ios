@@ -14,7 +14,7 @@ const { Context } = await load('cordis');
 const { DomainFacility, descriptorOf } = await load('dsh-storage-domain');
 const { JsonStorageBackend } = await load('dsh-storage-json');
 const { workspaceDomainSpec } = await load('dsh-workspace');
-const recoveryName = 'DPSK_workspace_recovery';
+const recoveryName = 'dsh_go_workspace_recovery';
 const empty = { initialized: true, workspaceIds: [], archivedSessionIds: [], pinnedSessionIds: [] };
 
 async function fixture(t, flag) {

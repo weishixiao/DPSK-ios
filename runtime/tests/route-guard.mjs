@@ -3,7 +3,7 @@
 //   node runtime/tests/route-guard.mjs <base-url> <launch-token> [--guard patched|bridge|none] [--expect-unguarded]
 //
 // Checks every registered exact/prefix/upgrade route: no credentials -> rejected by the guard
-// (x-DPSK-guard: reject), browser cookie -> reaches its handler, cross-site Origin /
+// (x-dsh-go-guard: reject), browser cookie -> reaches its handler, cross-site Origin /
 // Sec-Fetch-Site and a rebound Host -> rejected even with the cookie. Then the flows the official
 // client, our WebView and the app's Dart client use (index, static assets, plugin bundles,
 // /api/remote.mux) and, when present, the dsh-go-bridge API. --guard bridge expects the bridge's
@@ -65,7 +65,7 @@ function upgrade(path, headers = {}) {
     });
     const done = (status, hdrs, socket) => {
       socket?.destroy();
-      resolve({ status, guard: hdrs?.["x-DPSK-guard"] === "reject" });
+      resolve({ status, guard: hdrs?.["x-dsh-go-guard"] === "reject" });
     };
     req.on("upgrade", (res, socket) => done(res.statusCode, res.headers, socket));
     req.on("response", (res) => { res.resume(); done(res.statusCode, res.headers, res.socket); });
@@ -75,8 +75,8 @@ function upgrade(path, headers = {}) {
   });
 }
 
-const guarded = (r) => r.headers["x-DPSK-guard"] === "reject";
-const probePath = (kind, path) => (kind === "prefix" ? `${path}/DPSK-probe` : path);
+const guarded = (r) => r.headers["x-dsh-go-guard"] === "reject";
+const probePath = (kind, path) => (kind === "prefix" ? `${path}/dsh-go-probe` : path);
 
 console.log("== login (what the WebView and the Dart client do)");
 const login = await request("GET", `/?token=${encodeURIComponent(token)}`);
@@ -155,21 +155,21 @@ check(api.status === 200 && api.body.includes("server-response"), `POST /api/set
 const mux = await upgrade("/api/remote.mux", C);
 check(mux.status === 101, `WebSocket /api/remote.mux with cookie (Dart client) -> ${mux.status}`);
 
-if (table.prefix.includes("/DPSK")) {
+if (table.prefix.includes("/dsh-go")) {
   console.log("== dsh-go-bridge");
-  const capabilitiesAnon = await request("GET", "/DPSK/v1/capabilities");
+  const capabilitiesAnon = await request("GET", "/dsh-go/v1/capabilities");
   check(capabilitiesAnon.status === 401, `capabilities without cookie -> ${capabilitiesAnon.status}`);
-  const capabilities = await request("GET", "/DPSK/v1/capabilities", { headers: C });
+  const capabilities = await request("GET", "/dsh-go/v1/capabilities", { headers: C });
   let negotiated = {};
   try { negotiated = JSON.parse(capabilities.body); } catch {}
   check(capabilities.status === 200 && negotiated.v === 1 && typeof negotiated.bridge === "string"
     && Array.isArray(negotiated.capabilities) && negotiated.capabilities.includes("native-ui"),
     `capabilities with cookie -> ${capabilities.status}, v=${negotiated.v}`);
-  const capabilitiesRefused = await request("GET", "/DPSK/v1/capabilities", { headers: { ...C, origin: "http://evil.example" } });
+  const capabilitiesRefused = await request("GET", "/dsh-go/v1/capabilities", { headers: { ...C, origin: "http://evil.example" } });
   check(capabilitiesRefused.status === 403, `capabilities with cross-site Origin -> ${capabilitiesRefused.status}`);
-  const anon = await request("GET", "/DPSK/v1/inventory");
+  const anon = await request("GET", "/dsh-go/v1/inventory");
   check(anon.status === 401, `inventory without cookie -> ${anon.status}`);
-  const inv = await request("GET", "/DPSK/v1/inventory", { headers: C });
+  const inv = await request("GET", "/dsh-go/v1/inventory", { headers: C });
   let body = {};
   try { body = JSON.parse(inv.body); } catch {}
   check(inv.status === 200 && body.v === 1 && Array.isArray(body.packages), `inventory with cookie -> ${inv.status}, v=${body.v}, ${body.packages?.length ?? 0} packages`);
@@ -195,19 +195,19 @@ if (table.prefix.includes("/DPSK")) {
       ],
     },
   };
-  const post = await request("POST", "/DPSK/v1/occupancy", {
+  const post = await request("POST", "/dsh-go/v1/occupancy", {
     headers: { ...C, "content-type": "application/json", origin: base.origin }, body: JSON.stringify(report),
   });
   check(post.status === 204, `occupancy report -> ${post.status}`);
-  const bad = await request("POST", "/DPSK/v1/occupancy", { headers: { ...C, "content-type": "text/plain" }, body: "{}" });
+  const bad = await request("POST", "/dsh-go/v1/occupancy", { headers: { ...C, "content-type": "text/plain" }, body: "{}" });
   check(bad.status === 415, `occupancy with text/plain -> ${bad.status}`);
-  const evil = await request("POST", "/DPSK/v1/occupancy", {
+  const evil = await request("POST", "/dsh-go/v1/occupancy", {
     headers: { ...C, "content-type": "application/json", origin: "http://evil.example" }, body: JSON.stringify(report),
   });
   check(evil.status === 403, `occupancy from a cross-site page -> ${evil.status}`);
   const worse = { ...report, unresolved: 9, slots: { "settings.section": [{ package: "other", cell: "x", order: 0 }] } };
-  await request("POST", "/DPSK/v1/occupancy", { headers: { ...C, "content-type": "application/json" }, body: JSON.stringify(worse) });
-  const after = JSON.parse((await request("GET", "/DPSK/v1/inventory", { headers: C })).body);
+  await request("POST", "/dsh-go/v1/occupancy", { headers: { ...C, "content-type": "application/json" }, body: JSON.stringify(worse) });
+  const after = JSON.parse((await request("GET", "/dsh-go/v1/inventory", { headers: C })).body);
   const list = after.slots?.["settings.section"] ?? [];
   check(list.length === 1 && list[0].package === "dsh-pet" && list[0].official === false && list[0].order === 50,
     `wire occupants: ${JSON.stringify(list)}`);

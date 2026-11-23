@@ -131,7 +131,7 @@ test('ordinary launches and anything else in the parameter are not entries', asy
   await f.call('ready');
   const wants = [
     {}, { parameters: {} }, { parameters: { other: 'new' } }, shortcut('chat'), shortcut(''), shortcut(7),
-    { action: 'ohos.want.action.viewData', uri: 'dpsk://open/new' },
+    { action: 'ohos.want.action.viewData', uri: 'dshgo://open/new' },
   ];
   for (const want of wants) assert.equal(f.Plugin.receive(want, fromLauncher), false);
   assert.deepEqual(f.sent, []);

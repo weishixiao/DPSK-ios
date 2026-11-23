@@ -34,7 +34,7 @@ Node-API 用版本 8。固定 Node 源中 `src/node_version.h` 的默认模块 A
 bash runtime/tests/ohos/build-publication-native.sh "$NODE24_ROOT" out/publication-linux
 LD_PRELOAD="$PWD/out/publication-linux/libpublication-test-linked.so" \
   "$NODE24_ROOT/bin/node" runtime/tests/ohos/publication-linked-probe.mjs
-DPSK_OHOS_SIM_PLATFORM=openharmony DPSK_OHOS_SIM_ADDONS='[]' \
+DSH_GO_OHOS_SIM_PLATFORM=openharmony DSH_GO_OHOS_SIM_ADDONS='[]' \
   LD_PRELOAD="$PWD/out/publication-linux/libpublication-test-linked.so" \
   "$NODE24_ROOT/bin/node" --jitless --import ./runtime/ohos/sim/preload.mjs \
   runtime/tests/ohos/publication-linked-probe.mjs --strict
@@ -120,7 +120,7 @@ DSH_TEST_LOCK_STRICT=1 \
 
 只比较跨重启的 dev/ino 不足以证明归属：旧临时文件被删除后，文件系统可能立即把同一 inode 编号分给一个外来新文件。审查方已经实际复现了这种情况下的错误删除。随机文件名与持久账本不会使 inode 编号变成永久身份。
 
-本版因此再新增两个薄 API，属性名固定为 `user.dpsk_ownership`：
+本版因此再新增两个薄 API，属性名固定为 `user.dsh_go_ownership`：
 
 | API | 成功结果 | 错误与边界 |
 |---|---|---|
@@ -160,7 +160,7 @@ getter 先查询长度，再按实际返回长度构造字符串。第一次返�
 ```sh
 LD_PRELOAD="$PWD/out/publication-linux/libpublication-test-linked.so" \
   "$NODE24_ROOT/bin/node" --test runtime/tests/ohos/publication-xattr.test.mjs
-DSH_TEST_XATTR_STRICT=1 DPSK_OHOS_SIM_PLATFORM=openharmony DPSK_OHOS_SIM_ADDONS='[]' \
+DSH_TEST_XATTR_STRICT=1 DSH_GO_OHOS_SIM_PLATFORM=openharmony DSH_GO_OHOS_SIM_ADDONS='[]' \
   LD_PRELOAD="$PWD/out/publication-linux/libpublication-test-linked.so" \
   "$NODE24_ROOT/bin/node" --jitless --import ./runtime/ohos/sim/preload.mjs \
   --test runtime/tests/ohos/publication-xattr.test.mjs

@@ -85,13 +85,13 @@ Node 上游 [共享库说明](https://github.com/nodejs/node/blob/v24.22.1/doc/c
 所有源码前后摘要在 `node24-ohos-pins.json`，源码 diff 在 `node24-ohos.diff`。它们只应用到本脚本新解压的鸿蒙构建树；没有接入 Android 构建入口。
 
 1. **共享库命名。** [configure.py](https://github.com/nodejs/node/blob/v24.22.1/configure.py) 约 1849 行只对 Android 使用 `so`，其他 Linux 宿主目标会得到 `so.137`。为 OpenHarmony 也选择 `so`，让实际链接产物和 SONAME 都是 `libnode.so`，不靠重命名一个不同 SONAME 的库补救。
-2. **完整关闭 io_uring 探测。** [libuv linux.c](https://github.com/nodejs/node/blob/v24.22.1/deps/uv/src/unix/linux.c) 的 `uv__use_io_uring` 在约 479 行，对非 SQPOLL 分支先返回 1，到约 489 行才读取 `UV_USE_IO_URING`。因此环境变量 0 不能覆盖该路径。仅当同时定义 `__OHOS__` 与 `DPSK_EMBEDDED_RUNTIME` 时，采用已有 Android 分支同样的直接返回 0，使用 epoll/线程池路径。手机 seccomp 行为仍须实测；不安装可能干扰 Ark 的 SIGSYS handler。
+2. **完整关闭 io_uring 探测。** [libuv linux.c](https://github.com/nodejs/node/blob/v24.22.1/deps/uv/src/unix/linux.c) 的 `uv__use_io_uring` 在约 479 行，对非 SQPOLL 分支先返回 1，到约 489 行才读取 `UV_USE_IO_URING`。因此环境变量 0 不能覆盖该路径。仅当同时定义 `__OHOS__` 与 `DSH_GO_EMBEDDED_RUNTIME` 时，采用已有 Android 分支同样的直接返回 0，使用 epoll/线程池路径。手机 seccomp 行为仍须实测；不安装可能干扰 Ark 的 SIGSYS handler。
 3. **保留宿主的进程设置。** [node.cc](https://github.com/nodejs/node/blob/v24.22.1/src/node.cc) 的专用分支调用初始化时传入 `kNoStdioInitialization`、`kNoDefaultSignalHandling`、`kNoAdjustResourceLimits`；这些标志来自该版本公开 `node.h`，分别避免 Node 接管已经由宿主处理的 stdio、信号和资源上限。其他初始化仍由 `node::Start` 完成。
 4. **把正常 JS process.exit 限定到引擎结束。** 官方 [node.h](https://github.com/nodejs/node/blob/v24.22.1/src/node.h) 明确说明默认退出处理会调用进程级 `exit()`。在 `NodeMainInstance::Run` 的专用分支安装 `SetProcessExitHandler`，记录原退出码并 `Stop(env)`，随后不让空的 SpinEventLoop 返回值覆盖它。这是针对进程内嵌入的源码修复候选，尚未执行重编后的 Node。`process.abort()`、原生崩溃、OOM 等仍可能终止整个应用；线程不是故障隔离边界。
 
 5. **补上 V8 缺的 `<atomic>`。** [wasm/pgo.h](https://github.com/nodejs/node/blob/v24.22.1/deps/v8/src/wasm/pgo.h) 声明里用了 `std::atomic`，只靠其他头文件间接带入；libc++ 23 不再提供，编译报 `no template named 'atomic' in namespace 'std'`。宿主 GCC 不受影响。
 
-后四处仅在 **`__OHOS__ && DPSK_EMBEDDED_RUNTIME`** 同时成立时启用。针对真实固定源码，测试比较了预处理主体（`#include` 行保留为惰性文本，不展开）：Linux、Android，以及未开启专用宏的 OpenHarmony，修改前后逐字一致。Python 的命名分支也实测 Linux / Android / macOS 结果不变。此证据证明补丁选择边界，不证明目标二进制 ABI 或字节完全一致。
+后四处仅在 **`__OHOS__ && DSH_GO_EMBEDDED_RUNTIME`** 同时成立时启用。针对真实固定源码，测试比较了预处理主体（`#include` 行保留为惰性文本，不展开）：Linux、Android，以及未开启专用宏的 OpenHarmony，修改前后逐字一致。Python 的命名分支也实测 Linux / Android / macOS 结果不变。此证据证明补丁选择边界，不证明目标二进制 ABI 或字节完全一致。
 
 链接时给目标设置 `-Bsymbolic-functions`，让 Node 库内部函数优先绑定其自身定义；Node/Ark 的隔离靠下文的 N-API 改名，不靠这个选项。
 

@@ -2,7 +2,7 @@
 // is substituted; no AppGallery/device or UI-enablement claim.
 import 'dart:async';
 
-import 'package:dpsk_app/state/icon_shortcut_state.dart';
+import 'package:dsh_app/state/icon_shortcut_state.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -33,28 +33,28 @@ void main() {
   test('cancel/refusal is failed and missing capability is unsupported', () async {
     final consumer = IconShortcutChannel();
     messenger.setMockMethodCallHandler(_channel, (_) async => {'supported': true, 'requested': false});
-    expect(await consumer.pin('DPSK', Uint8List(1)), PinRequest.failed);
+    expect(await consumer.pin('DSH Go', Uint8List(1)), PinRequest.failed);
     messenger.setMockMethodCallHandler(_channel, (_) async => {'supported': false, 'requested': false});
-    expect(await consumer.pin('DPSK', Uint8List(1)), PinRequest.unsupported);
+    expect(await consumer.pin('DSH Go', Uint8List(1)), PinRequest.unsupported);
   });
 
   test('null response and platform error never become asked', () async {
     final consumer = IconShortcutChannel();
     messenger.setMockMethodCallHandler(_channel, (_) async => null);
-    expect(await consumer.pin('DPSK', Uint8List(1)), PinRequest.failed);
+    expect(await consumer.pin('DSH Go', Uint8List(1)), PinRequest.failed);
     messenger.setMockMethodCallHandler(_channel, (_) async => throw PlatformException(code: 'invalid', message: 'no picture'));
-    expect(await consumer.pin('DPSK', Uint8List(1)), PinRequest.failed);
+    expect(await consumer.pin('DSH Go', Uint8List(1)), PinRequest.failed);
   });
 
   test('missing native plugin keeps the existing unsupported result', () async {
-    expect(await IconShortcutChannel().pin('DPSK', Uint8List(1)), PinRequest.unsupported);
+    expect(await IconShortcutChannel().pin('DSH Go', Uint8List(1)), PinRequest.unsupported);
   });
 
   test('the actual consumer waits for the OH system-result future', () async {
     final answer = Completer<Map<String, bool>>();
     messenger.setMockMethodCallHandler(_channel, (_) => answer.future);
     var completed = false;
-    final pending = IconShortcutChannel().pin('DPSK', Uint8List(1)).then((value) { completed = true; return value; });
+    final pending = IconShortcutChannel().pin('DSH Go', Uint8List(1)).then((value) { completed = true; return value; });
     await pumpEventQueue();
     expect(completed, isFalse);
     answer.complete({'supported': true, 'requested': false});

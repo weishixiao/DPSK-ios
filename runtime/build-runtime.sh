@@ -11,7 +11,7 @@
 #
 # The DSH tree is patched with runtime/patches/*.diff (pinned per DSH version in
 # runtime/patches/pins.json; an unvetted DSH version fails the build) and the dsh-go-bridge
-# plugin (runtime/bridge/dsh-go-bridge) is installed at /opt/DPSK/dsh-go-bridge and loaded by
+# plugin (runtime/bridge/dsh-go-bridge) is installed at /opt/dsh-go/dsh-go-bridge and loaded by
 # the `dsh web` overlay. Check both on the host with runtime/tests/run-guard-tests.sh
 # runtime/.work/x86_64/dsh-prefix, or end to end with runtime/test-host.sh.
 #

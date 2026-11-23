@@ -2,12 +2,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:dpsk_app/companion/companion_voice.dart';
-import 'package:dpsk_app/companion/companion_voice_source.dart';
-import 'package:dpsk_app/speech/deepseek_speech.dart';
-import 'package:dpsk_app/speech/speech_audio.dart';
-import 'package:dpsk_app/speech/speech_out.dart';
-import 'package:dpsk_app/platform_boundary.dart' as target;
+import 'package:dsh_app/companion/companion_voice.dart';
+import 'package:dsh_app/companion/companion_voice_source.dart';
+import 'package:dsh_app/speech/deepseek_speech.dart';
+import 'package:dsh_app/speech/speech_audio.dart';
+import 'package:dsh_app/speech/speech_out.dart';
+import 'package:dsh_app/platform_boundary.dart' as target;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;

@@ -38,7 +38,7 @@ async function fixture(t, {connection = true, guardRoutes = false, rejection, gr
   apply(ctx, {persist: false, guardRoutes});
   let routeGate;
   const server = createServer(async (req, res) => {
-    const path = new URL(req.url, 'http://DPSK.invalid').pathname;
+    const path = new URL(req.url, 'http://dsh-go.invalid').pathname;
     const gate = routeGate?.path === path ? routeGate : undefined;
     if (gate) {
       routeGate = undefined;
@@ -83,7 +83,7 @@ for (const route of ['occupancy', 'plugin-config']) for (const timing of ['befor
     const entry = {options: {id: 'sample', name: 'sample-package', config: {count: 0}},
       fiber: {state: 2, runtime: {Config: schema}, config: {count: 0}}};
     const request = await fixture(t, route === 'plugin-config' ? {entries: [entry]} : {});
-    const path = `/DPSK/v1/${route}${route === 'plugin-config' ? '/sample' : ''}`;
+    const path = `/dsh-go/v1/${route}${route === 'plugin-config' ? '/sample' : ''}`;
     // Peer for the production WebServer's wait while Connection is absent.
     // Partial HTTP input, abort, bridge dispatch and subsequent retry are real.
     const gate = request.holdNextRoute(path); t.after(gate.resume);
@@ -115,7 +115,7 @@ for (const route of ['occupancy', 'plugin-config']) for (const timing of ['befor
 }
 
 test('shared body accepts a complete but unread IncomingMessage', async t => {
-  const request = await fixture(t), path = '/DPSK/v1/occupancy';
+  const request = await fixture(t), path = '/dsh-go/v1/occupancy';
   const gate = request.holdNextRoute(path); t.after(gate.resume);
   const response = request(path, {method: 'POST', headers: {'content-type': 'application/json'},
     body: JSON.stringify({bootRev: 'b1', slots: {}})});
@@ -130,21 +130,21 @@ test('shared body accepts a complete but unread IncomingMessage', async t => {
 
 test('bridge business errors share a nested shape and retain HTTP status', async t => {
   const request = await fixture(t);
-  const occupancy = '/DPSK/v1/occupancy';
+  const occupancy = '/dsh-go/v1/occupancy';
   const post = body => ({method: 'POST', headers: {'content-type': 'application/json'}, body});
   for (const [path, init, status, code] of [
-    ['/DPSK/v1/inventory', {method: 'POST'}, 405, 'method-not-allowed'],
+    ['/dsh-go/v1/inventory', {method: 'POST'}, 405, 'method-not-allowed'],
     [occupancy, {}, 405, 'method-not-allowed'],
     [occupancy, {method: 'POST', body: '{}'}, 415, 'unsupported-media-type'],
     [occupancy, post('invalid JSON'), 400, 'bad-request'],
     [occupancy, post('{}'), 400, 'bad-request'],
     [occupancy, post(' '.repeat(512 * 1024 + 1)), 413, 'too-large'],
     [occupancy, post(JSON.stringify({bootRev: 'b1', slots: Object.fromEntries(Array.from({length: 401}, (_, i) => [`slot-${i}`, []]))})), 413, 'too-large'],
-    ['/DPSK/v1/unknown', {}, 404, 'route-not-found'],
-    ['/DPSK/v1/plugin-config', {method: 'DELETE'}, 405, 'invalid-operation'],
-    ['/DPSK/v1/plugin-config/item', {method: 'DELETE'}, 405, 'invalid-operation'],
-    ['/DPSK/v1/plugin-config', {}, 503, 'host-unavailable'],
-    ['/DPSK/v1/sessions/deletion', {method: 'POST'}, 405, 'unavailable'],
+    ['/dsh-go/v1/unknown', {}, 404, 'route-not-found'],
+    ['/dsh-go/v1/plugin-config', {method: 'DELETE'}, 405, 'invalid-operation'],
+    ['/dsh-go/v1/plugin-config/item', {method: 'DELETE'}, 405, 'invalid-operation'],
+    ['/dsh-go/v1/plugin-config', {}, 503, 'host-unavailable'],
+    ['/dsh-go/v1/sessions/deletion', {method: 'POST'}, 405, 'unavailable'],
   ]) {
     const response = await request(path, init);
     assert.equal(response.status, status, `${init.method ?? 'GET'} ${path}`);
@@ -165,14 +165,14 @@ test('inventory marks an earlier page report stale until the current graph repor
   const request = await fixture(t, {graph: () => ({rev: currentRev, entries: [{id: 'sample-plugin', rev: currentRev}]})});
   const slots = {'settings.section': [{package: 'sample-plugin', cell: 'sample', order: 0, active: true}]};
   const report = async bootRev => {
-    const response = await request('/DPSK/v1/occupancy', {
+    const response = await request('/dsh-go/v1/occupancy', {
       method: 'POST', headers: {'content-type': 'application/json'},
       body: JSON.stringify({bootRev, slots}),
     });
     assert.equal(response.status, 204);
   };
   const snapshot = async () => {
-    const response = await request('/DPSK/v1/inventory');
+    const response = await request('/dsh-go/v1/inventory');
     assert.equal(response.status, 200);
     return response.body;
   };
@@ -212,7 +212,7 @@ test('inventory marks an earlier page report stale until the current graph repor
 
 test('capabilities advertise implemented families independently of service availability', async t => {
   const request = await fixture(t);
-  const response = await request('/DPSK/v1/capabilities');
+  const response = await request('/dsh-go/v1/capabilities');
   const version = JSON.parse(readFileSync(new URL('../bridge/dsh-go-bridge/package.json', import.meta.url))).version;
   assert.equal(response.status, 200);
   assert.deepEqual(response.body, {v: 1, bridge: version, capabilities: [
@@ -222,18 +222,18 @@ test('capabilities advertise implemented families independently of service avail
   ]});
   assert.equal(response.headers.get('cache-control'), 'no-store');
   assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
-  const deletion = await request('/DPSK/v1/sessions/deletion');
+  const deletion = await request('/dsh-go/v1/sessions/deletion');
   assert.equal(deletion.status, 200);
   assert.equal(deletion.body.supported, false, 'implemented route does not grant deletion authority');
-  const wrongMethod = await request('/DPSK/v1/capabilities', {method: 'POST'});
+  const wrongMethod = await request('/dsh-go/v1/capabilities', {method: 'POST'});
   assert.equal(wrongMethod.status, 405);
   assert.equal(wrongMethod.body.error.code, 'method-not-allowed');
 });
 
 test('capabilities HEAD returns GET metadata without a response body', async t => {
   const request = await fixture(t);
-  const get = await request('/DPSK/v1/capabilities');
-  const head = await request('/DPSK/v1/capabilities', {method: 'HEAD'});
+  const get = await request('/dsh-go/v1/capabilities');
+  const head = await request('/dsh-go/v1/capabilities', {method: 'HEAD'});
   assert.equal(head.status, 200);
   assert.equal(head.text, '');
   for (const name of ['content-type', 'content-length', 'cache-control', 'x-content-type-options']) {
@@ -245,18 +245,18 @@ for (const guardRoutes of [false, true]) for (const status of [401, 403, 503]) {
   test(`capabilities respect Connection verdict ${status}, fallback=${guardRoutes}`, async t => {
     const request = await fixture(t, {connection: status !== 503, rejection: status, guardRoutes});
     for (const method of ['GET', 'HEAD']) {
-      const response = await request('/DPSK/v1/capabilities', {method});
+      const response = await request('/dsh-go/v1/capabilities', {method});
       assert.equal(response.status, status);
       assert.equal(response.text.includes('capabilities'), false);
       if (method === 'HEAD') assert.equal(response.text, '');
-      if (guardRoutes) assert.equal(response.headers.get('x-DPSK-guard'), 'reject');
+      if (guardRoutes) assert.equal(response.headers.get('x-dsh-go-guard'), 'reject');
     }
   });
 }
 
 for (const guardRoutes of [false, true]) test(`missing Connection preserves route-specific failures, fallback=${guardRoutes}`, async t => {
   const request = await fixture(t, {connection: false, guardRoutes});
-  for (const path of ['/DPSK/v1/plugin-config', '/DPSK/v1/plugin-config/item']) {
+  for (const path of ['/dsh-go/v1/plugin-config', '/dsh-go/v1/plugin-config/item']) {
     const response = await request(path);
     assert.equal(response.status, 503);
     assert.equal(response.body.v, 1);
@@ -267,14 +267,14 @@ for (const guardRoutes of [false, true]) test(`missing Connection preserves rout
     assert.equal(head.text, '');
     assert.match(head.headers.get('content-type'), /^application\/json/);
   }
-  const deletion = await request('/DPSK/v1/sessions/delete', {method: 'POST'});
+  const deletion = await request('/dsh-go/v1/sessions/delete', {method: 'POST'});
   assert.equal(deletion.status, 503);
   assert.equal(deletion.body.error.code, 'unavailable');
-  const ordinary = await request('/DPSK/v1/inventory');
+  const ordinary = await request('/dsh-go/v1/inventory');
   assert.equal(ordinary.status, 503);
   assert.equal(ordinary.text, 'Service Unavailable\n');
   if (guardRoutes) {
-    assert.equal(ordinary.headers.get('x-DPSK-guard'), 'reject');
+    assert.equal(ordinary.headers.get('x-dsh-go-guard'), 'reject');
     const external = await request('/fixture-route');
     assert.equal(external.status, 503);
     assert.equal(external.text, 'Service Unavailable\n');

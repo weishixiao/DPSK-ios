@@ -4,13 +4,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:dpsk_app/speech/speech_out.dart';
-import 'package:dpsk_app/speech/speech_audio.dart';
-import 'package:dpsk_app/speech/deepseek_speech.dart';
-import 'package:dpsk_app/speech/speech_compat.dart';
-import 'package:dpsk_app/companion/companion_voice.dart';
-import 'package:dpsk_app/companion/companion_voice_source.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/speech/speech_out.dart';
+import 'package:dsh_app/speech/speech_audio.dart';
+import 'package:dsh_app/speech/deepseek_speech.dart';
+import 'package:dsh_app/speech/speech_compat.dart';
+import 'package:dsh_app/companion/companion_voice.dart';
+import 'package:dsh_app/companion/companion_voice_source.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
 
 import 'package:flutter/services.dart';
 

@@ -4,18 +4,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/diagnostics/app_error_log.dart';
-import 'package:dpsk_app/diagnostics/automatic_diagnostics.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_bundle.dart';
-import 'package:dpsk_app/diagnostics/diagnostics_channel.dart';
-import 'package:dpsk_app/runtime/runtime_bridge.dart';
-import 'package:dpsk_app/runtime/runtime_state.dart';
-import 'package:dpsk_app/state/android_features.dart';
-import 'package:dpsk_app/state/connection_state.dart';
-import 'package:dpsk_app/state/hosts_state.dart';
-import 'package:dpsk_app/state/notify_state.dart'
+import 'package:dsh_app/diagnostics/app_error_log.dart';
+import 'package:dsh_app/diagnostics/automatic_diagnostics.dart';
+import 'package:dsh_app/diagnostics/diagnostics_bundle.dart';
+import 'package:dsh_app/diagnostics/diagnostics_channel.dart';
+import 'package:dsh_app/runtime/runtime_bridge.dart';
+import 'package:dsh_app/runtime/runtime_state.dart';
+import 'package:dsh_app/state/android_features.dart';
+import 'package:dsh_app/state/connection_state.dart';
+import 'package:dsh_app/state/hosts_state.dart';
+import 'package:dsh_app/state/notify_state.dart'
     show FlagController, appForegroundProvider;
-import 'package:dpsk_app/state/settings_state.dart';
+import 'package:dsh_app/state/settings_state.dart';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -217,13 +217,13 @@ void main() {
         void configureHost(FakeDsh host, String id) {
           host.handlers['session/create'] = (_) => {
             'ok': true,
-            'value': {'sessionId': id, 'agentPreset': 'DPSK-diagnostics'},
+            'value': {'sessionId': id, 'agentPreset': 'dsh-go-diagnostics'},
           };
           host.handlers['session/projections'] = (_) => {
             'ok': true,
             'value': {
               'asOfSeq': 0,
-              'values': {'agentPreset': 'DPSK-diagnostics'},
+              'values': {'agentPreset': 'dsh-go-diagnostics'},
             },
           };
           host.handlers['session/cancel'] = (_) => {
@@ -402,7 +402,7 @@ void main() {
                 AppErrorSource.platform,
                 StateError('finite owner-state probe'),
                 StackTrace.fromString(
-                  '#0 probe (package:dpsk_app/diagnostics/automatic_diagnostics.dart:1:1)',
+                  '#0 probe (package:dsh_app/diagnostics/automatic_diagnostics.dart:1:1)',
                 ),
               );
             }
@@ -603,7 +603,7 @@ void main() {
         'ok': true,
         'value': {
           'sessionId': 'recovery-old-analysis',
-          'agentPreset': 'DPSK-diagnostics',
+          'agentPreset': 'dsh-go-diagnostics',
         },
       };
       host.handlers['session/cancel'] = (_) => {

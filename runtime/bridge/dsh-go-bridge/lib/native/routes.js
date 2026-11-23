@@ -13,8 +13,8 @@ import { insidePackage, panelTitle } from "./manifest.js";
 import { acceptUpgrade } from "./ws.js";
 import { LOCALE, call, errorText, isPlainObject, normalizeScope, toJson, utf8Bytes, viewStats, withTimeout } from "./util.js";
 
-export const STREAM_PATH = "/DPSK/v1/stream";
-const BASE = "/DPSK/v1/";
+export const STREAM_PATH = "/dsh-go/v1/stream";
+const BASE = "/dsh-go/v1/";
 const SURFACE_KEYS = { "composer.actions": "composer.actions", "message.actions": "message.actions", "composer.strip": "composer.strip", panel: "panels", "composer.tools": "composer.tools", "session.actions": "session.actions" };
 const CONTEXT_FOR = { "composer.actions": ["draft", "clipboard"], "composer.tools": ["draft", "clipboard"], "message.actions": ["message"] };
 const IMAGE_TYPES = { ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif" };
@@ -632,7 +632,7 @@ export function createNativeRoutes(core, { beginUsage = () => () => {} } = {}) {
 
   // -------------------------------------------------------------- dispatch
 
-  /** Handles a /DPSK/v1/<native route>; returns false for paths it does not own. */
+  /** Handles a /dsh-go/v1/<native route>; returns false for paths it does not own. */
   async function handle(req, res, path, url) {
     let route;
     if (path === `${BASE}contributions`) route = () => contributions(req, res, url);

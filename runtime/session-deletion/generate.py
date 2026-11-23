@@ -31,7 +31,7 @@ def transforms():
         path = 'node_modules/@deepseek-ai/' + package + '/lib/index.js'
         result.setdefault(path, []).append((old, new))
     add('dsh-session-persistence-jsonl', 'import z from "@deepseek-ai/schemastery";',
-        'import { createDeletionSeam } from "./DPSK-deletion.mjs";\nimport z from "@deepseek-ai/schemastery";')
+        'import { createDeletionSeam } from "./dsh-go-deletion.mjs";\nimport z from "@deepseek-ai/schemastery";')
     add('dsh-session-persistence-jsonl', '\t\tthis.assertUsableRoot();', '''\t\tthis.assertUsableRoot();
 \t\tthis.dshGoDeletion = createDeletionSeam(this, {
 \t\t\tacquire: (dir, id) => SessionWriteLease.acquire(dir, id),

@@ -8,10 +8,10 @@
     # 伙伴小屋's conversation (app/lib/companion/companion_state.dart, docs/design/companion.md):
     # the persona owns the whole system prompt and there are no tools. Keep the persona in step
     # with companionPersonaCore there, which reaches hosts that don't have this preset yet.
-    - id: preset-DPSK-companion
+    - id: preset-dsh-go-companion
       name: '@deepseek-ai/dsh-agent-preset'
       config:
-        id: DPSK-companion
+        id: dsh-go-companion
         name: 伙伴
         description: 伙伴小屋的对话：只有角色人设，没有工具。
         order: 90
@@ -53,10 +53,10 @@
                 name: '@deepseek-ai/dsh-command-compact'
     # Standard rows: @deepseek-ai/dsh-web-app@0.2.2-rc.1 presets/standard.patch.yml.
     # Recheck the standard tool set when upgrading DSH; see PRESET-NOTICE.txt.
-    - id: preset-DPSK-companion-full
+    - id: preset-dsh-go-companion-full
       name: '@deepseek-ai/dsh-agent-preset'
       config:
-        id: DPSK-companion-full
+        id: dsh-go-companion-full
         name: 伙伴·完整
         description: 保留伙伴人设，使用当前主机的标准工具与已连接的手机工具。
         order: 91

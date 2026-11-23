@@ -237,7 +237,7 @@ def collect_one(obj, store, mirror_base=None):
         urls.append(checked_url(mirror_base, base=True) + obj["key"])
     failures = []
     for url in urls:
-        request = urllib.request.Request(checked_url(url), headers={"User-Agent": "DPSK-input-store/1"})
+        request = urllib.request.Request(checked_url(url), headers={"User-Agent": "dsh-go-input-store/1"})
         try:
             response = urllib.request.urlopen(request, timeout=30)
         except (OSError, urllib.error.URLError, http.client.HTTPException) as error:

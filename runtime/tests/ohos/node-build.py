@@ -71,7 +71,7 @@ with tempfile.TemporaryDirectory(prefix='ohos-node-source-') as temporary:
                              ('ohos-without-embedded-build', ['-D__OHOS__=1'])]:
             assert preprocess(before, flags) == preprocess(after, flags), (name, label)
             results['branches'].append({'file': name, 'platform': label, 'identical': True})
-        flags = ['-D__OHOS__=1', '-DDPSK_EMBEDDED_RUNTIME=1']
+        flags = ['-D__OHOS__=1', '-DDSH_GO_EMBEDDED_RUNTIME=1']
         modified = preprocess(after, flags)
         assert modified != preprocess(before, flags)
         if name.endswith('linux.c'):

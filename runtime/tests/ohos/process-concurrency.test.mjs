@@ -67,7 +67,7 @@ test('只读 prepare 和允许的 rg 绝对路径仍走搜索队列，bash 内�
   const shell = spawn(['bash', '-c', 'echo ready > ready; sleep 30']);
   await ready(join(work, 'ready'));
   const mixed = spawn(['bash', '-c', 'rg --json --regexp=needle -- 中文.txt; echo wrote > mixed']);
-  for (const name of ['/DPSK/ohos/bin/rg', '/bin/rg', '/usr/bin/rg']) {
+  for (const name of ['/dsh-go/ohos/bin/rg', '/bin/rg', '/usr/bin/rg']) {
     const argv = runtime.prepare(grep(name), { mode: 'read-only', workspaceRoot: work });
     const search = spawn(argv);
     assert.equal((await within(search.done, 8000)).exitCode, 0);

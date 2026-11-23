@@ -36,7 +36,7 @@ async function rejects(operation, status, code) {
 }
 
 async function fixture(t, options = {}) {
-  const root = await fs.mkdtemp(join(process.env.DPSK_TEST_TMP || tmpdir(), 'DPSK-companion-'));
+  const root = await fs.mkdtemp(join(process.env.DSH_GO_TEST_TMP || tmpdir(), 'dsh-go-companion-'));
   const filePath = join(root, 'companion', 'state.json');
   let at = START;
   const now = () => at;

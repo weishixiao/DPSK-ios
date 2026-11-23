@@ -1,4 +1,4 @@
-package com.dpsk.harness.runtime
+package io.github.ccch1mneyyy.dsh_app.runtime
 
 import android.content.Context
 import android.os.Process as AndroidProcess
@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
     val expectsAlias = case in setOf("prior-direct-alias", "carried-direct-alias")
     if (case == "carried-direct-alias") {
         File(root, "root").mkdirs()
-        File(root, "root/.DPSK-direct-path-alias").writeText("v1\n${root.canonicalPath}\n")
+        File(root, "root/.dsh-go-direct-path-alias").writeText("v1\n${root.canonicalPath}\n")
     }
     if (case == "l2s-fallback-unknown") File(root, "root/.l2s").apply { mkdirs() }.resolve("kept").writeText("fixture")
     if (case == "prior-direct-alias" || case == "symlink-config-no-alias") {
@@ -43,8 +43,8 @@ fun main(args: Array<String>) {
     val exits = Collections.synchronizedList(mutableListOf<Int>())
     val done = CountDownLatch(1)
     val child = ProcessBuilder("/bin/sleep", "45").directory(if (owned) root else other).apply {
-        if (owned) environment()["DPSK_RUNTIME_ROOT"] = root.canonicalPath
-        else environment().remove("DPSK_RUNTIME_ROOT")
+        if (owned) environment()["DSH_GO_RUNTIME_ROOT"] = root.canonicalPath
+        else environment().remove("DSH_GO_RUNTIME_ROOT")
     }.start()
     val pid = child.pid().toInt()
     Os.permittedSignalPids += pid // only this test's own child may ever receive a signal

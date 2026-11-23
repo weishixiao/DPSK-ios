@@ -1,4 +1,4 @@
-package com.dpsk.harness.runtime
+package io.github.ccch1mneyyy.dsh_app.runtime
 
 import android.content.Context
 import android.os.Process as AndroidProcess
@@ -26,7 +26,7 @@ fun main(args: Array<String>) {
     val attempts = mutableListOf<DshProcess>()
     val methods = mutableListOf<Boolean>()
     fun child(): Process = ProcessBuilder("/bin/sleep", "45").directory(root).apply {
-        environment()["DPSK_RUNTIME_ROOT"] = root.canonicalPath
+        environment()["DSH_GO_RUNTIME_ROOT"] = root.canonicalPath
     }.start().also {
         children += it
         Os.permittedSignalPids += it.pid().toInt()

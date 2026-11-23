@@ -52,16 +52,16 @@
 npm ci --ignore-scripts --no-audit --no-fund --prefix runtime/ohos/node/build-tools
 node runtime/ohos/node/patch-undici.mjs /absolute/node-v24.22.1-ohos-source
 
-DPSK_UNDICI_BUNDLE=/absolute/node-v24.22.1-ohos-source/deps/undici/undici.js \
-DPSK_UNDICI_SOURCE=/absolute/node-v24.22.1-ohos-source/deps/undici/src \
+DSH_GO_UNDICI_BUNDLE=/absolute/node-v24.22.1-ohos-source/deps/undici/undici.js \
+DSH_GO_UNDICI_SOURCE=/absolute/node-v24.22.1-ohos-source/deps/undici/src \
 node --test runtime/tests/ohos/node-formdata.test.mjs
 
-DPSK_OHOS_SIM=1 DPSK_OHOS_SIM_PLATFORM=openharmony \
-DPSK_UNDICI_BUNDLE=/absolute/node-v24.22.1-ohos-source/deps/undici/undici.js \
-DPSK_UNDICI_SOURCE=/absolute/node-v24.22.1-ohos-source/deps/undici/src \
-DPSK_HTTP_DISPATCHER=/absolute/repository/runtime/ohos/net/dispatcher.mjs \
+DSH_GO_OHOS_SIM=1 DSH_GO_OHOS_SIM_PLATFORM=openharmony \
+DSH_GO_UNDICI_BUNDLE=/absolute/node-v24.22.1-ohos-source/deps/undici/undici.js \
+DSH_GO_UNDICI_SOURCE=/absolute/node-v24.22.1-ohos-source/deps/undici/src \
+DSH_GO_HTTP_DISPATCHER=/absolute/repository/runtime/ohos/net/dispatcher.mjs \
 node --jitless --import ./runtime/ohos/sim/preload.mjs --test --test-isolation=none \
   runtime/tests/ohos/node-formdata.test.mjs
 ```
 
-最后一条需要另行应用 O0/O5 的独立包；本包不复制它们。补丁中 `undici-formdata.diff` 用于人工审阅源码变化，`patch-undici.mjs` 是带前后哈希核验的实际生成入口。对最终重编后的 Node，去掉 `DPSK_UNDICI_BUNDLE`，使测试使用真正内置 Fetch，再执行同样的真实网络回归；手机必须通过签名宿主进入测试，不能把共享库当可执行文件启动。
+最后一条需要另行应用 O0/O5 的独立包；本包不复制它们。补丁中 `undici-formdata.diff` 用于人工审阅源码变化，`patch-undici.mjs` 是带前后哈希核验的实际生成入口。对最终重编后的 Node，去掉 `DSH_GO_UNDICI_BUNDLE`，使测试使用真正内置 Fetch，再执行同样的真实网络回归；手机必须通过签名宿主进入测试，不能把共享库当可执行文件启动。

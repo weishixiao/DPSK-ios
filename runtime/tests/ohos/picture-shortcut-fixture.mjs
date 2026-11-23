@@ -152,7 +152,7 @@ export async function shortcutFixture(t, options = {}) {
     };
   }
   const first = attach(), attached = [first];
-  function call(method = 'pin', args = { label: 'DPSK', png: new Uint8Array([137, 80, 78, 71]) }, target = first) {
+  function call(method = 'pin', args = { label: 'DSH Go', png: new Uint8Array([137, 80, 78, 71]) }, target = first) {
     if (!target.methods?.handler) return { done: Promise.resolve({ missing: true }), replies: [{ missing: true }] };
     const result = deferred(), replies = [];
     const reply = value => { replies.push(value); result.resolve(value); };

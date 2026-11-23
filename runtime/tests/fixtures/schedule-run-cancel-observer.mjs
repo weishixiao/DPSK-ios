@@ -4,7 +4,7 @@ import {syncBuiltinESMExports} from 'node:module';
 let lockRetries=0;
 const originalDelay=timers.setTimeout;
 // Test clock: only the companion's 20 ms lock retry. Real locks and other timers remain intact.
-timers.setTimeout=function(ms,...args){if(ms===20 && new Error().stack.includes('/DPSK-deletion.mjs:')){lockRetries++;return Promise.resolve(args[0]);}return originalDelay.call(this,ms,...args);};
+timers.setTimeout=function(ms,...args){if(ms===20 && new Error().stack.includes('/dsh-go-deletion.mjs:')){lockRetries++;return Promise.resolve(args[0]);}return originalDelay.call(this,ms,...args);};
 syncBuiltinESMExports();
 export const name='schedule-run-cancel-probe';
 export const inject=['schedule','agents','sessions','sessionController'];

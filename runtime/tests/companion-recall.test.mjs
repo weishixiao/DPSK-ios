@@ -32,7 +32,7 @@ const sectionData = (text) => JSON.parse(text.split('\n')[2]);
 const prep = (agent, turnId = 1, stepId = 1) => ({ agent, scope: agent, turnId, stepId, messages: [{ role: 'user', content: 'synthetic' }] });
 
 async function fixture(t, options = {}) {
-  const home = await io.mkdtemp(join(tmpdir(), 'DPSK-recall-'));
+  const home = await io.mkdtemp(join(tmpdir(), 'dsh-go-recall-'));
   const directory = join(home, 'recall-sessions');
   const clock = { at: 1000 };
   const state = { readHook: undefined, readError: false, transform: undefined, stop: undefined,
@@ -478,7 +478,7 @@ async function httpFixture(t, f) {
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(async () => { server.closeAllConnections(); await new Promise((resolve) => server.close(resolve)); });
   return async (path, { method = 'GET', body, contentType = 'application/json' } = {}) => {
-    const response = await fetch(`http://127.0.0.1:${server.address().port}/DPSK/v1/companion${path}`, {
+    const response = await fetch(`http://127.0.0.1:${server.address().port}/dsh-go/v1/companion${path}`, {
       method, headers: { 'content-type': contentType }, ...(body === undefined ? {} : {
         body: typeof body === 'string' || Buffer.isBuffer(body) ? body : JSON.stringify(body),
       }),

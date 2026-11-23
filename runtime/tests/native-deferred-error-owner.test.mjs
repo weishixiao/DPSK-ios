@@ -133,7 +133,7 @@ async function probe(mode) {
     let connection;
     let next;
     if (mode.startsWith('valid-stream-')) {
-      ws = new WebSocket(origin.replace('http:', 'ws:') + '/DPSK/v1/stream');
+      ws = new WebSocket(origin.replace('http:', 'ws:') + '/dsh-go/v1/stream');
       const queued = [];
       const waiters = [];
       ws.addEventListener('message', event => {
@@ -160,7 +160,7 @@ async function probe(mode) {
       connection = (await next(value => value.t === 'welcome')).conn;
     }
     const invoke = async id => {
-      const response = await fetch(origin + '/DPSK/v1/invoke', {
+      const response = await fetch(origin + '/dsh-go/v1/invoke', {
         method: 'POST', headers: {'content-type': 'application/json'},
         body: JSON.stringify({v: 1, pkg: 'deferred-owner-test', id,
           surface: 'composer.actions', ...(connection ? {stream: connection} : {})}),

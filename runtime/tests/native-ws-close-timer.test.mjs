@@ -101,7 +101,7 @@ for (const before of ['peer-fin', 'peer-reset', 'live']) {
     const received = [];
     client.on('data', chunk => received.push(chunk)); client.on('error', () => {});
     await once(client, 'connect');
-    client.write('GET /DPSK/v1/stream HTTP/1.1\r\nHost: localhost\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
+    client.write('GET /dsh-go/v1/stream HTTP/1.1\r\nHost: localhost\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
     const {req, socket, head} = await arrived.promise;
     assert.equal(req.complete, true, 'a normal upgrade already has complete HTTP headers');
     if (before === 'peer-fin') {

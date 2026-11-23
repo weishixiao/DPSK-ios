@@ -42,7 +42,7 @@ rows=[{'id':x,'disabled':True}for x in ['session-title-llm','llm-pi-ai','llm-dee
 patch=profile/'cordis.patch.yml';patch.write_text(json.dumps(rows));home_patch=home/'cordis.patch.yml';home_patch.write_text(json.dumps([{'id':'home-covered','config':{'count':2}},{'id':'home-same','config':{'count':1}},{'id':'flag-only','disabled':False},{'insert':[{'id':'home-insert','name':'wave10-r7-fixture','config':{'count':1}}]}]))
 overlay=private/'overlay.yml';overlay.write_text(json.dumps([{'id':'cli-covered','config':{'count':3}},{'id':'speech-to-text-sensevoice','config':{'dataRoot':str(private/'sensevoice'),'modelDirectory':str(private/'offline-models'),'vadModelPath':str(private/'offline-vad.onnx')}},{'insert':[{'id':'cli-insert','name':'wave10-r7-fixture','config':{'count':1}}]}]))
 env={k:os.environ[k]for k in ['PATH','LANG','LC_ALL','TMPDIR']if k in os.environ};env.update({'TZ':'Asia/Shanghai','DSH_HOME':str(home),'DSH_AGENTS_HOME':str(agents),'DSH_TELEMETRY_DISABLED':'1','UV_USE_IO_URING':'0','R7_BRIDGE':str(a.bridge.resolve())})
-base='http://127.0.0.1:'+str(a.port);route='/DPSK/v1/plugin-config';audit=[];snapshots=[];cleanup=[];sha=lambda b:hashlib.sha256(b).hexdigest()
+base='http://127.0.0.1:'+str(a.port);route='/dsh-go/v1/plugin-config';audit=[];snapshots=[];cleanup=[];sha=lambda b:hashlib.sha256(b).hexdigest()
 def save(name,value):(evidence/name).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
 def identity(pid):
  try:
@@ -61,7 +61,7 @@ def request(op,stage,path,data=None,method=None,headers=None):
  except urllib.error.HTTPError as r:status=r.code;text=r.read().decode();meta=dict(r.headers)
  body=json.loads(text)if text.startswith('{')else text
  assert not any(x in text for x in ['SYNTHETIC_R6_EXPLICIT','SYNTHETIC_R6_DEFAULT','SYNTHETIC_R6_EXCEPTION','SYNTHETIC_R6_DENIED']),text[:200]
- rec={'stage':stage,'method':method or('GET'if data is None else'POST'),'path':path,'request':data,'status':status,'headers':{k:v for k,v in meta.items()if k.lower()in['content-type','cache-control','x-DPSK-guard']},'response':body,'elapsedSeconds':time.monotonic()-started};audit.append(rec);save('http-audit.json',audit);return status,body,meta
+ rec={'stage':stage,'method':method or('GET'if data is None else'POST'),'path':path,'request':data,'status':status,'headers':{k:v for k,v in meta.items()if k.lower()in['content-type','cache-control','x-dsh-go-guard']},'response':body,'elapsedSeconds':time.monotonic()-started};audit.append(rec);save('http-audit.json',audit);return status,body,meta
 def get(op,stage,id='normal'):
  status,body,_=request(op,stage,route+'/'+id);assert status==200,(id,status,body);return body
 def post(op,stage,id,view,ops):return request(op,stage,route+'/'+id,{'revision':view['revision'],'ops':ops})

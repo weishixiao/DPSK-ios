@@ -4,8 +4,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:dpsk_app/speech/deepseek_speech.dart';
-import 'package:dpsk_app/host_boundary.dart';
+import 'package:dsh_app/speech/deepseek_speech.dart';
+import 'package:dsh_app/host_boundary.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'host-http-tests.dart' show Server;

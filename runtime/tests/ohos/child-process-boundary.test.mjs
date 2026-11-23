@@ -31,7 +31,7 @@ for (const platform of ['linux', 'android']) {
     const result = run(`
       Object.defineProperty(process, 'platform', { value: ${JSON.stringify(platform)} });
       globalThis[Symbol.for('dsh.go.ohos.sim')] = true;
-      process.env.DPSK_OHOS_SIM = '1';
+      process.env.DSH_GO_OHOS_SIM = '1';
       await import(guard);
       for (const name of names) {
         assert.equal(cjs[name], original[name]);

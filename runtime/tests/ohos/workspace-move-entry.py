@@ -301,9 +301,9 @@ def main():
             'HOME': os.environ['HOME'], 'TMPDIR': str(output / 'tmp'), 'LANG': 'C.UTF-8',
             'LD_PRELOAD': str(native / 'libdsh_host.so') + ':' + str(publication),
             'DSH_HOME': str(output / 'home'), 'NARB_DISABLE_NATIVE_CACHE': '1',
-            'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native),
-            'DPSK_OHOS_LINUX_DIRECTORY': str(output / 'linux-tools'),
-            'DPSK_OHOS_SIM_PLATFORM': 'openharmony',
+            'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native),
+            'DSH_GO_OHOS_LINUX_DIRECTORY': str(output / 'linux-tools'),
+            'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony',
             'OHOS_294_MOVE_CONFIG': str(output / 'CONFIG.json'),
             'OHOS_TYPESCRIPT_PREFIX': str(typescript),
             'OHOS_WORKSPACE_GRANTS_ADDON': str(native / 'workspace-publisher.node'),
@@ -323,7 +323,7 @@ def main():
             'scope': 'Selected files match the supplied manifest except explicitly recorded source-pinned component overrides when requested. No new compose/runtimeVersion claim for component prefixes. Old read tests are references, not executed.'})
         save(output / 'COMMAND.json', {'argv': command, 'cwd': str(output), 'environment': environment,
             'environmentSource': 'Explicit allowlist; HOME/PATH inherited unchanged, no other ambient dictionary copied',
-            'instrumentationAdds': {'DPSK_OHOS_SIM_ADDONS': [str(native / name) for name in
+            'instrumentationAdds': {'DSH_GO_OHOS_SIM_ADDONS': [str(native / name) for name in
                 ['libdsh_flock.so', 'libdsh_require_builtin.so', 'libdsh_workspace_grants.so', 'workspace-publisher.node']]},
             'nativeBuild': 'None: reuse five input libraries and the existing linked publication fixture'})
         started, timeout = time.monotonic(), False

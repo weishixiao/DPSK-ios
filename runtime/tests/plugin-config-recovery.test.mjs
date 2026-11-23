@@ -9,7 +9,7 @@ import { syncBuiltinESMExports } from 'node:module';
 import { createPluginConfig } from '../bridge/dsh-go-bridge/lib/plugin-config.js';
 import { withSources } from './plugin-config-source-fixture.mjs';
 
-const base = '/DPSK/v1/plugin-config';
+const base = '/dsh-go/v1/plugin-config';
 const graph = { uid: 1, refs: {
   1: { type: 'object', dict: { count: 2, fail: 3 } },
   2: { type: 'number' }, 3: { type: 'boolean' },

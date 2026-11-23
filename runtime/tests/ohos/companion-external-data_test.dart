@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dpsk_app/companion/companion_voice.dart';
-import 'package:dpsk_app/companion/companion_voice_source.dart';
-import 'package:dpsk_app/speech/deepseek_speech.dart';
-import 'package:dpsk_app/state/android_features.dart';
+import 'package:dsh_app/companion/companion_voice.dart';
+import 'package:dsh_app/companion/companion_voice_source.dart';
+import 'package:dsh_app/speech/deepseek_speech.dart';
+import 'package:dsh_app/state/android_features.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

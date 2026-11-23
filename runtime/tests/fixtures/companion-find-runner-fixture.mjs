@@ -57,7 +57,7 @@ export async function openFind(root,options={}){
  const route=createCompanionRoutes({ctx:{get:key=>values[key]},send:(res,status,body)=>{res.writeHead(status,{'content-type':'application/json'});res.end(JSON.stringify(body));}});
  const server=createServer((req,res)=>route.handle(req,res,new URL(req.url,'http://local').pathname).catch(error=>{res.statusCode=500;res.end(String(error));}));
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
- const base=`http://127.0.0.1:${server.address().port}/DPSK/v1/companion/tasks`;
+ const base=`http://127.0.0.1:${server.address().port}/dsh-go/v1/companion/tasks`;
  const request=async(path='',body,headers={})=>{
   const response=await fetch(base+path,{method:body===undefined?'GET':'POST',headers:{authorization:'owner',...(body===undefined?{}:{'content-type':'application/json'}),...headers},...(body===undefined?{}:{body:typeof body==='string'?body:JSON.stringify(body)})});
   return {status:response.status,body:await response.json()};

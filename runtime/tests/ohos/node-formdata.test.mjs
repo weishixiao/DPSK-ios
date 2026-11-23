@@ -11,10 +11,10 @@ import { after, test } from 'node:test';
 import { pathToFileURL } from 'node:url';
 
 const require = createRequire(import.meta.url);
-const api = process.env.DPSK_UNDICI_BUNDLE
-  ? require(path.resolve(process.env.DPSK_UNDICI_BUNDLE)) : globalThis;
-const dispatcher = process.env.DPSK_HTTP_DISPATCHER
-  ? (await import(pathToFileURL(path.resolve(process.env.DPSK_HTTP_DISPATCHER)))).createHttpDispatcher()
+const api = process.env.DSH_GO_UNDICI_BUNDLE
+  ? require(path.resolve(process.env.DSH_GO_UNDICI_BUNDLE)) : globalThis;
+const dispatcher = process.env.DSH_GO_HTTP_DISPATCHER
+  ? (await import(pathToFileURL(path.resolve(process.env.DSH_GO_HTTP_DISPATCHER)))).createHttpDispatcher()
   : undefined;
 after(async () => { await dispatcher?.close(); });
 
@@ -120,8 +120,8 @@ test('303 still drops POST body and body headers', async () => {
 });
 
 test('the replay Blob retains a lazy file-backed handle', async (t) => {
-  assert.ok(process.env.DPSK_UNDICI_SOURCE, 'set DPSK_UNDICI_SOURCE to the exact Undici source directory');
-  const sourceRoot = path.resolve(process.env.DPSK_UNDICI_SOURCE);
+  assert.ok(process.env.DSH_GO_UNDICI_SOURCE, 'set DSH_GO_UNDICI_SOURCE to the exact Undici source directory');
+  const sourceRoot = path.resolve(process.env.DSH_GO_UNDICI_SOURCE);
   const { extractBody } = require(path.join(sourceRoot, 'lib/web/fetch/body.js'));
   const { FormData } = require(path.join(sourceRoot, 'lib/web/fetch/formdata.js'));
   const directory = await mkdtemp(path.join(os.tmpdir(), 'ohos-formdata-'));

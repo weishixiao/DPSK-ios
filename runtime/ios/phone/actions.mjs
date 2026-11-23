@@ -49,7 +49,7 @@ export function actionFor(name, args) {
           return { kind: 'share', text: text(args.text, 'text') };
         }
         case 'settings': {
-          if (args.page !== 'home' || args.app !== undefined) throw unsupported('iOS 只支持 settings(page:"home") 打开 DPSK 自身设置，不能打开其他系统设置页或其他 App 设置。');
+          if (args.page !== 'home' || args.app !== undefined) throw unsupported('iOS 只支持 settings(page:"home") 打开 DSH Go 自身设置，不能打开其他系统设置页或其他 App 设置。');
           return { kind: 'settings' };
         }
         case 'navigate': {

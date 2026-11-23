@@ -14,7 +14,7 @@ import { phoneMemoryRules } from '../bridge/dsh-go-bridge/lib/companion/full-con
 import { createFixture, requestSystemText, assertNoRealNetwork } from './fixtures/companion-recall-engine.mjs';
 
 const execute = promisify(execFile);
-const ROOT = '/DPSK/v1/companion';
+const ROOT = '/dsh-go/v1/companion';
 const AUTH = 'Bearer synthetic-recall-http';
 const version = (value) => ({ storeId: value.storeId, expectedRevision: value.revision });
 const integration = (name, options, run) => test(name, {
@@ -74,7 +74,7 @@ integration('real HTTP binding reaches only its actual full Agent and retains th
   assert.equal(accepted.status, 200); assert.equal(accepted.body.status, 'ready');
   assert.equal(accepted.body.sessionId, bound.agent.id);
   const diagnostic = await f.assemble(bound.agent);
-  assert.equal(diagnostic.sections.filter((section) => section.name === 'DPSK:confirmed-memory').length, 0);
+  assert.equal(diagnostic.sections.filter((section) => section.name === 'dsh-go:confirmed-memory').length, 0);
   assert.equal(f.requests.length, 0, 'Diagnostic assembly neither prepares memory nor starts a model');
   await f.send(bound.agent, 'synthetic user turn');
   await f.send(samePreset.agent, 'ordinary full-preset user turn');
@@ -103,7 +103,7 @@ integration('real clean projection rejects existing transcript, legacy persona r
   f.engine.session.appendPluginRecord(unknown.agent.session, 'plugin:synthetic/unknown', { synthetic: true });
   await assert.rejects(f.bind('UNKNOWN_RECORD'), (error) => error.code === 'companion/recall-session-not-clean');
   const legacy = await f.createAgent('LEGACY_PERSONA');
-  f.engine.session.appendPluginRecord(legacy.agent.session, 'plugin:DPSK/companion-persona', {
+  f.engine.session.appendPluginRecord(legacy.agent.session, 'plugin:dsh-go/companion-persona', {
     v: 1, sessionId: legacy.agent.id, revision: 1, custom: 'old C740 persona', name: '', callMe: '',
   });
   await assert.rejects(f.bind('LEGACY_PERSONA'), (error) => error.code === 'companion/recall-session-not-clean');
@@ -128,7 +128,7 @@ integration('actual preset switch retires permanently and old full Agent cannot 
   const binding = await f.bind(a.agent.id);
   await f.switchPreset(a.agent, 'ordinary');
   assert.equal((await f.coordinator.status(binding.bindingId)).status, 'retired');
-  await f.switchPreset(a.agent, 'DPSK-companion-full');
+  await f.switchPreset(a.agent, 'dsh-go-companion-full');
   assert.equal((await f.coordinator.status(binding.bindingId)).status, 'retired');
   assert.throws(() => a.agent.followup(f.input('must not start')));
   assert.equal(f.requests.length, 0);
@@ -177,7 +177,7 @@ integration('an identical session id cannot substitute another actual Session ob
 
 integration('v1 clean checkpoints are refolded before a legacy persona record can authorize recall', { timeout: 15000 }, async (t) => {
   const f = await fixture(t), { agent } = await f.createAgent('LEGACY_CHECKPOINT');
-  f.engine.session.appendPluginRecord(agent.session, 'plugin:DPSK/companion-persona', {
+  f.engine.session.appendPluginRecord(agent.session, 'plugin:dsh-go/companion-persona', {
     v: 1, sessionId: agent.id, revision: 1, custom: 'legacy C740', name: '', callMe: '',
   });
   const events = agent.session.snapshotEvents(f.engine.session.SessionLogOffset(0));
@@ -200,7 +200,7 @@ integration('an unavailable recall adapter leaves ordinary full context and user
   await f.send(agent, 'ordinary full-mode turn');
   assert.equal(f.requests.length, 1);
   assert(requestSystemText(f.requests[0]).includes(f.personaText));
-  assert(requestSystemText(f.requests[0]).includes('DPSK'));
+  assert(requestSystemText(f.requests[0]).includes('dsh-go'));
 });
 
 integration('HTTP memory clear retires the actual driver; a new clean session sees the empty current library', { timeout: 15000 }, async (t) => {

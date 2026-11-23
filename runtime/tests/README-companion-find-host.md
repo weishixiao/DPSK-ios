@@ -5,7 +5,7 @@
 
 ## 请求与有限执行
 
-沿已有真实配对 owner admission、`/DPSK/v1/companion/tasks`、单个 `companion_tasks` Domain/JSON aggregate。
+沿已有真实配对 owner admission、`/dsh-go/v1/companion/tasks`、单个 `companion_tasks` Domain/JSON aggregate。
 不新增持久仓、模型工具、通用任务框架或任意路径执行。新增 kind 严格接受六个 args：
 `folderRef/scope:currentLevel/localDate/timeZone/dateBy:modified/extensions`；格式是非空去重 md/txt 子集。
 日期以首次受理时的 Temporal 当地日固定半开范围，精确原 create 重放不重新算时区。

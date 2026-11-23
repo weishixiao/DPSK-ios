@@ -28,8 +28,8 @@ with tempfile.TemporaryDirectory(prefix="delete-live-") as tmp:
     status,body=rpc("session/create",{"request":{"sessionId":id,"cwd":tmp}})
     assert status==200 and body["result"]["ok"] is True
    def observe(action,id,extra=""):return request("/local-deletion-test/"+action+"?id="+id+extra)
-   def delete(id):return request("/DPSK/v1/sessions/delete",{"sessionId":id})
-   assert request("/DPSK/v1/sessions/deletion")== (200,{"supported":True,"version":1})
+   def delete(id):return request("/dsh-go/v1/sessions/delete",{"sessionId":id})
+   assert request("/dsh-go/v1/sessions/deletion")== (200,{"supported":True,"version":1})
    create("fresh")
    fresh=delete("fresh")
    state=observe("snapshot","fresh")[1]

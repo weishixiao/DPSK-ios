@@ -131,14 +131,14 @@ if (linkedPublicationFixture) {
   const host = nativeLibraryDirectory && join(nativeLibraryDirectory, 'libdsh_host.so');
   if (host && await stat(host).then(() => true, () => false)) env.LD_PRELOAD += ':' + host;
 }
-if (nativeLibraryDirectory) env.DPSK_OHOS_NATIVE_LIBRARY_DIR = nativeLibraryDirectory;
+if (nativeLibraryDirectory) env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR = nativeLibraryDirectory;
 if (compileCacheDirectory) env.NODE_COMPILE_CACHE = compileCacheDirectory;
 if (values.mode === 'sim') {
-  env.DPSK_OHOS_SIM_ADDONS = JSON.stringify(allowedAddons.map((entry) => entry.path));
+  env.DSH_GO_OHOS_SIM_ADDONS = JSON.stringify(allowedAddons.map((entry) => entry.path));
   // The exact allowlist must not become a copied native binary in a tmp cache.
   env.NARB_DISABLE_NATIVE_CACHE = '1';
 }
-if (values.platform) env.DPSK_OHOS_SIM_PLATFORM = 'openharmony';
+if (values.platform) env.DSH_GO_OHOS_SIM_PLATFORM = 'openharmony';
 const args = [...flags, join(prefix, 'node_modules/@deepseek-ai/dsh/lib/bin.js'), 'web'];
 const profilePatches = [...values.patch, ...(values.mode === 'sim' ? values['sim-patch'] : [])];
 for (const name of [...profilePatches, overlay]) args.push('--patch', resolve(name));

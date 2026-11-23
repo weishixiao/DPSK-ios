@@ -42,11 +42,11 @@ overrides = {
     'DSH_TEST_PREFIX': str(prefix), 'OHOS_TEST_GIT_PREFIX': str(prefix),
     'DSH_O4B_EXPECT_STRICT': '1' if args.mode == 'strict' else '0',
 }
-removed = ['DPSK_OHOS_SIM', 'DSH_O4B_PARENT_ROOT', 'DSH_O4B_GIT_ROOT',
-           'DSH_GIT_ORACLE', 'DPSK_OHOS_SIM_PLATFORM', 'DPSK_OHOS_SIM_ADDONS']
+removed = ['DSH_GO_OHOS_SIM', 'DSH_O4B_PARENT_ROOT', 'DSH_O4B_GIT_ROOT',
+           'DSH_GIT_ORACLE', 'DSH_GO_OHOS_SIM_PLATFORM', 'DSH_GO_OHOS_SIM_ADDONS']
 argv = [str(node)]
 if args.mode == 'strict':
-    overrides.update(DPSK_OHOS_SIM_PLATFORM='openharmony', DPSK_OHOS_SIM_ADDONS='[]')
+    overrides.update(DSH_GO_OHOS_SIM_PLATFORM='openharmony', DSH_GO_OHOS_SIM_ADDONS='[]')
     argv += ['--jitless', '--import', str(root / 'runtime/ohos/sim/preload.mjs')]
 else:
     argv += ['--import', str(root / 'runtime/ohos/sim/marker.mjs')]

@@ -20,8 +20,8 @@ for (const [label, value, marker, expected] of [
   ['explicit simulation without connection', 'linux', true, 1],
 ]) {
   test(label, async () => {
-    const oldEnv = process.env.DPSK_OHOS_SIM;
-    process.env.DPSK_OHOS_SIM = '1';
+    const oldEnv = process.env.DSH_GO_OHOS_SIM;
+    process.env.DSH_GO_OHOS_SIM = '1';
     Object.defineProperty(process, 'platform', { ...platform, value });
     if (marker) globalThis[simulationSymbol] = true;
     const ctx = new Context(), routes = new Map();
@@ -41,7 +41,7 @@ for (const [label, value, marker, expected] of [
       if (expected) {
         server.listen(0, '127.0.0.1'); await once(server, 'listening');
         const result = await new Promise((resolve, reject) => {
-          http.get(`http://127.0.0.1:${server.address().port}/DPSK/v1/runtime-capabilities`, res => {
+          http.get(`http://127.0.0.1:${server.address().port}/dsh-go/v1/runtime-capabilities`, res => {
             let body = ''; res.on('data', bytes => { body += bytes; });
             res.on('end', () => resolve({ status: res.statusCode, body, headers: res.headers }));
           }).on('error', reject);
@@ -57,8 +57,8 @@ for (const [label, value, marker, expected] of [
       if (server.listening) await new Promise(resolve => server.close(resolve));
       if (marker) delete globalThis[simulationSymbol];
       Object.defineProperty(process, 'platform', platform);
-      if (oldEnv === undefined) delete process.env.DPSK_OHOS_SIM;
-      else process.env.DPSK_OHOS_SIM = oldEnv;
+      if (oldEnv === undefined) delete process.env.DSH_GO_OHOS_SIM;
+      else process.env.DSH_GO_OHOS_SIM = oldEnv;
     }
   });
 }

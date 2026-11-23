@@ -27,7 +27,7 @@ Node 的唯一可执行版本声明是 `runtime/ohos/node-version.json`（当前
 | `getOwnershipMarker(fd)` | 返回标记字符串；缺少标记为 `undefined`，其他系统错误抛出 |
 | `getSystemBuildIdentity()` | 同步返回 `osFullName`、`displayVersion`、`incrementalVersion`、`securityPatchTag` 四个字符串字段；仅取实际平台 getter，无环境变量替代 |
 
-标记使用 `user.dpsk_ownership`。成功改名后的最终 inode 保留该扩展属性，payload 字节不变。本轮不另开移除标记的中断窗口。五个函数的原生实现、固定构建脚本和独立边界测试属于配套原生分项；Linux `.node` / `LD_PRELOAD` 库仅是显式测试夹具，不是 OpenHarmony 产品二进制。
+标记使用 `user.dsh_go_ownership`。成功改名后的最终 inode 保留该扩展属性，payload 字节不变。本轮不另开移除标记的中断窗口。五个函数的原生实现、固定构建脚本和独立边界测试属于配套原生分项；Linux `.node` / `LD_PRELOAD` 库仅是显式测试夹具，不是 OpenHarmony 产品二进制。
 
 系统 build 四字段须各为 1–1024 个 UTF-8 字节、非空白且无 NUL，启动两次读取必须一致。固定字段顺序的 JSON 经 SHA256 得到持久版本键。任一字段不可用、过长或不稳定都明确阻止 publication preload；此时不读写旧熔断状态、不重新试用。该启动前提尚待实际设备验证，不能用 kernel release、Node 版本或随机值补足。
 
@@ -116,13 +116,13 @@ LD_PRELOAD="$LINKED_LIBRARY" "$NODE" --jitless --test \
   runtime/tests/ohos/publication-atomic.test.mjs \
   runtime/tests/ohos/publication-ledger-lifecycle.test.mjs
 
-LD_PRELOAD="$LINKED_LIBRARY" DPSK_OHOS_SIM_PLATFORM=openharmony \
+LD_PRELOAD="$LINKED_LIBRARY" DSH_GO_OHOS_SIM_PLATFORM=openharmony \
   "$NODE" --jitless --import "$SIM_PRELOAD" --test \
   runtime/tests/ohos/publication-atomic.test.mjs \
   runtime/tests/ohos/publication-ledger-lifecycle.test.mjs
 
 LD_PRELOAD="$LINKED_LIBRARY" DSH_HOME="$APP_DATA" DSH_TEST_PREFIX="$PREFIX" \
-  DPSK_OHOS_SIM_PLATFORM=openharmony \
+  DSH_GO_OHOS_SIM_PLATFORM=openharmony \
   "$NODE" --jitless --import "$SIM_PRELOAD" \
   --import ./runtime/ohos/publication/preload.mjs \
   --test --test-isolation=none \
@@ -159,12 +159,12 @@ OH 删除 seam 将缺少该方法或原子能力不支持映射为既有 `unavai
 有限回归使用真实私有文件和固定 Linux publication linked 夹具。以下入口不启动 App 或 SDK；`NODE`、`LINKED_LIBRARY`、`SIM_PRELOAD`、`OH_DELETION_CORE`、私有 `APP_DATA`、`TRACE` 均须使用明确绝对路径。`OH_DELETION_CORE` 指本次 composer 输出的 `generated/ohos-deletion/core.mjs`；路由单元组使用 `DSH_SESSION_DELETION_ROUTE` 指向同目录的 `session-deletion.js`，不得以未修改的共享源冒充 OH 后像。目录同步用例的 hook 只替换 core 自身的 fs/promises 依赖，记录真实 open/fsync/rm；为单独比较旧重试顺序，其 legacy-link 接缝委托真实原子服务，不启用硬链接，也不称旧完整构建或设备重放。
 
 ```sh
-LD_PRELOAD="$LINKED_LIBRARY" DPSK_OHOS_SIM_PLATFORM=openharmony \
+LD_PRELOAD="$LINKED_LIBRARY" DSH_GO_OHOS_SIM_PLATFORM=openharmony \
   DSH_SESSION_DELETION_CORE="$OH_DELETION_CORE" \
   "$NODE" --jitless --import "$SIM_PRELOAD" --test --test-isolation=none \
   runtime/tests/ohos/session-deletion-publication.test.mjs
 
-LD_PRELOAD="$LINKED_LIBRARY" DPSK_OHOS_SIM_PLATFORM=openharmony \
+LD_PRELOAD="$LINKED_LIBRARY" DSH_GO_OHOS_SIM_PLATFORM=openharmony \
   DSH_HOME="$APP_DATA" DSH_DELETION_SYNC_SOURCE="$OH_DELETION_CORE" \
   DSH_DELETION_SYNC_TRACE="$TRACE" \
   "$NODE" --jitless --import "$SIM_PRELOAD" \

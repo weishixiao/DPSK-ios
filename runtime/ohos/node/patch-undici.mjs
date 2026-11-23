@@ -14,7 +14,7 @@ const pins = {
 };
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 async function replaceFile(filename, bytes) {
-  const temporary = `${filename}.DPSK-${process.pid}.tmp`;
+  const temporary = `${filename}.dsh-go-${process.pid}.tmp`;
   await writeFile(temporary, bytes, { flag: 'wx' });
   await rename(temporary, filename);
 }

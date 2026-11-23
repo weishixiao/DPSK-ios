@@ -45,7 +45,7 @@ async function fixture(t) {
     rmSync(dir, { recursive: true, force: true });
   });
   return { get caps() { return caps; }, async get(query, path = 'views/caps-test/panel') {
-    const res = await fetch(`http://127.0.0.1:${server.address().port}/DPSK/v1/${path}?${query}`);
+    const res = await fetch(`http://127.0.0.1:${server.address().port}/dsh-go/v1/${path}?${query}`);
     return { status: res.status, body: await res.json() };
   } };
 }

@@ -138,7 +138,7 @@ def main():
         write_json(out / 'development-deletion-variants.json', variants)
 
     runtime_modules = {name: {'bytes': (runtime / name).stat().st_size, 'sha256': sha(runtime / name)} for name in [
-        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs',
+        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs',
         'runtime/bridge/dsh-go-bridge/lib/session-deletion.js',
         'runtime/ohos/publication/atomic.mjs', 'runtime/ohos/publication/index.mjs']}
     write_json(out / 'runtime-deletion-modules.json', runtime_modules)
@@ -169,8 +169,8 @@ def main():
     captured = json.loads(Path(str(argv_path) + '.env.json').read_text())
     expected = {'HOME': str(guest / 'root'), 'DSH_HOME': str(dsh), 'DSH_AGENTS_HOME': str(agents),
         'TMPDIR': str(cache / 'ohos-process'), 'NODE_COMPILE_CACHE': str(cache / 'node-compile-cache'),
-        'NARB_DISABLE_NATIVE_CACHE': '1', 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(args.native_library_dir),
-        'DPSK_OHOS_LINUX_DIRECTORY': str(guest.parent.parent / 'linux-tools'),
+        'NARB_DISABLE_NATIVE_CACHE': '1', 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(args.native_library_dir),
+        'DSH_GO_OHOS_LINUX_DIRECTORY': str(guest.parent.parent / 'linux-tools'),
         'DSH_PERMISSION_MODE': 'workspace-write'}
     assert captured == expected
     assert len(argv) == 13 and argv[1] == '--jitless' and argv.count('--import') == 1

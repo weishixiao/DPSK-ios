@@ -144,7 +144,7 @@ def main():
                 assert 'byteRange' not in source
                 assert source['sha256'] == doc['sha256'] and source['bytes'] == doc['bytes']
                 continue
-            request = urllib.request.Request(source['url'], headers={'User-Agent': 'DPSK-notice-verification'})
+            request = urllib.request.Request(source['url'], headers={'User-Agent': 'dsh-go-notice-verification'})
             try:
                 with urllib.request.urlopen(request, timeout=30) as response:
                     original = response.read()

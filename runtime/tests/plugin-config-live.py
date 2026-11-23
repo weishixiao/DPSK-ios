@@ -53,7 +53,7 @@ try:
   assert status==200,(status,r)
   return r['result']
  results={}
- base='/DPSK/v1/plugin-config'
+ base='/dsh-go/v1/plugin-config'
  status,listing=request(base);assert status==200,(status,listing)
  rows={x['entryId']:x for x in listing['entries']}
  assert rows['wave10-config-fixture']['configurable']

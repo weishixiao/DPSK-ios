@@ -163,7 +163,7 @@ def main():
             else:
                 command += ['--import', str(args.marker)]
             command += [str(actor), str(request_path)]
-            result = subprocess.run(command, capture_output=True, env={**env, 'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DPSK_OHOS_SIM_ADDONS': '[]'})
+            result = subprocess.run(command, capture_output=True, env={**env, 'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_GO_OHOS_SIM_ADDONS': '[]'})
             invocation = {'group': name, 'argv': command, 'exitCode': result.returncode, 'stderr': result.stderr.decode(), 'request': request,
                           'nativeUid': restricted_uid if restricted_uid is not None else os.geteuid(),
                           'nativeEnv': {'LC_ALL': env['LC_ALL'], 'XDG_CONFIG_HOME': env['XDG_CONFIG_HOME']}}

@@ -2,7 +2,7 @@
 // bridge state, persistence or logging. Requires only Node >= 20 built-ins.
 import { once } from "node:events";
 
-const ROOT = "/DPSK/v1/speech";
+const ROOT = "/dsh-go/v1/speech";
 const OFFICIAL_ORIGIN = "https://api.deepseek.com";
 const STATUS_URL = `${OFFICIAL_ORIGIN}/v1/tools/tts`;
 const TTS_LIMIT = 64 * 1024;

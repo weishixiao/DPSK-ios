@@ -23,7 +23,7 @@ export function createCommands(config, paths) {
     const environment = options.env ?? process.env;
     const path = environment.PATH;
     return { ...options, env: { ...copyEnvironment(environment), ...(path === undefined ? {} : {
-      DPSK_GUEST_PATH: path.split(':').filter((entry) => entry !== bin).map(paths.toGuest).join(':'),
+      DSH_GO_GUEST_PATH: path.split(':').filter((entry) => entry !== bin).map(paths.toGuest).join(':'),
     }) } };
   }
   function nodeOptions(options) {

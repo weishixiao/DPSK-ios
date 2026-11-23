@@ -55,7 +55,7 @@ function selectContext(doc, query, limit, now) {
 
 export function createCompanionStore({ filePath, now = Date.now, io = fs } = {}) {
   const home = process.env.DSH_HOME?.trim() || join(homedir(), ".dsh");
-  // Keep private memories outside DPSK/: reset's existing "UI and skills" option
+  // Keep private memories outside dsh-go/: reset's existing "UI and skills" option
   // retains that whole directory and must not silently retain personal memories too.
   const path = resolve(filePath ?? join(home, "companion", "state.json"));
   function clock() {
@@ -162,7 +162,7 @@ export function createCompanionStore({ filePath, now = Date.now, io = fs } = {})
       return transaction((doc, at) => selectContext(doc, query, limit, at));
     },
     exportData() {
-      return transaction((doc, at) => ({ schema: "DPSK/companion-export", ...snapshot(doc, at),
+      return transaction((doc, at) => ({ schema: "dsh-go/companion-export", ...snapshot(doc, at),
         exportedAt: at, memories: doc.memories }));
     },
     event(input) {

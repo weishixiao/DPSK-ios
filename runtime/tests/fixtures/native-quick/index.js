@@ -1,6 +1,6 @@
 // Test-only native plugin (runtime/tests/native-bridge.mjs): invoke handlers and every kind of
 // misbehaviour the bridge must contain (throws, timeouts, bad effects, oversize views, bad data).
-export const name = "DPSK-fixture-quick";
+export const name = "dsh-go-fixture-quick";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export const seen = [];

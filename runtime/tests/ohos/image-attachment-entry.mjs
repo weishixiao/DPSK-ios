@@ -131,7 +131,7 @@ try {
   assert.deepEqual(codec.identity(), oracle.identity);
   const require = createRequire(pathToFileURL(join(prefix, 'runtime/ohos/image/preload.mjs')));
   const fixed = require('@dsh-go/ohos-native').load('image-codec');
-  assert.equal(fixed.path, join(resolve(process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR), 'libdsh_image_codec.so'));
+  assert.equal(fixed.path, join(resolve(process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR), 'libdsh_image_codec.so'));
   assert.equal(fixed.binding.available, true); assert.equal(fixed.binding.fixtureOnly, false);
   assert.equal(fixed.binding.codecIdentity, oracle.identity.buildId);
   assert.equal(fixed.binding.colorGetterPolicy, 'destroy');

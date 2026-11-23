@@ -34,89 +34,89 @@ import 'surfaces.dart';
 abstract final class DshPalette {
   // ══ 浅色:晨雾 ══════════════════════════════════════════
   /// 页面渐变顶 · 晨雾蓝(与 DSH 官方 deepseek-50 同族)。
-  static const mistTop = Color(0xFFEBF1FE);
+  static const mistTop = Color(0xFFFFFFFF);
 
   /// 页面渐变底 · 近白微紫。
-  static const mistBottom = Color(0xFFF6F7FC);
+  static const mistBottom = Color(0xFFFFFFFF);
 
   /// 不透明页面底(渐变的中值;无法铺渐变时用)。
-  static const mist = Color(0xFFF0F4FD);
+  static const mist = Color(0xFFFFFFFF);
 
   /// 面色阶梯(不透明),玻璃关闭或 M3 组件需要实色时用。
-  static const mistLowest = Color(0xFFFBFCFF);
-  static const mistLow = Color(0xFFF6F9FE);
-  static const mistContainer = Color(0xFFEEF1F9);
-  static const mistHigh = Color(0xFFE7EBF4);
-  static const mistHighest = Color(0xFFDFE4EE);
+  static const mistLowest = Color(0xFFFFFFFF);
+  static const mistLow = Color(0xFFFAFAFA);
+  static const mistContainer = Color(0xFFF2F2F2);
+  static const mistHigh = Color(0xFFE6E6E6);
+  static const mistHighest = Color(0xFFD9D9D9);
 
   /// 主文字 · 深墨蓝(对所有浅色面 ≥ 13)。
-  static const ink = Color(0xFF1E232E);
+  static const ink = Color(0xFF000000);
 
   /// 次级文字(≥ 6.2)。
-  static const inkMuted = Color(0xFF4F5562);
+  static const inkMuted = Color(0xFF3D3D3D);
 
   /// 三级文字 · 时间戳、摘要、占位符(≥ 4.6,仍可承载信息)。
-  static const inkFaint = Color(0xFF646974);
+  static const inkFaint = Color(0xFF6B6B6B);
 
   /// 禁用 / 纯装饰(约 2.5,**不得**承载必要信息)。
-  static const inkGhost = Color(0xFFA1A5AC);
+  static const inkGhost = Color(0xFFA6A6A6);
 
   /// 输入框等交互边界(非文字对比 ≥ 3)。
-  static const outlineLight = Color(0xFF7E838D);
+  static const outlineLight = Color(0xFF808080);
 
   /// 分割线 / 发丝描边(装饰性)。
-  static const ruleLight = Color(0xFFDCE0E8);
+  static const ruleLight = Color(0xFFE0E0E0);
 
   /// 冷墨阴影基色:阴影带一点蓝,比纯黑阴影干净。
-  static const shadowInk = Color(0xFF0B152D);
+  static const shadowInk = Color(0xFF000000);
 
   // ══ 深色:深海石板 ══════════════════════════════════════
-  static const nightTop = Color(0xFF1D222C);
-  static const nightBottom = Color(0xFF1B1C23);
-  static const night = Color(0xFF1C1F28);
-  static const nightLowest = Color(0xFF14171E);
-  static const nightLow = Color(0xFF232730);
-  static const nightContainer = Color(0xFF272C36);
-  static const nightHigh = Color(0xFF2D323C);
-  static const nightHighest = Color(0xFF343944);
+  static const nightTop = Color(0xFF000000);
+  static const nightBottom = Color(0xFF000000);
+  static const night = Color(0xFF0A0A0A);
+  static const nightLowest = Color(0xFF000000);
+  static const nightLow = Color(0xFF141414);
+  static const nightContainer = Color(0xFF1A1A1A);
+  static const nightHigh = Color(0xFF222222);
+  static const nightHighest = Color(0xFF2A2A2A);
 
   /// 主文字 · 雾白(不是纯白,对深色面 ≥ 10.5)。
-  static const paper = Color(0xFFE6E9F0);
-  static const paperMuted = Color(0xFFB6BBC5);
-  static const paperFaint = Color(0xFF9A9EA9);
-  static const paperGhost = Color(0xFF656971);
-  static const outlineDark = Color(0xFF737781);
-  static const ruleDark = Color(0xFF343841);
-  static const shadowNight = Color(0xFF03060D);
+  static const paper = Color(0xFFF5F5F5);
+  static const paperMuted = Color(0xFFBFBFBF);
+  static const paperFaint = Color(0xFF9E9E9E);
+  static const paperGhost = Color(0xFF6B6B6B);
+  static const outlineDark = Color(0xFF7A7A7A);
+  static const ruleDark = Color(0xFF2E2E2E);
+  static const shadowNight = Color(0xFF000000);
 
   // ══ 中性辅助色(两套共用的语义角色) ═════════════════════
   /// 浅色 secondary · 板岩蓝灰:次要按钮、未选中强调。
-  static const slate = Color(0xFF545E6F);
-  static const slateContainer = Color(0xFFE2E6F0);
+  static const slate = Color(0xFF4D4D4D);
+  static const slateContainer = Color(0xFFE8E8E8);
 
   /// 深色 secondary。tonal 按钮底是叠在玻璃卡上约 9% 的白,和卡片拉开层次。
-  static const slateLift = Color(0xFFB3BED2);
-  static const onSlateLift = Color(0xFF1A2230);
+  static const slateLift = Color(0xFFC4C4C4);
+  static const onSlateLift = Color(0xFF101010);
   static const slateContainerDark = Color(0x17FFFFFF);
 
   /// tertiary · 暮紫:计划 / 目标 / 子代理这类"智能体在规划"的点缀。
-  static const dusk = Color(0xFF6B578F);
-  static const duskContainer = Color(0xFFECE5FB);
-  static const onDuskContainer = Color(0xFF3B2C54);
-  static const duskLift = Color(0xFFBEAEDE);
-  static const onDuskLift = Color(0xFF251C36);
-  static const duskContainerDark = Color(0xFF3E3451);
-  static const onDuskContainerDark = Color(0xFFE4DDF3);
+  static const dusk = Color(0xFF4D4D4D);
+  static const duskContainer = Color(0xFFECECEC);
+  static const onDuskContainer = Color(0xFF1A1A1A);
+  static const duskLift = Color(0xFFC9C9C9);
+  static const onDuskLift = Color(0xFF141414);
+  static const duskContainerDark = Color(0xFF303030);
+  static const onDuskContainerDark = Color(0xFFE8E8E8);
 
   // ══ 错误(低饱和砖玫红,与 DshColors 的 danger 同值) ═══
-  static const danger = Color(0xFFA54743);
-  static const onDanger = Color(0xFFFDF9F8);
-  static const dangerContainer = Color(0xFFFFE2E0);
-  static const onDangerContainer = Color(0xFF642724);
-  static const dangerLift = Color(0xFFE69089);
-  static const onDangerLift = Color(0xFF331513);
-  static const dangerContainerDark = Color(0xFF542C29);
-  static const onDangerContainerDark = Color(0xFFF8D9D7);
+  static const danger = Color(0xFF1A1A1A);
+  static const onDanger = Color(0xFFFFFFFF);
+  static const dangerContainer = Color(0xFFEDEDED);
+  static const onDangerContainer = Color(0xFF000000);
+  static const dangerLift = Color(0xFFBFBFBF);
+  static const onDangerLift = Color(0xFF0A0A0A);
+  static const dangerContainerDark = Color(0xFF2B2B2B);
+  static const onDangerContainerDark = Color(0xFFEDEDED);
 
   /// 遮罩基色(抽屉、模态底)。
   static const scrim = Color(0xFF0B111F);

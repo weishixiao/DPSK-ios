@@ -57,7 +57,7 @@ void expectReadable(DshUiPluginStyle style) {
 void main() {
   test('schema is the source of the app typography, colours and bounds', () {
     final schema = jsonDecode(File('../sdk/plugin-kit/schema/view.schema.json').readAsStringSync()) as Map;
-    final spec = schema['x-dsh-go']['v2Styles'] as Map;
+    final spec = schema['x-DPSK']['v2Styles'] as Map;
     expect({for (final size in DshUiTextSize.values) size.name: size.pixels}, spec['fontPixels']);
     expect(DshUiTextWeight.values.map((weight) => weight.name).toList(), spec['weights']);
     expect({

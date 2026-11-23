@@ -222,8 +222,8 @@ class L2sMigration(
     }
 
     companion object {
-        const val TEMP_PREFIX = ".dsh-go-l2s-"
-        val TEMP = Regex("""\.dsh-go-l2s-[0-9a-f]{16}\.tmp""")
+        const val TEMP_PREFIX = ".DPSK-l2s-"
+        val TEMP = Regex("""\.DPSK-l2s-[0-9a-f]{16}\.tmp""")
         /** Kept free beyond the copies, for the engine itself. */
         const val MARGIN = 128L shl 20
         private const val SLOW_NANOS = 500_000_000L

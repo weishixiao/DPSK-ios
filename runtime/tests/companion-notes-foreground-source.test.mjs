@@ -99,7 +99,7 @@ async function httpFixture(t,f) {
   const server=createServer((req,res)=>routes.handle(req,res,new URL(req.url,'http://local').pathname).catch(error=>res.destroy(error)));
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   t.after(async()=>{routes.dispose();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));});
-  return {server,url:`http://127.0.0.1:${server.address().port}/dsh-go/v1/companion/tasks`};
+  return {server,url:`http://127.0.0.1:${server.address().port}/DPSK/v1/companion/tasks`};
 }
 
 test('F actual HTTP held response outlives normal request-body close and streams durable snapshots through completion',async t=>{

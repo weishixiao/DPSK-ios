@@ -28,7 +28,7 @@ class _Host {
     : presets = [
         {'id': 'standard', 'isDefault': !companionDefault},
         {'id': 'minimal'},
-        {'id': 'dsh-go-companion-full', 'name': 'Companion', 'isDefault': companionDefault},
+        {'id': 'DPSK-companion-full', 'name': 'Companion', 'isDefault': companionDefault},
       ];
 
   /// What `agentPresets/list` answers (a test may change it).
@@ -279,7 +279,7 @@ void main() {
   test('what a new session gets: the pick while offered, the offered default over a hidden one', () {
     const standard = AgentPresetInfo(id: 'standard', isDefault: true);
     const minimal = AgentPresetInfo(id: 'minimal');
-    const companion = AgentPresetInfo(id: 'dsh-go-companion-full', isDefault: true);
+    const companion = AgentPresetInfo(id: 'DPSK-companion-full', isDefault: true);
     const broken = AgentPresetInfo(id: 'broken', broken: 'missing');
     expect(newChatPresetToApply([standard, minimal], null), isNull);
     expect(newChatPresetToApply([standard, minimal], 'minimal'), 'minimal');
@@ -307,8 +307,8 @@ void main() {
     expect(
       newChatPresets([
         a,
-        const AgentPresetInfo(id: 'dsh-go-companion-full'),
-        const AgentPresetInfo(id: 'dsh-go-diagnostics'),
+        const AgentPresetInfo(id: 'DPSK-companion-full'),
+        const AgentPresetInfo(id: 'DPSK-diagnostics'),
       ]).map((p) => p.id),
       ['a'],
     );

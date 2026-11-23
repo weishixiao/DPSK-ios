@@ -1,5 +1,5 @@
-// The plugin configuration through the dsh-go bridge (PLUGIN-CONFIG-CONTRACT
-// R1 §4–§6): the profile's entries from `GET /dsh-go/v1/plugin-config`, one
+// The plugin configuration through the DPSK bridge (PLUGIN-CONFIG-CONTRACT
+// R1 §4–§6): the profile's entries from `GET /DPSK/v1/plugin-config`, one
 // entry's complete form from `GET …/<entryId>`, writes as `{revision, ops}`
 // to `POST …/<entryId>`, secrets bound to a credential through
 // `credentials/*` (a bare secret is not written here).

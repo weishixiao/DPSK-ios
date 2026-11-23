@@ -24,7 +24,7 @@ void main() {
     final installed = Directory('${root.path}/root/.dsh/skills/$companionAdaptSkillName');
     expect(File('${installed.path}/references/contract.txt').readAsStringSync(), companionAdaptSystem);
     final skill = File('${installed.path}/SKILL.md');
-    skill.writeAsStringSync(bundle.skillMd.replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), ''));
+    skill.writeAsStringSync(bundle.skillMd.replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), ''));
     expect(await installUiSkill(root, bundle), UiSkillInstallResult.userOwned);
   });
 

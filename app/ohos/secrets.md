@@ -48,7 +48,7 @@ IPC、不可用等其他错误不会触发替代密钥。密钥生成 API 不返
 | ciphertext | 可变 | UTF-8 JSON 记录数组的 AES-256-GCM 密文 |
 | tag | 16 | 官方显式 nonce 模式下 `outData` 的尾部认证标签 |
 
-AAD 固定为 UTF-8 `DSH-Go private secrets vault v1`，不是空值。解密将尾部 16 字节作为
+AAD 固定为 UTF-8 `DPSK private secrets vault v1`，不是空值。解密将尾部 16 字节作为
 `HUKS_TAG_AE_TAG`，其余密文作为输入。HUKS 每次 update/finish 输入最多 64 KiB；输出
 先在内存保留，必须等 finish 认证成功才解析 JSON 或交给调用方。使用新随机 nonce
 不是数学上的永不碰撞承诺。当前仓库整体在内存处理，内存随已保存数据总量增长；

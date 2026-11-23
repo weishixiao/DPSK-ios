@@ -32,7 +32,7 @@ class Peer(BaseHTTPRequestHandler):
     def do_POST(self):
         value = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
         assert self.headers['Cookie'] == 'dsh-auth-test=synthetic'
-        assert self.path == '/dsh-go/v1/lifecycle'
+        assert self.path == '/DPSK/v1/lifecycle'
         posts[value['revision']] = value
         # The bridge normalizes foreground observations to no background grant.
         host = {**value, 'computePermission': (

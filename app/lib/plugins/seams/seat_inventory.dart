@@ -28,8 +28,8 @@ class SeatInventory {
 
   static const empty = SeatInventory();
 
-  /// Cells of the native panels' occupants: `dsh-go:<panel id>`.
-  static const nativeCellPrefix = 'dsh-go:';
+  /// Cells of the native panels' occupants: `DPSK:<panel id>`.
+  static const nativeCellPrefix = 'DPSK:';
 
   /// The panel id of a native occupant's [cell]; null for any other cell.
   static String? nativePanelId(String cell) =>
@@ -116,7 +116,7 @@ class SeatInventory {
 
   /// Native panels the host's plugins declare (switched-on ones): they
   /// occupy 对话详情's 「插件」 tab (`session.tab`) and 全部功能 (`features`)
-  /// as cells `dsh-go:<id>`, ahead of their package's web entries.
+  /// as cells `DPSK:<id>`, ahead of their package's web entries.
   final List<NativePanel> nativePanels;
 
   /// The native panel behind [package]'s [cell], if it is one.

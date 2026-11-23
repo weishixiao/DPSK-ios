@@ -4,7 +4,7 @@
 // process starts: one another DSH process wrote since (the desktop app, the
 // TUI, a headless run — on an SSH host the app's `dsh web` lives on between
 // connections) comes with no projections at all, and showed 「未命名」 until
-// opened (weishixiao/dsh-go#57, item 1). Checked against two rc.4 processes
+// opened (weishixiao/DPSK#57, item 1). Checked against two rc.4 processes
 // on one DSH_HOME: the long-lived one lists the other's conversation with no
 // projections, and answers `session/projections` with its title.
 //

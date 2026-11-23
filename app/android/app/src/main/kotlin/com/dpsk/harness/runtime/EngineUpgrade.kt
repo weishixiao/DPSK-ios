@@ -13,7 +13,7 @@ import java.nio.file.StandardOpenOption
 internal class RuntimeUpgradeBlocked(reason: String) : IllegalStateException("runtime_upgrade_blocked:$reason")
 
 internal val ENGINE_PATHS = listOf(
-    "opt/dsh", "opt/node", "opt/dsh-go", "etc/dsh-app",
+    "opt/dsh", "opt/node", "opt/DPSK", "etc/dsh-app",
     "etc/profile.d/dsh-app.sh", "usr/local/lib/node_modules/pnpm",
     "usr/local/bin/dsh", "usr/local/bin/node", "usr/local/bin/npm", "usr/local/bin/npx",
     "usr/local/bin/corepack", "usr/local/bin/pnpm", "usr/local/bin/pnpx", "usr/local/bin/pn", "usr/local/bin/pnx",

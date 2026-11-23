@@ -7913,7 +7913,7 @@ abstract class L10n {
   /// No description provided for @chatDownloadsFolderHint.
   ///
   /// In zh, this message translates to:
-  /// **'下载/DSH-Go 文件夹'**
+  /// **'下载/DPSK 文件夹'**
   String get chatDownloadsFolderHint;
 
   /// No description provided for @chatSavedToDownloadsPath.
@@ -9893,7 +9893,7 @@ abstract class L10n {
   /// No description provided for @companionMemoryUnsupportedHint.
   ///
   /// In zh, this message translates to:
-  /// **'经 DSH Remote 中继连接时用不了，或者这台主机的 dsh-go 桥接比较旧。'**
+  /// **'经 DSH Remote 中继连接时用不了，或者这台主机的 DPSK 桥接比较旧。'**
   String get companionMemoryUnsupportedHint;
 
   /// No description provided for @companionMemoryLoadFailed.
@@ -17853,7 +17853,7 @@ abstract class L10n {
   /// No description provided for @featuresExportDownloadsHint.
   ///
   /// In zh, this message translates to:
-  /// **'存进 下载/DSH-Go'**
+  /// **'存进 下载/DPSK'**
   String get featuresExportDownloadsHint;
 
   /// No description provided for @featuresExportContents.
@@ -23187,7 +23187,7 @@ abstract class L10n {
   /// No description provided for @phoneDiagnosticsSaveHint.
   ///
   /// In zh, this message translates to:
-  /// **'存进 下载/DSH-Go'**
+  /// **'存进 下载/DPSK'**
   String get phoneDiagnosticsSaveHint;
 
   /// No description provided for @phoneDiagnosticsNote.
@@ -26181,7 +26181,7 @@ abstract class L10n {
   /// No description provided for @phoneSelfCheckSaved.
   ///
   /// In zh, this message translates to:
-  /// **'报告已存入下载/DSH-Go。'**
+  /// **'报告已存入下载/DPSK。'**
   String get phoneSelfCheckSaved;
 
   /// No description provided for @phoneSelfCheckSaveFailed.
@@ -34749,7 +34749,7 @@ abstract class L10n {
   /// No description provided for @searchKwAbout.
   ///
   /// In zh, this message translates to:
-  /// **'关于,版本,更新,许可,dsh-go'**
+  /// **'关于,版本,更新,许可,DPSK'**
   String get searchKwAbout;
 
   /// No description provided for @searchKwPhoneConfirmEntry.
@@ -47799,7 +47799,7 @@ abstract class L10n {
   /// No description provided for @updateExportApkMessage.
   ///
   /// In zh, this message translates to:
-  /// **'会把这次下载并校验过的安装包复制到「下载/DSH-Go」，可以用 MT 管理器之类的工具重新签名后再装。\n\n重新签名后，手机上的签名和官方包不同，App 内更新会一直提示「签名不一致」，以后每次更新都要这样手动重签安装。\n\n如果只是系统拦着装不上（小米等机型），先试「安装路线」里的 Shizuku 或本机 ADB，那条路不用重新签名。'**
+  /// **'会把这次下载并校验过的安装包复制到「下载/DPSK」，可以用 MT 管理器之类的工具重新签名后再装。\n\n重新签名后，手机上的签名和官方包不同，App 内更新会一直提示「签名不一致」，以后每次更新都要这样手动重签安装。\n\n如果只是系统拦着装不上（小米等机型），先试「安装路线」里的 Shizuku 或本机 ADB，那条路不用重新签名。'**
   String get updateExportApkMessage;
 
   /// No description provided for @updateExportApkDone.
@@ -47883,7 +47883,7 @@ abstract class L10n {
   /// No description provided for @usageStatsFooter.
   ///
   /// In zh, this message translates to:
-  /// **'这个开关只控制 dsh-go 自身的统计：各功能使用次数（含酒馆消息、伙伴小屋、语音通话）、模型回复报告的 token 数、版本、手机品牌和型号、系统版本，不含对话、角色卡、文件和账号；它不控制 Google ML Kit SDK 的统计。'**
+  /// **'这个开关只控制 DPSK 自身的统计：各功能使用次数（含酒馆消息、伙伴小屋、语音通话）、模型回复报告的 token 数、版本、手机品牌和型号、系统版本，不含对话、角色卡、文件和账号；它不控制 Google ML Kit SDK 的统计。'**
   String get usageStatsFooter;
 
   /// No description provided for @usageNoticeBody.
@@ -47925,7 +47925,7 @@ abstract class L10n {
   /// No description provided for @usageStatsAndroidFooter.
   ///
   /// In zh, this message translates to:
-  /// **'这个开关只控制 dsh-go 自身的统计：各功能使用次数（含酒馆消息、伙伴小屋、语音通话）、模型回复报告的 token 数、版本、手机品牌和型号、系统版本，不含对话、角色卡、文件和账号；它不控制 Google ML Kit SDK 的统计。 Android 还按日汇总前台及首次参与统计、启动和远程连接结果与耗时区间，以及模型用量、插件执行、引导和系统确认的异常退出。关闭会清空未上报的数据。'**
+  /// **'这个开关只控制 DPSK 自身的统计：各功能使用次数（含酒馆消息、伙伴小屋、语音通话）、模型回复报告的 token 数、版本、手机品牌和型号、系统版本，不含对话、角色卡、文件和账号；它不控制 Google ML Kit SDK 的统计。 Android 还按日汇总前台及首次参与统计、启动和远程连接结果与耗时区间，以及模型用量、插件执行、引导和系统确认的异常退出。关闭会清空未上报的数据。'**
   String get usageStatsAndroidFooter;
 
   /// No description provided for @viewArtifactSaved.

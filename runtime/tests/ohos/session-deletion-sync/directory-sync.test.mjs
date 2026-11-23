@@ -28,7 +28,7 @@ test('directory sync failures preserve logs on both first commit and retry befor
   await fs.mkdir(directory, { recursive: true });
   const log = join(directory, 'session.jsonl'), original = '{"private":"directory-sync-proof"}\n';
   await fs.writeFile(log, original);
-  const control = join(root, '.dsh-go-lifecycle');
+  const control = join(root, '.DPSK-lifecycle');
   const slot = join(control, createHash('sha256').update('s1').digest('hex'));
   const marker = join(slot, 'deleted.json');
   const expected = [slot, control, root, dirname(root)];

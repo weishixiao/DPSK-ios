@@ -92,7 +92,7 @@ void main() {
     await tester.tap(find.text('要点'));
     await tester.pumpAndSettle();
     final call = bridge.invocations.single;
-    expect((call.pkg, call.id, call.surface), ('dsh-go-example-quick', 'summary', 'message.actions'));
+    expect((call.pkg, call.id, call.surface), ('DPSK-example-quick', 'summary', 'message.actions'));
     expect(call.scope, const DshGoScope(sessionId: 's1', messageId: 'm18'));
     expect(call.message, isNull, reason: 'the text only for a plugin that wants it');
     expect(composer.inserted, ['要点：一、二、三']);

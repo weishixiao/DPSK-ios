@@ -32,7 +32,7 @@ const islandsWithoutGuard = bool.fromEnvironment('DPSK_LOCAL_ISLANDS');
 /// - relay: never (no DSH Web over the relay);
 /// - SSH: yes, the same exposure as the 网页版 entry that's already there;
 /// - on-device: only once the route guard ships with the runtime — the
-///   bridge says so ([reported], `routeGuard` in `/dsh-go/v1/inventory`)
+///   bridge says so ([reported], `routeGuard` in `/DPSK/v1/inventory`)
 ///   *and* a cookieless call to a plugin route is refused ([probed]). Any
 ///   app on the phone can reach 127.0.0.1, so a self-report alone isn't
 ///   enough. [override] is [islandsWithoutGuard].
@@ -49,7 +49,7 @@ bool islandHostAllowed(
 
 /// The route that answers the probe: the bridge's own inventory, which the
 /// guard covers like every other plugin route.
-const routeGuardProbePath = '/dsh-go/v1/inventory';
+const routeGuardProbePath = '/DPSK/v1/inventory';
 
 /// Calls [routeGuardProbePath] on [base] with no cookie and no credentials.
 Future<RouteGuard> probeRouteGuard(

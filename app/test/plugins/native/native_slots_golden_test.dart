@@ -69,7 +69,7 @@ FakeBridge _bridge(_Copy c) {
   final bridge = FakeBridge(
     contributions([
       plugin(
-        'dsh-go-example-quick',
+        'DPSK-example-quick',
         title: c.quick,
         icon: 'bolt',
         composer: [
@@ -88,7 +88,7 @@ FakeBridge _bridge(_Copy c) {
         ],
       ),
       plugin(
-        'dsh-go-example-usage',
+        'DPSK-example-usage',
         title: c.usage,
         icon: 'chart',
         strip: [
@@ -106,8 +106,8 @@ FakeBridge _bridge(_Copy c) {
       ),
     ]),
   );
-  bridge.views['dsh-go-example-usage/usage'] = DshGoView(
-    pkg: 'dsh-go-example-usage',
+  bridge.views['DPSK-example-usage/usage'] = DshGoView(
+    pkg: 'DPSK-example-usage',
     id: 'usage',
     title: c.usage,
     view: {
@@ -302,7 +302,7 @@ void main() {
           app(
             NativePanelPage(
               panel: NativePanel(
-                package: 'dsh-go-example-usage',
+                package: 'DPSK-example-usage',
                 id: 'usage',
                 title: c.usage,
                 icon: 'chart',
@@ -337,7 +337,7 @@ void main() {
               occupancy: const {Slots.rightPaneTab: []},
               nativePanels: [
                 NativePanel(
-                  package: 'dsh-go-example-usage',
+                  package: 'DPSK-example-usage',
                   id: 'usage',
                   title: c.usage,
                   icon: 'chart',
@@ -368,8 +368,8 @@ void main() {
                       return const Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          NativePluginSection(package: 'dsh-go-example-quick'),
-                          NativePluginSection(package: 'dsh-go-example-usage'),
+                          NativePluginSection(package: 'DPSK-example-quick'),
+                          NativePluginSection(package: 'DPSK-example-usage'),
                         ],
                       );
                     },
@@ -383,9 +383,9 @@ void main() {
         await pumpFrames(tester);
         final container = ProviderScope.containerOf(tester.element(find.byType(Consumer).first));
         container.read(nativeDiagnosticsProvider.notifier)
-          ..view('dsh-go-example-usage', 3277)
-          ..invoked('dsh-go-example-usage', const Duration(milliseconds: 48))
-          ..report('dsh-go-example-usage', '/runtime/usage', [
+          ..view('DPSK-example-usage', 3277)
+          ..invoked('DPSK-example-usage', const Duration(milliseconds: 48))
+          ..report('DPSK-example-usage', '/runtime/usage', [
             NativeIssue('', nativeIssueText('timeout'), code: 'timeout'),
           ]);
         await pumpFrames(tester);

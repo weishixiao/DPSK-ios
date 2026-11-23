@@ -8,7 +8,7 @@ import { installFetch } from '../../ohos/net/fetch.mjs';
 
 assert.ok(process.env.OHOS_TEST_BASE_PREFIX && process.env.OHOS_TEST_DSH_PREFIX, 'provide both unchanged and patched npm-ci verification trees');
 // The old environment switch must not enable a production Android branch.
-process.env.DSH_GO_OHOS_SIM = '1';
+process.env.DPSK_OHOS_SIM = '1';
 assert.notEqual(globalThis[Symbol.for('dsh.go.ohos.sim')], true);
 Object.defineProperty(process, 'platform', { value: 'android' });
 let ohosCalls = 0;

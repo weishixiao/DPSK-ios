@@ -89,7 +89,7 @@ def main():
     environment = {key: value for key, value in os.environ.items()
                    if key not in ('NODE_OPTIONS', 'NODE_PATH', 'LD_PRELOAD', 'UV_THREADPOOL_SIZE')
                    and not key.startswith(('DSH_', 'OHOS_'))}
-    delta = {'UV_THREADPOOL_SIZE': '4', 'DSH_IMAGE_CANCEL_CACHE_MISS_CONFIG': str(out / 'CONFIG.json'), 'DSH_HOME': str(out / 'home'), 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native),
+    delta = {'UV_THREADPOOL_SIZE': '4', 'DSH_IMAGE_CANCEL_CACHE_MISS_CONFIG': str(out / 'CONFIG.json'), 'DSH_HOME': str(out / 'home'), 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native),
              'DSH_IMAGE_TEST_TRACE': str(out / 'SDK-TRACE.jsonl'), 'LD_PRELOAD': str(publication)}
     argv = [str(node), *(['--jitless'] if args.jitless else []), '--test', '--test-reporter=tap', str(actor)]
     save(out / 'COMMAND.json', {'argv': argv, 'environment': delta, 'timeoutSeconds': 30})

@@ -3,11 +3,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
-import { createPaths } from '/opt/dsh-go/direct/paths.mjs';
+import { createPaths } from '/opt/DPSK/direct/paths.mjs';
 import { Context } from '/opt/dsh/node_modules/@deepseek-ai/cordis/lib/index.js';
 import { LocalFileSystem } from '/opt/dsh/node_modules/@deepseek-ai/dsh-fs-local/lib/index.js';
 
-const root = process.env.DSH_GO_DIRECT_ROOTFS;
+const root = process.env.DPSK_DIRECT_ROOTFS;
 assert(root, 'use the production-generated direct node wrapper');
 const base = fs.mkdtempSync(`${root}/tmp/direct-paths-`);
 const outside = fs.mkdtempSync('/tmp/dsh-direct-outside-');

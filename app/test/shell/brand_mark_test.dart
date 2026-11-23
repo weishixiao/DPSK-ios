@@ -119,8 +119,8 @@ void main() {
       await expectBrandLockup(tester, find.byType(BrandLockup));
     });
 
-    testWidgets('「dsh-go」 at the share card\'s size: centred on the x-height', (tester) async {
-      await pumpLockup(tester, const BrandLockup(fontSize: 17, label: 'dsh-go'));
+    testWidgets('「DPSK」 at the share card\'s size: centred on the x-height', (tester) async {
+      await pumpLockup(tester, const BrandLockup(fontSize: 17, label: 'DPSK'));
       await expectBrandLockup(tester, find.byType(BrandLockup));
     });
 
@@ -194,7 +194,7 @@ void main() {
                           const BrandMark(size: 52, tile: true),
                           const BrandMark(size: 64, tile: true),
                         ]),
-                        row(const [BrandLockup(height: 19), BrandLockup(fontSize: 17, label: 'dsh-go')]),
+                        row(const [BrandLockup(height: 19), BrandLockup(fontSize: 17, label: 'DPSK')]),
                       ],
                     ),
                   ),

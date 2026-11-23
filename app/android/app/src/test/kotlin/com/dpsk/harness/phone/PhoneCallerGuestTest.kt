@@ -8,8 +8,8 @@ import org.junit.Test
 class PhoneCallerGuestTest {
     @Test fun diagnosticsPresetDeniesInheritedToolsAndOwnsCompletePersonaWithoutRuntimeContext() {
         val yaml = PhoneGuest.DIAGNOSTICS_PRESET_YAML
-        assertTrue(yaml.startsWith("    - id: preset-dsh-go-diagnostics\n"))
-        assertTrue(yaml.contains("        id: dsh-go-diagnostics\n"))
+        assertTrue(yaml.startsWith("    - id: preset-DPSK-diagnostics\n"))
+        assertTrue(yaml.contains("        id: DPSK-diagnostics\n"))
         assertTrue(yaml.contains("              complete: true\n"))
         assertTrue(yaml.contains("              includeRuntimeContext: false\n"))
         assertEquals(listOf("@deepseek-ai/dsh-agent-preset", "/opt/dsh-app/phone/diagnostics-policy.mjs",
@@ -37,7 +37,7 @@ class PhoneCallerGuestTest {
             PhoneGuest.writeFiles(root)
             val overlay = PhoneGuest.guestFile(root, PhoneGuest.PATCH).readText()
             assertEquals(PhoneGuest.PATCH_YAML + "        dshGoPhoneCaller: true\n" + PhoneGuest.DIAGNOSTICS_PRESET_YAML, overlay)
-            assertTrue(overlay.indexOf("dshGoPhoneCaller: true") < overlay.indexOf("    - id: preset-dsh-go-diagnostics"))
+            assertTrue(overlay.indexOf("dshGoPhoneCaller: true") < overlay.indexOf("    - id: preset-DPSK-diagnostics"))
             assertEquals(PhoneGuest.RELAY_JS, PhoneGuest.guestFile(root, PhoneGuest.RELAY).readText())
             assertEquals(PhoneGuest.DIAGNOSTICS_POLICY_JS, PhoneGuest.guestFile(root, PhoneGuest.DIAGNOSTICS_POLICY).readText())
         } finally {

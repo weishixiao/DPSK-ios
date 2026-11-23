@@ -23,7 +23,7 @@ import 'support/conversation_fixture.dart';
 import 'support/rich_conversation.dart';
 
 ConversationShare _share() =>
-    ConversationExport(fixtureSource()).build(now: DateTime.utc(2026, 10, 25, 3), app: 'dsh-go 1.0.0');
+    ConversationExport(fixtureSource()).build(now: DateTime.utc(2026, 10, 25, 3), app: 'DPSK 1.0.0');
 
 void main() {
   test('streamed prefixes keep rune boundaries when seeking in either direction', () {

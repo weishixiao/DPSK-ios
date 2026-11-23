@@ -17,13 +17,13 @@ test('OH implements the Android recordAppError contract and exposes persisted ev
   const f = await diagnosticsFixture(t), i = f.attach();
   const recorded = await f.call(i, 'recordAppError', {
     source: 'flutter', errorType: 'StateError',
-    stack: 'package:dsh_app/main.dart:12:4\nsynthetic secret body',
+    stack: 'package:dpsk_app/main.dart:12:4\nsynthetic secret body',
   }).done;
   assert.deepEqual(recorded, { value: null });
   const evidence = (await f.call(i, 'info').done).value.evidence;
   assert.equal(evidence.appErrors.length, 1);
   assert.equal(evidence.appErrors[0].source, 'flutter');
-  assert.equal(evidence.appErrors[0].stack, 'package:dsh_app/main.dart:12:4');
+  assert.equal(evidence.appErrors[0].stack, 'package:dpsk_app/main.dart:12:4');
   assert.equal(evidence.availability.appErrors, 'available');
 });
 
@@ -42,14 +42,14 @@ test('OH implements the Android recordVoiceStage validation and persistence cont
 test('same-name records persist across fresh module state and contain only fixed fields', async t => {
   const f = await diagnosticsFixture(t), first = f.attach();
   await info(f, first);
-  const stack = 'package:dsh_app/main.dart:12:4\nhttps://private.invalid/token\npackage:flutter/a.dart:1:2';
+  const stack = 'package:dpsk_app/main.dart:12:4\nhttps://private.invalid/token\npackage:flutter/a.dart:1:2';
   assert.deepEqual(await f.call(first, 'recordAppError', { source:'platform',errorType:'private-error-body',stack,secret:'private' }).done,
     {value:null});
   first.detach();
   const next = f.reload(), second = f.attach(new next.Plugin()), value = await info(f, second);
   assert.equal(value.appErrors.length, 1);
   assert.equal(value.appErrors[0].errorType, 'OtherError');
-  assert.equal(value.appErrors[0].stack, 'package:dsh_app/main.dart:12:4\npackage:flutter/a.dart:1:2');
+  assert.equal(value.appErrors[0].stack, 'package:dpsk_app/main.dart:12:4\npackage:flutter/a.dart:1:2');
   const disk = await fs.readFile(evidencePath(f,'appErrors'),'utf8');
   assert(!disk.includes('private')); assert.equal(f.fds.size, 0);
 });
@@ -250,7 +250,7 @@ test('consumed failed event survives engine replacement in the same process', as
 
 test('actual native channel replies form the wire consumed by the real Dart data test', async t => {
   const f=await diagnosticsFixture(t);f.faults.queue.push(fault(100),fault(200,'APP_FREEZE'));
-  const i=f.attach();await f.call(i,'recordAppError',{source:'flutter',errorType:'StateError',stack:'package:dsh_app/main.dart:12:4'}).done;
+  const i=f.attach();await f.call(i,'recordAppError',{source:'flutter',errorType:'StateError',stack:'package:dpsk_app/main.dart:12:4'}).done;
   await f.call(i,'recordVoiceStage',{stage:'failed',backend:'system',code:7}).done;
   const reply=await f.call(i,'info').done;assert.equal(reply.value.evidence.processExits.length,2);
   if(process.env.OHOS_DIAGNOSTIC_EVIDENCE_WIRE)await fs.writeFile(process.env.OHOS_DIAGNOSTIC_EVIDENCE_WIRE,JSON.stringify(reply.value));
@@ -258,7 +258,7 @@ test('actual native channel replies form the wire consumed by the real Dart data
 
 test('actual Android fixed value lists remain accepted by the same OH record method names', async t => {
   const repo=fileURLToPath(new URL('../../../',import.meta.url));
-  const source=await fs.readFile(join(repo,'app/android/app/src/main/kotlin/io/github/ccch1mneyyy/dsh_app/diagnostics/EvidenceStore.kt'),'utf8');
+  const source=await fs.readFile(join(repo,'app/android/app/src/main/kotlin/io/github/weishixiao/dpsk_app/diagnostics/EvidenceStore.kt'),'utf8');
   const values=name=>{const block=source.match(new RegExp('val '+name+' = setOf\\(([\\s\\S]*?)\\)'));assert(block);return [...block[1].matchAll(/"([A-Za-z_]+)"/g)].map(v=>v[1]);};
   const f=await diagnosticsFixture(t),i=f.attach();await info(f,i);
   for(const stage of values('STAGES'))assert.deepEqual(await f.call(i,'recordVoiceStage',{stage,backend:'system'}).done,{value:null});

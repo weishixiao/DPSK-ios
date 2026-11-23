@@ -54,7 +54,7 @@ final class EngineSkills {
 
   private struct Retired: Error {}
 
-  private static let names: Set<String> = ["dsh-go-ui", "dsh-go-plugin", "dsh-go-guide", "dsh-go-support"]
+  private static let names: Set<String> = ["DPSK-ui", "DPSK-plugin", "DPSK-guide", "DPSK-support"]
   private static let maxFiles = 64
   private static let maxFileBytes = 512 * 1024
   private static let maxBytes = 1024 * 1024
@@ -245,7 +245,7 @@ final class EngineSkills {
     else { return false }
     return normalized[normalized.index(normalized.startIndex, offsetBy: 4)..<end.lowerBound]
       .split(separator: "\n", omittingEmptySubsequences: false)
-      .contains { $0.drop(while: { $0 == " " || $0 == "\t" }).hasPrefix("# dsh-go:managed") }
+      .contains { $0.drop(while: { $0 == " " || $0 == "\t" }).hasPrefix("# DPSK:managed") }
   }
 
   private static func canonical(_ path: String) -> String? {
@@ -333,7 +333,7 @@ final class EngineSkills {
     let target = URL(fileURLWithPath: path)
     let directory = target.deletingLastPathComponent()
     try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let temporary = directory.appendingPathComponent(".dsh-go-tmp-" + target.lastPathComponent)
+    let temporary = directory.appendingPathComponent(".DPSK-tmp-" + target.lastPathComponent)
     defer { unlink(temporary.path) }
     // Atomic, so a link left at the temporary name is replaced rather than written through.
     try bytes.write(to: temporary, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])

@@ -1,6 +1,6 @@
 // Development entry point (plugin seats end to end): the real app, with its
 // on-device engine swapped for a DSH reached through `adb reverse` — a staged
-// runtime (route guard + dsh-go-bridge) running on the build machine. Not part
+// runtime (route guard + DPSK-bridge) running on the build machine. Not part
 // of any release.
 //
 //   tooling/build-apk.sh --debug -f x64 -t lib/dev/seams_e2e_main.dart

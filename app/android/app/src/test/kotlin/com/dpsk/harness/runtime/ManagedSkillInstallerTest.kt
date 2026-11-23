@@ -12,15 +12,15 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ManagedSkillInstallerTest {
-    private val skill = "---\n# dsh-go:managed\nname: dsh-go-ui\n---\n中文 🐳\n"
+    private val skill = "---\n# DPSK:managed\nname: DPSK-ui\n---\n中文 🐳\n"
     private fun files(value: String = "value") = linkedMapOf("SKILL.md" to skill, "nested/data.txt" to value)
     private fun root() = Files.createTempDirectory("managed-skill-").toFile().apply { File(this, "root/.dsh").mkdirs() }
-    private fun args(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "dsh-go-ui") =
+    private fun args(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "DPSK-ui") =
         mapOf("requestId" to id, "expectedRoot" to root.path, "expectedToken" to "fixture-only", "expectedGeneration" to 1, "name" to name, "files" to files)
-    private fun request(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "dsh-go-ui") =
+    private fun request(root: File, id: String = "one", files: Map<String, String> = files(), name: String = "DPSK-ui") =
         ManagedSkillRequest.parse(args(root, id, files, name))!!
-    private fun dir(root: File, name: String = "dsh-go-ui") = File(root, "root/.dsh/skills/$name")
-    private fun noTemps(root: File) = assertFalse(root.walkTopDown().any { it.name.endsWith(".dsh-go-tmp") })
+    private fun dir(root: File, name: String = "DPSK-ui") = File(root, "root/.dsh/skills/$name")
+    private fun noTemps(root: File) = assertFalse(root.walkTopDown().any { it.name.endsWith(".DPSK-tmp") })
     private inline fun withRoot(test: (File) -> Unit) { val root = root(); try { test(root) } finally { root.deleteRecursively() } }
 
     /** Completed tawc NEW: both names point to the same sibling-store regular object. */
@@ -52,7 +52,7 @@ class ManagedSkillInstallerTest {
             .first { File(it, "assets/skills").isDirectory }
         var count = 0
         var size = 0
-        for (name in listOf("dsh-go-ui", "dsh-go-plugin", "dsh-go-guide", "dsh-go-support", "companion-adapt", "pet-theme")) {
+        for (name in listOf("DPSK-ui", "DPSK-plugin", "DPSK-guide", "DPSK-support", "companion-adapt", "pet-theme")) {
             val assets = File(app, "assets/skills/$name")
             val manifest = Json.parse(File(assets, "manifest.json").readText()) as Map<*, *>
             val bundled = (manifest["files"] as Map<*, *>).entries.associate { (asset, target) ->
@@ -85,7 +85,7 @@ class ManagedSkillInstallerTest {
 
     @Test fun removedMarkerLeavesEveryUserFileAlone() = withRoot { root ->
         ManagedSkillInstaller.install(root, request(root)) { true }
-        File(dir(root), "SKILL.md").writeText(skill.replace("# dsh-go:managed", "# user-owned"))
+        File(dir(root), "SKILL.md").writeText(skill.replace("# DPSK:managed", "# user-owned"))
         File(dir(root), "nested/data.txt").writeText("mine")
         assertEquals("userOwned", ManagedSkillInstaller.install(root, request(root)) { true }.result)
         assertEquals("mine", File(dir(root), "nested/data.txt").readText())
@@ -95,7 +95,7 @@ class ManagedSkillInstallerTest {
         val root = File(base, "rootfs").apply { File(this, "root/.dsh").mkdirs() }
         ManagedSkillInstaller.install(root, request(root)) { true }
         val file = File(dir(root), "SKILL.md")
-        val userText = skill.replace("# dsh-go:managed", "# user-owned")
+        val userText = skill.replace("# DPSK:managed", "# user-owned")
         file.writeText(userText)
         File(dir(root), "nested/data.txt").writeText("mine")
         val obj = tawcBackup(root, file, "123")
@@ -140,7 +140,7 @@ class ManagedSkillInstallerTest {
     }
 
     @Test fun markerOutsideFrontmatterDoesNotAuthorizeOverwrite() = withRoot { root ->
-        File(dir(root), "SKILL.md").apply { parentFile!!.mkdirs(); writeText("---\nname: mine\n---\n# dsh-go:managed\n") }
+        File(dir(root), "SKILL.md").apply { parentFile!!.mkdirs(); writeText("---\nname: mine\n---\n# DPSK:managed\n") }
         assertEquals("userOwned", ManagedSkillInstaller.install(root, request(root)) { true }.result)
         assertFalse(File(dir(root), "nested").exists())
     }
@@ -209,7 +209,7 @@ class ManagedSkillInstallerTest {
     }
 
     @Test fun cancellationAfterStagingStopsRenameAndSkillIsLast() = withRoot { root ->
-        val staged = File(dir(root), "nested/data.txt.dsh-go-tmp")
+        val staged = File(dir(root), "nested/data.txt.DPSK-tmp")
         val result = ManagedSkillInstaller.install(root, request(root)) { !staged.exists() }
         assertEquals("cancelled", result.reason)
         assertFalse(File(dir(root), "nested/data.txt").exists())
@@ -217,7 +217,7 @@ class ManagedSkillInstallerTest {
         noTemps(root)
         var sawOther = false
         assertEquals("installed", ManagedSkillInstaller.install(root, request(root)) {
-            if (File(dir(root), "SKILL.md.dsh-go-tmp").exists()) {
+            if (File(dir(root), "SKILL.md.DPSK-tmp").exists()) {
                 sawOther = File(dir(root), "nested/data.txt").readText() == "value"
             }
             true
@@ -310,12 +310,12 @@ class ManagedSkillInstallerTest {
         val h = QueueHarness()
         File(dir(root), "nested").apply { parentFile!!.mkdirs(); writeText("blocked") }
         h.submit(root, request(root, "fails"))
-        h.submit(root, request(root, "next", name = "dsh-go-guide"))
+        h.submit(root, request(root, "next", name = "DPSK-guide"))
         h.drain()
         assertEquals(2, h.results.size)
         assertEquals("io", h.results.first().second["reason"])
         assertEquals("installed", h.results.last().second["result"])
-        assertTrue(File(dir(root, "dsh-go-guide"), "SKILL.md").exists())
+        assertTrue(File(dir(root, "DPSK-guide"), "SKILL.md").exists())
     }
 
     @Test fun runRetirementBeforeWorkerAndBeforeDeliveryAreBothChecked() = withRoot { root ->
@@ -401,7 +401,7 @@ class ManagedSkillInstallerTest {
         val owner = ManagedSkillOwner()
         try {
             queue.submit(owner, request(root), root, {
-                if (File(dir(root), "nested/data.txt.dsh-go-tmp").exists() && !retired.get()) {
+                if (File(dir(root), "nested/data.txt.DPSK-tmp").exists() && !retired.get()) {
                     staged.countDown(); check(resume.await(5, TimeUnit.SECONDS))
                 }
                 !retired.get()

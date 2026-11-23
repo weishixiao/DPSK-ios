@@ -47,8 +47,8 @@ PAYLOAD = [
     'node_modules/@deepseek-ai/dsh-base/cordis.patch.yml',
     'node_modules/@deepseek-ai/dsh-web-app/cordis.patch.yml',
     'node_modules/@deepseek-ai/dsh-web-app/presets/standard.patch.yml',
-    'node_modules/@dsh-go/ohos-native/package.json', 'node_modules/@dsh-go/ohos-native/index.cjs',
-    'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs',
+    'node_modules/@DPSK/ohos-native/package.json', 'node_modules/@DPSK/ohos-native/index.cjs',
+    'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs',
 ] + ['node_modules/@deepseek-ai/' + name + '/lib/index.js' for name in [
     'cordis', 'dsh-session', 'dsh-system-prompt', 'dsh-session-projection', 'dsh-sandbox-policy',
     'dsh-sandbox', 'dsh-fs-sandbox', 'dsh-fs-local', 'dsh-fs', 'dsh-llm', 'dsh-home-paths',
@@ -218,7 +218,7 @@ def prepare_inputs():
     provider_names={'node_modules/@deepseek-ai/dsh-fs-local/lib/index.js','node_modules/@deepseek-ai/dsh-fs-sandbox/lib/index.js'}
     source_overrides={
         'runtime/ohos/process/files/workspace-edit.mjs':'runtime/ohos/process/files/workspace-edit.mjs',
-        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs':'runtime/session-deletion/core.mjs',
+        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs':'runtime/session-deletion/core.mjs',
     }
     # Admission before Node: hashes plus current connection shape, never a behavior verdict.
     for name in provider_names:
@@ -265,7 +265,7 @@ def prepare_inputs():
             if any(actual[k]!=origin[k] for k in ['bytes','sha256','mode']):
                 raise PreparationBlocked('Component companion differs from source: '+name)
             overrides.append({'path':name,'basis':'exact source bytes/mode','actual':actual,'historicalManifest':recorded,
-                'sourceIdentity':origin,'scope':'source-derived deletion companion, not the composed OH variant' if name.endswith('dsh-go-deletion.mjs') else 'current private writer'})
+                'sourceIdentity':origin,'scope':'source-derived deletion companion, not the composed OH variant' if name.endswith('DPSK-deletion.mjs') else 'current private writer'})
         else:
             if (actual['sha256'],actual['bytes'])!=(recorded['sha256'],recorded['size']):
                 raise PreparationBlocked('Payload differs from actual composer manifest: '+name)
@@ -429,8 +429,8 @@ try:
     save('CONFIG.json', cfg)
     environment_delta = { 'TMPDIR': str(O / 'tmp'), 'LANG': 'C.UTF-8',
            'LD_PRELOAD': str(native / 'libdsh_host.so') + ':' + str(publication), 'DSH_HOME': str(O / 'home'), 'NARB_DISABLE_NATIVE_CACHE': '1',
-           'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native), 'DSH_GO_OHOS_LINUX_DIRECTORY': str(O / 'linux-tools'),
-           'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'OHOS_WRITE_CANCEL_CONFIG': str(O / 'CONFIG.json'),
+           'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native), 'DPSK_OHOS_LINUX_DIRECTORY': str(O / 'linux-tools'),
+           'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'OHOS_WRITE_CANCEL_CONFIG': str(O / 'CONFIG.json'),
            'OHOS_TYPESCRIPT_PREFIX': str(typescript), 'OHOS_WORKSPACE_GRANTS_ADDON': str(native / 'workspace-publisher.node')}
     env = os.environ.copy(); env.update(environment_delta)
     argv = [str(node), *(['--jitless'] if args.jitless else []), '--max-old-space-size=256', '--import', str(HERE / 'workspace-write-cancel-instrumentation.mjs'),
@@ -439,7 +439,7 @@ try:
     save('COMMAND.json', {'argv': argv, 'cwd': str(O), 'environmentDelta': environment_delta,
         'environmentSource': 'Inherited real HOME/PATH/network/proxy values unchanged; only listed component variables added; other values not logged',
         'inherited': {'HOME': os.environ.get('HOME'), 'PATH': os.environ.get('PATH')},
-        'instrumentationAdds': {'DSH_GO_OHOS_SIM_ADDONS': [str(native / x) for x in ['libdsh_flock.so', 'libdsh_require_builtin.so', 'libdsh_workspace_grants.so', 'workspace-publisher.node']]}})
+        'instrumentationAdds': {'DPSK_OHOS_SIM_ADDONS': [str(native / x) for x in ['libdsh_flock.so', 'libdsh_require_builtin.so', 'libdsh_workspace_grants.so', 'workspace-publisher.node']]}})
     save('INVOCATION.json', {'argv': [sys.executable, *sys.argv], 'cwd': str(Path.cwd()), 'atUTC': utc()})
     save('INPUTS.json', {**pre, 'files': before, 'newCompose': False, 'newNativeBuildInThisRun': False, 'consumesNewSameSourceWholeV1Build': True,
         'oracleValidation': 'Coordinator recomputes exact result from independent actor fs snapshots; this is not a second filesystem measurement.'})

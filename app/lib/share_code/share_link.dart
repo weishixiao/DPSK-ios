@@ -19,7 +19,7 @@ const shareLandingUrl = '$shareHostOrigin/share/';
 
 /// Where the landing page used to live. That site stays up, so links made
 /// there keep opening in browsers, and the app still reads them.
-const legacyShareLandingUrls = ['https://weishixiao.github.io/dsh-go/share/'];
+const legacyShareLandingUrls = ['https://weishixiao.github.io/DPSK/share/'];
 
 /// The current landing page first, then the old ones.
 const _landingUrls = [shareLandingUrl, ...legacyShareLandingUrls];

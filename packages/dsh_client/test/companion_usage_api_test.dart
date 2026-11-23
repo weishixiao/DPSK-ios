@@ -499,7 +499,7 @@ void main() {
   test('actual authenticated GET preserves exact frozen identity and raw final missing components', () async {
     final result = (await _read(client))!, receipt = result.receipts.single;
     expect(host.methods, ['GET']);
-    expect(host.paths.single.path, '/dsh-go/v1/companion/usage');
+    expect(host.paths.single.path, '/DPSK/v1/companion/usage');
     expect(host.paths.single.queryParameters, {
       'instanceId': 'chat-instance',
       'sessionId': 'chat-session',

@@ -113,7 +113,7 @@ void main() {
       final url = browser.opened.single;
       expect(url.toString(), startsWith('$forumDefaultBaseUrl/user-api-key/new?'));
       final q = url.queryParameters;
-      expect(q['application_name'], 'dsh-go');
+      expect(q['application_name'], 'DPSK');
       expect(q['scopes'], 'read,write,notifications,session_info');
       expect(q['auth_redirect'], 'dpsk://forum/auth');
       expect(q['padding'], 'oaep');

@@ -71,7 +71,7 @@ void main() {
       );
       final abort = DshHttpAbort();
       final pending = connection.postBytes(
-        '/dsh-go/v1/phone/claim',
+        '/DPSK/v1/phone/claim',
         [1, 2, 3],
         abort: abort,
         timeout: Duration(milliseconds: timeout ? 25 : 1000),

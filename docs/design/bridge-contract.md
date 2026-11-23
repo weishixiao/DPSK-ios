@@ -1,6 +1,6 @@
 # 桥 HTTP 契约：错误与能力协商
 
-桥继续使用 `/dsh-go/v1`。认证通过后，`GET /dsh-go/v1/capabilities` 返回协议主版本、桥实现版本和已实现的路由家族；`HEAD` 返回相同响应元数据而不带正文。客户端按 `v` 比较可解析的协议；`bridge` 只供诊断，不能按它推断权限或资源是否存在。
+桥继续使用 `/DPSK/v1`。认证通过后，`GET /DPSK/v1/capabilities` 返回协议主版本、桥实现版本和已实现的路由家族；`HEAD` 返回相同响应元数据而不带正文。客户端按 `v` 比较可解析的协议；`bridge` 只供诊断，不能按它推断权限或资源是否存在。
 
 ## 响应
 
@@ -39,13 +39,13 @@
 
 桥业务错误使用 `{error:{code,message}}`。已有 `v` 保留；plugin-config 的安全字段路径是 `error.path`。原稳定错误码、HTTP 状态以及 session、companion 的命名空间不改。桥总兜底的未知路由是 404 `route-not-found`；路由内资源缺失继续用原来的 `not-found`、`entry-unavailable` 等码。
 
-客户端先读嵌套 `error`，再兼容旧平铺 `{code,message}`。文本或 HTML 仍映射到 `dsh-go/http-<status>`，不直接把 HTML 当作显示消息。
+客户端先读嵌套 `error`，再兼容旧平铺 `{code,message}`。文本或 HTML 仍映射到 `DPSK/http-<status>`，不直接把 HTML 当作显示消息。
 
 通用认证拒绝保留原传输形状。上游 webserver 可在桥之前拒绝，`zzzz-plugin-config-readability.diff` 仍可回答旧平铺的 `host-unavailable` 503；桥自身的 unavailable 响应为嵌套形式。不能把“业务错误统一”解读为反向代理或上游守卫的每个响应都必定具有 `error`。
 
 ## 客户端入口与 404
 
-`DshGoApi.readDshGoBridgeCapabilities()` 返回 `DshGoBridgeCapabilities?`。只有无机器码或 `route-not-found` 的 404 返回 null（旧桥/未协商）。非 404、其他机器码、错误 JSON/字段、未知协议主版本都抛出，不缓存成“不支持”。未知整数主版本产生 `dsh-go/unsupported-version`；缺少或不合法的 `v` 是协议错误。未知能力名允许保留，调用方只识别自己使用的名字。
+`DshGoApi.readDshGoBridgeCapabilities()` 返回 `DshGoBridgeCapabilities?`。只有无机器码或 `route-not-found` 的 404 返回 null（旧桥/未协商）。非 404、其他机器码、错误 JSON/字段、未知协议主版本都抛出，不缓存成“不支持”。未知整数主版本产生 `DPSK/unsupported-version`；缺少或不合法的 `v` 是协议错误。未知能力名允许保留，调用方只识别自己使用的名字。
 
 `readDshGoContributions` 的成功 200 校验显式 `v:1`；`previous` 应来自同一桥、同一组 caps 的先前成功读取，304 直接返回该对象，不重复检查已经解析过的主版本。成功不先发能力查询，桥实现版本较高或较低也不改变 v1 的解析。
 
@@ -60,7 +60,7 @@
 | 404，无码；协商端点也无路由 | 返回 null，保持旧桥降级，含义仍是未协商 |
 | 协商中 401/403/5xx、其他结构化404、网络异常、未知主版本 | 实际错误向上传播 |
 
-`ClientInventoryApi.readBridgeInventory()` 对 404 使用同样的顺序，检查的能力名为 `inventory`：先读嵌套错误，再兼容平铺错误；资源码抛为 `client-inventory/<code>`，保留消息、path 和 status；`route-not-found` 直接返回 null；只有无码404才调用上述协商入口。协商明确有 inventory 时抛 `client-inventory/http-404`，无此能力或旧桥未协商时才返回 null。协商自身的错误保持 `dsh-go/...` 或协议/传输异常，不改写成 inventory 不支持。
+`ClientInventoryApi.readBridgeInventory()` 对 404 使用同样的顺序，检查的能力名为 `inventory`：先读嵌套错误，再兼容平铺错误；资源码抛为 `client-inventory/<code>`，保留消息、path 和 status；`route-not-found` 直接返回 null；只有无码404才调用上述协商入口。协商明确有 inventory 时抛 `client-inventory/http-404`，无此能力或旧桥未协商时才返回 null。协商自身的错误保持 `DPSK/...` 或协议/传输异常，不改写成 inventory 不支持。
 
 inventory 成功仍只发一个请求，成功模型保持原有读取方式；其非404 HTTP错误仍是 `client-inventory/http-<status>`。`readClientInventory()` 是尽力聚合接口，boot 与 bridge 这两个可选部分失败时仍降低 tier；它没有把失败保存成“桥不支持”。需要区分资源错误的调用方使用 `readBridgeInventory()`。
 
@@ -76,8 +76,8 @@ inventory 成功仍只发一个请求，成功模型保持原有读取方式；�
 | 新客户端 + 未实现协商端点的 v1 桥 | contributions 的 v1 成功照常；协商端点旧404返回 null；旧平铺错误仍可读取 |
 | 新 App + 新桥 | v决定可解析性，列表决定实现是否宣告；资源404不再泛化成旧桥 |
 | 新 App + 无桥 Host | 业务端点与协商端点均旧式404时仍可降级；认证/服务器错误不会误报无桥 |
-| 新 App + 未支持的主版本 | 抛 `dsh-go/unsupported-version`，不套用v1默认值 |
-| 非 HTTP carrier | 原生 API 沿用 `dsh-go/unsupported`，inventory 沿用 `client-inventory/unsupported`；不创建旁路连接 |
+| 新 App + 未支持的主版本 | 抛 `DPSK/unsupported-version`，不套用v1默认值 |
+| 非 HTTP carrier | 原生 API 沿用 `DPSK/unsupported`，inventory 沿用 `client-inventory/unsupported`；不创建旁路连接 |
 
 contributions 的 HTTP 成功体必须显式携带 `v`；缺少或不合法的值是协议错误。`DshGoContributions.fromJson` 是宽松模型读取器，缺省值不改变 HTTP 合同。plugin-config 客户端先读嵌套 `error`，再兼容平铺字段；服务端无需重复输出平铺别名。
 

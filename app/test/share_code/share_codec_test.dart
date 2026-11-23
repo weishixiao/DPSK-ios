@@ -210,9 +210,9 @@ void main() {
 
     test('other hosts and links are not share links', () {
       expect(ShareLink.parse(Uri.parse('dpsk://forum/auth?p=a.b')), isNull);
-      expect(ShareLink.parse(Uri.parse('https://evil.example/dsh-go/share/#p=a.b')), isNull);
+      expect(ShareLink.parse(Uri.parse('https://evil.example/DPSK/share/#p=a.b')), isNull);
       expect(ShareLink.parse(Uri.parse('dpsk://share/plugin')), isNull);
-      expect(isLandingUri(Uri.parse('https://weishixiao.github.io/dsh-go/sharer/')), isFalse);
+      expect(isLandingUri(Uri.parse('https://weishixiao.github.io/DPSK/sharer/')), isFalse);
     });
 
     test('finds the link in a pasted message', () {

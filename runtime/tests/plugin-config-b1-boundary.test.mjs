@@ -6,11 +6,11 @@ import {test} from 'node:test';
 import {readFileSync,readdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {createPluginConfig} from '../bridge/dsh-go-bridge/lib/plugin-config.js';
+import {createPluginConfig} from '../bridge/DPSK-bridge/lib/plugin-config.js';
 import {withSources} from './plugin-config-source-fixture.mjs';
 const fixtures=fileURLToPath(new URL('../../app/test/plugin_config/fixtures/schemas/',import.meta.url));
 const marker='B1_SYNTHETIC_INHERITED_SECRET';
-const base='/dsh-go/v1/plugin-config/fixture';
+const base='/DPSK/v1/plugin-config/fixture';
 function fixture(graph,{inherited={},user={},resolved,validate=x=>x}={}){
  const raw={...structuredClone(inherited),...structuredClone(user)};
  const schema=Object.assign(validate,{toJSON:()=>structuredClone(graph)});
@@ -55,7 +55,7 @@ test('BLOCKER: unset restores inherited ordinary value into complete user config
  const result=await f.post([{op:'unset',path:['count']}]);assert.equal(result.status,200);assert.equal(f.submitted().count,1);assert.equal(f.submitted().parent.opaque,marker);
 });
 test('published media graph: writing budget preserves unrelated bundle dshHome in editor output',async()=>{
- const media=JSON.parse(readFileSync(join(fixtures,'ccch1mneyyy-dsh-media-0.2.1.json'))).schema;
+ const media=JSON.parse(readFileSync(join(fixtures,'weishixiao-dsh-media-0.2.1.json'))).schema;
  const f=fixture(media,{inherited:{dshHome:'/synthetic/bundle-home',budget:{dailyCny:10},credentials:{slot1:{apiKey:''}}}});
  const result=await f.post([{op:'set',path:['budget','dailyCny'],value:20}]);assert.equal(result.status,200);
  assert.equal(f.submitted().dshHome,'/synthetic/bundle-home');assert.equal(f.submitted().credentials.slot1.apiKey,'');

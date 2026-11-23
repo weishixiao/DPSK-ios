@@ -27,7 +27,7 @@ async function fixture(t, options = {}) {
   await fs.writeFile(log, '{"private":"retained until durable marker"}\n');
   await fs.writeFile(note, 'unrelated file');
   const original = await fs.readFile(log);
-  const marker = join(root, '.dsh-go-lifecycle', createHash('sha256').update('s1').digest('hex'), 'deleted.json');
+  const marker = join(root, '.DPSK-lifecycle', createHash('sha256').update('s1').digest('hex'), 'deleted.json');
   const ledger = await openOwnershipLedger({ directory: join(directory, 'ownership'), ownerId: randomUUID(),
     lockExclusive: native.lockExclusive, setOwnershipMarker: native.setOwnershipMarker,
     getOwnershipMarker: native.getOwnershipMarker });

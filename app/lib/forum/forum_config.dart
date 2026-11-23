@@ -1,4 +1,4 @@
-// Where the dsh-go forum lives and how the app signs in to it (a self-hosted
+// Where the DPSK forum lives and how the app signs in to it (a self-hosted
 // Discourse, server kit in infra/forum/, deploy steps in docs/forum/deploy.md).
 
 /// The forum's address (docs/forum/deploy.md). An address set in 论坛设置
@@ -14,7 +14,7 @@ const forumAuthRedirect = 'dpsk://forum/auth';
 const forumAuthRoute = 'forum/auth';
 
 /// Shown on the Discourse approval page and in the user's API key list.
-const forumApplicationName = 'dsh-go';
+const forumApplicationName = 'DPSK';
 
 /// What the key may do: browse, post / like / bookmark / upload,
 /// notifications, `/session/current.json`. All four are in Discourse's

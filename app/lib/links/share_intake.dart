@@ -1,4 +1,4 @@
-// What other apps share to dsh-go through the system
+// What other apps share to DPSK through the system
 // share sheet — text, photos, files. Native side:
 // android/.../share/ShareActivity.kt (the share-sheet target) and
 // share/SharePlugin.kt (MethodChannel `dsh/share`), which copies the files

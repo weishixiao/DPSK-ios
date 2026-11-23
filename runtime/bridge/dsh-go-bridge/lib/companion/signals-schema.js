@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 
 export const SIGNAL_EVENT_BYTES = 1024;
-export const SIGNAL_META = 'dsh-go/companion-result';
+export const SIGNAL_META = 'DPSK/companion-result';
 const keys = (value, expected) => value !== null && typeof value === 'object' && !Array.isArray(value)
   && Object.keys(value).length === expected.length && expected.every((key) => Object.hasOwn(value, key));
 const integer = (value, min, max = Number.MAX_SAFE_INTEGER) => Number.isSafeInteger(value) && value >= min && value <= max;

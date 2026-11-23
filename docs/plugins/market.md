@@ -18,13 +18,13 @@ App 默认读 dshfind 的 format-1 索引。先给公开仓库加 `dsh-plugin` t
 
 收录条件（2026-10）：识别为插件、未被标记风险、带 bundle、已发布到 npm、回链匹配、包名与版本有效；`@deepseek-ai/*` 不收录。版本兼容性由安装端另外检查，风险标记由市场给出、作者不能自设。
 
-## 3. 上架官方市场（dsh-go-market）
+## 3. 上架官方市场（DPSK-market）
 
 App 的插件市场分**官方**、**适配 DPSK**、**全部**三个入口。官方目录里的同名包使用经过检查的固定版本，详情显示风险标记、适配能力、最低 App 版本、截图和双语介绍。
 
 投稿步骤：
 
-1. 到 [dsh-go-market](https://github.com/weishixiao/dsh-go-market) 仓库，按「提交插件」的说明新增一个 `plugins/*.json` 条目，提 PR。
+1. 到 [DPSK-market](https://github.com/weishixiao/DPSK-market) 仓库，按「提交插件」的说明新增一个 `plugins/*.json` 条目，提 PR。
 2. 条目只写作者字段（包名、精确版本、标题、摘要、分类、截图、主页等）；tier、risk、integrity 由该仓库的构建生成，作者不能自设。
 3. 审核与自动合并按该仓库的规则执行。**规则以仓库为准**，本文只描述 App 怎样使用这些数据。
 
@@ -54,7 +54,7 @@ App 的插件市场分**官方**、**适配 DPSK**、**全部**三个入口。�
 |---|---|
 | 网站能搜到，App 没有 | 索引结果、当前筛选分区、精确版本、npm 回链 |
 | 官方分区没有，只在「全部」 | 投稿条目是否已合入、条目版本是否与 npm 一致 |
-| 装的时候要求确认风险 | 风险标记来自对包内容的自动扫描（安装脚本、原生二进制、子进程、文件写入、网络等特征），不只看能力声明；到 [dsh-go-market](https://github.com/weishixiao/dsh-go-market) 的 `audit.json` 里按包名查具体文件路径；确认后仍可安装 |
+| 装的时候要求确认风险 | 风险标记来自对包内容的自动扫描（安装脚本、原生二进制、子进程、文件写入、网络等特征），不只看能力声明；到 [DPSK-market](https://github.com/weishixiao/DPSK-market) 的 `audit.json` 里按包名查具体文件路径；确认后仍可安装 |
 | 已安装版本被下架 | 详情页会提醒；发布修复版本并更新条目 |
 
 发布层的通用规则见 [DSH 官方 bundle 发布说明](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/develop/basic/publish.md)。

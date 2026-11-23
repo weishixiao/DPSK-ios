@@ -7,11 +7,11 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 
 const { createSessionDeletion } = await import(
-  pathToFileURL(resolve(process.env.DSH_SESSION_DELETION_ROUTE ?? 'runtime/bridge/dsh-go-bridge/lib/session-deletion.js'))
+  pathToFileURL(resolve(process.env.DSH_SESSION_DELETION_ROUTE ?? 'runtime/bridge/DPSK-bridge/lib/session-deletion.js'))
 );
 
-const CAP = '/dsh-go/v1/sessions/deletion';
-const DEL = '/dsh-go/v1/sessions/delete';
+const CAP = '/DPSK/v1/sessions/deletion';
+const DEL = '/DPSK/v1/sessions/delete';
 
 function harness({ active = [], tasks = [], fail, scheduleOk = true, tree = false, seamVersion = 2, deletionSupported = true } = {}) {
   const calls = [];
@@ -88,7 +88,7 @@ function harness({ active = [], tasks = [], fail, scheduleOk = true, tree = fals
 
 test('unknown paths are not handled', async () => {
   const h = harness();
-  assert.equal((await h.request('GET', '/dsh-go/v1/other')).handled, false);
+  assert.equal((await h.request('GET', '/DPSK/v1/other')).handled, false);
   assert.deepEqual(h.logs, []);
 });
 

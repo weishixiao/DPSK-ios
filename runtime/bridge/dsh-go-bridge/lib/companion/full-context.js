@@ -1,6 +1,6 @@
 // This context is mounted only by the companion-full preset.
 import { companionFullRules, renderCompanionProfile } from './full-persona.js';
-export const name = 'dsh-go-companion-full-context';
+export const name = 'DPSK-companion-full-context';
 export const inject = ['systemPrompt'];
 
 // 09s-r2.1 C. The selected JSON itself is attached only by the final request
@@ -44,7 +44,7 @@ export function apply(ctx) {
     name: 'app:web-surface',
     order: ctx.systemPrompt.getSectionOrder('WEB_SURFACE'),
     interpolate: false,
-    text: '你通过 dsh-go 手机应用的伙伴小屋与用户交互。用户未另指对象而说“这个应用”或“这里”时，指 dsh-go；当前主机上的文件与手机屏幕是不同的环境。界面没有隐式提供屏幕、DOM 或截图；只有本轮工具实际返回的内容才是已观察到的结果。',
+    text: '你通过 DPSK 手机应用的伙伴小屋与用户交互。用户未另指对象而说“这个应用”或“这里”时，指 DPSK；当前主机上的文件与手机屏幕是不同的环境。界面没有隐式提供屏幕、DOM 或截图；只有本轮工具实际返回的内容才是已观察到的结果。',
   });
   ctx.systemPrompt.context({
     name: 'app:web-surface',

@@ -1,12 +1,12 @@
 # Hosts, install, fallbacks
 
-dsh-go connects to three kinds of host: the on-device engine, SSH hosts and relay hosts. Tool cards travel in the conversation log and show everywhere; the other slots go through the dsh-go bridge (`dsh-go-bridge`) and need it on the host.
+DPSK connects to three kinds of host: the on-device engine, SSH hosts and relay hosts. Tool cards travel in the conversation log and show everywhere; the other slots go through the DPSK bridge (`DPSK-bridge`) and need it on the host.
 
 | | Tool cards | Capsules · menu · strip · panels | Web plugins (web islands) |
 |---|---|---|---|
 | On-device engine | ✅ | ✅ the bridge ships with the app's runtime | ✅ |
 | SSH host | ✅ | Phase 2 (the bridge cannot be installed on SSH hosts yet) | ✅ |
-| Relay host | ✅ (with the log) | ❌ the relay does not pass `/dsh-go/*` | ❌ |
+| Relay host | ✅ (with the log) | ❌ the relay does not pass `/DPSK/*` | ❌ |
 
 ## Installing a local plugin
 
@@ -30,13 +30,13 @@ dsh plugin --profile web add /absolute/path/to/my-plugin
 
 ### Getting the folder into the on-device environment
 
-The on-device engine runs in the app's own Linux environment (`/root` is home). Use `/root/.dsh/dsh-go/plugins/<name>/`: it is kept when the engine is reset; if the plugin profile was not kept, `add` it again after the reset.
+The on-device engine runs in the app's own Linux environment (`/root` is home). Use `/root/.dsh/DPSK/plugins/<name>/`: it is kept when the engine is reset; if the plugin profile was not kept, `add` it again after the reset.
 
 | Way | How |
 |---|---|
-| Let the agent write it | Say what you want ("a button above the composer that translates the clipboard into English"). The app's bundled `dsh-go-plugin` skill has it write, check and install the plugin |
-| From the terminal | `git clone` or `curl` into `/root/.dsh/dsh-go/plugins/` |
-| Phone storage | Copy the folder into the phone's Download; after turning on "Access phone files" in Settings it is `/sdcard/Download/` in the environment; `cp -r` it into `/root/.dsh/dsh-go/plugins/`. During development: `adb push folder /sdcard/Download/` |
+| Let the agent write it | Say what you want ("a button above the composer that translates the clipboard into English"). The app's bundled `DPSK-plugin` skill has it write, check and install the plugin |
+| From the terminal | `git clone` or `curl` into `/root/.dsh/DPSK/plugins/` |
+| Phone storage | Copy the folder into the phone's Download; after turning on "Access phone files" in Settings it is `/sdcard/Download/` in the environment; `cp -r` it into `/root/.dsh/DPSK/plugins/`. During development: `adb push folder /sdcard/Download/` |
 
 ## Fallbacks
 

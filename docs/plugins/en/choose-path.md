@@ -2,7 +2,7 @@
 
 [中文](../choose-path.md)
 
-There are three ways into dsh-go. Start from what you have, take the cheapest path that is enough, and add to it later.
+There are three ways into DPSK. Start from what you have, take the cheapest path that is enough, and add to it later.
 
 | You have | Take | You write | What the app shows |
 |---|---|---|---|

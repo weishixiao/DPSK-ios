@@ -25,19 +25,19 @@ EM_NAMES = {3: "i386", 40: "arm", 62: "x86-64", 183: "aarch64"}
 NPMMIRROR = "https://registry.npmmirror.com/"
 NPMJS = "https://registry.npmjs.org/"
 # `dsh web` overlay (passed with --patch by the launch command): plugin-install registries and
-# the dsh-go-bridge plugin row.
+# the DPSK-bridge plugin row.
 DSH_WEB_PATCH = "/etc/dsh-app/dsh-web.patch.yml"
-# Where runtime/bridge/dsh-go-bridge lands in the rootfs (loaded by absolute path from the overlay).
-DSH_GO_BRIDGE = "/opt/dsh-go/dsh-go-bridge"
+# Where runtime/bridge/DPSK-bridge lands in the rootfs (loaded by absolute path from the overlay).
+DPSK_BRIDGE = "/opt/DPSK/DPSK-bridge"
 # runtime/boot/boot-cache.mjs: path cache for `dsh web` while it boots, preloaded by the dsh shim.
-BOOT_CACHE = "/opt/dsh-go/boot-cache.mjs"
+BOOT_CACHE = "/opt/DPSK/boot-cache.mjs"
 BOOT_CACHE_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "boot", "boot-cache.mjs")
 DIRECT_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "direct")
 PNPM_BINS = {"pnpm": "pnpm.mjs", "pnpx": "pnpx.mjs", "pn": "pnpm.mjs", "pnx": "pnpx.mjs"}
 # Only these app-owned paths may change during an engine upgrade. Python (including
 # pip packages), dpkg, /usr and the rest of /usr/local remain the user's system.
 ENGINE_PATHS = [
-    "opt/dsh", "opt/node", "opt/dsh-go", "etc/dsh-app",
+    "opt/dsh", "opt/node", "opt/DPSK", "etc/dsh-app",
     "etc/profile.d/dsh-app.sh", "usr/local/lib/node_modules/pnpm",
 ] + ["usr/local/bin/" + name for name in ("dsh", "node", "npm", "npx", "corepack", *PNPM_BINS)]
 
@@ -540,7 +540,7 @@ def cmd_patch_dsh(args):
     if "zzzzzz-session-deletion.diff" in applied:
         # Source-owned companion module, installed only alongside the vetted rc4 seam.
         source = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "session-deletion", "core.mjs")
-        target = os.path.join(args.prefix, "node_modules", "@deepseek-ai", "dsh-session-persistence-jsonl", "lib", "dsh-go-deletion.mjs")
+        target = os.path.join(args.prefix, "node_modules", "@deepseek-ai", "dsh-session-persistence-jsonl", "lib", "DPSK-deletion.mjs")
         tmp = target + ".dsh-app-patch"
         with open(source, "rb") as src, open(tmp, "wb") as dst:
             dst.write(src.read())
@@ -970,12 +970,12 @@ def install_ca_bundle(entries, report):
 
 def bridge_shared_rows():
     """The rows of the bridge bundle's cordis.patch.yml that the local overlay also carries."""
-    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "bridge", "dsh-go-bridge", "cordis.patch.yml")
+    source = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "bridge", "DPSK-bridge", "cordis.patch.yml")
     with open(source, encoding="utf-8") as patch:
         rows = patch.read().split("    # --- shared rows ---\n", 1)[1]
     # Local runtimes load the bridge by path; it is not a profile dependency.
-    return rows.replace("name: dsh-go-bridge/companion/full-context",
-                        "name: %s/lib/companion/full-context.js" % DSH_GO_BRIDGE)
+    return rows.replace("name: DPSK-bridge/companion/full-context",
+                        "name: %s/lib/companion/full-context.js" % DPSK_BRIDGE)
 
 
 def overlay_entries(runtime_info, with_python=False, with_pnpm=False, with_bridge=False):
@@ -1035,7 +1035,7 @@ def overlay_entries(runtime_info, with_python=False, with_pnpm=False, with_bridg
     for name in sorted(os.listdir(DIRECT_SRC)):
         if name.endswith(".mjs"):
             with open(os.path.join(DIRECT_SRC, name), "rb") as src:
-                E["opt/dsh-go/direct/" + name] = Entry("file", 0o644, data=src.read(), origin="overlay")
+                E["opt/DPSK/direct/" + name] = Entry("file", 0o644, data=src.read(), origin="overlay")
     f("usr/local/bin/dsh",
       "#!/bin/sh\n"
       "# dsh-app shim: run the bundled DeepSeek Harness CLI with the bundled Node.\n"
@@ -1066,12 +1066,12 @@ def overlay_entries(runtime_info, with_python=False, with_pnpm=False, with_bridg
                       "      - %s\n" % (NPMMIRROR, NPMJS))
         if with_bridge:
             patch += ("#\n"
-                      "# dsh-go-bridge: plugin inventory for the app (GET /dsh-go/v1/inventory), loaded by path.\n"
-                      "# Do not also install dsh-go-bridge into a profile: two sources of one browser package\n"
+                      "# DPSK-bridge: plugin inventory for the app (GET /DPSK/v1/inventory), loaded by path.\n"
+                      "# Do not also install DPSK-bridge into a profile: two sources of one browser package\n"
                       "# fail the client composition.\n"
                       "- insert:\n"
-                      "    - id: dsh-go-bridge\n"
-                      "      name: %s/lib/index.js\n" % DSH_GO_BRIDGE)
+                      "    - id: DPSK-bridge\n"
+                      "      name: %s/lib/index.js\n" % DPSK_BRIDGE)
             patch += bridge_shared_rows()
         f(DSH_WEB_PATCH.lstrip("/"), patch)
     d("root/.dsh", 0o700)
@@ -1578,7 +1578,7 @@ def cmd_assemble(args):
         add_tree(os.path.join(args.pnpm_prefix, "node_modules", "pnpm"), "usr/local/lib/node_modules/pnpm",
                  "pnpm", pnpm_drop_reason)
     if args.bridge:
-        add_tree(args.bridge, DSH_GO_BRIDGE.lstrip("/"), "bridge", lambda rel, abi, prune: None)
+        add_tree(args.bridge, DPSK_BRIDGE.lstrip("/"), "bridge", lambda rel, abi, prune: None)
 
     # 4. dsh-app overlay (wins over everything above)
     for p, e in overlay_entries(runtime_info, with_python=bool(args.python), with_pnpm=bool(args.pnpm_prefix),
@@ -1634,7 +1634,7 @@ def cmd_assemble(args):
     # Direct native loading supports only the exact bundled addon files, after
     # architecture/libc pruning. This generated inventory is part of the hashed
     # archive, never a hand-maintained asset or a grant to user profile packages.
-    entries["opt/dsh-go/direct/native-addons.json"] = Entry(
+    entries["opt/DPSK/direct/native-addons.json"] = Entry(
         "file", 0o644, data=(json.dumps(direct_native_inventory(entries), sort_keys=True) + "\n").encode(), origin="overlay")
 
     # 6. Implicit parents, symlink normalisation, mode normalisation
@@ -1841,7 +1841,7 @@ def cmd_manifest(args):
         "ubuntuVersion": v["ubuntuVersion"],
         "prootVersion": v["prootVersion"],
         "dshPatches": v.get("dshPatches", []),
-        "dshGoBridge": {"version": v["dshGoBridge"], "path": DSH_GO_BRIDGE} if v.get("dshGoBridge") else None,
+        "dshGoBridge": {"version": v["dshGoBridge"], "path": DPSK_BRIDGE} if v.get("dshGoBridge") else None,
         "tallocVersion": v["tallocVersion"],
         "androidShmemVersion": v["androidShmemVersion"],
         "npmRegistry": "https://registry.npmmirror.com",
@@ -1856,14 +1856,14 @@ def cmd_manifest(args):
         "directEngine": {
             "schema": 2,
             "defaultEnabled": False,
-            "preload": "/opt/dsh-go/direct/preload.mjs",
+            "preload": "/opt/DPSK/direct/preload.mjs",
             "loader": "/usr/lib/" + ("x86_64-linux-gnu/ld-linux-x86-64.so.2" if args.abi == "x86_64" else "aarch64-linux-gnu/ld-linux-aarch64.so.1"),
             "paths": "typed guest/physical path seams; same-path PRoot alias only for direct or a prior direct preparation",
             "safeMode": "proot",
             "tls": "Node bundled CA defaults; explicit extra CA environment retained",
             "pnpmPackageImportMethod": "copy",
             "moduleIdentity": "uncached physical identity at load; source and pinned bundled native addons use verified descriptors",
-            "nativeAddonInventory": "/opt/dsh-go/direct/native-addons.json",
+            "nativeAddonInventory": "/opt/DPSK/direct/native-addons.json",
             "compatibilityGate": "nonempty or unreadable PRoot hard-link backing store selects proot; late L2S targets are refused without data migration",
         },
         "launch": launch_template(),
@@ -1939,7 +1939,7 @@ def main():
     p.add_argument("--prune-dev-metadata", action="store_true")
     p.add_argument("--deb", action="append", help="extra .deb to unpack and register (no maintainer scripts)")
     p.add_argument("--python", help="python-build-standalone install_only tarball -> /opt/python")
-    p.add_argument("--bridge", help="dsh-go-bridge package dir -> " + DSH_GO_BRIDGE + " (+ overlay row)")
+    p.add_argument("--bridge", help="DPSK-bridge package dir -> " + DPSK_BRIDGE + " (+ overlay row)")
     p.set_defaults(fn=cmd_assemble)
 
     p = sub.add_parser("manifest")

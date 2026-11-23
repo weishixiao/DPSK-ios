@@ -67,7 +67,7 @@ test('label whitespace/default and fresh ID/tid apply to every explicit click', 
   const f = await shortcutFixture(t);
   assert.deepEqual(await f.call('pin', { png: png(), label: ' \t \n ' }).done, success);
   assert.deepEqual(await f.call('pin', { png: png(), label: '  A\n\t B  ' }).done, success);
-  assert.equal(checks(f)[0][1].label, 'DSH Go'); assert.equal(checks(f)[1][1].label, 'A B');
+  assert.equal(checks(f)[0][1].label, 'DPSK'); assert.equal(checks(f)[1][1].label, 'A B');
   assert.notEqual(checks(f)[0][1].id, checks(f)[1][1].id);
   assert.notEqual(requests(f)[0][1].tid, requests(f)[1][1].tid);
   assert.equal((await slots(f)).length, 2);

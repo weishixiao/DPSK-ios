@@ -770,7 +770,7 @@
     },
     {
       "entryId": "goal",
-      "package": "@deepseek-ai/dsh-goal",
+      "package": "@deepseek-ai/DPSKal",
       "owner": "core",
       "bundle": "@deepseek-ai/dsh-base",
       "kind": "core",
@@ -783,7 +783,7 @@
     },
     {
       "entryId": "goal-round-driver",
-      "package": "@deepseek-ai/dsh-goal-round-driver",
+      "package": "@deepseek-ai/DPSKal-round-driver",
       "owner": "core",
       "bundle": "@deepseek-ai/dsh-base",
       "kind": "core",
@@ -3061,13 +3061,13 @@
       "reason": "entry-unavailable"
     },
     {
-      "entryId": "dsh-go-bridge",
+      "entryId": "DPSK-bridge",
       "package": null,
       "owner": "overlay",
       "bundle": null,
       "kind": "overlay",
       "source": "unverified",
-      "label": "dsh-go-bridge",
+      "label": "DPSK-bridge",
       "state": "unsupported",
       "configurable": false,
       "writable": false,

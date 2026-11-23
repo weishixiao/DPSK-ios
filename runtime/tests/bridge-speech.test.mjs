@@ -5,9 +5,9 @@ import { once } from 'node:events';
 import { createServer, request as httpRequest } from 'node:http';
 import { connect } from 'node:net';
 import { test } from 'node:test';
-import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
+import { apply } from '../bridge/DPSK-bridge/lib/index.js';
 
-const ROOT = '/dsh-go/v1/speech';
+const ROOT = '/DPSK/v1/speech';
 const OFFICIAL = 'https://api.deepseek.com';
 const TOKEN = 'speech-test-account-secret-never-real-7193';
 const KEY = 'speech-test-api-key-never-real-5081';
@@ -125,7 +125,7 @@ async function fixture(t, options = {}) {
     res.on('error', () => {});
     void (async () => {
       state.dispatches++;
-      const path = new URL(req.url, 'http://dsh-go.invalid').pathname;
+      const path = new URL(req.url, 'http://DPSK.invalid').pathname;
       const held = gate?.path === path ? gate : undefined;
       if (held) { gate = undefined; held.arrived.resolve({ req, res }); await held.resume.promise; }
       const route = webServer.exact.get(path) ?? [...webServer.prefixes.values()].find(r => path.startsWith(r.path));
@@ -184,7 +184,7 @@ test('GET reports account without upstream I/O; capabilities advertise speech', 
   assert.equal(f.state.seen.length, 0);
   assert.equal(result.headers.get('cache-control'), 'no-store');
   assert.equal(result.text.includes(TOKEN), false);
-  const capability = await nativeFetch(`${f.origin}/dsh-go/v1/capabilities`).then(r => r.json());
+  const capability = await nativeFetch(`${f.origin}/DPSK/v1/capabilities`).then(r => r.json());
   assert.ok(capability.capabilities.includes('speech'));
 });
 

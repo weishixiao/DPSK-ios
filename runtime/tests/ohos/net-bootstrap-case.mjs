@@ -77,7 +77,7 @@ if (isMainThread) {
       try { await load('dsh-preload.mjs'); } catch (error) { code = error.code; }
       result = { code, fetchSame: globalThis.fetch === previousFetch, externalUndiciLoaded: Object.hasOwn(require.cache, undiciPath) };
     } else if (config.name === 'android-env') {
-      Object.defineProperty(process, 'platform', { value: 'android' }); process.env.DSH_GO_OHOS_SIM = '1';
+      Object.defineProperty(process, 'platform', { value: 'android' }); process.env.DPSK_OHOS_SIM = '1';
       const previousFetch = globalThis.fetch;
       await load('dsh-preload.mjs');
       result = { fetchSame: globalThis.fetch === previousFetch, networkInstalled: !!globalThis[Symbol.for('dsh.go.ohos.net')], externalUndiciLoaded: Object.hasOwn(require.cache, undiciPath) };

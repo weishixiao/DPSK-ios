@@ -10,10 +10,10 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { pathToFileURL } from 'node:url';
-import { NativeCore } from '../bridge/dsh-go-bridge/lib/native/core.js';
-import { effectiveLimits } from '../bridge/dsh-go-bridge/lib/native/limits.js';
-import { createNativeRoutes } from '../bridge/dsh-go-bridge/lib/native/routes.js';
-import { encodeFrame } from '../bridge/dsh-go-bridge/lib/native/ws.js';
+import { NativeCore } from '../bridge/DPSK-bridge/lib/native/core.js';
+import { effectiveLimits } from '../bridge/DPSK-bridge/lib/native/limits.js';
+import { createNativeRoutes } from '../bridge/DPSK-bridge/lib/native/routes.js';
+import { encodeFrame } from '../bridge/DPSK-bridge/lib/native/ws.js';
 
 // The WS completion fence must keep a real deadline while production setTimeout is mocked.
 const realSetTimeout = globalThis.setTimeout;
@@ -112,7 +112,7 @@ async function fixture(t) {
       }
     } catch (error) { fail(error); }
   });
-  socket.write('GET /dsh-go/v1/stream HTTP/1.1\r\nHost: localhost\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
+  socket.write('GET /DPSK/v1/stream HTTP/1.1\r\nHost: localhost\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
   const send = message => socket.write(encodeFrame(1, JSON.stringify(message), { mask: true }));
   send({ t: 'hello', v: [1], features: ['voice', 'micro'] });
   const welcome = await next(message => message.t === 'welcome');
@@ -123,7 +123,7 @@ async function fixture(t) {
     const body = JSON.stringify({ v: 1, pkg, id: 'go', surface: 'composer.actions',
       scope: { sessionId: 's1' }, stream: welcome.conn });
     const result = await new Promise((resolve, reject) => {
-      const req = request({ host: '127.0.0.1', port, path: '/dsh-go/v1/invoke', method: 'POST', agent: false,
+      const req = request({ host: '127.0.0.1', port, path: '/DPSK/v1/invoke', method: 'POST', agent: false,
         headers: { 'content-type': 'application/json', 'content-length': Buffer.byteLength(body) } }, res => {
         const chunks = [];
         res.on('data', chunk => chunks.push(chunk));

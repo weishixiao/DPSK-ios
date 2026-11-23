@@ -122,7 +122,7 @@ class RecordingShareOut extends ShareOut {
   Future<String> save(String name, String content) async {
     final file = await write(name, content);
     saved.add(file.path);
-    return 'Download/DSH-Go/$name';
+    return 'Download/DPSK/$name';
   }
 }
 

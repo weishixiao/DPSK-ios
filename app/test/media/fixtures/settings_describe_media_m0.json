@@ -145,11 +145,11 @@
             "meta": {
               "default": [],
               "extra": {
-                "dsh-go/media/catalog": {
+                "DPSK/media/catalog": {
                   "v": 1,
                   "revision": "2026-10-28.m0.2",
                   "asOf": "2026-10-28",
-                  "contract": "dsh-go/media/catalog",
+                  "contract": "DPSK/media/catalog",
                   "capabilities": {
                     "tools": [
                       "generate_image"

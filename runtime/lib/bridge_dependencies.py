@@ -10,7 +10,7 @@ from pathlib import Path
 import shutil
 
 
-BRIDGE = Path(__file__).resolve().parents[1] / 'bridge/dsh-go-bridge'
+BRIDGE = Path(__file__).resolve().parents[1] / 'bridge/DPSK-bridge'
 PDF_FILES = {'package.json', 'README.md', 'LICENSE',
              'legacy/build/pdf.mjs', 'legacy/build/pdf.worker.mjs'}
 

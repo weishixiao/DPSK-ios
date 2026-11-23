@@ -77,7 +77,7 @@ for (const name of ['libdsh_flock.so','libdsh_require_builtin.so'])
 for (const relative of ['runtime/ohos/preload.mjs','node_modules/@deepseek-ai/dsh/lib/bin.js',
   'runtime/ohos/process/index.mjs','runtime/ohos/process/sandbox.mjs',
   'runtime/ohos/lifecycle/index.mjs','runtime/ohos/phone/index.mjs','runtime/ohos/capabilities/index.mjs',
-  'runtime/bridge/dsh-go-bridge/lib/index.js','runtime/ohos/process/child-process.mjs']) {
+  'runtime/bridge/DPSK-bridge/lib/index.js','runtime/ohos/process/child-process.mjs']) {
   const file=path.join(options.runtimeRoot,relative);fs.mkdirSync(path.dirname(file),{recursive:true});
   fs.writeFileSync(file,'// test substitute\n');
 }
@@ -90,14 +90,14 @@ assert.throws(()=>host.start({...options,guestRoot:undefined}),{code:'ERR_OHOS_H
 assert.throws(()=>host.start({...options,guestRoot:'/missing-guest-root'}),{code:'ERR_OHOS_HOST_LAYOUT'});
 assert.throws(()=>host.start({...options,nativeLibraryDir:undefined}),{code:'ERR_OHOS_HOST_ARGUMENT'});
 assert.throws(()=>host.start({...options,nativeLibraryDir:'/missing-native-dir'}),{code:'ERR_OHOS_NATIVE_LIBRARY_PATH'});
-assert.throws(()=>host.start({...options,env:{DSH_GO_OHOS_NATIVE_LIBRARY_DIR:'/untrusted'}}),{code:'ERR_OHOS_HOST_ENV'});
+assert.throws(()=>host.start({...options,env:{DPSK_OHOS_NATIVE_LIBRARY_DIR:'/untrusted'}}),{code:'ERR_OHOS_HOST_ENV'});
 assert.throws(()=>host.start({...options,linuxDirectory:undefined}),{code:'ERR_OHOS_HOST_ARGUMENT'});
 assert.throws(()=>host.start({...options,linuxDirectory:options.runtimeRoot}),{code:'ERR_OHOS_LINUX_DIRECTORY'});
 assert.throws(()=>host.start({...options,linuxDirectory:options.dshHome}),{code:'ERR_OHOS_LINUX_DIRECTORY'});
 assert.throws(()=>host.start({...options,linuxDirectory:path.dirname(guestRoot)}),{code:'ERR_OHOS_LINUX_DIRECTORY'});
 const linuxAlias=path.join(base,'linux-link');fs.symlinkSync(options.linuxDirectory,linuxAlias);
 assert.throws(()=>host.start({...options,linuxDirectory:linuxAlias}),{code:'ERR_OHOS_LINUX_DIRECTORY'});
-assert.throws(()=>host.start({...options,env:{DSH_GO_OHOS_LINUX_DIRECTORY:'/untrusted'}}),{code:'ERR_OHOS_HOST_ENV'});
+assert.throws(()=>host.start({...options,env:{DPSK_OHOS_LINUX_DIRECTORY:'/untrusted'}}),{code:'ERR_OHOS_HOST_ENV'});
 assert.throws(()=>host.start({...options,env:{DSH_AGENTS_HOME:'/untrusted'}}),{code:'ERR_OHOS_HOST_ENV'});
 assert.throws(()=>host.start({...options,workspaceRoots:[]}),{code:'ERR_OHOS_HOST_WORKSPACES'});
 assert.equal(host.getState().consumed,false);
@@ -122,8 +122,8 @@ assert.throws(()=>host.openUserFile(workspace),{code:'ERR_OHOS_HOST_ARGUMENT'});
 const previous=process.env.DSH_HOME;
 const previousHome=process.env.HOME;
 const previousAgents=process.env.DSH_AGENTS_HOME;
-const previousNative=process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR;
-const previousLinux=process.env.DSH_GO_OHOS_LINUX_DIRECTORY;
+const previousNative=process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR;
+const previousLinux=process.env.DPSK_OHOS_LINUX_DIRECTORY;
 async function until(phase) {
   const deadline=Date.now()+5000;
   for (;;) {
@@ -139,8 +139,8 @@ async function until(phase) {
   const ready=await until('running');
   assert.equal(ready.baseUrl,'http://127.0.0.1:3080');assert.equal(ready.token,'fixture_LAUNCH');
   assert.equal(ready.exitCode,null);assert.equal(ready.errorCode,null);assert.equal(ready.consumed,true);
-  assert.equal(process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR,options.nativeLibraryDir);
-  assert.equal(process.env.DSH_GO_OHOS_LINUX_DIRECTORY,options.linuxDirectory);
+  assert.equal(process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR,options.nativeLibraryDir);
+  assert.equal(process.env.DPSK_OHOS_LINUX_DIRECTORY,options.linuxDirectory);
   assert.equal(process.env.DSH_HOME,options.dshHome);
   assert.equal(process.env.HOME,path.join(guestRoot,'root'));
   assert.equal(process.env.DSH_AGENTS_HOME,path.join(guestRoot,'root/.agents'));
@@ -154,8 +154,8 @@ async function until(phase) {
   assert.equal(process.env.DSH_HOME,previous);
   assert.equal(process.env.HOME,previousHome);
   assert.equal(process.env.DSH_AGENTS_HOME,previousAgents);
-  assert.equal(process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR,previousNative);
-  assert.equal(process.env.DSH_GO_OHOS_LINUX_DIRECTORY,previousLinux);
+  assert.equal(process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR,previousNative);
+  assert.equal(process.env.DPSK_OHOS_LINUX_DIRECTORY,previousLinux);
   assert.equal(events.at(-1).kind,'exit');assert.equal(events.at(-1).exitCode,23);
   assert.ok(events.some(e=>e.kind==='ready'&&e.token==='fixture_LAUNCH'));
   assert.ok(events.some(e=>e.kind==='log'&&e.line==='fixture-mode:'+mode));

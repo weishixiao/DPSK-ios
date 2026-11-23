@@ -58,11 +58,11 @@ function request(path, body, cookie) {
 const login = await request('/?token=' + encodeURIComponent(auth.launchToken)); assert.equal(login.status, 303);
 const cookie = login.headers['set-cookie'][0].split(';')[0];
 async function status() {
-  const response = await request('/dsh-go/v1/linux', undefined, cookie); assert.equal(response.status, 200);
+  const response = await request('/DPSK/v1/linux', undefined, cookie); assert.equal(response.status, 200);
   return JSON.parse(response.text);
 }
 async function command(action, fields = {}) {
-  const before = await status(), response = await request('/dsh-go/v1/linux', { v: 1, instanceId: before.instanceId,
+  const before = await status(), response = await request('/DPSK/v1/linux', { v: 1, instanceId: before.instanceId,
     attemptId: before.attemptId, action, ...fields }, cookie);
   observations.push({ action, requestId: fields.requestId ?? null, httpStatus: response.status });
   assert.equal(response.status, 202); return JSON.parse(response.text);
@@ -124,7 +124,7 @@ try {
   const cancelled = await waitFor(state => state.job?.id === next && state.job.state === 'settled', 'real guest cancellation', 20000);
   check('off confirms true guest cancellation and sink completion', cancelled.job.cancelRequested && cancelled.job.outcome.cancelled === true && cancelled.job.outcome.signal === 'SIGKILL', { outcome: cancelled.job.outcome });
   shutdown = await waitFor(state => state.shutdownComplete, 'ordinary off native join', 30000);
-  const reopen = await request('/dsh-go/v1/linux', { v: 1, instanceId: shutdown.instanceId,
+  const reopen = await request('/DPSK/v1/linux', { v: 1, instanceId: shutdown.instanceId,
     attemptId: shutdown.attemptId, action: 'setEnabled', enabled: true }, cookie);
   const rejected = JSON.parse(reopen.text);
   observations.push({ action: 'setEnabled', enabled: true, afterOrdinaryOff: true,

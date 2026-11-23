@@ -1410,7 +1410,7 @@ class DsBotApi {
   /// A new feed on this host; [DsBotFeed.start] connects it.
   DsBotFeed feed({List<Duration> backoff = DsBotFeed.defaultBackoff}) => DsBotFeed(transport, backoff: backoff);
 
-  Future<DsBotHello> hello({String client = 'dsh-go', String? version, String platform = 'android'}) async =>
+  Future<DsBotHello> hello({String client = 'DPSK', String? version, String platform = 'android'}) async =>
       DsBotHello.fromJson(
         await call('hello', {
           'client': {'name': client, 'version': ?version, 'platform': platform},

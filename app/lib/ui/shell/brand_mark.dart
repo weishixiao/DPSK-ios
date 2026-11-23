@@ -5,7 +5,7 @@ import '../../state/app_info.dart';
 import '../theme/theme.dart';
 import 'brand_glyph.g.dart';
 
-/// The dsh-go mark: a fish tail with its bubble.
+/// The DPSK mark: a fish tail with its bubble.
 ///
 /// Vector paths generated from the brand masters in `assets/brand/`
 /// (`brand_glyph.g.dart`, by `tool/make_brand_mark.py`), in the launcher icon's
@@ -118,7 +118,7 @@ class _BrandPainter extends CustomPainter {
 /// text scale):
 /// - the glyph is [glyphScale] × the word's size tall;
 /// - its visual centre ([BrandMark.visualCentre]) sits on the centre of the word's
-///   main band: the x-height for a lowercase word (「dsh-go」), the cap height for
+///   main band: the x-height for a lowercase word (「DPSK」), the cap height for
 ///   capitals (「DSH」);
 /// - [gapScale] × the word's size separates the glyph's ink from the word.
 class BrandLockup extends StatelessWidget {

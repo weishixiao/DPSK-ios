@@ -6,8 +6,8 @@ const path = value => typeof value === 'string' && isAbsolute(value) && value !=
 // Imported by the host's sole preload before plugins. Later env mutations,
 // profile configuration and Worker inheritance cannot replace this snapshot.
 const host = isMainThread && (process.platform === 'openharmony' || globalThis[Symbol.for('dsh.go.ohos.sim')] === true);
-const directory = host ? process.env.DSH_GO_OHOS_LINUX_DIRECTORY : undefined;
-const nativeLibraryDirectory = host ? process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR : undefined;
+const directory = host ? process.env.DPSK_OHOS_LINUX_DIRECTORY : undefined;
+const nativeLibraryDirectory = host ? process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR : undefined;
 const captured = path(directory) && path(nativeLibraryDirectory)
   ? Object.freeze({ directory, nativeLibraryDirectory }) : undefined;
 let lockExclusive;

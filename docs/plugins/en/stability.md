@@ -65,6 +65,6 @@ The bridge enforces every number here.
 
 | Level | Includes |
 |---|---|
-| Stable | The `dshGo` manifest v1; the listed places and effects; views v1 and v2; the public methods of `ctx.dshGo`; public exports of `@dsh-go/plugin-kit` |
+| Stable | The `dshGo` manifest v1; the listed places and effects; views v1 and v2; the public methods of `ctx.dshGo`; public exports of `@DPSK/plugin-kit` |
 | Newer, may be adjusted | `composer.tools`, `session.actions`, `turn.note`, `placement: "plugin"`, `presentation: "sheet"`: fields won't be removed, but how the places look may still change |
 | Don't rely on | The bridge's internal routes, internal files under `lib/bridge/`, undocumented fields |

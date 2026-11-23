@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
-const client = readFileSync(new URL('../bridge/dsh-go-bridge/lib/client.js', import.meta.url), 'utf8');
+const client = readFileSync(new URL('../bridge/DPSK-bridge/lib/client.js', import.meta.url), 'utf8');
 const root = new URL('../../', import.meta.url);
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
@@ -29,7 +29,7 @@ function bridgePage() {
     });
   };
   const slots = {
-    ctx: { fiber: { entry: { options: { name: 'dsh-go-bridge/client' } } } },
+    ctx: { fiber: { entry: { options: { name: 'DPSK-bridge/client' } } } },
     entries: (key) => [...(records.get(key) || [])].sort((a, b) => (a.options.priority || 0) - (b.options.priority || 0)),
     entriesOfSlot(key) {
       const seen = new Set();
@@ -105,7 +105,7 @@ test('filter isolates package + cell, including official and unresolved occupant
   await p.api.report();
   assert.deepEqual(p.posts.at(-1).slots['shell.overlay'], before);
   assert.ok(before.every((o) => o.active));
-  assert.ok(!JSON.stringify(p.posts).includes('dsh-go-bridge"'));
+  assert.ok(!JSON.stringify(p.posts).includes('DPSK-bridge"'));
   p.dispose();
 });
 

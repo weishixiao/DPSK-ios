@@ -5,7 +5,7 @@
 // Since the 2026-10-28 revision a generation goes out as an ordinary chat
 // message with a parameter header (grammar v1, §4.6,
 // `ui/chat/media/generate_header.dart`); the plugin's tool answers with the
-// v1 `meta["dsh-go/media"]`.
+// v1 `meta["DPSK/media"]`.
 
 import 'dart:async';
 import 'dart:convert';
@@ -24,11 +24,11 @@ export 'media_catalog.dart';
 
 // ── The plugin ───────────────────────────────────────────────────────────────
 
-/// Package names the media plugin goes by: `@dsh-go/media` (the official
+/// Package names the media plugin goes by: `@DPSK/media` (the official
 /// market's), `@ccchimneyyy/dsh-media` (the personal scope it falls back to,
 /// docs/design/plugin-market.md D1), and `dsh-media` under any scope.
 bool isMediaPluginName(String name) =>
-    name == '@dsh-go/media' || name == '@ccchimneyyy/dsh-media' || name == 'dsh-media' || name.endsWith('/dsh-media');
+    name == '@DPSK/media' || name == '@ccchimneyyy/dsh-media' || name == 'dsh-media' || name.endsWith('/dsh-media');
 
 /// The plugin's settings namespace under its own name; a host may rename the
 /// instance, and the catalogue's metadata finds it anyway

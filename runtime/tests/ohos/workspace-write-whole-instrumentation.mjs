@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 const config = JSON.parse(readFileSync(process.env.OHOS_WHOLE_WRITE_CONFIG, 'utf8'));
-process.env.DSH_GO_OHOS_SIM_ADDONS = JSON.stringify([
+process.env.DPSK_OHOS_SIM_ADDONS = JSON.stringify([
   'libdsh_flock.so', 'libdsh_require_builtin.so', 'libdsh_workspace_grants.so', 'workspace-publisher.node',
 ].map(name => join(config.nativeDirectory, name)));
 await import(pathToFileURL(join(config.source, 'runtime/ohos/sim/preload.mjs')));
@@ -59,7 +59,7 @@ export function observeWrite(LocalFileSystem, SandboxedFileSystem) {
 // A transparent observation of the real new Native group, installed before
 // the sole production preload captures the five methods. No fabricated result.
 const require = createRequire(join(config.payload, 'package.json'));
-const native = require('@dsh-go/ohos-native').load('workspace-grants').binding;
+const native = require('@DPSK/ohos-native').load('workspace-grants').binding;
 const wholeMethods = ['beginWholeOutput', 'writeWholeOutput', 'closeWholeOutput', 'stepWholeOutput', 'abortWholeOutput'];
 const nativeCalls = [], nativeRestores = [], leaseIds = new Map();
 function nativeInput(method, args) {

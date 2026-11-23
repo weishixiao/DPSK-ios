@@ -171,18 +171,18 @@ class IslandHandle extends ChangeNotifier {
   /// context for a confirmation and a route).
   Stream<IslandMessage> get requests => _requests.stream;
 
-  /// The launch URL plus what dsh-go-bridge picks up at boot: island mode
+  /// The launch URL plus what DPSK-bridge picks up at boot: island mode
   /// for a list slot whose official entries it masks, or the right-pane tab
   /// to open (never both: masking that slot would empty official tabs too).
   Uri get _loadUrl {
     final cell = spec.cell ?? '';
     if (spec.slot == rightPaneTabSlot) {
       if (cell.isEmpty || book.officialRightbar.contains(cell)) return url;
-      return url.replace(fragment: 'dsh-go-tab=${Uri.encodeComponent(cell)}');
+      return url.replace(fragment: 'DPSK-tab=${Uri.encodeComponent(cell)}');
     }
     if (!spec.maskOfficial) return url;
     final slots = recipe?.slotsFor(spec.slot) ?? [spec.slot];
-    return url.replace(fragment: 'dsh-go-island=${slots.map(Uri.encodeComponent).join(',')}');
+    return url.replace(fragment: 'DPSK-island=${slots.map(Uri.encodeComponent).join(',')}');
   }
 
   static const rightPaneTabSlot = 'sidebar.right.pane.tab';

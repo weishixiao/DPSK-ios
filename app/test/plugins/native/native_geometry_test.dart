@@ -131,15 +131,15 @@ void main() {
   testWidgets('a panel page: the signed card keeps the 16 gutters, equal both sides', (tester) async {
     usePhoneView(tester);
     final bridge = FakeBridge(contributions([usagePlugin()]));
-    bridge.views['dsh-go-example-usage/usage'] = const DshGoView(
-      pkg: 'dsh-go-example-usage',
+    bridge.views['DPSK-example-usage/usage'] = const DshGoView(
+      pkg: 'DPSK-example-usage',
       id: 'usage',
       view: {'type': 'metric', 'label': '本对话', 'value': '¥0.42'},
     );
     await tester.pumpWidget(
       testApp(
         const NativePanelPage(
-          panel: NativePanel(package: 'dsh-go-example-usage', id: 'usage', title: '用量', placement: {'features'}),
+          panel: NativePanel(package: 'DPSK-example-usage', id: 'usage', title: '用量', placement: {'features'}),
         ),
         overrides: nativeOverrides(bridge),
       ),

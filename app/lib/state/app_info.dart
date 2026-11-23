@@ -26,7 +26,7 @@ abstract final class AppInfo {
   /// Shown on the About and licence pages.
   static String get disclaimer => appL10n.stateAppDisclaimer;
 
-  /// The line under the brand mark (welcome page, 关于 dsh-go).
+  /// The line under the brand mark (welcome page, 关于 DPSK).
   static String get slogan => appL10n.appSlogan;
 
   /// The original DPSK author and their personal profiles, not project pages.

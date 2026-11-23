@@ -240,7 +240,7 @@ void main() {
       final media = await client.readDshGoMedia('@acme/voice', 'speech', lease: 'L1', key: 'k_1');
       expect(media.bytes, [1, 2, 3, 4]);
       expect(media.contentType, 'audio/mpeg');
-      expect(host.paths.single, '/dsh-go/v1/media/@acme/voice/speech?lease=L1&key=k_1');
+      expect(host.paths.single, '/DPSK/v1/media/@acme/voice/speech?lease=L1&key=k_1');
       expect(host.cookies.single, contains('dsh-auth-k1='));
 
       host.answer = (request) async {
@@ -263,7 +263,7 @@ void main() {
       };
       await expectLater(
         client.readDshGoMedia('voice', 'speech', lease: 'L1'),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/not-found')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/not-found')),
       );
       expect(() => client.readDshGoMedia('voice', '../x', lease: 'L1'), throwsArgumentError);
     });
@@ -274,7 +274,7 @@ void main() {
         if (request.uri.path.endsWith('/elsewhere')) followed++;
         request.response
           ..statusCode = 302
-          ..headers.set('location', '/dsh-go/v1/media/voice/elsewhere');
+          ..headers.set('location', '/DPSK/v1/media/voice/elsewhere');
         await request.response.close();
       };
       await expectLater(client.readDshGoMedia('voice', 'speech', lease: 'L1'), throwsA(isA<DshHttpException>()));

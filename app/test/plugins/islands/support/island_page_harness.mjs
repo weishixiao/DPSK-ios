@@ -31,7 +31,7 @@
 // Scenario (all):
 //   target    'view' | 'panel' | 'settings' | 'rightbar' (default 'view')
 //   cell      the id asked for;  names  its names (zh, en)
-//   occupants {slot: [{cell, label}]}  what dsh-go-bridge reports (adds the bridge)
+//   occupants {slot: [{cell, label}]}  what DPSK-bridge reports (adds the bridge)
 //   run       virtual ms to run (default 60000)
 // view:      views [{id, label, menu?}], stored, persist (false: a pick is
 //            not recorded), rewrites [ms], later {at, view}, pagehide
@@ -721,7 +721,7 @@ await runUntil(now + (s.run || 60000));
 if (s.pagehide) for (const fn of windowHandlers.pagehide || []) fn();
 
 out.shown = model.shown();
-const marked = html.descendants().find((e) => (e.getAttribute('data-dsh-go-island') || '').split(' ').includes('shown'));
+const marked = html.descendants().find((e) => (e.getAttribute('data-DPSK-island') || '').split(' ').includes('shown'));
 out.island = marked && marked.firstElementChild ? marked.firstElementChild.model ?? null : null;
 if (model.stored) out.stored = model.stored();
 if (model.layout) out.layout = model.layout();

@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
-"""Check the user guide against the app, then build the dsh-go-guide skill.
+"""Check the user guide against the app, then build the DPSK-guide skill.
 
-    python3 app/tool/guide_sync.py           # check, then write app/assets/skills/dsh-go-guide/
+    python3 app/tool/guide_sync.py           # check, then write app/assets/skills/DPSK-guide/
     python3 app/tool/guide_sync.py --check   # check only, write nothing; exit 1 on any problem
 
 The guide lives in docs/guide/ (SKILL.md, README.md, zh/*.md, en/*.md) and ships
-as the dsh-go-guide skill: the app installs it into the on-device engine
-(lib/ui_config/ui_skill.dart), flat in app/assets/skills/dsh-go-guide/ with
+as the DPSK-guide skill: the app installs it into the on-device engine
+(lib/ui_config/ui_skill.dart), flat in app/assets/skills/DPSK-guide/ with
 manifest.json mapping each file back to its place. Rules for the pages:
 
-- zh/ and en/ hold the same pages. README.md says `> dsh-go <version>`, the
+- zh/ and en/ hold the same pages. README.md says `> DPSK <version>`, the
   version name in app/pubspec.yaml (without `+N`).
 - A UI path is a code span `A › B › C` on the line right after
   `<!-- nav: keyA,keyB,keyC -->`, which names each label's ARB key
   (app/lib/l10n/parts/*_<locale>.arb); a `›` without that line fails.
 - **Bold** is for UI text only: each must be a label of that locale, from the
   ARB or the Android string resources.
-- Relative links resolve; `dshgo://open/<id>` names a page or a row a link
+- Relative links resolve; `dpsk://open/<id>` names a page or a row a link
   may open: app/lib/links/page_links.dart and the settings index
   (app/lib/ui/settings/index/spots.dart).
 - Chinese pages say 对话, never 会话, and never 实验.
@@ -36,14 +36,14 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-SKILL = 'dsh-go-guide'
+SKILL = 'DPSK-guide'
 LOCALES = ('zh', 'en')
 HARMONY = 'harmony'
 NAV = re.compile(r'^<!-- nav: ([A-Za-z][A-Za-z0-9_]*(?:,[A-Za-z][A-Za-z0-9_]*)*) -->$')
 SPAN = re.compile(r'`([^`\n]+)`')
 BOLD = re.compile(r'\*\*([^*\n]+)\*\*')
 LINK = re.compile(r'\]\(([^)\s]+)\)')
-VERSION_LINE = re.compile(r'^> dsh-go (\S+)$', re.MULTILINE)
+VERSION_LINE = re.compile(r'^> DPSK (\S+)$', re.MULTILINE)
 BANNED = {'zh': ('会话', '实验'), 'en': ()}
 
 
@@ -155,8 +155,8 @@ def check_links(path: Path, guide: Path, ids: set[str]) -> list[str]:
     base = guide.joinpath(*parts[1:]).parent if parts[0] == HARMONY else path.parent
     for i, line in enumerate(path.read_text(encoding='utf-8').splitlines()):
         for target in LINK.findall(line):
-            if target.startswith('dshgo://'):
-                page = re.fullmatch(r'dshgo://open/([a-z0-9-]+)', target)
+            if target.startswith('dpsk://'):
+                page = re.fullmatch(r'dpsk://open/([a-z0-9-]+)', target)
                 if not page or page[1] not in ids:
                     errors.append(f'{name}:{i + 1}: {target} is not a page link the app opens')
             elif not re.match(r'(https?|mailto):', target):
@@ -172,8 +172,8 @@ def check_skill(text: str) -> list[str]:
         return ['SKILL.md: must start with --- front matter']
     lines = front[1].splitlines()
     errors = []
-    if not any(line.startswith('# dsh-go:managed') for line in lines):
-        errors.append('SKILL.md: front matter needs the # dsh-go:managed line')
+    if not any(line.startswith('# DPSK:managed') for line in lines):
+        errors.append('SKILL.md: front matter needs the # DPSK:managed line')
     for key in ('name', 'description', 'whenToUse'):
         if not any(line.startswith(f'{key}: ') for line in lines):
             errors.append(f'SKILL.md: front matter needs {key}')
@@ -235,7 +235,7 @@ def check(repo: Path, guide: Path) -> list[str]:
             continue
         stated = VERSION_LINE.findall(readme.read_text(encoding='utf-8'))
         if stated != [version]:
-            errors.append(f'{name}: want one line `> dsh-go {version}` (app/pubspec.yaml), found {stated}')
+            errors.append(f'{name}: want one line `> DPSK {version}` (app/pubspec.yaml), found {stated}')
     errors += check_skill((guide / 'SKILL.md').read_text(encoding='utf-8'))
     if 'SKILL.md' in harmony:
         errors += [f'{HARMONY}/{error}' for error in check_skill(harmony['SKILL.md'].read_text(encoding='utf-8'))]

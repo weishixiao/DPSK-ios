@@ -112,8 +112,8 @@ def main():
         runtime_ohos = runtime / 'runtime/ohos'
         shutil.copytree(ROOT / 'runtime/ohos', runtime_ohos,
                         ignore=shutil.ignore_patterns('node', 'node_modules', 'build', '__pycache__'))
-        bridge = ROOT / 'runtime/bridge/dsh-go-bridge'
-        target_bridge = runtime / 'runtime/bridge/dsh-go-bridge'
+        bridge = ROOT / 'runtime/bridge/DPSK-bridge'
+        target_bridge = runtime / 'runtime/bridge/DPSK-bridge'
         target_bridge.mkdir(parents=True, exist_ok=True)
         shutil.copytree(bridge / 'lib', target_bridge / 'lib')
         for name in ['package.json', 'cordis.patch.yml']:
@@ -138,12 +138,12 @@ def main():
         write_json(out / 'development-deletion-variants.json', variants)
 
     runtime_modules = {name: {'bytes': (runtime / name).stat().st_size, 'sha256': sha(runtime / name)} for name in [
-        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs',
-        'runtime/bridge/dsh-go-bridge/lib/session-deletion.js',
+        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs',
+        'runtime/bridge/DPSK-bridge/lib/session-deletion.js',
         'runtime/ohos/publication/atomic.mjs', 'runtime/ohos/publication/index.mjs']}
     write_json(out / 'runtime-deletion-modules.json', runtime_modules)
     run('bridge-isolated-import', [sys.executable, HERE / 'bridge-isolated-import.py',
-        '--node', args.node, '--bridge', runtime / 'runtime/bridge/dsh-go-bridge',
+        '--node', args.node, '--bridge', runtime / 'runtime/bridge/DPSK-bridge',
         '--out', out / 'bridge-isolated-import'])
 
     guest = out / '中文应用目录/runtime/rootfs'
@@ -169,8 +169,8 @@ def main():
     captured = json.loads(Path(str(argv_path) + '.env.json').read_text())
     expected = {'HOME': str(guest / 'root'), 'DSH_HOME': str(dsh), 'DSH_AGENTS_HOME': str(agents),
         'TMPDIR': str(cache / 'ohos-process'), 'NODE_COMPILE_CACHE': str(cache / 'node-compile-cache'),
-        'NARB_DISABLE_NATIVE_CACHE': '1', 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(args.native_library_dir),
-        'DSH_GO_OHOS_LINUX_DIRECTORY': str(guest.parent.parent / 'linux-tools'),
+        'NARB_DISABLE_NATIVE_CACHE': '1', 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(args.native_library_dir),
+        'DPSK_OHOS_LINUX_DIRECTORY': str(guest.parent.parent / 'linux-tools'),
         'DSH_PERMISSION_MODE': 'workspace-write'}
     assert captured == expected
     assert len(argv) == 13 and argv[1] == '--jitless' and argv.count('--import') == 1
@@ -270,7 +270,7 @@ def main():
         'attachmentFixtureSha256': sha(out / 'attachment-fixture-input.json'),
         'attachmentObjectsUnchangedAfterHostExit': True,
         'engineLifecycle': report['engineLifecycle'], 'runtimeDeletionModules': runtime_modules,
-        'isolatedBridgeSource': str(runtime / 'runtime/bridge/dsh-go-bridge'),
+        'isolatedBridgeSource': str(runtime / 'runtime/bridge/DPSK-bridge'),
         'bridgeFixtureSha256': sha(out / 'bridge-fixture-input.json'),
         'bridgeIsolatedImport': json.loads((out / 'bridge-isolated-import/report.json').read_text())['status'],
         'profileSha256': before_profile, 'roundSourceSha256': sha(source_round), 'roundDriverSha256': sha(round_driver),

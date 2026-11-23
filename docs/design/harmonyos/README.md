@@ -76,7 +76,7 @@ runner 和 linked publication binding 已编入 `libnode.so`，生产包不再�
 | DSH_HOME | `<guestRoot>/root/.dsh` | 私有配置、会话与生命周期记录；不授予用户文件导出权 |
 | DSH_AGENTS_HOME | `<guestRoot>/root/.agents` | 共享技能与 AGENTS.md 的真实消费者根 |
 | 唯一工作区 | `<guestRoot>/root/workspace` | 传入实际 subprocess 与 sandbox policy |
-| 用户产出 | `<guestRoot>/root/workspace/DSH-Go` | `listOutputs` 只列这里，不遍历项目依赖和其他工作区文件 |
+| 用户产出 | `<guestRoot>/root/workspace/DPSK` | `listOutputs` 只列这里，不遍历项目依赖和其他工作区文件 |
 | 托管技能 | `<guestRoot>/root/.dsh/skills/<name>` | token/世代/owner 绑定，事务式写入和取消；不等于插件市场安装 |
 | 持久引擎日志 | `<filesDir>/dsh-runtime/engine.log` 与 `.1` | 诊断主包已精确独审；只收脱敏后的条目，有界队列和轮转，非崩溃前完整日志保证 |
 | 临时文件和 V8 编译缓存 | Context cache 下的运行时专用目录 | 可重建，不能保存唯一业务事实；不允许被重定向到任意目录 |
@@ -134,7 +134,7 @@ flowchart TD
 | 通道 | 当前协议行为 | 尚未具备或尚待确认 |
 |---|---|---|
 | `dsh/runtime` | status/install/start/stop/logs/events、guestRoot、reopenApp、托管技能 | 一进程一次 Node；目标装载/重启/后台真实行为待设备 |
-| `dsh/files`、`dsh/media` | 安全 FD 后复制，系统打开/保存、相册确认、DSH-Go 产出列表 | 强制选择打开 App 不支持；URI 提供方写入无跨提供方原子回滚保证 |
+| `dsh/files`、`dsh/media` | 安全 FD 后复制，系统打开/保存、相册确认、DPSK 产出列表 | 强制选择打开 App 不支持；URI 提供方写入无跨提供方原子回滚保证 |
 | `dsh/app`、`dsh/links` | 时区、固定自身 Ability 回前台、冷/热深链及外来文件及时复制 | 刷新率的 auto/max 靠引擎的 `LTPODispatchHighFrameRate`，真实帧率待设备；后台拉起不绕过系统限制 |
 | connectivity_plus | 承载类型列表和事件，失败不伪装 none | 有网络不等于互联网可达；真实 observer 回收待设备 |
 | `dsh/notify` | 普通锁屏安全文字提醒、HMAC 导航点击、串行取消 | 通知外审批/拒绝、实况窗不支持；publish 成功不证明已展示 |

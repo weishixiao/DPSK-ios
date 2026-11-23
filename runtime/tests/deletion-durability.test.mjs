@@ -39,8 +39,8 @@ async function fixture(t) {
 
 const hooks = () => ({ validate: async () => {}, dispose: async () => {}, inspectTasks: async () => false, cleanup: async () => {} });
 function interceptSync(t, f, failures) {
-  const slot = join(f.root, '.dsh-go-lifecycle', createHash('sha256').update(f.id).digest('hex'));
-  const required = [slot, join(f.root, '.dsh-go-lifecycle'), f.root, dirname(f.root)];
+  const slot = join(f.root, '.DPSK-lifecycle', createHash('sha256').update(f.id).digest('hex'));
+  const required = [slot, join(f.root, '.DPSK-lifecycle'), f.root, dirname(f.root)];
   const marker = join(slot, 'deleted.json');
   const originalOpen = fs.open, originalRm = fs.rm;
   const trace = [];

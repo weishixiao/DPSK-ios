@@ -78,7 +78,7 @@ void main() {
       await pumpSection(
         tester,
         FakeBridge(contributions([voice])),
-        'dsh-go-example-quick',
+        'DPSK-example-quick',
         overrides: [
           operatingSystemProvider.overrideWithValue('android'),
           nativeMediaPlatformProvider.overrideWithValue(platform),
@@ -93,7 +93,7 @@ void main() {
       await pumpSection(
         tester,
         FakeBridge(contributions([voice])),
-        'dsh-go-example-quick',
+        'DPSK-example-quick',
         overrides: [
           operatingSystemProvider.overrideWithValue('ohos'),
           nativeMediaPlatformProvider.overrideWithValue(_Features(const {'audio', 'voice'})),
@@ -109,7 +109,7 @@ void main() {
       await pumpSection(
         tester,
         FakeBridge(contributions([voice])),
-        'dsh-go-example-quick',
+        'DPSK-example-quick',
         overrides: [
           operatingSystemProvider.overrideWithValue('ohos'),
           nativeMediaPlatformProvider.overrideWithValue(_Features(const {'audio'})),
@@ -124,7 +124,7 @@ void main() {
   });
 
   testWidgets('a switch per declared place, then the status line', (tester) async {
-    final container = await pumpSection(tester, FakeBridge(contributions([quickPlugin()])), 'dsh-go-example-quick');
+    final container = await pumpSection(tester, FakeBridge(contributions([quickPlugin()])), 'DPSK-example-quick');
     expect(find.text('输入框按钮'), findsOneWidget);
     expect(find.text('消息菜单'), findsOneWidget);
     expect(find.text('状态条'), findsNothing, reason: 'only what the plugin declares');

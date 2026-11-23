@@ -38,10 +38,10 @@ import kotlin.concurrent.thread
  *
  * - `resolveGuest {path}` → host path of a local-engine file, or null.
  * - `listOutputs {depth}` → up to 500 most recently modified `[{path, bytes, modified}]` from
- *   `/sdcard/Download/DSH-Go` and the old `/sdcard/Download/DSH`
+ *   `/sdcard/Download/DPSK` and the old `/sdcard/Download/DSH`
  *   (guest paths; empty without phone storage).
  * - `open {path, mime, name, chooser}` → ACTION_VIEW through this app's FileProvider.
- * - `saveToDownloads {path, name, mime}` → shown location (`Download/DSH-Go/x.pdf`):
+ * - `saveToDownloads {path, name, mime}` → shown location (`Download/DPSK/x.pdf`):
  *   MediaStore Downloads on API 29+, the public Downloads directory before
  *   (asks for the storage permission when needed).
  *
@@ -338,9 +338,9 @@ class FilesPlugin : FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandle
 
     companion object {
         const val CHANNEL = "dsh/files"
-        /** `Download/DSH-Go`: saved files, and the local engine's output folder (GuestSetup). No
+        /** `Download/DPSK`: saved files, and the local engine's output folder (GuestSetup). No
          *  space: the agent types this path into shell commands. */
-        private const val SUBDIR = "DSH-Go"
+        private const val SUBDIR = "DPSK"
         /** The folder before the app was called DPSK; nothing is written there any more. */
         private const val LEGACY_SUBDIR = "DSH"
         private const val STORAGE_REQUEST = 0x5d6

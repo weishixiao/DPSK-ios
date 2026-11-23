@@ -457,7 +457,7 @@ void main() {
     await copied.future;
     expect(await File(path!).exists(), isTrue);
     expect(content, isNot(contains('never-export')));
-    reply.complete('Download/DSH-Go/dsh-phone-self-check.md');
+    reply.complete('Download/DPSK/dsh-phone-self-check.md');
     await done;
     expect(await File(path!).exists(), isFalse);
     expect(await root.list().toList(), isEmpty);

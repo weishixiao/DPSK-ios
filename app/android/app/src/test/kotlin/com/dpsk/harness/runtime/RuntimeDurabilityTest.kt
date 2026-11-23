@@ -36,7 +36,7 @@ class RuntimeDurabilityTest {
 
     @Test fun theReadyMarkerFollowsRestoredDataAndTheDataBarrierEvenForTheSameVersion() {
         installed()
-        File(keep, "root/.dsh/dsh-go/ui.json").apply {
+        File(keep, "root/.dsh/DPSK/ui.json").apply {
             parentFile!!.mkdirs()
             writeText("kept settings")
         }
@@ -45,7 +45,7 @@ class RuntimeDurabilityTest {
             assertFalse(version.exists())
             assertEquals("new runtime", File(base, "rootfs/bin/new").readText())
             assertEquals("user notes", File(base, "rootfs/root/workspace/notes").readText())
-            assertEquals("kept settings", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
+            assertEquals("kept settings", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
             assertTrue(File(base, "rootfs.old/bin/old").isFile)
             order.add("data")
         }, syncDirectory = { directory ->
@@ -103,7 +103,7 @@ class RuntimeDurabilityTest {
     @Test fun firstInstallReplacesAnUnpublishedTemporaryBeforeItsPublicationBarrier() {
         stage()
         write("rootfs.version.next", "partial")
-        File(keep, "root/.dsh/dsh-go/ui.json").apply {
+        File(keep, "root/.dsh/DPSK/ui.json").apply {
             parentFile!!.mkdirs()
             writeText("kept settings")
         }
@@ -112,7 +112,7 @@ class RuntimeDurabilityTest {
         val actual = assertThrows(IOException::class.java) {
             activateRootfs(base, "new-version", keep, sync = {
                 assertFalse(Files.exists(version.toPath(), NOFOLLOW_LINKS))
-                assertEquals("kept settings", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
+                assertEquals("kept settings", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
                 order.add("data")
             }, syncDirectory = { directory ->
                 assertEquals(base, directory)
@@ -127,7 +127,7 @@ class RuntimeDurabilityTest {
         assertEquals(listOf("data", "publish"), order)
         assertEquals("new-version", version.readText())
         assertEquals("new runtime", File(base, "rootfs/bin/new").readText())
-        assertEquals("kept settings", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
+        assertEquals("kept settings", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
     }
 
     @Test fun aFailedTemporaryRemovalDoesNotPublishTheFirstInstallMarker() {

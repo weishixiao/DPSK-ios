@@ -128,7 +128,7 @@ void main() {
     });
 
     testWidgets('installed and off keeps its way to the plugin pages', (tester) async {
-      carrier.handlers['pluginManager/listBundles'] = (_) => [bundleJson('@dsh-go/media', enabled: false)];
+      carrier.handlers['pluginManager/listBundles'] = (_) => [bundleJson('@DPSK/media', enabled: false)];
       await prompt(tester, host());
       expect(find.text(_zh.mediaInstallAction), findsOneWidget);
     });

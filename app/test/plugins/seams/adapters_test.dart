@@ -159,9 +159,9 @@ void main() {
 
   group('P2 skeletons', () {
     test('dsh-ui-panel matches native panel cells only; pet matches nothing yet', () {
-      // Native panels occupy `dsh-go:<id>` cells (test/plugins/native/native_panel_test.dart).
+      // Native panels occupy `DPSK:<id>` cells (test/plugins/native/native_panel_test.dart).
       for (final slot in [Slots.dshGoPanel, Slots.rightPaneTab, Slots.main]) {
-        final native = SlotOccupant(slot: slot, package: 'dsh-cost', cell: 'dsh-go:cost');
+        final native = SlotOccupant(slot: slot, package: 'dsh-cost', cell: 'DPSK:cost');
         final web = SlotOccupant(slot: slot, package: 'dsh-cost', cell: 'cost');
         expect(const DshUiPanelAdapter().slots, contains(slot));
         expect(const DshUiPanelAdapter().canRender(native, const PluginClientInfo(package: 'dsh-cost')), isTrue);

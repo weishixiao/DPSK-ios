@@ -4,8 +4,8 @@
 /// * Tier A, any Host: [PluginsApi.listBundles] plus the boot graph the Host
 ///   injects into its index page as `__DSH_BOOT__` ([parseWebBootGraph]; the
 ///   page is read as text, nothing in it runs).
-/// * Tier B, a Host with the app's `dsh-go-bridge` package: its occupancy table
-///   at `GET /dsh-go/v1/inventory` ([BridgeInventory]).
+/// * Tier B, a Host with the app's `DPSK-bridge` package: its occupancy table
+///   at `GET /DPSK/v1/inventory` ([BridgeInventory]).
 ///
 /// Both pages are HTTP routes, so over the relay tunnel only the bundle list
 /// is left ([ClientInventoryTier.bundles]).
@@ -186,10 +186,10 @@ String? _jsonObjectAt(String text, int start) {
 
 /// The app's bridge package; its own island-mode placeholders are not
 /// occupants.
-const dshGoBridgePackage = 'dsh-go-bridge';
+const dshGoBridgePackage = 'DPSK-bridge';
 
 /// Path of the bridge's inventory route.
-const bridgeInventoryPath = '/dsh-go/v1/inventory';
+const bridgeInventoryPath = '/DPSK/v1/inventory';
 
 /// A package's cell in a slot as the bridge reported it.
 class ClientSlotOccupant {
@@ -266,7 +266,7 @@ class BridgePackage {
   final String? pet;
 }
 
-/// `GET /dsh-go/v1/inventory`.
+/// `GET /DPSK/v1/inventory`.
 class BridgeInventory {
   const BridgeInventory({
     this.version = 1,
@@ -492,7 +492,7 @@ extension ClientInventoryApi on DshClient {
     return parseWebBootGraph(response.text);
   }
 
-  /// Tier B: `GET /dsh-go/v1/inventory`. Null for an explicitly missing route
+  /// Tier B: `GET /DPSK/v1/inventory`. Null for an explicitly missing route
   /// or a legacy 404 without an advertised inventory capability. Resource
   /// errors keep their code under `client-inventory/`; only an ambiguous 404
   /// calls [DshGoApi.readDshGoBridgeCapabilities], whose errors propagate unchanged.

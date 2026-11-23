@@ -23,7 +23,7 @@ await mkdir(out, { recursive: false });
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 const rows = [];
-const route = '/dsh-go/v1/runtime-capabilities';
+const route = '/DPSK/v1/runtime-capabilities';
 const { capabilities: subprocessCapabilities } = await import(pathToFileURL(join(tree, 'runtime/ohos/process/commands.mjs')));
 
 function exchange(base, { path = route, method = 'GET', cookie, headers = {} } = {}) {
@@ -39,8 +39,8 @@ function exchange(base, { path = route, method = 'GET', cookie, headers = {} } =
 }
 function environment(home) {
   return { PATH: process.env.PATH, LANG: 'C.UTF-8', DSH_HOME: home, DSH_PERMISSION_MODE: 'workspace-write',
-    DSH_GO_OHOS_SIM_PLATFORM: 'openharmony', DSH_GO_OHOS_SIM_ADDONS: JSON.stringify(addons),
-    DSH_GO_OHOS_NATIVE_LIBRARY_DIR: nativeLibraries, NARB_DISABLE_NATIVE_CACHE: '1', LD_PRELOAD: linked };
+    DPSK_OHOS_SIM_PLATFORM: 'openharmony', DPSK_OHOS_SIM_ADDONS: JSON.stringify(addons),
+    DPSK_OHOS_NATIVE_LIBRARY_DIR: nativeLibraries, NARB_DISABLE_NATIVE_CACHE: '1', LD_PRELOAD: linked };
 }
 async function snapshot(home) {
   const value = {};

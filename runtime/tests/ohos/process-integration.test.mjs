@@ -131,8 +131,8 @@ test('DSH原rawOutputMaxBytes上限不解析截断的半条JSON', async () => {
 
 test('PTY明确不可用，git解析到受限Worker而非系统可执行文件', async () => {
   await assert.rejects(ctx.subprocess.spawnTerminal({}), { code: 'ERR_OHOS_PTY_UNAVAILABLE' });
-  assert.equal(await ctx.subprocess.resolveExecutable('git'), '/dsh-go/ohos/bin/git');
-  assert.equal(await ctx.subprocess.resolveExecutable('bash'), '/dsh-go/ohos/bin/bash');
+  assert.equal(await ctx.subprocess.resolveExecutable('git'), '/DPSK/ohos/bin/git');
+  assert.equal(await ctx.subprocess.resolveExecutable('bash'), '/DPSK/ohos/bin/bash');
   assert.equal(ctx.subprocess.temporaryRoot, temp);
   assert.throws(() => { ctx.subprocess.temporaryRoot = '/tmp'; }, TypeError);
 });

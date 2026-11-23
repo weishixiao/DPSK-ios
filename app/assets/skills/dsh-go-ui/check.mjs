@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// dsh-go ui.json checker — zero dependencies, Node 18+.
+// DPSK ui.json checker — zero dependencies, Node 18+.
 //
-//   node check.mjs                 checks $DSH_HOME/dsh-go/ui.json
+//   node check.mjs                 checks $DSH_HOME/DPSK/ui.json
 //   node check.mjs path/to/ui.json
 //   node check.mjs - < ui.json     reads stdin
 //   add --json for machine-readable output
 //
-// It reports exactly what the dsh-go app reports: the same JSON Pointers and
+// It reports exactly what the DPSK app reports: the same JSON Pointers and
 // the same words, because it is a line-for-line twin of the app's validator
 // (lib/ui_config/ui_config_parser.dart and ui_json_reader.dart in the app).
 // Value lists and limits come from ../schema.json (or ./schema.json).
@@ -27,7 +27,7 @@ if (!schemaPath) {
 }
 const schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
 const defs = schema.$defs;
-const x = schema['x-dsh-go'];
+const x = schema['x-DPSK'];
 const L = x.limits;
 const S = {
   version: x.version,
@@ -962,13 +962,13 @@ export function checkUiJson(text) {
 // ── CLI ───────────────────────────────────────────────────────────────────
 
 function defaultPath() {
-  if (process.env.DSH_HOME) return join(process.env.DSH_HOME, 'dsh-go', 'ui.json');
-  // Installed as <DSH_HOME>/skills/dsh-go-ui/scripts/check.mjs.
+  if (process.env.DSH_HOME) return join(process.env.DSH_HOME, 'DPSK', 'ui.json');
+  // Installed as <DSH_HOME>/skills/DPSK-ui/scripts/check.mjs.
   const skill = dirname(here);
-  if (basename(here) === 'scripts' && basename(skill) === 'dsh-go-ui' && basename(dirname(skill)) === 'skills') {
-    return join(dirname(dirname(skill)), 'dsh-go', 'ui.json');
+  if (basename(here) === 'scripts' && basename(skill) === 'DPSK-ui' && basename(dirname(skill)) === 'skills') {
+    return join(dirname(dirname(skill)), 'DPSK', 'ui.json');
   }
-  return join(homedir(), '.dsh', 'dsh-go', 'ui.json');
+  return join(homedir(), '.dsh', 'DPSK', 'ui.json');
 }
 
 const kindLabel = { fatal: '错误', invalid: '错误', ignored: '忽略', adjusted: '提示' };

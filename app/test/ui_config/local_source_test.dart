@@ -18,7 +18,7 @@ void main() {
   StreamSubscription<UiConfigRead>? sub;
   Directory? rootfs;
 
-  File config() => File('${root.path}/root/.dsh/dsh-go/ui.json');
+  File config() => File('${root.path}/root/.dsh/DPSK/ui.json');
 
   void start() {
     source = LocalUiConfigSource(
@@ -48,11 +48,11 @@ void main() {
     _ => null,
   };
 
-  test('no file yet: creates dsh-go/, reports absent, then follows the file', () async {
+  test('no file yet: creates DPSK/, reports absent, then follows the file', () async {
     start();
     await until(() => reads.isNotEmpty);
     expect(reads.last, isA<UiConfigAbsent>());
-    expect(Directory('${root.path}/root/.dsh/dsh-go').existsSync(), isTrue);
+    expect(Directory('${root.path}/root/.dsh/DPSK').existsSync(), isTrue);
 
     config().writeAsStringSync('{"version": 1, "density": "compact"}');
     await until(() => lastText() != null);
@@ -90,7 +90,7 @@ void main() {
     await until(() => lastText()?.contains('dark') ?? false);
   });
 
-  test('other files in dsh-go/ are not reads', () async {
+  test('other files in DPSK/ are not reads', () async {
     config().parent.createSync(recursive: true);
     config().writeAsStringSync('{"version": 1}');
     start();
@@ -148,10 +148,10 @@ void main() {
     );
     sub = source.watch().listen(reads.add);
     await until(() => reads.isNotEmpty);
-    expect(Directory('${root.path}/root/.dsh/dsh-go').existsSync(), isFalse);
+    expect(Directory('${root.path}/root/.dsh/DPSK').existsSync(), isFalse);
     installing = false;
     kicks.add(null);
-    await until(() => Directory('${root.path}/root/.dsh/dsh-go').existsSync());
+    await until(() => Directory('${root.path}/root/.dsh/DPSK').existsSync());
     config().writeAsStringSync('{"version": 1}');
     await until(() => lastText() != null);
     installing = true;

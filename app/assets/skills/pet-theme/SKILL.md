@@ -1,7 +1,7 @@
 ---
-# dsh-go:managed — delete this line to keep your own edits.
+# DPSK:managed — delete this line to keep your own edits.
 name: pet-theme
-description: 把宠物素材做成 dsh-go 可导入的宠物包：clawd-on-desk 主题、GIF/PNG/WebP 表情包、逐帧目录、Aseprite 导出或单张图片。用于「把这个主题做成宠物」「把表情包做成宠物」「这个能导入吗」和 /pet-theme。
+description: 把宠物素材做成 DPSK 可导入的宠物包：clawd-on-desk 主题、GIF/PNG/WebP 表情包、逐帧目录、Aseprite 导出或单张图片。用于「把这个主题做成宠物」「把表情包做成宠物」「这个能导入吗」和 /pet-theme。
 ---
 
 # 做一只宠物
@@ -38,7 +38,7 @@ description: 把宠物素材做成 dsh-go 可导入的宠物包：clawd-on-desk 
 
        cd /tmp/pet-pack/<id> && python3 -m zipfile -c <输出路径>/<id>.zip pack.json *.png
 
-   手机输出到 /sdcard/Download/DSH-Go/。
+   手机输出到 /sdcard/Download/DPSK/。
 6. 收尾：告诉用户导入路径，作者与授权显示在宠物页底部；只做自用转换，第三方素材
    （尤其 CC BY-NC-SA 同人作品）不要打包进发行版或市场。
 

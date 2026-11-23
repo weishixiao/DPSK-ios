@@ -106,7 +106,7 @@ const _halfHour = Duration(minutes: 30);
 /// Half an hour in: due.
 const _due = StarPromptRecord(used: _halfHour);
 
-final _github = Uri.parse('https://github.com/weishixiao/dsh-go');
+final _github = Uri.parse('https://github.com/weishixiao/DPSK');
 
 String _title(int hours) => lookupL10n(AppLocale.zhCN).starPromptTitle(hours);
 

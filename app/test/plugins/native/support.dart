@@ -49,7 +49,7 @@ class FakeSocket implements DshGoSocket {
   Map<String, Object?>? subOf(String id) => sent.where((m) => m['t'] == 'sub' && m['id'] == id).lastOrNull;
 }
 
-/// The host's dsh-go bridge, scripted.
+/// The host's DPSK bridge, scripted.
 class FakeBridge implements NativeBridge {
   FakeBridge([this.raw]);
 
@@ -73,7 +73,7 @@ class FakeBridge implements NativeBridge {
   @override
   Future<DshGoView> view(String pkg, String id, {DshGoScope scope = DshGoScope.none, required DshGoCaps caps}) async {
     final view = views['$pkg/$id'];
-    if (view == null) throw const DshRemoteException('dsh-go/not-found', 'unknown panel');
+    if (view == null) throw const DshRemoteException('DPSK/not-found', 'unknown panel');
     return view;
   }
 
@@ -156,7 +156,7 @@ Map<String, Object?> plugin(
 
 /// The quick-actions plugin of the examples: two capsules, two menu items.
 Map<String, Object?> quickPlugin({List<String> wants = const []}) => plugin(
-  'dsh-go-example-quick',
+  'DPSK-example-quick',
   title: '快捷指令',
   icon: 'bolt',
   wants: wants,
@@ -178,7 +178,7 @@ Map<String, Object?> quickPlugin({List<String> wants = const []}) => plugin(
 
 /// The usage plugin of the examples: a status line and a panel.
 Map<String, Object?> usagePlugin({List<String> placement = const ['session.tab', 'features']}) => plugin(
-  'dsh-go-example-usage',
+  'DPSK-example-usage',
   title: '用量',
   icon: 'chart',
   strip: [

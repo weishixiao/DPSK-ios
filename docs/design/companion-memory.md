@@ -89,7 +89,7 @@
 
 轻量在最终请求副本中附上手机已选块，不回写原话或稳定 system。完整模式沿真实 instanceId / sessionId / requestId、archive / control / history 分界认领，在 provider 组包前使用副本注入；不写进持久 Session 历史，不复用会落盘的 system context。空选择明确交桥，到最终请求才省略空块，不能补回主机旧召回。
 
-只有实际 runtime hook 可用才声明 phoneMemory；同请求 ID 同内容可幂等重送，换内容拒绝。旧主机不支持时保留干净普通聊天与工具，明确这项记忆通道不可用；不能伪装已经使用手机记忆。完整模式源码入口是 [prompt-context](../../runtime/bridge/dsh-go-bridge/lib/companion/prompt-context.js) 与 [运行时补丁](../../runtime/patches/companion-phone-memory-request.diff)。
+只有实际 runtime hook 可用才声明 phoneMemory；同请求 ID 同内容可幂等重送，换内容拒绝。旧主机不支持时保留干净普通聊天与工具，明确这项记忆通道不可用；不能伪装已经使用手机记忆。完整模式源码入口是 [prompt-context](../../runtime/bridge/DPSK-bridge/lib/companion/prompt-context.js) 与 [运行时补丁](../../runtime/patches/companion-phone-memory-request.diff)。
 
 ### 4.4 控制、真删与迟到结果
 
@@ -130,7 +130,7 @@
 
 root.complete 仅表示当前观察范围内、归属于手机标记主循环的普通调用已结束，不代表所有后台 / 压缩调用、全部 token 分项或费用都齐全。主机缓存有界且不阻拦聊天；重启、驱逐、容量不足或断流须保留覆盖缺口。unknown/revision=0 不能覆盖掉手机已存的旧收据，也不能因 receipts 为空显示免费。账本不主动复制提示词、回答或密钥。
 
-代码见 [辅助请求 SDK](../../packages/dsh_client/lib/src/companion_auxiliary_api.dart)、[普通聊天用量 SDK](../../packages/dsh_client/lib/src/companion_usage_api.dart)、[主机观察器](../../runtime/bridge/dsh-go-bridge/lib/companion/usage.js) 和 [phone store](../../packages/dsh_client/lib/src/companion_memory_store.dart)。
+代码见 [辅助请求 SDK](../../packages/dsh_client/lib/src/companion_auxiliary_api.dart)、[普通聊天用量 SDK](../../packages/dsh_client/lib/src/companion_usage_api.dart)、[主机观察器](../../runtime/bridge/DPSK-bridge/lib/companion/usage.js) 和 [phone store](../../packages/dsh_client/lib/src/companion_memory_store.dart)。
 
 ### 4.6 维护时先找这些入口
 
@@ -141,7 +141,7 @@ root.complete 仅表示当前观察范围内、归属于手机标记主循环的
 | `app/lib/companion/companion_memory.dart` | 共享 owner、迁移机会、任务与迟到收据收尾；关闭前等待正在使用库的工作 |
 | `app/lib/companion/companion_memory_worker.dart` | 同一辅助请求入口，预算、取消、解析、按版本提交 |
 | `app/lib/ui/companion/companion_page.dart`、`companion_memory_page.dart` | 原话先存、当轮调用、手记添加 / 修改 / 忘掉，以及简短的聊天回应 |
-| `runtime/bridge/dsh-go-bridge/lib/companion/`、`runtime/patches/` | 真实当轮记忆注入、已有通道的辅助请求、普通聊天用量观察 |
+| `runtime/bridge/DPSK-bridge/lib/companion/`、`runtime/patches/` | 真实当轮记忆注入、已有通道的辅助请求、普通聊天用量观察 |
 
 提示词只在对应工作需要时送固定指令和当批输入，不把四套串成每轮流水线，也不附示例全集。C 聊天资料指令沿现角色；D 回访拟文只在手机已放行的一次机会需要时使用，本地短句足够就直接用短句。
 

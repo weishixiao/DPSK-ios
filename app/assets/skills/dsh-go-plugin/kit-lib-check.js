@@ -1,4 +1,4 @@
-// `check`: what the dsh-go app and the bridge will say about a plugin, before
+// `check`: what the DPSK app and the bridge will say about a plugin, before
 // you install it. Manifest problems come from the bridge's own parser
 // (lib/bridge/, copied from runtime/bridge), view problems from a line-by-line
 // twin of the app's parser (lib/view-check.js), with the app's words.
@@ -18,7 +18,7 @@ import { BUDGETS, bindingsIn, checkView, labeled } from './view-check.js'
 
 export { checkView, BUDGETS }
 
-const VIEW_KEY = 'dsh-go/view'
+const VIEW_KEY = 'DPSK/view'
 const ICONS = new Set(JSON.parse(readFileSync(new URL('../schema/view.schema.json', import.meta.url), 'utf8')).$defs.icon.anyOf[0].enum)
 
 // ── words (the check's own; issue texts come from the app / bridge) ─────────
@@ -238,7 +238,7 @@ async function loadHostHalf(pkgJson, dir, w) {
   const saved = process.env.DSH_HOME
   const { mkdtempSync, rmSync } = await import('node:fs')
   const { tmpdir } = await import('node:os')
-  const home = mkdtempSync(join(tmpdir(), 'dsh-go-check-'))
+  const home = mkdtempSync(join(tmpdir(), 'DPSK-check-'))
   process.env.DSH_HOME = home
   try {
     return await loadIn(pkgJson, dir, w)
@@ -378,7 +378,7 @@ export async function checkPlugin(dirOrFile, options = {}) {
 
 // ── single view ───────────────────────────────────────────────────────────
 
-/** Check a view file (or a tool result meta `{ "dsh-go/view": … }`). */
+/** Check a view file (or a tool result meta `{ "DPSK/view": … }`). */
 export function checkViewText(text, options = {}) {
   const w = words(options.lang)
   let json

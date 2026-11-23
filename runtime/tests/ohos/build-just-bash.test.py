@@ -86,7 +86,7 @@ def main():
             assert (output / "LICENSE").read_bytes() == (source / "LICENSE").read_bytes()
             assert json.loads((output / "package.json").read_text())["license"] == "Apache-2.0"
             for name in pins["changedAfter"]:
-                assert (output / name).read_bytes().startswith(b"/* Modified for dsh-go OHOS:")
+                assert (output / name).read_bytes().startswith(b"/* Modified for DPSK OHOS:")
             assert not (output / "index.cjs").exists()
             assert not (output / "browser.js").exists()
             for name in pins["omitFromPrivateEsm"]:

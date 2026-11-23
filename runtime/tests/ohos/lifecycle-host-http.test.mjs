@@ -71,7 +71,7 @@ async function fixture(t, options = {}) {
     const response = await request(origin + '/?token=' + encodeURIComponent(auth.launchToken));
     assert.equal(response.status, 303); return response.headers['set-cookie'][0].split(';')[0];
   };
-  const post = (cookie, value, extraHeaders = {}) => request(origin + '/dsh-go/v1/lifecycle', {
+  const post = (cookie, value, extraHeaders = {}) => request(origin + '/DPSK/v1/lifecycle', {
     method: 'POST', headers: { cookie, 'content-type': 'application/json', ...extraHeaders }, body: JSON.stringify(value),
   });
   return { directory, journal, coordinator, ctx, connection, auth, origin, seen, login, post, native, foreground };
@@ -86,8 +86,8 @@ test('actual signed-cookie login drives durable pause/resume through production 
   f.foreground(true);
   await client.send(f.origin, f.auth.launchToken, observation(2, true, 'granted'));
   assert.equal(f.coordinator.status().paused, false);
-  assert.deepEqual(f.seen, [{ method: 'GET', path: '/' }, { method: 'POST', path: '/dsh-go/v1/lifecycle' },
-    { method: 'POST', path: '/dsh-go/v1/lifecycle' }]);
+  assert.deepEqual(f.seen, [{ method: 'GET', path: '/' }, { method: 'POST', path: '/DPSK/v1/lifecycle' },
+    { method: 'POST', path: '/DPSK/v1/lifecycle' }]);
   const capabilities = runtimeCapabilities(f.ctx, 'cap-test');
   assert.deepEqual(capabilities.background, { policy: 'may-freeze', computePermission: 'unknown', resume: 'reconcile' });
   assert.deepEqual(f.journal.records.map(row => row.body.kind), ['header', 'pause', 'resume']);
@@ -113,7 +113,7 @@ test('Host/Origin and signed-cookie admission precede all host changes; status G
   assert.equal(f.journal.records.length, 1);
   const before = f.coordinator.status();
   for (let i = 0; i < 3; i++) {
-    const status = await request(f.origin + '/dsh-go/v1/lifecycle', { headers: { cookie } }); assert.equal(status.status, 200);
+    const status = await request(f.origin + '/DPSK/v1/lifecycle', { headers: { cookie } }); assert.equal(status.status, 200);
     runtimeCapabilities(f.ctx, 'read-only');
   }
   assert.deepEqual(f.coordinator.status(), before); assert.equal(f.journal.records.length, 1);
@@ -161,7 +161,7 @@ test('cancelled response can already have applied: newer revision wins without r
   const f = await fixture(t), client = new OhosLifecycleTransport();
   const held = Promise.withResolvers(), release = Promise.withResolvers(); let heldOnce = false;
   httpState.beforeReply = async (_reply, url) => {
-    if (url.endsWith('/dsh-go/v1/lifecycle') && !heldOnce) { heldOnce = true; held.resolve(); await release.promise; }
+    if (url.endsWith('/DPSK/v1/lifecycle') && !heldOnce) { heldOnce = true; held.resolve(); await release.promise; }
   };
   f.foreground(true);
   const old = client.send(f.origin, f.auth.launchToken, observation(1, true));
@@ -243,7 +243,7 @@ test('malformed native ACK cannot reach the owner callback as valid authority', 
   for (const bad of [undefined, null, {}, { ...nativeSnapshot(false), nowMs: -2 },
     { ...nativeSnapshot(false), ownerGeneration: '1' }, { ...nativeSnapshot(false), foreground: true }]) {
     httpState.beforeReply = (reply, url) => {
-      if (!url.endsWith('/dsh-go/v1/lifecycle')) return;
+      if (!url.endsWith('/DPSK/v1/lifecycle')) return;
       const ack = JSON.parse(reply.result); ack.nativeHost = bad; reply.result = JSON.stringify(ack);
     };
     await assert.rejects(client.send(f.origin, f.auth.launchToken, observation(1, false)), { code: 'ohos_lifecycle_native' });
@@ -281,7 +281,7 @@ test('steady host heartbeat avoids detailed history projection while full querie
   const direct = await f.coordinator.observeHost(observation(504, true));
   assert.equal(direct.calls.length, 4, 'the default service API remains a full status view');
   assert.equal(detailedReads, 1);
-  const get = await request(f.origin + '/dsh-go/v1/lifecycle', { headers: { cookie } });
+  const get = await request(f.origin + '/DPSK/v1/lifecycle', { headers: { cookie } });
   assert.equal(get.status, 200); assert.equal(JSON.parse(get.text).calls.length, 4);
   assert.equal(detailedReads, 2, 'an explicit GET still obtains detailed history');
 });

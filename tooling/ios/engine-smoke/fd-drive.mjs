@@ -19,7 +19,7 @@ writeFileSync(preload,'// Empty diagnostic preload; preserves the product runner
 const library=values.library?resolve(values.library):join(resolve(values.frameworks),'DshNodeHost.framework/DshNodeHost');
 const argv=[library,join(root,'fixture'),preload,fileURLToPath(new URL('./fd-main.mjs',import.meta.url)),String(runs)];
 const nativeDirectory=resolve(values['native-dir']??values.frameworks??dirname(library));
-const env={...process.env,DSH_GO_OHOS_NATIVE_LIBRARY_DIR:nativeDirectory,SIMCTL_CHILD_DSH_GO_OHOS_NATIVE_LIBRARY_DIR:nativeDirectory};
+const env={...process.env,DPSK_OHOS_NATIVE_LIBRARY_DIR:nativeDirectory,SIMCTL_CHILD_DPSK_OHOS_NATIVE_LIBRARY_DIR:nativeDirectory};
 for(const k of ['NODE_OPTIONS','DSH_IOS_SMOKE_PATCH','DSH_IOS_SMOKE_IMPORT']){delete env[k];delete env['SIMCTL_CHILD_'+k];}
 let command,args;
 if(values['linux-preload']) {command=resolve(values.smoke);args=argv;env.LD_PRELOAD=resolve(values['linux-preload']);}

@@ -9,7 +9,7 @@ class ShareSlotPruneTest {
     @Test fun pruningIncomingSlotsPreservesExportsAndUnknownEntries() {
         val root = Files.createTempDirectory("share-slots").toFile()
         try {
-            val export = File(root, "dsh-go-20261107-120000.png").apply { writeText("export") }
+            val export = File(root, "DPSK-20261107-120000.png").apply { writeText("export") }
             val unknown = File(root, "other-module").apply { mkdir() }
             File(unknown, "keep.txt").writeText("other")
             val namedFile = File(root, "m00000000-9").apply { writeText("not a directory") }

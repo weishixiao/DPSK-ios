@@ -50,7 +50,7 @@ async function generate(expected) {
   return output;
 }
 async function replaceFile(filename, bytes) {
-  const temporary = `${filename}.dsh-go-${process.pid}.tmp`;
+  const temporary = `${filename}.DPSK-${process.pid}.tmp`;
   await writeFile(temporary, bytes, { flag: 'wx' });
   try { await rename(temporary, filename); }
   finally { await rm(temporary, { force: true }); }

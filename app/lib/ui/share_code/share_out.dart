@@ -1,5 +1,5 @@
 // Where a share code goes — the clipboard, the Android share sheet, a `.dpsk`
-// file in Download/DSH-Go. A seam: tests record instead.
+// file in Download/DPSK. A seam: tests record instead.
 
 import 'dart:io';
 
@@ -39,13 +39,13 @@ class ShareOut {
 
   Future<void> shareText(String text) => _share(ShareParams(text: text));
 
-  /// `dsh-go-profile-20261024.dpsk` / `dsh-go-plugin-notes.dpsk`.
+  /// `DPSK-profile-20261024.dpsk` / `DPSK-plugin-notes.dpsk`.
   String fileName({required bool profile, String? name}) {
     final t = _clock();
     String two(int n) => n.toString().padLeft(2, '0');
-    if (profile) return 'dsh-go-profile-${t.year}${two(t.month)}${two(t.day)}.$shareFileExtension';
+    if (profile) return 'DPSK-profile-${t.year}${two(t.month)}${two(t.day)}.$shareFileExtension';
     final slug = (name ?? 'plugin').split('/').last.replaceAll(RegExp(r'[^A-Za-z0-9._-]+'), '-');
-    return 'dsh-go-plugin-${slug.isEmpty ? 'plugin' : slug}.$shareFileExtension';
+    return 'DPSK-plugin-${slug.isEmpty ? 'plugin' : slug}.$shareFileExtension';
   }
 
   /// Writes [content] into the cache's `share_code/` (keeping the last few).
@@ -72,7 +72,7 @@ class ShareOut {
     ),
   );
 
-  /// Into `Download/DSH-Go`; returns where it landed.
+  /// Into `Download/DPSK`; returns where it landed.
   Future<String> save(String name, String content) async {
     final dir = await Directory('${(await _cacheRoot()).path}/share_code').create(recursive: true);
     // A dismissed sheet may reopen while the native worker still reads its source.

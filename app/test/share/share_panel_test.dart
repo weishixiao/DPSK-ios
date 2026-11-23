@@ -65,7 +65,7 @@ class _Exporter extends ShareExporter {
   Future<String> save(File image) async {
     if (saveError case final error?) throw error;
     saved.add(image);
-    return 'Download/DSH-Go/${image.uri.pathSegments.last}';
+    return 'Download/DPSK/${image.uri.pathSegments.last}';
   }
 }
 
@@ -88,7 +88,7 @@ class _Out extends ConversationOut {
     if (saveError case final error?) throw error;
     final file = await write(name, content);
     saved.add((file, format));
-    return 'Download/DSH-Go/${file.uri.pathSegments.last}';
+    return 'Download/DPSK/${file.uri.pathSegments.last}';
   }
 }
 
@@ -860,7 +860,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('share-send')));
     await _settle(tester);
     final file = File(panel.exporter.shared.single.files!.single.path);
-    expect(file.path, endsWith('dsh-go-20261024-153012.png'));
+    expect(file.path, endsWith('DPSK-20261024-153012.png'));
     final bytes = (await tester.runAsync(file.readAsBytes))!;
     final image = (await tester.runAsync(() async {
       final codec = await ui.instantiateImageCodec(bytes);

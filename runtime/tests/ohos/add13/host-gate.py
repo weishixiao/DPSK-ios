@@ -81,7 +81,7 @@ try:
     captured = json.loads(Path(str(argv_path) + '.env.json').read_text())
     assert len(argv) == 13 and argv[1] == '--jitless' and argv.count('--import') == 1
     profile = Path(argv[7]); shutil.copy2(profile, H / 'host-profile.json')
-    assert any(row.get('name') == str(runtime / 'runtime/bridge/dsh-go-bridge/lib/index.js') for operation in json.loads(profile.read_text()) for row in operation.get('insert', []))
+    assert any(row.get('name') == str(runtime / 'runtime/bridge/DPSK-bridge/lib/index.js') for operation in json.loads(profile.read_text()) for row in operation.get('insert', []))
 
     sim_path = S / 'runtime/ohos/sim/preload.mjs'
     original_sim = sim_path.read_text()

@@ -60,7 +60,7 @@ export class SecretVault {
   }
 
   private header(): Uint8Array { return new Uint8Array([68, 83, 72, 83, 1, 0, 0, 0]); }
-  private aad(): Uint8Array { return new util.TextEncoder().encodeInto('DSH-Go private secrets vault v1'); }
+  private aad(): Uint8Array { return new util.TextEncoder().encodeInto('DPSK private secrets vault v1'); }
 
   private generationParameters(): huks.HuksParam[] {
     return [

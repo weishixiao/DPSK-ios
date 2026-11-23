@@ -6,13 +6,13 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const LIB = new URL("../bridge/dsh-go-bridge/lib/native/", import.meta.url);
+const LIB = new URL("../bridge/DPSK-bridge/lib/native/", import.meta.url);
 const { checkManifest, parseManifest, renderPlugin } = await import(new URL("manifest.js", LIB));
 const util = await import(new URL("util.js", LIB));
 const { NativeCore } = await import(new URL("core.js", LIB));
 const { LIMITS, SURFACES } = await import(new URL("limits.js", LIB));
 
-const tmp = mkdtempSync(join(tmpdir(), "dsh-go-native-seams-"));
+const tmp = mkdtempSync(join(tmpdir(), "DPSK-native-seams-"));
 process.on("exit", () => rmSync(tmp, { recursive: true, force: true }));
 
 function pkgDir(name, dshGo) {

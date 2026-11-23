@@ -1,6 +1,6 @@
 # 第三方声明（Third-Party Notices）
 
-本文件集中列出 dsh-go 复制或改写进源码的第三方代码与素材，以及随 App 一起分发的字体、原生库和 Linux 运行时组件。源文件头用 `SPDX-FileCopyrightText` / `SPDX-License-Identifier` 标记版权与许可，并指向本文件；各项目的派生关系见各条目。
+本文件集中列出 DPSK 复制或改写进源码的第三方代码与素材，以及随 App 一起分发的字体、原生库和 Linux 运行时组件。源文件头用 `SPDX-FileCopyrightText` / `SPDX-License-Identifier` 标记版权与许可，并指向本文件；各项目的派生关系见各条目。
 
 - App 内「设置 › 开源许可」页随 APK 分发同样的声明（`app/lib/ui/common/third_party_licenses.dart`，字体在 `app/lib/ui/settings/font_licenses.dart`）。
 - Dart / Flutter 依赖应按 `app/pubspec.lock`（以及本地包的 lock）核对直接与传递依赖；Flutter 从包根 `LICENSE` 收集许可并显示在许可证页。这里不逐包重复，发行前仍须核验实际 APK 的许可资产，不能仅凭依赖声明认定已收录。
@@ -99,7 +99,7 @@ used under the MIT License with the author's permission.
 | `packages/dsh_client/lib/src/binary_response.dart` | `@deepseek-ai/dsh-client-connection`（`parseBinaryResponse`） | 二进制结果解码 |
 | `packages/dsh_client/lib/src/deliverables.dart` | `@deepseek-ai/dsh-client-ui-deliverables`（`isPresentedData`、`isPresentedFile`、`presentedForClosing`） | 交付文件校验与按轮选取 |
 | `runtime/patches/route-guard.diff` | `dsh-host-webserver` | 运行时构建时打到 DSH 上的补丁 |
-| `runtime/bridge/dsh-go-bridge/PRESET-NOTICE.txt`、`cordis.patch.yml`（shared rows） | `@deepseek-ai/dsh-web-app@0.2.2-rc.1` 的 `presets/standard.patch.yml` | 标准工具集预置的 NOTICE 与拷贝来源 |
+| `runtime/bridge/DPSK-bridge/PRESET-NOTICE.txt`、`cordis.patch.yml`（shared rows） | `@deepseek-ai/dsh-web-app@0.2.2-rc.1` 的 `presets/standard.patch.yml` | 标准工具集预置的 NOTICE 与拷贝来源 |
 
 此外，App 中部分组件的结构与行为参照 DeepSeek Harness 的 Web 客户端（MIT），包括消息操作、提及、输入区 dock、回合过程、产物、工作区、终端和定时任务等，不逐文件列出。
 
@@ -454,7 +454,7 @@ C710 新增的 `image` 4.12.0 是 MIT 许可 pub 依赖；其原许可由 Flutte
 - **Clawd on Desk**（https://github.com/rullerzhou-afk/clawd-on-desk，AGPL-3.0）：桌宠的主题包格式、状态名、优先级与时长默认值与它兼容，宠物包可以在两边通用。本项目没有复制它的代码。
 - **Streamdown**（https://github.com/vercel/streamdown）：`app/lib/ui/chat/render/stream_repair.dart` 修补流式 Markdown 末尾的方式参照了它的 `remend`。
 - **DS Bot**：dsh-ui 组件的名称与 DS Bot 一致。
-- **Open-Meteo**（https://open-meteo.com，数据 CC BY 4.0）：示例插件 `examples/plugins/dsh-go-example-weather` 使用它的天气数据，卡片上注明来源。
+- **Open-Meteo**（https://open-meteo.com，数据 CC BY 4.0）：示例插件 `examples/plugins/DPSK-example-weather` 使用它的天气数据，卡片上注明来源。
 
 ## 六、OpenHarmony 虚拟进程与构建工具
 
@@ -1028,6 +1028,6 @@ Local recognition is enabled by default. While off, recognition requests do not
 trigger SDK loading or initialization. Turning it off prevents new recognition,
 but does not uninstall
 the SDK or promise to clear or stop sending previously accumulated SDK statistics.
-The dsh-go anonymous usage statistics switch does not control this SDK.
+The DPSK anonymous usage statistics switch does not control this SDK.
 The Apache 2.0 license for documentation sample code is not the license for
 this SDK binary. This notice does not replace Google's SDK terms.

@@ -6,7 +6,7 @@
 
 ## 如何私密报告
 
-打开仓库的 [Security Advisories](https://github.com/weishixiao/dsh-go/security/advisories) 页面：
+打开仓库的 [Security Advisories](https://github.com/weishixiao/DPSK/security/advisories) 页面：
 
 - 如果有 **Report a vulnerability**，使用该入口发送私密报告。
 - 如果没有该入口，请先开一个只询问“如何私密联系维护者”的 Issue，等待私密联系方式。不要在该 Issue 中描述漏洞细节、附上复现数据或公布受影响的部署地址。

@@ -17,7 +17,7 @@ import {
 const TRACKER = Symbol.for("cordis.tracker");
 const SCAN_MAX_AGE_MS = 2000;
 const CHANGED_DEBOUNCE_MS = 300;
-const SELF = "dsh-go-bridge";
+const SELF = "DPSK-bridge";
 const REG_NAMES = { panels: "panel", strips: "strip", notes: "turnNote", handlers: "on", media: "media", micro: "micro", capability: "onCapability" };
 
 /** Loader entry owning a fiber (walks up through `ctx.inject` sub-fibers). */
@@ -308,7 +308,7 @@ export class NativeCore {
     const h = this.#health(pkg);
     h.consecutive++;
     h.total++;
-    this.ctx.logger?.warn?.("dsh-go-bridge: plugin %s violation %s: %s", pkg, code, message);
+    this.ctx.logger?.warn?.("DPSK-bridge: plugin %s violation %s: %s", pkg, code, message);
     h.issues.set("violation", { path: "/runtime/violation", code: "violation", severity: "warn", message: `${code}: ${message}`, count: h.total });
     this.healthVersion++;
     if (h.consecutive >= LIMITS.violationsToDegrade && !h.degraded) {

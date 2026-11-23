@@ -12,7 +12,7 @@ import org.junit.Test
 class RuntimeInstallerRecoveryTest {
     private val files = Files.createTempDirectory("installer-recovery").toFile()
     private val base = File(files, "runtime")
-    private val directories = setOf("opt/dsh", "opt/node", "opt/dsh-go", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
+    private val directories = setOf("opt/dsh", "opt/node", "opt/DPSK", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
     private val spec = EngineUpgradeSpec("a".repeat(64), "24.04.5", ENGINE_PATHS)
     private class SpaceCheckReached : AssertionError("archive-space reservation reached")
     private val spaceCheck = SpaceCheckReached()

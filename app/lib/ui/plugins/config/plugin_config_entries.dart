@@ -6,7 +6,7 @@
 // switched on ([PluginConfigScope]); DSH's core and the App's own rows never
 // are, and an entry nobody recognises isn't either. A plugin without fields
 // gets no entry, never an empty page. Where the Host reads forms one entry
-// at a time (the dsh-go bridge), its own list says which entries can be
+// at a time (the DPSK bridge), its own list says which entries can be
 // configured until a form is read, and (bridge R7) which ones an overlay
 // fixes.
 //

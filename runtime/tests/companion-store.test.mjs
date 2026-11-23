@@ -8,9 +8,9 @@ import { dirname, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import {
   advanceState, applyEvent, initialState, publicState,
-} from '../bridge/dsh-go-bridge/lib/companion/state.js';
-import { MAX_FILE_BYTES, validMemory } from '../bridge/dsh-go-bridge/lib/companion/schema.js';
-import { createCompanionStore } from '../bridge/dsh-go-bridge/lib/companion/store.js';
+} from '../bridge/DPSK-bridge/lib/companion/state.js';
+import { MAX_FILE_BYTES, validMemory } from '../bridge/DPSK-bridge/lib/companion/schema.js';
+import { createCompanionStore } from '../bridge/DPSK-bridge/lib/companion/store.js';
 
 const MINUTE = 60_000;
 const HOUR = 60 * MINUTE;
@@ -36,7 +36,7 @@ async function rejects(operation, status, code) {
 }
 
 async function fixture(t, options = {}) {
-  const root = await fs.mkdtemp(join(process.env.DSH_GO_TEST_TMP || tmpdir(), 'dsh-go-companion-'));
+  const root = await fs.mkdtemp(join(process.env.DPSK_TEST_TMP || tmpdir(), 'DPSK-companion-'));
   const filePath = join(root, 'companion', 'state.json');
   let at = START;
   const now = () => at;

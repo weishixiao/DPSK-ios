@@ -7,7 +7,7 @@ import { errorCode, usageReceipt } from './auxiliary.js';
 import { lookupAnswerSystem } from './lookup-answer.js';
 import { estimateLookupInputTokens } from './lookup-input.js';
 
-const ROOT = '/dsh-go/v1/companion/lookup';
+const ROOT = '/DPSK/v1/companion/lookup';
 const MAX_BYTES = 65536, MAX_RECORDS = 4096;
 const raw = value => value?.[Symbol.for('cordis.original')] ?? value;
 const failure = (status, code, message) => new CompanionError(status, 'lookup-' + code, message);
@@ -235,7 +235,7 @@ export function createCompanionLookupRoutes({ ctx, send, readJson, resolve, inst
       if (path !== ROOT && !path.startsWith(ROOT + '/')) return false;
       try {
         admit(req);
-        const url = new URL(req.url, 'http://dsh-go.invalid');
+        const url = new URL(req.url, 'http://DPSK.invalid');
         if (path === ROOT && req.method === 'GET') {
           req.resume();
           if ([...url.searchParams.keys()].some(key => key !== 'sessionId') || url.searchParams.getAll('sessionId').length !== 1) throw failure(400, 'invalid-request', 'One full companion session is required');

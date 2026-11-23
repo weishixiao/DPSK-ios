@@ -43,7 +43,7 @@ void main() {
       } else {
         secondDone.complete();
       }
-      return 'Download/DSH-Go/$name';
+      return 'Download/DPSK/$name';
     });
     addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(channel, null));
     final out = ShareOut(
@@ -80,7 +80,7 @@ void main() {
       await firstDone.future;
     });
     await tester.pump();
-    expect(names, ['dsh-go-profile-20261024.dpsk', 'dsh-go-profile-20261024.dpsk']);
+    expect(names, ['DPSK-profile-20261024.dpsk', 'DPSK-profile-20261024.dpsk']);
     expect((decodeShareFile(firstContent!) as ProfileShare).skills.single.name, 'first');
     await tester.pumpWidget(const SizedBox());
   });

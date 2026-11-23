@@ -10,7 +10,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
+import { apply } from '../bridge/DPSK-bridge/lib/index.js';
 
 function gate() {
   let resolve;
@@ -80,7 +80,7 @@ async function probe(kind, timing, outcome, directory) {
   server.listen(0, '127.0.0.1');
   await once(server, 'listening');
   const port = server.address().port;
-  const socket = new WebSocket(`ws://127.0.0.1:${port}/dsh-go/v1/stream`);
+  const socket = new WebSocket(`ws://127.0.0.1:${port}/DPSK/v1/stream`);
   const messages = [], waiters = [];
   socket.addEventListener('message', event => {
     const value = JSON.parse(event.data);
@@ -117,7 +117,7 @@ async function probe(kind, timing, outcome, directory) {
     await finished.promise;
     // Real HTTP/WS round trips run after the source cleanup has settled. They
     // also let Node apply its ordinary unhandled-rejection policy in a red run.
-    const response = await fetch(`http://127.0.0.1:${port}/dsh-go/v1/contributions?v=1`);
+    const response = await fetch(`http://127.0.0.1:${port}/DPSK/v1/contributions?v=1`);
     assert.equal(response.status, 200);
     assert.ok((await response.json()).plugins.some(p => p.pkg === pkg));
     send({ t: 'ping', at: 2 });

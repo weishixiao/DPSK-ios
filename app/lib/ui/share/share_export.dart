@@ -168,11 +168,11 @@ class ShareExporter {
     await SharePlus.instance.share(params);
   }
 
-  /// `dsh-go-20261024-153012.png`.
+  /// `DPSK-20261024-153012.png`.
   String fileName() {
     final t = _clock();
     String two(int n) => n.toString().padLeft(2, '0');
-    return 'dsh-go-${t.year}${two(t.month)}${two(t.day)}-${two(t.hour)}${two(t.minute)}${two(t.second)}.png';
+    return 'DPSK-${t.year}${two(t.month)}${two(t.day)}-${two(t.hour)}${two(t.minute)}${two(t.second)}.png';
   }
 
   /// Writes [png] into the cache's `share/` (keeping only the last few).
@@ -199,7 +199,7 @@ class ShareExporter {
     ),
   );
 
-  /// Into the shared pictures the album shows (`Download/DSH-Go`, indexed as an
+  /// Into the shared pictures the album shows (`Download/DPSK`, indexed as an
   /// image by MediaStore); returns where it landed.
   Future<String> save(File image) =>
       files.saveToDownloads(image.path, name: image.uri.pathSegments.last, mime: 'image/png');

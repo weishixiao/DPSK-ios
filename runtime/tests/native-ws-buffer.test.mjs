@@ -2,8 +2,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
-import { WsConnection, encodeFrame } from "../bridge/dsh-go-bridge/lib/native/ws.js";
-import { LIMITS } from "../bridge/dsh-go-bridge/lib/native/limits.js";
+import { WsConnection, encodeFrame } from "../bridge/DPSK-bridge/lib/native/ws.js";
+import { LIMITS } from "../bridge/DPSK-bridge/lib/native/limits.js";
 
 class Socket extends EventEmitter {
   out = [];

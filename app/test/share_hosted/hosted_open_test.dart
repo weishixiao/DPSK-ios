@@ -43,7 +43,7 @@ void main() {
         expect(ShareLink.parse(uri)?.code, code, reason: base);
         expect(ShareLink.find('看看这个 $base#p=$code 很好用')?.code, code, reason: base);
       }
-      expect(isLandingUri(Uri.parse('https://weishixiao.github.io/dsh-go/other/')), isFalse);
+      expect(isLandingUri(Uri.parse('https://weishixiao.github.io/DPSK/other/')), isFalse);
       expect(isLandingUri(Uri.parse('https://go.dshtui.com/c/')), isFalse);
       expect(
         ShareLink.inline(ShareLink.parse(Uri.parse('dpsk://share/plugin?p=$code'))!.kind!, code).webLink,
@@ -65,7 +65,7 @@ void main() {
 
     test('in forwarded text, punctuation and all', () {
       final url = 'https://go.dshtui.com/c/Ab3dE5gH9k#k=$key';
-      expect(findHostedUrl('「修复登录」· dsh-go 对话\n$url'), Uri.parse(url));
+      expect(findHostedUrl('「修复登录」· DPSK 对话\n$url'), Uri.parse(url));
       expect(findHostedUrl('看这个：$url。'), Uri.parse(url));
       expect(findHostedUrl('dpsk://go.dshtui.com/c/Ab3dE5gH9k#k=$key'), Uri.parse(url));
       expect(findHostedUrl('https://evil.example/c/Ab3dE5gH9k#k=$key'), isNull);
@@ -75,7 +75,7 @@ void main() {
 
     test('a shared text with one goes to its replay, not the composer', () {
       final url = 'https://go.dshtui.com/c/Ab3dE5gH9k#k=$key';
-      expect(IncomingShare(text: '「修复登录」· dsh-go 对话\n$url').hostedLink, Uri.parse(url));
+      expect(IncomingShare(text: '「修复登录」· DPSK 对话\n$url').hostedLink, Uri.parse(url));
       expect(
         IncomingShare(
           text: url,

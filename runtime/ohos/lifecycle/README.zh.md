@@ -91,11 +91,11 @@ O6 的 `background.resume` 每次查询已安装 `ohosLifecycle` 服务：协议
 
 | 请求 | 参数和结果 |
 |---|---|
-| `GET /dsh-go/v1/lifecycle` | 全引擎视图；可选唯一 `sessionId` 查询参数过滤会话 |
-| `POST /dsh-go/v1/lifecycle` | JSON `{"operation":"pause"}` 或 `{"operation":"resume"}`；控制整个引擎 |
+| `GET /DPSK/v1/lifecycle` | 全引擎视图；可选唯一 `sessionId` 查询参数过滤会话 |
+| `POST /DPSK/v1/lifecycle` | JSON `{"operation":"pause"}` 或 `{"operation":"resume"}`；控制整个引擎 |
 | 同上 | JSON `{"operation":"cancel","sessionId":"…"}` |
 | 同上 | JSON `{"operation":"acknowledgeUnknown","sessionId":"…"}`；显式保留历史并放弃追认旧未知 |
-| `GET /dsh-go/v1/lifecycle/result?sessionId=…&callSeq=…` | `identity`、`final`、原始/最终 `result`；final 时另含确切 `sessionData` 和已知 `resources` |
+| `GET /DPSK/v1/lifecycle/result?sessionId=…&callSeq=…` | `identity`、`final`、原始/最终 `result`；final 时另含确切 `sessionData` 和已知 `resources` |
 
 状态字段包括 `v:1`、`bootId`、六态 `state`、`closed`、`paused`、`confirmedPause`、`blocked`、`corruption`、`controlVersion`、`activeBudgetCount`、`calls`、`transport`。每条 call 有原身份、边界 phase、是否仍待结算 active、是否仍在原 dispatch 中 dispatchActive、保存结果标志以及恢复依据。六态为 `running`、`paused`、`cancelling`、`terminated`、`completed`、`result-unknown`；未知事实优先于暂停显示。
 

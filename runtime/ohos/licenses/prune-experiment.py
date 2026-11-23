@@ -72,7 +72,7 @@ def main():
     tests = here.parent.parent / 'tests/ohos'
     report['probeSHA256'] = {name: sha((tests / name).read_bytes()) for name in ['licenses-prune-probe.mjs', 'licenses-sqlite-probe.mjs']}
     argv = [str(args.node), '--jitless', '--import', str(args.sim_preload.resolve()), str(tests / 'licenses-prune-probe.mjs')]
-    env = dict(os.environ, M4_LICENSE_SHADOW=str(shadow), DSH_GO_OHOS_SIM='1', DSH_GO_OHOS_SIM_PLATFORM='openharmony')
+    env = dict(os.environ, M4_LICENSE_SHADOW=str(shadow), DPSK_OHOS_SIM='1', DPSK_OHOS_SIM_PLATFORM='openharmony')
     report['argv'] = argv
     removed = []
     stages = [('complete-closure', []), ('no-typescript-sql', ['node_modules/typescript', 'node_modules/sql.js']), ('no-typescript-sql-cpython', ['node_modules/just-bash/vendor/cpython-emscripten'])]

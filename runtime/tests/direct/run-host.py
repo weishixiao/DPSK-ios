@@ -145,8 +145,8 @@ def main():
             if not previous:
                 with root.joinpath(probe_file.lstrip('/')).open('x') as fixture_file:
                     fixture_file.write('direct-host-existing-file-fixture\n')
-            tail[shell_at:shell_at] = [f'DSH_HOME={home}', 'DSH_GO_RUNTIME_ROOT=' + str(root),
-                'DSH_GO_HOST_PROBE_FILE=' + probe_file,
+            tail[shell_at:shell_at] = [f'DSH_HOME={home}', 'DPSK_RUNTIME_ROOT=' + str(root),
+                'DPSK_HOST_PROBE_FILE=' + probe_file,
                 'DEEPSEEK_API_KEY=sk-dsh-app-smoke-test-not-a-real-key']
             argv = prefix + tail
             environment = host_env.copy()

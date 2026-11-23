@@ -7,7 +7,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { posix } from "node:path";
 
-const ROOT = new URL("../bridge/dsh-go-bridge/", import.meta.url);
+const ROOT = new URL("../bridge/DPSK-bridge/", import.meta.url);
 
 function packedFiles() {
   const out = execFileSync("npm", ["pack", "--dry-run", "--json", "--ignore-scripts"], {

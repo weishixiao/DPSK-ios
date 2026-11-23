@@ -23,7 +23,7 @@ class _Server {
   _Server() {
     for (final base in [_dl, _go]) {
       files['${base}index.json'] = jsonEncode(officialIndexJson());
-      files['${base}dsh-go.json'] = jsonEncode(officialSidecarJson());
+      files['${base}DPSK.json'] = jsonEncode(officialSidecarJson());
     }
   }
 
@@ -65,27 +65,27 @@ void main() {
     test('comes from the public bucket and answers for six hours without a request', () async {
       final server = _Server();
       final first = await fetchOfficialMarket(get: server.get);
-      expect(server.requests, ['${_dl}dsh-go.json', '${_dl}index.json']);
-      expect(first.byName['@dsh-go/media']!.section, MarketSection.official);
+      expect(server.requests, ['${_dl}DPSK.json', '${_dl}index.json']);
+      expect(first.byName['@DPSK/media']!.section, MarketSection.official);
 
       server.requests.clear();
       await _age(const Duration(hours: 5, minutes: 59));
       final again = await fetchOfficialMarket(get: server.get);
       expect(server.requests, isEmpty);
       expect(again.entries.map((e) => e.name), first.entries.map((e) => e.name));
-      expect(again.byName['@dsh-go/media']!.listing!.integrity, first.byName['@dsh-go/media']!.listing!.integrity);
+      expect(again.byName['@DPSK/media']!.listing!.integrity, first.byName['@DPSK/media']!.listing!.integrity);
     });
 
     test('is revalidated with its ETags once stale: 304 keeps it, 200 replaces it', () async {
       final server = _Server();
       await fetchOfficialMarket(get: server.get);
-      final tags = {for (final f in ['index.json', 'dsh-go.json']) f: '"${server.files['$_dl$f'].hashCode}"'};
+      final tags = {for (final f in ['index.json', 'DPSK.json']) f: '"${server.files['$_dl$f'].hashCode}"'};
 
       await _age(const Duration(hours: 6));
       server.requests.clear();
       final unchanged = await fetchOfficialMarket(get: server.get);
-      expect(server.requests, ['${_dl}dsh-go.json ${tags['dsh-go.json']}', '${_dl}index.json ${tags['index.json']}']);
-      expect(unchanged.byName['@dsh-go/media']!.section, MarketSection.official);
+      expect(server.requests, ['${_dl}DPSK.json ${tags['DPSK.json']}', '${_dl}index.json ${tags['index.json']}']);
+      expect(unchanged.byName['@DPSK/media']!.section, MarketSection.official);
       // The 304s renewed it.
       server.requests.clear();
       await fetchOfficialMarket(get: server.get);
@@ -120,22 +120,22 @@ void main() {
       await _age(const Duration(days: 30));
       server.down.addAll([_dl, _go]);
       final offline = await fetchOfficialMarket(get: server.get);
-      expect(offline.byName['@dsh-go/media']!.section, MarketSection.official);
+      expect(offline.byName['@DPSK/media']!.section, MarketSection.official);
 
       SharedPreferences.setMockInitialValues({});
       await expectLater(fetchOfficialMarket(get: server.get), throwsA(isA<MarketFetchException>()));
     });
 
     test('keeps only a pair that agrees on every pinned version', () async {
-      // The edge can serve a new index.json beside an old dsh-go.json for a few minutes.
-      final server = _Server()..bump('${_dl}dsh-go.json', '@dsh-go/media');
+      // The edge can serve a new index.json beside an old DPSK.json for a few minutes.
+      final server = _Server()..bump('${_dl}DPSK.json', '@DPSK/media');
       final mixed = await fetchOfficialMarket(get: server.get);
-      expect(mixed.byName['@dsh-go/media']!.listing, isNull);
+      expect(mixed.byName['@DPSK/media']!.listing, isNull);
       expect((await SharedPreferences.getInstance()).getString('market.official'), isNull);
       server
-        ..files['${_dl}dsh-go.json'] = jsonEncode(officialSidecarJson())
+        ..files['${_dl}DPSK.json'] = jsonEncode(officialSidecarJson())
         ..requests.clear();
-      expect((await fetchOfficialMarket(get: server.get)).byName['@dsh-go/media']!.listing, isNotNull);
+      expect((await fetchOfficialMarket(get: server.get)).byName['@DPSK/media']!.listing, isNotNull);
       expect(server.requests, hasLength(2));
     });
 
@@ -189,8 +189,8 @@ void main() {
       final worker = await serve((request) {
         request.response.redirect(Uri.parse('http://127.0.0.1:${bucket.port}${request.uri}'), status: HttpStatus.found);
       });
-      final file = await fetchMarketFile(Uri.parse('http://127.0.0.1:${worker.port}/market/dsh-go.json'));
-      expect(jsonDecode(file.text!), {'path': '/market/dsh-go.json', 'agent': 'dsh-app'});
+      final file = await fetchMarketFile(Uri.parse('http://127.0.0.1:${worker.port}/market/DPSK.json'));
+      expect(jsonDecode(file.text!), {'path': '/market/DPSK.json', 'agent': 'dsh-app'});
     });
   });
 }

@@ -1,5 +1,5 @@
 // Which conversation is the companion's on each host (full mode). It is an
-// ordinary session on that host, opened with the `dsh-go-companion-full` Agent
+// ordinary session on that host, opened with the `DPSK-companion-full` Agent
 // preset: her persona with the host's standard tools, and the phone's when phone
 // control is on. This file remembers its id, keeps it out of the chat drawer and
 // out of chat alerts. Hosts whose engine lacks the preset (an older runtime, a
@@ -19,8 +19,8 @@ import '../state/connection_state.dart';
 import '../state/hosts_state.dart';
 import '../state/sessions_state.dart';
 
-/// Full mode's preset, declared in runtime/bridge/dsh-go-bridge/cordis.patch.yml.
-const companionPresetId = 'dsh-go-companion-full';
+/// Full mode's preset, declared in runtime/bridge/DPSK-bridge/cordis.patch.yml.
+const companionPresetId = 'DPSK-companion-full';
 
 const _sessionsKey = 'companion_sessions';
 const _lastSeenKey = 'companion_last_seen';
@@ -437,7 +437,7 @@ Future<void> companionMarkSeen(DateTime now) async {
 }
 
 /// The persona for hosts without the preset. Keep in step with the preset's in
-/// runtime/bridge/dsh-go-bridge/cordis.patch.yml.
+/// runtime/bridge/DPSK-bridge/cordis.patch.yml.
 const companionInlinePersona = '''
 （从现在起请扮演下面的角色，直接开始，不要复述这段设定。）
 $companionPersonaCore''';

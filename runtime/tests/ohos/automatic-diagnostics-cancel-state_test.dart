@@ -217,13 +217,13 @@ void main() {
         void configureHost(FakeDsh host, String id) {
           host.handlers['session/create'] = (_) => {
             'ok': true,
-            'value': {'sessionId': id, 'agentPreset': 'dsh-go-diagnostics'},
+            'value': {'sessionId': id, 'agentPreset': 'DPSK-diagnostics'},
           };
           host.handlers['session/projections'] = (_) => {
             'ok': true,
             'value': {
               'asOfSeq': 0,
-              'values': {'agentPreset': 'dsh-go-diagnostics'},
+              'values': {'agentPreset': 'DPSK-diagnostics'},
             },
           };
           host.handlers['session/cancel'] = (_) => {
@@ -603,7 +603,7 @@ void main() {
         'ok': true,
         'value': {
           'sessionId': 'recovery-old-analysis',
-          'agentPreset': 'dsh-go-diagnostics',
+          'agentPreset': 'DPSK-diagnostics',
         },
       };
       host.handlers['session/cancel'] = (_) => {

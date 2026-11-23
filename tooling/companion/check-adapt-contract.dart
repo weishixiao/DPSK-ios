@@ -95,7 +95,7 @@ void main() {
     final light = companionAdaptRequest(probe, note: '眼睛不眨');
     equal(companionAdaptFullRequest(probe, note: '眼睛不眨'), '/companion-adapt\n\n$light', 'same request');
     final input = jsonDecode(light) as Map;
-    equal(input['schema'], 'dsh-go/companion-adapt-request', 'schema');
+    equal(input['schema'], 'DPSK/companion-adapt-request', 'schema');
     equal(input['target'], 'app-local-adapter-v1', 'target');
     equal(input['verifiedEffects'], {'expressions': {}, 'motions': {}}, 'no invented approvals');
   };

@@ -58,8 +58,8 @@ argv = [args.node, '--jitless', '--import', str(ROOT / 'runtime/ohos/sim/preload
         str(output / 'workspace'), str(output / 'RESULT.json')]
 # An explicit, non-secret environment: guest jobs inherit no coordinator proxy or token.
 env = {'PATH': str(Path(args.node).resolve().parent) + ':/usr/bin:/bin', 'HOME': str(home), 'TMPDIR': str(temporary),
-       'LANG': 'C.UTF-8', 'LD_PRELOAD': str(args.publication_fixture.resolve()), 'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony',
-       'DSH_GO_OHOS_SIM_ADDONS': json.dumps([str(native)])}
+       'LANG': 'C.UTF-8', 'LD_PRELOAD': str(args.publication_fixture.resolve()), 'DPSK_OHOS_SIM_PLATFORM': 'openharmony',
+       'DPSK_OHOS_SIM_ADDONS': json.dumps([str(native)])}
 started = time.monotonic()
 with (output / 'guest.stdout').open('wb') as stdout, (output / 'guest.stderr').open('wb') as stderr:
     result = subprocess.run(argv, env=env, cwd=ROOT, stdout=stdout, stderr=stderr, timeout=870)

@@ -44,7 +44,7 @@ App（分享面板「链接」）
 
 - 首页、着陆页和它们的文件是静态资源，**不经过 Worker**（不计 Worker 请求数）：`build-site.mjs` 把每个文件的安全头写进 `public/_headers`（逐个路径，不用通配），`/` 和 `/share/` 由 `public/_redirects` 的 200 改写指到 `index.html`。只有 Worker 自己的路由先进 Worker（`wrangler.jsonc` 的 `run_worker_first` 列表：`/api/*`、`/c/*`、`/market*`、`/p*`、`/beta*`、`/download*`、`/share`（301 到 `/share/`），以及要藏起来的 `/c.html`、`/index.html`）。路径按字面匹配（`html_handling: none`）；没有对应文件的路径也落到 Worker，返回同样的 404。
 - 和全部走 Worker 时相比，头部逐项相同（`wrangler dev` 对比过 111 个请求）；只差两处无关紧要的：对静态文件用 GET/HEAD 以外的方法，405 由资源服务直接给（不带 `Allow`，带该文件的安全头）；304 也带上该文件的 `Cache-Control`。
-- 旧着陆页 `https://weishixiao.github.io/dsh-go/share/` 保留不下线：已经发出去的分享码链接照常能开，App 也继续认（`legacyShareLandingUrls`）。新生成的分享码链接都用 `go.dshtui.com/share/`。
+- 旧着陆页 `https://weishixiao.github.io/DPSK/share/` 保留不下线：已经发出去的分享码链接照常能开，App 也继续认（`legacyShareLandingUrls`）。新生成的分享码链接都用 `go.dshtui.com/share/`。
 - 安全头：
   - HTML：CSP 与页面自带的 `<meta>` 一致，再加 `frame-ancestors 'none'`（构建时从页面里提取，没有 CSP 或允许 `unsafe-inline` 脚本时构建失败）；另有 `X-Frame-Options: DENY`、`Referrer-Policy: no-referrer`、`nosniff`、`COOP`、`Permissions-Policy`、`noindex`。
   - 首页：`default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; style-src-elem 'self'; style-src-attr 'unsafe-inline'; img-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`。没有内联脚本；开场动画靠内联 `style` 属性里的 CSS 变量，所以只放开 `style-src-attr`（不认识它的旧浏览器退回 `style-src` 的 `'unsafe-inline'`）。首页和它的文件不带 `noindex`，其余头部同上；HTML `no-cache`，其余文件一小时。
@@ -67,7 +67,7 @@ App（分享面板「链接」）
 | `POST /api/v1/c?ttl=7d\|30d\|forever` | 体为密文，`Content-Type: application/octet-stream`，≤ 20 MB；缺省 `30d` | `201 {id, deleteToken, expiresAt}`（永久为 `null`） | 400 格式 / 415 类型 / 413 太大 / 429 限速 |
 | `GET /api/v1/c/<id>` | 取回密文 | `200` 密文 | 404 不存在、已删除或已过期 |
 | `DELETE /api/v1/c/<id>` | `Authorization: Bearer <deleteToken>`，或 `X-Admin-Key` | `204` | 401 无凭据 / 403 不对 / 404 |
-| `GET /api/github/stars` | 首页的 Star 数（`src/github.ts`）：Worker 去问 `api.github.com/repos/weishixiao/dsh-go`，访客不连 GitHub | `200 {stars}`，`max-age=600` | 503 从没拿到过 |
+| `GET /api/github/stars` | 首页的 Star 数（`src/github.ts`）：Worker 去问 `api.github.com/repos/weishixiao/DPSK`，访客不连 GitHub | `200 {stars}`，`max-age=600` | 503 从没拿到过 |
 
 - 校验：魔数 `DSG1`、最小 32 字节、`Content-Type`、大小（先看 `Content-Length`，流式读取时也截断）。
 - `deleteToken`：32 字节随机，只返回一次；R2 里只存它的 SHA-256（`customMetadata.dt`），比较为常量时间。
@@ -118,7 +118,7 @@ App（分享面板「链接」）
 | 来路 | 走法 |
 |---|---|
 | 别的 App 分享进来的文字（微信转发） | `IncomingShare.hostedLink` → `SystemEntryHost` 交给 LinkRouter |
-| 网页查看器的「用 dsh-go 打开」 | `dpsk://go.dshtui.com/c/<id>#k=<key>`（和 https 链接同一条路由） |
+| 网页查看器的「用 DPSK 打开」 | `dpsk://go.dshtui.com/c/<id>#k=<key>`（和 https 链接同一条路由） |
 | App Links（以后） | `https://go.dshtui.com/c/…`；需要清单里的 `autoVerify` intent-filter 和本域名的 `/.well-known/assetlinks.json`，等发布签名定了再加 |
 
 - LinkHost 启动时调 `registerHostedLinks` 注册 `go.dshtui.com/c`；收到链接后取回密文、在手机上解密、进回放页。超过 0.6 秒才提示「正在打开…」。
@@ -145,7 +145,7 @@ CF_TOKEN_FILE=<token 文件> scripts/provision.sh apply   # 建 R2 + 生命周�
 | Rate Limiting 命名空间 | `42001`（上传）、`42002`（读取）、`42003`（App 使用统计，§15）；账号内唯一，别的 Worker 不要复用 |
 | Analytics Engine 数据集 | `wrangler.jsonc` 绑定 `dpsk_downloads`、`dpsk_checks`、`dpsk_usage`（第一次写入时自动建）；`provision.sh` 默认带上，没开通 Analytics Engine 的账号用 `--no-analytics`（§15） |
 | Cron Trigger | 每 10 分钟一次，把插件市场写到 `dpsk-dl` 的 `market/`（[plugin-market.md](plugin-market.md) §3） |
-| Redirect Rule（zone 级，单条重定向） | 描述 `dpsk-share: plugin market from the public bucket`：`go.dshtui.com/market/index.json`、`/market/dsh-go.json` → 302 `https://dl.dshtui.com/market/<同名>`（带 `Origin` 头的请求不跳）；`provision.sh` 在 `dl` 上的文件和 Worker 一致后按描述建或改，不碰别的规则 |
+| Redirect Rule（zone 级，单条重定向） | 描述 `dpsk-share: plugin market from the public bucket`：`go.dshtui.com/market/index.json`、`/market/DPSK.json` → 302 `https://dl.dshtui.com/market/<同名>`（带 `Origin` 头的请求不跳）；`provision.sh` 在 `dl` 上的文件和 Worker 一致后按描述建或改，不碰别的规则 |
 | Durable Object | `BetaGuard`（migration `v1`）、`StatsSalt`（`v2`，§15） |
 | Worker secret | `ADMIN_KEY`（管理员删除用；`provision.sh apply` 生成并设置，本地副本默认 `~/.config/keys/dpsk-share-admin.txt`（`ADMIN_FILE`），权限 600，放在仓库外） |
 | Worker secret | `BETA_SECRET`（内测发包，§14；`scripts/beta-keys.sh init` 生成并设置，本地副本默认 `~/keys/dpsk-beta-secret`（`BETA_SECRET_FILE`），权限 600） |
@@ -278,7 +278,7 @@ CLOUDFLARE_API_TOKEN="$(cat <token 文件>)" npx wrangler secret put ADMIN_KEY <
 |---|---|---|---|
 | 国内 `cn` | `<CN_BASE_URL><版本>/<文件>`（香港对象存储，公共读） | 变量 `CN_BASE_URL` 是 https 地址，且清单 `routes` 含 `cn` | `request.cf.country == "CN"` |
 | 海外 `global` | 密钥模式：签名链接；公开模式：`<DL_BASE_URL>download/<版本>/<文件>`（公开下载桶 `dl.dshtui.com`，字节不经 Worker），清单 `routes` 没有 `dl` 或没配 `DL_BASE_URL` 时是 `/download/<版本>/<文件>` | 总有 | 其他地区 |
-| GitHub `github` | `github.com/weishixiao/dsh-go/releases/download/v<版本>/<文件>` | 清单 `routes` 含 `github` | — |
+| GitHub `github` | `github.com/weishixiao/DPSK/releases/download/v<版本>/<文件>` | 清单 `routes` 含 `github` | — |
 
 - `routes` 由 `publish-release.sh` 在每条线路下载核对之后写进 `beta/update.json`，所以页面不会给出还没传上去的线路。`?via=` 可指定线路；切换是单选按钮 + CSS，公开页不跑脚本。
 - 公开下载桶 `dpsk-dl`（`DL_BASE_URL`，默认 `https://dl.dshtui.com/`）：`download/<版本>/<文件>` 放每个发版文件（APK、增量补丁、`SHA256SUMS`、这一版的 `update.json`，都是 `immutable`），根目录 `update.json` 是最新正式版的清单（`max-age=300`，给 App）。和放分享链接的 `dpsk-share` 分开，`dpsk-share` 保持私有：公开了的话，拿到对象键的人能绕过 Worker 的过期和额度。`routes` 里的 `dl` 只说明文件也在这个桶，页面上不是单独一条线路。

@@ -39,7 +39,7 @@ async function serverFor(body) {
       response.writeHead(303, { 'set-cookie': 'dsh-auth-fixture=session.value; HttpOnly; Path=/', location: '/' });
       response.end(); return;
     }
-    assert.equal(request.url, '/dsh-go/v1/linux');
+    assert.equal(request.url, '/DPSK/v1/linux');
     assert.equal(request.headers.cookie, 'dsh-auth-fixture=session.value');
     try { await body(item, response); }
     catch (error) { response.destroy(error); }

@@ -82,7 +82,7 @@ final nativeClockProvider = Provider<DateTime Function()>((ref) => DateTime.now)
 
 // ── Contributions ────────────────────────────────────────────────────────────
 
-/// The host's dsh-go bridge as the app uses it (tests swap in a fake).
+/// The host's DPSK bridge as the app uses it (tests swap in a fake).
 abstract interface class NativeBridge {
   Future<DshGoContributions?> contributions(DshGoCaps caps, {DshGoContributions? previous});
 
@@ -123,7 +123,7 @@ class ClientNativeBridge implements NativeBridge {
     if (carrier is! DshHttpCarrier) return null;
     final connection = carrier.connection;
     String segments(String s) => s.split('/').map((p) => Uri.encodeComponent(p).replaceAll('%40', '@')).join('/');
-    final url = connection.resolve('/dsh-go/v1/assets/${segments(pkg)}/${segments(path)}');
+    final url = connection.resolve('/DPSK/v1/assets/${segments(pkg)}/${segments(path)}');
     return NetworkImage(
       url.toString(),
       headers: {'cookie': ?connection.cookie?.header, 'host': ?connection.hostHeader},

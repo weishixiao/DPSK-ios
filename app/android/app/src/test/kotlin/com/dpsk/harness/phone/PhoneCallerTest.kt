@@ -71,7 +71,7 @@ class PhoneCallerTest {
         val server = McpServer(emptyList(), { _, _, _ -> calls++; ToolOutput("unexpected") })
         val params = mapOf("v" to 1, "sessionId" to "A", "runId" to "epoch:1")
         fun wire(value: Any?, id: Boolean = true) = Json.write(buildMap<String, Any?> {
-            put("jsonrpc", "2.0"); if (id) put("id", 5); put("method", "dsh-go/phone-run-end"); put("params", value)
+            put("jsonrpc", "2.0"); if (id) put("id", 5); put("method", "DPSK/phone-run-end"); put("params", value)
         })
         val end = server.dispatch(wire(params)) as McpServer.Dispatch.RunEnd
         assertEquals("A", end.sessionId); assertEquals("epoch:1", end.runId); assertEquals("unknown", end.completion)

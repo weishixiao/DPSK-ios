@@ -37,7 +37,7 @@ test('observer reports a successful real native load and its on-disk file hash',
   const code = `const {createRequire}=require('node:module'); const r=createRequire(${JSON.stringify(join(prefix, 'package.json'))}); const a=r('node-addon-require-builtin'); if(typeof a.requireBuiltin('internal/modules/helpers').getCjsConditions!=='function') throw new Error('missing real member'); if(typeof WebAssembly!=='undefined') throw new Error('missing O0'); try {require('node:child_process').spawnSync('never-run'); throw new Error('spawn escaped');} catch(e) {if(e.code!=='ERR_OHOS_SIM_SPAWN') throw e;} console.log('native-body-ok');`;
   const result = execute(['--jitless', '--import', preload, '--import', observer, '-e', code], {
     DSH_OHOS_MEASURE_LOADER: '1', NARB_DISABLE_NATIVE_CACHE: '1',
-    DSH_GO_OHOS_SIM_ADDONS: JSON.stringify([addon]),
+    DPSK_OHOS_SIM_ADDONS: JSON.stringify([addon]),
   });
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /native-body-ok/u);
@@ -60,7 +60,7 @@ test('observer cannot turn O0 denied addon loading into successful telemetry', (
   // "no usable binding" error cannot replace the original O0 error code.
   const code = `require(${JSON.stringify(addon)});`;
   const result = execute(['--jitless', '--import', preload, '--import', observer, '-e', code], {
-    DSH_OHOS_MEASURE_LOADER: '1', NARB_DISABLE_NATIVE_CACHE: '1', DSH_GO_OHOS_SIM_ADDONS: '[]',
+    DSH_OHOS_MEASURE_LOADER: '1', NARB_DISABLE_NATIVE_CACHE: '1', DPSK_OHOS_SIM_ADDONS: '[]',
   });
   assert.equal(result.status, 1, result.stderr);
   assert.match(result.stderr, /ERR_OHOS_SIM_DLOPEN/u);

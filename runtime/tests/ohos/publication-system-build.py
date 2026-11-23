@@ -40,8 +40,8 @@ def main():
     fixture = HERE / 'publication-deviceinfo-fixture'
     build = out / 'native'
     env = os.environ.copy()
-    for name in ['NODE_OPTIONS', 'LD_PRELOAD', 'DSH_HOME', 'DSH_GO_OHOS_SIM',
-                 'DSH_GO_OHOS_SIM_PLATFORM', 'DSH_GO_OHOS_SIM_ADDONS']:
+    for name in ['NODE_OPTIONS', 'LD_PRELOAD', 'DSH_HOME', 'DPSK_OHOS_SIM',
+                 'DPSK_OHOS_SIM_PLATFORM', 'DPSK_OHOS_SIM_ADDONS']:
         env.pop(name, None)
     rows = []
 

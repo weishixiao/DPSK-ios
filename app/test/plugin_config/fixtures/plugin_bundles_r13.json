@@ -865,7 +865,7 @@
       },
       {
         "rowId": "goal",
-        "moduleName": "@deepseek-ai/dsh-goal",
+        "moduleName": "@deepseek-ai/DPSKal",
         "entryId": "include:goal",
         "meta": {
           "title": {
@@ -880,7 +880,7 @@
       },
       {
         "rowId": "goal-round-driver",
-        "moduleName": "@deepseek-ai/dsh-goal-round-driver",
+        "moduleName": "@deepseek-ai/DPSKal-round-driver",
         "entryId": "include:goal-round-driver",
         "meta": {
           "title": {
@@ -2971,13 +2971,13 @@
     "overrides": []
   },
   {
-    "name": "dsh-go-fixture-local-notes",
+    "name": "DPSK-fixture-local-notes",
     "official": false,
     "availability": "profile",
     "version": "1.0.0",
     "description": "A local third-party plugin for the DPSK plugin-config catalog fixture",
     "meta": {
-      "title": "dsh-go-fixture-local-notes",
+      "title": "DPSK-fixture-local-notes",
       "description": "A local third-party plugin for the DPSK plugin-config catalog fixture"
     },
     "source": "link:/root/plugins/local-notes",
@@ -2988,10 +2988,10 @@
     "rows": [
       {
         "rowId": "local-notes",
-        "moduleName": "dsh-go-fixture-local-notes",
+        "moduleName": "DPSK-fixture-local-notes",
         "entryId": "include:local-notes",
         "meta": {
-          "title": "dsh-go-fixture-local-notes",
+          "title": "DPSK-fixture-local-notes",
           "description": "A local third-party plugin for the DPSK plugin-config catalog fixture"
         }
       }

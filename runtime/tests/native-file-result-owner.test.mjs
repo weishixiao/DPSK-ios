@@ -9,9 +9,9 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {setImmediate as nextTurn} from 'node:timers/promises';
 import {fileURLToPath, pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
-import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
-import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
+import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
+import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
+import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
 
 const cases = [
   'invalid-eager-rejection',
@@ -63,7 +63,7 @@ async function probe(mode, dir) {
     await once(server, 'listening');
     const origin = `http://127.0.0.1:${server.address().port}`;
     const request = async (path, body, contentType = 'application/json') => {
-      const response = await fetch(`${origin}/dsh-go/v1/${path}`, {
+      const response = await fetch(`${origin}/DPSK/v1/${path}`, {
         method: 'POST', headers: {'content-type': contentType},
         body: contentType === 'application/json' ? JSON.stringify(body) : body,
       });
@@ -110,7 +110,7 @@ async function probe(mode, dir) {
     });
     service.on('healthy', () => ({toast: 'still serving'}));
 
-    ws = new WebSocket(origin.replace('http:', 'ws:') + '/dsh-go/v1/stream');
+    ws = new WebSocket(origin.replace('http:', 'ws:') + '/DPSK/v1/stream');
     const welcome = new Promise((resolve, reject) => {
       ws.addEventListener('error', reject, {once: true});
       ws.addEventListener('message', event => {

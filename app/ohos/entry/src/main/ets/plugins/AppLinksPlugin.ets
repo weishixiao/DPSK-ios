@@ -123,12 +123,12 @@ export default class AppLinksPlugin implements FlutterPlugin, AbilityAware, Meth
     const colon = uri.indexOf(':');
     if (colon < 1) return false;
     const scheme = uri.slice(0, colon).toLowerCase();
-    if (!['dshgo', 'https', 'http', 'file', 'content'].includes(scheme)) return false;
+    if (!['dpsk', 'https', 'http', 'file', 'content'].includes(scheme)) return false;
     const arrival = new LinkArrival();
     AppLinksPlugin.pending.push(arrival);
     const event: Map<string, Any> = new Map<string, Any>();
     switch (scheme) {
-      case 'dshgo': case 'https': case 'http':
+      case 'dpsk': case 'https': case 'http':
         event.set('uri', uri);
         break;
       case 'file': {

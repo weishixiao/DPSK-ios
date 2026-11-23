@@ -13,7 +13,7 @@ output is a single chosen `.xlsx` basename in an already bound directory, with
 `writeMode:createNew`. Duplicate bindings and duplicate directory/name/version
 selections are rejected. Existing output is never overwritten or renamed.
 
-Receipt binding uses the existing `POST /dsh-go/v1/companion/tasks/inputs` with
+Receipt binding uses the existing `POST /DPSK/v1/companion/tasks/inputs` with
 the explicit J kind. Text/Markdown and supported PDF inputs have a 4 MiB byte
 limit. The old comparison binding shape and two-draft 64 KiB limit remain. A
 receipt binding cannot enlarge the I comparison limits.
@@ -131,7 +131,7 @@ means that the newer agreement executed. No new workbook is produced.
 
 ## Original workbook route
 
-`GET /dsh-go/v1/companion/tasks/{taskId}/artifacts/{artifactId}/content`
+`GET /DPSK/v1/companion/tasks/{taskId}/artifacts/{artifactId}/content`
 requires exactly one `hostStoreId` and one `hostExecutionId` query value. The
 paired owner and original store/execution/task/artifact are checked before IO.
 It only serves registered J workbooks with original identity/hash/size. It does

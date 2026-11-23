@@ -25,7 +25,7 @@ class RuntimeUpgradeIntegrationTest {
     @After fun cleanup() { base.deleteRecursively() }
 
     private fun stage() {
-        for (path in ENGINE_PATHS) write("staging/$path" + if (path in setOf("opt/dsh", "opt/node", "opt/dsh-go",
+        for (path in ENGINE_PATHS) write("staging/$path" + if (path in setOf("opt/dsh", "opt/node", "opt/DPSK",
             "etc/dsh-app", "usr/local/lib/node_modules/pnpm")) "/version" else "", "new engine")
         write("staging/etc/dsh-app/runtime.json", next.toString())
         write("staging/etc/os-release", "ID=ubuntu\nVERSION_ID=24.04\n")
@@ -120,7 +120,7 @@ class RuntimeUpgradeIntegrationTest {
             base.deleteRecursively(); base.mkdirs()
             if (layered) next.put("schema", 2).put("baseCompatibility", layerDescriptor())
             stage()
-            write("kept/root/.dsh/dsh-go/ui.json", "saved ui")
+            write("kept/root/.dsh/DPSK/ui.json", "saved ui")
             val keep = File(base, "kept")
             val failure = IOException("first install interrupted at data barrier")
             assertSame(failure, assertThrows(IOException::class.java) {
@@ -138,7 +138,7 @@ class RuntimeUpgradeIntegrationTest {
             assertTrue(resumeRootfsInstall(base, "new", "arm64-v8a", next, keep, sync = {
                 barriers++
                 assertFalse(Files.exists(marker.toPath(), NOFOLLOW_LINKS))
-                assertEquals("saved ui", File(root, "root/.dsh/dsh-go/ui.json").readText())
+                assertEquals("saved ui", File(root, "root/.dsh/DPSK/ui.json").readText())
             }))
             assertEquals(1, barriers)
             assertEquals("new", marker.readText())
@@ -153,7 +153,7 @@ class RuntimeUpgradeIntegrationTest {
     @Test fun resumingAnUnfinishedResetKeepsRestoredItemsAndPropagatesFailures() {
         stage()
         write("staging/root/.agents", "blocked parent")
-        write("kept/root/.dsh/dsh-go/ui.json", "saved ui")
+        write("kept/root/.dsh/DPSK/ui.json", "saved ui")
         write("kept/root/.agents/skills/mine/SKILL.md", "saved skill")
         val keep = File(base, "kept")
         val marker = File(base, "rootfs.version")
@@ -163,7 +163,7 @@ class RuntimeUpgradeIntegrationTest {
             resumeRootfsInstall(base, "new", "arm64-v8a", next, keep, sync = { fail("data barrier reached") })
         }
         assertFalse(Files.exists(marker.toPath(), NOFOLLOW_LINKS))
-        assertEquals("saved ui", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
+        assertEquals("saved ui", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
         assertEquals("saved skill", File(keep, "root/.agents/skills/mine/SKILL.md").readText())
         assertTrue(File(base, "rootfs/root/.agents").delete())
         val failure = IOException("retry data barrier")
@@ -172,7 +172,7 @@ class RuntimeUpgradeIntegrationTest {
         })
         assertFalse(Files.exists(marker.toPath(), NOFOLLOW_LINKS))
         assertTrue(resumeRootfsInstall(base, "new", "arm64-v8a", next, keep, sync = {}))
-        assertEquals("saved ui", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
+        assertEquals("saved ui", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
         assertEquals("saved skill", File(base, "rootfs/root/.agents/skills/mine/SKILL.md").readText())
         assertEquals("new", marker.readText())
         assertFalse(keep.exists())
@@ -227,12 +227,12 @@ class RuntimeUpgradeIntegrationTest {
             if (layered) next.put("schema", 2).put("baseCompatibility", layerDescriptor())
             stage()
             write("staging/root/.agents", "blocked parent")
-            write("kept/root/.dsh/dsh-go/ui.json", "saved ui")
+            write("kept/root/.dsh/DPSK/ui.json", "saved ui")
             write("kept/root/.agents/skills/mine/SKILL.md", "saved skill")
             val keep = File(base, "kept")
             assertThrows(KeepFailed::class.java) { activate(keep) }
             assertFalse(File(base, "rootfs.version").exists())
-            assertEquals("saved ui", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
+            assertEquals("saved ui", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
 
             // The next install sees rootfs already present, so it takes the engine route.
             stage()
@@ -244,7 +244,7 @@ class RuntimeUpgradeIntegrationTest {
             assertTrue(File(base, "rootfs/root/.agents").delete())
             activate(keep)
             assertEquals("saved skill", File(base, "rootfs/root/.agents/skills/mine/SKILL.md").readText())
-            assertEquals("saved ui", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
+            assertEquals("saved ui", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
             assertFalse(keep.exists())
             assertEquals("new", File(base, "rootfs.version").readText())
         }
@@ -265,12 +265,12 @@ class RuntimeUpgradeIntegrationTest {
 
     @Test fun staleKeptFilesDoNotOverwriteAPreviouslyReadyUserSystem() {
         installed(true); stage()
-        write("kept/root/.dsh/dsh-go/ui.json", "older saved ui")
-        write("rootfs/root/.dsh/dsh-go/ui.json", "edited after the system was ready")
+        write("kept/root/.dsh/DPSK/ui.json", "older saved ui")
+        write("rootfs/root/.dsh/DPSK/ui.json", "edited after the system was ready")
         val keep = File(base, "kept")
         activate(keep)
-        assertEquals("edited after the system was ready", File(base, "rootfs/root/.dsh/dsh-go/ui.json").readText())
-        assertEquals("older saved ui", File(keep, "root/.dsh/dsh-go/ui.json").readText())
+        assertEquals("edited after the system was ready", File(base, "rootfs/root/.dsh/DPSK/ui.json").readText())
+        assertEquals("older saved ui", File(keep, "root/.dsh/DPSK/ui.json").readText())
         assertEquals("new", File(base, "rootfs.version").readText())
     }
 

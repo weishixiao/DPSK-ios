@@ -1,4 +1,4 @@
-// The plugin configuration on the dsh-go bridge's routes (PLUGIN-CONFIG-
+// The plugin configuration on the DPSK bridge's routes (PLUGIN-CONFIG-
 // CONTRACT R1), against a fake Host over real HTTP: the capability probe and
 // its fallback, entries read one at a time, the opaque revision sent back,
 // held edits in one write, and every refusal with its rollback path —

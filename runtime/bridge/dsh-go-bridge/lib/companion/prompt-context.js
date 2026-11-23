@@ -5,7 +5,7 @@ import { CompanionError, invalid } from './schema.js';
 import { validRecallSessionId } from './recall-schema.js';
 import { createCompanionUsage } from './usage.js';
 
-export const FULL_PRESET = 'dsh-go-companion-full';
+export const FULL_PRESET = 'DPSK-companion-full';
 const MAX_SESSIONS = 128, MAX_PENDING = 32, RECENT_MS = 30 * 60 * 1000;
 const kinds = new Set(['pet', 'feed', 'task-finished', 'renamed']);
 const controls = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/;

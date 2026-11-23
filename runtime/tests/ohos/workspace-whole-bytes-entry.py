@@ -37,8 +37,8 @@ PAYLOAD = [
     'node_modules/@deepseek-ai/dsh-base/cordis.patch.yml',
     'node_modules/@deepseek-ai/dsh-web-app/cordis.patch.yml',
     'node_modules/@deepseek-ai/dsh-web-app/presets/standard.patch.yml',
-    'node_modules/@dsh-go/ohos-native/package.json', 'node_modules/@dsh-go/ohos-native/index.cjs',
-    'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs',
+    'node_modules/@DPSK/ohos-native/package.json', 'node_modules/@DPSK/ohos-native/index.cjs',
+    'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs',
 ] + ['node_modules/@deepseek-ai/' + name + '/lib/index.js' for name in [
     'cordis', 'dsh-session', 'dsh-system-prompt', 'dsh-session-projection', 'dsh-sandbox-policy',
     'dsh-sandbox', 'dsh-fs-sandbox', 'dsh-fs-local', 'dsh-fs', 'dsh-llm', 'dsh-home-paths',
@@ -84,7 +84,7 @@ def prepare_inputs():
                       'node_modules/@deepseek-ai/dsh-fs-sandbox/lib/index.js'}
     source_overrides = {
         'runtime/ohos/process/files/workspace-edit.mjs': 'runtime/ohos/process/files/workspace-edit.mjs',
-        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs': 'runtime/session-deletion/core.mjs',
+        'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs': 'runtime/session-deletion/core.mjs',
     }
     checked, overrides = [], []
     for name in PAYLOAD:
@@ -102,7 +102,7 @@ def prepare_inputs():
                 raise ValueError('Component companion differs from its exact source: ' + name)
             overrides.append({'path': name, 'basis': 'exact source bytes/mode', 'actual': actual,
                 'historicalManifest': recorded, 'sourceIdentity': origin,
-                'scope': 'prepared source-derived deletion companion, not the composed OH variant' if name.endswith('dsh-go-deletion.mjs') else 'unchanged private writer source'})
+                'scope': 'prepared source-derived deletion companion, not the composed OH variant' if name.endswith('DPSK-deletion.mjs') else 'unchanged private writer source'})
         else:
             if (actual['sha256'], actual['bytes']) != (recorded['sha256'], recorded['size']):
                 raise ValueError('Payload differs from actual composer manifest: ' + name)
@@ -145,8 +145,8 @@ try:
     env = {'HOME': os.environ['HOME'], 'PATH': os.environ['PATH'], 'TMPDIR': str(O / 'tmp'), 'LANG': 'C.UTF-8',
            'LD_PRELOAD': str(native / 'libdsh_host.so') + ':' + str(publication),
            'DSH_HOME': str(O / 'home'), 'NARB_DISABLE_NATIVE_CACHE': '1',
-           'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(native), 'DSH_GO_OHOS_LINUX_DIRECTORY': str(O / 'linux-tools'),
-           'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'OHOS_321_WHOLE_BYTES_CONFIG': str(O / 'CONFIG.json'),
+           'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(native), 'DPSK_OHOS_LINUX_DIRECTORY': str(O / 'linux-tools'),
+           'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'OHOS_321_WHOLE_BYTES_CONFIG': str(O / 'CONFIG.json'),
            'OHOS_TYPESCRIPT_PREFIX': str(typescript),
            'OHOS_WORKSPACE_GRANTS_ADDON': str(native / 'workspace-publisher.node')}
     argv = [str(node), *(['--jitless'] if args.jitless else []), '--max-old-space-size=256', '--import', str(HERE / 'workspace-whole-bytes-instrumentation.mjs'),
@@ -154,7 +154,7 @@ try:
             str(payload / 'node_modules/@deepseek-ai/dsh/lib/bin.js'), '--profile', 'web', '--dump-config']
     save('COMMAND.json', {'argv': argv, 'cwd': str(O), 'environment': env,
         'environmentSource': 'Explicit allowlist; executor HOME/PATH unchanged. No credentials or model endpoint.',
-        'instrumentationAdds': {'DSH_GO_OHOS_SIM_ADDONS': [str(native / x) for x in [
+        'instrumentationAdds': {'DPSK_OHOS_SIM_ADDONS': [str(native / x) for x in [
             'libdsh_flock.so', 'libdsh_require_builtin.so', 'libdsh_workspace_grants.so', 'workspace-publisher.node']]},
         'scope': 'One selected-mode ordinary API component process: physical max11, physical max10, normal selected logical max11, logical max10; no range or codec. No HTTP/RPC or model call.'})
     save('INVOCATION.json', {'argv': [sys.executable, *sys.argv], 'cwd': str(Path.cwd()), 'atUTC': utc()})

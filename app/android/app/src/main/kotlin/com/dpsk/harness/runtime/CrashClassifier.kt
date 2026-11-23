@@ -106,7 +106,7 @@ object CrashClassifier {
         Regex("^\\[dsh-app-direct] launch failed: .+"),
         Regex("^/.*/opt/node/bin/node: (?:error while loading shared libraries: .+|.+: version [`'].+['`] not found.*)$"),
         Regex("^/.*/ld-linux[^/: ]+\\.so(?:\\.[0-9]+)?: (?:cannot open shared object file|failed to map segment|invalid ELF header|ELF load command|cannot execute).*$"),
-        Regex("^Error \\[ERR_MODULE_NOT_FOUND]: Cannot find module ['\"].*/opt/dsh-go/direct/(?:preload|dns|paths|processes|modules)\\.mjs['\"].*$"),
+        Regex("^Error \\[ERR_MODULE_NOT_FOUND]: Cannot find module ['\"].*/opt/DPSK/direct/(?:preload|dns|paths|processes|modules)\\.mjs['\"].*$"),
         Regex("^DshDirectModuleIdentityError: this file needs compatible launch; stop the engine and turn off Direct engine$"),
     )
     /**

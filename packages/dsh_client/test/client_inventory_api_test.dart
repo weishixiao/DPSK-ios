@@ -100,7 +100,7 @@ const _bridge = {
         'order': 40,
         'label': {'en': 'Desktop pet', 'zh': '桌宠'},
       },
-      {'package': 'dsh-go-bridge', 'cell': 'general', 'order': -1},
+      {'package': 'DPSK-bridge', 'cell': 'general', 'order': -1},
       {'cell': 'nameless'},
     ],
     'conversation.input.dock': [
@@ -276,7 +276,7 @@ void main() {
       expect(inventory.packages.keys.last, '@deepseek-ai/dsh-client-ui-chat');
       expect(inventory.isOfficial('@deepseek-ai/dsh-experimental-session-search'), isTrue);
       expect(inventory.isOfficial('dsh-cost-meter'), isFalse);
-      expect(inventory.isOfficial('dsh-go-bridge'), isTrue);
+      expect(inventory.isOfficial('DPSK-bridge'), isTrue);
       expect(inventory.isOfficial('@deepseek-ai/never-heard-of'), isTrue);
       expect(inventory.slots, isNull);
     });
@@ -497,7 +497,7 @@ void main() {
         host.capabilitiesStatus = status;
         await expectLater(
           client.readBridgeInventory(),
-          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/http-$status')),
+          throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/http-$status')),
         );
       }
       host.capabilitiesStatus = 404;
@@ -506,7 +506,7 @@ void main() {
       });
       await expectLater(
         client.readBridgeInventory(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/not-found')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/not-found')),
       );
       host.capabilitiesBody = jsonEncode({
         'error': {'code': 'route-not-found', 'message': 'route missing'},
@@ -517,7 +517,7 @@ void main() {
       host.capabilities = {'v': 2};
       await expectLater(
         client.readBridgeInventory(),
-        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'dsh-go/unsupported-version')),
+        throwsA(isA<DshRemoteException>().having((e) => e.code, 'code', 'DPSK/unsupported-version')),
       );
       host.capabilities = {'v': 1, 'bridge': '0.4.0'};
       await expectLater(client.readBridgeInventory(), throwsA(isA<DshProtocolException>()));

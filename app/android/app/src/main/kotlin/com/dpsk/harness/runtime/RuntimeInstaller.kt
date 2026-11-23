@@ -311,8 +311,8 @@ internal fun syncDirectory(directory: File) {
 
 /** What 「重置运行环境」 can keep of the user's /root (paths under the rootfs). */
 enum class ResetKeep(val wire: String, val paths: List<String>) {
-    /** `$DSH_HOME/dsh-go` (ui.json) and both user skill roots: small, written by the user, harmless. */
-    UI_AND_SKILLS("uiAndSkills", listOf("root/.dsh/dsh-go", "root/.dsh/skills", "root/.agents/skills")),
+    /** `$DSH_HOME/DPSK` (ui.json) and both user skill roots: small, written by the user, harmless. */
+    UI_AND_SKILLS("uiAndSkills", listOf("root/.dsh/DPSK", "root/.dsh/skills", "root/.agents/skills")),
 
     /** Installed plugins with their settings, the global settings layer and the home `.env`. */
     PLUGINS_AND_SETTINGS("pluginsAndSettings", listOf("root/.dsh/profiles", "root/.dsh/cordis.patch.yml", "root/.dsh/.env"));

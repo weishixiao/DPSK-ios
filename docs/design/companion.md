@@ -8,7 +8,7 @@
 - **活人感优先靠规则层，不靠模型。** 眨眼、视线、呼吸、闲置小动作、触摸反应、昼夜和问候都不花 token。模型只在用户开口时才调用。
 - **Live2D 的东西不进 APK 和仓库。** Core 是 Live2D 的专有代码，框架和模型各有条款。它们打成素材包，用时才放进手机。App 里只有我们自己的舞台代码。
 - **角色素材是数据，运行库是代码。** 运行库按写死的摘要校验，角色目录只收数据文件。所以以后用户自己导入角色时，别人的包不能在 WebView 里跑脚本。
-- **两种对话方式，用户自己选（§6.3）。** 轻量：手机直接调模型，只聊天，不用启动引擎、不连主机。完整：当前主机上的一个普通会话，用 `dsh-go-companion-full` 预设，有主机的全部工具，开了手机操控时还有手机工具。
+- **两种对话方式，用户自己选（§6.3）。** 轻量：手机直接调模型，只聊天，不用启动引擎、不连主机。完整：当前主机上的一个普通会话，用 `DPSK-companion-full` 预设，有主机的全部工具，开了手机操控时还有手机工具。
 - **以后和酒馆共用角色数据。** 她的设定会变成一张兼容酒馆格式的角色卡，任何导入的卡也能请进小屋。见 [roleplay.md](roleplay.md)。
 - **养成和每天来看她另有一份方向稿**：潮水和收藏册、日记、早安简报、每一档解锁什么，不惩罚缺席。见 [companion-daily.md](companion-daily.md)。
 
@@ -26,8 +26,8 @@
 | 对话 | 文本和语音输入，流式字幕，标记驱动表情和动作，文本节奏带动口型 | `companion_page.dart`、`companion_reply.dart` |
 | 问候 | 按时间和离开多久选一句，不责备 | `companionGreeting` |
 | 素材 | 导入 zip，路径和类型检查，运行库摘要校验，可删除 | `app/lib/companion/companion_pack.dart` |
-| 预设 | `dsh-go-companion-full`（完整模式，人设 + 标准预设的全部插件，Pro C410/C411）；只有人设的 `dsh-go-companion` 留着不用。桥接随引擎带上；旧主机退回「默认预设 + 人设放进第一条消息」 | `runtime/bridge/dsh-go-bridge/cordis.patch.yml` |
-| 状态（第 1 期） | 主机上的心情、精力、亲近度：进门记一次到访，摸头记一次事件；心情好时带一点笑，精力影响动作幅度，越熟越常看着你。问候用主机记下的上次到访时间 | `runtime/bridge/dsh-go-bridge/lib/companion/`、`companion_api.dart` |
+| 预设 | `DPSK-companion-full`（完整模式，人设 + 标准预设的全部插件，Pro C410/C411）；只有人设的 `DPSK-companion` 留着不用。桥接随引擎带上；旧主机退回「默认预设 + 人设放进第一条消息」 | `runtime/bridge/DPSK-bridge/cordis.patch.yml` |
+| 状态（第 1 期） | 主机上的心情、精力、亲近度：进门记一次到访，摸头记一次事件；心情好时带一点笑，精力影响动作幅度，越熟越常看着你。问候用主机记下的上次到访时间 | `runtime/bridge/DPSK-bridge/lib/companion/`、`companion_api.dart` |
 | 记忆（第 1 期） | 「她记得的事」：用户写下、修改、删除，只存在当前主机；页面如实写明她还不会自己想起 | `companion_memory_page.dart` |
 | 生活细节 | 夜里更容易困、会打哈欠，清晨伸懒腰，心情好时哼歌冒音符，说到句末轻轻点头 | `stage.js` |
 | 小房子（第 1 期） | 海底的一角：贝壳点心盘、泡泡球、海草软垫，点了各有一段表演，主机记下活动和剩余时间。见 §6.1 | `index.html`、`stage.js`、`companion_page.dart` |
@@ -90,7 +90,7 @@ pack.zip
 
 ## 4. 预设和人设
 
-`cordis.patch.yml` 里 `--- shared rows ---` 以下的行，`rtbuild.py` 也会放进本机运行时的 overlay，所以本机和 `dsh plugin add dsh-go-bridge` 的远程主机都有这个预设。人设用 `prefix` + `complete: true` + `includeRuntimeContext: false`，只留人设，再带上压缩组。人设写了不声称是真人、不写色情内容、不发展恋爱情节、遇到自伤信号要放下角色认真回应。
+`cordis.patch.yml` 里 `--- shared rows ---` 以下的行，`rtbuild.py` 也会放进本机运行时的 overlay，所以本机和 `dsh plugin add DPSK-bridge` 的远程主机都有这个预设。人设用 `prefix` + `complete: true` + `includeRuntimeContext: false`，只留人设，再带上压缩组。人设写了不声称是真人、不写色情内容、不发展恋爱情节、遇到自伤信号要放下角色认真回应。
 
 **没有预设的主机**（旧运行时、没更新桥接的远程主机）：`CompanionSessions` 查不到预设就退回默认预设，人设放进第一条消息。这时她有工具，请求审批时页面上出现「有件事要你确认」，点了进普通对话。批准只能是真实点按，她说的话和语音都不算。
 
@@ -129,7 +129,7 @@ owner 的决定：「轻量的模式就只做对话，甚至连 dsh 内核都不
 
 | | 轻量 | 完整 |
 |---|---|---|
-| 大脑 | 手机直接调 DeepSeek 官方 Messages 接口：`https://api.deepseek.com/anthropic/v1/messages`，`x-api-key` + `anthropic-version: 2023-06-01`，模型 `deepseek-flash`，`thinking: disabled`，流式。和引擎的 `@deepseek-ai/dsh-llm-deepseek` 同一个接口 | 当前主机上的 DSH 会话，`dsh-go-companion` 预设 |
+| 大脑 | 手机直接调 DeepSeek 官方 Messages 接口：`https://api.deepseek.com/anthropic/v1/messages`，`x-api-key` + `anthropic-version: 2023-06-01`，模型 `deepseek-flash`，`thinking: disabled`，流式。和引擎的 `@deepseek-ai/dsh-llm-deepseek` 同一个接口 | 当前主机上的 DSH 会话，`DPSK-companion` 预设 |
 | 要什么 | App 里存的 DeepSeek API Key（设置里填的那个，安全存储）。只用 DeepSeek 账号登录、没有 Key 时不能用 | 一台连着的主机 |
 | 人设 | `companionPersonaCore` 做 system，和预设里的同一份 | 预设里的人设 |
 | 对话记录 | 这台手机上的 `<伙伴目录>/light-chat.json`，存最近 80 行，每次带最近 24 行（同一方连续的行合并，开头是用户）。移除素材包不删它，「重新认识」删它 | 主机上的会话，菜单能打开 |

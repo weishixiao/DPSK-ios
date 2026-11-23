@@ -168,7 +168,7 @@ void main() {
     addTearDown(other.close);
     host.answer = (request, body) async {
       request.response.statusCode = 307;
-      request.response.headers.set('location', '${other.uri}/dsh-go/v1/phone/next');
+      request.response.headers.set('location', '${other.uri}/DPSK/v1/phone/next');
       request.response.write(_ownerSecret);
       await request.response.close();
     };

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createSignalsFixture } from './fixtures/companion-signals-engine.mjs';
-import { projectRunResult, SIGNAL_META } from '../bridge/dsh-go-bridge/lib/companion/signals-schema.js';
+import { projectRunResult, SIGNAL_META } from '../bridge/DPSK-bridge/lib/companion/signals-schema.js';
 
 const integration = (name, body) => test(name, { skip: !process.env.DSH_PREFIX, timeout: 20000, concurrency: false }, body);
 async function fixture(t, options) { const f = await createSignalsFixture(options); t.after(() => f.dispose()); return f; }

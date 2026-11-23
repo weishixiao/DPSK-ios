@@ -72,7 +72,7 @@ function storage() {
 }
 
 const directory = (id) => join(root, 'aa', id);
-const cascadeFile = (id) => join(root, '.dsh-go-lifecycle', createHash('sha256').update(id).digest('hex'), 'cascade.json');
+const cascadeFile = (id) => join(root, '.DPSK-lifecycle', createHash('sha256').update(id).digest('hex'), 'cascade.json');
 const HEADER = (id, extra = {}) => ({ id, ...extra });
 const hooks = (overrides = {}) => ({
   validate: async (id) => { validations.push(id); },
@@ -125,7 +125,7 @@ test('removes every stored generation, clears derived state, and leaves a durabl
   assert.equal(seam.deleted('s1'), true);
   assert.throws(() => seam.assertAdmit('s1'), (error) => error.code === 'not-found');
   // The tombstone records where the logs were so a retry can finish safely.
-  assert.equal(existsSync(join(root, '.dsh-go-lifecycle')), true);
+  assert.equal(existsSync(join(root, '.DPSK-lifecycle')), true);
   // A stale id is not admitted into a new materialisation either.
   assert.throws(() => seam.assertParent({ id: 'child', origin: 'subagent', parentSession: 's1' }), (e) => e.code === 'not-found');
 });
@@ -463,7 +463,7 @@ test('workspace stop can finish before deletion cleanup without losing per-sessi
   seam = createDeletionSeam(backend, {
     parseGeneration, notFound,
     acquire: async (dir, id) => {
-      if (id === 'dsh-go-mutations' && leases.has(dir)) observedContention();
+      if (id === 'DPSK-mutations' && leases.has(dir)) observedContention();
       const lease = await acquire(dir);
       if (id === 's1') sessionLeases.add(dir);
       return lease;
@@ -522,7 +522,7 @@ test('workspace stop can finish before deletion cleanup without losing per-sessi
   assert.equal(seam.pending.has('s1'), false);
   assert.equal(claimed, false);
   assert.equal(leases.size, 0);
-  assert.equal(events.some(([event]) => event === 'dsh-go/session-deleted'), false);
+  assert.equal(events.some(([event]) => event === 'DPSK/session-deleted'), false);
 
   failCleanup = false;
   await seam.delete('s1', { ...hooks(), cleanup });
@@ -531,6 +531,6 @@ test('workspace stop can finish before deletion cleanup without losing per-sessi
   assert.equal(leases.size, 0);
   assert.deepEqual(providerErrors, [], 'an unrelated archive stop must not exhaust the mutation lease retries');
   assert.deepEqual(events, [
-    ['schedule-stop', 's2'], ['forget', 's1'], ['forget', 's1'], ['dsh-go/session-deleted', 's1'],
+    ['schedule-stop', 's2'], ['forget', 's1'], ['forget', 's1'], ['DPSK/session-deleted', 's1'],
   ]);
 });

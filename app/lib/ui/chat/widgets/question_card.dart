@@ -175,7 +175,7 @@ class _QuestionCardState extends State<QuestionCard> {
                   question: questions[i],
                   scheduleAuthorization:
                       widget.request.raw['purpose'] == 'schedule-authorization' &&
-                      questions[i].id.startsWith('dsh-go-schedule-authorization-'),
+                      questions[i].id.startsWith('DPSK-schedule-authorization-'),
                   index: questions.length > 1 ? i + 1 : null,
                   picked: _picked[i],
                   controller: _custom[i],

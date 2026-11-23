@@ -1,5 +1,5 @@
 // Hosts whose plugin-config list does not say who carries an entry — 0.9.9's
-// runtime r12 (no dsh-go plugin-config routes: DSH's own settings/describe)
+// runtime r12 (no DPSK plugin-config routes: DSH's own settings/describe)
 // and a bridge before R7 — see exactly what they saw before the R7 changes:
 // the same entries, the same names (a row's own title), no read-only mark,
 // the same page titles and search results. This file only uses what the app
@@ -215,7 +215,7 @@ void main() {
       expect(shown, ['speech-to-text', 'speech-to-text-sensevoice', 'api-speech-to-text', 'local-notes']);
       expect(
         [for (final ns in shown) pluginConfigTitle(ns, bundles, state: state)],
-        ['语音识别', 'SenseVoice 本地识别', '语音转写接口', 'dsh-go-fixture-local-notes'],
+        ['语音识别', 'SenseVoice 本地识别', '语音转写接口', 'DPSK-fixture-local-notes'],
       );
     });
   });

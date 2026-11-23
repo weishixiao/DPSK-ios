@@ -7,12 +7,12 @@ import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
-import { createCompanionStore } from '../bridge/dsh-go-bridge/lib/companion/store.js';
-import { createRecallCoordinator } from '../bridge/dsh-go-bridge/lib/companion/recall.js';
-import { createRecallMarkers, RECALL_MARKER_SCHEMA } from '../bridge/dsh-go-bridge/lib/companion/recall-markers.js';
-import { validateBind, validateRevoke } from '../bridge/dsh-go-bridge/lib/companion/recall-schema.js';
-import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
-import { formatRecallSection, normalizeRecallText, RECALL_SELECTOR, selectRecallContext } from '../bridge/dsh-go-bridge/lib/companion/recall-selector.js';
+import { createCompanionStore } from '../bridge/DPSK-bridge/lib/companion/store.js';
+import { createRecallCoordinator } from '../bridge/DPSK-bridge/lib/companion/recall.js';
+import { createRecallMarkers, RECALL_MARKER_SCHEMA } from '../bridge/DPSK-bridge/lib/companion/recall-markers.js';
+import { validateBind, validateRevoke } from '../bridge/DPSK-bridge/lib/companion/recall-schema.js';
+import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
+import { formatRecallSection, normalizeRecallText, RECALL_SELECTOR, selectRecallContext } from '../bridge/DPSK-bridge/lib/companion/recall-selector.js';
 
 // These fixtures exercise the real store/selector/coordinator/marker/HTTP code.
 // Agent lifecycle/provider certification is a controlled adapter boundary here;
@@ -32,7 +32,7 @@ const sectionData = (text) => JSON.parse(text.split('\n')[2]);
 const prep = (agent, turnId = 1, stepId = 1) => ({ agent, scope: agent, turnId, stepId, messages: [{ role: 'user', content: 'synthetic' }] });
 
 async function fixture(t, options = {}) {
-  const home = await io.mkdtemp(join(tmpdir(), 'dsh-go-recall-'));
+  const home = await io.mkdtemp(join(tmpdir(), 'DPSK-recall-'));
   const directory = join(home, 'recall-sessions');
   const clock = { at: 1000 };
   const state = { readHook: undefined, readError: false, transform: undefined, stop: undefined,
@@ -478,7 +478,7 @@ async function httpFixture(t, f) {
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(async () => { server.closeAllConnections(); await new Promise((resolve) => server.close(resolve)); });
   return async (path, { method = 'GET', body, contentType = 'application/json' } = {}) => {
-    const response = await fetch(`http://127.0.0.1:${server.address().port}/dsh-go/v1/companion${path}`, {
+    const response = await fetch(`http://127.0.0.1:${server.address().port}/DPSK/v1/companion${path}`, {
       method, headers: { 'content-type': contentType }, ...(body === undefined ? {} : {
         body: typeof body === 'string' || Buffer.isBuffer(body) ? body : JSON.stringify(body),
       }),

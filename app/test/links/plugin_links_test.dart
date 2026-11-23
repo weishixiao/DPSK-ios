@@ -26,7 +26,7 @@ import '../share_code/support/sheet_support.dart' show RecordingShareOut;
 void main() {
   group('the link', () {
     test('the package name is one encoded path segment', () {
-      expect(marketPluginLink('@dsh-go/media'), 'https://go.dshtui.com/p/%40dsh-go%2Fmedia');
+      expect(marketPluginLink('@DPSK/media'), 'https://go.dshtui.com/p/%40DPSK%2Fmedia');
       expect(marketPluginLink('dsh-approval-gate'), 'https://go.dshtui.com/p/dsh-approval-gate');
     });
 
@@ -40,9 +40,9 @@ void main() {
 
     test('https and dpsk:// on the share host, encoded or not, name the package', () {
       for (final (link, name) in [
-        ('https://go.dshtui.com/p/%40dsh-go%2Fmedia', '@dsh-go/media'),
-        ('dpsk://go.dshtui.com/p/%40dsh-go%2Fmedia', '@dsh-go/media'),
-        ('dpsk://go.dshtui.com/p/@dsh-go/media', '@dsh-go/media'),
+        ('https://go.dshtui.com/p/%40DPSK%2Fmedia', '@DPSK/media'),
+        ('dpsk://go.dshtui.com/p/%40DPSK%2Fmedia', '@DPSK/media'),
+        ('dpsk://go.dshtui.com/p/@DPSK/media', '@DPSK/media'),
         ('https://GO.DSHTUI.COM/p/dsh-approval-gate/', 'dsh-approval-gate'),
         (marketPluginLink('@someone/dsh-weather'), '@someone/dsh-weather'),
       ]) {
@@ -161,11 +161,11 @@ void main() {
 
     testWidgets('the web page hand-over opens the official entry', (tester) async {
       await pumpHome(tester);
-      links.add(Uri.parse('dpsk://go.dshtui.com/p/%40dsh-go%2Fmedia'));
+      links.add(Uri.parse('dpsk://go.dshtui.com/p/%40DPSK%2Fmedia'));
       await tester.pump();
       await tester.pumpAndSettle();
       expect(find.byType(MarketPluginSheet), findsOneWidget);
-      expect(tester.widget<MarketPluginSheet>(find.byType(MarketPluginSheet)).entry.name, '@dsh-go/media');
+      expect(tester.widget<MarketPluginSheet>(find.byType(MarketPluginSheet)).entry.name, '@DPSK/media');
       expect(find.text('生图生视频'), findsOneWidget);
     });
 

@@ -454,7 +454,7 @@ void main() {
     for (final returned in [null, 'standard']) {
       final client = AnalysisClient()..returnedPreset = returned;
       await expectLater(sendDiagnosticAnalysis(client, 'facts', () => true, (_, _) async {}), throwsStateError);
-      expect(client.calls, ['create:dsh-go-diagnostics']);
+      expect(client.calls, ['create:DPSK-diagnostics']);
       await client.close();
     }
   });
@@ -464,7 +464,7 @@ void main() {
     await sendDiagnosticAnalysis(client, 'facts', () => true, (id, _) async {
       expect(id, 'analysis');
     });
-    expect(client.calls, ['create:dsh-go-diagnostics', 'projections', 'rename', 'watch', 'prompt:facts']);
+    expect(client.calls, ['create:DPSK-diagnostics', 'projections', 'rename', 'watch', 'prompt:facts']);
     expect(client.cancels, 0);
     await client.close();
   });
@@ -472,7 +472,7 @@ void main() {
   test('sender refuses a substituted projection without sending facts', () async {
     final client = AnalysisClient()..projectionPreset = 'standard';
     await expectLater(sendDiagnosticAnalysis(client, 'facts', () => true, (_, _) async {}), throwsStateError);
-    expect(client.calls, ['create:dsh-go-diagnostics', 'projections']);
+    expect(client.calls, ['create:DPSK-diagnostics', 'projections']);
     await client.close();
   });
 
@@ -528,8 +528,8 @@ void main() {
 class AnalysisClient extends DshClient {
   AnalysisClient() : super(DshConnection(Uri.parse('http://127.0.0.1:9')));
   final calls = <String>[];
-  String? returnedPreset = 'dsh-go-diagnostics';
-  String? projectionPreset = 'dsh-go-diagnostics';
+  String? returnedPreset = 'DPSK-diagnostics';
+  String? projectionPreset = 'DPSK-diagnostics';
   final events = StreamController<DshEvent>.broadcast();
   Completer<void>? promptGate;
   void Function()? onPrompt;

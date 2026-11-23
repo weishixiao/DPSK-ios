@@ -865,7 +865,7 @@
       },
       {
         "rowId": "goal",
-        "moduleName": "@deepseek-ai/dsh-goal",
+        "moduleName": "@deepseek-ai/DPSKal",
         "entryId": "include:goal",
         "meta": {
           "title": {
@@ -880,7 +880,7 @@
       },
       {
         "rowId": "goal-round-driver",
-        "moduleName": "@deepseek-ai/dsh-goal-round-driver",
+        "moduleName": "@deepseek-ai/DPSKal-round-driver",
         "entryId": "include:goal-round-driver",
         "meta": {
           "title": {

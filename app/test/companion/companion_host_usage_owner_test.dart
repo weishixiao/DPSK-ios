@@ -49,7 +49,7 @@ class _Fixture {
       methods.add(request.method);
       final query = Map<String, String>.from(request.uri.queryParameters);
       queries.add(query);
-      expect(request.uri.path, '/dsh-go/v1/companion/usage');
+      expect(request.uri.path, '/DPSK/v1/companion/usage');
       if (!started.isCompleted) started.complete();
       final response = await answer(query);
       request.response.statusCode = status;

@@ -16,14 +16,14 @@ import { createNodeScriptWorker, formatNodeScriptError, nodeScriptAvailable } fr
 import { borrowProcessGrantAuthority, isLogicalWorkspacePath, processGrantNativeDirectory,
   processWorkspaceGrant, quarantineProcessGrantRetirement } from './files/process-authority.mjs';
 
-const confinedProgram = '/dsh-go/ohos/confined';
+const confinedProgram = '/DPSK/ohos/confined';
 const validateArgv = argv => {
   if (!argv.length || !argv[0] || argv.some(value => typeof value !== 'string' || value.includes('\0'))) throw new TypeError('argv 必须是无 NUL 的字符串数组，且命令名非空');
 };
 const commandName = command => {
   const name = basename(command);
   if (!subprocessCommands.includes(name)) return;
-  if (command === name || [`/dsh-go/ohos/bin/${name}`, `/bin/${name}`, `/usr/bin/${name}`].includes(command)) return name;
+  if (command === name || [`/DPSK/ohos/bin/${name}`, `/bin/${name}`, `/usr/bin/${name}`].includes(command)) return name;
 };
 
 export class VirtualSubprocessRuntime {
@@ -98,12 +98,12 @@ export class VirtualSubprocessRuntime {
     if (!command || (!isAbsolute(command) && command.includes('/'))) throw new Error('必须使用虚拟命令名或绝对路径');
     const name = commandName(command);
     if (!name || (name === 'node' && !nodeScriptAvailable())) throw new SubprocessExecutableNotFoundError(unavailableMessage);
-    return `/dsh-go/ohos/bin/${name}`;
+    return `/DPSK/ohos/bin/${name}`;
   }
 
   async terminalEnvironment(signal) {
     signal?.throwIfAborted();
-    return { platform: 'posix', defaultShell: '/dsh-go/ohos/bin/bash' };
+    return { platform: 'posix', defaultShell: '/DPSK/ohos/bin/bash' };
   }
 
   async spawnTerminal() {
@@ -269,9 +269,9 @@ export class VirtualSubprocessRuntime {
           for (const [key, value] of Object.entries(env)) if (value === undefined) delete env[key];
           // Worker 通过继承 --import 重新建立测试标记；环境变量不能启用仿真。
           const workerEnv = { ...env };
-          if (grant) workerEnv.DSH_GO_OHOS_NATIVE_LIBRARY_DIR = processGrantNativeDirectory();
-          if (globalThis[Symbol.for('dsh.go.ohos.sim')] === true && process.env.DSH_GO_OHOS_SIM_PLATFORM) {
-            workerEnv.DSH_GO_OHOS_SIM_PLATFORM = process.env.DSH_GO_OHOS_SIM_PLATFORM;
+          if (grant) workerEnv.DPSK_OHOS_NATIVE_LIBRARY_DIR = processGrantNativeDirectory();
+          if (globalThis[Symbol.for('dsh.go.ohos.sim')] === true && process.env.DPSK_OHOS_SIM_PLATFORM) {
+            workerEnv.DPSK_OHOS_SIM_PLATFORM = process.env.DPSK_OHOS_SIM_PLATFORM;
           }
           const nodeTask = name === 'node';
           const linux = this.#linux();

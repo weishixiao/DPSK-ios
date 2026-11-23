@@ -6,7 +6,7 @@ import { createServer } from 'node:http';
 import { setTimeout as delay } from 'node:timers/promises';
 import vm from 'node:vm';
 
-const client = readFileSync(new URL('../bridge/dsh-go-bridge/lib/client.js', import.meta.url), 'utf8');
+const client = readFileSync(new URL('../bridge/DPSK-bridge/lib/client.js', import.meta.url), 'utf8');
 
 async function bridgePage(t, { failFirst = true } = {}) {
   const posts = [];

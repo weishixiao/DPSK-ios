@@ -1,5 +1,5 @@
 // The app root keeps the skill auto-install alive: once the on-device engine
-// runs, both bundled skills (dsh-go-ui, dsh-go-plugin) land in its skills
+// runs, both bundled skills (DPSK-ui, DPSK-plugin) land in its skills
 // folder, without any page having to ask for them.
 
 import 'dart:io';
@@ -100,7 +100,7 @@ void main() {
     await installUiSkill(root, plugin);
     final mine = skillMd(pluginSkillName)
         .readAsStringSync()
-        .replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), '');
+        .replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), '');
     skillMd(pluginSkillName).writeAsStringSync('$mine\n我的补充\n');
 
     await pumpRoot(tester, RuntimePhase.running);

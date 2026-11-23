@@ -12,4 +12,4 @@ SDK依据是固定公开SDK26的 `@ohos.deviceInfo.d.ts` 和 `bundleManager.Bund
 
 测试：`runtime/tests/ohos/usage-channel.test.mjs` 执行真实 EntryAbility 与 UsagePlugin 经 TS erasure 的方法体，系统与Flutter边界显式替身；`app/test/usage/ohos_device_contract_test.dart` 执行真实Dart消费者及统计控制器，只用FakeUsageHttp，不访问真实统计服务。设置 `OHOS_USAGE_FACTS` 可读入 ETS 测试生成的 JSON；不设时使用明确的同合同夹具。
 
-本包不注册 dsh/update，也不改保存取消协议。仅给 update 的 info 实现会误解除当前 MissingPluginException 的 APK 禁用门；保存取消若返回null，会被 FilesChannel 兜成假 Download/DSH-Go 成功路径。这两项需独立完整消费者合同，不能以半个原生处理器交付。
+本包不注册 dsh/update，也不改保存取消协议。仅给 update 的 info 实现会误解除当前 MissingPluginException 的 APK 禁用门；保存取消若返回null，会被 FilesChannel 兜成假 Download/DPSK 成功路径。这两项需独立完整消费者合同，不能以半个原生处理器交付。

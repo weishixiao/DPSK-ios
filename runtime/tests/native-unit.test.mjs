@@ -1,4 +1,4 @@
-// Unit tests for the dsh-go-bridge native plugin modules (no DSH needed).
+// Unit tests for the DPSK-bridge native plugin modules (no DSH needed).
 //   node --test runtime/tests/native-unit.test.mjs
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -9,7 +9,7 @@ import { syncBuiltinESMExports } from "node:module";
 import { join } from "node:path";
 import { Duplex } from "node:stream";
 
-const LIB = new URL("../bridge/dsh-go-bridge/lib/native/", import.meta.url);
+const LIB = new URL("../bridge/DPSK-bridge/lib/native/", import.meta.url);
 const { checkManifest, parseManifest, renderPlugin } = await import(new URL("manifest.js", LIB));
 const { checkEffects, normalize, splitPending, validate } = await import(new URL("effects.js", LIB));
 const util = await import(new URL("util.js", LIB));
@@ -20,7 +20,7 @@ const { WsConnection, encodeFrame } = await import(new URL("ws.js", LIB));
 
 const CAPS = { versions: [1], app: "0.10.0", locale: "zh-CN", key: "k" };
 const LIVE0 = { panels: new Map(), strips: new Set(), handlers: new Set(), degraded: false, runtimeIssues: [] };
-const tmp = mkdtempSync(join(tmpdir(), "dsh-go-native-unit-"));
+const tmp = mkdtempSync(join(tmpdir(), "DPSK-native-unit-"));
 process.on("exit", () => rmSync(tmp, { recursive: true, force: true }));
 const codes = (issues) => issues.map((i) => `${i.code}@${i.path}`);
 
@@ -688,7 +688,7 @@ test("core: completed first-data deadlines release their waiters while the feed 
   const sub = { id: "panel", send: (message) => messages.push(message) };
   feed.attach(sub);
   for (let i = 0; i < 3; i++) {
-    const url = new URL("http://local/dsh-go/v1/views/waiter-a/p");
+    const url = new URL("http://local/DPSK/v1/views/waiter-a/p");
     let status;
     let body;
     const res = { headersSent: false, writeHead(code) { status = code; this.headersSent = true; }, end(value) { body = JSON.parse(value); } };

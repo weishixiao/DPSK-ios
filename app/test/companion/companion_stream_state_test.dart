@@ -343,7 +343,7 @@ class _FollowupBridge extends _Bridge {
     bool followRedirects = true,
     int? maxResponseBytes,
   }) async {
-    if (path == '/dsh-go/v1/companion/auxiliary') {
+    if (path == '/DPSK/v1/companion/auxiliary') {
       discovery++;
       expect(query, {'sessionId': _session});
       return this.json({
@@ -378,7 +378,7 @@ class _FollowupBridge extends _Bridge {
     Duration? headerTimeout,
     Duration? idleTimeout = const Duration(seconds: 20),
   }) async {
-    expect(path, '/dsh-go/v1/companion/auxiliary');
+    expect(path, '/DPSK/v1/companion/auxiliary');
     final sent = Map<String, Object?>.from(body! as Map<String, Object?>);
     posts.add(sent);
     await release.future; // Deliberately late even if the Page cancels meanwhile.

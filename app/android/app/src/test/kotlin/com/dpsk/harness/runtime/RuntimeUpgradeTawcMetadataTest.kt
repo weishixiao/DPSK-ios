@@ -17,7 +17,7 @@ class RuntimeUpgradeTawcMetadataTest {
     private val abi = "arm64-v8a"
     private val metadata = File(root, "etc/dsh-app/runtime.json")
     private val backup = File(root, "root/runtime-info-backup.json")
-    private val directories = setOf("opt/dsh", "opt/node", "opt/dsh-go", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
+    private val directories = setOf("opt/dsh", "opt/node", "opt/DPSK", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
     private val next = info("new")
 
     @After fun cleanUp() { base.deleteRecursively() }

@@ -1,6 +1,6 @@
 // Writing on the forum — a reply, or a new topic with a category and a title.
 // Markdown, like Discourse's own composer; pictures upload to the forum and go
-// in as `upload://` links; 「分享码」 attaches a dsh-go share link that readers
+// in as `upload://` links; 「分享码」 attaches a DPSK share link that readers
 // install with one tap.
 
 import 'dart:async';

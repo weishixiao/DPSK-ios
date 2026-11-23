@@ -1,5 +1,5 @@
 {
-  "name": "dsh-go-ohos-node-build-tools",
+  "name": "DPSK-ohos-node-build-tools",
   "private": true,
   "version": "1.0.0",
   "dependencies": {

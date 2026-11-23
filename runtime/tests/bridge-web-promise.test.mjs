@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import vm from 'node:vm';
-import {apply} from '../bridge/dsh-go-bridge/lib/index.js';
+import {apply} from '../bridge/DPSK-bridge/lib/index.js';
 
 function bridge(t) {
   const taps = new Set(), stops = [];

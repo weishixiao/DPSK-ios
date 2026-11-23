@@ -160,7 +160,7 @@ The app encrypts snapshots and its catalog in private storage, with the key in p
 
 ### Device pairing (scan the computer's code)
 
-Upstream `docs/device-pairing-v1.md` and `docs/dsh-go-pairing-integration.md`, the phone side:
+Upstream `docs/device-pairing-v1.md` and `docs/DPSK-pairing-integration.md`, the phone side:
 
 1. `parsePairingScan(text)` strictly parses the short code `https://<server>/pair#v1.<ticket>` (or the legacy JSON code) without opening it. Show `scan.origin` before sending anything there.
 2. `resolvePairing(scan)` checks login discovery (`capabilities.devicePairing == dsh-pairing-v1`, plus `devicePairingQr == fragment-ticket-v1` for the short code) and resolves the ticket. Read-only on the Server. A code for another Server fails with `PAIRING_SERVER_MISMATCH` and its `origin`.

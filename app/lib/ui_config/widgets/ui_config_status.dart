@@ -1,7 +1,7 @@
 // ui.json's one quiet line in settings and the sheet behind it: 「界面配置 · 2
 // 处没生效」, and on tap what did not apply, with the JSON Pointer of each. No
 // banners, no notifications. Without a ui.json the line is not there — except
-// on a remote host without the dsh-go-ui skill, where it offers to install it
+// on a remote host without the DPSK-ui skill, where it offers to install it
 // (when the app's wiring provides an installer).
 
 import 'dart:async';

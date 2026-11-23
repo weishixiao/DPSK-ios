@@ -16,7 +16,7 @@ if(mode==='write') {
 }
 const i = f.attach();
 if(mode==='write') {
-  assert.deepEqual(await f.call(i,'recordAppError',{source:'flutter',errorType:'StateError',stack:'package:dsh_app/main.dart:1:2'}).done,{value:null});
+  assert.deepEqual(await f.call(i,'recordAppError',{source:'flutter',errorType:'StateError',stack:'package:dpsk_app/main.dart:1:2'}).done,{value:null});
   assert.deepEqual(await f.call(i,'recordVoiceStage',{stage:'failed',backend:'system',code:7}).done,{value:null});
 }
 const result = await f.call(i,'info').done, evidence = result.value.evidence;

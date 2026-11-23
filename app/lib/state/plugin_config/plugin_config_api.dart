@@ -4,7 +4,7 @@
 // reloads the plugin for the rest, and the credential store for secrets bound
 // to a reference.
 //
-// Two Hosts implement it: the dsh-go bridge's `/dsh-go/v1/plugin-config`
+// Two Hosts implement it: the DPSK bridge's `/DPSK/v1/plugin-config`
 // routes (BridgePluginConfigApi, PLUGIN-CONFIG-CONTRACT R1), and where those
 // are missing DSH 0.2.1's own `settings/describe` + `settings/mutate`, which
 // serve `.volatile()` fields only (EngineSettingsPluginConfigApi).

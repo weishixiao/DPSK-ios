@@ -150,7 +150,7 @@ void main() {
     await tester.tap(find.byTooltip('问 AI'));
     await tester.pumpAndSettle();
     final c = ProviderScope.containerOf(tester.element(find.byType(MaterialApp)));
-    expect(c.read(composeInboxProvider).single.text, '/dsh-go-guide 插件能做什么？装第三方插件要注意什么？');
+    expect(c.read(composeInboxProvider).single.text, '/DPSK-guide 插件能做什么？装第三方插件要注意什么？');
   });
 
   testWidgets('partial load exposes the exact failing row and no invented runtime cause', (tester) async {

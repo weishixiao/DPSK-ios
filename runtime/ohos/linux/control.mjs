@@ -8,7 +8,7 @@ import { linuxHostPaths } from './host-paths.mjs';
 import { deriveLinuxJobDiagnostic } from './job-diagnostics.mjs';
 import { LinuxProxyPolicy, withoutInheritedProxy } from './proxy.mjs';
 
-const route = '/dsh-go/v1/linux';
+const route = '/DPSK/v1/linux';
 const fail = (code, message, status = 409) => Object.assign(new Error(message), { code, status });
 const requestError = message => fail('ERR_OHOS_LINUX_REQUEST', message, 400);
 const codeOf = cause => /^[A-Z][A-Z0-9_]{0,127}$/.test(cause?.code ?? '') ? cause.code : 'ERR_OHOS_LINUX_CONTROL';

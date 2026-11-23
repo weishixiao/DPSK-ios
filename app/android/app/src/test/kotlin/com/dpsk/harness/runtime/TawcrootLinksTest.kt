@@ -185,7 +185,7 @@ class TawcrootLinksTest {
     @Test fun leftoverCopiesFromAKilledRunAreRemoved() {
         obj("3", "data")
         name("root/n", "3")
-        val stale = File(root, "root/.dsh-go-tawc-0123456789abcdef.tmp").apply { writeText("partial") }
+        val stale = File(root, "root/.DPSK-tawc-0123456789abcdef.tmp").apply { writeText("partial") }
         migration().run()
         assertFalse(Files.exists(stale.toPath(), LinkOption.NOFOLLOW_LINKS))
     }

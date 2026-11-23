@@ -10,7 +10,7 @@ const home = join(output, 'child-home'), tmp = join(output, 'child-tmp');
 const environment = {
   PATH: node.slice(0, node.lastIndexOf('/')) + ':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
   HOME: home, TMPDIR: tmp, LANG: 'C.UTF-8', LD_PRELOAD: publication,
-  DSH_GO_OHOS_SIM_PLATFORM: 'openharmony', DSH_GO_OHOS_SIM_ADDONS: JSON.stringify([join(nativeDirectory, 'libdsh_linux.so')]),
+  DPSK_OHOS_SIM_PLATFORM: 'openharmony', DPSK_OHOS_SIM_ADDONS: JSON.stringify([join(nativeDirectory, 'libdsh_linux.so')]),
 };
 const commands = [], checks = [], results = [];
 const expect = (pass, name) => { if (!pass) throw Object.assign(new Error(name), { code: 'ERR_PROXY_PAIR_ASSERTION' }); checks.push(name); };

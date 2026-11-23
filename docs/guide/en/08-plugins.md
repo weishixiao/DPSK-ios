@@ -58,7 +58,7 @@ Turn off any of these places in the plugin's details. To turn off the whole plug
 
 The first time a plugin reads your draft, clipboard or a reply, it asks first. It reads only after you tap **Allow**, and only when you tap it. Once allowed, it can't be revoked separately; turn off that place or the plugin instead.
 
-The native UI needs the dsh-go bridge on the host: this phone's engine has it built in, remote hosts usually don't, and it never shows over DSH Remote.
+The native UI needs the DPSK bridge on the host: this phone's engine has it built in, remote hosts usually don't, and it never shows over DSH Remote.
 
 ## DPSK market
 

@@ -444,7 +444,7 @@ void main() {
       expect(src('asset:/etc/x.png'), isNull);
       expect(src('asset:a/.hidden/b.png'), isNull);
       expect(src('asset:icons/a.svg'), isNull);
-      expect(src('/dsh-go/v1/assets/pkg/a.png'), isNull);
+      expect(src('/DPSK/v1/assets/pkg/a.png'), isNull);
       expect(src('https://tracker.example/p.png'), isNull);
       expect(src('//tracker.example/p.png'), isNull);
       expect(src('data:image/svg+xml;base64,PHN2Zy8+'), isNull);

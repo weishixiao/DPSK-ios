@@ -15,7 +15,7 @@ Reset and uninstall both delete data on this phone; you rarely need them to fix 
 
 To report a problem, export a diagnostics bundle here. It includes the version, device, bounded engine logs and captured errors, not all system logs or a complete crash history. The app attempts to remove keys and tokens; still inspect the bundle before sharing it.
 
-To let the AI look into it, tap **Let the AI read diagnostics**. The app writes a bounded snapshot for the local engine, then ask the AI to "check the diagnostics". The bundled `dsh-go-support` skill walks the symptoms and drafts an issue you can paste.
+To let the AI look into it, tap **Let the AI read diagnostics**. The app writes a bounded snapshot for the local engine, then ask the AI to "check the diagnostics". The bundled `DPSK-support` skill walks the symptoms and drafts an issue you can paste.
 
 ### Crashes and automatic failure analysis
 
@@ -98,7 +98,7 @@ See [Pets](06-pets.md).
 
 ## A plugin is installed but doesn't show up
 
-Check that the plugin is enabled, and restart the engine if asked. A plugin's native UI needs the dsh-go bridge on the host: this phone's engine has it built in, remote hosts usually don't. A display place may also be turned off in the plugin's details. Plugin panels without a native UI appear in the Plugins group of All features, opening in the app or as Web entries. See [Plugins](08-plugins.md).
+Check that the plugin is enabled, and restart the engine if asked. A plugin's native UI needs the DPSK bridge on the host: this phone's engine has it built in, remote hosts usually don't. A display place may also be turned off in the plugin's details. Plugin panels without a native UI appear in the Plugins group of All features, opening in the app or as Web entries. See [Plugins](08-plugins.md).
 
 ## What the app sends
 

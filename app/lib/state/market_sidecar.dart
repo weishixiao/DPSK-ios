@@ -1,4 +1,4 @@
-// The DPSK sidecar of the official plugin index, `dsh-go.json`
+// The DPSK sidecar of the official plugin index, `DPSK.json`
 // (docs/design/plugin-market.md §3): what format 1 has no room for — the
 // tier, the zh/en title and summary, screenshots, the DPSK protocol
 // declaration, the risk the market's checks found, the npm integrity and the
@@ -104,7 +104,7 @@ class MarketSidecar {
 
 final _integrity = RegExp(r'^sha(?:256|384|512)-[A-Za-z0-9+/]+={0,2}$');
 
-/// Reads a decoded `dsh-go.json`. Throws [MarketIndexException] only when it
+/// Reads a decoded `DPSK.json`. Throws [MarketIndexException] only when it
 /// isn't a schema-1 sidecar at all; a bad entry is skipped and recorded.
 MarketSidecar parseMarketSidecar(Object? json) {
   if (json is! Map) throw const MarketIndexException(r'$', 'must be an object');

@@ -1215,7 +1215,7 @@ abstract final class Spots {
     condition: SpotCondition.engineField,
   );
 
-  // 关于 dsh-go.
+  // 关于 DPSK.
   static final version = SettingSpot(
     'version',
     page: SettingsPageId.about,

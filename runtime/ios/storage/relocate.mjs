@@ -99,7 +99,7 @@ function decodeSegment(segment) {
 function relativeSession(value) {
   return typeof value === 'string' && !value.includes('\0') && !value.includes('\\') &&
     value.split('/').length === 2 && value.split('/').every(part => part && part !== '.' && part !== '..') &&
-    !value.startsWith('.dsh-go-lifecycle/');
+    !value.startsWith('.DPSK-lifecycle/');
 }
 async function maybeStat(path) {
   try { return await fs.lstat(path); } catch (error) { if (error.code === 'ENOENT') return; throw error; }
@@ -370,7 +370,7 @@ async function finishPending(context) {
   await fs.rm(stage, { recursive: true }); await syncDirectory(work);
 }
 async function deletionDirectories(sessions) {
-  const lifecycle = join(sessions, '.dsh-go-lifecycle');
+  const lifecycle = join(sessions, '.DPSK-lifecycle');
   if (!(await maybeStat(lifecycle))) return new Set();
   await directory(lifecycle);
   const deleted = new Set();
@@ -400,7 +400,7 @@ async function migrateSessions(context, oldRoots, currentRoot, readHeader) {
   const conflictingIds = new Set((quarantine?.entries ?? [])
     .filter(entry => entry.reason === 'duplicate-session-id').map(entry => entry.sessionId));
   for (const project of (await fs.readdir(sessions)).sort()) {
-    if (project === '.dsh-go-lifecycle') continue;
+    if (project === '.DPSK-lifecycle') continue;
     const projectPath = join(sessions, project), stat = await fs.lstat(projectPath);
     if (!stat.isDirectory() || stat.isSymbolicLink()) continue;
     for (const segment of (await fs.readdir(projectPath)).sort()) {

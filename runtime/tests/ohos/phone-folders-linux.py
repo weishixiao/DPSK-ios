@@ -35,8 +35,8 @@ config={'source':str(source),'payload':str(payload),'nativeDirectory':str(native
 save('CONFIG.json',config)
 environment={'PATH':str(node.parent)+os.pathsep+os.defpath,'HOME':str(out/'home'),'TMPDIR':str(out/'tmp'),'LANG':'C.UTF-8',
  'LD_PRELOAD':str(native/'libdsh_host.so')+':'+str(publication),'DSH_HOME':str(out/'home'),'NARB_DISABLE_NATIVE_CACHE':'1',
- 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR':str(native),'DSH_GO_OHOS_LINUX_DIRECTORY':str(out/'linux-tools'),
- 'DSH_GO_OHOS_SIM_PLATFORM':'openharmony','OHOS_PHONE_FOLDER_CONFIG':str(out/'CONFIG.json'),
+ 'DPSK_OHOS_NATIVE_LIBRARY_DIR':str(native),'DPSK_OHOS_LINUX_DIRECTORY':str(out/'linux-tools'),
+ 'DPSK_OHOS_SIM_PLATFORM':'openharmony','OHOS_PHONE_FOLDER_CONFIG':str(out/'CONFIG.json'),
  'OHOS_TYPESCRIPT_PREFIX':str(typescript),'OHOS_WORKSPACE_GRANTS_ADDON':str(native/'workspace-publisher.node')}
 here=source/'runtime/tests/ohos'
 command=[str(node),*(['--jitless']if a.jitless else []),'--max-old-space-size=256',

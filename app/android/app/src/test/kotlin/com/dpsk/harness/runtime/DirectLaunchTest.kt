@@ -26,10 +26,10 @@ class DirectLaunchTest {
     }
 
     @Test fun prootNodeKeepsItsFlagsAndImportsTheDnsResolver() {
-        assertEquals("--dns-result-order=ipv4first --max-old-space-size=1536 --import=/opt/dsh-go/direct/proot-dns.mjs",
+        assertEquals("--dns-result-order=ipv4first --max-old-space-size=1536 --import=/opt/DPSK/direct/proot-dns.mjs",
             DirectLaunch.prootNodeOptions("--dns-result-order=ipv4first --max-old-space-size=1536"))
-        assertEquals("--import=/opt/dsh-go/direct/proot-dns.mjs", DirectLaunch.prootNodeOptions(""))
-        assertEquals("--import=/opt/dsh-go/direct/proot-dns.mjs", DirectLaunch.prootNodeOptions(null))
+        assertEquals("--import=/opt/DPSK/direct/proot-dns.mjs", DirectLaunch.prootNodeOptions(""))
+        assertEquals("--import=/opt/DPSK/direct/proot-dns.mjs", DirectLaunch.prootNodeOptions(null))
     }
 
     @Test fun bothAbisUseRootfsLoaders() {
@@ -51,9 +51,9 @@ class DirectLaunchTest {
         val root = kotlin.io.path.createTempDirectory("direct-old").toFile()
         try {
             assertEquals("runtimeUpdateRequired", DirectLaunch.unavailable(root, "x86_64"))
-            File(root, "opt/dsh-go/direct").mkdirs()
+            File(root, "opt/DPSK/direct").mkdirs()
             File(root, DirectLaunch.PRELOAD).writeText("R1 fixture")
-            File(root, "opt/dsh-go/direct/dns.mjs").writeText("R1 fixture")
+            File(root, "opt/DPSK/direct/dns.mjs").writeText("R1 fixture")
             assertEquals("runtimeUpdateRequired", DirectLaunch.unavailable(root, "x86_64"))
         }
         finally { root.deleteRecursively() }
@@ -228,8 +228,8 @@ class DirectLaunchTest {
     @Test fun composedPerformanceBudgetReachesDirectNode() {
         val root = kotlin.io.path.createTempDirectory("direct-plan").toFile()
         try {
-            File(root, "opt/dsh-go/direct").mkdirs()
-            for (name in listOf("preload.mjs", "dns.mjs", "modules.mjs", "native-addons.json")) File(root, "opt/dsh-go/direct/$name").writeText("fixture")
+            File(root, "opt/DPSK/direct").mkdirs()
+            for (name in listOf("preload.mjs", "dns.mjs", "modules.mjs", "native-addons.json")) File(root, "opt/DPSK/direct/$name").writeText("fixture")
             for (path in listOf(DirectLaunch.loaderPath("x86_64"), "opt/node/bin/node")) {
                 File(root, path).apply { parentFile.mkdirs(); writeText("fixture"); assertTrue(setExecutable(true, true)) }
             }

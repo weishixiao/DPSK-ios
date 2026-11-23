@@ -5,7 +5,7 @@ import { createMcpToolDefinition } from '@deepseek-ai/dsh-mcp-client';
 import { createPhoneBridge } from './bridge.mjs';
 import { iosToolDescription } from './descriptions.mjs';
 
-export const name = 'dsh-go-ios-phone';
+export const name = 'DPSK-ios-phone';
 export const inject = ['tools'];
 export const catalogSha256 = 'ec04e096af7d632e86f9b0e39a28fbf7f74042e1df7b46db825b5cb7bbfe810e';
 

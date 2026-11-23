@@ -97,7 +97,7 @@ void main() {
   }
 
   group('问 AI', () {
-    const question = '/dsh-go-guide 手机操控是怎么工作的？有什么风险？';
+    const question = '/DPSK-guide 手机操控是怎么工作的？有什么风险？';
     String? queued(WidgetTester tester) =>
         ProviderScope.containerOf(tester.element(find.byType(MaterialApp)))
             .read(composeInboxProvider)

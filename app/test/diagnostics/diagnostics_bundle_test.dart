@@ -101,7 +101,7 @@ Map<String, String> _unzip(List<int> bytes) => {
 
 void main() {
   test('file name: ASCII, sortable, to the second', () {
-    expect(DiagnosticsBundle.fileName(_at), 'dsh-go-diagnostics-20261024-153012.zip');
+    expect(DiagnosticsBundle.fileName(_at), 'DPSK-diagnostics-20261024-153012.zip');
   });
 
   group('contents', () {
@@ -251,13 +251,13 @@ void main() {
     });
 
     test('build writes one bundle into the cache, replacing older ones', () async {
-      File('${cache.path}/diagnostics/dsh-go-diagnostics-20261023-090000.zip')
+      File('${cache.path}/diagnostics/DPSK-diagnostics-20261023-090000.zip')
         ..createSync(recursive: true)
         ..writeAsStringSync('old');
       final file = await exporter.build(onStep: steps.add);
-      expect(file.path, '${cache.path}/diagnostics/dsh-go-diagnostics-20261024-153012.zip');
+      expect(file.path, '${cache.path}/diagnostics/DPSK-diagnostics-20261024-153012.zip');
       expect(Directory('${cache.path}/diagnostics').listSync().map((e) => e.uri.pathSegments.last), [
-        'dsh-go-diagnostics-20261024-153012.zip',
+        'DPSK-diagnostics-20261024-153012.zip',
       ]);
       expect(_unzip(file.readAsBytesSync()).keys, contains('engine.log'));
       expect(steps, [DiagnosticsStep.collecting, DiagnosticsStep.packing]);
@@ -265,10 +265,10 @@ void main() {
 
     test('save hands the ZIP to Downloads and says where', () async {
       final where = await exporter.saveToDownloads(onStep: steps.add);
-      expect(where, 'Download/DSH-Go/dsh-go-diagnostics-20261024-153012.zip');
-      expect(files.saved.single.name, 'dsh-go-diagnostics-20261024-153012.zip');
+      expect(where, 'Download/DPSK/DPSK-diagnostics-20261024-153012.zip');
+      expect(files.saved.single.name, 'DPSK-diagnostics-20261024-153012.zip');
       expect(files.saved.single.mime, 'application/zip');
-      expect(diagnosticsSavedText(where), '已存到 下载/DSH-Go/dsh-go-diagnostics-20261024-153012.zip');
+      expect(diagnosticsSavedText(where), '已存到 下载/DPSK/DPSK-diagnostics-20261024-153012.zip');
       expect(steps.last, DiagnosticsStep.saving);
     });
 
@@ -300,7 +300,7 @@ void main() {
         } finally {
           held.release.complete();
         }
-        expect(await outcome, 'Download/DSH-Go/dsh-go-diagnostics-20261024-153012.zip');
+        expect(await outcome, 'Download/DPSK/DPSK-diagnostics-20261024-153012.zip');
         expect(_unzip(held.bytes!)['engine.log']!.trim(), 'first export');
       });
     }
@@ -308,7 +308,7 @@ void main() {
     test('save removes only its operation directory after native completion', () async {
       final built = await exporter.build();
       final where = await exporter.saveToDownloads(onStep: steps.add);
-      expect(where, 'Download/DSH-Go/dsh-go-diagnostics-20261024-153012.zip');
+      expect(where, 'Download/DPSK/DPSK-diagnostics-20261024-153012.zip');
       final source = File(files.saved.single.path);
       expect(source.existsSync(), isFalse);
       expect(source.parent.existsSync(), isFalse);
@@ -345,9 +345,9 @@ void main() {
     test('share sends the ZIP to the share sheet', () async {
       expect(await exporter.share(onStep: steps.add), isTrue);
       final params = shared.single;
-      expect(params.files!.single.name, 'dsh-go-diagnostics-20261024-153012.zip');
+      expect(params.files!.single.name, 'DPSK-diagnostics-20261024-153012.zip');
       expect(params.files!.single.mimeType, 'application/zip');
-      expect(params.fileNameOverrides, ['dsh-go-diagnostics-20261024-153012.zip']);
+      expect(params.fileNameOverrides, ['DPSK-diagnostics-20261024-153012.zip']);
       expect(steps.last, DiagnosticsStep.sharing);
     });
 
@@ -366,7 +366,7 @@ class _Files extends FilesChannel {
   Future<String> saveToDownloads(String hostPath, {required String name, required String mime}) async {
     expect(File(hostPath).existsSync(), isTrue);
     saved.add((path: hostPath, name: name, mime: mime));
-    return 'Download/DSH-Go/$name';
+    return 'Download/DPSK/$name';
   }
 }
 
@@ -381,7 +381,7 @@ class _HeldFiles extends FilesChannel {
     entered.complete(hostPath);
     await release.future;
     bytes = await File(hostPath).readAsBytes();
-    return 'Download/DSH-Go/$name';
+    return 'Download/DPSK/$name';
   }
 }
 

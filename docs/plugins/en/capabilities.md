@@ -37,7 +37,7 @@ One page for "what a plugin can and cannot do". Details live in the other pages;
 
 ## Capability dependencies and degradation
 
-- Native slots appear only on hosts with the dsh-go bridge: the on-device engine has it; remote hosts usually don't (SSH/relay get tool cards only).
+- Native slots appear only on hosts with the DPSK bridge: the on-device engine has it; remote hosts usually don't (SSH/relay get tool cards only).
 - Newer slots and capabilities depend on app and bridge versions; use `caps` instead of assuming.
 - Older apps ignore unknown keys; a panel that only lists a newer position falls back to `session.tab` rather than disappearing.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds dsh-go APKs. Every APK that goes onto a phone or emulator comes from
+# Builds DPSK APKs. Every APK that goes onto a phone or emulator comes from
 # here, dev and release alike: each build gets a fresh versionCode (the build
 # minute, see tooling/build_number.py), so it installs over the previous one and
 # the system refreshes what it cached for the old build (icons included).
@@ -31,7 +31,7 @@
 # ~/keys/dpsk-beta-channel.token (mode 600), DSH_BETA_TOKEN_FILE points
 # elsewhere. Never printed, never part of a public release.
 # Release builds carry the companion pack, which stays out of the repository:
-# app/assets/companion/whale-girl.zip, else ~/keys/dsh-go/companion-pack-whale-girl.zip
+# app/assets/companion/whale-girl.zip, else ~/keys/DPSK/companion-pack-whale-girl.zip
 # (DSH_COMPANION_PACK points elsewhere), credited by tooling/companion_pack.py.
 # This script takes no machine locks; callers add their own.
 set -euo pipefail
@@ -149,7 +149,7 @@ if ((side)); then
 else
   unset DSH_SIDE_BUILD
 fi
-echo "dsh-go $name ($code, $when) · $mode · ${flavors[*]}$( ((beta)) && echo ' · beta channel')$( ((side)) && echo ' · side (dpsk_app.test)')$( ((star_on)) && echo ' · star prompt')"
+echo "DPSK $name ($code, $when) · $mode · ${flavors[*]}$( ((beta)) && echo ' · beta channel')$( ((side)) && echo ' · side (dpsk_app.test)')$( ((star_on)) && echo ' · star prompt')"
 if ((dry)); then
   for c in "${commands[@]}"; do echo "(cd app && ${c% })"; done
   ((keep_daemon)) || echo "(cd app/android && ./gradlew --stop)"
@@ -170,7 +170,7 @@ fi
 # The companion pack (docs/design/companion.md); a fresh checkout has none.
 ((companion)) && [[ $mode == release ]] || companion=0
 if ((companion)) && [[ ! -f $APP/assets/companion/whale-girl.zip ]]; then
-  pack=${DSH_COMPANION_PACK-$HOME/keys/dsh-go/companion-pack-whale-girl.zip}
+  pack=${DSH_COMPANION_PACK-$HOME/keys/DPSK/companion-pack-whale-girl.zip}
   # A killed --no-companion build may have left the only copy here.
   if [[ ! -f $pack && -f $APP/build/.whale-girl.zip.held ]]; then
     pack="$APP/build/.whale-girl.zip.held"
@@ -240,5 +240,5 @@ for i in "${!flavors[@]}"; do
 done
 
 echo
-echo "dsh-go $name ($code, $when)"
+echo "DPSK $name ($code, $when)"
 for apk in "${built[@]}"; do echo "  ${apk#"$ROOT/"}"; done

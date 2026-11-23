@@ -1,11 +1,11 @@
 ---
-# dsh-go:managed — the dsh-go app keeps this skill up to date; delete this line to keep your own edits.
-name: dsh-go-support
-description: dsh-go 手机 App 的排障与反馈：读 App 写好的本机诊断（路径见 AGENTS.md 的「本机诊断」一节，通常是 `$DSH_HOME/dsh-app/diagnostics.md`）、按症状清单定位、生成脱敏的环境摘要和 issue 草稿。用户说卡顿、发热、耗电、连不上、闪退、更新装不上、插件不生效、手机操控失败，或要反馈 bug 时，先加载它。Diagnose and report dsh-go problems from the on-device diagnostics snapshot.
-whenToUse: The person reports a problem with DPSK (lag, heat, battery, connection, crash, update, plugin, phone control) or asks to file an issue. Not for changing the app's UI (dsh-go-ui) or writing a plugin (dsh-go-plugin).
+# DPSK:managed — the DPSK app keeps this skill up to date; delete this line to keep your own edits.
+name: DPSK-support
+description: DPSK 手机 App 的排障与反馈：读 App 写好的本机诊断（路径见 AGENTS.md 的「本机诊断」一节，通常是 `$DSH_HOME/dsh-app/diagnostics.md`）、按症状清单定位、生成脱敏的环境摘要和 issue 草稿。用户说卡顿、发热、耗电、连不上、闪退、更新装不上、插件不生效、手机操控失败，或要反馈 bug 时，先加载它。Diagnose and report DPSK problems from the on-device diagnostics snapshot.
+whenToUse: The person reports a problem with DPSK (lag, heat, battery, connection, crash, update, plugin, phone control) or asks to file an issue. Not for changing the app's UI (DPSK-ui) or writing a plugin (DPSK-plugin).
 ---
 
-# dsh-go 排障与反馈
+# DPSK 排障与反馈
 
 这个技能只做一件事：**先把事实拿到，再下结论**。App 自己会写一份本机诊断，路径和管理规则见全局指令的「本机诊断」一节——先读它，再按下面的清单走。不要凭"可能是……"就开药方。
 
@@ -66,7 +66,7 @@ App 捕获的完整错误信息仍是本进程内有限的内存记录；新版�
 
 ### 更新装不上
 - 先看 App 里能不能直接更新：1.0.16 起支持经 Shizuku 或自连 ADB 直接安装更新，也能导出已下载的安装包自行安装；入口在更新提示与 **设置 → 通用 → 检查更新** 相关页。
-- 系统安装确认页不出现 / 被当作取消：国产 ROM（HyperOS、ColorOS 等）常见；让用户从 GitHub Release 手动下载 `dsh-go-<版本>-arm64.apk` 安装，或在系统设置里允许本应用安装未知来源。
+- 系统安装确认页不出现 / 被当作取消：国产 ROM（HyperOS、ColorOS 等）常见；让用户从 GitHub Release 手动下载 `DPSK-<版本>-arm64.apk` 安装，或在系统设置里允许本应用安装未知来源。
 - 安装包解析失败：多半是下载不完整，重新下载并对照 `SHA256SUMS`。
 
 ### 引擎被系统杀掉后自动重启 / 上一轮中断

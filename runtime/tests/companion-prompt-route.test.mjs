@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
-import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
-import { createCompanionPromptContext, FULL_PRESET } from '../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
+import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
+import { createCompanionPromptContext, FULL_PRESET } from '../bridge/DPSK-bridge/lib/companion/prompt-context.js';
 
-const path = '/dsh-go/v1/companion/prompt-context';
+const path = '/DPSK/v1/companion/prompt-context';
 async function fixture(t) {
   const clock = Date.UTC(2026, 10, 8, 5);
   const human = { type: 'user/message', time: clock - 24 * 3600000, data: { source: { kind: 'user' } } };

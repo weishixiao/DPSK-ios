@@ -1,4 +1,4 @@
-// v1.3 selected-file tests for dsh-go-bridge (docs/design/native-plugins-protocol.md §12): real HTTP and
+// v1.3 selected-file tests for DPSK-bridge (docs/design/native-plugins-protocol.md §12): real HTTP and
 // WebSocket through the bridge's apply(), with a fake loader. No DSH needed.
 //   node --test runtime/tests/native-files.test.mjs
 import assert from 'node:assert/strict';
@@ -10,13 +10,13 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { once } from 'node:events';
-import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
-import { encodeFrame } from '../bridge/dsh-go-bridge/lib/native/ws.js';
-import { parseManifest } from '../bridge/dsh-go-bridge/lib/native/manifest.js';
-import { normalize } from '../bridge/dsh-go-bridge/lib/native/effects.js';
+import { apply } from '../bridge/DPSK-bridge/lib/index.js';
+import { encodeFrame } from '../bridge/DPSK-bridge/lib/native/ws.js';
+import { parseManifest } from '../bridge/DPSK-bridge/lib/native/manifest.js';
+import { normalize } from '../bridge/DPSK-bridge/lib/native/effects.js';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { apply as applyFileExample } from '../../examples/plugins/dsh-go-example-files/lib/index.js';
+import { apply as applyFileExample } from '../../examples/plugins/DPSK-example-files/lib/index.js';
 import { SchemaSet } from '../../sdk/plugin-kit/lib/json-schema.js';
 const schemas = new SchemaSet();
 const delay = ms => new Promise(r => setTimeout(r, ms));
@@ -39,7 +39,7 @@ async function fixture(t, declaration = manifest, native = {}) {
   apply(ctx, { persist: false, guardRoutes: false, native });
   let fileRouteGate;
   const server = createServer(async (req, res) => {
-    const gate = req.url.startsWith('/dsh-go/v1/files/') && req.url.includes(`/${fileRouteGate?.operation}?`)
+    const gate = req.url.startsWith('/DPSK/v1/files/') && req.url.includes(`/${fileRouteGate?.operation}?`)
       ? fileRouteGate : undefined;
     if (gate) {
       fileRouteGate = undefined;
@@ -70,11 +70,11 @@ async function fixture(t, declaration = manifest, native = {}) {
         if (op === 1) deliver(JSON.parse(data.toString()));
       }
     });
-    socket.write('GET /dsh-go/v1/stream HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
+    socket.write('GET /DPSK/v1/stream HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Version: 13\r\nSec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n');
     const out = { socket, messages, send: m => socket.write(encodeFrame(1, JSON.stringify(m), { mask: true })), next(p) { const i = messages.findIndex(p); if (i >= 0) return Promise.resolve(messages.splice(i, 1)[0]); return new Promise((r, reject) => { const w = { p, r }; w.timer = setTimeout(() => reject(new Error('message timeout')), 1500); waiters.push(w); }); } };
     out.send({ t: 'hello', v: [1], ...(features === undefined ? {} : { features }) }); out.welcome = await out.next(m => m.t === 'welcome'); return out;
   }
-  const request = (path, options = {}) => fetch(`http://127.0.0.1:${port}/dsh-go/v1/${path}`, { ...options, headers: { authorization: 'Bearer test', ...options.headers } });
+  const request = (path, options = {}) => fetch(`http://127.0.0.1:${port}/DPSK/v1/${path}`, { ...options, headers: { authorization: 'Bearer test', ...options.headers } });
   const invoke = async (w, scope = { sessionId: 's1' }, pkg = 'file-test') => { const response = await request('invoke', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ v: 1, pkg, id: 'go', surface: 'composer.actions', scope, stream: w?.welcome.conn, userGesture: true }) }); return { status: response.status, ...await response.json() }; };
   t.after(async () => { for (const s of sockets) s.destroy(); while (disposers.length) disposers.pop()(); server.closeAllConnections(); await new Promise(r => server.close(r)); rmSync(dir, { recursive: true, force: true }); });
   function addPlugin(name) {
@@ -134,7 +134,7 @@ test('upload disconnected before dispatch permits error completion and a fresh s
   const gate = f.holdNextUploadRoute();
   const socket = connect(f.port, '127.0.0.1'); t.after(() => socket.destroy());
   await once(socket, 'connect');
-  socket.write(`POST /dsh-go/v1/${filePath(w, effect, 'upload', { name: 'partial.txt' })} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nContent-Type: application/octet-stream\r\nContent-Length: 100\r\n\r\npartial`);
+  socket.write(`POST /DPSK/v1/${filePath(w, effect, 'upload', { name: 'partial.txt' })} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nContent-Type: application/octet-stream\r\nContent-Length: 100\r\n\r\npartial`);
   const { req, res } = await gate.arrived, closed = once(res, 'close');
   socket.destroy(); await closed;
   assert.equal(req.aborted, true); assert.equal(res.destroyed, true);
@@ -171,7 +171,7 @@ for (const timing of ['before dispatch', 'while reading']) {
     const gate = f.holdNextCompleteRoute(); t.after(gate.resume);
     const socket = connect(f.port, '127.0.0.1'); t.after(() => socket.destroy());
     await once(socket, 'connect');
-    socket.write(`POST /dsh-go/v1/${filePath(w, effect, 'complete')} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nContent-Type: application/json\r\nContent-Length: 100\r\n\r\n{"status":`);
+    socket.write(`POST /DPSK/v1/${filePath(w, effect, 'complete')} HTTP/1.1\r\nHost: localhost\r\nAuthorization: Bearer test\r\nContent-Type: application/json\r\nContent-Length: 100\r\n\r\n{"status":`);
     const { req, res } = await gate.arrived;
     let settled = false; gate.done.then(() => { settled = true; });
     if (timing === 'while reading') {
@@ -562,7 +562,7 @@ test('callback cannot create deferred side effects, including an eager rejected 
 });
 
 test('runnable example consumes actual uploaded bytes through its registered panel callback', async t => {
-  const declaration = JSON.parse(readFileSync(new URL('../../examples/plugins/dsh-go-example-files/package.json', import.meta.url))).dshGo;
+  const declaration = JSON.parse(readFileSync(new URL('../../examples/plugins/DPSK-example-files/package.json', import.meta.url))).dshGo;
   const f = await fixture(t, declaration);
   applyFileExample({ inject: (deps, fn) => fn({ dshGo: f.service }) });
   const w = await f.ws(['files']);
@@ -598,7 +598,7 @@ test('panel callback names must be registered own actions, never inherited Objec
 // This one needs the OH ETS fixture's TypeScript, so only the OH gate runs it.
 if (process.env.OHOS_TYPESCRIPT_PREFIX) {
  const {filesFixture,args,owner,until}=await import('./ohos/native-files-fixture.mjs');
- const {truncateChars}=await import('../bridge/dsh-go-bridge/lib/native/util.js');
+ const {truncateChars}=await import('../bridge/DPSK-bridge/lib/native/util.js');
  async function selection(t,name){
   const f=await filesFixture(t), bytes=Buffer.from('synthetic selection bytes'), file=await f.file(name,bytes);
   const result=f.call(f.methods,'pick',args());f.select([file.uri]);const reply=await result.done;
@@ -610,7 +610,7 @@ if (process.env.OHOS_TYPESCRIPT_PREFIX) {
  }
  test('real bridge callback receives MIME inferred before OH display truncation',async t=>{
   assert.equal([...truncateChars('😀'.repeat(30)+'a'.repeat(98)+'.jpg',128)].length,128);
-  const declaration=JSON.parse(readFileSync(new URL('../../examples/plugins/dsh-go-example-files/package.json',import.meta.url))).dshGo;
+  const declaration=JSON.parse(readFileSync(new URL('../../examples/plugins/DPSK-example-files/package.json',import.meta.url))).dshGo;
   const f=await fixture(t,declaration);applyFileExample({inject:(_,fn)=>fn({dshGo:f.service})});const w=await f.ws(['files']);
   const response=await f.request('invoke',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({v:1,pkg:'file-test',id:'files',surface:'panel',action:'chooseFiles',scope:{sessionId:'s1'},stream:w.welcome.conn,userGesture:true})});
   assert.equal(response.status,200);const effect=(await response.json()).effects[0];

@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import {resolve,join} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {createPluginConfig} from '../bridge/dsh-go-bridge/lib/plugin-config.js';
+import {createPluginConfig} from '../bridge/DPSK-bridge/lib/plugin-config.js';
 import {withSources} from './plugin-config-source-fixture.mjs';
 const {default:z}=await import(pathToFileURL(join(resolve(process.env.DSH_PREFIX),'node_modules/@deepseek-ai/schemastery/lib/index.mjs')));
 const marker='SCHEMA_SYNTHETIC_SECRET';
@@ -14,7 +14,7 @@ async function responseFor(schema,raw){
  const ctx={get:n=>n==='configEditor'?editor:n==='loader'?{entries:()=>[entry]}:undefined};
  withSources(ctx,[entry]);
  let response;const api=createPluginConfig(ctx,{send(_r,status,body){response={status,body}},readBody(){throw Error('unused')}});
- await api.handle({method:'GET'}, {}, '/dsh-go/v1/plugin-config/test');return response;
+ await api.handle({method:'GET'}, {}, '/DPSK/v1/plugin-config/test');return response;
 }
 async function read(schema,raw){const response=await responseFor(schema,raw);assert.equal(response.status,200);return response.body;
 }
@@ -164,7 +164,7 @@ test('detail limits real rc4 Schemastery root serialization to its requested ent
  withSources(ctx,entries);
  let response;
  const api=createPluginConfig(ctx,{send(_r,status,body){response={status,body}},readBody(){throw Error('unused');}});
- await api.handle({method:'GET'},{},'/dsh-go/v1/plugin-config/item-123');
+ await api.handle({method:'GET'},{},'/DPSK/v1/plugin-config/item-123');
  assert.equal(response.status,200);assert.deepEqual(response.body.value,{visible:'value-123'});
  assert.equal(globalThis.__schemastery_refs__,undefined,'real serializer releases its temporary graph state');
  t.diagnostic(`real rc4 detail entries=200 rootSerializations=${counts.reduce((a,b)=>a+b,0)}`);

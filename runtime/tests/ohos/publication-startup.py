@@ -29,7 +29,7 @@ console.log(JSON.stringify(result));"""
     missing_marker = imported + "const real=process._linkedBinding;process._linkedBinding=name=>{const result=real(name);if(name!=='dsh_ohos_publication')return result;const copy={...result};delete copy.getOwnershipMarker;return copy;};await installPublication();"
     cases = [
         ('ordinary-linux', False, False, True, 'absent', {}, probe, {'platform': 'linux', 'installed': False}, None),
-        ('environment-alone', False, False, True, 'absent', {'DSH_GO_OHOS_SIM': '1', 'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony'}, probe, {'platform': 'linux', 'installed': False}, None),
+        ('environment-alone', False, False, True, 'absent', {'DPSK_OHOS_SIM': '1', 'DPSK_OHOS_SIM_PLATFORM': 'openharmony'}, probe, {'platform': 'linux', 'installed': False}, None),
         ('strict-linked', True, True, True, 'valid', {}, probe, {'platform': 'openharmony', 'installed': True}, None),
         ('strict-missing-binding', True, False, True, 'valid', {}, probe, None, 'ERR_OHOS_PUBLICATION_BINDING_MISSING'),
         ('injected-missing-marker-member', True, True, False, 'valid', {}, missing_marker, None, 'ERR_OHOS_PUBLICATION_BINDING_INVALID'),
@@ -69,14 +69,14 @@ console.log(JSON.stringify(result));"""
             elif home_kind == 'ledger-corrupt':
                 p = home / 'ohos-ownership'; p.mkdir(mode=0o700); (p / 'ledger.json').write_text('{incomplete')
             env = os.environ.copy()
-            for key in ('LD_PRELOAD', 'DSH_GO_OHOS_SIM', 'DSH_GO_OHOS_SIM_PLATFORM', 'DSH_GO_OHOS_SIM_ADDONS', 'NODE_OPTIONS', 'DSH_HOME'):
+            for key in ('LD_PRELOAD', 'DPSK_OHOS_SIM', 'DPSK_OHOS_SIM_PLATFORM', 'DPSK_OHOS_SIM_ADDONS', 'NODE_OPTIONS', 'DSH_HOME'):
                 env.pop(key, None)
             if home_kind != 'absent': env['DSH_HOME'] = configured
             env.update(additions)
             argv = [str(args.node.resolve()), '--jitless']
             if simulation:
                 argv += ['--import', str(args.simulation.resolve())]
-                env['DSH_GO_OHOS_SIM_PLATFORM'] = 'openharmony'
+                env['DPSK_OHOS_SIM_PLATFORM'] = 'openharmony'
             if linked: env['LD_PRELOAD'] = str(args.linked_lib.resolve())
             if install: argv += ['--import', str(preload)]
             argv += ['--input-type=module', '--eval', source]

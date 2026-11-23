@@ -198,7 +198,7 @@ def main():
                    f'--sysroot={sdk / "sysroot"}', f'-resource-dir={runtimes / "clang-resource"}',
                    f'--ld-path={sdk / "llvm/bin/ld.lld"}', '-Qunused-arguments', '-fPIC',
                    '-include', str(HERE / 'napi-rename.h'),
-                   '-D__OHOS__=1', '-D__MUSL__=1', '-DDSH_GO_EMBEDDED_RUNTIME=1',
+                   '-D__OHOS__=1', '-D__MUSL__=1', '-DDPSK_EMBEDDED_RUNTIME=1',
                    f'-ffile-prefix-map={source}=/node-v24.22.1']
         if name == 'clang++':
             command += ['-stdlib=libc++', f'-stdlib++-isystem{runtimes / "include/c++/v1"}',

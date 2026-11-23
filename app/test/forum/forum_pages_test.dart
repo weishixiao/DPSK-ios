@@ -214,7 +214,7 @@ void main() {
 
     testWidgets('附上分享码 takes the share link from the clipboard', (tester) async {
       final link = samplePluginLink();
-      mockClipboard(tester, '来自 dsh-go 的分享：${link.webLink} 点开就能装');
+      mockClipboard(tester, '来自 DPSK 的分享：${link.webLink} 点开就能装');
       await openReply(tester, FakeForumApi(signedIn: true));
       await tester.enterText(find.byType(TextField), '推荐这个');
       await tester.tap(find.text('附上分享码'));

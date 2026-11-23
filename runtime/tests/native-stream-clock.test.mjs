@@ -5,10 +5,10 @@ import { test } from 'node:test';
 import { createHash, randomBytes } from 'node:crypto';
 import { createServer, request } from 'node:http';
 import { performance } from 'node:perf_hooks';
-import { NativeCore } from '../bridge/dsh-go-bridge/lib/native/core.js';
-import { effectiveLimits } from '../bridge/dsh-go-bridge/lib/native/limits.js';
-import { createNativeRoutes, STREAM_PATH } from '../bridge/dsh-go-bridge/lib/native/routes.js';
-import { encodeFrame } from '../bridge/dsh-go-bridge/lib/native/ws.js';
+import { NativeCore } from '../bridge/DPSK-bridge/lib/native/core.js';
+import { effectiveLimits } from '../bridge/DPSK-bridge/lib/native/limits.js';
+import { createNativeRoutes, STREAM_PATH } from '../bridge/DPSK-bridge/lib/native/routes.js';
+import { encodeFrame } from '../bridge/DPSK-bridge/lib/native/ws.js';
 
 const realSetTimeout = globalThis.setTimeout;
 const realClearTimeout = globalThis.clearTimeout;

@@ -125,7 +125,7 @@ function fixture(t, { directory, hooks = {}, launchWant = {} } = {}) {
   const application = { filesDir: root };
   const messenger = { removed: [], setMessageHandler(name, handler) { assert.equal(handler, null); this.removed.push(name); } };
   const engine = { getApplicationContext: () => application, getBinaryMessenger: () => messenger };
-  const ability = { launchWant, context: { abilityInfo: { bundleName: 'io.github.ccch1mneyyy.dsh_app', name: 'EntryAbility' } } };
+  const ability = { launchWant, context: { abilityInfo: { bundleName: 'com.dpsk.harness', name: 'EntryAbility' } } };
   const binding = { getAbility: () => ability, addOnNewWantListener: x => listeners.add(x), removeOnNewWantListener: x => listeners.delete(x) };
   const Plugin = module.exports.default;
   const make = () => { const value = new Plugin(); value.onAttachedToEngine(engine); return value; };
@@ -172,7 +172,7 @@ test('441 running then waiting uses ordinary progress and done only retires live
   assert.equal(first.id, 0);
   assert.equal(first.label, 'dsh-chat:live');
   assert.deepEqual(clone(first.content), {
-    notificationContentType: 0, normal: { title: 'DSH Go', text: running.publicText },
+    notificationContentType: 0, normal: { title: 'DPSK', text: running.publicText },
   });
   const tap = clone(f.agents[0]);
   assert.equal(tap.actionType, 1, 'SDK START_ABILITY');
@@ -198,7 +198,7 @@ test('441 running then waiting uses ordinary progress and done only retires live
   assert.equal(f.published[1].id, first.id);
   assert.equal(f.published[1].label, first.label);
   assert.deepEqual(clone(f.published[1].content), {
-    notificationContentType: 0, normal: { title: 'DSH Go', text: waiting.publicText },
+    notificationContentType: 0, normal: { title: 'DPSK', text: waiting.publicText },
   });
   assert.equal(f.published[1].actionButtons, undefined, 'a live summary never approves a request');
 

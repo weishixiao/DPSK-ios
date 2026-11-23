@@ -104,16 +104,16 @@ void main() {
 
     test('unreadable metas are no card', () {
       expect(MediaMeta.fromToolMeta({'other': 1}), isNull);
-      expect(MediaMeta.fromToolMeta({'dsh-go/media': 'x'}), isNull);
+      expect(MediaMeta.fromToolMeta({'DPSK/media': 'x'}), isNull);
       expect(
         MediaMeta.fromToolMeta({
-          'dsh-go/media': {'v': 1, 'status': 'done', 'items': []},
+          'DPSK/media': {'v': 1, 'status': 'done', 'items': []},
         }),
         isNull,
       );
       expect(
         MediaMeta.fromToolMeta({
-          'dsh-go/media': {
+          'DPSK/media': {
             'v': 1,
             'kind': 'image',
             'status': 'done',

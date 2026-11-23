@@ -12,7 +12,7 @@ const BACKENDS: string[] = ['deepseek', 'cloud', 'system', 'local', 'unknown'];
 const ERROR_TYPES: string[] = ['StateError', 'ArgumentError', 'RangeError', 'TypeError', 'FormatException',
   'TimeoutException', 'PlatformException', 'MissingPluginException', 'FlutterError', 'AssertionError',
   'SocketException', 'HttpException', 'FileSystemException', 'UnsupportedError', 'OtherError'];
-const LOCATION: RegExp = /^package:(?:dsh_app|flutter)\/[A-Za-z0-9_/.-]{1,120}\.dart:[0-9]{1,7}:[0-9]{1,7}$/;
+const LOCATION: RegExp = /^package:(?:dpsk_app|flutter)\/[A-Za-z0-9_/.-]{1,120}\.dart:[0-9]{1,7}:[0-9]{1,7}$/;
 // Only logs named by these OS events, in their documented app-sandbox directory.
 const FAULT_LOG: RegExp = /^\/data\/storage\/el2\/log\/hiappevent\/APP_(?:CRASH|FREEZE)_[0-9]{1,20}_[0-9]{1,10}\.log$/;
 

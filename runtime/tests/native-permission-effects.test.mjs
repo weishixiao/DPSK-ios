@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {normalize} from '../bridge/dsh-go-bridge/lib/native/effects.js';
+import {normalize} from '../bridge/DPSK-bridge/lib/native/effects.js';
 import {normalize as sdkNormalize} from '../../sdk/plugin-kit/lib/bridge/effects.js';
 
 for(const [label,check] of [['runtime',normalize],['sdk',sdkNormalize]]) {

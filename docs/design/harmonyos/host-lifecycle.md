@@ -8,7 +8,7 @@ UIAbility 的 `onForeground`、`onBackground`、`onDestroy` 更新 RuntimeContro
 
 每次观察的 `revision` 单调增加。引擎地址或启动凭证变化会退休旧 transport。前后台新事件、stop 或引擎结束撤销上一请求和重试定时器；已抵达 Node 的旧请求仍可能执行，因此后端也按 revision 拒绝倒退。不能用 HTTP Promise 的取消代替后端时序检查。
 
-认证沿用当前运行时的 BrowserAuth：先用宿主启动凭证访问 `/?token=...`，禁止自动重定向，要求303和一个合法签名 `dsh-auth-*` cookie，再向 `/dsh-go/v1/lifecycle` 发 JSON：
+认证沿用当前运行时的 BrowserAuth：先用宿主启动凭证访问 `/?token=...`，禁止自动重定向，要求303和一个合法签名 `dsh-auth-*` cookie，再向 `/DPSK/v1/lifecycle` 发 JSON：
 
 ```json
 {"operation":"host","revision":2,"foreground":false,"computePermission":"unknown"}

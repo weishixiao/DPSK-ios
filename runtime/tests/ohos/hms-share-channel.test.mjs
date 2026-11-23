@@ -339,18 +339,18 @@ test('external authority policy refuses private/self/HTTP/traversal before open 
   assert.equal(f.delivered[1].value.skipped[0].reason, 'unreadable');
 });
 
-test('URI-derived filename is preserved when title is absent, including .dshgo routing extension', async t => {
-  const f = await shareFixture(t); const source = await f.external('中文 配置.dshgo', '{}');
+test('URI-derived filename is preserved when title is absent, including .dpsk routing extension', async t => {
+  const f = await shareFixture(t); const source = await f.external('中文 配置.dpsk', '{}');
   f.receive([{ uri: source.uri, utd: 'general.file' }]); await ready(f); await waitEvents(f, 1);
-  assert.equal(f.delivered[0].value.files[0].name, '中文 配置.dshgo');
+  assert.equal(f.delivered[0].value.files[0].name, '中文 配置.dpsk');
 });
 
 test('text is bounded without splitting a surrogate and names cannot escape staging directory', async t => {
   const f = await shareFixture(t); const source = await f.external('file', 'data');
   f.receive([{ content: 'x'.repeat(199999) + '🙂', title: 'subject', utd: 'general.plain-text' },
-    { uri: source.uri, title: '../../' + '汉'.repeat(200) + '.dshgo', utd: 'general.file' }]);
+    { uri: source.uri, title: '../../' + '汉'.repeat(200) + '.dpsk', utd: 'general.file' }]);
   await ready(f); await waitEvents(f, 1); const event = f.delivered[0].value;
-  assert.equal(event.text.length, 199999); assert(event.files[0].name.endsWith('.dshgo'));
+  assert.equal(event.text.length, 199999); assert(event.files[0].name.endsWith('.dpsk'));
   assert(Buffer.byteLength(event.files[0].name) <= 240); assert(!event.files[0].name.includes('/'));
   assert(event.files[0].path.startsWith(f.app.cacheDir + '/dsh-share-in/'));
 });

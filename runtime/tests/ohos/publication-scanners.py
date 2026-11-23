@@ -83,13 +83,13 @@ for mode in ('jit', 'strict'):
             home = Path(temp) / 'home'
             home.mkdir(mode=0o700)
             env = {k: v for k, v in os.environ.items() if k not in {
-                'NODE_OPTIONS', 'LD_PRELOAD', 'DSH_GO_OHOS_SIM', 'DSH_GO_OHOS_SIM_PLATFORM',
-                'DSH_GO_OHOS_SIM_ADDONS', 'DSH_HOME', 'DSH_TEST_PREFIX', 'DSH_SCANNER_STRICT'}}
+                'NODE_OPTIONS', 'LD_PRELOAD', 'DPSK_OHOS_SIM', 'DPSK_OHOS_SIM_PLATFORM',
+                'DPSK_OHOS_SIM_ADDONS', 'DSH_HOME', 'DSH_TEST_PREFIX', 'DSH_SCANNER_STRICT'}}
             env.update(DSH_HOME=str(home), DSH_TEST_PREFIX=str(a.prefix), LD_PRELOAD=str(a.linked),
                        DSH_SCANNER_STRICT='1' if mode == 'strict' else '0')
             flags = ['--jitless', '--import', str(a.simulation)] if mode == 'strict' else ['--import', str(a.marker)]
             if mode == 'strict':
-                env.update(DSH_GO_OHOS_SIM_PLATFORM='openharmony', DSH_GO_OHOS_SIM_ADDONS='[]')
+                env.update(DPSK_OHOS_SIM_PLATFORM='openharmony', DPSK_OHOS_SIM_ADDONS='[]')
             argv = [str(a.node), *flags, '--import', str(a.publication_preload), str(actor), scenario]
             row['argv'] = argv
             row['environment'] = {key: env[key] for key in ('DSH_HOME', 'DSH_TEST_PREFIX', 'LD_PRELOAD', 'DSH_SCANNER_STRICT')}

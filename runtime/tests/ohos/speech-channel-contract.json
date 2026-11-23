@@ -110,8 +110,8 @@
       "sha256": "eba5aecd5fcdfab1c0e7c92fbb0bbd31390f57f2c3fc182a627b67cc370ec954"
     },
     {
-      "path": "runtime/bridge/dsh-go-bridge/lib/speech.js",
-      "url": "https://raw.githubusercontent.com/weishixiao/DPSK/dd130b31061e305cd9c06e103c3e5210fee1922f/runtime/bridge/dsh-go-bridge/lib/speech.js",
+      "path": "runtime/bridge/DPSK-bridge/lib/speech.js",
+      "url": "https://raw.githubusercontent.com/weishixiao/DPSK/dd130b31061e305cd9c06e103c3e5210fee1922f/runtime/bridge/DPSK-bridge/lib/speech.js",
       "status": 200,
       "bytes": 14683,
       "git_blob_sha1": "c9d8d19fc419137fa492be6b184b7bec1b88465b",

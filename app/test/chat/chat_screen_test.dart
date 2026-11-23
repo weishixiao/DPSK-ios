@@ -558,7 +558,7 @@ void main() {
       final field = tester.widget<TextField>(
         find.descendant(of: find.byType(Composer), matching: find.byType(TextField)),
       );
-      expect(field.controller!.text, '/dsh-go-guide 「本对话都允许」会放行哪些操作？怎么关掉？');
+      expect(field.controller!.text, '/DPSK-guide 「本对话都允许」会放行哪些操作？怎么关掉？');
       // Waits for the person to send it.
       expect(harness.sessions.creates, 0);
     });

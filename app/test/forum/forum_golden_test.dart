@@ -42,7 +42,7 @@ void main() {
       await tester.tap(find.text('配置分享'));
       await tester.enterText(
         find.byType(TextField).at(1),
-        '后台保活 + 低功耗模型，一晚上只掉 3% 电。\n\n[配置：省电模式](https://weishixiao.github.io/dsh-go/share/#p=…)',
+        '后台保活 + 低功耗模型，一晚上只掉 3% 电。\n\n[配置：省电模式](https://weishixiao.github.io/DPSK/share/#p=…)',
       );
       await settle(tester);
       // The caret blinks: park focus so both themes freeze the same frame.

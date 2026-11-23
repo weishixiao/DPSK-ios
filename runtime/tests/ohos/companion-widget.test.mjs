@@ -90,7 +90,7 @@ test('Android exact hour boundaries, busy expiry and pose/bond defaults', async 
   }
   const initial = widgetView(new WidgetValues(), new Date(noon));
   assert.equal(initial.nameDefault, true); assert.equal(initial.statusDefault, 'waiting');
-  assert.equal(initial.openUri, 'dshgo://open/companion');
+  assert.equal(initial.openUri, 'dpsk://open/companion');
 });
 
 test('Android line TTL is strictly less than 12 hours and preserves future timestamps/clock rollback', async t => {

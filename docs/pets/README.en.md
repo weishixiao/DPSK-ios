@@ -1,6 +1,6 @@
-# Make a dsh-go pet pack (author guide)
+# Make a DPSK pet pack (author guide)
 
-A dsh-go state pet is "one zip + one `pack.json` + a few tiled PNG sheets". Build it, import it into the app to test, then submit it to the Creative Workshop.
+A DPSK state pet is "one zip + one `pack.json` + a few tiled PNG sheets". Build it, import it into the app to test, then submit it to the Creative Workshop.
 
 **Shortest path**
 

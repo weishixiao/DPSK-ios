@@ -10,7 +10,7 @@ export function apply(ctx, config) {
   ctx.on('agent/turn-stopping', async ({ agent, signal }) => {
     const record = { status: 'BLOCKED', sessionId: agent.session.id };
     try {
-      const origin = ctx.webServer.getOrigin(), path = origin + '/dsh-go/v1/lifecycle';
+      const origin = ctx.webServer.getOrigin(), path = origin + '/DPSK/v1/lifecycle';
       const login = await fetch(ctx.connection.authenticatedUrl(origin), { redirect: 'manual', signal });
       assert.equal(login.status, 303);
       const cookie = login.headers.getSetCookie().find(value => value.startsWith('dsh-auth-')).split(';')[0];
@@ -29,7 +29,7 @@ export function apply(ctx, config) {
       assert.equal(before.body.calls.length, 5);
       assert(before.body.calls.every(call => call.phase === 'committed' && call.active === false));
       assert.deepEqual(before.body.calls.map(call => call.name), ['write', 'edit', 'read', 'grep', 'bash']);
-      const capabilityPath = origin + '/dsh-go/v1/runtime-capabilities';
+      const capabilityPath = origin + '/DPSK/v1/runtime-capabilities';
       const unauthorizedCapability = await request(capabilityPath); assert.equal(unauthorizedCapability.status, 401);
       const capabilities = await request(capabilityPath, { headers: { cookie } });
       assert.equal(capabilities.status, 200); assert.equal(capabilities.body.background.resume, 'reconcile');

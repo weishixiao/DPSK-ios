@@ -26,7 +26,7 @@ JS、JSON、配置和静态资源进入 rawfile，再由 P2 按 SHA256 增量落
 
 ## 显式加载接缝
 
-`runtime/ohos/native/hap-loader/` 是本仓库的自有代码，安装为 `@dsh-go/ohos-native`，没有增加外部 npm 依赖。仓库 AGPL-3.0-only 许可证随包保留。
+`runtime/ohos/native/hap-loader/` 是本仓库的自有代码，安装为 `@DPSK/ohos-native`，没有增加外部 npm 依赖。仓库 AGPL-3.0-only 许可证随包保留。
 
 `ohos-hap-native-libraries.diff` 只登记在 pins 的 `ohos` 目标。它在真实 `process.platform === 'openharmony'` 时改变两个接缝：
 
@@ -57,10 +57,10 @@ helper 只接受两个产品名，把它们映射到上表文件名。库目录�
 python3 -I -B runtime/lib/rtbuild.py patch-dsh \
   --prefix "$O2_PREFIX" --dsh-version 0.2.1-rc.4 --target ohos \
   --out "$O2_LOGS/patches.json" --target-report "$O2_LOGS/target.json"
-mkdir -p "$O2_PREFIX/node_modules/@dsh-go/ohos-native"
+mkdir -p "$O2_PREFIX/node_modules/@DPSK/ohos-native"
 cp runtime/ohos/native/hap-loader/index.cjs runtime/ohos/native/hap-loader/package.json \
-  "$O2_PREFIX/node_modules/@dsh-go/ohos-native/"
-cp LICENSE "$O2_PREFIX/node_modules/@dsh-go/ohos-native/LICENSE"
+  "$O2_PREFIX/node_modules/@DPSK/ohos-native/"
+cp LICENSE "$O2_PREFIX/node_modules/@DPSK/ohos-native/LICENSE"
 ```
 
 构建已固定源的 Linux flock，并使用已核来源的 Linux require-builtin addon：

@@ -1,5 +1,5 @@
 // `dpsk://open/<page>` opens one of the app's pages and
-// does nothing else. The bundled guide (docs/guide, the dsh-go-guide skill)
+// does nothing else. The bundled guide (docs/guide, the DPSK-guide skill)
 // links to pages this way, so a reply can say 「在这里打开」. A reply's
 // Markdown link reaches the router through [openReplyPageLink]
 // (ui/chat/render/markdown_body.dart); a link from outside the app arrives

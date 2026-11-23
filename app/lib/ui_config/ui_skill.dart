@@ -1,8 +1,8 @@
-// The dsh-go-ui skill that teaches a host's agent to edit ui.json. The files
-// ship in assets/skills/dsh-go-ui/ (flat; manifest.json maps each to its place
+// The DPSK-ui skill that teaches a host's agent to edit ui.json. The files
+// ship in assets/skills/DPSK-ui/ (flat; manifest.json maps each to its place
 // in the skill folder).
 //
-// - On-device engine: written into `$DSH_HOME/skills/dsh-go-ui/` each time the
+// - On-device engine: written into `$DSH_HOME/skills/DPSK-ui/` each time the
 //   engine comes up. DSH watches that root, so the skill appears without a
 //   restart. The app keeps the folder current while SKILL.md carries the
 //   managed line (a YAML comment inside the front matter — DSH only reads a
@@ -28,24 +28,24 @@ import '../state/android_features.dart' show operatingSystemProvider;
 import '../state/hosts_state.dart';
 import 'ui_config_state.dart';
 
-const uiSkillName = 'dsh-go-ui';
-const uiSkillAssetDir = 'assets/skills/dsh-go-ui/';
+const uiSkillName = 'DPSK-ui';
+const uiSkillAssetDir = 'assets/skills/DPSK-ui/';
 
 /// The second skill the app ships: teaches a host's agent to write a small
 /// local native plugin (sdk/plugin-kit/skill, built into
-/// assets/skills/dsh-go-plugin/ by sdk/plugin-kit/scripts/sync-skill.mjs).
+/// assets/skills/DPSK-plugin/ by sdk/plugin-kit/scripts/sync-skill.mjs).
 /// Installed and kept current exactly like [uiSkillName], in its own folder.
-const pluginSkillName = 'dsh-go-plugin';
+const pluginSkillName = 'DPSK-plugin';
 
 /// The third: the app's own user guide (docs/guide, built into
-/// assets/skills/dsh-go-guide/ by tool/guide_sync.py), so the agent can answer
+/// assets/skills/DPSK-guide/ by tool/guide_sync.py), so the agent can answer
 /// how to use the app. Read-only; installed and kept current the same way.
-const guideSkillName = 'dsh-go-guide';
+const guideSkillName = 'DPSK-guide';
 
 /// The fourth: troubleshooting and bug-report playbook. Reads the diagnostics
 /// snapshot the app writes into the engine (`$DSH_HOME/dsh-app/diagnostics.md`)
 /// and turns a symptom into a redacted environment summary / issue draft.
-const supportSkillName = 'dsh-go-support';
+const supportSkillName = 'DPSK-support';
 
 /// Uses the same report, prompt and checked adapter as companion light mode.
 const companionAdaptSkillName = 'companion-adapt';
@@ -57,7 +57,7 @@ const companionAdaptSkillName = 'companion-adapt';
 const petThemeSkillName = 'pet-theme';
 
 /// The managed line inside SKILL.md's front matter.
-const uiSkillManagedMarker = '# dsh-go:managed';
+const uiSkillManagedMarker = '# DPSK:managed';
 
 final _safePath = RegExp(r'^[A-Za-z0-9_-][A-Za-z0-9._-]*(/[A-Za-z0-9_-][A-Za-z0-9._-]*)*$');
 
@@ -156,7 +156,7 @@ Future<UiSkillInstallResult> installUiSkill(Directory rootfs, UiSkillBundle bund
       if (file.existsSync() && file.readAsStringSync() == text) continue;
     } catch (_) {}
     file.parent.createSync(recursive: true);
-    final tmp = File('${file.path}.dsh-go-tmp');
+    final tmp = File('${file.path}.DPSK-tmp');
     tmp.writeAsStringSync(text, flush: true);
     tmp.renameSync(file.path);
     changed = true;
@@ -377,7 +377,7 @@ abstract interface class UiSkillRemoteInstaller {
 final uiSkillRemoteInstallerProvider = Provider<UiSkillRemoteInstaller?>((ref) => null);
 
 /// A POSIX `sh` script that writes [bundle] to
-/// `${DSH_HOME:-$HOME/.dsh}/skills/dsh-go-ui/` (leaving a folder the person
+/// `${DSH_HOME:-$HOME/.dsh}/skills/DPSK-ui/` (leaving a folder the person
 /// took over alone) and prints `DSHAPP skill=installed` or
 /// `DSHAPP skill=user-owned`.
 String uiSkillShellScript(UiSkillBundle bundle) {
@@ -402,10 +402,10 @@ String uiSkillShellScript(UiSkillBundle bundle) {
     n++;
     final body = text.endsWith('\n') ? text : '$text\n';
     out
-      ..writeln("cat > \"\$d/$path.dsh-go-tmp\" <<'$tag'")
+      ..writeln("cat > \"\$d/$path.DPSK-tmp\" <<'$tag'")
       ..write(body)
       ..writeln(tag)
-      ..writeln('mv "\$d/$path.dsh-go-tmp" "\$d/$path"');
+      ..writeln('mv "\$d/$path.DPSK-tmp" "\$d/$path"');
   }
   out.writeln("echo 'DSHAPP skill=installed'");
   return out.toString();

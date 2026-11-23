@@ -1,6 +1,6 @@
 # O6：运行时能力及发布熔断的 HTTP 读取
 
-本目录实现 O6 v1 约定中的 **GET `/dsh-go/v1/runtime-capabilities`**。第二波在已有发布熔断片段上接入实际 Cordis 执行/锁能力和纯 Dart 模型/API。没有观测依据的原生模块、后台授权仍为 null/unknown；真机验证未执行。字段来源、旧引擎兼容和 Dart 使用约定见 [capabilities-v1.md](../../../docs/design/harmonyos/capabilities-v1.md) 第八节。
+本目录实现 O6 v1 约定中的 **GET `/DPSK/v1/runtime-capabilities`**。第二波在已有发布熔断片段上接入实际 Cordis 执行/锁能力和纯 Dart 模型/API。没有观测依据的原生模块、后台授权仍为 null/unknown；真机验证未执行。字段来源、旧引擎兼容和 Dart 使用约定见 [capabilities-v1.md](../../../docs/design/harmonyos/capabilities-v1.md) 第八节。
 
 ## 装配
 

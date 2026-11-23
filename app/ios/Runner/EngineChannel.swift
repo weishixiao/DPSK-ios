@@ -458,7 +458,7 @@ private final class EngineLifecycle: NSObject, URLSessionTaskDelegate {
   }
 
   private func send(origin: String, revision: Int, current: @escaping () -> Bool, done: @escaping (String?) -> Void) {
-    guard let url = URL(string: origin + "/dsh-go/v1/lifecycle"), let cookie else { return done("ios_lifecycle_endpoint") }
+    guard let url = URL(string: origin + "/DPSK/v1/lifecycle"), let cookie else { return done("ios_lifecycle_endpoint") }
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue(cookie, forHTTPHeaderField: "Cookie")
@@ -690,7 +690,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
   private var dshHome: URL { home.appendingPathComponent(".dsh", isDirectory: true) }
   private var agentsHome: URL { home.appendingPathComponent(".agents", isDirectory: true) }
   private var workspace: URL { home.appendingPathComponent("workspace", isDirectory: true) }
-  private var outputs: URL { workspace.appendingPathComponent("DSH-Go", isDirectory: true) }
+  private var outputs: URL { workspace.appendingPathComponent("DPSK", isDirectory: true) }
   private var cache: URL {
     (FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
       ?? URL(fileURLWithPath: NSTemporaryDirectory()))
@@ -993,7 +993,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
 
   /// Relative to the guest root, as on Android. None lies inside another.
   private static let keepable = [
-    "uiAndSkills": ["root/.dsh/dsh-go", "root/.dsh/skills", "root/.agents/skills"],
+    "uiAndSkills": ["root/.dsh/DPSK", "root/.dsh/skills", "root/.agents/skills"],
     "pluginsAndSettings": ["root/.dsh/profiles", "root/.dsh/cordis.patch.yml", "root/.dsh/.env"],
   ]
 
@@ -1404,7 +1404,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
         ## 可视化回复（dsh-ui）
 
         - 适合图表或卡片的真实数据可用 dsh-ui 围栏代码块，内容为单个 JSON 对象；普通对话用文字即可。
-        - 已支持的 type 包括 text、metric、chart、compare、steps、callout、options、confirm、stack、row；不知道字段时先查随包 dsh-go-ui 技能，不要猜。
+        - 已支持的 type 包括 text、metric、chart、compare、steps、callout、options、confirm、stack、row；不知道字段时先查随包 DPSK-ui 技能，不要猜。
         - 不在卡片收集密码、密钥或验证码；options/confirm 放在回复末尾，等待用户反馈后再继续。
 
         """
@@ -1511,7 +1511,7 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
       if let prepared {
         entries = [[
           "insert": [[
-            "id": "dsh-go-ios-phone",
+            "id": "DPSK-ios-phone",
             "name": target.appendingPathComponent("plugin.mjs").path,
             "config": ["directory": prepared.directory.path, "runId": prepared.runId],
           ]],

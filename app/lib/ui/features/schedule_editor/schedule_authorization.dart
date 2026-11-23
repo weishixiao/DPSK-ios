@@ -52,7 +52,7 @@ class ScheduleAuthorization {
       request.sessionId == _sessionId &&
       request.raw['purpose'] == 'schedule-authorization' &&
       request.questions.isNotEmpty &&
-      request.questions.first.id.startsWith('dsh-go-schedule-authorization-');
+      request.questions.first.id.startsWith('DPSK-schedule-authorization-');
 
   void _replay() {
     for (final event in client.mux.pendingRequests) {

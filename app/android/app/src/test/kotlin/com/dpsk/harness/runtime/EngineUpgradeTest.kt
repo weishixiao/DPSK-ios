@@ -10,7 +10,7 @@ import org.junit.Test
 class EngineUpgradeTest {
     private val base = Files.createTempDirectory("engine-upgrade").toFile()
     private val spec = EngineUpgradeSpec("a".repeat(64), "24.04.5", ENGINE_PATHS)
-    private val directories = setOf("opt/dsh", "opt/node", "opt/dsh-go", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
+    private val directories = setOf("opt/dsh", "opt/node", "opt/DPSK", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
     private val users = listOf("usr/bin/gh", "usr/local/bin/custom", "var/lib/dpkg/status", "etc/apt/sources.list",
         "usr/local/lib/node_modules/custom/index.js", "opt/python/lib/site-packages/custom.py", "root/.config/gh/config.yml")
 

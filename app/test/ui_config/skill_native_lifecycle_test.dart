@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support.dart' show tempRootfs;
 
 UiSkillBundle bundle([String name = uiSkillName]) =>
-    UiSkillBundle({'SKILL.md': '---\n# dsh-go:managed\nname: $name\n---\nfixture\n'}, name: name);
+    UiSkillBundle({'SKILL.md': '---\n# DPSK:managed\nname: $name\n---\nfixture\n'}, name: name);
 
 class Runtime extends LocalRuntimeController {
   @override

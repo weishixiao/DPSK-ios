@@ -10,7 +10,7 @@ const preload = fileURLToPath(new URL('../../ohos/sim/preload.mjs', import.meta.
 const marker = fileURLToPath(new URL('../../ohos/sim/marker.mjs', import.meta.url));
 function run(code, overrides = {}, mode = 'strict') {
   const env = { ...process.env };
-  for (const key of ['DSH_GO_OHOS_SIM', 'DSH_GO_OHOS_SIM_PLATFORM', 'DSH_GO_OHOS_SIM_ADDONS']) delete env[key];
+  for (const key of ['DPSK_OHOS_SIM', 'DPSK_OHOS_SIM_PLATFORM', 'DPSK_OHOS_SIM_ADDONS']) delete env[key];
   Object.assign(env, overrides);
   const flags = mode === 'strict' ? ['--jitless', '--import', preload] : mode === 'marker' ? ['--import', marker] : [];
   return spawnSync(process.execPath, [...flags, '--input-type=module', '-e', code], {
@@ -27,7 +27,7 @@ test('the obsolete environment switch alone leaves ordinary Node unchanged', () 
   const value = result(run(`import { spawnSync } from 'node:child_process';
     console.log(JSON.stringify({ wasm: typeof WebAssembly, platform: process.platform,
       simulated: globalThis[Symbol.for('dsh.go.ohos.sim')] === true,
-      status: spawnSync(process.execPath, ['-e', '']).status }));`, { DSH_GO_OHOS_SIM: '1' }, 'none'));
+      status: spawnSync(process.execPath, ['-e', '']).status }));`, { DPSK_OHOS_SIM: '1' }, 'none'));
   assert.deepEqual(value, { wasm: 'object', platform: process.platform, simulated: false, status: 0 });
 });
 
@@ -36,7 +36,7 @@ test('the explicit marker preload preserves JIT and ordinary Node abilities', ()
     console.log(JSON.stringify({ wasm: typeof WebAssembly, platform: process.platform,
       simulated: globalThis[Symbol.for('dsh.go.ohos.sim')] === true,
       jitless: process.execArgv.includes('--jitless'),
-      legacyEnv: Object.hasOwn(process.env, 'DSH_GO_OHOS_SIM'),
+      legacyEnv: Object.hasOwn(process.env, 'DPSK_OHOS_SIM'),
       status: spawnSync(process.execPath, ['-e', '']).status }));`, {}, 'marker'));
   assert.deepEqual(value, { wasm: 'object', platform: process.platform, simulated: true, jitless: false, legacyEnv: false, status: 0 });
 });
@@ -44,7 +44,7 @@ test('the explicit marker preload preserves JIT and ordinary Node abilities', ()
 test('a real worker recreates the explicit marker from inherited preloads without environment activation', () => {
   const value = result(run(`import { Worker } from 'node:worker_threads';
     const worker = new Worker(new URL('data:text/javascript,' + encodeURIComponent(
-      "import { parentPort } from 'node:worker_threads'; parentPort.postMessage({simulated:globalThis[Symbol.for('dsh.go.ohos.sim')]===true,wasm:typeof WebAssembly,jitless:process.execArgv.includes('--jitless'),legacyEnv:Object.hasOwn(process.env,'DSH_GO_OHOS_SIM')});"
+      "import { parentPort } from 'node:worker_threads'; parentPort.postMessage({simulated:globalThis[Symbol.for('dsh.go.ohos.sim')]===true,wasm:typeof WebAssembly,jitless:process.execArgv.includes('--jitless'),legacyEnv:Object.hasOwn(process.env,'DPSK_OHOS_SIM')});"
     )));
     const value = await new Promise((resolve, reject) => { worker.once('message',resolve); worker.once('error',reject); });
     await worker.terminate(); console.log(JSON.stringify(value));`, {}, 'marker'));
@@ -94,7 +94,7 @@ test('callback, promise, named ESM and synchronous links fail without altering s
 test('jitless removes wasm and platform override is explicit', () => {
   const code = `console.log(JSON.stringify({ wasm: typeof WebAssembly, platform: process.platform, jitless: process.execArgv.includes('--jitless') }));`;
   assert.deepEqual(result(run(code)), { wasm: 'undefined', platform: process.platform, jitless: true });
-  assert.deepEqual(result(run(code, { DSH_GO_OHOS_SIM_PLATFORM: 'openharmony' })), {
+  assert.deepEqual(result(run(code, { DPSK_OHOS_SIM_PLATFORM: 'openharmony' })), {
     wasm: 'undefined', platform: 'openharmony', jitless: true,
   });
 });
@@ -107,7 +107,7 @@ test('dlopen denies before touching native code; named file does not grant a bas
 });
 
 test('invalid whitelist rejects startup rather than weakening the constraint', () => {
-  const child = run(`console.log('should not run')`, { DSH_GO_OHOS_SIM_ADDONS: '["relative.node"]' });
+  const child = run(`console.log('should not run')`, { DPSK_OHOS_SIM_ADDONS: '["relative.node"]' });
   assert.notEqual(child.status, 0);
   assert.equal(child.stdout, '');
   assert.match(child.stderr, /absolute addon paths/);
@@ -120,7 +120,7 @@ test('an exact whitelisted addon reaches the real loader', () => {
   try {
     const child = run(`let code; try { process.dlopen({ exports: {} }, ${JSON.stringify(addon)}); }
       catch (e) { code = e.code; } console.log(JSON.stringify(code));`, {
-      DSH_GO_OHOS_SIM_ADDONS: JSON.stringify([addon]),
+      DPSK_OHOS_SIM_ADDONS: JSON.stringify([addon]),
     });
     assert.equal(result(child), 'ERR_DLOPEN_FAILED');
     assert.doesNotMatch(child.stderr, /\[ohos-sim\]/);
@@ -130,7 +130,7 @@ test('an exact whitelisted addon reaches the real loader', () => {
 test('ordinary worker inherits preload and the process restriction', () => {
   const child = run(`import { Worker } from 'node:worker_threads';
     const worker = new Worker(new URL('data:text/javascript,' + encodeURIComponent(
-      "import { parentPort } from 'node:worker_threads'; import { spawnSync } from 'node:child_process'; let code; try { spawnSync('FAKE_SECRET_ARG_6f3d'); } catch (e) { code=e.code; console.error(e); } parentPort.postMessage({wasm:typeof WebAssembly,code,simulated:globalThis[Symbol.for('dsh.go.ohos.sim')]===true,legacyEnv:Object.hasOwn(process.env,'DSH_GO_OHOS_SIM')});"
+      "import { parentPort } from 'node:worker_threads'; import { spawnSync } from 'node:child_process'; let code; try { spawnSync('FAKE_SECRET_ARG_6f3d'); } catch (e) { code=e.code; console.error(e); } parentPort.postMessage({wasm:typeof WebAssembly,code,simulated:globalThis[Symbol.for('dsh.go.ohos.sim')]===true,legacyEnv:Object.hasOwn(process.env,'DPSK_OHOS_SIM')});"
     )));
     const value = await new Promise((resolve, reject) => { worker.once('message',resolve); worker.once('error',reject); });
     await worker.terminate(); console.log(JSON.stringify(value));`);

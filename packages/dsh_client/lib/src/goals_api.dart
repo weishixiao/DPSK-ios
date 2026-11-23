@@ -1,7 +1,7 @@
-/// The session's long-term goal (`@deepseek-ai/dsh-goal`): the `goals/*`
+/// The session's long-term goal (`@deepseek-ai/DPSKal`): the `goals/*`
 /// Remote, the `goal` projection and the `goal/activation-changed` event.
 ///
-/// Verified against DSH 0.2.1-rc.2 (`dsh-goal` typings and
+/// Verified against DSH 0.2.1-rc.2 (`DPSKal` typings and
 /// `typert.remote-client.js`, `dsh-client-ui-goal` client):
 ///
 /// * every verb is addressed by the owning session (`agentId`); mutations

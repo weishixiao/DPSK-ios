@@ -14,7 +14,7 @@ import '../plugins/support/fake_plugin_host.dart';
 
 void main() {
   test('official and fallback media names; offered, installed, disabled, disconnected', () {
-    for (final name in ['@dsh-go/media', '@ccchimneyyy/dsh-media', 'dsh-media', '@example/dsh-media']) {
+    for (final name in ['@DPSK/media', '@ccchimneyyy/dsh-media', 'dsh-media', '@example/dsh-media']) {
       expect(isMediaPluginName(name), isTrue);
       final installed = PluginBundle.fromJson(bundleJson(name));
       expect(mediaPluginStateOf([installed]), MediaPluginState.ready);
@@ -33,7 +33,7 @@ void main() {
     carrier = FakePluginCarrier();
     client = DshClient.withCarrier(carrier);
     carrier.handlers['pluginManager/listBundles'] = (_) => sampleBundles;
-    carrier.handlers['pluginManager/installBundle'] = (_) => installResult(target: '@dsh-go/media');
+    carrier.handlers['pluginManager/installBundle'] = (_) => installResult(target: '@DPSK/media');
   });
   tearDown(() => client.close());
 
@@ -63,7 +63,7 @@ void main() {
     expect(container.read(mediaPluginProvider), MediaPluginState.installable);
     await tester.tap(find.text('在此主机上安装'));
     await tester.pumpAndSettle();
-    expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@dsh-go/media@0.2.0');
+    expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@DPSK/media@0.2.0');
   });
 
   testWidgets('media settings still offers installation when no plugin serves settings', (tester) async {
@@ -71,7 +71,7 @@ void main() {
     expect(find.byType(MediaInstallPrompt), findsOneWidget);
     await tester.tap(find.text('在此主机上安装'));
     await tester.pumpAndSettle();
-    expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@dsh-go/media@0.2.0');
+    expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@DPSK/media@0.2.0');
   });
 
   testWidgets('an old app reaches the detail with a disabled install action', (tester) async {
@@ -84,7 +84,7 @@ void main() {
   });
 
   testWidgets('a disabled installed media plugin opens management without reinstalling', (tester) async {
-    carrier.handlers['pluginManager/listBundles'] = (_) => [bundleJson('@dsh-go/media', enabled: false)];
+    carrier.handlers['pluginManager/listBundles'] = (_) => [bundleJson('@DPSK/media', enabled: false)];
     await pump(tester);
     await tester.tap(find.text('在此主机上安装'));
     await tester.pumpAndSettle();

@@ -93,7 +93,7 @@ internal class ManagedSkillRequest private constructor(
         const val MAX_FILES = 64
         const val MAX_FILE_BYTES = 512 * 1024
         const val MAX_BYTES = 1024 * 1024
-        private val names = setOf("dsh-go-ui", "dsh-go-plugin", "dsh-go-guide", "dsh-go-support", "companion-adapt", "pet-theme")
+        private val names = setOf("DPSK-ui", "DPSK-plugin", "DPSK-guide", "DPSK-support", "companion-adapt", "pet-theme")
         private val path = Regex("^[A-Za-z0-9_-][A-Za-z0-9._-]*(/[A-Za-z0-9_-][A-Za-z0-9._-]*)*$")
 
         /** Cheap bounded checks on the main thread; UTF-8 encoding happens on the runtime worker. */
@@ -134,7 +134,7 @@ internal data class ManagedSkillOutcome(val result: String? = null, val reason: 
  * it is not rollback. SKILL.md is committed last so a first partial install stays hidden.
  */
 internal object ManagedSkillInstaller {
-    private const val MARKER = "# dsh-go:managed"
+    private const val MARKER = "# DPSK:managed"
     private val frontMatter = Regex("^---\\r?\\n([\\s\\S]*?)\\r?\\n---")
 
     private fun managed(text: String): Boolean = frontMatter.find(text)?.groupValues?.get(1)
@@ -170,7 +170,7 @@ internal object ManagedSkillInstaller {
             if (!dirPath.startsWith(rootPath)) return ManagedSkillOutcome("userOwned")
             for (path in bytes.keys) {
                 if (!File(dir, path).canonicalFile.toPath().startsWith(dirPath) ||
-                    !File(dir, "$path.dsh-go-tmp").canonicalFile.toPath().startsWith(dirPath)) {
+                    !File(dir, "$path.DPSK-tmp").canonicalFile.toPath().startsWith(dirPath)) {
                     return ManagedSkillOutcome("userOwned")
                 }
             }
@@ -191,7 +191,7 @@ internal object ManagedSkillInstaller {
                 if (!parent.isDirectory && !parent.mkdirs() && !parent.isDirectory) {
                     throw java.io.IOException("cannot create skill directory")
                 }
-                val tmp = File(parent, "${file.name}.dsh-go-tmp")
+                val tmp = File(parent, "${file.name}.DPSK-tmp")
                 try {
                     checkCurrent()
                     FileOutputStream(tmp).use { stream -> stream.write(data); stream.fd.sync() }

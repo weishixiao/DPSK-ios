@@ -169,7 +169,7 @@ def main():
             check('android-selected-set-changes', same=False)
         for name in ('patches/fs-create-exclusive.diff', 'build-runtime.sh', 'lib/rtbuild.py',
                      'lib/android_recipe.py', 'session-deletion/core.mjs', 'session-deletion/generate.py',
-                     'bridge/dsh-go-bridge/package.json', 'boot/boot-cache.mjs', 'direct/paths.mjs',
+                     'bridge/DPSK-bridge/package.json', 'boot/boot-cache.mjs', 'direct/paths.mjs',
                      'locks/dsh-0.2.2-rc.1/package-lock.json', 'locks/pnpm-11.28.5/package-lock.json'):
             path = runtime / name
             suffix = b'\n# digest sensitivity fixture\n' if name.endswith(('.py', '.sh')) else b'\n'

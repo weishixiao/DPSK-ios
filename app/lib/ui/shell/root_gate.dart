@@ -342,15 +342,15 @@ class _RootGateState extends ConsumerState<RootGate> {
         _startEngineBeside();
       }
     });
-    // Each start of the on-device engine writes the bundled skills (dsh-go-ui,
-    // dsh-go-plugin) into its skills folder, while they are still the app's.
+    // Each start of the on-device engine writes the bundled skills (DPSK-ui,
+    // DPSK-plugin) into its skills folder, while they are still the app's.
     ref.listen(uiSkillAutoInstallProvider, (_, _) {});
     // The rootfs came or went: files read straight from it look again.
     ref.listen(localRuntimeProvider.select((s) => s.status.installedVersion), (prev, next) {
       if (prev != next) ref.invalidate(guestFsProvider);
     });
     // The engine is up: write this run's diagnostics where its agent can read them
-    // (dsh-go-support does). A restart publishes the next snapshot.
+    // (DPSK-support does). A restart publishes the next snapshot.
     ref.listen(localRuntimeProvider.select((s) => s.status.phase), (_, next) {
       if (next == RuntimePhase.running) {
         _publishDiagnostics();

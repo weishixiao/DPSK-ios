@@ -6,9 +6,9 @@ import {createServer} from 'node:http';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
-import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
-import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
+import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
+import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
+import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
 const prefixArg=process.env.DSH_TEST_PREFIX??process.env.DSH_PREFIX;
 const PKG='micro-manifest-test';
 
@@ -45,7 +45,7 @@ export function apply(ctx){ctx.dshGo.micro('caption',{data(scope,emit){
  await ctx.loader.await();assert(ctx.loader.resolve('include:micro'));assert(ctx.loader.resolve('include:other'));
  routes=createNativeRoutes(core);server=createServer((req,res)=>{const u=new URL(req.url,'http://local');void routes.handle(req,res,u.pathname,u)});server.on('upgrade',(req,s,h)=>routes.upgrade(req,s,h));
  server.listen(0,'127.0.0.1');await once(server,'listening');
- ws=new WebSocket(`ws://127.0.0.1:${server.address().port}/dsh-go/v1/stream`);
+ ws=new WebSocket(`ws://127.0.0.1:${server.address().port}/DPSK/v1/stream`);
  const messages=[],waiters=[];
  ws.addEventListener('message',e=>{const m=JSON.parse(e.data);messages.push(m);for(const w of [...waiters])if(w.p(m)){waiters.splice(waiters.indexOf(w),1);clearTimeout(w.timer);w.resolve(m)}});
  const next=p=>{const m=messages.find(p);if(m)return Promise.resolve(m);return new Promise((resolve,reject)=>{const w={p,resolve,timer:setTimeout(()=>reject(Error('WS response deadline')),3000)};waiters.push(w)})};

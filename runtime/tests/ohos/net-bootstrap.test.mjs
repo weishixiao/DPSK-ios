@@ -20,7 +20,7 @@ async function run(name, mode) {
   if (['fresh', 'custom', 'worker'].includes(name)) args.push('--import', join(netRoot, 'dsh-preload.mjs'));
   args.push('--import', observer, name === 'wrong-entry' ? observer : entry);
   const env = { ...process.env, OHOS_BOOTSTRAP_CASE: JSON.stringify({ name, prefix, netRoot }) };
-  for (const key of ['NODE_OPTIONS', 'NODE_USE_ENV_PROXY', 'DSH_GO_OHOS_SIM', 'DSH_GO_OHOS_SIM_PLATFORM', 'HTTP_PROXY', 'http_proxy', 'HTTPS_PROXY', 'https_proxy', 'NO_PROXY', 'no_proxy', 'ALL_PROXY', 'all_proxy']) delete env[key];
+  for (const key of ['NODE_OPTIONS', 'NODE_USE_ENV_PROXY', 'DPSK_OHOS_SIM', 'DPSK_OHOS_SIM_PLATFORM', 'HTTP_PROXY', 'http_proxy', 'HTTPS_PROXY', 'https_proxy', 'NO_PROXY', 'no_proxy', 'ALL_PROXY', 'all_proxy']) delete env[key];
   const { stdout } = await execute(process.execPath, args, { env, timeout: 15000, maxBuffer: 1024 * 1024 });
   const outcome = JSON.parse(stdout.trim());
   assert.equal(outcome.failure, undefined, JSON.stringify(outcome));

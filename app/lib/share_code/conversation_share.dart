@@ -450,7 +450,7 @@ class ConversationShare {
   /// The model of its last reply.
   final String? model;
 
-  /// `dsh-go 1.0.0`.
+  /// `DPSK 1.0.0`.
   final String? app;
 
   /// When it was exported.

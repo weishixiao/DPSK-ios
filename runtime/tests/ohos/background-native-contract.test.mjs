@@ -67,7 +67,7 @@ async function fixture(t, options = {}) {
     const response = await request(origin + '/?token=' + encodeURIComponent(auth.launchToken));
     assert.equal(response.status, 303); return response.headers['set-cookie'][0].split(';')[0];
   };
-  const post = (cookie, value, extraHeaders = {}) => request(origin + '/dsh-go/v1/lifecycle', {
+  const post = (cookie, value, extraHeaders = {}) => request(origin + '/DPSK/v1/lifecycle', {
     method: 'POST', headers: { cookie, 'content-type': 'application/json', ...extraHeaders }, body: JSON.stringify(value),
   });
   return { directory, journal, coordinator, ctx, connection, auth, origin, seen, login, post };

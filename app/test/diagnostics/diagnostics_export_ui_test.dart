@@ -44,7 +44,7 @@ class _ScriptedExporter extends DiagnosticsExporter {
   @override
   Future<String> saveToDownloads({void Function(DiagnosticsStep step)? onStep}) async {
     await _walk(onStep, DiagnosticsStep.saving);
-    return savedAt ?? 'Download/DSH-Go/dsh-go-diagnostics-20261024-153012.zip';
+    return savedAt ?? 'Download/DPSK/DPSK-diagnostics-20261024-153012.zip';
   }
 
   @override
@@ -104,7 +104,7 @@ Finder _row(String title) => find.ancestor(of: find.text(title), matching: find.
 void main() {
   testWidgets('saving shows each step, then where it went', (tester) async {
     final exporter = await _pump(tester);
-    expect(find.text('存进 下载/DSH-Go'), findsOneWidget);
+    expect(find.text('存进 下载/DPSK'), findsOneWidget);
 
     await tester.tap(find.text('存到「下载」'));
     await tester.pump();
@@ -120,8 +120,8 @@ void main() {
     exporter.done.complete();
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
-    expect(find.text('已存到 下载/DSH-Go/dsh-go-diagnostics-20261024-153012.zip'), findsOneWidget);
-    expect(find.text('存进 下载/DSH-Go'), findsOneWidget);
+    expect(find.text('已存到 下载/DPSK/DPSK-diagnostics-20261024-153012.zip'), findsOneWidget);
+    expect(find.text('存进 下载/DPSK'), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsNothing);
     expect(tester.widget<ListPageRow>(_row('分享诊断包')).onTap, isNotNull);
   });
@@ -135,7 +135,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('没有存储权限，存不进「下载」'), findsOneWidget);
-    expect(find.text('存进 下载/DSH-Go'), findsOneWidget);
+    expect(find.text('存进 下载/DPSK'), findsOneWidget);
   });
 
   group('HarmonyOS, where the system asks where', () {
@@ -146,14 +146,14 @@ void main() {
       expect(diagnosticsStepText(DiagnosticsStep.saving, harmony: false), '正在存到「下载」…');
       expect(diagnosticsStepText(DiagnosticsStep.packing, harmony: true), '正在打包…');
       expect(diagnosticsSavedText(picked), '已保存');
-      expect(diagnosticsSavedText('Download/DSH-Go/d.zip'), '已存到 下载/DSH-Go/d.zip');
+      expect(diagnosticsSavedText('Download/DPSK/d.zip'), '已存到 下载/DPSK/d.zip');
     });
 
     testWidgets('asks where, and says 已保存 instead of the URI', (tester) async {
       final exporter = await _pump(tester, savedAt: picked, os: 'ohos');
       expect(find.text('选择保存位置'), findsOneWidget);
       expect(find.text('存到「下载」'), findsNothing);
-      expect(find.text('存进 下载/DSH-Go'), findsNothing);
+      expect(find.text('存进 下载/DPSK'), findsNothing);
       await tester.tap(find.text('保存到文件'));
       await tester.pump();
       exporter.packed.complete();
@@ -231,7 +231,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 600));
     expect(find.text('导出诊断包'), findsNothing);
-    expect(find.text('已存到 下载/DSH-Go/dsh-go-diagnostics-20261024-153012.zip'), findsOneWidget);
+    expect(find.text('已存到 下载/DPSK/DPSK-diagnostics-20261024-153012.zip'), findsOneWidget);
   });
 
   testWidgets('sharing from the sheet closes it once sent', (tester) async {

@@ -52,7 +52,7 @@ Map<String, Object?> _preset({
 /// app's fallback list then keeps the page usable.
 Map<String, Object?> _catalog({bool presets = true, bool video = true}) => {
   'v': 1,
-  'contract': 'dsh-go/media/catalog',
+  'contract': 'DPSK/media/catalog',
   'capabilities': {'image': true, 'video': video},
   'models': [
     _model('doubao-seedream-5-0-pro', 'Seedream 5.0', 'image', 'ark-image'),
@@ -147,7 +147,7 @@ Map<String, Object?> _schema(Map<String, Object?>? catalog, {bool kindDefaults =
       'type': 'transform',
       'meta': {
         'default': <Object?>[],
-        if (catalog != null) 'extra': {'dsh-go/media/catalog': catalog},
+        if (catalog != null) 'extra': {'DPSK/media/catalog': catalog},
       },
       'inner': {
         'type': 'array',

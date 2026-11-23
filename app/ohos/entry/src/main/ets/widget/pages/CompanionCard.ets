@@ -15,7 +15,7 @@ struct CompanionCard {
   @LocalStorageProp('line') line: string = '';
   @LocalStorageProp('pearls') pearls: string = '';
   @LocalStorageProp('pose') pose: string = 'idle';
-  @LocalStorageProp('openUri') openUri: string = 'dshgo://open/companion';
+  @LocalStorageProp('openUri') openUri: string = 'dpsk://open/companion';
 
   private whale(): Resource {
     if (this.pose === 'sleeping') return $r('app.media.companion_widget_sleeping');

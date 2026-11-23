@@ -1,7 +1,7 @@
 // Private functional fixture for the real Host bridge. Never part of runtime payload.
 import z from '__SCHEMA_MODULE__';
 import { createHash } from 'node:crypto';
-export const name = 'dsh-go-fixture-host-bridge';
+export const name = 'DPSK-fixture-host-bridge';
 export const Config = z.object({ label: z.string().default('initial-label') });
 export function apply(ctx, config) {
   const state = { label: config.label, callbacks: 0, files: [], pendingCancelled: 0, bumps: 0 };

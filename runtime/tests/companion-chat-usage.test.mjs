@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
-import { createCompanionUsage } from '../bridge/dsh-go-bridge/lib/companion/usage.js';
-import { createCompanionPromptContext } from '../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
-import { createCompanionRoutes } from '../bridge/dsh-go-bridge/lib/companion/routes.js';
+import { createCompanionUsage } from '../bridge/DPSK-bridge/lib/companion/usage.js';
+import { createCompanionPromptContext } from '../bridge/DPSK-bridge/lib/companion/prompt-context.js';
+import { createCompanionRoutes } from '../bridge/DPSK-bridge/lib/companion/routes.js';
 
 function ledger(limits) {
   const owner = {}, usage = createCompanionUsage({ instanceId: 'boot', now: () => 100, limits });
@@ -171,7 +171,7 @@ async function httpFixture(t, { now = () => 100, usageLimits } = {}) {
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(async () => { context.clear(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); });
   const request = async ({ auth = 'owner', method = 'GET', query = 'instanceId=boot&sessionId=session&requestId=request' } = {}) => {
-    const response = await fetch(`http://127.0.0.1:${server.address().port}/dsh-go/v1/companion/usage?${query}`,
+    const response = await fetch(`http://127.0.0.1:${server.address().port}/DPSK/v1/companion/usage?${query}`,
       { method, headers: { authorization: auth } });
     return { status: response.status, body: await response.json() };
   };

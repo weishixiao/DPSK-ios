@@ -30,7 +30,7 @@ abstract interface class CompanionKeeper {
   Future<int> deleteMemory(String storeId, int revision, String id);
 }
 
-/// Full mode: the host's bridge (`/dsh-go/v1/companion`).
+/// Full mode: the host's bridge (`/DPSK/v1/companion`).
 class HostKeeper implements CompanionKeeper {
   HostKeeper(this.client);
 

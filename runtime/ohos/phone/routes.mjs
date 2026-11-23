@@ -99,7 +99,7 @@ export function registerPhoneRoutes(ctx, queue) {
     }
   };
   for (const action of ['next', 'claim', 'result', 'cancel']) {
-    const path = '/dsh-go/v1/phone/' + action;
+    const path = '/DPSK/v1/phone/' + action;
     ctx.effect(() => ctx.webServer.register({ kind: 'exact', path, handler: handler(action) }), 'ohos phone ' + action);
   }
   ctx.effect(() => () => poll?.(fail('closed', 410)), 'ohos phone pending read');

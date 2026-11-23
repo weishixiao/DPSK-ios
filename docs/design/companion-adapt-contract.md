@@ -4,7 +4,7 @@
 
 ## 1. 两种模式共用数据
 
-`companion_adapt_contract.dart` 是无 I/O、无 Flutter 依赖的纯模块。原 `companion_adapt.dart` re-export，旧调用方无需换 import。`companionAdaptInput` 返回 `{schema:"dsh-go/companion-adapt-request",v:1,target:"app-local-adapter-v1",vocabulary,probe,verifiedEffects,wanted,truncation,current?,currentDropped?,userFeedback?}`；`companionAdaptRequest` 是它的 JSON 字符串；`companionAdaptFullRequest` 只在同一字符串前加 `/companion-adapt`。
+`companion_adapt_contract.dart` 是无 I/O、无 Flutter 依赖的纯模块。原 `companion_adapt.dart` re-export，旧调用方无需换 import。`companionAdaptInput` 返回 `{schema:"DPSK/companion-adapt-request",v:1,target:"app-local-adapter-v1",vocabulary,probe,verifiedEffects,wanted,truncation,current?,currentDropped?,userFeedback?}`；`companionAdaptRequest` 是它的 JSON 字符串；`companionAdaptFullRequest` 只在同一字符串前加 `/companion-adapt`。
 
 `probe.mocFile` 来自 stage 的相对路径，绝非指纹。App 保存时仍用真实 moc3 计算 SHA-256。参数最多 800 个可用记录（原请求只取 600），名称/分组最多 160 个 Unicode 标量，部件 300，表情/动作各 256；反馈 1000。有限数、正确范围和默认值是入表前提。Stage 报告原始 min/max/default，不做三位小数舍入，避免把很小但有效的范围变成零宽。`parametersComplete` 只说明参数数量是否完整，不能当语义已验证。字段被截断或排除时明确留计数；替换后尚无可用规则或 identity 证据的标准名写入 `coverageUnknown`。
 
@@ -52,7 +52,7 @@ Stage 新增完整 `ruleAliasVersion: 1` 与 `ruleAliases: {标准名:{ids:[物�
 
 本地技能已接到三个真实入口：Flutter assets manifest、`extraSkillLoadersProvider`、Kotlin `ManagedSkillRequest.names`。继续使用现有事务安装、引擎代际与用户接管规则：删掉 managed 注释后不覆盖。远程主机只在已有明确安装操作中加载 `loadUiSkillBundle(null, companionAdaptSkillName)` 并交 `UiSkillRemoteInstaller.install(context, host, bundle)`；不能因有发消息权限就后台安装。旧主机缺技能时可选择使用轻量模式；若要在普通技术会话内联，发送同一 `companionAdaptSystem` 与同一 JSON 报告，App 仍校验，不声称技能已安装。
 
-`UiSkillRemoteInstaller` 目前是接口，默认 provider 为 null，本补丁未实现远程安装 UI。主线若通过 relay 提示安装，不能直接复用现有 `uiSkillInstallPrompt(bundle)`：它仍固定 dsh-go-ui 的目录和三个文件，会漏掉本技能的 `references/contract.txt`。远程接线须在用户明确的安装操作中传完整 `bundle.name/files` 并验安装结果；已有 `uiSkillShellScript(bundle)` 按 bundle 通用生成 SSH 脚本，但本轮未执行远程安装。
+`UiSkillRemoteInstaller` 目前是接口，默认 provider 为 null，本补丁未实现远程安装 UI。主线若通过 relay 提示安装，不能直接复用现有 `uiSkillInstallPrompt(bundle)`：它仍固定 DPSK-ui 的目录和三个文件，会漏掉本技能的 `references/contract.txt`。远程接线须在用户明确的安装操作中传完整 `bundle.name/files` 并验安装结果；已有 `uiSkillShellScript(bundle)` 按 bundle 通用生成 SSH 脚本，但本轮未执行远程安装。
 
 ## 5. 验证与仍需主线验收
 

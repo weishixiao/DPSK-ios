@@ -1,8 +1,8 @@
 // `dsh-ui-panel` (plugin-seams.md §4.2, native-plugins.md §3.1): a plugin's
 // native panel, drawn with the plugin view renderer under the plugin's name.
-// Its occupants are the inventory's `dsh-go:<id>` cells: 对话详情's 「插件」
+// Its occupants are the inventory's `DPSK:<id>` cells: 对话详情's 「插件」
 // tab for `session.tab`, 全部功能 for `features`, and the synthetic
-// `dsh-go.panel` slot. A package with one shows it instead of its web entry
+// `DPSK.panel` slot. A package with one shows it instead of its web entry
 // there (the planner sees to that; ui.json can still ask for the web).
 
 import 'package:flutter/widgets.dart';

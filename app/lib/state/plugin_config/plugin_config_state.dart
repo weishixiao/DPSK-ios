@@ -68,7 +68,7 @@ final pluginConfigScopeProvider = Provider<PluginConfigScope>((ref) {
   return PluginConfigScope.of(bundles);
 });
 
-/// The Host interface the page runs on: the dsh-go bridge's complete plugin
+/// The Host interface the page runs on: the DPSK bridge's complete plugin
 /// configuration where the Host has it, else the live fields DSH serves
 /// through the engine settings (the relay never reaches the bridge).
 final pluginConfigApiProvider = Provider<PluginConfigApi?>((ref) {

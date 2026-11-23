@@ -9,9 +9,9 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {setImmediate as nextTurn} from 'node:timers/promises';
 import {fileURLToPath, pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
-import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
-import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
+import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
+import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
+import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
 
 const cases = [
   'invalid-eager-rejection',
@@ -133,7 +133,7 @@ async function probe(mode) {
     let connection;
     let next;
     if (mode.startsWith('valid-stream-')) {
-      ws = new WebSocket(origin.replace('http:', 'ws:') + '/dsh-go/v1/stream');
+      ws = new WebSocket(origin.replace('http:', 'ws:') + '/DPSK/v1/stream');
       const queued = [];
       const waiters = [];
       ws.addEventListener('message', event => {
@@ -160,7 +160,7 @@ async function probe(mode) {
       connection = (await next(value => value.t === 'welcome')).conn;
     }
     const invoke = async id => {
-      const response = await fetch(origin + '/dsh-go/v1/invoke', {
+      const response = await fetch(origin + '/DPSK/v1/invoke', {
         method: 'POST', headers: {'content-type': 'application/json'},
         body: JSON.stringify({v: 1, pkg: 'deferred-owner-test', id,
           surface: 'composer.actions', ...(connection ? {stream: connection} : {})}),

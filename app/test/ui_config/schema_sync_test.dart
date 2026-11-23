@@ -11,9 +11,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support.dart';
 
 void main() {
-  final schema = jsonDecode(File('$appDir/assets/skills/dsh-go-ui/schema.json').readAsStringSync()) as Map;
+  final schema = jsonDecode(File('$appDir/assets/skills/DPSK-ui/schema.json').readAsStringSync()) as Map;
   final defs = schema[r'$defs'] as Map;
-  final x = schema['x-dsh-go'] as Map;
+  final x = schema['x-DPSK'] as Map;
   List<Object?> enumOf(String def) => (defs[def] as Map)['enum'] as List;
 
   test('value lists match UiSchema', () {
@@ -104,7 +104,7 @@ void main() {
   });
 
   test('the manifest lists every bundled file and SKILL.md is a valid managed skill', () async {
-    final dir = Directory('$appDir/assets/skills/dsh-go-ui');
+    final dir = Directory('$appDir/assets/skills/DPSK-ui');
     final manifest = jsonDecode(File('${dir.path}/manifest.json').readAsStringSync()) as Map;
     final files = (manifest['files'] as Map).cast<String, String>();
     final onDisk = {for (final f in dir.listSync()) f.uri.pathSegments.last}..remove('manifest.json');
@@ -115,15 +115,15 @@ void main() {
     expect(bundle.files.keys, unorderedEquals(files.values));
     final skill = bundle.skillMd;
     expect(skill.split('\n').first, '---', reason: 'DSH ignores a skill whose first line is not ---');
-    expect(RegExp(r'^name: dsh-go-ui$', multiLine: true).hasMatch(skill), isTrue);
+    expect(RegExp(r'^name: DPSK-ui$', multiLine: true).hasMatch(skill), isTrue);
     expect(RegExp(r'^description: \S', multiLine: true).hasMatch(skill), isTrue);
     expect(isManagedUiSkill(skill), isTrue);
-    expect(isManagedUiSkill(skill.replaceFirst(RegExp(r'^# dsh-go:managed.*\n', multiLine: true), '')), isFalse);
+    expect(isManagedUiSkill(skill.replaceFirst(RegExp(r'^# DPSK:managed.*\n', multiLine: true), '')), isFalse);
   });
 
   test('the examples apply without issues', () {
     for (final name in ['example-full.json', 'example-header.json', 'example-quiet.json']) {
-      final load = parseUiConfig(File('$appDir/assets/skills/dsh-go-ui/$name').readAsStringSync());
+      final load = parseUiConfig(File('$appDir/assets/skills/DPSK-ui/$name').readAsStringSync());
       expect(load.issues, isEmpty, reason: name);
     }
   });

@@ -235,7 +235,7 @@ const files = {
   'runtime/ohos/lifecycle/index.mjs': 'export function apply() {}',
   'runtime/ohos/capabilities/index.mjs': 'export function apply() {}',
   'runtime/ohos/phone/index.mjs': 'export function apply() {}',
-  'runtime/bridge/dsh-go-bridge/lib/index.js': 'export function apply() {}',
+  'runtime/bridge/DPSK-bridge/lib/index.js': 'export function apply() {}',
   'runtime/ohos/process/child-process.mjs': 'export const childProcess = true;',
   'runtime/ohos/中文 空格.txt': '中文与 emoji 🐳\n',
 };
@@ -464,7 +464,7 @@ test('日志快照/live边界单调去重、2000行有界，敏感值不落日�
 });
 
 test('start参数拒绝暗中改变宿主配置，模式仅允许normal或safe且拒绝sdcard', () => {
-  for (const key of ['NODE_OPTIONS', 'DSH_HOME', 'DSH_AGENTS_HOME', 'LD_PRELOAD', 'DSH_GO_OHOS_SIM', 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR', 'NODE_PATH', 'HOME']) {
+  for (const key of ['NODE_OPTIONS', 'DSH_HOME', 'DSH_AGENTS_HOME', 'LD_PRELOAD', 'DPSK_OHOS_SIM', 'DPSK_OHOS_NATIVE_LIBRARY_DIR', 'NODE_PATH', 'HOME']) {
     assert.throws(() => core.validateEnvironment(new Map([[key, 'value']])), { code: 'ohos_invalid_env' });
   }
   assert.deepEqual(core.validateEnvironment(new Map([['DEEPSEEK_API_KEY', 'test-only']])), { DEEPSEEK_API_KEY: 'test-only' });
@@ -808,11 +808,11 @@ test('P2 v6: 原生参数、真实沙箱目录和交付指令使用同一个gues
   assert.equal(options.runtimeRoot, c.dir + '/dsh-runtime/tree');
   assert.equal(options.linuxDirectory, c.dir + '/linux-tools');
   assert((await fs.stat(options.linuxDirectory)).isDirectory());
-  for (const relative of ['root/.dsh', 'root/.agents', 'root/workspace/DSH-Go']) {
+  for (const relative of ['root/.dsh', 'root/.agents', 'root/workspace/DPSK']) {
     assert((await fs.stat(root + '/' + relative)).isDirectory());
   }
   const instructions = await fs.readFile(root + '/root/.dsh/AGENTS.md', 'utf8');
-  assert(instructions.includes(root + '/root/workspace/DSH-Go'));
+  assert(instructions.includes(root + '/root/workspace/DPSK'));
   const diagnostic = await c.controller.publishDiagnostics('# 实际报告\n');
   assert.equal(diagnostic.get('path'), root + '/root/.dsh/dsh-app/diagnostics.md');
   assert.equal(await fs.readFile(diagnostic.get('path'), 'utf8'), '# 实际报告\n');
@@ -947,11 +947,11 @@ async function managedChannelCase(name) {
   native.state.phase = 'running'; native.state.baseUrl = 'http://127.0.0.1:3080'; native.state.token = 'fixture-managed-token';
   const request = async (connection, id, text = '中文技能') => ({ requestId: id,
     expectedRoot: c.controller.paths.guestRoot, expectedToken: native.state.token,
-    expectedGeneration: (await connection.invoke('getStatus')).get('managedSkillGeneration'), name: 'dsh-go-ui',
-    files: new Map([['notes/readme.txt', text], ['SKILL.md', '---\n# dsh-go:managed\nname: dsh-go-ui\n---\n' + text + '\n']]),
+    expectedGeneration: (await connection.invoke('getStatus')).get('managedSkillGeneration'), name: 'DPSK-ui',
+    files: new Map([['notes/readme.txt', text], ['SKILL.md', '---\n# DPSK:managed\nname: DPSK-ui\n---\n' + text + '\n']]),
   });
   return { ...c, ...attached, attach, request,
-    directory: c.controller.paths.dshHome + '/skills/dsh-go-ui',
+    directory: c.controller.paths.dshHome + '/skills/DPSK-ui',
     close() {
       for (const [plugin, binding] of bindings) plugin.onDetachedFromEngine(binding);
       RuntimeController.shared = previous;
@@ -1351,7 +1351,7 @@ test('recovery: the failure says its cause is unknown; thirty seconds running cl
 });
 test('recovery: committed reset does not delete in old process; next process reinstalls and restores chosen bytes before native import',async()=>{
  let c=await controllerCase('rescue-reset-reinstall');await c.controller.install(false);
- const kept=c.dir+'/runtime/rootfs/root/.dsh/dsh-go/ui.json';await fs.mkdir(path.dirname(kept),{recursive:true});await fs.writeFile(kept,'user-ui');
+ const kept=c.dir+'/runtime/rootfs/root/.dsh/DPSK/ui.json';await fs.mkdir(path.dirname(kept),{recursive:true});await fs.writeFile(kept,'user-ui');
  const plugin=resetPlugin(c);try{assert.equal((await plugin.call({keep:['uiAndSkills'],reinstall:true})).code,'ohos_reset_committed');}finally{plugin.close();}
  assert.equal(await fs.readFile(kept,'utf8'),'user-ui');await assert.rejects(nativeHostModule.loadNativeHost(),{code:'ohos_restart_required'});assert.equal(nativeHostModule.nativeHostTouched(),false);
  c=await reopenCase(c);assert.equal(c.controller.snapshot().get('phase'),'installed');assert.equal(await fs.readFile(kept,'utf8'),'user-ui');assert.equal(c.controller.snapshot().get('resetPending'),false);assert.equal(nativeHostModule.nativeHostTouched(),false);

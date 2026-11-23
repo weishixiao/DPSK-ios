@@ -13,7 +13,7 @@ const authority = createGrantAuthority({
 });
 ```
 
-`hostLibrary`来自可信原生启动状态。主环境先装载固定签名addon，再通过RTLD_NOLOAD查找已存在的libdsh_host；不运行另一份host，不从URI/candidatePath取库或工作区路径。生产Node loader使用既有`@dsh-go/ohos-native`固定白名单product `workspace-grants`。Node worker不获得任意原生库加载参数。
+`hostLibrary`来自可信原生启动状态。主环境先装载固定签名addon，再通过RTLD_NOLOAD查找已存在的libdsh_host；不运行另一份host，不从URI/candidatePath取库或工作区路径。生产Node loader使用既有`@DPSK/ohos-native`固定白名单product `workspace-grants`。Node worker不获得任意原生库加载参数。
 
 此调用在原生addon中永久捕获唯一owner napi_env；之后issue/retire要求同一env。owner结束时永久封闭，不能被Worker重新认领。Worker可consume随机一次性ticket，不能通过id/gen直接Acquire。只比较env身份，不跨env调用N-API。首次bindOwner本身依赖上述固定启动顺序；不得把这项初始化推迟到已有不可信Worker之后，也不把任意主线程插件/native代码当已隔离对手。
 

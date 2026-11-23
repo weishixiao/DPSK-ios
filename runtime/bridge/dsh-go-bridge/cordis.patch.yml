@@ -1,17 +1,17 @@
-# Layer applied when a profile lists this bundle (`dsh plugin add dsh-go-bridge` on a remote
+# Layer applied when a profile lists this bundle (`dsh plugin add DPSK-bridge` on a remote
 # host). The dsh-app runtime loads it by path from /etc/dsh-app/dsh-web.patch.yml instead.
 - insert:
-    - id: dsh-go-bridge
-      name: dsh-go-bridge
+    - id: DPSK-bridge
+      name: DPSK-bridge
     # rtbuild.py copies the rows below this line into that overlay too, so both get them.
     # --- shared rows ---
     # 伙伴小屋's conversation (app/lib/companion/companion_state.dart, docs/design/companion.md):
     # the persona owns the whole system prompt and there are no tools. Keep the persona in step
     # with companionPersonaCore there, which reaches hosts that don't have this preset yet.
-    - id: preset-dsh-go-companion
+    - id: preset-DPSK-companion
       name: '@deepseek-ai/dsh-agent-preset'
       config:
-        id: dsh-go-companion
+        id: DPSK-companion
         name: 伙伴
         description: 伙伴小屋的对话：只有角色人设，没有工具。
         order: 90
@@ -53,10 +53,10 @@
                 name: '@deepseek-ai/dsh-command-compact'
     # Standard rows: @deepseek-ai/dsh-web-app@0.2.2-rc.1 presets/standard.patch.yml.
     # Recheck the standard tool set when upgrading DSH; see PRESET-NOTICE.txt.
-    - id: preset-dsh-go-companion-full
+    - id: preset-DPSK-companion-full
       name: '@deepseek-ai/dsh-agent-preset'
       config:
-        id: dsh-go-companion-full
+        id: DPSK-companion-full
         name: 伙伴·完整
         description: 保留伙伴人设，使用当前主机的标准工具与已连接的手机工具。
         order: 91
@@ -64,7 +64,7 @@
           # This scoped provider owns persona-prefix + fixed persona-suffix.
           # User messages stay verbatim; structured facts use runtime-context.
           - id: companion-full-context
-            name: dsh-go-bridge/companion/full-context
+            name: DPSK-bridge/companion/full-context
           - id: agent-instructions
             name: '@deepseek-ai/dsh-agent-instructions'
             config:

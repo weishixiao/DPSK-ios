@@ -2,7 +2,7 @@
 
 [中文](../from-zero.md)
 
-Build an installable DSH plugin from an empty directory. It counts Unicode code points, UTF-8 bytes and lines, displays a native card in dsh-go, and keeps an ordinary tool result for the model and the DSH web client. The example does not make network requests, write files or read the clipboard. Its output contains counts only.
+Build an installable DSH plugin from an empty directory. It counts Unicode code points, UTF-8 bytes and lines, displays a native card in DPSK, and keeps an ordinary tool result for the model and the DSH web client. The example does not make network requests, write files or read the clipboard. Its output contains counts only.
 
 The sequence is: write the bundle, test and check its view, install it on a host, inspect the release tarball, publish your package, then verify the market index. Each step has an observable result.
 
@@ -12,7 +12,7 @@ The example targets **DSH and dsh-tools 0.2.1-rc.4** and needs Node 22.19 or lat
 
 `engines.dsh` and the dsh-tools dependencies name a **tested version range**, the same as the example plugins in this repository: `">=0.2.1-rc.2 <0.3.0-0"`. DSH compares versions with semver when it installs a plugin, so a single exact version gets the plugin refused as soon as the engine moves on (rc.2 → rc.4, say) even if not a line changed. The lower bound is the oldest version you tested; the upper bound stops before the next minor version, because a 0.x minor may break things. To support a version outside the range, run the same tests on it first, then widen the range.
 
-You need an installed `dsh` CLI and a complete dsh-go development checkout containing `sdk/plugin-kit/`. The SDK is distributed with the repository and is not published to npm. The name `@dsh-go/plugin-kit` in examples is not an instruction to install a public npm package. This guide invokes the checker from the checkout; the plugin itself uses DSH's `dsh-tools` at runtime.
+You need an installed `dsh` CLI and a complete DPSK development checkout containing `sdk/plugin-kit/`. The SDK is distributed with the repository and is not published to npm. The name `@DPSK/plugin-kit` in examples is not an instruction to install a public npm package. This guide invokes the checker from the checkout; the plugin itself uses DSH's `dsh-tools` at runtime.
 
 ```sh
 node --version
@@ -20,8 +20,8 @@ npm --version
 pnpm --version
 dsh --version
 
-# Replace this with your complete dsh-go development checkout.
-DSHGO_DEV_ROOT=/absolute/path/to/dsh-go
+# Replace this with your complete DPSK development checkout.
+DSHGO_DEV_ROOT=/absolute/path/to/DPSK
 mkdir -p dsh-text-metrics-demo/lib dsh-text-metrics-demo/test
 cd dsh-text-metrics-demo
 ```
@@ -107,7 +107,7 @@ export function toolCard(build) {
     try {
       const json = JSON.stringify(build(args, value))
       if (json === undefined || Buffer.byteLength(json, 'utf8') > 8 * 1024) return {}
-      return { 'dsh-go/view': JSON.parse(json) }
+      return { 'DPSK/view': JSON.parse(json) }
     } catch {
       return {}
     }
@@ -192,8 +192,8 @@ test('real defineTool output validates and carries both model text and a card', 
     const value = await tool.execute(args)
     assert.deepEqual(validateJsonSchemaValue(tool.output.schema, value, 'value'), [])
     const meta = tool.output.presentationMeta(args, value)
-    assert.deepEqual(meta['dsh-go/view'], metricsView(value))
-    assert.ok(Buffer.byteLength(JSON.stringify(meta['dsh-go/view']), 'utf8') < 8192)
+    assert.deepEqual(meta['DPSK/view'], metricsView(value))
+    assert.ok(Buffer.byteLength(JSON.stringify(meta['DPSK/view']), 'utf8') < 8192)
     assert.equal(tool.output.render(args, value)[0].type, 'text')
     assert.ok(!JSON.stringify(meta).includes(args.text))
   }
@@ -213,7 +213,7 @@ test('a broken or oversized card does not fail the tool result', () => {
 # Text metrics / 文本统计
 
 The `text_metrics` tool counts Unicode code points, UTF-8 bytes and lines.
-It does not store the input or make network requests. dsh-go shows a native
+It does not store the input or make network requests. DPSK shows a native
 card; the DSH web client keeps the ordinary text result.
 
 `text_metrics` 统计码点、UTF-8 字节和行数，不保存输入、不发网络请求。
@@ -353,9 +353,9 @@ npm view @your-scope/dsh-text-metrics name version repository dist.integrity --j
 
 The example has no `prepare` or `prepublishOnly` build scripts, so these commands explicitly disable scripts. If later versions require them, complete the build and tests before following the appropriate release process. Uploading a source repository alone does not publish an installable npm package. Refer to [npm's publication documentation](https://docs.npmjs.com/cli/v11/commands/npm-publish/) for account operations and command options.
 
-## 7. Verify the market index dsh-go actually consumes
+## 7. Verify the market index DPSK actually consumes
 
-> Submission and listing in the official market (dsh-go-market) are covered in [Publishing and listing](market.md). This section is about the default discovery index only.
+> Submission and listing in the official market (DPSK-market) are covered in [Publishing and listing](market.md). This section is about the default discovery index only.
 
 The app currently reads dshfind's **format-1 index** at `https://api.dshfind.com/market/dsh-index.json`. Website discovery and inclusion in this index have different requirements.
 
@@ -375,7 +375,7 @@ console.log(entry ? JSON.stringify(entry, null, 2) : 'Not in this index yet')
 JS
 ```
 
-Finally search for the package in the app, verify version, source and target host, install it and make a fresh tool call. A website page, an npm release, an index entry and a working app installation are four separate states; confirm each one. If the package stays unlisted, contact dshfind through its feedback channel with the public repository URL, the exact npm version and the index result. No listing request to dsh-go is needed.
+Finally search for the package in the app, verify version, source and target host, install it and make a fresh tool call. A website page, an npm release, an index entry and a working app installation are four separate states; confirm each one. If the package stays unlisted, contact dshfind through its feedback channel with the public repository URL, the exact npm version and the index result. No listing request to DPSK is needed.
 
 ## 8. Troubleshooting
 
@@ -391,6 +391,6 @@ Finally search for the package in the app, verify version, source and target hos
 
 ## References
 
-Compare the implementation with this repository's [quick start](quickstart.md), [host support](hosts.md), [checklist](checklist.md), the SDK and the [weather example](../../../examples/plugins/dsh-go-example-weather/).
+Compare the implementation with this repository's [quick start](quickstart.md), [host support](hosts.md), [checklist](checklist.md), the SDK and the [weather example](../../../examples/plugins/DPSK-example-weather/).
 
 Bundle/profile behavior is documented in the [official DSH publishing guide](https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/develop/basic/publish.md). Market requirements come from [dshfind's discovery documentation](https://github.com/hikariming/dshfind/blob/3ee8543f3ec60792cae0523d4a149cba0d68770c/README.zh-CN.md) and its [index generator](https://github.com/hikariming/dshfind/blob/3ee8543f3ec60792cae0523d4a149cba0d68770c/scripts/lib/dsh-index.mjs).

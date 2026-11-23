@@ -1,5 +1,5 @@
 // Tool cards: a plugin tool's `presentationMeta` returns
-// {"dsh-go/view": View}; DSH stores it as `tool/result.data.meta`; the app
+// {"DPSK/view": View}; DSH stores it as `tool/result.data.meta`; the app
 // draws it in the tool row (docs/design/native-plugins-views.md §8).
 
 import 'dart:convert';
@@ -116,15 +116,15 @@ void main() {
   setUpAll(loadTestFonts);
 
   group('ToolView', () {
-    test('reads meta["dsh-go/view"] on a successful call only', () {
+    test('reads meta["DPSK/view"] on a successful call only', () {
       expect(ToolView.of(weather('a')).pluginView, isNull);
       expect(ToolView.of(weather('a', meta: {'diffs': []})).pluginView, isNull);
-      final ok = ToolView.of(weather('a', meta: {'dsh-go/view': weatherCard}));
+      final ok = ToolView.of(weather('a', meta: {'DPSK/view': weatherCard}));
       expect(ok.pluginView, isA<DshUiParsed>());
       expect(ok.pluginTitle, '东京 · 未来 3 天');
-      final failed = ToolView.of(weather('a', meta: {'dsh-go/view': weatherCard}, status: ToolStatus.failed));
+      final failed = ToolView.of(weather('a', meta: {'DPSK/view': weatherCard}, status: ToolStatus.failed));
       expect(failed.pluginView, isNull);
-      expect(ToolView.of(weather('a', meta: {'dsh-go/view': 'garbage'})).pluginView, isA<DshUiInvalid>());
+      expect(ToolView.of(weather('a', meta: {'DPSK/view': 'garbage'})).pluginView, isA<DshUiInvalid>());
     });
 
     test('8 KiB: a bigger card is not drawn', () {
@@ -135,12 +135,12 @@ void main() {
           {'type': 'text', 'text': '字' * 3000},
         ],
       };
-      expect(ToolView.of(weather('a', meta: {'dsh-go/view': big})).pluginView, isA<DshUiInvalid>());
+      expect(ToolView.of(weather('a', meta: {'DPSK/view': big})).pluginView, isA<DshUiInvalid>());
     });
 
     test('the session log carries the view through a reload', () {
-      final item = replayed({'dsh-go/view': weatherCard});
-      expect((item.meta as Map)['dsh-go/view'], weatherCard);
+      final item = replayed({'DPSK/view': weatherCard});
+      expect((item.meta as Map)['DPSK/view'], weatherCard);
       expect(ToolView.of(item).pluginTitle, '东京 · 未来 3 天');
       expect(replayed(null).meta, isNull);
     });
@@ -157,7 +157,7 @@ void main() {
 
     testWidgets('a view: the card open by default, its title in the row when closed', (tester) async {
       await pumpRows(tester, [
-        weather('card', meta: {'dsh-go/view': weatherCard}),
+        weather('card', meta: {'DPSK/view': weatherCard}),
       ]);
       expect(inRow('card', find.byType(PluginToolCard)), findsOneWidget);
       expect(inRow('card', find.text('最高')), findsOneWidget);
@@ -180,7 +180,7 @@ void main() {
 
     testWidgets('the card opens when the result arrives, unless closed by hand', (tester) async {
       final running = weather('late', status: ToolStatus.running);
-      final done = weather('late', meta: {'dsh-go/view': weatherCard});
+      final done = weather('late', meta: {'DPSK/view': weatherCard});
       await pumpRows(tester, [running]);
       expect(inRow('late', find.text('最高')), findsNothing);
       await pumpRows(tester, [done]);
@@ -189,7 +189,7 @@ void main() {
       // Closed by hand: it stays closed while the row updates.
       await expand(tester, 'late');
       await pumpRows(tester, [
-        weather('late', meta: {'dsh-go/view': weatherCard, 'n': 2}),
+        weather('late', meta: {'DPSK/view': weatherCard, 'n': 2}),
       ]);
       await pumpFrames(tester, 12);
       expect(inRow('late', find.text('最高')), findsNothing);
@@ -197,7 +197,7 @@ void main() {
 
     testWidgets('inside a folded turn: a plain row, the card is elsewhere', (tester) async {
       await pumpRows(tester, [
-        weather('in', meta: {'dsh-go/view': weatherCard}),
+        weather('in', meta: {'DPSK/view': weatherCard}),
       ], card: ToolCardPlacement.rowOnly);
       expect(inRow('in', find.text('东京 · 未来 3 天')), findsOneWidget);
       expect(inRow('in', find.text('最高')), findsNothing);
@@ -208,7 +208,7 @@ void main() {
 
     testWidgets('outside a folded turn: the card alone', (tester) async {
       await pumpRows(tester, [
-        weather('out', meta: {'dsh-go/view': weatherCard}),
+        weather('out', meta: {'DPSK/view': weatherCard}),
       ], card: ToolCardPlacement.cardOnly);
       expect(inRow('out', find.text('最高')), findsOneWidget);
       expect(inRow('out', find.text('东京 · 未来 3 天')), findsOneWidget);
@@ -226,7 +226,7 @@ void main() {
         weather(
           'untitled',
           meta: {
-            'dsh-go/view': {'type': 'metric', 'label': '最高', 'value': '21°'},
+            'DPSK/view': {'type': 'metric', 'label': '最高', 'value': '21°'},
           },
         ),
       ]);
@@ -238,7 +238,7 @@ void main() {
         weather(
           'broken',
           meta: {
-            'dsh-go/view': {'type': 'gauge'},
+            'DPSK/view': {'type': 'gauge'},
           },
         ),
       ]);
@@ -252,19 +252,19 @@ void main() {
       final cyclic = <String, Object?>{'type': 'stack'};
       cyclic['children'] = [cyclic];
       await pumpRows(tester, [
-        weather('a', meta: {'dsh-go/view': weatherCard}),
-        weather('b', meta: {'dsh-go/view': cyclic}),
-        weather('c', meta: {'dsh-go/view': double.nan}),
+        weather('a', meta: {'DPSK/view': weatherCard}),
+        weather('b', meta: {'DPSK/view': cyclic}),
+        weather('c', meta: {'DPSK/view': double.nan}),
         weather(
           'd',
           meta: {
-            'dsh-go/view': {'type': 'image', 'src': 'https://tracker.example/p.png'},
+            'DPSK/view': {'type': 'image', 'src': 'https://tracker.example/p.png'},
           },
         ),
         weather(
           'e',
           meta: {
-            'dsh-go/view': {
+            'DPSK/view': {
               'type': 'stack',
               'children': [
                 weatherCard,
@@ -293,7 +293,7 @@ void main() {
         weather(
           'ro',
           meta: {
-            'dsh-go/view': {
+            'DPSK/view': {
               'type': 'stack',
               'title': '只读',
               'children': [actionsView, choiceView, listView],
@@ -331,7 +331,7 @@ void main() {
 
     testWidgets('history: the card is back after reloading the session', (tester) async {
       await pumpRows(tester, [
-        replayed({'dsh-go/view': weatherCard, 'other': 1}),
+        replayed({'DPSK/view': weatherCard, 'other': 1}),
       ]);
       expect(inRow('call-1', find.text('东京 · 未来 3 天')), findsOneWidget);
       expect(inRow('call-1', find.text('21°')), findsOneWidget);

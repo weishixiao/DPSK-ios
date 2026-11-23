@@ -10,11 +10,11 @@
   },
   "plugins": [
     {
-      "name": "@dsh-go/media",
+      "name": "@DPSK/media",
       "title": { "en": "Images & video", "zh": "生图生视频" },
       "description": { "en": "Generate images and video in chat", "zh": "在对话里生成图片和视频" },
       "author": "DPSK",
-      "homepage": "https://go.dshtui.com/p/%40dsh-go%2Fmedia",
+      "homepage": "https://go.dshtui.com/p/%40DPSK%2Fmedia",
       "repository": { "url": "https://github.com/weishixiao/dsh-media" },
       "metadata": { "category": "media", "keywords": ["生图", "视频", "image", "video"] },
       "versions": [
@@ -22,7 +22,7 @@
       ]
     },
     {
-      "name": "@dsh-go/translate",
+      "name": "@DPSK/translate",
       "title": { "en": "Live translate", "zh": "同声翻译" },
       "description": { "en": "Translate replies as they stream", "zh": "回复一边生成一边翻译" },
       "author": "DPSK",

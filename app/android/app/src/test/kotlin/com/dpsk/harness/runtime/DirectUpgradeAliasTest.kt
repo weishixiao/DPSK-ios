@@ -11,7 +11,7 @@ class DirectUpgradeAliasTest {
     private val base = Files.createTempDirectory("direct-upgrade").toFile()
     private val root = File(base, "rootfs")
     private val args = listOf("proot", "/usr/bin/env", "-i", "/bin/sh", "-c", "exit 0")
-    private val markerName = ".dsh-go-direct-path-alias"
+    private val markerName = ".DPSK-direct-path-alias"
 
     @After fun cleanup() { base.deleteRecursively() }
 

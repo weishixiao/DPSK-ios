@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { createUsage } from '../bridge/dsh-go-bridge/lib/usage.js';
+import { createUsage } from '../bridge/DPSK-bridge/lib/usage.js';
 
 const prefix = process.env.DSH_TEST_PREFIX ?? process.env.DSH_PREFIX;
 const options = { skip: !prefix && 'prepared DSH prefix required' };

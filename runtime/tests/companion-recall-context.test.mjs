@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createRecallContexts } from '../bridge/dsh-go-bridge/lib/companion/recall-context.js';
-import { apply as applyFullContext } from '../bridge/dsh-go-bridge/lib/companion/full-context.js';
+import { createRecallContexts } from '../bridge/DPSK-bridge/lib/companion/recall-context.js';
+import { apply as applyFullContext } from '../bridge/DPSK-bridge/lib/companion/full-context.js';
 
 test('a late old disposer cannot remove a successor in the same actual scope', () => {
   const registry = createRecallContexts(), scope = {}, systemPrompt = {};

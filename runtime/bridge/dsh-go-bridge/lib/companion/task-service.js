@@ -24,7 +24,7 @@ export function mountCompanionTasks(ctx) {
         wake:id=>{const {kind}=store.stored(id);return kind==='host.find_draft'?find?.wake(id):
           kind==='host.compare_drafts'?compare?.wake(id):kind==='host.receipts_to_sheet'?receipts?.wake(id):runner.wake(id);},
         stop:async()=>{await Promise.all([runner.stop(),find?.stop(),compare?.stop(),receipts?.stop()]);await execution.close();}});
-      taskCtx.effect(()=>()=>store.close(),'dsh-go-bridge: durable companion tasks');
+      taskCtx.effect(()=>()=>store.close(),'DPSK-bridge: durable companion tasks');
       taskCtx.provide('dshGoCompanionTasks',store);
       for (const id of store.runnable()) store.wake(id);
     } catch(error) {

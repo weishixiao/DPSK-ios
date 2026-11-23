@@ -22,7 +22,7 @@
 
 代码在 `app/lib/ui/share/`：
 
-- **卡片**（`share_card.dart`）：固定 390 逻辑像素宽，用 App 自己的主题和 `MarkdownBody` 渲染正文（代码高亮、公式、表格都和聊天里一致）；代码块由卡片自己画成不滚动、自动换行、没有按钮的代码井。底部是品牌组合（鱼尾与气泡图形 + 「dsh-go」字标，`BrandLockup`）+ 二维码，二维码默认指向 `https://github.com/weishixiao/dsh-go`（`ShareContent.link`，可改）。
+- **卡片**（`share_card.dart`）：固定 390 逻辑像素宽，用 App 自己的主题和 `MarkdownBody` 渲染正文（代码高亮、公式、表格都和聊天里一致）；代码块由卡片自己画成不滚动、自动换行、没有按钮的代码井。底部是品牌组合（鱼尾与气泡图形 + 「DPSK」字标，`BrandLockup`）+ 二维码，二维码默认指向 `https://github.com/weishixiao/DPSK`（`ShareContent.link`，可改）。
 - **三种模板**：浅色（App 的雾蓝页面）、深色、卡片（DeepSeek 蓝底上浮一张白卡）。第一次打开跟随 App 明暗，之后记住上次选的。
 - **开关**：「提问」「模型与用时」可以单独关掉。
 - **长回答**：按块估算高度（中文约 1 em、英文约 0.55 em、代码按换行后的行数），超出约 1500 逻辑像素就在段落 / 列表项 / 代码行的边界截断，最后一行放「…」；单个超长段落在句号处截断。估算失误时还有一道硬上限（再高 30% 处淡出裁掉）。
@@ -35,7 +35,7 @@
 
 代码：`app/lib/ui/community/`、`app/lib/state/community_state.dart`。从上到下：
 
-1. **论坛**概览卡（`CommunityPage(onOpenForum: …)`，论坛客户端接好后由集成步骤传入；不传时这里是项目卡：品牌图形、「dsh-go」、一句 tagline，点开 GitHub）。
+1. **论坛**概览卡（`CommunityPage(onOpenForum: …)`，论坛客户端接好后由集成步骤传入；不传时这里是项目卡：品牌图形、「DPSK」、一句 tagline，点开 GitHub）。
 2. **精选插件**：维护者在 JSON 里写包名和一句推荐语；在 dshfind 目录里查到的才显示，「获取」打开插件市场原有的详情弹层（带信任提示，装到当前主机），状态（获取 / 更新 / 已安装 / 安装中）和插件市场一致。目录打不开时显示一行「插件目录没打开 · 点一下重试」。
 3. **玩法**：两列磁贴，点一下回到聊天、开一个新对话，把提示词放进输入框**但不发送**（复用「让 DSH 帮我修」的 `repairDraftProvider`）。
 4. **交流群**：QQ / 微信 / Telegram / 论坛等行，点开弹层：大二维码、群号（「复制群号」）、「打开」。
@@ -48,8 +48,8 @@
   → 先用：缓存（上次下载成功的） 或 内置 assets/community/community.json，取 revision 大的
   → 距上次联网 ≥ 6 小时：依次问
        自建源（--dart-define=DSH_COMMUNITY_FEED=https://…，配了才有）
-       raw.githubusercontent.com/weishixiao/dsh-go/main/community.json
-       cdn.jsdelivr.net/gh/weishixiao/dsh-go@main/community.json
+       raw.githubusercontent.com/weishixiao/DPSK/main/community.json
+       cdn.jsdelivr.net/gh/weishixiao/DPSK@main/community.json
        fastly.jsdelivr.net/gh/…（同上）
      上次成功的源排第一；第一个给出合法 JSON 的为准
   → revision 更大才替换并写缓存（CDN 上的旧副本不会把新内容盖回去）
@@ -82,7 +82,7 @@
 | `groups[].kind` | `qq` `wechat` `telegram` `discord` `forum` `github`，决定图标 |
 | `groups[].qr` | 二维码内容，缺省用 `url`；`url` `qr` `copy` 全空的项不显示 |
 
-**发布**：改仓库根目录的 `community.json` 并推到 `main`。jsDelivr 对分支文件有缓存，要立刻生效就访问一次 `https://purge.jsdelivr.net/gh/weishixiao/dsh-go@main/community.json`。发版时把同一份拷进 `app/assets/community/community.json`，新装用户离线也有最新内容。
+**发布**：改仓库根目录的 `community.json` 并推到 `main`。jsDelivr 对分支文件有缓存，要立刻生效就访问一次 `https://purge.jsdelivr.net/gh/weishixiao/DPSK@main/community.json`。发版时把同一份拷进 `app/assets/community/community.json`，新装用户离线也有最新内容。
 
 ### 发版前要填的值
 

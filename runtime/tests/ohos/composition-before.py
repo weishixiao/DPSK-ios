@@ -63,7 +63,7 @@ def main():
     command = ['python3', '-I', '-B', str(config / 'build-just-bash.py'),
         '--package', str(args.process_prefix / 'node_modules/just-bash'), '--out', str(process / 'build/just-bash')]
     built = subprocess.run(command, capture_output=True, text=True, check=True)
-    shutil.copytree(repo / 'runtime/bridge/dsh-go-bridge', out / 'runtime/bridge/dsh-go-bridge',
+    shutil.copytree(repo / 'runtime/bridge/DPSK-bridge', out / 'runtime/bridge/DPSK-bridge',
                     ignore=shutil.ignore_patterns('node_modules', '.git'))
     for name in ('LICENSE', 'THIRD_PARTY_NOTICES.md'):
         shutil.copy2(repo / name, out / name)

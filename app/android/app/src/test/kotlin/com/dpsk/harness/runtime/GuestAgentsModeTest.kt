@@ -24,7 +24,7 @@ class GuestAgentsModeTest {
             assertTrue(english.contains("## Phone control"))
             assertTrue(english.contains("## Local diagnostics"))
             assertTrue(english.contains("Ubuntu 24.04 environment (proot, no root required)"))
-            assertTrue(english.contains("`/sdcard/Download/DSH-Go/`"))
+            assertTrue(english.contains("`/sdcard/Download/DPSK/`"))
             assertFalse(english.contains("# 运行环境（DSH 手机版）"))
 
             GuestSetup.writeAgentsMd(root, phoneStorage = true, phoneControl = true, directEngine = true, nativeLocale = "en")
@@ -110,7 +110,7 @@ class GuestAgentsModeTest {
             assertEquals(modified, obj.lastModified())
             GuestSetup.writeAgentsMd(root, phoneStorage = true)
             assertFalse(Files.isSymbolicLink(file.toPath()))
-            assertTrue(file.readText().contains("`/sdcard/Download/DSH-Go/`"))
+            assertTrue(file.readText().contains("`/sdcard/Download/DPSK/`"))
             assertArrayEquals(original, obj.readBytes())
             assertEquals("tawcroot:link:123", Files.readSymbolicLink(File(root, "root/agents-backup.md").toPath()).toString())
         } finally { base.deleteRecursively() }
@@ -167,7 +167,7 @@ class GuestAgentsModeTest {
             GuestSetup.writeAgentsMd(root, phoneStorage = true)
             val text = File(root, "root/.dsh/AGENTS.md").readText()
             // The folder FilesPlugin saves into and lists, with no space to quote in shell commands.
-            assertTrue(text.contains("给用户的产出文件放到 `/sdcard/Download/DSH-Go/`。"))
+            assertTrue(text.contains("给用户的产出文件放到 `/sdcard/Download/DPSK/`。"))
             assertFalse(text.contains("/sdcard/Download/DSH/"))
         } finally { root.deleteRecursively() }
     }
@@ -180,7 +180,7 @@ class GuestAgentsModeTest {
             val proot = file.readText()
             assertTrue(proot.contains("## 本机诊断"))
             assertTrue(proot.contains("`\$DSH_HOME/dsh-app/diagnostics.md`"))
-            assertTrue(proot.contains("dsh-go-support"))
+            assertTrue(proot.contains("DPSK-support"))
             GuestSetup.writeAgentsMd(root, phoneStorage = false, directEngine = true)
             val direct = file.readText()
             assertTrue(direct.contains("`${root.canonicalPath}/root/.dsh/dsh-app/diagnostics.md`"))

@@ -90,7 +90,7 @@
 
 实现采用**固定代码目录、安装归属记录、逐文件原子替换**：开始前原子持久写入 installing.json，其中保存当前与历次未完成安装的 ownedPaths/stagingHashes；先按深路径优先清理本版已退役的登记文件和空祖先目录，遇到当前版本需要的目录则保留，未知内容不递归删除。逐个核已有文件的 size/SHA256，相同则复用，不重复读取 HAP 内容；变更文件从 RawFd 的 `{fd,offset,length}` 分块读出，写同文件系统的 staging 临时文件，核摘要后 rename；最后清理登记的临时文件、提交安装记录并清掉 installing 标记。任何中断都保留“待续装”状态，start 必须拒绝；换 HAP 版本后也继承未完成事务的归属记录，再按新版本清单续装。这样升级只写变化部分，不承诺旧版本即时回滚，也不在已经启动过 Node 的 App 进程内换代码。
 
-`guestRoot = context.filesDir + '/runtime/rootfs'`；`HOME`、`DSH_HOME`、`DSH_AGENTS_HOME` 分别为其下的 `root`、`root/.dsh`、`root/.agents`，唯一 workspaceRoot 为 `root/workspace`。交付文件放 `root/workspace/DSH-Go`；缓存仍放 `context.cacheDir`。`rootfs` 只是目录名，没有 Linux guest。运行时代码仍在 `context.filesDir + '/dsh-runtime/tree'`，不在 workspaceRoots 中。任何安装/首次启动的目录创建失败均明确失败，不回退到 `/` 或 `process.cwd()`。
+`guestRoot = context.filesDir + '/runtime/rootfs'`；`HOME`、`DSH_HOME`、`DSH_AGENTS_HOME` 分别为其下的 `root`、`root/.dsh`、`root/.agents`，唯一 workspaceRoot 为 `root/workspace`。交付文件放 `root/workspace/DPSK`；缓存仍放 `context.cacheDir`。`rootfs` 只是目录名，没有 Linux guest。运行时代码仍在 `context.filesDir + '/dsh-runtime/tree'`，不在 workspaceRoots 中。任何安装/首次启动的目录创建失败均明确失败，不回退到 `/` 或 `process.cwd()`。
 
 ## 公开 API 依据与设备待验
 

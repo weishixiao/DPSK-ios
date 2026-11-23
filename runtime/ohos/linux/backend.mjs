@@ -44,7 +44,7 @@ export class LinuxRuntimeBackend {
   spawn(spec){
     if(this.closed||this.#failure)throw this.#failure??failure('ERR_OHOS_PROCESS_CLOSED','Linux backend is closed');
     if(!spec||!argvValid(spec.argv))throw new TypeError('argv must contain NUL-free strings');
-    if(spec.policy!==undefined||spec.argv[0]==='/dsh-go/ohos/confined'||spec.argv[0]==='/dsh-go/ohos/linux/confined')throw failure('ERR_OHOS_BACKEND_CONFINEMENT','Linux cannot consume an unenforced workspace policy or ticket');
+    if(spec.policy!==undefined||spec.argv[0]==='/DPSK/ohos/confined'||spec.argv[0]==='/DPSK/ohos/linux/confined')throw failure('ERR_OHOS_BACKEND_CONFINEMENT','Linux cannot consume an unenforced workspace policy or ticket');
     const mounts=spec.mounts??[];
     if(!Array.isArray(mounts)||mounts.length>4||!mounts.every(item=>mountValid(item)&&this.#exports.has(item.tag))||(mounts.length&&!this.#mounts))throw failure('ERR_OHOS_LINUX_WORKSPACE_UNAVAILABLE','Guest mounts must name App directories this VM exported, and the guest must support them');
     if(spec.cwd!=='/workspace'&&!mounts.some(item=>inside(item.target,spec.cwd)))throw failure('ERR_OHOS_LINUX_WORKSPACE_UNAVAILABLE','A host cwd must lie inside one of this job\'s App directory mounts; otherwise only the private guest /workspace is admitted');

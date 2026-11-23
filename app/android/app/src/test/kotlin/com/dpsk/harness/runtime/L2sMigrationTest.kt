@@ -410,9 +410,9 @@ class L2sMigrationTest {
     @Test fun aCopyLeftByAKilledRunIsRemovedAndLookalikeUserFilesStay() {
         file("root/a", "x")
         link("root/a", "root/b")
-        val leftover = file("root/.dsh-go-l2s-0123456789abcdef.tmp", "partial copy")
-        val user = file("root/.dsh-go-l2s-notes.tmp", "mine")
-        val alsoUser = file("root/.dsh-go-l2s-0123456789ABCDEF.tmp", "mine too")
+        val leftover = file("root/.DPSK-l2s-0123456789abcdef.tmp", "partial copy")
+        val user = file("root/.DPSK-l2s-notes.tmp", "mine")
+        val alsoUser = file("root/.DPSK-l2s-0123456789ABCDEF.tmp", "mine too")
 
         migrate()
         assertFalse(leftover.exists())

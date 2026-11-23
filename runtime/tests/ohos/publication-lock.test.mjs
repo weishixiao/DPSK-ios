@@ -18,7 +18,7 @@ const records = [];
 function actor(lockPath) {
   const argv = strict ? ['--jitless', '--import', process.env.DSH_TEST_SIM_PRELOAD, childScript, lockPath, '--strict'] : [childScript, lockPath];
   const child = spawn(process.execPath, argv, {
-    env: { ...process.env, DSH_GO_OHOS_SIM_PLATFORM: 'openharmony', DSH_GO_OHOS_SIM_ADDONS: '[]' },
+    env: { ...process.env, DPSK_OHOS_SIM_PLATFORM: 'openharmony', DPSK_OHOS_SIM_ADDONS: '[]' },
     stdio: ['pipe', 'pipe', 'pipe'],
   });
   const messages = [], waits = [];

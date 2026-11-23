@@ -19,11 +19,11 @@ import 'app_links.dart';
 final _packageName = RegExp(r'^(?:@[a-z0-9][a-z0-9._~-]*/)?[a-z0-9][a-z0-9._~-]*$');
 
 /// The page of [name] in the official market, the package name encoded as
-/// one path segment (`/p/%40dsh-go%2Fmedia`).
+/// one path segment (`/p/%40DPSK%2Fmedia`).
 String marketPluginLink(String name) => '$shareHostOrigin/p/${Uri.encodeComponent(name)}';
 
 /// The package a plugin link names — https or `dpsk://`, on the share host,
-/// the name encoded or not (`/p/@dsh-go/media`); null for anything else.
+/// the name encoded or not (`/p/@DPSK/media`); null for anything else.
 String? marketPluginLinkName(Uri uri) {
   final scheme = uri.scheme.toLowerCase();
   if (scheme != 'https' && scheme != appLinkScheme) return null;

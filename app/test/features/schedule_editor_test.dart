@@ -186,7 +186,7 @@ void main() {
           'value': {
             'answers': [
               {
-                'id': 'dsh-go-schedule-authorization-synthetic',
+                'id': 'DPSK-schedule-authorization-synthetic',
                 'selected': ['授权 / Authorize'],
               },
             ],
@@ -237,7 +237,7 @@ void main() {
         'value': {
           'answers': [
             {
-              'id': 'dsh-go-schedule-authorization-edit-question',
+              'id': 'DPSK-schedule-authorization-edit-question',
               'selected': ['授权 / Authorize'],
             },
           ],

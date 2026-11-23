@@ -22,7 +22,7 @@ void main() {
   late DshClient client;
   late ProviderContainer container;
   late Completer<String?> integrity;
-  final entry = officialFixtureMarket().byName['@dsh-go/media']!;
+  final entry = officialFixtureMarket().byName['@DPSK/media']!;
 
   setUp(() async {
     integrity = Completer<String?>();
@@ -90,6 +90,6 @@ void main() {
       carrier.calls.where((call) => call.$1.contains('Bundle') && !call.$1.contains('list')).map((call) => call.$1),
       ['pluginManager/removeBundle', 'pluginManager/installBundle'],
     );
-    expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@dsh-go/media@0.2.0');
+    expect(carrier.argsOf('pluginManager/installBundle').single['spec'], '@DPSK/media@0.2.0');
   });
 }

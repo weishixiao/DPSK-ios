@@ -2,7 +2,7 @@
 // conversation view): a sidebar panel (`main`), a settings section, and a
 // right pane tab, run against a model of DSH Web 0.2.1-rc.4's page under
 // node (test/plugins/islands/support/island_page_harness.mjs). Names match
-// whole; two controls by the name, or another entry dsh-go-bridge reports
+// whole; two controls by the name, or another entry DPSK-bridge reports
 // under it, is a miss. Where the client records what it opened (the right
 // pane's layout, by kind) that is read back; where it doesn't (panels and
 // sections live in memory), the control's own current state

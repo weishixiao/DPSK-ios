@@ -8,7 +8,7 @@ import os from 'node:os';
 import path from 'node:path';
 
 const fields = ['PROBE_VALUE', 'OWN_VALUE', 'HOME', 'TMPDIR', 'DSH_HOME', 'DSH_AGENTS_HOME',
-  'PATH', 'DSH_GO_GUEST_PATH', '__proto__', 'HIDDEN_VALUE'];
+  'PATH', 'DPSK_GUEST_PATH', '__proto__', 'HIDDEN_VALUE'];
 const base = fs.mkdtempSync(path.join(os.tmpdir(), 'direct-process-env-'));
 const worker = String.raw`
 import assert from 'node:assert/strict';
@@ -86,7 +86,7 @@ for (const row of result.rows) {
     const normal = {
       PROBE_VALUE: 'inherited', OWN_VALUE: 'own', HOME: '/root/custom', TMPDIR: '/tmp/custom',
       DSH_HOME: '/root/dsh', DSH_AGENTS_HOME: '/root/agents',
-      PATH: `${result.bin}:${result.rootfs}/usr/bin:/custom/bin`, DSH_GO_GUEST_PATH: null,
+      PATH: `${result.bin}:${result.rootfs}/usr/bin:/custom/bin`, DPSK_GUEST_PATH: null,
       ['__proto__']: 'literal-key', HIDDEN_VALUE: null,
     };
     assert.deepEqual(row.native, normal, 'the native control includes enumerable prototype keys');
@@ -95,7 +95,7 @@ for (const row of result.rows) {
       for (const key of ['HOME', 'TMPDIR', 'DSH_HOME', 'DSH_AGENTS_HOME']) {
         expected[key] = result.rootfs + normal[key];
       }
-    } else expected.DSH_GO_GUEST_PATH = '/usr/bin:/custom/bin';
+    } else expected.DPSK_GUEST_PATH = '/usr/bin:/custom/bin';
     assert.deepEqual(row.adapted, expected);
   });
 }

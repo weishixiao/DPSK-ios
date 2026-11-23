@@ -6,8 +6,8 @@ import { pathToFileURL } from 'node:url';
 import { fields } from './schema.js';
 import { canonicalUuid, recallError, validRecallSessionId } from './recall-schema.js';
 
-const RECORD = 'plugin:dsh-go/companion-recall';
-const FULL_PRESET = 'dsh-go-companion-full';
+const RECORD = 'plugin:DPSK/companion-recall';
+const FULL_PRESET = 'DPSK-companion-full';
 const CONFIG_RECORDS = new Set(['agent-preset/selected', 'model/selection',
   'subagent/model-selection-policy',
   'permission/preset', 'approval/policy', 'sandbox/mode', 'plan/mode']);
@@ -62,7 +62,7 @@ export async function createRecallEngineAdapter(ctx, { contexts } = {}) {
     marked = undefined;
     coordinator()?.retireAll('adapter-disposed');
     return projection?.dispose();
-  }, 'dsh-go-bridge: recall engine owner');
+  }, 'DPSK-bridge: recall engine owner');
   engine = await loadEngine(ctx);
   if (closed) throw unavailable();
   const projectionRegistry = ctx.get('sessionProjections');

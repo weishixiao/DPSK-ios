@@ -275,7 +275,7 @@ void main() {
       expect(await probeRouteGuard(base), RouteGuard.unknown);
       await server.close(force: true);
       expect(await probeRouteGuard(base), RouteGuard.unknown, reason: 'nothing listening');
-      expect(seen.first, '/dsh-go/v1/inventory cookie=null');
+      expect(seen.first, '/DPSK/v1/inventory cookie=null');
     });
 
     test('launch URL is the 网页版 one', () {

@@ -167,7 +167,7 @@ void main() {
     expect(catalog.entries.every((entry) => entry.listing == null), isTrue);
     expect(
       server.paths,
-      unorderedEquals(['/market/index.json', '/market/dsh-go.json']),
+      unorderedEquals(['/market/index.json', '/market/DPSK.json']),
     );
   });
 }

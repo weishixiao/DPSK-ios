@@ -2,7 +2,7 @@
   "schema": 1,
   "generatedAt": "2026-10-30T12:00:00Z",
   "plugins": {
-    "@dsh-go/media": {
+    "@DPSK/media": {
       "version": "0.2.0",
       "tier": "official",
       "title": { "zh": "生图生视频", "en": "Images & video" },
@@ -14,7 +14,7 @@
       "checkedAt": "2026-10-30T11:58:00Z",
       "blockedVersions": []
     },
-    "@dsh-go/translate": {
+    "@DPSK/translate": {
       "version": "1.0.0",
       "tier": "official",
       "title": { "zh": "同声翻译", "en": "Live translate" },

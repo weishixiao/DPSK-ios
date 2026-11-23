@@ -7,7 +7,7 @@ import 'errors.dart';
 import 'json.dart';
 import 'session_api.dart';
 
-const runtimeCapabilitiesPath = '/dsh-go/v1/runtime-capabilities';
+const runtimeCapabilitiesPath = '/DPSK/v1/runtime-capabilities';
 
 enum RuntimeSupport { supported, unsupported, unknown }
 

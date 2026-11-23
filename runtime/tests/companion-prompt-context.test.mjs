@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createCompanionPromptContext, validatePromptContext } from '../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
-import { renderCompanionProfile, companionFullRules } from '../bridge/dsh-go-bridge/lib/companion/full-persona.js';
+import { createCompanionPromptContext, validatePromptContext } from '../bridge/DPSK-bridge/lib/companion/prompt-context.js';
+import { renderCompanionProfile, companionFullRules } from '../bridge/DPSK-bridge/lib/companion/full-persona.js';
 
 const START = Date.UTC(2026, 10, 8, 5, 20);
 const profile = { persona: 'Literal {{unknown}}', name: '小鲸', callMe: '阿明', moves: '' };

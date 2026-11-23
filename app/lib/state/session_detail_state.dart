@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'connection_state.dart';
 
-/// The session's goal (`goal` projection of dsh-goal), when one is set.
+/// The session's goal (`goal` projection of DPSKal), when one is set.
 class SessionGoal {
   const SessionGoal({
     required this.objective,

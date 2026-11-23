@@ -68,7 +68,7 @@ v1 golden 仍用原基准，不因 v2 更新；v2 的浅深色、窄屏、大字
 视图函数的第二个参数 `caps` 告诉你 App 能画什么：
 
 ```js
-import { hasComponent, adaptView, localize } from '@dsh-go/plugin-kit'
+import { hasComponent, adaptView, localize } from '@DPSK/plugin-kit'
 
 view: (scope, caps) => {
   const v = buildView(scope)
@@ -88,7 +88,7 @@ view: (scope, caps) => {
 
 ## 工具卡永久兼容
 
-工具卡写进对话记录，一年后打开老对话也要能画。App 对 `meta["dsh-go/view"]` 只增不删，老格式永久能画。你这边：
+工具卡写进对话记录，一年后打开老对话也要能画。App 对 `meta["DPSK/view"]` 只增不删，老格式永久能画。你这边：
 
 - 改工具卡结构时，不要删老字段的含义；
 - 不要在工具卡里放会过期的东西（临时链接、带时效的图片地址）。

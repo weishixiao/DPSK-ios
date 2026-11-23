@@ -71,7 +71,7 @@ Map<String, Object?> scheduleQuestionFrame(
   String id, {
   String session = 's1',
   String purpose = 'schedule-authorization',
-  String prefix = 'dsh-go-schedule-authorization-',
+  String prefix = 'DPSK-schedule-authorization-',
 }) => {
   'type': 'waterfall',
   'event': 'user-questions/request',

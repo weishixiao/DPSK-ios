@@ -32,7 +32,7 @@ def main():
     flags = []
     if args.mode == 'strict':
         flags = ['--jitless', '--import', str(source / 'runtime/ohos/sim/preload.mjs')]
-        environment.update(DSH_GO_OHOS_SIM_PLATFORM='openharmony', DSH_GO_OHOS_SIM_ADDONS='[]')
+        environment.update(DPSK_OHOS_SIM_PLATFORM='openharmony', DPSK_OHOS_SIM_ADDONS='[]')
     cases = ['resume-forward', 'resume-backward', 'busy-forward', 'busy-backward',
              'ready-resume-before-expiry-check', 'ready-busy-before-expiry-check',
              'already-ready-expired-budget', 'first-install-refused', 'abort-during-wait', 'preaborted-ready']

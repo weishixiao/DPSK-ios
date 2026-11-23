@@ -40,7 +40,7 @@ FakeBridge _bridge({bool panels = true, int capsules = 0}) {
   final bridge = FakeBridge(
     contributions([
       plugin(
-        'dsh-go-example-usage',
+        'DPSK-example-usage',
         title: '用量',
         icon: 'chart',
         panels: [
@@ -54,7 +54,7 @@ FakeBridge _bridge({bool panels = true, int capsules = 0}) {
         ],
       ),
       plugin(
-        'dsh-go-example-album',
+        'DPSK-example-album',
         title: '相册',
         icon: 'gallery',
         panels: [
@@ -82,8 +82,8 @@ FakeBridge _bridge({bool panels = true, int capsules = 0}) {
     ]),
   );
   for (final (pkg, id, label, value) in [
-    ('dsh-go-example-usage', 'usage', '本对话', '¥0.42'),
-    ('dsh-go-example-album', 'album', '今日', '12 张'),
+    ('DPSK-example-usage', 'usage', '本对话', '¥0.42'),
+    ('DPSK-example-album', 'album', '今日', '12 张'),
   ]) {
     bridge.views['$pkg/$id'] = DshGoView(
       pkg: pkg,

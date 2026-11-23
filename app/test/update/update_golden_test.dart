@@ -87,7 +87,7 @@ class FakeUpdate extends AppUpdateController {
   }
 
   /// What [exportApk] answers; null = the copy failed. Counts the calls.
-  String? exportResult = 'Download/DSH-Go/dsh-go-1.2.0-arm64.apk';
+  String? exportResult = 'Download/DPSK/DPSK-1.2.0-arm64.apk';
   int exports = 0;
 
   @override
@@ -340,7 +340,7 @@ void main() {
       await tester.tap(find.descendant(of: find.byType(AlertDialog), matching: find.text('导出安装包')));
       await tester.pumpAndSettle();
       expect(update.exports, 1);
-      expect(find.text('已存到 下载/DSH-Go/dsh-go-1.2.0-arm64.apk'), findsOneWidget);
+      expect(find.text('已存到 下载/DPSK/DPSK-1.2.0-arm64.apk'), findsOneWidget);
     });
 
     testWidgets('nothing was downloaded, so nothing is offered for signing', (tester) async {

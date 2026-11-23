@@ -11,8 +11,8 @@ class DirectFailureTest {
     @Test fun directLoaderAndPreloadErrorsAreLaunchFailuresOnlyBeforeReady() {
         val lines = listOf(marker,
             "/data/user/0/app/files/runtime/rootfs/opt/node/bin/node: error while loading shared libraries: libstdc++.so.6: cannot open shared object file: No such file or directory",
-            "Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/data/user/0/app/files/runtime/rootfs/opt/dsh-go/direct/preload.mjs' imported from /data/user/0/app/files/",
-            "Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/data/user/0/app/files/runtime/rootfs/opt/dsh-go/direct/modules.mjs' imported from /data/user/0/app/files/",
+            "Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/data/user/0/app/files/runtime/rootfs/opt/DPSK/direct/preload.mjs' imported from /data/user/0/app/files/",
+            "Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/data/user/0/app/files/runtime/rootfs/opt/DPSK/direct/modules.mjs' imported from /data/user/0/app/files/",
             "DshDirectModuleIdentityError: this file needs compatible launch; stop the engine and turn off Direct engine")
         for (line in lines) {
             val failed = classify(listOf(line))

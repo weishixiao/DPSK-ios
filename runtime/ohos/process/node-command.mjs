@@ -7,7 +7,7 @@ export function nodeCommand({ roots, workspaceRoots, readOnly }) {
     let worker;
     try {
       const env = Object.fromEntries(ctx.env);
-      if (globalThis[Symbol.for('dsh.go.ohos.sim')] === true && process.env.DSH_GO_OHOS_SIM_PLATFORM) env.DSH_GO_OHOS_SIM_PLATFORM = process.env.DSH_GO_OHOS_SIM_PLATFORM;
+      if (globalThis[Symbol.for('dsh.go.ohos.sim')] === true && process.env.DPSK_OHOS_SIM_PLATFORM) env.DPSK_OHOS_SIM_PLATFORM = process.env.DPSK_OHOS_SIM_PLATFORM;
       worker = createNodeScriptWorker({ args, cwd: ctx.cwd, roots, workspaceRoots, readOnly,
         env, stdin: Buffer.from(ctx.stdin, 'latin1') });
     } catch (error) {

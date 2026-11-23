@@ -372,7 +372,7 @@ Future<void> sendDiagnosticAnalysis(
   }
 
   guard();
-  const preset = 'dsh-go-diagnostics';
+  const preset = 'DPSK-diagnostics';
   final session = await client.createSession(cwd: '/root/workspace', agentPreset: preset).timeout(rpcWait);
   guard();
   if (session.sessionId.isEmpty || session.agentPreset != preset) {

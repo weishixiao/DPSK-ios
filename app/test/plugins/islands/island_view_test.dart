@@ -191,7 +191,7 @@ void main() {
     const sheet = IslandSpec(
       host: HostRef.local,
       form: IslandForm.panel,
-      slot: 'dsh-go.chat',
+      slot: 'DPSK.chat',
       sessionId: 's1',
       maskOfficial: true,
     );
@@ -199,7 +199,7 @@ void main() {
     await _settle(tester);
     expect(
       _page.loads.single.fragment,
-      'dsh-go-island=conversation.session.header.actions,conversation.session.header.utilities,'
+      'DPSK-island=conversation.session.header.actions,conversation.session.header.utilities,'
       'conversation.input.dock,conversation.input.left,conversation.input.right,conversation.input.overlay,'
       'conversation.composer.dock',
     );
@@ -505,7 +505,7 @@ void main() {
     );
     await tester.pumpWidget(_app(IslandView(spec: spec, fallback: _fallback)));
     await _settle(tester);
-    expect(_page.loads.single.fragment, 'dsh-go-island=conversation.input.dock');
+    expect(_page.loads.single.fragment, 'DPSK-island=conversation.input.dock');
   });
 
   _testIsland('what a document the page already left says is dropped', (tester) async {
@@ -535,6 +535,6 @@ void main() {
     );
     await tester.pumpWidget(_app(IslandView(spec: spec, fallback: _fallback)));
     await _settle(tester);
-    expect(_page.loads.single.fragment, 'dsh-go-tab=k4-tab', reason: 'never island mode for this slot');
+    expect(_page.loads.single.fragment, 'DPSK-tab=k4-tab', reason: 'never island mode for this slot');
   });
 }

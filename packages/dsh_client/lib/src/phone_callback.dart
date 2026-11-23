@@ -376,7 +376,7 @@ final class DshPhoneClient {
     DshHttpResponse response;
     try {
       response = await _wire.postBytes(
-        '/dsh-go/v1/phone/$action',
+        '/DPSK/v1/phone/$action',
         bytes,
         contentType: 'application/json',
         followRedirects: false,

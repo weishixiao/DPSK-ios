@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { readFile } from 'node:fs/promises';
 import { createServer, request as httpRequest } from 'node:http';
-import { createCompanionRoutes } from '../../bridge/dsh-go-bridge/lib/companion/routes.js';
+import { createCompanionRoutes } from '../../bridge/DPSK-bridge/lib/companion/routes.js';
 
 export const golden = JSON.parse(await readFile(
   new URL('../../../tooling/companion/fixtures/phone-context.json', import.meta.url), 'utf8'));
@@ -24,12 +24,12 @@ export async function phoneHttp(f) {
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const port = server.address().port;
   return {
-    url: 'http://127.0.0.1:' + port + '/dsh-go/v1/companion/prompt-context',
+    url: 'http://127.0.0.1:' + port + '/DPSK/v1/companion/prompt-context',
     request(value) {
       const get = typeof value === 'string', data = get ? '' : JSON.stringify(value);
       return new Promise((resolve, reject) => {
         const req = httpRequest({ host: '127.0.0.1', port,
-          path: '/dsh-go/v1/companion/prompt-context' + (get ? '?sessionId=' + encodeURIComponent(value) : ''),
+          path: '/DPSK/v1/companion/prompt-context' + (get ? '?sessionId=' + encodeURIComponent(value) : ''),
           method: get ? 'GET' : 'POST',
           headers: get ? {} : { 'content-type': 'application/json', 'content-length': Buffer.byteLength(data) },
         }, res => {

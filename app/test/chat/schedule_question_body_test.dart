@@ -155,7 +155,7 @@ void main() {
         eventId: 'unknown',
         sessionId: 's1',
         raw: {'purpose': purpose},
-        questions: const [UserQuestion(id: 'dsh-go-schedule-authorization-future', question: text)],
+        questions: const [UserQuestion(id: 'DPSK-schedule-authorization-future', question: text)],
       );
       await tester.pumpWidget(
         testApp(

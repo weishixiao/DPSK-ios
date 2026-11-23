@@ -95,7 +95,7 @@ void main() {
       await for (final chunk in request) {
         received.addAll(chunk);
       }
-      expect(request.uri.path, '/dsh-go/v1/files/$_request/upload');
+      expect(request.uri.path, '/DPSK/v1/files/$_request/upload');
       expect(request.uri.queryParameters, {'stream': 's1', 'name': '中文 file.txt', 'mediaType': 'text/plain'});
       expect(request.headers.contentType!.mimeType, 'application/octet-stream');
       request.response.headers.contentType = ContentType.json;

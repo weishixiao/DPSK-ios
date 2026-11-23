@@ -69,13 +69,13 @@ argv = [args.node, '--jitless', '--import', str(ROOT / 'runtime/ohos/sim/preload
         str(output / 'guest-control.mjs'), str(args.native_library_dir.resolve()),
         str(source / 'assets'), str(archive), str(output / 'private-linux'), str(output / 'RESULT.json')]
 env = {key: value for key, value in os.environ.items()
-       if key not in {'NODE_OPTIONS', 'NODE_PATH', 'LD_PRELOAD'} and not key.startswith('DSH_GO_OHOS_')}
-env.update(LD_PRELOAD=str(args.publication_fixture.resolve()), DSH_GO_OHOS_SIM_PLATFORM='openharmony', DSH_GO_OHOS_SIM_ADDONS=json.dumps([str(native)]))
+       if key not in {'NODE_OPTIONS', 'NODE_PATH', 'LD_PRELOAD'} and not key.startswith('DPSK_OHOS_')}
+env.update(LD_PRELOAD=str(args.publication_fixture.resolve()), DPSK_OHOS_SIM_PLATFORM='openharmony', DPSK_OHOS_SIM_ADDONS=json.dumps([str(native)]))
 started = time.monotonic()
 with (output / 'guest.stdout').open('wb') as stdout, (output / 'guest.stderr').open('wb') as stderr:
     result = subprocess.run(argv, env=env, stdout=stdout, stderr=stderr, timeout=360)
 record = {'argv': argv, 'exitCode': result.returncode, 'seconds': time.monotonic() - started,
-          'environment': {key: env[key] for key in ['LD_PRELOAD', 'DSH_GO_OHOS_SIM_PLATFORM', 'DSH_GO_OHOS_SIM_ADDONS']}}
+          'environment': {key: env[key] for key in ['LD_PRELOAD', 'DPSK_OHOS_SIM_PLATFORM', 'DPSK_OHOS_SIM_ADDONS']}}
 (output / 'COMMAND.json').write_text(json.dumps(record, indent=2) + '\n')
 assert inputs['source'] == {str(p.relative_to(output / 'source')): sha(p)
                             for p in (output / 'source').rglob('*') if p.is_file()}, 'frozen runtime inputs changed'

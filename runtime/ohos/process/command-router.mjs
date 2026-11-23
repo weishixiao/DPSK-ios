@@ -3,7 +3,7 @@ import { VirtualSubprocessRuntime } from './runtime.mjs';
 import { pythonCommandName } from './python-backend.mjs';
 
 const error = (code, message) => Object.assign(new Error(message), { code });
-const isNode = command => ['node', '/bin/node', '/usr/bin/node', '/dsh-go/ohos/bin/node', process.execPath].includes(command);
+const isNode = command => ['node', '/bin/node', '/usr/bin/node', '/DPSK/ohos/bin/node', process.execPath].includes(command);
 const virtualCommands = new Set(['bash', 'sh', 'rg', 'git', 'node']);
 const accepts = (backend, policy) => Array.isArray(backend?.capabilities?.confinement)
   && backend.capabilities.confinement.includes(policy.mode) && typeof backend.prepare === 'function';

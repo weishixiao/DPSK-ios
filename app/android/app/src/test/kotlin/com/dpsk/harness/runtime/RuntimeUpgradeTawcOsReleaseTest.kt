@@ -19,7 +19,7 @@ class RuntimeUpgradeTawcOsReleaseTest {
     private val alias = File(root, "etc/os-release")
     private val source = File(root, "usr/lib/os-release")
     private val backup = File(root, "root/os-release-backup")
-    private val directories = setOf("opt/dsh", "opt/node", "opt/dsh-go", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
+    private val directories = setOf("opt/dsh", "opt/node", "opt/DPSK", "etc/dsh-app", "usr/local/lib/node_modules/pnpm")
 
     @After fun cleanUp() { base.deleteRecursively() }
 

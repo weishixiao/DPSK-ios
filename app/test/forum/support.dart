@@ -284,7 +284,7 @@ ForumTopic sampleTopic(
 }
 
 List<ForumTopic> sampleTopics() => [
-  sampleTopic(100, '欢迎来到 dsh-go 论坛：新手先看这里', category: 1, posts: 1, ago: const Duration(days: 3), pinned: true),
+  sampleTopic(100, '欢迎来到 DPSK 论坛：新手先看这里', category: 1, posts: 1, ago: const Duration(days: 3), pinned: true),
   sampleTopic(
     101,
     '分享一个联网搜索插件，装上就能查实时资料',
@@ -297,7 +297,7 @@ List<ForumTopic> sampleTopics() => [
   sampleTopic(103, '让 DSH 每天早上整理一份新闻简报', category: 4, posts: 21, ago: const Duration(hours: 5), posters: [2, 6, 1]),
   sampleTopic(104, '远程连接家里电脑时提示「没能连上引擎」', category: 5, posts: 4, ago: const Duration(hours: 26), posters: [6, 3]),
   sampleTopic(105, '建议：插件市场支持按评分排序', category: 6, posts: 9, ago: const Duration(days: 4), posters: [5, 4, 2]),
-  sampleTopic(106, '用 dsh-go 批量改照片文件名的小技巧', category: 4, posts: 2, ago: const Duration(days: 6), posters: [1]),
+  sampleTopic(106, '用 DPSK 批量改照片文件名的小技巧', category: 4, posts: 2, ago: const Duration(days: 6), posters: [1]),
 ];
 
 ForumTopicListPage sampleTopicPage({bool more = false}) =>

@@ -446,14 +446,14 @@
     },
     {
       "entryId": "goal",
-      "package": "@deepseek-ai/dsh-goal",
+      "package": "@deepseek-ai/DPSKal",
       "label": "goal",
       "state": "active",
       "configurable": true
     },
     {
       "entryId": "goal-round-driver",
-      "package": "@deepseek-ai/dsh-goal-round-driver",
+      "package": "@deepseek-ai/DPSKal-round-driver",
       "label": "goal-round-driver",
       "state": "unsupported",
       "configurable": false,
@@ -1459,9 +1459,9 @@
       "reason": "unsupported-schema"
     },
     {
-      "entryId": "dsh-go-bridge",
+      "entryId": "DPSK-bridge",
       "package": null,
-      "label": "dsh-go-bridge",
+      "label": "DPSK-bridge",
       "state": "unsupported",
       "configurable": false,
       "reason": "no-schema"
@@ -1512,7 +1512,7 @@
     },
     {
       "entryId": "local-notes",
-      "package": "dsh-go-fixture-local-notes",
+      "package": "DPSK-fixture-local-notes",
       "label": "local-notes",
       "state": "active",
       "configurable": true

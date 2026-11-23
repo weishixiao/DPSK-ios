@@ -24,8 +24,8 @@ def sha(path):
 def environment():
     env = os.environ.copy()
     for key in ['NODE_OPTIONS', 'NODE_USE_ENV_PROXY', 'LD_PRELOAD', 'DSH_HOME',
-                'DSH_GO_OHOS_SIM', 'DSH_GO_OHOS_SIM_PLATFORM', 'DSH_GO_OHOS_SIM_ADDONS',
-                'DSH_GO_OHOS_LINUX_DIRECTORY', 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR',
+                'DPSK_OHOS_SIM', 'DPSK_OHOS_SIM_PLATFORM', 'DPSK_OHOS_SIM_ADDONS',
+                'DPSK_OHOS_LINUX_DIRECTORY', 'DPSK_OHOS_NATIVE_LIBRARY_DIR',
                 'HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'NO_PROXY',
                 'http_proxy', 'https_proxy', 'all_proxy', 'no_proxy']:
         env.pop(key, None)
@@ -176,8 +176,8 @@ def main():
             env = environment()
             env['OHOS_STARTUP_CASE'] = json.dumps({'name': name, 'entry': str(entry), 'strict': strict,
                 'linuxDirectory': str(linux_directory), 'nativeLibraryDirectory': str(native_directory)})
-            env['DSH_GO_OHOS_LINUX_DIRECTORY'] = str(linux_directory)
-            env['DSH_GO_OHOS_NATIVE_LIBRARY_DIR'] = str(native_directory)
+            env['DPSK_OHOS_LINUX_DIRECTORY'] = str(linux_directory)
+            env['DPSK_OHOS_NATIVE_LIBRARY_DIR'] = str(native_directory)
             if name != 'missing-home': env['DSH_HOME'] = str(home)
             if name != 'missing-binding': env['LD_PRELOAD'] = str(linked)
             arguments = ['--jitless'] if strict else []
@@ -185,11 +185,11 @@ def main():
             if name != 'android-env':
                 arguments += ['--import', str(OHOS / 'sim' / ('preload.mjs' if strict else 'marker.mjs'))]
                 if strict:
-                    env['DSH_GO_OHOS_SIM_PLATFORM'] = 'openharmony'
-                    env['DSH_GO_OHOS_SIM_ADDONS'] = '[]'
+                    env['DPSK_OHOS_SIM_PLATFORM'] = 'openharmony'
+                    env['DPSK_OHOS_SIM_ADDONS'] = '[]'
             else:
-                env['DSH_GO_OHOS_SIM'] = '1'
-                env['DSH_GO_OHOS_SIM_PLATFORM'] = 'openharmony'
+                env['DPSK_OHOS_SIM'] = '1'
+                env['DPSK_OHOS_SIM_PLATFORM'] = 'openharmony'
             arguments += ['--import', preload, '--import', str(HERE / 'host-preload-observer.mjs'),
                           main_file if name == 'wrong-entry' else str(entry)]
             def check(p, name=name, strict=strict, home=home):

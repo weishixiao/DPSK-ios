@@ -13,7 +13,7 @@ assets=a.assets.resolve();manifest=json.loads((assets/'install-manifest.json').r
 commands=[];checks=0
 for mode in ['cancel-download','cancel-prepare','unknown-retire','cancel-boot','normal']:
  argv=[a.node,'--jitless','--import',str(ROOT/'runtime/ohos/sim/preload.mjs'),str(out/'owner-test.mjs'),str(a.native_library_dir.resolve()),str(assets/'install-manifest.json'),str(a.archive.resolve()),str(out/mode),mode]
- env={**os.environ,'LD_PRELOAD':str(a.publication_fixture.resolve()),'DSH_GO_OHOS_SIM_ADDONS':json.dumps([str(a.native_library_dir.resolve()/'libdsh_linux.so')])}
+ env={**os.environ,'LD_PRELOAD':str(a.publication_fixture.resolve()),'DPSK_OHOS_SIM_ADDONS':json.dumps([str(a.native_library_dir.resolve()/'libdsh_linux.so')])}
  result=subprocess.run(argv,capture_output=True,env=env,timeout=210);(out/(mode+'.stdout')).write_bytes(result.stdout);(out/(mode+'.stderr')).write_bytes(result.stderr);commands.append({'mode':mode,'argv':argv,'exitCode':result.returncode});(out/'commands.json').write_text(json.dumps(commands,indent=2)+'\n');assert result.returncode==0,(mode,result.stderr.decode(errors='replace'))
  summary=json.loads(result.stdout.decode().splitlines()[-1]);assert summary['pass'];checks+=summary['checks'];print(mode,summary['checks'],'PASS',flush=True)
 (out/'RESULT.json').write_text(json.dumps({'passed':True,'checks':checks,'scope':'Host actual Node NAPI/TinyEMU + production owner, explicit archive transport fixture; no HAP/device or Huawei HTTP assertion'},indent=2)+'\n')

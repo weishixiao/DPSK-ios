@@ -21,7 +21,7 @@ A plugin that registers a View of a conversation in DSH Web (`conversation.view`
 
 The last capsule above the chat page's composer, **Plugins** (a puzzle icon), opens the conversation's plugin sheet. It shows only while the sheet has something, outside the eight capsules, and steps aside with the row while a reply is generating.
 
-To hide this app-owned entry, add `pluginCapsule` to the existing `hide` array in `$DSH_HOME/dsh-go/ui.json`, for example `{"version":1,"hide":["pluginCapsule"]}`. Remove it, or restore that setting to its default in the app, to show the entry again. This does not disable plugins, hide their own composer actions, or remove panels from All features / Chat details. The `plugins.seats` map configures plugin slots; `chat.panel` and `dsh-go.panel` do not name this built-in capsule.
+To hide this app-owned entry, add `pluginCapsule` to the existing `hide` array in `$DSH_HOME/DPSK/ui.json`, for example `{"version":1,"hide":["pluginCapsule"]}`. Remove it, or restore that setting to its default in the app, to show the entry again. This does not disable plugins, hide their own composer actions, or remove panels from All features / Chat details. The `plugins.seats` map configures plugin slots; `chat.panel` and `DPSK.panel` do not name this built-in capsule.
 
 The sheet holds the native panels first (`placement: "chat.panel"`, by plugin name), then the web plugins' chat-page parts: the third-party entries of these seven slots — `conversation.session.header.actions`, `conversation.session.header.utilities`, `conversation.input.dock`, `conversation.input.left`, `conversation.input.right`, `conversation.input.overlay`, `conversation.composer.dock`. They share **one** panel island, stacked in page order, with the official entries masked; a line above it says whose they are.
 
@@ -48,16 +48,16 @@ Other unseated places (such as message-level parts) remain listed individually w
 
 After opt-in in plugin details, the app allows only the enabled `shell.overlay` cells of that package. Official entries, disabled packages and entries with unknown ownership are not revealed alongside them. The switch is a **local preference stored per host**: hosts have separate choices, and host configuration is not rewritten. Explicit values for this slot / package in `ui.json`'s `plugins.seats` take precedence over the local switch; edit that configuration first when it controls the choice.
 
-For example, host configuration `{"version":1,"plugins":{"seats":{"shell.overlay":{"dsh-go-example-overlay":"island"}}}}` explicitly enables the example; replace `island` with `hidden` to disable it. Merge into existing configuration without overwriting other keys.
+For example, host configuration `{"version":1,"plugins":{"seats":{"shell.overlay":{"DPSK-example-overlay":"island"}}}}` explicitly enables the example; replace `island` with `hidden` to disable it. Merge into existing configuration without overwriting other keys.
 
 - Overlays live inside `ChatScreen` within `HomeShell.chat`. A `ClipRect` strictly confines the viewport to chat content between the native header and composer, without covering native chrome, the drawer, right detail pane or native modals. Pending approvals or unanswered questions stop the overlay; it is also absent outside the chat page. It is not an Android cross-app floating window.
 - Empty areas pass touches through. Hit testing uses **reported rectangles**, not image alpha or pixel-transparent cutouts. Transparent pixels inside an image's rectangle can still consume touches. Sampling and bridge delivery can lag fast movement; hit regions are not guaranteed to track animation exactly.
 - Set the root to `pointer-events: none` and only actual interactive elements to `pointer-events: auto`. Do not cover the chat with a transparent full-screen target; keep interactive regions small and stable.
-- The keyboard shrinks the available chat-content area through native layout, and the overlay viewport shrinks with it. CSS `--dsh-go-island-top` / `--dsh-go-island-bottom` remain readable pixel insets (use a `0px` fallback on the web). They may be `0` inside this area because native chrome is already reserved; do not subtract header / composer heights again. These are not plugin-controlled native layout.
+- The keyboard shrinks the available chat-content area through native layout, and the overlay viewport shrinks with it. CSS `--DPSK-island-top` / `--DPSK-island-bottom` remain readable pixel insets (use a `0px` fallback on the web). They may be `0` inside this area because native chrome is already reserved; do not subtract header / composer heights again. These are not plugin-controlled native layout.
 - The local engine, attributable bridge occupancy, route guard and resource budget are still required. Opt-in does not bypass these gates; failure retains the web entry.
 - Audio keeps the existing WebView user-gesture requirement; gesture-free playback is not enabled automatically. This work adds no native `pets` / `bubbles` / `actions` protocol.
 
-See the [web overlay and three-slot example](../../../examples/plugins/dsh-go-example-overlay/README.en.md), with no extra dependencies or build chain. The plugin was not installed or run for this work, and physical-device verification has not been performed.
+See the [web overlay and three-slot example](../../../examples/plugins/DPSK-example-overlay/README.en.md), with no extra dependencies or build chain. The plugin was not installed or run for this work, and physical-device verification has not been performed.
 
 ## Touch sizes in the full web page
 
@@ -89,4 +89,4 @@ About 200 MB for the first island (renderer plus app increment), with roughly 1�
 
 ## Not yet available
 
-This entry adds no `plugin:` page references to `ui.json`, cross-plugin `open` aliases or `dsh-go://panel/…` deep links. Native `open` effects still target supported app pages or the calling plugin's `panel:<id>`. Additional targets need separately defined validation, lifecycle and permission boundaries.
+This entry adds no `plugin:` page references to `ui.json`, cross-plugin `open` aliases or `DPSK://panel/…` deep links. Native `open` effects still target supported app pages or the calling plugin's `panel:<id>`. Additional targets need separately defined validation, lifecycle and permission boundaries.

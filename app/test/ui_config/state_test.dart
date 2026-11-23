@@ -280,7 +280,7 @@ void main() {
     );
     addTearDown(c.dispose);
     c.listen(uiOverridesProvider, (_, _) {});
-    final file = File('${root.path}/root/.dsh/dsh-go/ui.json');
+    final file = File('${root.path}/root/.dsh/DPSK/ui.json');
     await until(() => file.parent.existsSync());
     file.writeAsStringSync('{"version": 1, "density": "compact"}');
     await until(() => c.read(uiOverridesProvider).config.density == UiDensity.compact);

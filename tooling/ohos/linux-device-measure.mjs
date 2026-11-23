@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { witnessCommands, validateWitnessResult, compareWitnessResults } from './research/linux-resume/guest-witness.mjs';
 
-const ROUTE = '/dsh-go/v1/linux';
+const ROUTE = '/DPSK/v1/linux';
 const CAP = 65536;
 const STATES = ['disabled', 'installing', 'enabled', 'disabling', 'stopping', 'stopped', 'unavailable', 'failed', 'unknown'];
 export const LOCKED_VERSIONS = Object.freeze({ gh: '2.97.0', python: '3.14.10', rg: '15.1.0', git: '2.54.0' });

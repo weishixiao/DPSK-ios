@@ -131,7 +131,7 @@ class CompanionSignalTestHost {
       });
       return;
     }
-    if (req.uri.path == '/dsh-go/v1/companion/signals') {
+    if (req.uri.path == '/DPSK/v1/companion/signals') {
       if (customCapability != null) {
         await customCapability!(req);
         return;
@@ -139,7 +139,7 @@ class CompanionSignalTestHost {
       await reply(req, capability, status: capabilityStatus);
       return;
     }
-    if (req.uri.path == '/dsh-go/v1/companion/signals/stream') {
+    if (req.uri.path == '/DPSK/v1/companion/signals/stream') {
       streamOpens++;
       req.response
         ..statusCode = 200
@@ -151,7 +151,7 @@ class CompanionSignalTestHost {
       await onStream?.call(req.response);
       return;
     }
-    if (req.uri.path == '/dsh-go/v1/companion/recall') {
+    if (req.uri.path == '/DPSK/v1/companion/recall') {
       await reply(req, {
         'v': 1,
         'supported': true,
@@ -164,7 +164,7 @@ class CompanionSignalTestHost {
       });
       return;
     }
-    if (req.uri.path == '/dsh-go/v1/companion/recall/bindings/$signalTestBinding') {
+    if (req.uri.path == '/DPSK/v1/companion/recall/bindings/$signalTestBinding') {
       await beforeBinding?.call();
       await reply(req, binding);
       return;

@@ -7,7 +7,7 @@ const CI_ONLY_PR_AUTHOR_IDS = new Set([
   49699333, // dependabot[bot]
   41898282, // github-actions[bot]
 ])
-const COMMENT_MARKER = '<!-- dsh-go-pr-gate -->'
+const COMMENT_MARKER = '<!-- DPSK-pr-gate -->'
 
 // dsh-Go 目前不接受任何外部 PR：作者不是协作者、也不在 APPROVED_CONTRIBUTORS
 // 里时关闭 PR，并留一条指向 CONTRIBUTING.md 的评论。维护者 reopen 视为放行。

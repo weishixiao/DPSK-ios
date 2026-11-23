@@ -160,7 +160,7 @@ python3 runtime/tests/ohos/device-prerequisites/audit.py   --cache /absolute/pat
 | EINVAL 路径 | 区分实际 native `renameat2/EINVAL` 与账本写入/临时文件/同步错误。登记 `unsupported`、明确警告和后续无额外 rename；非原子回退的半 final 风险继续存在。 |
 | 崩溃恢复 | 在持久 `trying` 后受控终止测试 App，再以相同版本启动；核对 `disabled-after-crash` 持久化、rename 次数为0、回退能否完成，以及旧归属临时资源的恢复结果。不能删除标记后重试冒充自动恢复。 |
 | 误触发 | 分别记录调用前被杀、原生已成功但 available 未持久化、低电/断电等未确认窗口。残留 trying 只证明上次没有完成状态记录，不证明发生了 SIGSYS。误触发仍必须保留已提交 final，不能回滚或覆盖。 |
-| 能力观察 | 读取发布服务的动态 `atomic` 状态，并核对已鉴权 `GET /dsh-go/v1/runtime-capabilities` 的 `publication.atomic`。配套增量已在 Linux 严格仿真的真实 DSH/connection 下验证 HTTP；本表的目标设备项与 Dart 仍为 NOT_RUN。完整 O6 其他能力字段未在本项实现。 |
+| 能力观察 | 读取发布服务的动态 `atomic` 状态，并核对已鉴权 `GET /DPSK/v1/runtime-capabilities` 的 `publication.atomic`。配套增量已在 Linux 严格仿真的真实 DSH/connection 下验证 HTTP；本表的目标设备项与 Dart 仍为 NOT_RUN。完整 O6 其他能力字段未在本项实现。 |
 | 状态持久化失败 | 在允许的测试目录检验状态文件与目录同步失败如何暴露；禁止绕过未落盘的 trying 继续 native。已有 final 成功但记录 available 失败应明确报错并保留 final。 |
 
 “最多崩一次”的范围必须限定为**同一个已识别系统版本、已持久 arm 的首次实际调用及稳定策略前提**。同进程已有成功后再发生动态过滤策略变化、标记被清除/数据被恢复到旧备份、系统身份不可用等情形，不在一个未加限定的保证内。Linux SIGKILL 证明进程死亡恢复路径；不等于真实 SIGSYS、设备断电持久性或任何挂载上的实现已经验证。

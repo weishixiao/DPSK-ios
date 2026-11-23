@@ -73,7 +73,7 @@ DIAGNOSTIC_EDITS = {
     'node_modules/node-addon-native-custom-loader/lib/index.js': (
         ('OpenHarmony packages only the pinned N-API backend', 'iOS packages only the pinned N-API backend'),
     ),
-    'node_modules/@dsh-go/ohos-native/index.cjs': (
+    'node_modules/@DPSK/ohos-native/index.cjs': (
         ("flock: 'libdsh_flock.so',", "flock: 'DshFlock.framework/DshFlock',"),
         ("'require-builtin': 'libdsh_require_builtin.so',", "'require-builtin': 'DshRequireBuiltin.framework/DshRequireBuiltin',"),
         ('// .so is the HAP library filename; require(.so) would parse it as JavaScript.',

@@ -53,7 +53,7 @@ void main() {
   }
 
   test('picks the lowest-penalty mask and keeps the finder patterns', () {
-    final code = QrCode.encode('https://github.com/weishixiao/dsh-go');
+    final code = QrCode.encode('https://github.com/weishixiao/DPSK');
     expect(code.version, 3);
     expect(code.ecc, QrEcc.medium);
     // Finder corners: dark outer ring, light separator.

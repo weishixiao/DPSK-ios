@@ -1,13 +1,13 @@
 ---
-# dsh-go:managed — the dsh-go app keeps this skill up to date; delete this line to keep your own edits.
-name: dsh-go-ui
-description: dsh-go 手机 App 原生界面的配置（$DSH_HOME/dsh-go/ui.json）：顶栏按钮、输入框上方的快捷胶囊、新对话建议卡、抽屉分组与排序、密度、隐藏元素、主题和强调色、平板快捷键、插件座位。只改 **dsh-go 手机原生界面**；用户要改 Harness 网页版 / 桌面端、做 Cordis 插件或网页插件时，用官方技能，不要用本技能。用户要改 App 本身的样子时先加载它，比如「把顶栏的 XX 换成 YY」「输入框上面加个总结按钮」「新对话页放几个常用问题」「抽屉按创建时间排」「把回合脚注藏掉」「换成暗色 / 黛青」「加个 ctrl+k 打开搜索」。Change how the dsh-go phone app's native screens look and behave by editing ui.json; the Harness Web UI / Cordis plugins are the official skills' business.
-whenToUse: The user asks to change the dsh-go app (手机 App / 原生界面) itself. Not for the Harness Web UI, Cordis plugins or DSH settings; anything that needs logic or data is a plugin (dsh-go-plugin).
+# DPSK:managed — the DPSK app keeps this skill up to date; delete this line to keep your own edits.
+name: DPSK-ui
+description: DPSK 手机 App 原生界面的配置（$DSH_HOME/DPSK/ui.json）：顶栏按钮、输入框上方的快捷胶囊、新对话建议卡、抽屉分组与排序、密度、隐藏元素、主题和强调色、平板快捷键、插件座位。只改 **DPSK 手机原生界面**；用户要改 Harness 网页版 / 桌面端、做 Cordis 插件或网页插件时，用官方技能，不要用本技能。用户要改 App 本身的样子时先加载它，比如「把顶栏的 XX 换成 YY」「输入框上面加个总结按钮」「新对话页放几个常用问题」「抽屉按创建时间排」「把回合脚注藏掉」「换成暗色 / 黛青」「加个 ctrl+k 打开搜索」。Change how the DPSK phone app's native screens look and behave by editing ui.json; the Harness Web UI / Cordis plugins are the official skills' business.
+whenToUse: The user asks to change the DPSK app (手机 App / 原生界面) itself. Not for the Harness Web UI, Cordis plugins or DSH settings; anything that needs logic or data is a plugin (DPSK-plugin).
 ---
 
-# dsh-go 界面配置（ui.json）
+# DPSK 界面配置（ui.json）
 
-dsh-go App 会读 `$DSH_HOME/dsh-go/ui.json`（`DSH_HOME` 默认 `~/.dsh`），按里面的声明改自己的原生界面。改完保存，已接线的键一两秒内自动生效，不用重启。
+DPSK App 会读 `$DSH_HOME/DPSK/ui.json`（`DSH_HOME` 默认 `~/.dsh`），按里面的声明改自己的原生界面。改完保存，已接线的键一两秒内自动生效，不用重启。
 
 **当前只有部分键真正接线，见下面的「生效状态」表。**没接线的键 App 仍会解析和校验，但界面不会变——不要向用户保证写了就生效。
 
@@ -15,23 +15,23 @@ dsh-go App 会读 `$DSH_HOME/dsh-go/ui.json`（`DSH_HOME` 默认 `~/.dsh`），�
 
 ## 和官方技能的分工
 
-- **本技能**：改 dsh-go 手机 App 的原生界面（ui.json）。
-- **dsh-go-plugin**：给手机 App 加胶囊、菜单、状态条、原生面板、工具卡；要逻辑或数据时用它，不用 ui.json。
+- **本技能**：改 DPSK 手机 App 的原生界面（ui.json）。
+- **DPSK-plugin**：给手机 App 加胶囊、菜单、状态条、原生面板、工具卡；要逻辑或数据时用它，不用 ui.json。
 - **官方 `cordis-plugin-development` 等**：Harness Web UI / 桌面端的插件、装饰、槽位、页面和 MCP；目录在工作区，安装走 `plugin_manager → install_bundle`。
-- 用户没点名界面载体时，手机上默认是 dsh-go 原生界面；先确定载体再选技能，不看加载顺序。两套配置（ui.json / Cordis bundle）不要混写，也不要拿官方网页插件的做法套到 App 上。
+- 用户没点名界面载体时，手机上默认是 DPSK 原生界面；先确定载体再选技能，不看加载顺序。两套配置（ui.json / Cordis bundle）不要混写，也不要拿官方网页插件的做法套到 App 上。
 
 ## 怎么改
 
-1. 先读现有文件：`cat "$DSH_HOME/dsh-go/ui.json"`（没有就新建，目录不存在就 `mkdir -p`）。
+1. 先读现有文件：`cat "$DSH_HOME/DPSK/ui.json"`（没有就新建，目录不存在就 `mkdir -p`）。
 2. 只改用户要求的部分，其他键原样保留。用户之前的配置不要删。
 3. 写回：严格 JSON，UTF-8，不要注释，不要尾逗号，不超过 64 KiB。最好先写临时文件再 `mv` 过去。
-4. 自查：`node "$DSH_HOME/skills/dsh-go-ui/scripts/check.mjs"`。输出是 App 解析器的判断，**不是界面生效数**；只有「生效状态」表里已接线的键会改变界面：
+4. 自查：`node "$DSH_HOME/skills/DPSK-ui/scripts/check.mjs"`。输出是 App 解析器的判断，**不是界面生效数**；只有「生效状态」表里已接线的键会改变界面：
    - `错误 /composer/quickActions/2/action/url：只支持 https 链接`：这一项不生效，其余照常；
    - `忽略`：App 不认识或超出上限的部分；
    - `提示`：已自动修正（比如文字太长被截断），仍然生效；
    - `ui.json 没有生效：…`：整份没读进去（语法错误、版本不对），App 继续用上一次有效的配置。
    有错就改到没有 `错误` 为止。加 `--json` 得到机器可读结果。checker 报的「已应用 N 项」只是解析器接收的声明的数量，不要转述成「已生效」。
-5. 本机（手机上的引擎）还会有 `$DSH_HOME/dsh-go/ui.status.json`，是 App 实际读到的结果，可以对照。
+5. 本机（手机上的引擎）还会有 `$DSH_HOME/DPSK/ui.status.json`，是 App 实际读到的结果，可以对照。
 6. 告诉用户改了什么。用户想撤销某一项，就把那个键删掉；已接线的项（`theme.mode`、`plugins.seats`）还能在 App 设置里点「来自 ui.json」→「恢复默认」，这只让 App 忽略那一项，不会改文件。
 
 完整字段定义在同目录的 `schema.json`，示例在 `examples/`。
@@ -92,11 +92,11 @@ dsh-go App 会读 `$DSH_HOME/dsh-go/ui.json`（`DSH_HOME` 默认 `~/.dsh`），�
 | `theme.accent` | 自定义强调色 `#RRGGBB`（App 会自动调到对比度达标）；和 `accentPreset` 二选一 |
 | `pet` | `id`、`position`（`top-left` / `top-right` / `bottom-left` / `bottom-right`）、`quiet`（布尔）。当前只校验，不改变界面 |
 | `shortcuts` | 平板外接键盘快捷键，≤ 20 条：`keys` 如 `ctrl+k`、`ctrl+shift+n`、`alt+1`、`f5`（必须带 ctrl 或 alt，F 键除外；不能用 meta/cmd/win；`ctrl+a/c/v/x/y/z`、`ctrl+shift+v/z`、`alt+f4` 被占用）+ `action` |
-| `plugins.seats` | 插件在原生界面里怎么出现：`{ "<slot>": { "<npm 包名>": "native" \| "island" \| "web" \| "hidden" } }`（原生画 / 内嵌网页 / 在网页版打开 / 隐藏）。slot 名见 `schema.json` 的 `x-dsh-go.slots.known`；`unseatable` 里的是 App 自己的界面，不放插件 |
+| `plugins.seats` | 插件在原生界面里怎么出现：`{ "<slot>": { "<npm 包名>": "native" \| "island" \| "web" \| "hidden" } }`（原生画 / 内嵌网页 / 在网页版打开 / 隐藏）。slot 名见 `schema.json` 的 `x-DPSK.slots.known`；`unseatable` 里的是 App 自己的界面，不放插件 |
 
 图标（`icon`）：bolt star sparkle heart flag bookmark pin bell clock alarm calendar todo note document folder search code terminal globe chart lightbulb book puzzle robot chat mail translate image camera mic link summary wrench bug travel school home play refresh archive team wallet palette
 
-要隐藏聊天页的「插件」入口，把 `pluginCapsule` 加进现有 `hide` 数组，例如 `{"version":1,"hide":["pluginCapsule"]}`。它只隐藏 App 的聚合入口，不停用插件、不隐藏插件自己的快捷胶囊，也不改变「全部功能」或「对话详情」的入口。删除该项或在界面配置页恢复默认即可显示。`plugins.seats` 配置的是插件的槽位，不是这个 App 入口；不要用 `chat.panel` / `dsh-go.panel` 座位设置替代。
+要隐藏聊天页的「插件」入口，把 `pluginCapsule` 加进现有 `hide` 数组，例如 `{"version":1,"hide":["pluginCapsule"]}`。它只隐藏 App 的聚合入口，不停用插件、不隐藏插件自己的快捷胶囊，也不改变「全部功能」或「对话详情」的入口。删除该项或在界面配置页恢复默认即可显示。`plugins.seats` 配置的是插件的槽位，不是这个 App 入口；不要用 `chat.panel` / `DPSK.panel` 座位设置替代。
 
 ## 动作（action）
 

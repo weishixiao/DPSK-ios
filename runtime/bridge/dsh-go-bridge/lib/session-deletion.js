@@ -1,12 +1,12 @@
 // No filesystem access here: only the bundled engine's fenced lifecycle seam may delete.
-const ROOT = "/dsh-go/v1/sessions";
+const ROOT = "/DPSK/v1/sessions";
 const STATUS = { "session-active": 409, "session-related": 409, "writer-held": 409,
   "not-found": 404, unavailable: 503, failed: 500 };
 const errorBody = (code, message) => ({ error: { code, message } });
 
 export function sessionDeletionUnavailable(req) {
   try {
-    const path = new URL(req.url ?? "/", "http://dsh-go.invalid").pathname;
+    const path = new URL(req.url ?? "/", "http://DPSK.invalid").pathname;
     if (path === `${ROOT}/deletion` || path === `${ROOT}/delete`)
       return errorBody("unavailable", "Safe session deletion is unavailable.");
   } catch {}

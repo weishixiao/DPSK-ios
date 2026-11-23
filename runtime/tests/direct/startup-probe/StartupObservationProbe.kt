@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
     executable(File(root, DirectLaunch.loaderPath("x86_64")))
     executable(File(root, "opt/node/bin/node"))
     for (name in listOf("preload.mjs", "dns.mjs", "modules.mjs", "native-addons.json")) {
-        File(root, "opt/dsh-go/direct/$name").apply { parentFile.mkdirs(); writeText("fixture") }
+        File(root, "opt/DPSK/direct/$name").apply { parentFile.mkdirs(); writeText("fixture") }
     }
     // Minimal static ELF64 metadata for the real DirectLaunch planner.
     File(root, "opt/dsh/node_modules/@vscode/ripgrep-linux-x64/bin/rg").apply {

@@ -126,7 +126,7 @@ void main() {
       'purpose': 'schedule-authorization',
       'questions': [
         {
-          'id': 'dsh-go-schedule-authorization-one',
+          'id': 'DPSK-schedule-authorization-one',
           'question': 'Session: s\nCreate\nAutonomous execution risk\n{"prompt":"full prompt","at":"tomorrow"}',
           'options': [
             {'label': '授权 / Authorize'},

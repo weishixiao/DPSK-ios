@@ -6,12 +6,12 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { test } from 'node:test';
-import { apply } from '../bridge/dsh-go-bridge/lib/index.js';
+import { apply } from '../bridge/DPSK-bridge/lib/index.js';
 
-const ROOT = '/dsh-go/v1/companion';
+const ROOT = '/DPSK/v1/companion';
 const AUTH = 'Bearer synthetic-companion-test';
 async function fixture(t, { connection = true } = {}) {
-  const home = await mkdtemp(join(tmpdir(), 'dsh-go-companion-route-'));
+  const home = await mkdtemp(join(tmpdir(), 'DPSK-companion-route-'));
   const path = join(home, 'companion', 'state.json');
   const routes = [], disposals = [], guarded = [];
   const ctx = {

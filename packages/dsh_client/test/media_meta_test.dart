@@ -1,4 +1,4 @@
-// meta["dsh-go/media"], contract v1 (docs/design/media-generation.md §2.5 ①).
+// meta["DPSK/media"], contract v1 (docs/design/media-generation.md §2.5 ①).
 
 import 'package:dsh_client/dsh_client.dart';
 import 'package:test/test.dart';
@@ -105,7 +105,7 @@ void main() {
 
   test('what isn\'t a card', () {
     expect(MediaMeta.fromToolMeta(null), isNull);
-    expect(MediaMeta.fromToolMeta({'dsh-go/view': {}}), isNull);
+    expect(MediaMeta.fromToolMeta({'DPSK/view': {}}), isNull);
     expect(MediaMeta.fromJson({'v': 0, 'kind': 'image', 'items': full['items']}), isNull);
     expect(MediaMeta.fromJson({'v': 1, 'status': 'done', 'items': []}), isNull);
     expect(MediaMeta.fromJson({'v': 1, 'kind': 'image', 'status': 'done', 'items': []}), isNull);

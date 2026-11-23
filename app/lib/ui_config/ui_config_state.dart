@@ -106,7 +106,7 @@ enum UiConfigAvailability {
   /// A remote host with no conversation yet.
   noSession,
 
-  /// A remote host where the dsh-go-ui skill is not installed and DSH home
+  /// A remote host where the DPSK-ui skill is not installed and DSH home
   /// is unknown.
   noSkill,
 
@@ -134,7 +134,7 @@ class UiConfigState {
   /// this before drawing what ui.json decides, to avoid a flash).
   final bool restored;
 
-  /// A remote host without the dsh-go-ui skill.
+  /// A remote host without the DPSK-ui skill.
   final bool skillMissing;
 
   /// Offer to install the skill (remote hosts only).

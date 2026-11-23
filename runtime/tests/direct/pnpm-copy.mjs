@@ -7,7 +7,7 @@ import path from 'node:path';
 import cp from 'node:child_process';
 import { createHash } from 'node:crypto';
 
-const root = process.env.DSH_GO_DIRECT_ROOTFS;
+const root = process.env.DPSK_DIRECT_ROOTFS;
 assert(root, 'direct wrapper required');
 const base = fs.mkdtempSync(`${root}/tmp/direct-pnpm-`);
 const store = fs.mkdtempSync('/dev/shm/direct-pnpm-store-');

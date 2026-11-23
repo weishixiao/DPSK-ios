@@ -9,7 +9,7 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:dpsk_app/companion/companion_host_memory_transport.dart';
 import 'package:dpsk_app/companion/companion_memory_worker.dart';
 
-const _path = '/dsh-go/v1/companion/auxiliary';
+const _path = '/DPSK/v1/companion/auxiliary';
 const _time = 1795260000123;
 
 // Captured from actual A02h routes by checks/A02d-wire-fixtures.mjs.

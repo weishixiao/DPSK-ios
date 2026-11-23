@@ -18,9 +18,9 @@ args = parser.parse_args()
 out = Path(args.out).resolve(); out.mkdir(parents=True, exist_ok=True)
 runtime = Path(__file__).resolve().parents[2]
 env = {**os.environ, 'DSH_LIFECYCLE_TEST_PREFIX': str(Path(args.prefix).resolve()), 'LD_PRELOAD': str(Path(args.linked).resolve()),
-       'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(Path(args.native_library_dir).resolve()),
+       'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(Path(args.native_library_dir).resolve()),
        'NARB_DISABLE_NATIVE_CACHE': '1',
-       'DSH_GO_OHOS_SIM_ADDONS': json.dumps([str(Path(args.native_library_dir).resolve() / name) for name in ['libdsh_flock.so', 'libdsh_require_builtin.so']])}
+       'DPSK_OHOS_SIM_ADDONS': json.dumps([str(Path(args.native_library_dir).resolve() / name) for name in ['libdsh_flock.so', 'libdsh_require_builtin.so']])}
 command = [args.node, '--jitless', '--import', str(runtime / 'ohos/sim/preload.mjs'), str(Path(__file__).with_name('lifecycle-freeze-actor.mjs'))]
 results = []
 def run_case(mode, logical, tool):

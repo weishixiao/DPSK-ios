@@ -122,7 +122,7 @@ for package in config['packages']:
     package['rootUri'] = urljoin(config_path.as_uri(), package['rootUri'])
 config['packages'] += [{'name': name, 'rootUri': (out / folder).as_uri() + '/',
                         'packageUri': 'lib/', 'languageVersion': '3.13'}
-                       for name, folder in [('dsh_client', 'client'), ('dsh_app', 'app')] +
+                       for name, folder in [('dsh_client', 'client'), ('dpsk_app', 'app')] +
                                            [(name, name) for name, _ in fixture_packages]]
 (out / '.dart_tool').mkdir()
 (out / '.dart_tool/package_config.json').write_text(json.dumps(config, indent=2) + '\n')

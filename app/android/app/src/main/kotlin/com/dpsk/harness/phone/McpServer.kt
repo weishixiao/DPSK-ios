@@ -15,7 +15,7 @@ class ToolOutput(
 /** Host attribution, separate from tool arguments. It is not an approval or a task lease. */
 data class PhoneCaller(val sessionId: String, val runId: String, val callId: String, val runLifecycle: Int = 0) {
     companion object {
-        const val META_KEY = "dsh-go/phone-caller"
+        const val META_KEY = "DPSK/phone-caller"
 
         fun identifier(value: Any?): String? = (value as? String)?.takeIf {
             it.length in 1..256 && it.none { c -> c < ' ' || c == '\u007f' }
@@ -99,7 +99,7 @@ class McpServer(
             "initialize" -> Dispatch.Reply(result(id, initializeResult(params["protocolVersion"] as? String)))
             "ping" -> Dispatch.Reply(result(id, emptyMap<String, Any?>()))
             "tools/list" -> Dispatch.Reply(result(id, mapOf("tools" to tools)))
-            "dsh-go/phone-run-end" -> {
+            "DPSK/phone-run-end" -> {
                 val session = PhoneCaller.identifier(params["sessionId"])
                 val run = PhoneCaller.identifier(params["runId"])
                 val completion = if (params.containsKey("completion")) params["completion"] else "unknown"

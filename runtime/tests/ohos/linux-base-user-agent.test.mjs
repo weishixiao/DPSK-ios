@@ -9,7 +9,7 @@ import { createFetch } from '../../ohos/net/fetch.mjs';
 import { createHttpDispatcher } from '../../ohos/net/dispatcher.mjs';
 import { downloadLinuxBase } from '../../ohos/linux/base-download.mjs';
 
-const userAgent = 'dsh-go-ohos-linux/1';
+const userAgent = 'DPSK-ohos-linux/1';
 const body = Buffer.from('pinned Linux base over verified local TLS\0\xff');
 const sha256 = createHash('sha256').update(body).digest('hex');
 

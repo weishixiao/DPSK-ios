@@ -8,14 +8,14 @@ import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { createCompanionStore } from '../../bridge/dsh-go-bridge/lib/companion/store.js';
-import { createRecallCoordinator } from '../../bridge/dsh-go-bridge/lib/companion/recall.js';
-import { createRecallMarkers } from '../../bridge/dsh-go-bridge/lib/companion/recall-markers.js';
-import { createRecallContexts } from '../../bridge/dsh-go-bridge/lib/companion/recall-context.js';
-import { createCompanionPromptContext } from '../../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
-import { companionFullDefault, companionFullRules } from '../../bridge/dsh-go-bridge/lib/companion/full-persona.js';
+import { createCompanionStore } from '../../bridge/DPSK-bridge/lib/companion/store.js';
+import { createRecallCoordinator } from '../../bridge/DPSK-bridge/lib/companion/recall.js';
+import { createRecallMarkers } from '../../bridge/DPSK-bridge/lib/companion/recall-markers.js';
+import { createRecallContexts } from '../../bridge/DPSK-bridge/lib/companion/recall-context.js';
+import { createCompanionPromptContext } from '../../bridge/DPSK-bridge/lib/companion/prompt-context.js';
+import { companionFullDefault, companionFullRules } from '../../bridge/DPSK-bridge/lib/companion/full-persona.js';
 
-const FULL_PRESET = 'dsh-go-companion-full';
+const FULL_PRESET = 'DPSK-companion-full';
 const personaText = companionFullDefault;
 const personaRules = companionFullRules;
 
@@ -61,7 +61,7 @@ export async function createFixture({ prefix, home: existingHome, keepHome = fal
   // One Host owns DSH_HOME in a process. Tests of independent Hosts use child
   // processes, rather than pretending a mutable process-global home is scoped.
   if (environmentOwner) throw new Error('Independent recall Hosts require independent fixture processes');
-  const home = existingHome ?? await mkdtemp(join(tmpdir(), 'dsh-go-recall-engine-'));
+  const home = existingHome ?? await mkdtemp(join(tmpdir(), 'DPSK-recall-engine-'));
   await mkdir(home, { recursive: true });
   const token = {};
   environmentOwner = token;
@@ -164,12 +164,12 @@ export async function createFixture({ prefix, home: existingHome, keepHome = fal
     ctx.provide('dshGoCompanionRecall', coordinator);
     ctx.effect(() => () => { coordinator.dispose(); contexts.dispose(); }, 'c902-fixture.recall');
     if (withRecall) {
-      const module = await import('../../bridge/dsh-go-bridge/lib/companion/recall-engine.js');
+      const module = await import('../../bridge/DPSK-bridge/lib/companion/recall-engine.js');
       adapter = await module.createRecallEngineAdapter(ctx, { contexts });
       ctx.provide('dshGoCompanionRecallEngine', adapter);
     }
     ready.resolve(adapter);
-    const contextUrl = new URL('../../bridge/dsh-go-bridge/lib/companion/full-context.js', import.meta.url).href;
+    const contextUrl = new URL('../../bridge/DPSK-bridge/lib/companion/full-context.js', import.meta.url).href;
     // C905's production preset replaces dsh-persona with this provider. Mount
     // that same provider once: it owns the prefix, fixed suffix and context.
     const fullPlugins = () => [{ id: 'companion-full-context', name: contextUrl }];

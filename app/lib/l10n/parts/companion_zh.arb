@@ -134,7 +134,7 @@
   "companionMemoryEmpty": "还没有记下什么",
   "companionMemoryEmptyHint": "你们聊过的事，她会自己慢慢记住。想让她特别记着什么，也可以写在这里。",
   "companionMemoryUnsupported": "这台主机还不能保存她的记忆",
-  "companionMemoryUnsupportedHint": "经 DSH Remote 中继连接时用不了，或者这台主机的 dsh-go 桥接比较旧。",
+  "companionMemoryUnsupportedHint": "经 DSH Remote 中继连接时用不了，或者这台主机的 DPSK 桥接比较旧。",
   "companionMemoryLoadFailed": "没读到",
   "companionMemoryRetry": "重试",
   "companionMemoryConflict": "刚才另一处改过了，已经刷新",

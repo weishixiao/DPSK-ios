@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
-import { canReadReceiptPdf, readReceiptPdf } from '../bridge/dsh-go-bridge/lib/companion/receipt-pdf.js';
+import { canReadReceiptPdf, readReceiptPdf } from '../bridge/DPSK-bridge/lib/companion/receipt-pdf.js';
 import { ordinary, textLines, paintImage, imageDate, chinese, chinesePdf, encryptedPdf } from './fixtures/companion-receipt-pdf.mjs';
 
 const text = ordinary([textLines(['DATE 2026-11-20', 'ITEM TRAIN', 'AMOUNT CNY 80.00'])]);
@@ -100,7 +100,7 @@ test('PDF active worker is terminated by the original abort and releases the chi
   // guessed parser delay. The child can exit only when the worker is gone.
   const source = `
     import assert from 'node:assert/strict';
-    import { readReceiptPdf } from ${JSON.stringify(new URL('../bridge/dsh-go-bridge/lib/companion/receipt-pdf.js', import.meta.url).href)};
+    import { readReceiptPdf } from ${JSON.stringify(new URL('../bridge/DPSK-bridge/lib/companion/receipt-pdf.js', import.meta.url).href)};
     const controller = new AbortController();
     const reason = new Error('original deadline reached');
     const pending = readReceiptPdf(new Uint8Array(${JSON.stringify([...text])}), {signal:controller.signal});
@@ -125,7 +125,7 @@ test('PDF worker preserves a real inherited preload and refuses ambient optional
     import {isMainThread,threadId} from 'node:worker_threads';
     appendFileSync(process.env.J_PDF_PRELOAD_PROBE,JSON.stringify({isMainThread,threadId,wasm:typeof WebAssembly})+'\\n');\n`);
   const entry = join(directory, 'read.mjs');
-  await writeFile(entry, `import {readReceiptPdf} from ${JSON.stringify(new URL('../bridge/dsh-go-bridge/lib/companion/receipt-pdf.js', import.meta.url).href)};
+  await writeFile(entry, `import {readReceiptPdf} from ${JSON.stringify(new URL('../bridge/DPSK-bridge/lib/companion/receipt-pdf.js', import.meta.url).href)};
     const result=await readReceiptPdf(new Uint8Array(${JSON.stringify([...text])}));
     console.log(JSON.stringify(result.pages[0].lines.map(line=>line.text)));\n`);
   const result = await childOutput(['--no-addons', '--jitless', '--import', preload, entry], {
@@ -149,7 +149,7 @@ test('PDF runtime gate declines an older advertised Node without loading the par
 });
 
 test('PDF extraction resolves the exact installed dependency and keeps its licenses', async () => {
-  const bridge = new URL('../bridge/dsh-go-bridge/', import.meta.url);
+  const bridge = new URL('../bridge/DPSK-bridge/', import.meta.url);
   const require = createRequire(new URL('package.json', bridge));
   const root = new URL('./', pathToFileURL(require.resolve('pdfjs-dist/package.json')));
   const lock = JSON.parse(await readFile(new URL('package-lock.json', bridge), 'utf8'));
@@ -170,7 +170,7 @@ test('PDF staged bridge extracts real text with the exact installed subset and n
   // Missing dependencies must fail here, not turn into a tooling-fixture pass.
   const directory = await mkdtemp(join(tmpdir(), 'companion-pdf-stage-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
-  const bridge = fileURLToPath(new URL('../bridge/dsh-go-bridge/', import.meta.url));
+  const bridge = fileURLToPath(new URL('../bridge/DPSK-bridge/', import.meta.url));
   const staged = join(directory, 'bridge');
   await promisify(execFile)('python3', ['-I',
     fileURLToPath(new URL('../lib/bridge_dependencies.py', import.meta.url)),

@@ -6,7 +6,7 @@ App 以 APK 分发、不上商店，更新靠 App 自己查 GitHub Releases、�
 
 ## 资产约定
 
-每个版本一个 GitHub Release，仓库 `weishixiao/dsh-go`，必须公开（私有仓库匿名访问一律 404，App 只会显示「暂时检查不了」）。同一组文件也放在公开下载桶：`https://dl.dshtui.com/download/<版本>/<文件>`，最新版的清单在 `https://dl.dshtui.com/update.json`（见「公开下载桶 dl」）。
+每个版本一个 GitHub Release，仓库 `weishixiao/DPSK`，必须公开（私有仓库匿名访问一律 404，App 只会显示「暂时检查不了」）。同一组文件也放在公开下载桶：`https://dl.dshtui.com/download/<版本>/<文件>`，最新版的清单在 `https://dl.dshtui.com/update.json`（见「公开下载桶 dl」）。
 
 正式版统一提供 arm64 安装包。`update.json` 供更新清单回退读取，`SHA256SUMS` 供缺少 GitHub digest 时校验 APK，`*.dshdelta` 是从最近几个旧版升上来的增量补丁（`docs/design/delta-update.md`），都由 App 自己用，不要求用户手动下载。GitHub 自动生成的 Source code 压缩包是源码快照，不是安装包。
 
@@ -15,10 +15,10 @@ App 以 APK 分发、不上商店，更新靠 App 自己查 GitHub Releases、�
 | 版本名 | `app/pubspec.yaml` 的 `version: X.Y.Z[-pre]`，即 versionName；后面的 `+1` 只是占位 | `1.2.0` |
 | 构建号 | Android versionCode，由 `tooling/build-apk.sh` 按构建时间生成，见「构建号」 | `10251234` |
 | tag | `v` + 版本名（不带 `+N`） | `v1.2.0`、`v1.3.0-beta.1` |
-| APK | `dsh-go-<版本名>-<flavor>.apk`，正式版 flavor 固定为 `arm64`；文件名不带 `+N`（GitHub 会改写 `+`） | `dsh-go-1.2.0-arm64.apk` |
-| iOS 安装包 | `dsh-go-<版本名>-ios-unsigned.ipa`：iOS 编译工作流 `ios-unsigned-ipa` 产物里的 `DSH-Go-unsigned.ipa`（必须是发版提交上的那次运行，且「Archive as for TestFlight, and look inside」这一步通过；归档检查失败时 IPA 照样会上传，那份不能用），上传 Release 时改成这个名字；只挂在 GitHub Release，不进 `SHA256SUMS` 和 `update.json` | `dsh-go-1.2.0-ios-unsigned.ipa` |
-| 增量补丁 | `dsh-go-<版本名>-from-<旧版本名>-arm64.dshdelta`，只发不到整包 60 % 的 | `dsh-go-1.2.0-from-1.1.0-arm64.dshdelta` |
-| 校验和 | `SHA256SUMS`，`sha256sum` 的标准输出，APK 和补丁都在里面 | `<hex>  dsh-go-1.2.0-arm64.apk` |
+| APK | `DPSK-<版本名>-<flavor>.apk`，正式版 flavor 固定为 `arm64`；文件名不带 `+N`（GitHub 会改写 `+`） | `DPSK-1.2.0-arm64.apk` |
+| iOS 安装包 | `DPSK-<版本名>-ios-unsigned.ipa`：iOS 编译工作流 `ios-unsigned-ipa` 产物里的 `DPSK-unsigned.ipa`（必须是发版提交上的那次运行，且「Archive as for TestFlight, and look inside」这一步通过；归档检查失败时 IPA 照样会上传，那份不能用），上传 Release 时改成这个名字；只挂在 GitHub Release，不进 `SHA256SUMS` 和 `update.json` | `DPSK-1.2.0-ios-unsigned.ipa` |
+| 增量补丁 | `DPSK-<版本名>-from-<旧版本名>-arm64.dshdelta`，只发不到整包 60 % 的 | `DPSK-1.2.0-from-1.1.0-arm64.dshdelta` |
+| 校验和 | `SHA256SUMS`，`sha256sum` 的标准输出，APK 和补丁都在里面 | `<hex>  DPSK-1.2.0-arm64.apk` |
 | 清单 | `update.json`（schema 1），镜像和自托管源都读它 | 见下 |
 | 更新说明 | Release 正文（Markdown），App 弹窗里原样渲染 | |
 
@@ -32,14 +32,14 @@ App 以 APK 分发、不上商店，更新靠 App 自己查 GitHub Releases、�
   "title": "DSH 1.2.0",
   "publishedAt": "2026-11-01T08:00:00Z",
   "notes": "## 新功能\n…",
-  "page": "https://github.com/weishixiao/dsh-go/releases/tag/v1.2.0",
+  "page": "https://github.com/weishixiao/DPSK/releases/tag/v1.2.0",
   "assets": {
-    "arm64": { "name": "dsh-go-1.2.0-arm64.apk", "size": 180107933, "sha256": "…" }
+    "arm64": { "name": "DPSK-1.2.0-arm64.apk", "size": 180107933, "sha256": "…" }
   },
   "patches": {
     "arm64": [
       { "from": "<1.1.0 APK 的 SHA-256>", "fromVersion": "1.1.0+10201200",
-        "name": "dsh-go-1.2.0-from-1.1.0-arm64.dshdelta", "size": 13278848, "sha256": "…" }
+        "name": "DPSK-1.2.0-from-1.1.0-arm64.dshdelta", "size": 13278848, "sha256": "…" }
     ]
   }
 }
@@ -77,7 +77,7 @@ versionCode = (年 - 2026) × 10^8 + MMDDhhmm      时钟固定按 UTC+8
 ## 发版步骤
 
 1. **改版本名**：`app/pubspec.yaml` 的 `version:`，版本名按 semver 升；`+1` 不动。之后打的开发包也带新版本名，不会被提示「更新」到这一版。
-   - **同步使用说明**：按本版界面改动更新 `docs/guide/`，把 `docs/guide/README.md` 的 `> dsh-go X.Y.Z` 改成新版本名，`python3 app/tool/guide_sync.py` 重新生成 App 内置技能，`python3 app/tool/guide_sync.py --check` 通过再打包（它核对入口路径、界面文字、页面链接与版本号）。
+   - **同步使用说明**：按本版界面改动更新 `docs/guide/`，把 `docs/guide/README.md` 的 `> DPSK X.Y.Z` 改成新版本名，`python3 app/tool/guide_sync.py` 重新生成 App 内置技能，`python3 app/tool/guide_sync.py --check` 通过再打包（它核对入口路径、界面文字、页面链接与版本号）。
 2. **只打包 arm64 正式版**（运行时要先 `runtime/build-runtime.sh` 产出 `runtime/out/`）。x64 仅供必要的本地模拟器验证，不上传、不放入正式更新清单：
 
    ```sh
@@ -172,7 +172,7 @@ npx wrangler r2 object put dpsk-share/beta/update.json --file prev.json --conten
 |---|---|---|---|
 | 国内线路 | `<CN_BASE_URL><版本>/<文件>` | 香港对象存储（阿里云 OSS 或腾讯云 COS），公共读 | `request.cf.country` 为 `CN` |
 | 海外线路 | 公开模式 `https://dl.dshtui.com/download/<版本>/<文件>`（清单 `routes` 里没有 `dl` 的旧版本是 `/download/<版本>/<文件>`）；密钥模式是 10 分钟的签名链接 | 公开模式：公开 R2 桶 `dpsk-dl`，字节不经 Worker；旧版本和密钥模式：R2 `beta/<版本>/`，经 Worker | 其他地区 |
-| GitHub | `github.com/weishixiao/dsh-go/releases/download/v<版本>/<文件>` | GitHub Release | 手动切换 |
+| GitHub | `github.com/weishixiao/DPSK/releases/download/v<版本>/<文件>` | GitHub Release | 手动切换 |
 
 - 页面上用分段按钮切换（纯 CSS，不跑脚本）；`?via=cn|global|github` 直接指定线路，`?lang=zh|en` 指定语言（默认跟浏览器）。
 - 一条线路只在**配置了**并且**这一版确实传上去了**时出现：`beta/update.json` 的 `routes` 由发布脚本在下载核对之后写入。`CN_BASE_URL` 为空时国内线路整项隐藏；没有 `routes` 的旧清单只给海外线路。
@@ -305,7 +305,7 @@ scripts/publish-release.sh ../../dist --github
 |---|---|
 | 页面和带令牌的 App | 上一版的清单设为最新（「内测通道」的回滚两行）。上一版若是旧脚本发的、清单里没有 `routes`，回滚后页面只给海外线路 |
 | 公开桶的 `update.json` | `npx wrangler r2 object get dpsk-dl/download/<上一版>/update.json --file prev.json --remote`，再 `npx wrangler r2 object put dpsk-dl/update.json --file prev.json --content-type 'application/json; charset=utf-8' --cache-control 'public, max-age=300' --remote`（环境变量同上）；边缘最多再给 5 分钟旧的。上一版没传过公开桶（回滚的是第一个走 dl 的版本）时没有可回的清单，删掉 `dpsk-dl/update.json` 即可 |
-| GitHub 上的这一版 | `gh release edit v<版本> --repo weishixiao/dsh-go --draft=true` 撤回成草稿，`releases/latest` 回到上一版；彻底删除用 `gh release delete v<版本> --repo weishixiao/dsh-go --cleanup-tag` |
+| GitHub 上的这一版 | `gh release edit v<版本> --repo weishixiao/DPSK --draft=true` 撤回成草稿，`releases/latest` 回到上一版；彻底删除用 `gh release delete v<版本> --repo weishixiao/DPSK --cleanup-tag` |
 | 香港桶 | 不用动：页面跟着清单走，不再指向新版；要删就删 `<版本>/` |
 | 公开下载 | `DOWNLOAD_ACCESS` 改回 `"key"` 再部署 |
 
@@ -416,7 +416,7 @@ App 的签名预检认 lineage：新包的签名历史里含已装版本的签�
 - **跳过这个版本**：这个版本不再自动弹，有更新的版本照常提醒；「关于」里显示「已跳过」。手动检查仍会打开弹窗。
 - **稍后**：只关弹窗，下次自动检查（次日）还会提醒。
 - **上次的结果会缓存**：重启后不联网也能看到「新版本」标记；装好新版后自动清掉缓存和残留安装包。
-- **导出安装包**：「可以安装」，或签名不一致 / 安装被拦截的失败界面，可以「导出安装包」：把校验过的包复制到 `Download/DSH-Go/`（MediaStore，文件名就是清单里的资产名）。这是给「首次安装被厂商拦、只能自己重签」的人兜底，不是常规更新路径——重签后的包和官方签名不同，App 内更新会一直停在「签名不一致」，以后每版都得手动重签覆盖装。能走 Shizuku / 本机 ADB 就别走这条路。导出只是复制，`cache/updates/` 里的原文件、安装和清理逻辑都不变（提权安装器要求文件直接在 `cache/updates` 下，别把下载目录搬走）。
+- **导出安装包**：「可以安装」，或签名不一致 / 安装被拦截的失败界面，可以「导出安装包」：把校验过的包复制到 `Download/DPSK/`（MediaStore，文件名就是清单里的资产名）。这是给「首次安装被厂商拦、只能自己重签」的人兜底，不是常规更新路径——重签后的包和官方签名不同，App 内更新会一直停在「签名不一致」，以后每版都得手动重签覆盖装。能走 Shizuku / 本机 ADB 就别走这条路。导出只是复制，`cache/updates/` 里的原文件、安装和清理逻辑都不变（提权安装器要求文件直接在 `cache/updates` 下，别把下载目录搬走）。
 - **磁盘**：开始下载前要求可用空间 ≥ 安装包 × 2 + 64 MB（下载 + 安装暂存）。走补丁也是这个门槛：补丁拼完就删，峰值仍是安装暂存那一刻。
 - 安装用 PackageInstaller 会话（把文件流写进会话），不用 FileProvider，也不需要 `content://`。
 

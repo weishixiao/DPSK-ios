@@ -13,7 +13,7 @@
 | `requestId` | 非空字符串，最多 200 个 UTF-16 单元，同一 owner 未结束请求不能重名 |
 | `expectedRoot` / `expectedToken` | 非空字符串，各最多 4096 个单元；root 在 IO 阶段比较 canonical path，token 只在内存比较 |
 | `expectedGeneration` | 已公布的正安全整数，必须与 owner 当前许可相等 |
-| `name` | 仅 `dsh-go-ui`、`dsh-go-plugin`、`dsh-go-guide`、`dsh-go-support` |
+| `name` | 仅 `DPSK-ui`、`DPSK-plugin`、`DPSK-guide`、`DPSK-support` |
 | `files` | 1–64 项字符串 Map，必须含 `SKILL.md`；路径最多 512 字符，只允许 ASCII 字母、数字、下划线、连字符开头的安全段，禁止绝对路径、空段、`.` 和 `..` |
 | 文本预算 | 每项 UTF-16 单元先限 512 Ki，总量先限 1 Mi；严格编码后仍分别限 UTF-8 512 KiB / 1 MiB，不截断 |
 
@@ -40,7 +40,7 @@ Flutter OH StandardMessageCodec 将 INT32、可安全表示的 INT64 和 FLOAT64
 1. 在执行阶段验证根、严格编码和字节上限。OH TextEncoder 会替换未配对 surrogate，所以显式先查 UTF-16；与实际 Kotlin 编码异常一样回 `io`，不写替代字符。
 2. `SKILL.md` 必须以 frontmatter 开头，且 managed marker 位于其中。已有 SKILL 无 marker、不可读、非严格 UTF-8 或超过读取上界时回 `userOwned`，不覆盖用户接管的文件。比较保留既有单个开头 BOM 的兼容规则。
 3. 非 SKILL 文件按请求顺序比较、提交；相同文本不写。`SKILL.md` 永远最后。先写同目录隐藏临时文件、处理短写、fsync、关闭，再重验许可和路径并 rename；之后 fsync 父目录。
-4. 临时名是 `.dsh-go-tmp-<basename>`。请求路径段不允许以点开头，因此合法输入文件不会与另一文件的临时名碰撞。异常或取消尽力清理已打开但未提交的临时文件；文件描述符在 finally 关闭。
+4. 临时名是 `.DPSK-tmp-<basename>`。请求路径段不允许以点开头，因此合法输入文件不会与另一文件的临时名碰撞。异常或取消尽力清理已打开但未提交的临时文件；文件描述符在 finally 关闭。
 5. 逐组件 lstat 和末端 NOFOLLOW 拒绝已存在的静态 symlink，末端打开使用 NONBLOCK 并以 fstat 要求普通文件。`File.path` 只用于入口 canonical 比较；它对原路径字符串做 realpath，不能证明 fd 的根包含关系。
 
 取消不回滚已提交文件。新装取消后可能留下部分普通文件，但没有最后的 SKILL；升级取消后可能是新数据与旧 SKILL，后续正常安装修复。若取消发生在已经开始的 rename 内，该次 rename 仍可能完成；队列保持槽直到物理操作结束。**这不是整包原子事务，也不提供对抗另一个并发恶意改父目录的 writer 的文件系统沙箱**，与 Android 文档边界一致。系统 fsync/rename 的持久化和中断行为仍待设备测量。

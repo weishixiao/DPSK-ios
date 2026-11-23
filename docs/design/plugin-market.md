@@ -6,7 +6,7 @@
 
 | # | 决定 |
 |---|---|
-| D1 | 官方插件发在 npm 作用域 `@dsh-go`（组织）；组织建不了时用个人作用域 `@ccchimneyyy` |
+| D1 | 官方插件发在 npm 作用域 `@DPSK`（组织）；组织建不了时用个人作用域 `@ccchimneyyy` |
 | D2 | **自动上架**：提交通过自动检查就合并上架，不等人工；检查出的风险**标给用户看** |
 | D3 | 生图生视频插件**不预装**进本机运行时，从市场一键装 |
 | D4 | 提交走 GitHub |
@@ -24,12 +24,12 @@
 
 ## 3. 数据：两个文件
 
-都由市场仓库的 CI 生成，发到 GitHub Pages（`MARKET_SOURCE_URL`，默认 `https://weishixiao.github.io/dsh-go-market/`）。App 不直接读那里：
+都由市场仓库的 CI 生成，发到 GitHub Pages（`MARKET_SOURCE_URL`，默认 `https://weishixiao.github.io/DPSK-market/`）。App 不直接读那里：
 
 ```
 GitHub Pages
   → Worker 的 Cron（每 10 分钟，src/market.ts publishMarket）：取两个文件，一起校验（validateCatalog）
-      通过 → 写到公开桶 dpsk-dl 的 market/index.json、market/dsh-go.json
+      通过 → 写到公开桶 dpsk-dl 的 market/index.json、market/DPSK.json
              （application/json; charset=utf-8，Cache-Control: public, max-age=300），
              同一份快照也存进 Worker 自己的缓存（KV）
       失败 → 什么都不写，桶里和缓存里还是上一份
@@ -40,11 +40,11 @@ GitHub Pages
 ```
 
 - `https://go.dshtui.com/market/index.json`（= `https://dl.dshtui.com/market/index.json`）：**格式 1**，必须通过 DSH 0.2.1 官方校验器（`dsh-plugin-market-index`）。DSH 网页版、dsh-TUI 也能直接添加这个地址。每个插件**只列锁定的那一个版本**。
-- `https://go.dshtui.com/market/dsh-go.json`（= `https://dl.dshtui.com/market/dsh-go.json`）：格式 1 装不下的东西，App 用。
+- `https://go.dshtui.com/market/DPSK.json`（= `https://dl.dshtui.com/market/DPSK.json`）：格式 1 装不下的东西，App 用。
 - 两个文件在 CDN 上各自缓存，目录变化后的 5 分钟内可能拿到新旧不配套的一对：App 照常显示（版本对不上的 sidecar 条目不用），但不存下来，下次再取（§6）。
 
 ```jsonc
-// dsh-go.json
+// DPSK.json
 {
   "schema": 1,
   "generatedAt": "2026-10-30T12:00:00Z",
@@ -74,13 +74,13 @@ GitHub Pages
 
 ## 4. 市场仓库与提交流程（GitHub，自动上架）
 
-公开仓库 `weishixiao/dsh-go-market`：
+公开仓库 `weishixiao/DPSK-market`：
 
 ```
 plugins/<包名，@scope__name 形式>.json   每个插件一个文件（作者提交的）
 schema/plugin.schema.json
 scripts/check.mjs                         自动检查
-scripts/build.mjs                         生成 index.json + dsh-go.json
+scripts/build.mjs                         生成 index.json + DPSK.json
 .github/workflows/check.yml               PR 上跑检查，全过就自动合并
 .github/workflows/publish.yml             合并后生成并发布
 .github/workflows/watch.yml               每天查一次已上架包的新版本，自动开 PR
@@ -147,4 +147,4 @@ App 在删除旧版本或开始安装之前，通过现有 `ShareNet.npmFacts` �
 | `@weishixiao/dsh-media`：补视频生成、编辑图片、国内服务商，整理发包 | Pro（后端） |
 | 市场仓库、检查与生成脚本、GitHub Actions、Worker 的 `/market/*`、`/p/<包名>` 和写 `dl` 的 Cron | Pro（后端） |
 | App 市场页、风险展示、安装与更新、媒体入口 | Claude（前端） |
-| npm 组织 `dsh-go` 和发包令牌、市场仓库的创建 | owner |
+| npm 组织 `DPSK` 和发包令牌、市场仓库的创建 | owner |

@@ -171,7 +171,7 @@ void main() {
       'weather_card',
       {},
       meta: {
-        'dsh-go/view': {
+        'DPSK/view': {
           'type': 'stack',
           'children': [
             {'type': 'text', 'text': id},

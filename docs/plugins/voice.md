@@ -2,7 +2,7 @@
 
 [English](en/voice.md)
 
-给朗读这类插件的四样能力：放一段声音，用户一开口就停，字幕每秒更新十次，字幕浮在界面上。全部可选：不声明就什么都不发生，老插件、老 App 都不受影响。完整示例：[`dsh-go-example-readaloud`](../../examples/plugins/dsh-go-example-readaloud/)。规格：[协议 §11](../design/native-plugins-protocol.md#11-可选能力v12)。
+给朗读这类插件的四样能力：放一段声音，用户一开口就停，字幕每秒更新十次，字幕浮在界面上。全部可选：不声明就什么都不发生，老插件、老 App 都不受影响。完整示例：[`DPSK-example-readaloud`](../../examples/plugins/DPSK-example-readaloud/)。规格：[协议 §11](../design/native-plugins-protocol.md#11-可选能力v12)。
 
 | 能力 | 你得到 | 你做 | App 做 |
 |---|---|---|---|
@@ -109,7 +109,7 @@ ctx.inject(['dshGo'], (ctx) => {
 ## 测
 
 ```js
-import { createTestHost } from '@dsh-go/plugin-kit/testing'
+import { createTestHost } from '@DPSK/plugin-kit/testing'
 const h = createTestHost({ dir, caps: { features: ['audio', 'voice', 'micro', 'overlay'] } })
 apply(h.ctx)
 const { effects } = await h.invoke('read', { context: { message: '你好。' }, scope: { sessionId: 's1' } })

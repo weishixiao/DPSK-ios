@@ -375,11 +375,11 @@ def deletion_variants(repo: Path, prefix: Path, output: Path):
     """Generate only the two OH deletion variants; never rewrite shared Android inputs."""
     rows = [
         ('runtime/session-deletion/core.mjs',
-         'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/dsh-go-deletion.mjs', 'core.mjs',
+         'node_modules/@deepseek-ai/dsh-session-persistence-jsonl/lib/DPSK-deletion.mjs', 'core.mjs',
          '25a4da7393ed29ec1427862796ea310c55e32368e616b6ab43e36a3a56976430',
          'db7fd228ef4190023ac37850f47a61b0a0f0e9111428fe61bec956017e295bf6'),
-        ('runtime/bridge/dsh-go-bridge/lib/session-deletion.js',
-         'runtime/bridge/dsh-go-bridge/lib/session-deletion.js', 'session-deletion.js',
+        ('runtime/bridge/DPSK-bridge/lib/session-deletion.js',
+         'runtime/bridge/DPSK-bridge/lib/session-deletion.js', 'session-deletion.js',
          '8483c8265cfad03d9f4f1b5a483f0f4a300bb97eb0027d8d60016c9f09706837',
          'c5b70e171c0da6876e0eae4e29ddacaec06ee306d7a56fed0f8533ccb2c77945'),
     ]
@@ -435,7 +435,7 @@ def assemble(args):
     packages = {'dsh': checked_lock(dsh, config['dshLockSha256']),
                 'process': checked_lock(process, config['processLockSha256']),
                 'bridge': checked_lock(bridge_prefix, digest(
-                    (repo / 'runtime/bridge/dsh-go-bridge/package-lock.json').read_bytes()))}
+                    (repo / 'runtime/bridge/DPSK-bridge/package-lock.json').read_bytes()))}
     input_spec = importlib.util.spec_from_file_location('ohos_prepared_inputs', Path(__file__).with_name('prepare-inputs.py'))
     input_module = importlib.util.module_from_spec(input_spec)
     input_spec.loader.exec_module(input_module)
@@ -474,9 +474,9 @@ def assemble(args):
                      'runtime/ohos/licenses/tinyemu-2019-12-21-NOTICES.txt')
         helper = source_runtime / 'native/hap-loader'
         for name in ('index.cjs', 'package.json'):
-            composer.add(helper / name, repo, 'repository', 'node_modules/@dsh-go/ohos-native/' + name)
-        composer.add(repo / 'LICENSE', repo, 'repository', 'node_modules/@dsh-go/ohos-native/LICENSE')
-        bridge = repo / 'runtime/bridge/dsh-go-bridge'
+            composer.add(helper / name, repo, 'repository', 'node_modules/@DPSK/ohos-native/' + name)
+        composer.add(repo / 'LICENSE', repo, 'repository', 'node_modules/@DPSK/ohos-native/LICENSE')
+        bridge = repo / 'runtime/bridge/DPSK-bridge'
         for source in records(bridge / 'lib'):
             destination = source.relative_to(repo).as_posix()
             composer.add(source, repo, 'repository', destination,
@@ -487,7 +487,7 @@ def assemble(args):
         dependency_spec.loader.exec_module(dependency_module)
         pdf, pdf_files = dependency_module.pdf_files(bridge_prefix)
         for source in pdf_files:
-            destination = 'runtime/bridge/dsh-go-bridge/node_modules/pdfjs-dist/' + source.relative_to(pdf).as_posix()
+            destination = 'runtime/bridge/DPSK-bridge/node_modules/pdfjs-dist/' + source.relative_to(pdf).as_posix()
             composer.add(source, bridge_prefix, 'bridge-dependencies', destination)
         for name in ('package.json', 'cordis.patch.yml', 'PDF-DEPENDENCY.md'):
             composer.add(bridge / name, repo, 'repository', (bridge / name).relative_to(repo).as_posix())

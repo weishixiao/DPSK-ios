@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:test/test.dart';
 
-const _path = '/dsh-go/v1/companion/tasks';
+const _path = '/DPSK/v1/companion/tasks';
 const _capability = <String, Object?>{
   'v': 1,
   'hostStoreId': 'original-store',

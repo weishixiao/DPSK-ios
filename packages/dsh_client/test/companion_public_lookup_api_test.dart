@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:dsh_client/dsh_client.dart';
 import 'package:test/test.dart';
 
-const _path = '/dsh-go/v1/companion/lookup';
+const _path = '/DPSK/v1/companion/lookup';
 const _task = <String, Object?>{
   'placeName': '青桥美术馆',
   'city': null,

@@ -74,26 +74,26 @@ export async function runBridgeRouteContract({ base, cookie, rpc, WebSocket, out
     socket.close(1000, 'contract complete'); await closed; clearTimeout(timer); result.stream.forcedTermination = forced;
   }
   try {
-    const cap = await request('runtime-capabilities', 'GET', '/dsh-go/v1/runtime-capabilities');
+    const cap = await request('runtime-capabilities', 'GET', '/DPSK/v1/runtime-capabilities');
     check(cap.status === 200 && cap.json?.v === 1 && cap.json.platform === 'openharmony' && cap.json.nodeVersion === '24.22.1', 'OH authenticated capability contract');
-    const inventory = await request('inventory', 'GET', '/dsh-go/v1/inventory');
+    const inventory = await request('inventory', 'GET', '/DPSK/v1/inventory');
     check(inventory.status === 200 && inventory.json?.v === 1 && typeof inventory.json.bridge === 'string' && inventory.json.routeGuard === true, 'bridge inventory and its real loopback routeGuard');
-    const anon = await request('inventory-anonymous', 'GET', '/dsh-go/v1/inventory', { anonymous: true });
+    const anon = await request('inventory-anonymous', 'GET', '/DPSK/v1/inventory', { anonymous: true });
     check([401, 403].includes(anon.status), 'anonymous inventory must be guarded');
-    const canary = await request('guard-canary-authenticated', 'GET', '/dsh-go-guard-canary'); check(canary.status === 204, 'actual canary registered');
-    const canaryAnon = await request('guard-canary-anonymous', 'GET', '/dsh-go-guard-canary', { anonymous: true }); check([401, 403].includes(canaryAnon.status), 'anonymous canary guarded');
+    const canary = await request('guard-canary-authenticated', 'GET', '/DPSK-guard-canary'); check(canary.status === 204, 'actual canary registered');
+    const canaryAnon = await request('guard-canary-anonymous', 'GET', '/DPSK-guard-canary', { anonymous: true }); check([401, 403].includes(canaryAnon.status), 'anonymous canary guarded');
 
-    const listing = await request('plugin-config-list', 'GET', '/dsh-go/v1/plugin-config');
+    const listing = await request('plugin-config-list', 'GET', '/DPSK/v1/plugin-config');
     check(listing.status === 200 && Array.isArray(listing.json?.entries), 'plugin-config list');
-    check(listing.json.entries.some(entry => entry.entryId === fixture.entryId && entry.configurable && entry.writable && entry.owner === 'installed' && entry.bundle === 'dsh-go-fixture-host-config-bundle'), 'declared installed fixture is configurable and writable');
+    check(listing.json.entries.some(entry => entry.entryId === fixture.entryId && entry.configurable && entry.writable && entry.owner === 'installed' && entry.bundle === 'DPSK-fixture-host-config-bundle'), 'declared installed fixture is configurable and writable');
     check(listing.json.entries.some(entry => entry.entryId === fixture.nativeEntryId && entry.configurable === false && entry.owner === 'overlay'), 'absolute native fixture remains outside editable bundle authority');
-    const entryPath = `/dsh-go/v1/plugin-config/${encodeURIComponent(fixture.entryId)}`;
+    const entryPath = `/DPSK/v1/plugin-config/${encodeURIComponent(fixture.entryId)}`;
     const config = await request('plugin-config-read', 'GET', entryPath); check(config.status === 200 && config.json?.value?.label === 'initial-label' && typeof config.json.revision === 'string', 'read real fixture config');
     const changed = await request('plugin-config-write', 'POST', entryPath, { body: { revision: config.json.revision, ops: [{ op: 'set', path: ['label'], value: 'changed-label' }] } });
     check(changed.status === 200 && changed.json?.value?.label === 'changed-label', 'write real fixture config');
     const reread = await request('plugin-config-reread', 'GET', entryPath); check(reread.status === 200 && reread.json?.value?.label === 'changed-label', 'configuration readback');
 
-    const deletion = await request('session-deletion-capability', 'GET', '/dsh-go/v1/sessions/deletion');
+    const deletion = await request('session-deletion-capability', 'GET', '/DPSK/v1/sessions/deletion');
     check(deletion.status === 200 && deletion.json?.version === 1 && deletion.json.supported === true, 'safe deletion seam available');
     const sessionId = ownedSessionId; check(typeof sessionId === 'string' && sessionId.length > 0, 'completed private session supplied'); result.disposableSession = sessionId;
     const listedBefore = await rpc('session/list', { _request: {} });
@@ -106,7 +106,7 @@ export async function runBridgeRouteContract({ base, cookie, rpc, WebSocket, out
     await attachmentCase('invalid-reference', sessionId, { ...image, attachmentId: 'not-an-attachment-id' }, 'session/attachment-invalid', 'INVALID_ATTACHMENT_REF');
     await attachmentCase('legacy-shape', sessionId, image, 'gateway/input-invalid', undefined, { legacy: true });
     await attachmentCase('anonymous', sessionId, image, null, undefined, { anonymous: true });
-    const deleted = await request('session-delete', 'POST', '/dsh-go/v1/sessions/delete', { body: { sessionId } });
+    const deleted = await request('session-delete', 'POST', '/DPSK/v1/sessions/delete', { body: { sessionId } });
     check(deleted.status === 200 && deleted.json?.deleted === true && deleted.json.sessionId === sessionId, 'delete only owned disposable session');
     const listedAfter = await rpc('session/list', { _request: {} });
     result.sessionListAfter = listedAfter; check(Array.isArray(listedAfter.items) && !listedAfter.items.some(item => item.sessionId === sessionId), 'actual subsequent session absence');
@@ -118,16 +118,16 @@ export async function runBridgeRouteContract({ base, cookie, rpc, WebSocket, out
 
 
     const caps = 'v=1&app=0.10.0&locale=zh-CN&features=audio,files&surfaces=panels&components=stack,text,metric';
-    const contributions = await request('contributions', 'GET', `/dsh-go/v1/contributions?${caps}`);
+    const contributions = await request('contributions', 'GET', `/DPSK/v1/contributions?${caps}`);
     check(contributions.status === 200 && contributions.json?.v === 1 && contributions.json.plugins?.some(plugin => plugin.pkg === fixture.pkg && plugin.state === 'ok'), 'real path-loaded native contribution');
     check(typeof contributions.headers.etag === 'string', 'contributions ETag');
-    const etag = await request('contributions-etag', 'GET', `/dsh-go/v1/contributions?${caps}`, { headers: { 'if-none-match': contributions.headers.etag } }); check(etag.status === 304 && etag.raw.length === 0, 'ETag revalidation');
-    const view = await request('view', 'GET', `/dsh-go/v1/views/${fixture.pkg}/proof?${caps}`);
+    const etag = await request('contributions-etag', 'GET', `/DPSK/v1/contributions?${caps}`, { headers: { 'if-none-match': contributions.headers.etag } }); check(etag.status === 304 && etag.raw.length === 0, 'ETag revalidation');
+    const view = await request('view', 'GET', `/DPSK/v1/views/${fixture.pkg}/proof?${caps}`);
     check(view.status === 200 && view.json?.v === 1 && view.json.pkg === fixture.pkg && view.json.view?.children?.[0]?.text === 'initial-label' && view.json.data?.bumps === 0, 'real panel view and first data');
-    const asset = await request('asset', 'GET', `/dsh-go/v1/assets/${fixture.pkg}/proof.png`);
+    const asset = await request('asset', 'GET', `/DPSK/v1/assets/${fixture.pkg}/proof.png`);
     check(asset.status === 200 && asset.headers['content-type'] === 'image/png' && createHash('sha256').update(asset.raw).digest('hex') === fixture.assetSHA256, 'real PNG asset bytes');
 
-    socket = new WebSocket(base.replace('http:', 'ws:') + '/dsh-go/v1/stream', { headers: { Cookie: cookie }, handshakeTimeout: 15000 });
+    socket = new WebSocket(base.replace('http:', 'ws:') + '/DPSK/v1/stream', { headers: { Cookie: cookie }, handshakeTimeout: 15000 });
     closed = new Promise(resolve => socket.once('close', (code, reason) => { result.stream.close = { code, reason: reason.toString() }; resolve(); }));
     const fail = error => { wsError = error; for (const waiter of [...waiters]) waiter.reject(error); };
     socket.on('error', fail);
@@ -139,7 +139,7 @@ export async function runBridgeRouteContract({ base, cookie, rpc, WebSocket, out
     check(welcome.v === 1 && typeof welcome.conn === 'string' && welcome.features?.includes('audio') && welcome.features.includes('files'), 'native hello/welcome negotiation');
     send({ t: 'sub', sub: 'proof', pkg: fixture.pkg, id: 'proof', scope: {} });
     const first = await nextFrame(frame => frame.sub === 'proof' && frame.t === 'data', 'initial data'); check(first.data?.bumps === 0, 'real initial subscription data');
-    const invoke = (id, action, extra = {}) => request(id, 'POST', '/dsh-go/v1/invoke', { body: { v: 1, pkg: fixture.pkg, id: 'proof', surface: 'panel', action, scope: {}, stream: welcome.conn, ...extra } });
+    const invoke = (id, action, extra = {}) => request(id, 'POST', '/DPSK/v1/invoke', { body: { v: 1, pkg: fixture.pkg, id: 'proof', surface: 'panel', action, scope: {}, stream: welcome.conn, ...extra } });
     const bump = await invoke('invoke', 'bump'); check(bump.status === 200 && bump.json?.v === 1 && bump.json.effects?.some(effect => effect.type === 'toast' && effect.text === 'bumped'), 'real action effects');
     const update = await nextFrame(frame => frame.sub === 'proof' && ['data', 'patch'].includes(frame.t), 'action data update'); check((update.data ?? update.merge)?.bumps === 1, 'subscription observes action update');
     const pending = await invoke('stream-pending', 'hold'); check(pending.status === 200 && typeof pending.json?.pending?.id === 'string', 'real deferred operation');
@@ -148,12 +148,12 @@ export async function runBridgeRouteContract({ base, cookie, rpc, WebSocket, out
 
     const audio = await invoke('media-lease', 'audio'); check(audio.status === 200, 'audio effect response');
     const play = audio.json?.effects?.find(effect => effect.type === 'audio' && effect.op === 'play'); check(typeof play?.lease === 'string', 'issued live audio lease');
-    const mediaPath = `/dsh-go/v1/media/${fixture.pkg}/tone?${new URLSearchParams({ lease: play.lease, key: 'proof-key' })}`;
+    const mediaPath = `/DPSK/v1/media/${fixture.pkg}/tone?${new URLSearchParams({ lease: play.lease, key: 'proof-key' })}`;
     const media = await request('media', 'GET', mediaPath); check(media.status === 200 && media.headers['content-type'] === 'audio/wav' && media.raw.length === 48 && media.raw.subarray(0, 4).toString() === 'RIFF', 'real leased audio bytes');
     const choice = await invoke('file-request', 'choose', { userGesture: true }); check(choice.status === 200, 'file-picker effect response');
     const effect = choice.json?.effects?.find(effect => effect.type === 'pickFile'); check(/^[A-Za-z0-9_-]{32}$/.test(effect?.request ?? ''), 'real issued file request');
     const fileBytes = Buffer.from('owned 中文 selected-file bytes\n'); const fileSHA = createHash('sha256').update(fileBytes).digest('hex');
-    const fileRoot = `/dsh-go/v1/files/${effect.request}`;
+    const fileRoot = `/DPSK/v1/files/${effect.request}`;
     const upload = await request('file-upload', 'POST', `${fileRoot}/upload?${new URLSearchParams({ stream: welcome.conn, name: '中文.txt', mediaType: 'text/plain' })}`, { raw: fileBytes });
     check(upload.status === 200 && upload.json?.file?.bytes === fileBytes.length, 'real file upload');
     const completePath = `${fileRoot}/complete?${new URLSearchParams({ stream: welcome.conn })}`;
@@ -167,8 +167,8 @@ export async function runBridgeRouteContract({ base, cookie, rpc, WebSocket, out
     check(result.stream.close?.code === 1000 && result.stream.forcedTermination === false, 'native stream closes normally');
     const revoked = await request('media-after-close', 'GET', mediaPath); check(revoked.status === 404 && jsonCode(revoked.json) === 'not-found', 'stream close revokes media lease');
     const occupancyBody = { bootRev: 'add12-private-boot', slots: { 'composer.before': [{ package: fixture.pkg, cell: 'private-cell', active: true }] }, attribution: 'fixture', unresolved: 0 };
-    const occupancy = await request('occupancy', 'POST', '/dsh-go/v1/occupancy', { body: occupancyBody }); check(occupancy.status === 204, 'browser-half occupancy write');
-    const inventoryAfter = await request('inventory-after-occupancy', 'GET', '/dsh-go/v1/inventory'); check(inventoryAfter.status === 200 && inventoryAfter.json?.bootRev === occupancyBody.bootRev && inventoryAfter.json.slots?.['composer.before']?.[0]?.package === fixture.pkg, 'occupancy observed through inventory');
+    const occupancy = await request('occupancy', 'POST', '/DPSK/v1/occupancy', { body: occupancyBody }); check(occupancy.status === 204, 'browser-half occupancy write');
+    const inventoryAfter = await request('inventory-after-occupancy', 'GET', '/DPSK/v1/inventory'); check(inventoryAfter.status === 200 && inventoryAfter.json?.bootRev === occupancyBody.bootRev && inventoryAfter.json.slots?.['composer.before']?.[0]?.package === fixture.pkg, 'occupancy observed through inventory');
     result.status = 'PASS_HOST_BRIDGE_ROUTE_CONTRACT';
     result.requiredTemplates = 15;
   } catch (error) { result.status = 'FAIL_HOST_BRIDGE_ROUTE_CONTRACT'; result.error = { name: error.name, message: error.message }; throw error; }

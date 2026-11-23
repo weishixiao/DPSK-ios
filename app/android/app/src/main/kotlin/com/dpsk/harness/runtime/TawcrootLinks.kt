@@ -221,8 +221,8 @@ class TawcrootLinks(
         const val PREFIX = "tawcroot:link:"
         private val MOUNT_POINTS = setOf("system", "apex", "sdcard", "storage", "dev", "proc", "sys")
         private val TOKEN = Regex("[0-9]+(-[0-9]+)?")
-        const val TEMP_PREFIX = ".dsh-go-tawc-"
-        val TEMP = Regex("""\.dsh-go-tawc-[0-9a-f]{16}\.tmp""")
+        const val TEMP_PREFIX = ".DPSK-tawc-"
+        val TEMP = Regex("""\.DPSK-tawc-[0-9a-f]{16}\.tmp""")
         private const val SLOW_NANOS = 500_000_000L
         private const val BATCH = 2000
 

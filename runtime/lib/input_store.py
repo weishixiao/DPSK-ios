@@ -155,7 +155,7 @@ def inventory(repo, npm_locks=None, all_locks=False):
         pnpm = json.loads(defaults[1].read_text(encoding="utf-8"))["packages"].get("node_modules/pnpm", {})
         if pnpm.get("version") != values["PNPM_VERSION"] or pnpm.get("integrity") != values["PNPM_INTEGRITY"]:
             raise InputError("current pnpm lock version/integrity does not match source pins")
-        defaults.append(repo / "runtime/bridge/dsh-go-bridge/package-lock.json")
+        defaults.append(repo / "runtime/bridge/DPSK-bridge/package-lock.json")
         locks = sorted(set(defaults) | set((repo / "runtime/locks").glob("*/package-lock.json"))) if all_locks else defaults
     for lock in locks:
         add_npm_lock(objects, lock, repo)
@@ -237,7 +237,7 @@ def collect_one(obj, store, mirror_base=None):
         urls.append(checked_url(mirror_base, base=True) + obj["key"])
     failures = []
     for url in urls:
-        request = urllib.request.Request(checked_url(url), headers={"User-Agent": "dsh-go-input-store/1"})
+        request = urllib.request.Request(checked_url(url), headers={"User-Agent": "DPSK-input-store/1"})
         try:
             response = urllib.request.urlopen(request, timeout=30)
         except (OSError, urllib.error.URLError, http.client.HTTPException) as error:

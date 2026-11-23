@@ -8,7 +8,7 @@
 //     ([PluginConfigScope.owns]; per bundle `official`, `optional`,
 //     `installed`, `source`, `enabled`, `error`, and the `rows` its patch
 //     inserts: `rowId` = the entry id, `moduleName`);
-//   * the Host's list (`GET /dsh-go/v1/plugin-config`), where it says so:
+//   * the Host's list (`GET /DPSK/v1/plugin-config`), where it says so:
 //     the entry's `package` is the one the row loads, and from bridge R7
 //     (runtime r14) its `owner` is `optional` or `installed`, its `kind`
 //     `plugin` and its `bundle` the one carrying the row.

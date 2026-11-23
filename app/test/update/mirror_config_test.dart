@@ -12,10 +12,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'support.dart';
 
-const _api = 'https://api.github.com/repos/weishixiao/dsh-go/releases/latest';
-const _apk = 'dsh-go-0.9.0-arm64.apk';
-const _githubApk = 'https://github.com/weishixiao/dsh-go/releases/download/v0.9.0/$_apk';
-const _manifest = 'https://github.com/weishixiao/dsh-go/releases/latest/download/update.json';
+const _api = 'https://api.github.com/repos/weishixiao/DPSK/releases/latest';
+const _apk = 'DPSK-0.9.0-arm64.apk';
+const _githubApk = 'https://github.com/weishixiao/DPSK/releases/download/v0.9.0/$_apk';
+const _manifest = 'https://github.com/weishixiao/DPSK/releases/latest/download/update.json';
 const _dlFeed = 'https://dl.dshtui.com/update.json';
 const _dlApk = 'https://dl.dshtui.com/download/0.9.0/$_apk';
 const _mirror = 'https://dl.example.com';
@@ -181,8 +181,8 @@ void main() {
 
     test('tag → version directory', () {
       expect(
-        mirror.rewrite(githubReleaseAsset('v1.3.0-beta.1', 'dsh-go-1.3.0-beta.1-x64.apk')).toString(),
-        '$_mirror/download/1.3.0-beta.1/dsh-go-1.3.0-beta.1-x64.apk',
+        mirror.rewrite(githubReleaseAsset('v1.3.0-beta.1', 'DPSK-1.3.0-beta.1-x64.apk')).toString(),
+        '$_mirror/download/1.3.0-beta.1/DPSK-1.3.0-beta.1-x64.apk',
       );
     });
 

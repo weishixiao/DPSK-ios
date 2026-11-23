@@ -2,7 +2,7 @@
 // pinned-loop, provider POST and Session log coverage is in the integration file.
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createCompanionPromptContext, validatePromptContext } from '../bridge/dsh-go-bridge/lib/companion/prompt-context.js';
+import { createCompanionPromptContext, validatePromptContext } from '../bridge/DPSK-bridge/lib/companion/prompt-context.js';
 
 const START = Date.UTC(2026, 10, 21);
 const block = (items = [{ id: 'k2', kind: 'fact', text: 'PHONE_MEMORY_🐋' },

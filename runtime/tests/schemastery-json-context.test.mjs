@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { createPluginConfig } from '../bridge/dsh-go-bridge/lib/plugin-config.js';
+import { createPluginConfig } from '../bridge/DPSK-bridge/lib/plugin-config.js';
 import { withSources } from './plugin-config-source-fixture.mjs';
 
 assert.ok(process.env.DSH_PREFIX, 'DSH_PREFIX must select the fixed package tree');
@@ -130,11 +130,11 @@ for (const [name, z] of modules) {
       send(_res, status, body) { response = { status, body }; },
       readBody() { throw Error('GET only'); },
     });
-    await api.handle({ method: 'GET' }, {}, '/dsh-go/v1/plugin-config/broken');
+    await api.handle({ method: 'GET' }, {}, '/DPSK/v1/plugin-config/broken');
     assert.equal(response.status, 404);
     assert.equal(response.body.error.code, 'entry-unavailable');
     // No test-side cleanup between the failed and successful public operations.
-    await api.handle({ method: 'GET' }, {}, '/dsh-go/v1/plugin-config/healthy');
+    await api.handle({ method: 'GET' }, {}, '/DPSK/v1/plugin-config/healthy');
     assert.equal(response.status, 200);
     assert.deepEqual(response.body.value, { visible: 'healthy' });
     assert.ok(response.body.schema.refs);

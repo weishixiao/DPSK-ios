@@ -1,6 +1,6 @@
 # 插槽参考
 
-工具卡之外，插件还能在 dsh-go 的四个原生位置出现。位置由 `package.json` 里的 `dshGo` 清单声明，内容由宿主半侧（插件在引擎里跑的 Node 代码）通过 `ctx.dshGo` 提供。规格原文：`docs/design/native-plugins-protocol.md`。
+工具卡之外，插件还能在 DPSK 的四个原生位置出现。位置由 `package.json` 里的 `dshGo` 清单声明，内容由宿主半侧（插件在引擎里跑的 Node 代码）通过 `ctx.dshGo` 提供。规格原文：`docs/design/native-plugins-protocol.md`。
 
 | 插槽（surface） | 原生位置 | 条目字段 | 每插件 | 文字上限 | 点按 |
 |---|---|---|---|---|---|
@@ -54,7 +54,7 @@
 
 ```js
 export function apply(ctx) {
-  ctx.inject(['dshGo'], (ctx) => {          // 只有装了 dsh-go 桥接的主机才会进来
+  ctx.inject(['dshGo'], (ctx) => {          // 只有装了 DPSK 桥接的主机才会进来
     ctx.dshGo.on('translate', (scope, event) => ({ insert: `译成英文：\n\n${scope.clipboard}` }))
     ctx.dshGo.strip('today', (scope, emit, caps) => watch(() => emit({ text: label(caps.locale) })))
     ctx.dshGo.panel('usage', {

@@ -177,7 +177,7 @@ class _NoRiskNotices implements RiskNoticeStore {
 /// synthetic transcripts' own.
 Map<String, Object?> testCatalogMeta() => {
   'v': 1,
-  'contract': 'dsh-go/media/catalog',
+  'contract': 'DPSK/media/catalog',
   'capabilities': {'image': true, 'video': true},
   'models': [
     {
@@ -246,7 +246,7 @@ SettingsNamespaceView testMediaNamespace({
         'meta': {
           'default': <Object?>[],
           // null: no catalogue at all.
-          'extra': {'dsh-go/media/catalog': ?(catalog is _Default ? testCatalogMeta() : catalog)},
+          'extra': {'DPSK/media/catalog': ?(catalog is _Default ? testCatalogMeta() : catalog)},
         },
         'inner': {
           'type': 'array',

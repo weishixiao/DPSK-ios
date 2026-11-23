@@ -17,7 +17,7 @@
   },
   "bridge": {
     "commit": "b4527967afb4a7e245c59b5954493cb4a2c919e9",
-    "path": "runtime/bridge/dsh-go-bridge/lib/speech.js",
+    "path": "runtime/bridge/DPSK-bridge/lib/speech.js",
     "sha256": "2593ca0537b054eaaeee6c3ccac308bd5e2cf1c08692007c38d04c5988873e1e"
   },
   "scope": "1321 pending call pause and prior 1320/1317/1301-1303 speech dependency closure; unchanged main bridge; explicit OS boundaries, no SDK/device/paid API claim"

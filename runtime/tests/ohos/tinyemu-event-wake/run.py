@@ -329,7 +329,7 @@ class Driver:
                     arguments += ['--jitless', '--import', self.source / 'runtime/ohos/sim/preload.mjs']
                 arguments += [research / 'node-case.mjs', self.build, self.config['normal'], case]
                 stdout, _ = self.command('original-node-' + mode + '-' + case, arguments,
-                    env={'DSH_GO_OHOS_SIM_ADDONS': json.dumps([str(self.library)])}, timeout=12)
+                    env={'DPSK_OHOS_SIM_ADDONS': json.dumps([str(self.library)])}, timeout=12)
                 self.check('OriginalNode/' + mode + '/' + case, True, result=json.loads(stdout))
         for mode in [1, 2, 3]:
             target = self.out / ('original-join-' + str(mode)); target.mkdir()

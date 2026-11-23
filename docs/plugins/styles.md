@@ -125,4 +125,4 @@ v2 面板和工具卡的内容始终放在 App 控制的不透明区域内，外
 
 旧 App 忽略 `v`、`accent`、`style`、`spans` 中不认识的属性，仍画原有节点的 `text` / `value`。保留文字回退即可使用同一份样式视图；新控件还需要按 `caps.components` 做组件降级。工具卡写入历史，尤其不要省略 v1 仍需要的属性。
 
-完整的样式小看板在 [`dsh-go-example-styles`](../../examples/plugins/dsh-go-example-styles/README.md)。新交互组件的预算和状态行为见组件、动作相关文档。
+完整的样式小看板在 [`DPSK-example-styles`](../../examples/plugins/DPSK-example-styles/README.md)。新交互组件的预算和状态行为见组件、动作相关文档。

@@ -14,13 +14,13 @@
 
 ## 2. 传输
 
-新增可选接口：**`GET /dsh-go/v1/runtime-capabilities`**，返回 JSON，`Content-Type: application/json; charset=utf-8`，`Cache-Control: no-store`。它位于现有 dsh-go bridge 的命名空间，复用现有 HTTP 连接和启动 token 换取的 Cookie，不创设第二套凭据。接口实现放在 OHOS 的 Cordis 插件中，只有鸿蒙运行时或显式仿真才注册；Android 的 bridge 和启动配置不改。
+新增可选接口：**`GET /DPSK/v1/runtime-capabilities`**，返回 JSON，`Content-Type: application/json; charset=utf-8`，`Cache-Control: no-store`。它位于现有 DPSK bridge 的命名空间，复用现有 HTTP 连接和启动 token 换取的 Cookie，不创设第二套凭据。接口实现放在 OHOS 的 Cordis 插件中，只有鸿蒙运行时或显式仿真才注册；Android 的 bridge 和启动配置不改。
 
 成功返回 HTTP 200。POST 等非只读方法返回 405。必须经过已有 webServer 鉴权及 Origin/Host 路由防护；不能因使用 127.0.0.1 或因为该接口只读就豁免。若现有 guard 尚未就绪，遵循其失败状态，不先提供一个匿名能力端点。
 
 调用时机：连接认证成功且 `$events` ready 后；重连至新引擎后；前台恢复并完成连接重新检查后。v1 不增加推送通道，App 可以在刷新相关页面时重取。能力记录只属于当前连接和 bootId，不跨主机复用缓存。
 
-选用新可选端点的原因：已有 bridge `inventory` 描述客户端模块、slot 占用和 routeGuard，本机执行能力的生命周期与它不同。新端点使旧 App 无需感知，也避免把未识别字段强加到既有响应。现有实现位置：`runtime/bridge/dsh-go-bridge/lib/index.js` 的 `inventory()`、prefix handler；Dart 连接的已鉴权 GET 位于 `packages/dsh_client/lib/src/connection.dart`。
+选用新可选端点的原因：已有 bridge `inventory` 描述客户端模块、slot 占用和 routeGuard，本机执行能力的生命周期与它不同。新端点使旧 App 无需感知，也避免把未识别字段强加到既有响应。现有实现位置：`runtime/bridge/DPSK-bridge/lib/index.js` 的 `inventory()`、prefix handler；Dart 连接的已鉴权 GET 位于 `packages/dsh_client/lib/src/connection.dart`。
 
 ## 3. 字段
 

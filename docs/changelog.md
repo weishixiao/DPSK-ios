@@ -44,7 +44,7 @@
 
 ### 中文
 
-- **iOS 版（测试）。** 这一版起提供未签名的 iOS 安装包 `dsh-go-1.2.0-ios-unsigned.ipa`，需要用爱思助手、AltStore 等工具自己签名后安装。用免费 Apple ID 签名时 Bundle ID 会被改掉，部分能力（如 Siri、分享扩展、后台）可能用不了。iOS 版只在少数真机上试过，问题请开 issue。
+- **iOS 版（测试）。** 这一版起提供未签名的 iOS 安装包 `DPSK-1.2.0-ios-unsigned.ipa`，需要用爱思助手、AltStore 等工具自己签名后安装。用免费 Apple ID 签名时 Bundle ID 会被改掉，部分能力（如 Siri、分享扩展、后台）可能用不了。iOS 版只在少数真机上试过，问题请开 issue。
 - **鸿蒙版合入主线。** 鸿蒙版的代码已经和安卓、iOS 共用一套，这一版暂时不提供 HAP 安装包，签名就绪后再补到这个版本下。
 - **酒馆。** 酒馆助手的接口补齐，支持原生 MVU 变量；能把 DeepSeek 网页里聊不下去的对话导入酒馆接着聊；导入大卡和长聊天时明显不卡了。
 - **让 AI 做一只宠物。** 宠物页新增「让 AI 做一只宠物」：带上自己的素材（GIF、逐帧图、Aseprite 导出或单张图），AI 会把它转成宠物包；转换时保留中文动画名，网页模式也能用。
@@ -57,7 +57,7 @@
 
 ### English
 
-- **iOS (testing).** Starting with this version there is an unsigned iOS package, `dsh-go-1.2.0-ios-unsigned.ipa`, which you sign yourself with a tool such as AltStore before installing. Signing with a free Apple ID changes the bundle ID, and some features (such as Siri, the share extension and background work) may not be available. The iOS version has only been tried on a few real devices; please open an issue if something goes wrong.
+- **iOS (testing).** Starting with this version there is an unsigned iOS package, `DPSK-1.2.0-ios-unsigned.ipa`, which you sign yourself with a tool such as AltStore before installing. Signing with a free Apple ID changes the bundle ID, and some features (such as Siri, the share extension and background work) may not be available. The iOS version has only been tried on a few real devices; please open an issue if something goes wrong.
 - **HarmonyOS joins the main line.** The HarmonyOS code now shares one code base with Android and iOS. This version doesn't ship a HAP yet; it will be added to this release once signing is ready.
 - **Tavern.** The Tavern Helper interfaces are complete, with native MVU variables; conversations that ran out of room on the DeepSeek website can be imported into Tavern and continued; importing large cards and long chats no longer stutters.
 - **Have the AI make a pet.** The pets page has a new Have the AI make a pet entry: bring your own art (GIFs, frame sequences, Aseprite exports or a single image) and the AI turns it into a pet pack; Chinese animation names are kept, and it works in web mode too.
@@ -426,13 +426,13 @@
 
 ### 中文
 
-- 排障：引擎起来后，App 会把一份脱敏的本机诊断写进引擎（`$DSH_HOME/dsh-app/diagnostics.md`）：版本、设备、运行时、启动方式、连接、性能档位、最近错误和日志尾部。新增内置技能 `dsh-go-support`，教 AI 先读它再排查，并按症状给出可直接粘贴的 issue 草稿。
+- 排障：引擎起来后，App 会把一份脱敏的本机诊断写进引擎（`$DSH_HOME/dsh-app/diagnostics.md`）：版本、设备、运行时、启动方式、连接、性能档位、最近错误和日志尾部。新增内置技能 `DPSK-support`，教 AI 先读它再排查，并按症状给出可直接粘贴的 issue 草稿。
 - 设置 → 诊断新增「让 AI 看诊断」：手动刷新这份快照，然后问 AI「看下诊断」就行。
 - 更新：修了「已经是 1.0.4 却提示最新」——某个更新源停在旧版本时，不再就此收工，会继续问其它源，取更新的那个；公测包也不再带内测通道令牌，免得一个过期的内测清单盖住 GitHub 的新版本。
 
 ### English
 
-- Support: once the engine is up, the app writes a redacted local diagnostics snapshot into it (`$DSH_HOME/dsh-app/diagnostics.md`): versions, device, runtime, launch mode, connection, performance tier, recent errors and log tails. The new bundled `dsh-go-support` skill tells the agent to read it first, walk the symptom, and draft an issue you can paste.
+- Support: once the engine is up, the app writes a redacted local diagnostics snapshot into it (`$DSH_HOME/dsh-app/diagnostics.md`): versions, device, runtime, launch mode, connection, performance tier, recent errors and log tails. The new bundled `DPSK-support` skill tells the agent to read it first, walk the symptom, and draft an issue you can paste.
 - Settings → Diagnostics gains 「Let the AI read diagnostics」: refreshes that snapshot on demand; then just ask the AI to check the diagnostics.
 - Update: fixed 「1.0.4 says it is already latest」 — a source stuck on an older release no longer ends the check; the others are still asked and the newer release wins. Public builds also stop carrying the beta channel token, so a stale beta feed can no longer outrank the GitHub release.
 
@@ -463,14 +463,14 @@
 - 可视化回复：选项卡可以在选项之外自己填一句（模型用 `freetext` 开启），回传时以「其他：…」跟在选择后面。模型忘了写 `dsh-ui` 围栏、把 JSON 直接写进正文时，也能画成原生卡片；复制和分享会把它换成一行摘要。
 - 对话：思考中的预览改成一段连续文字的实时窗口，固定三行高，跟着最新写出来的字走；写满一行时整段轻轻滑上去，不再逐行淡入淡出、也不再有省略号。一轮正常结束时，思考与工具调用一律收成一行——以前翻看过这一轮就会一直展开着；手动展开的思考也会在轮次结束后收回。
 - 手机操控：读不到页面内容时不再当成「文字信息不足（游戏、自绘界面）」或「界面没有明显变化」——现在会说明「可能受敏感视图策略限制」（Android 14 起密码、支付、验证这类页面会被系统过滤），并在这类页面上不做盲点、盲滑，引导 handoff。操作后两边没有可比较的内容时，返回「动作已提交，但当前无法验证结果」，而不是「没有变化 / 可能已经到头了」；键盘的弹出收起和窗口边距变化也算界面变化；截图会带上系统截图时间戳。
-- 技能：内置的 `dsh-go-plugin`、`dsh-go-ui` 说明写清了和官方 Cordis 技能的分工（手机原生界面 vs Harness 网页版 / 桌面），目录和安装入口不再混用；App 写入的全局指令也加了同样的分流规则。
+- 技能：内置的 `DPSK-plugin`、`DPSK-ui` 说明写清了和官方 Cordis 技能的分工（手机原生界面 vs Harness 网页版 / 桌面），目录和安装入口不再混用；App 写入的全局指令也加了同样的分流规则。
 
 ### English
 
 - Visual replies: an options card can allow an answer beyond its presets (the model turns it on with `freetext`); what the person types comes back as an `Other: …` line after the choice. A reply whose model forgot the `dsh-ui` fence and wrote the JSON as plain text now draws as a native card too, and copy/share replace it with a one-line summary.
 - Chat: the thinking preview is a three-line live window of continuous text that follows the newest words and glides up a line when one fills; the per-line fading and the leading ellipsis are gone. A turn that ends normally always folds its thinking and tool calls into one row — previously a turn you had scrolled through stayed expanded; thinking you expanded by hand folds back when the turn ends.
 - Phone control: a page whose content cannot be read is no longer reported as a poor tree ("game / custom-drawn UI") or as "no visible change" — it now says the content may be blocked by the sensitive-view policy (Android 14+ filters pages like passwords, payments and verification), stops blind taps and swipes there and points to handoff. When an action leaves nothing comparable on either side it reports "submitted, but the result cannot be verified" instead of "unchanged / probably at the end of the list"; IME show/hide and window inset changes count as screen changes, and a screenshot carries the system timestamp.
-- Skills: the bundled `dsh-go-plugin` and `dsh-go-ui` instructions now spell out how they divide work with the official Cordis skills (phone-native UI vs Harness Web / desktop), so directories and install entries are no longer mixed; the app's global instructions follow the same routing rule.
+- Skills: the bundled `DPSK-plugin` and `DPSK-ui` instructions now spell out how they divide work with the official Cordis skills (phone-native UI vs Harness Web / desktop), so directories and install entries are no longer mixed; the app's global instructions follow the same routing rule.
 
 ## 1.0.4 · 2026-10-31
 
@@ -554,7 +554,7 @@ DPSK 1.0.0 来了，这是第一个公开版本。它让你在 Android 手机上
 - **匿名使用统计**：只发送每天的使用次数和 App、系统版本等基本信息，不含对话、文件和账号；默认开启，在 设置 › 隐私与分享 随时关闭。
 - **图像与视频生成即将上线**：App 这边已经就绪，生成插件发布后即可在对话里使用。
 
-此前 0.9.x 各版本的详细改动见[更新日志](https://github.com/weishixiao/dsh-go/blob/HEAD/docs/changelog.md)。
+此前 0.9.x 各版本的详细改动见[更新日志](https://github.com/weishixiao/DPSK/blob/HEAD/docs/changelog.md)。
 
 ### English
 
@@ -574,7 +574,7 @@ What DPSK does today:
 - **Anonymous usage stats:** only daily usage counts and basics like the app and Android version, never chats, files or accounts. On by default; turn it off any time in Settings › Privacy and sharing.
 - **Image and video generation is on its way:** the app side is ready, and it opens up in chats once the generation plugin is released.
 
-For the detailed history of the 0.9.x releases, see the [changelog](https://github.com/weishixiao/dsh-go/blob/HEAD/docs/changelog.md).
+For the detailed history of the 0.9.x releases, see the [changelog](https://github.com/weishixiao/DPSK/blob/HEAD/docs/changelog.md).
 
 ## 0.9.10 · 2026-10-30
 
@@ -642,7 +642,7 @@ For the detailed history of the 0.9.x releases, see the [changelog](https://gith
 
 ### 中文
 
-- 改名 DPSK：桌面图标、最近任务、通知和系统设置里都叫 DPSK。保存的图片在相册「DPSK」，下载的文件在「下载/DSH-Go」；之前存的文件留在原处，旧对话里的文件卡片照常打开。
+- 改名 DPSK：桌面图标、最近任务、通知和系统设置里都叫 DPSK。保存的图片在相册「DPSK」，下载的文件在「下载/DPSK」；之前存的文件留在原处，旧对话里的文件卡片照常打开。
 - 启动动画：系统启动画面无缝交接到 App 的第一帧，图标轻轻上移，DPSK 字样随之浮现；冷启动完整播一遍，热启动可用即进。
 - 自己的启动画面和桌面入口：设置 › 主题 › 启动画面 可以换成自己的图片、动图或 3 秒内的视频，选适配方式和背景色，预览一遍再用。桌面图标下新增「图片快捷方式」，用自己的图片在桌面另放一个打开 DPSK 的入口。换桌面图标后会提示几秒后生效。
 - 首次启动按功能开权限：新增一步「想让 DPSK 帮你做哪些事」，在读写手机文件、桌宠与悬浮窗、手机操控、后台持续运行、语音输入里挑选，再逐项带你到对应的系统页面或品牌设置页，回到 App 自动确认是否已开启。无障碍遇到「受限制的设置」时有分步指引。之后在 设置 › 通用 › 系统权限 随时查看、补开。
@@ -661,7 +661,7 @@ For the detailed history of the 0.9.x releases, see the [changelog](https://gith
 
 ### English
 
-- Now called DPSK: the launcher, Recents, notifications and system settings all say DPSK. Saved pictures go to the DPSK album and downloads to Download/DSH-Go; files saved earlier stay where they are, and older chats still open their file cards.
+- Now called DPSK: the launcher, Recents, notifications and system settings all say DPSK. Saved pictures go to the DPSK album and downloads to Download/DPSK; files saved earlier stay where they are, and older chats still open their file cards.
 - Launch animation: the system splash hands over seamlessly to the app’s first frame, where the icon rises and DPSK fades in beneath it. A cold start plays it through; a warm start goes the moment the app is ready.
 - Your own launch screen and home-screen picture: Settings › Theme › Launch screen takes a picture, an animation or a clip up to 3 s, with a fit and background colour and a preview first. Under App icon, Picture shortcut puts a separate shortcut to DPSK on the home screen with a picture of your own. After switching the app icon, the app says the home screen takes a few seconds.
 - Permissions by feature on first run: a new step, "What should DPSK help with?", lets you pick from phone files, pet and floating window, phone control, running in the background and voice input. The app then takes you to each system or phone-maker page in turn and checks whether it's on when you come back. Accessibility gets step-by-step help when Android shows Restricted settings. Review or finish any of it later in Settings › General › System permissions.
@@ -682,18 +682,18 @@ For the detailed history of the 0.9.x releases, see the [changelog](https://gith
 
 ### 中文
 
-- 设置重新整理：首页按 AI、能力、外观、通用、主机、帮助与关于分组，每一行直接显示当前状态。顶部新增搜索，旧名字、同义词都能搜到，点结果会直接跳到那一项；在抽屉里按住 ⚙ 也能进入搜索。新增「个性化」「界面」「隐私与分享」「关于 dsh-go」几页。
+- 设置重新整理：首页按 AI、能力、外观、通用、主机、帮助与关于分组，每一行直接显示当前状态。顶部新增搜索，旧名字、同义词都能搜到，点结果会直接跳到那一项；在抽屉里按住 ⚙ 也能进入搜索。新增「个性化」「界面」「隐私与分享」「关于 DPSK」几页。
 - 几处改名：模型渠道 → 模型，引擎 → 本机引擎，引擎设置 → 引擎参数，后台保活 → 后台运行，语音识别 → 语音输入；「自动执行命令」并入权限里的「完全权限」。抽屉身份栏的圆键改为「全部功能」，全部功能也重新分组。
-- 分享卡片的二维码中间加上了 dsh-go 图标，并略微放大，截图压缩后也更好扫。链接太长、印出来扫不出的卡片不再放二维码。
+- 分享卡片的二维码中间加上了 DPSK 图标，并略微放大，截图压缩后也更好扫。链接太长、印出来扫不出的卡片不再放二维码。
 - DS Bot：视图卡里的选择题和简单表单可以直接在 App 里作答提交；群聊断线或补读失败后会自动接上；全文弹层的字数加上千分位。
 - 插件设置里 App 编辑不了的部分，统一显示一行「在网页版编辑此项」。插件卸载、更新、允许构建脚本时如果已经切换了主机，会提示「主机已切换，未执行」。
 - 切换主机后，斜杠命令的结果、「本对话都允许」和用量统计都只作用于原来的主机和对话。
 
 ### English
 
-- Settings, reorganised: the home page groups everything under AI, Capabilities, Appearance, General, Hosts, and Help and about, and each row shows its current state. Search at the top finds old names and synonyms and takes you straight to the setting; you can also hold ⚙ in the drawer to search. New pages: Personalization, Interface, Privacy and sharing, and About dsh-go.
+- Settings, reorganised: the home page groups everything under AI, Capabilities, Appearance, General, Hosts, and Help and about, and each row shows its current state. Search at the top finds old names and synonyms and takes you straight to the setting; you can also hold ⚙ in the drawer to search. New pages: Personalization, Interface, Privacy and sharing, and About DPSK.
 - A few renames: Model providers → Models, Engine → Local engine, Engine settings → Engine parameters, Keep alive → Background running, Speech recognition → Voice input; "Run commands automatically" is now Full access under Permissions. The drawer's round button opens All features, which is regrouped too.
-- Share cards carry the dsh-go icon in the middle of the QR code, a little larger so it still scans from a compressed screenshot. A card whose link is too long to scan no longer prints a code.
+- Share cards carry the DPSK icon in the middle of the QR code, a little larger so it still scans from a compressed screenshot. A card whose link is too long to scan no longer prints a code.
 - DS Bot: answer choice questions and simple forms in view cards right in the app; group chats pick up again after a dropped feed or a failed catch-up read; and the full-text sheet groups its character count.
 - Plugin settings the app can't edit show one "Edit this item on the web" row. Uninstalling, updating or allowing a plugin's build scripts after you've switched hosts now says "Host changed — nothing was done".
 - After switching hosts, a slash command's result, "allow all in this conversation" and usage figures stay with the host and conversation they came from.
@@ -702,7 +702,7 @@ For the detailed history of the 0.9.x releases, see the [changelog](https://gith
 
 ### 中文
 
-- 手机操控：在别的 App 里遇到需要你确认的操作，也会弹出 dsh-go 的确认卡；任务完成后回到发起它的那个对话，系统不允许自动切回时改用一条通知。手机操控 › 进阶 › 后台确认与返回，可以查看各品牌手机的设置方法。
+- 手机操控：在别的 App 里遇到需要你确认的操作，也会弹出 DPSK 的确认卡；任务完成后回到发起它的那个对话，系统不允许自动切回时改用一条通知。手机操控 › 进阶 › 后台确认与返回，可以查看各品牌手机的设置方法。
 - 插件设置原生化：多选、列表、日期、颜色、链接、滑块、折叠分组等都能直接在 App 里编辑，只有个别不支持的项会显示「在网页版编辑此项」。字段说明完整显示；保存要等主机确认，失败时保留你的输入。语音输入类插件有了自己的「语音设置」。
 - 列表不再等引擎：模型、渠道、插件和对话列表在引擎启动或重连时先显示上次的结果，后台更新完成后替换；读取大列表时界面照常滑动。
 - DS Bot：主机上的 DS Bot 还不支持手机端时会直接说明，并提供网页版入口；群聊达到转发上限后可以一键继续；可以为 Bot 或群聊选择工作目录、从详情页复制一个 Bot；主机还在统计用量时显示「—」而不是 0；刷新记忆时内容保留在屏幕上。
@@ -712,7 +712,7 @@ For the detailed history of the 0.9.x releases, see the [changelog](https://gith
 
 ### English
 
-- Phone control: when an action needs your OK while you're in another app, dsh-go's confirmation card now appears there too. When a task ends you're taken back to the chat that started it, or, where the system doesn't allow that, you get a notification. Phone control › Advanced › Confirmations and return shows how to set this up on each phone brand.
+- Phone control: when an action needs your OK while you're in another app, DPSK's confirmation card now appears there too. When a task ends you're taken back to the chat that started it, or, where the system doesn't allow that, you get a notification. Phone control › Advanced › Confirmations and return shows how to set this up on each phone brand.
 - Native plugin settings: multi-select, lists, dates, colours, links, sliders and collapsible groups can all be edited in the app; only the odd unsupported field shows "Edit this item on the web". Field descriptions show in full, saves wait for the host to confirm, and a failed save keeps what you typed. Voice input plugins get their own Voice settings.
 - Lists don't wait for the engine: models, providers, plugins and chats show their last result while the engine starts or reconnects, then update in place, and large lists load without stalling the screen.
 - DS Bot: when the host's DS Bot isn't on mobile yet, the app says so and offers DSH Web. A group that hits its relay limit can carry on in one tap; Bots and groups can have a working folder; you can duplicate a Bot from its details; usage shows "—" rather than 0 while the host is still counting; and refreshing memory keeps it on screen.
@@ -863,7 +863,7 @@ For the detailed history of the 0.9.x releases, see the [changelog](https://gith
 **分享**
 
 - 分享卡片带上消息里的图片，五种模板：浅色、深色、卡片、纸张、玻璃；多轮对话可以拼成一张长图。
-- 整段对话可以分享成文件或链接，对方在浏览器里回放，或在 dsh-go 里接着聊。链接端到端加密，在「我的分享链接」里管理。
+- 整段对话可以分享成文件或链接，对方在浏览器里回放，或在 DPSK 里接着聊。链接端到端加密，在「我的分享链接」里管理。
 
 **更稳**
 
@@ -909,7 +909,7 @@ For the detailed history of the 0.9.x releases, see the [changelog](https://gith
 **Sharing**
 
 - Share cards now include the message's images and come in five templates: Light, Dark, Card, Paper and Glass. Several rounds can be stitched into one long image.
-- Share a whole chat as a file or a link. Others replay it in the browser or pick it up in dsh-go. Links are end-to-end encrypted; manage them in "My shared links".
+- Share a whole chat as a file or a link. Others replay it in the browser or pick it up in DPSK. Links are end-to-end encrypted; manage them in "My shared links".
 
 **More reliable**
 

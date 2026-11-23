@@ -234,8 +234,8 @@ test('detach during copying cancels, closes descriptors and removes the uncommit
 
 test('listOutputs depth, hidden files, symlink exclusion and seconds to milliseconds match Dart', async t => {
   const f = await fixture(t);
-  const path = await f.file('DSH-Go/top.txt', '1234');
-  await f.file('DSH-Go/.private.txt'); await f.file('DSH-Go/one/two/three.txt');
+  const path = await f.file('DPSK/top.txt', '1234');
+  await f.file('DPSK/.private.txt'); await f.file('DPSK/one/two/three.txt');
   await fsp.symlink(path, join(f.paths.outputs, 'link.txt'));
   await f.file('package.json', '{"name":"project"}');
   await f.file('node_modules/package/index.js', 'project dependency');
@@ -437,23 +437,23 @@ test('late old engine detach cannot remove the current file channel owner', asyn
 });
 
 // 125: real source file -> production resolveGuest snapshot, not a private helper mirror.
-test('valid long Chinese export retains the dshgo routing extension', async t => {
+test('valid long Chinese export retains the dpsk routing extension', async t => {
   const f = await fixture(t);
-  const original = '文'.repeat(81) + '.dshgo';
-  const bytes = Buffer.from('{"dshgo":1,"code":"fixture"}\n');
+  const original = '文'.repeat(81) + '.dpsk';
+  const bytes = Buffer.from('{"dpsk":1,"code":"fixture"}\n');
   const source = await f.file(original, bytes);
   const reply = await f.call('dsh/files', 'resolveGuest', { path: source });
   assert.equal(typeof reply.value, 'string', JSON.stringify(reply));
   const name = reply.value.slice(reply.value.lastIndexOf('/') + 1);
   assert.deepEqual(await fsp.readFile(reply.value), bytes);
   console.log('ACTUAL_125_EXPORT', JSON.stringify({ original, originalBytes: Buffer.byteLength(original), name, bytes: Buffer.byteLength(name), copiedBytes: bytes.length }));
-  assert(name.endsWith('.dshgo'), 'A valid exported share-code file must retain its routing extension');
+  assert(name.endsWith('.dpsk'), 'A valid exported share-code file must retain its routing extension');
   assert(Buffer.byteLength(name) <= 240);
 });
 
 test('actual outgoing share wire retains extension after local export', async t => {
   const f = await fixture(t);
-  const source = await f.file('文'.repeat(81) + '.dshgo', 'actual-export-payload');
+  const source = await f.file('文'.repeat(81) + '.dpsk', 'actual-export-payload');
   const reply = await f.call('dsh/files', 'resolveGuest', { path: source });
   assert.equal(typeof reply.value, 'string');
   const share = await shareFixture(t);
@@ -466,13 +466,13 @@ test('actual outgoing share wire retains extension after local export', async t 
   assert.equal(await fsp.readFile(sharedPath, 'utf8'), 'actual-export-payload');
   console.log('ACTUAL_125_SHARE_WIRE', JSON.stringify({ inputPath: reply.value, record }));
   panel.emit('dismiss'); await call.done;
-  assert(record.title.endsWith('.dshgo'), 'The actual outgoing record must retain the suffix consumed by incoming share-code routing');
-  assert(sharedPath.endsWith('.dshgo'));
+  assert(record.title.endsWith('.dpsk'), 'The actual outgoing record must retain the suffix consumed by incoming share-code routing');
+  assert(sharedPath.endsWith('.dpsk'));
 });
 
 
 test('export preserves literal percent sequences, Chinese spaces and one file URI encoding', async t => {
-  const f = await fixture(t), name = '中文 50% %2F 文件.dshgo';
+  const f = await fixture(t), name = '中文 50% %2F 文件.dpsk';
   const source = await f.file(name, 'literal-percent-payload');
   const reply = await f.call('dsh/files', 'resolveGuest', { path: source });
   assert(reply.value.endsWith('/' + name));
@@ -485,12 +485,12 @@ test('export preserves literal percent sequences, Chinese spaces and one file UR
 
 test('real export keeps bounded suffix and full Unicode code points at the 240-byte budget', async t => {
   const f = await fixture(t);
-  for (const name of ['文'.repeat(78) + '.dshgo', '😀'.repeat(60) + '.dshgo']) {
+  for (const name of ['文'.repeat(78) + '.dpsk', '😀'.repeat(60) + '.dpsk']) {
     const source = await f.file(name, name);
     const reply = await f.call('dsh/files', 'resolveGuest', { path: source });
     assert.equal(typeof reply.value, 'string');
     const exported = reply.value.slice(reply.value.lastIndexOf('/') + 1);
-    assert(exported.endsWith('.dshgo')); assert(Buffer.byteLength(exported) <= 240);
+    assert(exported.endsWith('.dpsk')); assert(Buffer.byteLength(exported) <= 240);
     assert(!exported.includes('\uFFFD'));
     assert.equal(await fsp.readFile(reply.value, 'utf8'), name);
     if (Buffer.byteLength(name) === 240) assert.equal(exported, name);

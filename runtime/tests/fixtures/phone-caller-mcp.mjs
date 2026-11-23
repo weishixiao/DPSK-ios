@@ -23,7 +23,7 @@ for await (const line of createInterface({ input: process.stdin })) {
         capabilities: {
           tools: { listChanged: false },
           ...(['supported', 'lifecycle'].includes(process.argv[2]) ? {
-            experimental: { 'dsh-go/phone-caller': { v: 1, taskIsolation: 0, ...(process.argv[2] === 'lifecycle' ? { runLifecycle: 1 } : {}) } },
+            experimental: { 'DPSK/phone-caller': { v: 1, taskIsolation: 0, ...(process.argv[2] === 'lifecycle' ? { runLifecycle: 1 } : {}) } },
           } : {}),
         },
         serverInfo: { name: 'synthetic-phone-caller', version: '1' },
@@ -39,7 +39,7 @@ for await (const line of createInterface({ input: process.stdin })) {
         refused,
         dropped,
         pid: process.pid,
-        caller: request.params._meta?.['dsh-go/phone-caller'] ?? null,
+        caller: request.params._meta?.['DPSK/phone-caller'] ?? null,
       }) }] };
       if (request.params.arguments?.exit === true) {
         // Reply, then retire this connection as a relay or bridge loss would.
@@ -47,7 +47,7 @@ for await (const line of createInterface({ input: process.stdin })) {
         continue;
       }
       break;
-    case 'dsh-go/phone-run-end': {
+    case 'DPSK/phone-run-end': {
       const fault = claimFirstEnd();
       if (fault === 'exit') process.exit(0);
       if (fault === 'drop') {

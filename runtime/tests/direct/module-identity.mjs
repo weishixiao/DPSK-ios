@@ -6,7 +6,7 @@ import { pathToFileURL } from 'node:url';
 import { Context } from '/opt/dsh/node_modules/@deepseek-ai/cordis/lib/index.js';
 import { LocalFileSystem } from '/opt/dsh/node_modules/@deepseek-ai/dsh-fs-local/lib/index.js';
 
-const root = process.env.DSH_GO_DIRECT_ROOTFS;
+const root = process.env.DPSK_DIRECT_ROOTFS;
 if (!root) throw new Error('Production direct wrapper is required');
 const base = fs.mkdtempSync(`${root}/tmp/review-module-identity-`);
 const outside = fs.mkdtempSync('/tmp/dsh-review-outside-module-');

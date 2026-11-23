@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { createUsage } from '../bridge/dsh-go-bridge/lib/usage.js';
+import { createUsage } from '../bridge/DPSK-bridge/lib/usage.js';
 
 test('background settlement counts only reported fields and opt-out clears the lease', () => {
   let now = Date.parse('2026-11-20T14:00:00Z');

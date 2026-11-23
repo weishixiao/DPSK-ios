@@ -7,9 +7,9 @@ import {syncBuiltinESMExports} from 'node:module';
 import {tmpdir} from 'node:os';
 import {dirname,join} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {NativeCore} from '../bridge/dsh-go-bridge/lib/native/core.js';
-import {createNativeRoutes} from '../bridge/dsh-go-bridge/lib/native/routes.js';
-import {effectiveLimits} from '../bridge/dsh-go-bridge/lib/native/limits.js';
+import {NativeCore} from '../bridge/DPSK-bridge/lib/native/core.js';
+import {createNativeRoutes} from '../bridge/DPSK-bridge/lib/native/routes.js';
+import {effectiveLimits} from '../bridge/DPSK-bridge/lib/native/limits.js';
 const LIMIT=1048576;
 async function fixture(t){
  const dir=await fs.mkdtemp(join(tmpdir(),'native-asset-read-budget-'));
@@ -23,7 +23,7 @@ async function fixture(t){
  server.listen(0,'127.0.0.1');await once(server,'listening');
  t.after(async()=>{routes.dispose();core.dispose();server.closeAllConnections();await new Promise(r=>server.close(r));await fs.rm(dir,{recursive:true,force:true})});
  const request=async(method='GET',path='changing.png',headers={})=>{
-  const r=await fetch(`http://127.0.0.1:${server.address().port}/dsh-go/v1/assets/asset-budget-test/${path}`,{method,headers});
+  const r=await fetch(`http://127.0.0.1:${server.address().port}/DPSK/v1/assets/asset-budget-test/${path}`,{method,headers});
   return {status:r.status,bytes:Buffer.from(await r.arrayBuffer()),length:r.headers.get('content-length'),etag:r.headers.get('etag')};
  };
  return{file,request};

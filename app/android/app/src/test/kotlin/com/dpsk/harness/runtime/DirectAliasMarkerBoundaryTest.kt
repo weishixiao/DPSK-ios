@@ -14,7 +14,7 @@ class DirectAliasMarkerBoundaryTest {
             File(root, "opt/dsh-app/direct").mkdirs()
             File(root, "opt/dsh-app/direct/config.json").writeText("{\"schema\":2}")
             val target = File(base, "untouched").apply { writeText("unrelated bytes\n") }
-            val marker = File(root, "root/.dsh-go-direct-path-alias")
+            val marker = File(root, "root/.DPSK-direct-path-alias")
             Files.createSymbolicLink(marker.toPath(), target.toPath())
             DirectLaunch.preservePhysicalAlias(root)
             assertFalse(Files.isSymbolicLink(marker.toPath()))

@@ -25,7 +25,7 @@ P2 v6 的 `guestRoot` 固定为同一个 ApplicationContext 的 `filesDir + '/ru
 | `DSH_AGENTS_HOME`、共享 skills / AGENTS.md | `root/.agents` |
 | 唯一工作区 | `root/workspace` |
 | 托管技能 | `root/.dsh/skills/<固定 name>` |
-| 给用户交付的输出目录 | `root/workspace/DSH-Go` |
+| 给用户交付的输出目录 | `root/workspace/DPSK` |
 
 运行时代码仍放在原来的 `filesDir/dsh-runtime/tree`，不移进 guestRoot。托管技能的许可、取消和逐文件提交见 `managed-skills.md`；输出目录策略由文件通道负责。
 

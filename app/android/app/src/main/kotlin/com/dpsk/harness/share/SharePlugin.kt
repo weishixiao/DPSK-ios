@@ -37,7 +37,7 @@ import java.util.concurrent.Executors
  * in order on `ready` (the same contract as links/LinksPlugin).
  *
  * Only `content:` URIs of other apps are read: a `file:` URI or one of this app's own providers
- * would let any app have dsh-go attach its private files to a message.
+ * would let any app have DPSK attach its private files to a message.
  */
 class SharePlugin : FlutterPlugin, ActivityAware, MethodChannel.MethodCallHandler, PluginRegistry.NewIntentListener {
 

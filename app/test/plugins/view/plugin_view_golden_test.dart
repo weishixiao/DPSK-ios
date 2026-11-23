@@ -57,7 +57,7 @@ class _RefreshKey extends StatelessWidget {
 }
 
 ToolChatItem pluginTool(String id, Object? view, {String city = '东京', String result = '{"ok":true}'}) =>
-    tool(id, 'weather', {'city': city, 'days': 3}, result: result, meta: {'dsh-go/view': view, 'other': 1});
+    tool(id, 'weather', {'city': city, 'days': 3}, result: result, meta: {'DPSK/view': view, 'other': 1});
 
 /// Tool rows the way the chat lays them out (StreamRow insets).
 Widget toolRows(List<ToolChatItem> items) => Column(

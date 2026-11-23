@@ -18,7 +18,7 @@ mkdirSync(dirname(preload), {recursive: true, mode: 0o700});
 writeFileSync(preload, '// Empty diagnostic preload: isolate main-heap recovery, not a full DSH session.\n', {mode: 0o600});
 const library = values.library ? resolve(values.library) : join(resolve(values.frameworks), 'DshNodeHost.framework/DshNodeHost');
 const nativeDirectory = resolve(values['native-dir'] ?? values.frameworks ?? dirname(library));
-const env = {...process.env, DSH_GO_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory, SIMCTL_CHILD_DSH_GO_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory};
+const env = {...process.env, DPSK_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory, SIMCTL_CHILD_DPSK_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory};
 for (const key of ['NODE_OPTIONS', 'DSH_IOS_SMOKE_PATCH', 'DSH_IOS_SMOKE_IMPORT']) { delete env[key]; delete env['SIMCTL_CHILD_' + key]; }
 const argv = [library, preload, fileURLToPath(new URL('./heap-main.mjs', import.meta.url))];
 let command, args;

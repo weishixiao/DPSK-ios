@@ -60,9 +60,9 @@ async function httpFixture(t, options) {
   t.after(() => ctx.fiber.dispose());
   const logged = await request(origin + '/?token=' + encodeURIComponent(auth.launchToken));
   assert.equal(logged.status, 303); const cookie = logged.headers['set-cookie'][0].split(';')[0];
-  const get = async (headers = {}) => request(origin + '/dsh-go/v1/linux', { headers: { cookie, ...headers } });
+  const get = async (headers = {}) => request(origin + '/DPSK/v1/linux', { headers: { cookie, ...headers } });
   const post = (action, fields = {}, headers = {}) => { const state = f.control.status();
-    return request(origin + '/dsh-go/v1/linux', { method: 'POST', headers: { cookie, 'content-type': 'application/json', ...headers },
+    return request(origin + '/DPSK/v1/linux', { method: 'POST', headers: { cookie, 'content-type': 'application/json', ...headers },
       body: JSON.stringify({ v: 1, instanceId: state.instanceId, attemptId: state.attemptId, action, ...fields }) }); };
   return { ...f, ctx, origin, cookie, get, post };
 }
@@ -182,7 +182,7 @@ test('invalid body/fields are bounded and cannot choose any owner/native/asset p
   assert.equal((await f.post('setEnabled', { enabled: 'true' })).status, 400);
   assert.equal((await f.post('setEnabled', { enabled: true }, { 'content-type': 'text/plain' })).status, 415);
   assert.equal((await f.post('setEnabled', { enabled: true, padding: 'x'.repeat(70000) })).status, 413);
-  assert.equal((await request(f.origin + '/dsh-go/v1/linux?assets=/attacker', { headers: { cookie: f.cookie } })).status, 400);
+  assert.equal((await request(f.origin + '/DPSK/v1/linux?assets=/attacker', { headers: { cookie: f.cookie } })).status, 400);
   assert.deepEqual(f.calls(), { loads: 0, manifests: 0, owners: 0 });
 });
 

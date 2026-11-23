@@ -21,9 +21,9 @@ test('DSH profile registration does not enter internal command Worker subtrees',
   assert.equal(process.platform, 'openharmony', 'exercise the OH product branch');
   assert.equal(globalThis[Symbol.for('dsh.go.ohos.sim')], true, 'explicit host fixture only');
   assert.equal(getEnvironmentData(registrationKey), undefined);
-  assert.equal(typeof process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR, 'string');
-  assert.equal(scrubbedParentEnv().DSH_GO_OHOS_NATIVE_LIBRARY_DIR, undefined);
-  assert.equal(scrubbedParentEnv().DSH_GO_OHOS_SIM_ADDONS, undefined);
+  assert.equal(typeof process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR, 'string');
+  assert.equal(scrubbedParentEnv().DPSK_OHOS_NATIVE_LIBRARY_DIR, undefined);
+  assert.equal(scrubbedParentEnv().DPSK_OHOS_SIM_ADDONS, undefined);
   const base = await mkdtemp(join(tmpdir(), 'ohos-internal-profile-'));
   const home = join(base, 'home'), profile = join(home, 'profiles/web');
   const workspace = join(base, 'workspace'), temporaryRoot = join(base, 'tmp');
@@ -44,8 +44,8 @@ test('DSH profile registration does not enter internal command Worker subtrees',
   const inspect = `JSON.stringify({
     registered: require('node:worker_threads').getEnvironmentData(${JSON.stringify(registrationKey)}) !== undefined,
     privatePaths: globalThis[Symbol.for('dsh.go.ohos.nodeWorker.paths')]?.protocol === 1,
-    native: process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR ?? null,
-    addons: process.env.DSH_GO_OHOS_SIM_ADDONS ?? null,
+    native: process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR ?? null,
+    addons: process.env.DPSK_OHOS_SIM_ADDONS ?? null,
     cwd: process.cwd(), bytes: require('node:fs').readFileSync('./input.txt', 'utf8')
   })`;
   const expectedNode = { registered: false, privatePaths: true, native: null, addons: null,
@@ -53,7 +53,7 @@ test('DSH profile registration does not enter internal command Worker subtrees',
   const shellQuote = value => "'" + value.replaceAll("'", "'\\''") + "'";
   try {
     await t.test('unregistered shell control keeps the original environment scrub', async () => {
-      const result = await run(['bash', '-c', 'printf "ok|%s|%s" "$DSH_GO_OHOS_NATIVE_LIBRARY_DIR" "$DSH_GO_OHOS_SIM_ADDONS"']);
+      const result = await run(['bash', '-c', 'printf "ok|%s|%s" "$DPSK_OHOS_NATIVE_LIBRARY_DIR" "$DPSK_OHOS_SIM_ADDONS"']);
       assert.equal(result.exitCode, 0, result.stderr);
       assert.equal(result.stdout, 'ok||');
     });
@@ -66,7 +66,7 @@ test('DSH profile registration does not enter internal command Worker subtrees',
     assert.notEqual(registered, undefined, 'real PluginPackages published the profile');
 
     await t.test('registered shell runs with both native loader inputs still scrubbed', async () => {
-      const result = await run(['bash', '-c', 'printf "ok|%s|%s" "$DSH_GO_OHOS_NATIVE_LIBRARY_DIR" "$DSH_GO_OHOS_SIM_ADDONS"']);
+      const result = await run(['bash', '-c', 'printf "ok|%s|%s" "$DPSK_OHOS_NATIVE_LIBRARY_DIR" "$DPSK_OHOS_SIM_ADDONS"']);
       assert.equal(result.exitCode, 0, result.stderr);
       assert.equal(result.stdout, 'ok||');
     });
@@ -108,8 +108,8 @@ test('DSH profile registration does not enter internal command Worker subtrees',
       await writeFile(join(workspace, 'descendant.mjs'), `
         import { parentPort, getEnvironmentData } from 'node:worker_threads';
         parentPort.postMessage({ registered: getEnvironmentData(${JSON.stringify(registrationKey)}) !== undefined,
-          native: process.env.DSH_GO_OHOS_NATIVE_LIBRARY_DIR ?? null,
-          addons: process.env.DSH_GO_OHOS_SIM_ADDONS ?? null,
+          native: process.env.DPSK_OHOS_NATIVE_LIBRARY_DIR ?? null,
+          addons: process.env.DPSK_OHOS_SIM_ADDONS ?? null,
           privatePaths: !!globalThis[Symbol.for('dsh.go.ohos.nodeWorker.paths')] });
       `);
       await writeFile(join(workspace, 'parent.mjs'), `
@@ -129,8 +129,8 @@ test('DSH profile registration does not enter internal command Worker subtrees',
     });
     await t.test('a user command env cannot opt into profile bootstrap or substitute a native library', async () => {
       const result = await run(['bash', '-c', 'printf explicit-env-ok'], {
-        DSH_GO_OHOS_NATIVE_LIBRARY_DIR: '/nonexistent-untrusted-native',
-        DSH_GO_OHOS_SIM_ADDONS: '[]',
+        DPSK_OHOS_NATIVE_LIBRARY_DIR: '/nonexistent-untrusted-native',
+        DPSK_OHOS_SIM_ADDONS: '[]',
         DSH_OHOS_WORKER_KIND: 'plugin',
       });
       assert.equal(result.exitCode, 0, result.stderr);

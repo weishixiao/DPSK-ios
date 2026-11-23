@@ -76,7 +76,7 @@ class ToolRow extends StatefulWidget {
   final ToolChatItem item;
   final ApprovalResponder onRespond;
 
-  /// 带原生卡片(`meta["dsh-go/view"]`)时卡片画在哪,见 [ToolCardPlacement]。
+  /// 带原生卡片(`meta["DPSK/view"]`)时卡片画在哪,见 [ToolCardPlacement]。
   /// 不带卡片的调用不受影响。
   final ToolCardPlacement card;
 
@@ -154,7 +154,7 @@ class _ToolRowState extends State<ToolRow> {
             child: switch (v.pluginView) {
               // 生成的图片 / 视频:媒体卡(折进过程里的那一行不画,卡片在外面)。
               _ when v.media != null && widget.card == ToolCardPlacement.inline => MediaCard(meta: v.media!),
-              // 插件工具带了原生卡片(meta["dsh-go/view"]);折进过程里的
+              // 插件工具带了原生卡片(meta["DPSK/view"]);折进过程里的
               // 那一行不再画卡片(卡片在外面)。
               final parse? when widget.card == ToolCardPlacement.inline => PluginToolCard(
                 parse: parse,

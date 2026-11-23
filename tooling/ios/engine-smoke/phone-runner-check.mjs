@@ -65,7 +65,7 @@ async function rpc(method, params = {}, headers = { authorization: `Bearer ${end
   const response = await fetch(url, {
     method: 'POST', headers: { 'content-type': 'application/json', ...headers },
     body: JSON.stringify({ method, params, expiresAt: Date.now() + 110_000,
-      controllerBundleID: 'io.github.ccch1mneyyy.dshgo', xctestDeniedBundleIDs: [], ...metadata }),
+      controllerBundleID: 'com.dpsk.harness', xctestDeniedBundleIDs: [], ...metadata }),
   });
   const body = await response.json();
   steps.push(`${method} ${JSON.stringify(params)} ${response.status} ${Date.now() - at}ms ${body.ok ? 'ok' : `error: ${body.error}`}`);

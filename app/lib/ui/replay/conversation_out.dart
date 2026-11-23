@@ -1,5 +1,5 @@
 // Where a shared conversation goes — a `.dpsk` file, a self-contained `.html`
-// or Markdown (the Android share sheet, or Download/DSH-Go), plain text, or a
+// or Markdown (the Android share sheet, or Download/DPSK), plain text, or a
 // hosted link (the share host's client, app/lib/share_hosted/). Seams: tests
 // record instead.
 
@@ -24,7 +24,7 @@ export '../share_hosted/manage_links_button.dart' show ManageLinksButton;
 
 /// The file forms of a shared conversation.
 enum ConversationFormat {
-  /// `.dpsk`: opens in dsh-go (replay, 「接着聊」) and on the landing page.
+  /// `.dpsk`: opens in DPSK (replay, 「接着聊」) and on the landing page.
   file,
 
   /// `.html`: opens in any browser, offline.
@@ -94,7 +94,7 @@ class ConversationOut {
   /// The Android share sheet with a link.
   Future<void> shareText(String text) => _share(ShareParams(text: text));
 
-  /// Into `Download/DSH-Go`; returns where it landed.
+  /// Into `Download/DPSK`; returns where it landed.
   Future<String> save(String name, String content, ConversationFormat format) async {
     final dir = await Directory('${(await _cacheRoot()).path}/conversation').create(recursive: true);
     // A dismissed sheet can reopen before the native worker reads its source.

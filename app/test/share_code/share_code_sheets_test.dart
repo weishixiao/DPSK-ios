@@ -176,7 +176,7 @@ void main() {
     await tester.pump();
     final link = ShareLink.parse(Uri.parse(out.copied.single))!;
     expect(link.isGist, isTrue);
-    expect(net.created.single.$2, 'dsh-go-profile-20261024.dpsk');
+    expect(net.created.single.$2, 'DPSK-profile-20261024.dpsk');
     await _settle(tester);
   });
 

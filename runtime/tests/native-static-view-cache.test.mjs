@@ -6,9 +6,9 @@ import { mkdtempSync, writeFileSync, rmSync, utimesSync, unlinkSync } from 'node
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { NativeCore } from '../bridge/dsh-go-bridge/lib/native/core.js';
-import { createNativeRoutes } from '../bridge/dsh-go-bridge/lib/native/routes.js';
-import { effectiveLimits } from '../bridge/dsh-go-bridge/lib/native/limits.js';
+import { NativeCore } from '../bridge/DPSK-bridge/lib/native/core.js';
+import { createNativeRoutes } from '../bridge/DPSK-bridge/lib/native/routes.js';
+import { effectiveLimits } from '../bridge/DPSK-bridge/lib/native/limits.js';
 
 const MARKER = 'native-static-cost';
 
@@ -48,7 +48,7 @@ async function fixture(t, initial) {
     rmSync(dir, { recursive: true, force: true });
   });
   const get = async (locale = 'en') => {
-    const res = await fetch(`http://127.0.0.1:${server.address().port}/dsh-go/v1/views/static-cache-test/panel?locale=${locale}`);
+    const res = await fetch(`http://127.0.0.1:${server.address().port}/DPSK/v1/views/static-cache-test/panel?locale=${locale}`);
     return { status: res.status, ...await res.json() };
   };
   return { file, write, core, service, get };

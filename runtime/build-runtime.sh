@@ -10,8 +10,8 @@
 #   RUNTIME_OUT=/path runtime/build-runtime.sh   # stage outputs outside runtime/out (not packaged)
 #
 # The DSH tree is patched with runtime/patches/*.diff (pinned per DSH version in
-# runtime/patches/pins.json; an unvetted DSH version fails the build) and the dsh-go-bridge
-# plugin (runtime/bridge/dsh-go-bridge) is installed at /opt/dsh-go/dsh-go-bridge and loaded by
+# runtime/patches/pins.json; an unvetted DSH version fails the build) and the DPSK-bridge
+# plugin (runtime/bridge/DPSK-bridge) is installed at /opt/DPSK/DPSK-bridge and loaded by
 # the `dsh web` overlay. Check both on the host with runtime/tests/run-guard-tests.sh
 # runtime/.work/x86_64/dsh-prefix, or end to end with runtime/test-host.sh.
 #
@@ -331,7 +331,7 @@ install_dsh() {  # $1 = npm cpu, $2 = prefix dir
 # The bridge has a separate exact lock; optional native canvas is never installed.
 install_bridge() {  # $1 = npm cpu, $2 = private npm prefix, $3 = staged bridge
   local cpu="$1" prefix="$2" output="$3" bin; bin="$(host_npm)"
-  local source="$HERE/bridge/dsh-go-bridge"
+  local source="$HERE/bridge/DPSK-bridge"
   rm -rf "$prefix" "$output"; mkdir -p "$prefix"
   cp "$source/package.json" "$source/package-lock.json" "$prefix/"
   local -a npm_flags=(); npm_prefix_flags "$cpu" "$prefix"
@@ -463,7 +463,7 @@ PYEOF
   log "patching DSH (runtime/patches, pinned for $DSH_VERSION)"
   "${PY[@]}" patch-dsh --prefix "$prefix" --dsh-version "$DSH_VERSION" --target android --patches "$HERE/patches" \
     --out "$work/dsh-patches.json" --target-report "$work/dsh-patch-target.json" >&2
-  local bridge="$work/dsh-go-bridge"
+  local bridge="$work/DPSK-bridge"
   install_bridge "$npm_cpu" "$work/bridge-prefix" "$bridge"
   local bridge_version
   bridge_version="$(python3 -I -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$bridge/package.json")"

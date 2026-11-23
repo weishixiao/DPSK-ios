@@ -1,4 +1,4 @@
-/// Generated pictures and videos on a tool result: `meta["dsh-go/media"]`,
+/// Generated pictures and videos on a tool result: `meta["DPSK/media"]`,
 /// written by the host's media plugin through `presentationMeta` (contract v1,
 /// docs/design/media-generation.md §2.5 ①). No bytes: the items name files in
 /// the host's workspace, read through `workspaceFiles/*` like any artifact.
@@ -7,7 +7,7 @@ library;
 import 'json.dart';
 
 /// The tool-result meta key the media plugin writes.
-const mediaMetaKey = 'dsh-go/media';
+const mediaMetaKey = 'DPSK/media';
 
 /// `kind` of a request.
 enum MediaKind {
@@ -206,7 +206,7 @@ class MediaFailure {
   final String? text;
 }
 
-/// `meta["dsh-go/media"]`, v1.
+/// `meta["DPSK/media"]`, v1.
 class MediaMeta {
   const MediaMeta({
     this.version = 1,

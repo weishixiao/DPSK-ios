@@ -30,7 +30,7 @@ Future<void> clearAutoDefaultPreset(ProviderContainer container) async {
     if (file == null || !file.existsSync()) return;
     final fixed = withoutAutoDefaultPreset(file.readAsStringSync());
     if (fixed == null) return;
-    final tmp = File('${file.path}.dsh-go-tmp')..writeAsStringSync(fixed, flush: true);
+    final tmp = File('${file.path}.DPSK-tmp')..writeAsStringSync(fixed, flush: true);
     tmp.renameSync(file.path);
     debugPrint('Permissions: cleared the stored Auto default for new chats');
     // Safe mode runs its own profile; leaving it starts the fixed one.

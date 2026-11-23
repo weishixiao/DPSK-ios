@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 
 import 'support/receipt_task_fixtures.dart';
 
-const _path = '/dsh-go/v1/companion/tasks';
+const _path = '/DPSK/v1/companion/tasks';
 const _capability = <String, Object?>{
   'v': 1,
   'hostStoreId': 'original-store',

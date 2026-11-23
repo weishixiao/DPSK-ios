@@ -4,9 +4,9 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
-import {createPluginConfig} from '../bridge/dsh-go-bridge/lib/plugin-config.js';
+import {createPluginConfig} from '../bridge/DPSK-bridge/lib/plugin-config.js';
 import {withSources} from './plugin-config-source-fixture.mjs';
-const BASE='/dsh-go/v1/plugin-config';
+const BASE='/DPSK/v1/plugin-config';
 const schema=Object.assign(x=>x,{toJSON:()=>({uid:1,refs:{1:{type:'object',dict:{count:2}},2:{type:'number'}}})});
 function fixture(){
  const entry={options:{id:'one',name:'own-plugin',config:{count:1}},fiber:{state:2,runtime:{Config:schema,callback(){}},config:{count:1}}},entries=[entry];

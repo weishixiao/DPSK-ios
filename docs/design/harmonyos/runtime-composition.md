@@ -45,7 +45,7 @@ npm ci --ignore-scripts --omit=optional --include=dev \
 | 沙箱策略插件 | `runtime/ohos/process/sandbox.mjs` |
 | 生命周期工具边界插件 | `runtime/ohos/lifecycle/index.mjs` |
 | 能力协议插件 | `runtime/ohos/capabilities/index.mjs` |
-| App 路由桥 | `runtime/bridge/dsh-go-bridge/lib/index.js` |
+| App 路由桥 | `runtime/bridge/DPSK-bridge/lib/index.js` |
 | OS 子进程边界 | `runtime/ohos/process/child-process.mjs` |
 
 `RuntimeCore.validateManifest` 现在要求同一集合。组成器从真实 C++ 源中的固定字面量调用提取要求，并与实际 ETS 声明比较；不能识别的调用形式、集合漂移或最终载荷缺项都会拒绝。新增宿主入口时必须继续遵守并更新这一明确约定与测试，不能仅修改某一层的常量。
@@ -155,7 +155,7 @@ Android验证为节约磁盘只复制所有pins涉及的vendor文件，用实际
 
 ## 合 main 时的 OH 删除变体
 
-`compose-runtime.py` 的 `deletion_variants` 钉了 `runtime/session-deletion/core.mjs` 和 `runtime/bridge/dsh-go-bridge/lib/session-deletion.js` 的前像、后像 SHA。main 改了其中任何一个，组成都会以 `OH deletion source changed` 拒绝，不会静默打错。
+`compose-runtime.py` 的 `deletion_variants` 钉了 `runtime/session-deletion/core.mjs` 和 `runtime/bridge/DPSK-bridge/lib/session-deletion.js` 的前像、后像 SHA。main 改了其中任何一个，组成都会以 `OH deletion source changed` 拒绝，不会静默打错。
 
 遇到这个拒绝时：
 

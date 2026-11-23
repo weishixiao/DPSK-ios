@@ -35,9 +35,9 @@ import '../shell/golden_harness.dart';
 
 /// The bundled guide pages, as a map (tests don't read the asset bundle).
 Future<String> _pages(String asset) async => switch (asset) {
-  'assets/skills/dsh-go-guide/zh-04-phone-control.md' => '# 手机操控\n让 DSH 看屏幕。',
-  'assets/skills/dsh-go-guide/en-04-phone-control.md' => '# Phone control\nLet DSH read the screen.',
-  'assets/skills/dsh-go-guide/zh-03-engine-hosts.md' => '# 本机引擎与远程主机',
+  'assets/skills/DPSK-guide/zh-04-phone-control.md' => '# 手机操控\n让 DSH 看屏幕。',
+  'assets/skills/DPSK-guide/en-04-phone-control.md' => '# Phone control\nLet DSH read the screen.',
+  'assets/skills/DPSK-guide/zh-03-engine-hosts.md' => '# 本机引擎与远程主机',
   _ => throw StateError('no asset $asset'),
 };
 
@@ -56,7 +56,7 @@ void main() {
 
     test("this phone's engine: the skill's /name and the question", () async {
       final request = await askAiRequest(AskAiTopic.phoneControl, route: GuideRoute.skill, read: _pages);
-      expect(request.text, '/dsh-go-guide 手机操控是怎么工作的？有什么风险？');
+      expect(request.text, '/DPSK-guide 手机操控是怎么工作的？有什么风险？');
       expect(request.attachments, isEmpty);
       expect(request.note, isNull);
     });
@@ -65,7 +65,7 @@ void main() {
       final request = await askAiRequest(AskAiTopic.phoneControl, route: GuideRoute.attachment, read: _pages);
       expect(request.text, '关于 DPSK App：手机操控是怎么工作的？有什么风险？\n请按附件里的使用说明回答。');
       final file = request.attachments.single;
-      expect(file.name, 'dsh-go-guide-phone-control.md');
+      expect(file.name, 'DPSK-guide-phone-control.md');
       expect(file.isImage, isFalse);
       expect(utf8.decode(file.bytes), '# 手机操控\n让 DSH 看屏幕。');
       expect(request.note, isNull);
@@ -95,7 +95,7 @@ void main() {
     test('every topic names a guide page that ships with the app', () {
       final manifest = jsonDecode(
         // Read from disk: the same file the asset bundle carries.
-        File('assets/skills/dsh-go-guide/manifest.json').readAsStringSync(),
+        File('assets/skills/DPSK-guide/manifest.json').readAsStringSync(),
       );
       final files = (manifest as Map)['files'] as Map;
       for (final topic in AskAiTopic.values) {
@@ -167,7 +167,7 @@ void main() {
       expect(find.byType(AppPage), findsNothing, reason: 'back at the chat');
       final request = _container(tester).read(composeInboxProvider).single;
       expect(request.text, startsWith('关于 DPSK App：怎么连接自己的电脑或服务器？'));
-      expect(request.attachments.single.name, 'dsh-go-guide-engine-hosts.md');
+      expect(request.attachments.single.name, 'DPSK-guide-engine-hosts.md');
     });
 
     testWidgets('on DSH Remote, which takes no files: the question and the note', (tester) async {
@@ -220,7 +220,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(row);
       await tester.pumpAndSettle();
-      expect(_container(tester).read(composeInboxProvider).single.text, '/dsh-go-guide DPSK 能做什么？我该从哪里开始？');
+      expect(_container(tester).read(composeInboxProvider).single.text, '/DPSK-guide DPSK 能做什么？我该从哪里开始？');
     });
 
     testWidgets('使用帮助 is not there in 网页模式', (tester) async {
@@ -319,7 +319,7 @@ void main() {
       await tester.tap(find.text('不确定？问 AI'));
       await tester.pumpAndSettle();
       expect(find.byType(RiskNoticeSheet), findsNothing);
-      expect(_container(tester).read(composeInboxProvider).single.text, '/dsh-go-guide 「访问手机文件」打开后，AI 能读写哪些文件？怎么关掉？');
+      expect(_container(tester).read(composeInboxProvider).single.text, '/DPSK-guide 「访问手机文件」打开后，AI 能读写哪些文件？怎么关掉？');
     });
   });
 

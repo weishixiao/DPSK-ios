@@ -23,7 +23,7 @@ const baseFiles = {
   'runtime/ohos/lifecycle/index.mjs': 'fixture lifecycle',
   'runtime/ohos/phone/index.mjs': 'fixture phone',
   'runtime/ohos/capabilities/index.mjs': 'fixture capabilities',
-  'runtime/bridge/dsh-go-bridge/lib/index.js': 'fixture bridge',
+  'runtime/bridge/DPSK-bridge/lib/index.js': 'fixture bridge',
   'runtime/ohos/process/child-process.mjs': 'fixture child-process',
 };
 const sha = bytes => createHash('sha256').update(Buffer.from(bytes)).digest('hex');

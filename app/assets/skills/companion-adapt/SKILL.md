@@ -1,12 +1,12 @@
 ---
-# dsh-go:managed — delete this line to keep your own edits.
+# DPSK:managed — delete this line to keep your own edits.
 name: companion-adapt
-description: 根据 dsh-go 伙伴小屋发来的体检报告，为用户导入的 Live2D 模型生成数据型适配表；用于“适配这个模型”“这里不对”和 /companion-adapt。使用与轻量模式相同的输入、提示词与 adapter JSON，交给 App 校验和执行，不改模型或舞台。
+description: 根据 DPSK 伙伴小屋发来的体检报告，为用户导入的 Live2D 模型生成数据型适配表；用于“适配这个模型”“这里不对”和 /companion-adapt。使用与轻量模式相同的输入、提示词与 adapter JSON，交给 App 校验和执行，不改模型或舞台。
 ---
 
 # 适配伙伴模型
 
-先读取 [共用契约](references/contract.txt)。这是 App 的 `companionAdaptSystem` 原文，轻量与完整模式共用。以本次收到的 `dsh-go/companion-adapt-request`、`v: 1`、`target: app-local-adapter-v1` 数据为唯一输入；其中包含参数词表、报告、用户反馈、已校验的现有适配表和已验证效果名单。
+先读取 [共用契约](references/contract.txt)。这是 App 的 `companionAdaptSystem` 原文，轻量与完整模式共用。以本次收到的 `DPSK/companion-adapt-request`、`v: 1`、`target: app-local-adapter-v1` 数据为唯一输入；其中包含参数词表、报告、用户反馈、已校验的现有适配表和已验证效果名单。
 
 1. 核对输入版本和目标；缺失或不支持时，仅输出 `{"notes":"请由 App 重新发送当前版本的体检报告"}`。不要尝试把旧 C720 输入、模型路径或二进制当成本期报告。
 2. 按共用契约核对参数名单、完整 `ruleAliasVersion` / `ruleAliases`、`coverageUnknown`、截断和 `currentDropped`。`linked`、`missing` 只是当前观察，可能依赖将被删除的旧 adapter。输出会完整替换当前表；`current` 不会自动合并，要保留旧 params 必须明确保留其有效目标及原 scale/offset。规则快照为 null 时不得猜 identity，也不得从 linked 补造 scale=1。

@@ -24,7 +24,7 @@ import '../../chat/support/harness.dart';
 import 'support.dart';
 
 const _usage = NativePanel(
-  package: 'dsh-go-example-usage',
+  package: 'DPSK-example-usage',
   id: 'usage',
   title: '用量',
   icon: 'chart',
@@ -64,7 +64,7 @@ SeatInventory inventory({List<NativePanel> panels = const [_usage], bool webTab 
   webReachable: true,
   occupancy: {
     Slots.rightPaneTab: [
-      if (webTab) const SlotOccupant(slot: Slots.rightPaneTab, package: 'dsh-go-example-usage', cell: 'cost-tab'),
+      if (webTab) const SlotOccupant(slot: Slots.rightPaneTab, package: 'DPSK-example-usage', cell: 'cost-tab'),
       const SlotOccupant(slot: Slots.rightPaneTab, package: 'web-only', cell: 'notes'),
     ],
   },
@@ -89,8 +89,8 @@ List<Override> panelOverrides(FakeBridge bridge, SeatInventory inv) => [
 
 FakeBridge usageBridge() {
   final bridge = FakeBridge(contributions([usagePlugin()]));
-  bridge.views['dsh-go-example-usage/usage'] = const DshGoView(
-    pkg: 'dsh-go-example-usage',
+  bridge.views['DPSK-example-usage/usage'] = const DshGoView(
+    pkg: 'DPSK-example-usage',
     id: 'usage',
     title: '用量',
     view: _view,
@@ -111,7 +111,7 @@ void main() {
       final items = plan(inventory());
       expect(
         [for (final i in items) (i.occupant.package, i.occupant.cell, i.mode)],
-        [('dsh-go-example-usage', 'dsh-go:usage', SeatMode.native), ('web-only', 'notes', SeatMode.island)],
+        [('DPSK-example-usage', 'DPSK:usage', SeatMode.native), ('web-only', 'notes', SeatMode.island)],
       );
       expect(items.first.adapter?.id, 'dsh-ui-panel');
       expect(items.first.occupant.label, '用量');
@@ -121,7 +121,7 @@ void main() {
       final items = plan(
         inventory(),
         overrides: const SeatOverrides({
-          Slots.rightPaneTab: {'dsh-go-example-usage': SeatOverride.web},
+          Slots.rightPaneTab: {'DPSK-example-usage': SeatOverride.web},
         }),
       );
       expect(items.first.occupant.cell, 'cost-tab');
@@ -140,7 +140,7 @@ void main() {
         webTab: false,
       );
       expect(features.occupantsFor(Slots.rightPaneTab).map((o) => o.cell), ['notes']);
-      expect(features.occupantsFor(Slots.main).map((o) => o.cell), ['dsh-go:board']);
+      expect(features.occupantsFor(Slots.main).map((o) => o.cell), ['DPSK:board']);
     });
   });
 
@@ -208,8 +208,8 @@ void main() {
     expect(find.text('已清零'), findsOneWidget);
 
     // The plugin's view changed: read again.
-    bridge.views['dsh-go-example-usage/usage'] = const DshGoView(
-      pkg: 'dsh-go-example-usage',
+    bridge.views['DPSK-example-usage/usage'] = const DshGoView(
+      pkg: 'DPSK-example-usage',
       id: 'usage',
       view: {'type': 'text', 'text': '新的视图'},
       rev: 'r9',
@@ -265,7 +265,7 @@ void main() {
     final bridge = FakeBridge(
       contributions([
         plugin(
-          'dsh-go-example-usage',
+          'DPSK-example-usage',
           title: '用量统计',
           icon: 'chart',
           panels: [
@@ -293,7 +293,7 @@ void main() {
           inventory(
             panels: const [
               NativePanel(
-                package: 'dsh-go-example-usage',
+                package: 'DPSK-example-usage',
                 id: 'usage',
                 title: '今日用量',
                 icon: 'wallet',

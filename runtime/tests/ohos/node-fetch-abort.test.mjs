@@ -8,8 +8,8 @@ import { resolve } from 'node:path';
 import test from 'node:test';
 import { createHttpDispatcher } from '../../ohos/net/dispatcher.mjs';
 
-const api = process.env.DSH_GO_UNDICI_BUNDLE
-  ? createRequire(import.meta.url)(resolve(process.env.DSH_GO_UNDICI_BUNDLE)) : globalThis;
+const api = process.env.DPSK_UNDICI_BUNDLE
+  ? createRequire(import.meta.url)(resolve(process.env.DPSK_UNDICI_BUNDLE)) : globalThis;
 const reasons = [
   ['null', null], ['zero', 0], ['false', false], ['empty-string', ''],
   ['negative-zero', -0], ['NaN', NaN], ['bigint-zero', 0n],

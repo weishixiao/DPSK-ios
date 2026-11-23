@@ -10,9 +10,9 @@ import java.nio.file.attribute.BasicFileAttributes
 
 /** Explicit glibc loader launch; no ELF or user-profile mutation. Pure JVM/testable. */
 object DirectLaunch {
-    const val PRELOAD = "opt/dsh-go/direct/preload.mjs"
+    const val PRELOAD = "opt/DPSK/direct/preload.mjs"
     /** PRoot's Node gets Direct's per-family DNS resolver through this import (runtime/direct/proot-dns.mjs). */
-    const val PROOT_DNS = "/opt/dsh-go/direct/proot-dns.mjs"
+    const val PROOT_DNS = "/opt/DPSK/direct/proot-dns.mjs"
     private const val OWNED = "opt/dsh-app/direct"
 
     /** Fallback reason: Direct already failed to launch here with this runtime. */
@@ -81,9 +81,9 @@ object DirectLaunch {
 
     fun unavailable(rootfs: File, abi: String): String? = when {
         abi !in setOf("arm64-v8a", "x86_64") -> "unsupportedAbi"
-        !File(rootfs, PRELOAD).isFile || !File(rootfs, "opt/dsh-go/direct/dns.mjs").isFile ||
-            !File(rootfs, "opt/dsh-go/direct/modules.mjs").isFile ||
-            !File(rootfs, "opt/dsh-go/direct/native-addons.json").isFile -> "runtimeUpdateRequired"
+        !File(rootfs, PRELOAD).isFile || !File(rootfs, "opt/DPSK/direct/dns.mjs").isFile ||
+            !File(rootfs, "opt/DPSK/direct/modules.mjs").isFile ||
+            !File(rootfs, "opt/DPSK/direct/native-addons.json").isFile -> "runtimeUpdateRequired"
         !File(rootfs, loaderPath(abi)).canExecute() || !File(rootfs, "opt/node/bin/node").canExecute() -> "runtimeIncomplete"
         else -> null
     }
@@ -122,7 +122,7 @@ object DirectLaunch {
         return "$path:$path"
     }
 
-    private const val ALIAS_MARKER = ".dsh-go-direct-path-alias"
+    private const val ALIAS_MARKER = ".DPSK-direct-path-alias"
 
     private fun hasGeneratedConfig(rootfs: File): Boolean =
         listOf("opt", "opt/dsh-app", OWNED).all {

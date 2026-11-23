@@ -1,58 +1,58 @@
 ---
-# dsh-go:managed — the dsh-go app keeps this skill up to date; delete this line to keep your own edits.
-name: dsh-go-plugin
-description: 给 dsh-go 手机 App 写一个本地小插件，在**手机原生界面**里出现：输入框上方的胶囊、回复长按菜单里的操作、状态条、原生面板、工具结果卡片，还能朗读、开口即停、显示字幕；写完用自带的检查器检查，装进当前主机。用户要给 dsh-go App 加需要逻辑或数据的东西时先加载它，比如「输入框上面加个按钮，把剪贴板译成英文」「长按消息加个『存到笔记』」「输入框上方显示今天用了多少」「做个面板看我的待办」「这个工具的结果画成卡片」「加个按钮把回复读出来」。只用于 dsh-go 手机原生界面；用户要做 Cordis 插件、改 Harness 网页版 / 桌面端，或明确说的是网页插件时，用官方 cordis-plugin-development 技能，不要用本技能的目录和安装方式。Write a small local DSH plugin that shows up natively in the dsh-go phone app; for Cordis / Harness Web UI plugins use the official skill instead.
-whenToUse: The user wants to add something of their own to the dsh-go phone app (手机 App / 原生界面) that needs logic or data. For fixed buttons, layout, theme or hiding things use the dsh-go-ui skill (ui.json) instead. For Cordis plugins or the Harness Web UI / desktop, use the official cordis-plugin-development skill — different directory and install entry.
+# DPSK:managed — the DPSK app keeps this skill up to date; delete this line to keep your own edits.
+name: DPSK-plugin
+description: 给 DPSK 手机 App 写一个本地小插件，在**手机原生界面**里出现：输入框上方的胶囊、回复长按菜单里的操作、状态条、原生面板、工具结果卡片，还能朗读、开口即停、显示字幕；写完用自带的检查器检查，装进当前主机。用户要给 DPSK App 加需要逻辑或数据的东西时先加载它，比如「输入框上面加个按钮，把剪贴板译成英文」「长按消息加个『存到笔记』」「输入框上方显示今天用了多少」「做个面板看我的待办」「这个工具的结果画成卡片」「加个按钮把回复读出来」。只用于 DPSK 手机原生界面；用户要做 Cordis 插件、改 Harness 网页版 / 桌面端，或明确说的是网页插件时，用官方 cordis-plugin-development 技能，不要用本技能的目录和安装方式。Write a small local DSH plugin that shows up natively in the DPSK phone app; for Cordis / Harness Web UI plugins use the official skill instead.
+whenToUse: The user wants to add something of their own to the DPSK phone app (手机 App / 原生界面) that needs logic or data. For fixed buttons, layout, theme or hiding things use the DPSK-ui skill (ui.json) instead. For Cordis plugins or the Harness Web UI / desktop, use the official cordis-plugin-development skill — different directory and install entry.
 ---
 
-# 给 dsh-go 写一个本地小插件
+# 给 DPSK 写一个本地小插件
 
 插件是一个放在主机上的 npm 包目录：`package.json` 里的 `dshGo` 清单声明 App 里出现什么，`lib/index.js` 在引擎里处理点按、推数据。App 只画声明和 JSON 视图，不执行插件代码。
 
 ## 和官方技能的分工（先判断界面载体）
 
-这个技能只负责 **dsh-go 手机 App 的原生界面**。创造模式里还会加载官方的 `cordis-plugin-development`，它负责 **Harness Web UI / 桌面端**的插件，两套的目录、清单和安装入口都不同。**先确定界面载体，再选技能**；不要按加载顺序、也不要混着用：
+这个技能只负责 **DPSK 手机 App 的原生界面**。创造模式里还会加载官方的 `cordis-plugin-development`，它负责 **Harness Web UI / 桌面端**的插件，两套的目录、清单和安装入口都不同。**先确定界面载体，再选技能**；不要按加载顺序、也不要混着用：
 
 | 用户要的 | 用哪个 | 目录 / 安装 |
 |---|---|---|
-| 手机 App 里加胶囊、菜单项、状态条、原生面板、工具结果卡片、朗读 / 字幕 | 本技能 | `$DSH_HOME/dsh-go/plugins/<name>/`，`dsh plugin --profile web add <目录>` |
-| 改 dsh-go App 自己的样子（顶栏按钮、主题、隐藏元素） | `dsh-go-ui`（ui.json） | `$DSH_HOME/dsh-go/ui.json` |
+| 手机 App 里加胶囊、菜单项、状态条、原生面板、工具结果卡片、朗读 / 字幕 | 本技能 | `$DSH_HOME/DPSK/plugins/<name>/`，`dsh plugin --profile web add <目录>` |
+| 改 DPSK App 自己的样子（顶栏按钮、主题、隐藏元素） | `DPSK-ui`（ui.json） | `$DSH_HOME/DPSK/ui.json` |
 | Cordis / Harness Web UI 插件、装饰、槽位、MCP、页面 | 官方 `cordis-plugin-development` | 工作区建包 + `plugin_manager` → `install_bundle` |
 | Agent 预设、Cordis 组合 | 官方组合类技能 | 官方流程 |
 
-- 用户没点名界面载体时：在本 App 里默认目标是 dsh-go 手机原生界面（`AGENTS.md` 也这么写）；但如果用户明确要网页版 / 桌面端，就按官方技能走。
-- 官方技能里的「不要在工作区外建包、不要在 `$DSH_HOME` 下建包、不要手写 profile 的 package.json / cordis.patch.yml」针对的是 **Cordis bundle**。dsh-go 原生插件不是 Cordis bundle：它就是放在 `$DSH_HOME/dsh-go/plugins/` 下的 npm 包，用 `dsh plugin --profile web add` 装。两条规则各管各的，不冲突，也不能互换目录和安装方式。
-- 同一个「加个按钮」两边都能做时：在 dsh-go 里先做原生版本；用户还要网页版，再让官方技能另做一份。
+- 用户没点名界面载体时：在本 App 里默认目标是 DPSK 手机原生界面（`AGENTS.md` 也这么写）；但如果用户明确要网页版 / 桌面端，就按官方技能走。
+- 官方技能里的「不要在工作区外建包、不要在 `$DSH_HOME` 下建包、不要手写 profile 的 package.json / cordis.patch.yml」针对的是 **Cordis bundle**。DPSK 原生插件不是 Cordis bundle：它就是放在 `$DSH_HOME/DPSK/plugins/` 下的 npm 包，用 `dsh plugin --profile web add` 装。两条规则各管各的，不冲突，也不能互换目录和安装方式。
+- 同一个「加个按钮」两边都能做时：在 DPSK 里先做原生版本；用户还要网页版，再让官方技能另做一份。
 
 ## 先判断用哪个
 
 | 用户要的 | 做法 |
 |---|---|
-| 固定文字的按钮、顶栏按钮、隐藏元素、主题 | 不写插件，用 dsh-go-ui 技能改 ui.json |
+| 固定文字的按钮、顶栏按钮、隐藏元素、主题 | 不写插件，用 DPSK-ui 技能改 ui.json |
 | 按钮要读剪贴板 / 输入框 / 某条回复，或要算点什么 | 本技能：`composer.actions` / `message.actions` + `on(id)` |
 | 一直看得到的一行数字 | 本技能：`composer.strip` + `strip(id)` |
 | 一整页信息 | 本技能：`panels` + `panel(id)` |
 | 不常用但要顺手的工具 | 本技能：`composer.tools`（加号面板，要较新的 App） |
 | 对整段对话做事：导出、归档 | 本技能：`session.actions`（右侧栏「信息」，要较新的 App） |
 | 每轮一眼看到的数字 | 本技能：`turn.note` + `turnNote(id)`（回合脚注，要较新的 App） |
-| 某个工具的结果画成卡片 | 本技能：工具 `output.presentationMeta` 返回 `{ "dsh-go/view": 视图 }`，不需要清单 |
+| 某个工具的结果画成卡片 | 本技能：工具 `output.presentationMeta` 返回 `{ "DPSK/view": 视图 }`，不需要清单 |
 | 把回复读出来、开口就停、跟读字幕 | 本技能：`capabilities` + `media` / `micro` / `overlays`（见下文「声音与字幕」） |
 
-胶囊、菜单、状态条、面板只在装了 dsh-go 桥接的主机上出现：手机本机引擎有（`/etc/dsh-app/runtime.json` 存在就是）；其他主机只有工具卡。
+胶囊、菜单、状态条、面板只在装了 DPSK 桥接的主机上出现：手机本机引擎有（`/etc/dsh-app/runtime.json` 存在就是）；其他主机只有工具卡。
 
 ## 步骤
 
-1. **建目录**（放在 `$DSH_HOME/dsh-go/plugins/` 下，引擎重置时会保留；`DSH_HOME` 默认 `~/.dsh`）：
+1. **建目录**（放在 `$DSH_HOME/DPSK/plugins/` 下，引擎重置时会保留；`DSH_HOME` 默认 `~/.dsh`）：
    ```sh
-   P="${DSH_HOME:-$HOME/.dsh}/dsh-go/plugins/local-quote"
-   mkdir -p "$(dirname "$P")" && cp -r "${DSH_HOME:-$HOME/.dsh}/skills/dsh-go-plugin/template" "$P"
+   P="${DSH_HOME:-$HOME/.dsh}/DPSK/plugins/local-quote"
+   mkdir -p "$(dirname "$P")" && cp -r "${DSH_HOME:-$HOME/.dsh}/skills/DPSK-plugin/template" "$P"
    ```
 2. **改名**：`package.json` 的 `name`、`cordis.patch.yml` 的 `name`、`lib/index.js` 的 `name` 三处一致，用 `local-` 开头，小写字母、数字和 `-`。
 3. **写清单**（`package.json` → `dshGo`，见下表），只声明用得到的；`wants` 只要真读的内容。
 4. **写处理**（`lib/index.js`）：一律写在 `ctx.inject(['dshGo'], (ctx) => { … })` 里。
 5. **自查**，改到没有「错误」为止：
    ```sh
-   node "${DSH_HOME:-$HOME/.dsh}/skills/dsh-go-plugin/kit/bin/check.mjs" "$P" --load
+   node "${DSH_HOME:-$HOME/.dsh}/skills/DPSK-plugin/kit/bin/check.mjs" "$P" --load
    ```
    `--load` 会在隔离环境里加载你的代码：查处理函数在不在、视图函数画出来的视图 App 能不能画。
    `--json` 给机器读；`--lang zh` 指定语言；`--budget toolCard|panel|strip` 按工具卡、面板或状态条检查视图预算；`--app <版本>` 按目标 App 版本判断 `minApp`（不写时按 999.0.0 判断，`minApp` 不会被拦截，检查目标版本时必须写出）；面板位置等较新字段不按版本检查。
@@ -200,7 +200,7 @@ ctx.dshGo.on('translate', (scope) => ({
 | `actions` | `items: [{ label, action, icon?, style?: primary\|plain }]`（≤ 4，至多一个 primary） |
 | `options` | `id` `options: [{ label, value? }]` `multi?` `selected?` |
 | `confirm` | `id` `confirmLabel?` `cancelLabel?` |
-| `image` | `src`：`/dsh-go/v1/…` 同源路径或 ≤ 64 KiB 的 `data:image/…`；`alt?` `aspect?` |
+| `image` | `src`：`/DPSK/v1/…` 同源路径或 ≤ 64 KiB 的 `data:image/…`；`alt?` `aspect?` |
 
 `action` 写动作 id 字符串，或 `{ "id": "open", "args": { … } }`（args ≤ 1 KiB）。上限：面板 32 KiB / 120 个组件 / 8 层；工具卡 8 KiB / 40 个 / 6 层，第 0 期不能点。
 
@@ -210,7 +210,7 @@ ctx.dshGo.on('translate', (scope) => ({
 presentationMeta: (args, value) => {
   try {   // 抛错或返回 undefined / NaN 会让整次工具调用失败
     const text = JSON.stringify({ type: 'stack', title: `${value.city} · 今天`, children: [{ type: 'metric', label: '气温', value: `${value.temp}°` }] })
-    return text.length < 8000 ? { 'dsh-go/view': JSON.parse(text) } : {}
+    return text.length < 8000 ? { 'DPSK/view': JSON.parse(text) } : {}
   } catch { return {} }
 },
 ```
@@ -241,7 +241,7 @@ ctx.dshGo.micro('caption', { data: (scope, emit) => { emit({ text: '读到这里
 ctx.dshGo.onCapability((scope, { event }) => {})   // audio.ended / voice.speechStart / …；返回值不执行
 ```
 
-慢的事（TTS）放在 `media` 里，不放在 `on` 里。App 负责：开口时先停播再通知、问用户能不能听、只在前台、声音结束后自动停听关字幕。没有 TTS 时可以像 `examples/plugins/dsh-go-example-readaloud` 那样合成占位音。
+慢的事（TTS）放在 `media` 里，不放在 `on` 里。App 负责：开口时先停播再通知、问用户能不能听、只在前台、声音结束后自动停听关字幕。没有 TTS 时可以像 `examples/plugins/DPSK-example-readaloud` 那样合成占位音。
 
 ## 规矩
 

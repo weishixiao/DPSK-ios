@@ -72,7 +72,7 @@ object PhoneGuest {
         failOnStartupError: false
 """
 
-    const val DIAGNOSTICS_POLICY_JS = """export const name = 'dsh-go-diagnostics-policy';
+    const val DIAGNOSTICS_POLICY_JS = """export const name = 'DPSK-diagnostics-policy';
 export const inject = ['tools'];
 export function apply(ctx) {
   ctx.tools.restrict({ allow: [] });
@@ -81,10 +81,10 @@ export function apply(ctx) {
 
     // The scoped policy denies inherited and future global tools; native executor hides root PTC.
     // l10n:keep agent diagnostic persona
-    const val DIAGNOSTICS_PRESET_YAML = """    - id: preset-dsh-go-diagnostics
+    const val DIAGNOSTICS_PRESET_YAML = """    - id: preset-DPSK-diagnostics
       name: '@deepseek-ai/dsh-agent-preset'
       config:
-        id: dsh-go-diagnostics
+        id: DPSK-diagnostics
         name: Diagnostics
         description: Analyze supplied diagnostic evidence without tools or runtime context.
         plugins:

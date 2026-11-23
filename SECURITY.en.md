@@ -6,7 +6,7 @@ Keep exploit details, credentials, private keys, real user data and complete dia
 
 ## Report privately
 
-Open this repository's [Security Advisories](https://github.com/weishixiao/dsh-go/security/advisories) page:
+Open this repository's [Security Advisories](https://github.com/weishixiao/DPSK/security/advisories) page:
 
 - If **Report a vulnerability** is available, use it to submit a private report.
 - If it is unavailable, open an issue asking only how to contact the maintainer privately, then wait for a private contact route. Do not describe the vulnerability, attach reproduction data or identify an affected deployment in that public issue.

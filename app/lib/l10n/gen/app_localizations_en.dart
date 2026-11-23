@@ -4505,7 +4505,7 @@ class L10nEn extends L10n {
   String get chatOpenInDefaultApp => 'Open in default app';
 
   @override
-  String get chatDownloadsFolderHint => 'Downloads/DSH-Go folder';
+  String get chatDownloadsFolderHint => 'Downloads/DPSK folder';
 
   @override
   String chatSavedToDownloadsPath(String path) {
@@ -5687,7 +5687,7 @@ class L10nEn extends L10n {
 
   @override
   String get companionMemoryUnsupportedHint =>
-      'It isn\'t available over the DSH Remote relay, or this host\'s dsh-go bridge is older.';
+      'It isn\'t available over the DSH Remote relay, or this host\'s DPSK bridge is older.';
 
   @override
   String get companionMemoryLoadFailed => 'Couldn\'t load';
@@ -10139,7 +10139,7 @@ class L10nEn extends L10n {
   String get featuresExportSaveDownloads => 'Save to Downloads';
 
   @override
-  String get featuresExportDownloadsHint => 'Save in Downloads/DSH-Go';
+  String get featuresExportDownloadsHint => 'Save in Downloads/DPSK';
 
   @override
   String get featuresExportContents => 'All records and attachments from this chat and its subagents';
@@ -13161,7 +13161,7 @@ class L10nEn extends L10n {
   String get phoneDiagnosticsSave => 'Save to Downloads';
 
   @override
-  String get phoneDiagnosticsSaveHint => 'Save in Downloads/DSH-Go';
+  String get phoneDiagnosticsSaveHint => 'Save in Downloads/DPSK';
 
   @override
   String get phoneDiagnosticsNote =>
@@ -14828,7 +14828,7 @@ class L10nEn extends L10n {
   String get phoneSelfCheckSaving => 'Saving…';
 
   @override
-  String get phoneSelfCheckSaved => 'Report saved to Downloads/DSH-Go.';
+  String get phoneSelfCheckSaved => 'Report saved to Downloads/DPSK.';
 
   @override
   String get phoneSelfCheckSaveFailed => 'Could not save the report.';
@@ -27454,7 +27454,7 @@ class L10nEn extends L10n {
 
   @override
   String get updateExportApkMessage =>
-      'Copies the package downloaded and verified now into Downloads/DSH-Go, so you can sign it yourself (MT Manager and the like) and install that.\n\nA package you signed has a different signature from ours: in-app updates then always report a signature mismatch, and every later version has to be signed and installed by hand.\n\nIf the system simply blocks the install (Xiaomi and other vendors), try Shizuku or on-device ADB under Installation route first; that needs no signing.';
+      'Copies the package downloaded and verified now into Downloads/DPSK, so you can sign it yourself (MT Manager and the like) and install that.\n\nA package you signed has a different signature from ours: in-app updates then always report a signature mismatch, and every later version has to be signed and installed by hand.\n\nIf the system simply blocks the install (Xiaomi and other vendors), try Shizuku or on-device ADB under Installation route first; that needs no signing.';
 
   @override
   String updateExportApkDone(String path) {
@@ -27503,7 +27503,7 @@ class L10nEn extends L10n {
 
   @override
   String get usageStatsFooter =>
-      'This switch controls dsh-go’s own statistics: feature counts (tavern messages, companion room visits and voice calls included), the token counts model replies report, versions, phone maker and model, and system version. It includes no chats, character cards, files or accounts, and does not control Google ML Kit SDK statistics.';
+      'This switch controls DPSK’s own statistics: feature counts (tavern messages, companion room visits and voice calls included), the token counts model replies report, versions, phone maker and model, and system version. It includes no chats, character cards, files or accounts, and does not control Google ML Kit SDK statistics.';
 
   @override
   String get usageNoticeBody => 'No chats or personal info.\nTurn off anytime.';
@@ -27525,7 +27525,7 @@ class L10nEn extends L10n {
 
   @override
   String get usageStatsAndroidFooter =>
-      'This switch controls dsh-go’s own statistics: feature counts (tavern messages, companion room visits and voice calls included), the token counts model replies report, versions, phone maker and model, and system version. It includes no chats, character cards, files or accounts, and does not control Google ML Kit SDK statistics. Android also summarizes foreground days, the first day of collection, startup and remote connection results and timing bands, model usage, plugin actions, setup, and abnormal exits confirmed by the operating system. Turning it off clears unsent data.';
+      'This switch controls DPSK’s own statistics: feature counts (tavern messages, companion room visits and voice calls included), the token counts model replies report, versions, phone maker and model, and system version. It includes no chats, character cards, files or accounts, and does not control Google ML Kit SDK statistics. Android also summarizes foreground days, the first day of collection, startup and remote connection results and timing bands, model usage, plugin actions, setup, and abnormal exits confirmed by the operating system. Turning it off clears unsent data.';
 
   @override
   String viewArtifactSaved(String value) {

@@ -12,7 +12,7 @@ import 'connection.dart';
 import 'errors.dart';
 import 'session_api.dart';
 
-const _path = '/dsh-go/v1/companion/tasks';
+const _path = '/DPSK/v1/companion/tasks';
 const _workbookMediaType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 typedef _Row = Map<String, Object?>;
 

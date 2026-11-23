@@ -72,7 +72,7 @@ ChatState _state() => ChatState(
       'weather_forecast',
       {'city': '东京', 'days': 2},
       result: 'Sat: clear 21/15, Sun: light rain 18/13',
-      meta: {'dsh-go/view': _forecast},
+      meta: {'DPSK/view': _forecast},
     ),
     assistant(9, '**周六**更适合出门，去镰仓正好；周日有雨，可以留给箱根的温泉。'),
   ],

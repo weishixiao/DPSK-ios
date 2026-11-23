@@ -138,4 +138,4 @@
 
 ## 视图 v2 输入与结构组件
 
-输入与结构的 24 个组件、表单、双向绑定、有限公式、调度与位置预算见[输入、表单与本地状态](inputs.md)；空状态和图集见上面。完整可运行示例是[工作台](../../examples/plugins/dsh-go-example-workbench/)。
+输入与结构的 24 个组件、表单、双向绑定、有限公式、调度与位置预算见[输入、表单与本地状态](inputs.md)；空状态和图集见上面。完整可运行示例是[工作台](../../examples/plugins/DPSK-example-workbench/)。

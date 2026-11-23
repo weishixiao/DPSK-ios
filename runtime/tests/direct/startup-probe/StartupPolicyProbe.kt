@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
     val expectsAlias = case in setOf("prior-direct-alias", "carried-direct-alias")
     if (case == "carried-direct-alias") {
         File(root, "root").mkdirs()
-        File(root, "root/.dsh-go-direct-path-alias").writeText("v1\n${root.canonicalPath}\n")
+        File(root, "root/.DPSK-direct-path-alias").writeText("v1\n${root.canonicalPath}\n")
     }
     if (case == "l2s-fallback-unknown") File(root, "root/.l2s").apply { mkdirs() }.resolve("kept").writeText("fixture")
     if (case == "prior-direct-alias" || case == "symlink-config-no-alias") {

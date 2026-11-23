@@ -137,7 +137,7 @@ class _UpdateSheetState extends ConsumerState<UpdateSheet> {
   static const _buttonSize = Size.fromHeight(48);
 
   /// 「导出安装包」: says what signing by hand costs, then copies the verified
-  /// download into `Download/DSH-Go` and shows where it landed.
+  /// download into `Download/DPSK` and shows where it landed.
   Future<void> _exportApk() async {
     final l10n = appL10n;
     final save = await showAppDialog<bool>(
@@ -159,7 +159,7 @@ class _UpdateSheetState extends ConsumerState<UpdateSheet> {
         content: Text(
           where == null
               ? l10n.updateExportApkFailed
-              // `Download/DSH-Go/x.apk`, named as the rest of the app names it.
+              // `Download/DPSK/x.apk`, named as the rest of the app names it.
               : l10n.updateExportApkDone(where.replaceFirst(RegExp(r'^Download/'), '')),
         ),
       ),

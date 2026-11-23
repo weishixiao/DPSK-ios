@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 const config = JSON.parse(readFileSync(process.env.OHOS_932_CONFIG, 'utf8'));
-const binding = createRequire(join(config.payload, 'package.json'))('@dsh-go/ohos-native').load('workspace-grants').binding;
+const binding = createRequire(join(config.payload, 'package.json'))('@DPSK/ohos-native').load('workspace-grants').binding;
 const result = {};
 for (const [name, action] of Object.entries({
   snapshot: () => binding.snapshot(),

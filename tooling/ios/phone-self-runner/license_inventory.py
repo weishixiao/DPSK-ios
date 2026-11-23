@@ -125,7 +125,7 @@ def generate(metadata):
     identities = [(p['name'], p['version']) for p in packages]
     if len(set(identities)) != len(identities):
         raise ValueError('Duplicate package name/version')
-    output = bytearray(b'DSH Go phone native third-party notices\n'
+    output = bytearray(b'DPSK phone native third-party notices\n'
                        b'Generated from locked Cargo metadata. Source texts below are copied verbatim.\n'
                        b'Curated upstream or standard-license supplements identify their provenance.\n'
                        b'No build-machine paths, pairing records or credentials are included.\n')

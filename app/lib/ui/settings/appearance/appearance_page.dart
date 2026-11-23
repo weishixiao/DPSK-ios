@@ -219,8 +219,8 @@ class ThemeModePicker extends ConsumerWidget {
   if (hit != null) return hit;
   if (_themeCache.length > 6) _themeCache.clear();
   return _themeCache[key] = (
-    buildLightTheme(accent: accent, themePack: pack),
-    buildDarkTheme(accent: accent, themePack: pack),
+    buildLightTheme(accent: accent),
+    buildDarkTheme(accent: accent),
   );
 }
 

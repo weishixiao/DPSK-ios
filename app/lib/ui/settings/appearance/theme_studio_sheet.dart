@@ -95,7 +95,6 @@ class _ThemeStudioSheetState extends ConsumerState<ThemeStudioSheet> {
       accent: AppAccent.fromThemePack(draft),
       glassBlur: _glassBlur,
       glyphLocale: AppLocale.isEnglish ? AppLocale.zhCN : null,
-      themePack: draft,
       loadedFonts: {...?_savedFonts, ..._c.fontFamilies},
     );
   }

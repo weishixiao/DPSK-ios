@@ -146,7 +146,6 @@ class _DshAppState extends ConsumerState<DshApp> with WidgetsBindingObserver {
       glassBlur: glassBlur,
       instantPages: instantPages,
       fluid: fluid,
-      themePack: themePack,
       loadedFonts: loadedFonts,
     );
     _dark = buildDarkTheme(
@@ -155,7 +154,6 @@ class _DshAppState extends ConsumerState<DshApp> with WidgetsBindingObserver {
       glassBlur: glassBlur,
       instantPages: instantPages,
       fluid: fluid,
-      themePack: themePack,
       loadedFonts: loadedFonts,
     );
   }

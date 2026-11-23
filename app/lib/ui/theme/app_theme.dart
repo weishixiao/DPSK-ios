@@ -39,14 +39,13 @@ ThemeData buildLightTheme({
   Locale? glyphLocale,
   bool instantPages = false,
   bool fluid = false,
-  ThemePack? themePack,
   Map<String, String> loadedFonts = const {},
 }) => _build(
-  applyThemePackScheme(DshPalette.lightScheme(accent), themePack),
-  applyThemePackColors(DshColors.forAccent(Brightness.light, accent), themePack, Brightness.light),
+  applyThemePackScheme(DshPalette.lightScheme(accent), null),
+  applyThemePackColors(DshColors.forAccent(Brightness.light, accent), null, Brightness.light),
   applyThemePackSurfaces(
     DshSurfaces.light(accent, blurEnabled: glassBlur),
-    themePack,
+    null,
     Brightness.light,
     blurEnabled: glassBlur,
   ),
@@ -54,7 +53,6 @@ ThemeData buildLightTheme({
   glyphLocale,
   instantPages,
   fluid,
-  themePack,
   loadedFonts,
 );
 
@@ -65,14 +63,13 @@ ThemeData buildDarkTheme({
   Locale? glyphLocale,
   bool instantPages = false,
   bool fluid = false,
-  ThemePack? themePack,
   Map<String, String> loadedFonts = const {},
 }) => _build(
-  applyThemePackScheme(DshPalette.darkScheme(accent), themePack),
-  applyThemePackColors(DshColors.forAccent(Brightness.dark, accent), themePack, Brightness.dark),
+  applyThemePackScheme(DshPalette.darkScheme(accent), null),
+  applyThemePackColors(DshColors.forAccent(Brightness.dark, accent), null, Brightness.dark),
   applyThemePackSurfaces(
     DshSurfaces.dark(accent, blurEnabled: glassBlur),
-    themePack,
+    null,
     Brightness.dark,
     blurEnabled: glassBlur,
   ),
@@ -80,7 +77,6 @@ ThemeData buildDarkTheme({
   glyphLocale,
   instantPages,
   fluid,
-  themePack,
   loadedFonts,
 );
 
@@ -125,7 +121,6 @@ ThemeData _build(
   Locale? glyphLocale,
   bool instantPages,
   bool fluid, [
-  ThemePack? themePack,
   Map<String, String> loadedFonts = const {},
 ]) {
   // iOS 式水平推入,上一页左移变暗;系统预测返回与边缘右滑都跟手

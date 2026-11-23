@@ -292,7 +292,7 @@ ThemeData studioThemeOf(ThemePack pack, {required bool dark}) {
   // Under its own ID the draft would pick up the special-cased accent of the built-in it started from.
   final draft = pack.copyWith(id: 'draft-preview');
   final accent = AppAccent.fromThemePack(draft);
-  return dark ? buildDarkTheme(accent: accent, themePack: draft) : buildLightTheme(accent: accent, themePack: draft);
+  return dark ? buildDarkTheme(accent: accent) : buildLightTheme(accent: accent);
 }
 
 /// The colour [key] has in the draft: the pack's own, or else what [theme] falls back to.

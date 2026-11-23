@@ -19,7 +19,7 @@ Future<Uint8List> workshopGenerateThemeCover({required ThemeLibrary library, req
   }
   final pack = await library.load(localId);
   final loadedFonts = await _coverFonts(pack);
-  final theme = buildLightTheme(accent: AppAccent.fromThemePack(pack), themePack: pack, loadedFonts: loadedFonts);
+  final theme = buildLightTheme(accent: AppAccent.fromThemePack(pack), loadedFonts: loadedFonts);
   final style = theme.extension<DshThemeStyle>()!;
   final surfaces = theme.extension<DshSurfaces>()!;
   final images = <String, ui.Image>{};

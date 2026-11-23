@@ -41,6 +41,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.90.0
       - name: Check the shared phone native owner without Apple services
         run: |
           bash tooling/ios/build-phone-self-runner.sh --check

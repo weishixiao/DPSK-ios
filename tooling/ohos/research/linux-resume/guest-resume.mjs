@@ -106,7 +106,7 @@ function request(path, body, cookie) {
     const requestOffset = positions.request;
     // Preserve control payload bytes only. Never persist the login URL, cookie
     // or headers; the fixed probe supplies no real account/environment secrets.
-    if (path === '/DPSK/v1/linux') { append(files['http-requests.bin'], requestBytes); positions.request += requestBytes.length; }
+    if (path === '/dsh-go/v1/linux') { append(files['http-requests.bin'], requestBytes); positions.request += requestBytes.length; }
     const req = http.request(origin + path, { method: body ? 'POST' : 'GET', headers: {
       ...(cookie ? { cookie } : {}), ...(body ? { 'content-type': 'application/json' } : {}),
     } }, res => {
@@ -114,7 +114,7 @@ function request(path, body, cookie) {
       res.on('data', chunk => { bytes += chunk.length; if (bytes > 98304) req.destroy(new Error('bounded response exceeded')); else chunks.push(chunk); });
       res.on('error', reject); res.on('end', () => {
         const value = Buffer.concat(chunks);
-        if (path === '/DPSK/v1/linux') {
+        if (path === '/dsh-go/v1/linux') {
           const offset = positions.response; positions.response += value.length; append(files['http-responses.bin'], value);
           append(files['http.jsonl'], JSON.stringify({ atNs: clock(), method: body ? 'POST' : 'GET', action: body?.action ?? null,
             requestOffset, requestBytes: requestBytes.length, responseOffset: offset, responseBytes: value.length, status: res.statusCode }) + '\n');
@@ -129,10 +129,10 @@ function request(path, body, cookie) {
 const login = await request('/?token=' + encodeURIComponent(auth.launchToken)); assert.equal(login.status, 303);
 const cookie = login.headers['set-cookie'][0].split(';')[0];
 async function status() {
-  const response = await request('/DPSK/v1/linux', undefined, cookie); assert.equal(response.status, 200); return JSON.parse(response.text);
+  const response = await request('/dsh-go/v1/linux', undefined, cookie); assert.equal(response.status, 200); return JSON.parse(response.text);
 }
 async function command(action, fields = {}) {
-  const before = await status(), response = await request('/DPSK/v1/linux', { v: 1, instanceId: before.instanceId, attemptId: before.attemptId, action, ...fields }, cookie);
+  const before = await status(), response = await request('/dsh-go/v1/linux', { v: 1, instanceId: before.instanceId, attemptId: before.attemptId, action, ...fields }, cookie);
   observations.push({ action, requestId: fields.requestId ?? null, status: response.status }); assert.equal(response.status, 202); return JSON.parse(response.text);
 }
 async function waitFor(predicate, label, milliseconds = 180000) {
@@ -194,7 +194,7 @@ try {
   const closeRequested = event('shutdown-command'); await command('setEnabled', { enabled: false });
   shutdown = await waitFor(value => value.shutdownComplete && value.job?.state === 'settled', 'off retires the VM', 60000);
   check('off cancels with the actual SIGKILL outcome and keeps completed output', shutdown.job.cancelRequested && shutdown.job.outcome.cancelled === true && shutdown.job.outcome.signal === 'SIGKILL', { outcome: shutdown.job.outcome });
-  const before = await status(), again = await request('/DPSK/v1/linux', { v: 1, instanceId: before.instanceId, attemptId: before.attemptId, action: 'setEnabled', enabled: true }, cookie);
+  const before = await status(), again = await request('/dsh-go/v1/linux', { v: 1, instanceId: before.instanceId, attemptId: before.attemptId, action: 'setEnabled', enabled: true }, cookie);
   observations.push({ action: 'setEnabled', requestId: null, status: again.status });
   check('after off this process refuses on and asks for an app restart, with no second VM', shutdown.state === 'stopped' && shutdown.restartRequired === true &&
     again.status === 409 && again.text.includes('ERR_OHOS_LINUX_CLOSED') && creates === 1 && ownerCreations === 1, { status: again.status });

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds DPSK APKs. Every APK that goes onto a phone or emulator comes from
+# Builds dsh-go APKs. Every APK that goes onto a phone or emulator comes from
 # here, dev and release alike: each build gets a fresh versionCode (the build
 # minute, see tooling/build_number.py), so it installs over the previous one and
 # the system refreshes what it cached for the old build (icons included).
@@ -20,7 +20,7 @@
 #   --no-companion                   release without the licensed companion pack
 #   --beta                           embed the beta channel token (internal builds only)
 #   --side                           test build that installs next to the released app
-#                                    (package ...dpsk_app.test, named DPSK 测试, own data)
+#                                    (package ...dsh_app.test, named DSH Go 测试, own data)
 #   --no-star                        release without the star prompt
 #   --dry-run                        print what would run
 #
@@ -28,10 +28,10 @@
 # Public release builds ask GitHub only, and ask for a star (DSH_STAR_PROMPT,
 # docs/design/star-prompt.md); --beta, --side and --no-star builds don't. `--beta` embeds the beta channel token
 # (lib/update/update_config.dart) for internal builds; the token file is
-# ~/keys/dpsk-beta-channel.token (mode 600), DSH_BETA_TOKEN_FILE points
+# ~/keys/dshgo-beta-channel.token (mode 600), DSH_BETA_TOKEN_FILE points
 # elsewhere. Never printed, never part of a public release.
 # Release builds carry the companion pack, which stays out of the repository:
-# app/assets/companion/whale-girl.zip, else ~/keys/DPSK/companion-pack-whale-girl.zip
+# app/assets/companion/whale-girl.zip, else ~/keys/dsh-go/companion-pack-whale-girl.zip
 # (DSH_COMPANION_PACK points elsewhere), credited by tooling/companion_pack.py.
 # This script takes no machine locks; callers add their own.
 set -euo pipefail
@@ -106,7 +106,7 @@ platform_of() { case "$1" in arm64) echo android-arm64 ;; x64) echo android-x64 
 
 # Beta channel token: handed to flutter in a JSON file (600, shredded on exit),
 # so it never shows up in the commands printed here.
-beta_file=${DSH_BETA_TOKEN_FILE-$HOME/keys/dpsk-beta-channel.token}
+beta_file=${DSH_BETA_TOKEN_FILE-$HOME/keys/dshgo-beta-channel.token}
 beta_json="$APP/build/.beta-channel.json"
 beta=0
 # Public builds never carry the channel token: a stale beta feed would outrank
@@ -149,7 +149,7 @@ if ((side)); then
 else
   unset DSH_SIDE_BUILD
 fi
-echo "DPSK $name ($code, $when) · $mode · ${flavors[*]}$( ((beta)) && echo ' · beta channel')$( ((side)) && echo ' · side (dpsk_app.test)')$( ((star_on)) && echo ' · star prompt')"
+echo "dsh-go $name ($code, $when) · $mode · ${flavors[*]}$( ((beta)) && echo ' · beta channel')$( ((side)) && echo ' · side (dsh_app.test)')$( ((star_on)) && echo ' · star prompt')"
 if ((dry)); then
   for c in "${commands[@]}"; do echo "(cd app && ${c% })"; done
   ((keep_daemon)) || echo "(cd app/android && ./gradlew --stop)"
@@ -170,7 +170,7 @@ fi
 # The companion pack (docs/design/companion.md); a fresh checkout has none.
 ((companion)) && [[ $mode == release ]] || companion=0
 if ((companion)) && [[ ! -f $APP/assets/companion/whale-girl.zip ]]; then
-  pack=${DSH_COMPANION_PACK-$HOME/keys/DPSK/companion-pack-whale-girl.zip}
+  pack=${DSH_COMPANION_PACK-$HOME/keys/dsh-go/companion-pack-whale-girl.zip}
   # A killed --no-companion build may have left the only copy here.
   if [[ ! -f $pack && -f $APP/build/.whale-girl.zip.held ]]; then
     pack="$APP/build/.whale-girl.zip.held"
@@ -240,5 +240,5 @@ for i in "${!flavors[@]}"; do
 done
 
 echo
-echo "DPSK $name ($code, $when)"
+echo "dsh-go $name ($code, $when)"
 for apk in "${built[@]}"; do echo "  ${apk#"$ROOT/"}"; done

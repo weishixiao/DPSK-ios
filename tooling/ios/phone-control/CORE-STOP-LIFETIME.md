@@ -29,7 +29,7 @@ Rust Session.cleanup 的四段预算是 5 + 5 + 5 + 15 秒；Swift 本地停止�
 
 Runner 的 12 秒路线切换等待保持为一个调用等待上限，超时只返回 ERR_PHONE_STOPPING，不会据此设置永久 fault。已有 fault 在进入等待前立即失败；等待中出现 fault 也立即结束，不再白等剩余时间。await 返回后仍重新核对当前调用和 maySwitchBackend，避免把异步 helper 的旧结果当成持续授权。
 
-Core prepare 的 STOP_UNCONFIRMED 和切换等待的 fault 路径使用同一说明，明确要求用户彻底关闭 DPSK 后重开、由用户重新发起，并禁止自动重试。本地 timeout 若随后收到有效迟到确认，状态也可自行解除；这不等于重新执行先前动作。其他 prepare 失败、逐次批准、精确 owner、no replay、returnToApp 和手动接手机制保持原有约束。
+Core prepare 的 STOP_UNCONFIRMED 和切换等待的 fault 路径使用同一说明，明确要求用户彻底关闭 DSH Go 后重开、由用户重新发起，并禁止自动重试。本地 timeout 若随后收到有效迟到确认，状态也可自行解除；这不等于重新执行先前动作。其他 prepare 失败、逐次批准、精确 owner、no replay、returnToApp 和手动接手机制保持原有约束。
 
 ## Dart 可见契约
 

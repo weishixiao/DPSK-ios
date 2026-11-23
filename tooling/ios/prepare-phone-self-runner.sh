@@ -7,7 +7,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 DEVICE=""
 PAIRING=""
 TEAM=""
-APP_BUNDLE="com.dpsk.harness"
+APP_BUNDLE="io.github.ccch1mneyyy.dshgo"
 usage() {
   printf 'Usage: %s --device UDID [--pairing RP_PAIRING.plist] [--team TEAM_ID] [--app-bundle-id ID]\n' "$0"
 }
@@ -71,5 +71,5 @@ RUNNER="$WORK/Build/Products/Debug-iphoneos/PhoneRunnerUITests-Runner.app"
 [[ -d "$RUNNER" ]] || { printf 'Xcode did not produce the expected XCTest runner app.\n' >&2; exit 1; }
 printf 'Installing the XCTest helper. No pairing data will be copied to an app container.\n'
 xcrun devicectl device install app --device "$DEVICE" "$RUNNER"
-printf 'Helper installed. Open DPSK phone settings, import the RP pairing record from Files, and choose how to store it.\n'
+printf 'Helper installed. Open DSH Go phone settings, import the RP pairing record from Files, and choose how to store it.\n'
 printf 'Enable LocalDevVPN, Developer Mode, and the explicit XCTest enhancement switch. Prepare DDI through phone settings. No phone action was issued.\n'

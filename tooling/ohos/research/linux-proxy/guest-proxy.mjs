@@ -56,9 +56,9 @@ async function request(path, body, cookie) {
 }
 const login = await request('/?token=' + encodeURIComponent(auth.launchToken)); expect(login.status === 303, 'actual BrowserAuth accepts the research session');
 const cookie = login.headers['set-cookie'][0].split(';')[0];
-async function status() { const response = await request('/DPSK/v1/linux', undefined, cookie); expect(response.status === 200, 'authenticated status'); return JSON.parse(response.value); }
+async function status() { const response = await request('/dsh-go/v1/linux', undefined, cookie); expect(response.status === 200, 'authenticated status'); return JSON.parse(response.value); }
 async function action(name, fields = {}) {
-  const current = await status(), response = await request('/DPSK/v1/linux', { v: 1, instanceId: current.instanceId,
+  const current = await status(), response = await request('/dsh-go/v1/linux', { v: 1, instanceId: current.instanceId,
     attemptId: current.attemptId, action: name, ...fields }, cookie);
   expect(response.status === 202, 'control action accepted: ' + name); return JSON.parse(response.value);
 }

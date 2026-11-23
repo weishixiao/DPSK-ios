@@ -13,7 +13,7 @@ const names = ['simulator', 'app', 'out', 'video'];
 const { values } = parseArgs({ options: Object.fromEntries(names.map(name => [name, { type: 'string' }])) });
 for (const key of names) if (!values[key]) throw new Error(`--${key} required`);
 
-const bundleId = 'com.dpsk.harness';
+const bundleId = 'io.github.ccch1mneyyy.dshgo';
 const out = resolve(values.out);
 const videoDirectory = resolve(values.video);
 mkdirSync(out, { recursive: true });

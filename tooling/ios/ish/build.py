@@ -259,7 +259,7 @@ def main():
                 shutil.rmtree(framework)
             framework.mkdir()
             shutil.copy2(build / 'DshGuest.dylib', framework / 'DshGuest')
-            info = dict(CFBundleExecutable='DshGuest', CFBundleIdentifier='com.dpsk.harness.guest',
+            info = dict(CFBundleExecutable='DshGuest', CFBundleIdentifier='io.github.ccch1mneyyy.dshgo.guest',
                 CFBundleName='DshGuest', CFBundlePackageType='FMWK', CFBundleShortVersionString='1.0',
                 CFBundleVersion='1', MinimumOSVersion='15.0',
                 CFBundleSupportedPlatforms=['iPhoneOS' if sdk == 'iphoneos' else 'iPhoneSimulator'])

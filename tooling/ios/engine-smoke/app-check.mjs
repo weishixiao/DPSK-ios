@@ -16,7 +16,7 @@ import { startFakeModel } from './model.mjs';
 
 const { values } = parseArgs({ options: Object.fromEntries(
   ['simulator', 'app', 'mode', 'shot'].map((name) => [name, { type: 'string' }])) });
-const bundleId = 'com.dpsk.harness';
+const bundleId = 'io.github.ccch1mneyyy.dshgo';
 const clean = (text) => String(text).replace(/([?&]token=)[^\s&]+/g, '$1<redacted>')
   .replace(/%/g, '%25').replace(/\r?\n/g, '%0A');
 const notice = (title, text) => console.log(`::notice title=${title}::${clean(text).slice(0, 3500)}`);

@@ -1,6 +1,6 @@
 # 931：代理与两次 App 生命周期的 Linux 测量客户端
 
-`linux-device-measure.mjs` 在宿主Node运行，只用标准库和本仓库的 `research/linux-resume/guest-witness.mjs`；请从完整源码目录执行，不要只复制一个脚本。它通过 `/DPSK/v1/linux` 鉴权协议驱动App内guest；宿主不执行gh、git、Python或ripgrep。本次931新增状态投影、代理配置和两段持久恢复测量；宿主定向测试的服务/guest仍是明确替身，不代表新版CLI已经在手机、SDK或真实账号上通过。历史930联合测量在文末单独列明。
+`linux-device-measure.mjs` 在宿主Node运行，只用标准库和本仓库的 `research/linux-resume/guest-witness.mjs`；请从完整源码目录执行，不要只复制一个脚本。它通过 `/dsh-go/v1/linux` 鉴权协议驱动App内guest；宿主不执行gh、git、Python或ripgrep。本次931新增状态投影、代理配置和两段持久恢复测量；宿主定向测试的服务/guest仍是明确替身，不代表新版CLI已经在手机、SDK或真实账号上通过。历史930联合测量在文末单独列明。
 
 ## 本机入口
 

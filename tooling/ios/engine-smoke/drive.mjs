@@ -52,7 +52,7 @@ cpSync(join(repo, 'runtime/ios/phone'), phoneBackend, { recursive: true });
 cpSync(join(repo, 'runtime/ios/browser'), join(resolve(values.runtime), 'runtime/ios/browser'), { recursive: true });
 cpSync(join(repo, 'runtime/ios/system'), join(resolve(values.runtime), 'runtime/ios/system'), { recursive: true });
 writeFileSync(join(dshHome, 'ios-host.patch.json'), JSON.stringify([{ insert: [{
-  id: 'DPSK-ios-phone', name: join(phoneBackend, 'plugin.mjs'), config: { directory: phoneDirectory, runId: phoneRun },
+  id: 'dsh-go-ios-phone', name: join(phoneBackend, 'plugin.mjs'), config: { directory: phoneDirectory, runId: phoneRun },
 }] }]));
 
 const overlay = join(work, 'model.patch.yml');

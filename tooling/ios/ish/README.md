@@ -26,7 +26,7 @@ python3 tooling/ios/ish/test-build.py
 bash -n tooling/ios/build-ish.sh
 ```
 
-发布 framework 自带 GPLv3全文、上游 LICENSE.md/ LICENSE.IOS、精确源码地址和本地 patch。发布者仍须提供对应发布版本的完整 DPSK源代码与构建脚本；SOURCE.txt 说明获取路径，不把移动分支当作完整源码交付。编译入口不复制上游 app 主程序。
+发布 framework 自带 GPLv3全文、上游 LICENSE.md/ LICENSE.IOS、精确源码地址和本地 patch。发布者仍须提供对应发布版本的完整 DSH Go源代码与构建脚本；SOURCE.txt 说明获取路径，不把移动分支当作完整源码交付。编译入口不复制上游 app 主程序。
 
 
 build.patch显式列出生产C单元，将其编入libish，并为整个上游/kernel/glue定义DSH_IOS_GUEST_CONFINED=1；N-API `.cc`不进kernel Meson目标。job-runtime.patch包含受限mount、任务线程追踪、禁用native offload、PID1 bookkeeping信号保护和不改全局SIGPIPE的初始化分支。两份patch随DshGuest.framework附带。

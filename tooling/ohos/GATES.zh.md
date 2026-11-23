@@ -19,7 +19,7 @@ bash tooling/ohos/run-gates.sh --config ../gate-inputs.json --out ../gate-run-00
 | INCOMPLETE | 子命令虽然退出0，但报告未执行的 skip/todo 断言或完整桥接清单仍不完整。 |
 | BLOCKED_NOT_RUN | 必需工具/输入缺失、真实环境能力不可用，或前置组未通过；该组未执行。 |
 
-Flutter的pub/vendor/l10n/test/analyze只操作独立`flutter-source`，其Android registrant、local.properties和解析生成物不进入native/Android身份对照树。Flutter执行前后逐文件核app/lib、app/test、packages及app/pubspec.yaml原有输入，并拒绝新增Dart/ARB源码；测试失败生成的图片只记录为产物。package_config中dpsk_app、dsh_client、dsh_remote的rootUri必须实际解析到该副本，packageUri必须选择各自lib；受保护输入中的文件/目录symlink直接拒绝，包根和lib本身也不得重定向，旧好树/子目录重定向会失败。受保护树完整扫描，不因源码子目录名为build或node_modules而忽略；复制前后也与冻结候选逐项比较。字体只补缺件，不覆盖原资产。原候选应直接从基底和补丁冻结，禁止提前在它里面运行Flutter pub生成Android文件。
+Flutter的pub/vendor/l10n/test/analyze只操作独立`flutter-source`，其Android registrant、local.properties和解析生成物不进入native/Android身份对照树。Flutter执行前后逐文件核app/lib、app/test、packages及app/pubspec.yaml原有输入，并拒绝新增Dart/ARB源码；测试失败生成的图片只记录为产物。package_config中dsh_app、dsh_client、dsh_remote的rootUri必须实际解析到该副本，packageUri必须选择各自lib；受保护输入中的文件/目录symlink直接拒绝，包根和lib本身也不得重定向，旧好树/子目录重定向会失败。受保护树完整扫描，不因源码子目录名为build或node_modules而忽略；复制前后也与冻结候选逐项比较。字体只补缺件，不覆盖原资产。原候选应直接从基底和补丁冻结，禁止提前在它里面运行Flutter pub生成Android文件。
 
 继承环境中的OHOS/DSH/M3/M4/M6等测试源码选择器一律移除；必需外部输入由本次配置及各组明确参数提供，旧好源码不能暗中覆盖本次候选。Flutter消费者使用官方JSON reporter并逐项核testDone.skipped及done.success，expanded的视觉格式不作为判断依据。已知wrapper隐藏的TAP只从其固定声明日志读取、核执行总数与skip/todo，并保存hash，不递归猜测其它文件。
 

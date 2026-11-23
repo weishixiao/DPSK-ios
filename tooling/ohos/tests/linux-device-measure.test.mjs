@@ -63,7 +63,7 @@ async function fixture(options = {}) {
       res.writeHead(303, { 'set-cookie': COOKIE + '; Path=/; HttpOnly', location: options.redirect ?? '/' }); res.end(); return;
     }
     requests.push({ method: req.method, kind: 'control' });
-    assert.equal(req.url, '/DPSK/v1/linux'); assert.equal(req.headers.cookie, COOKIE);
+    assert.equal(req.url, '/dsh-go/v1/linux'); assert.equal(req.headers.cookie, COOKIE);
     if (req.method === 'GET') {
       getCount++;
       if (options.raceBeforeProxy && getCount === 2) {

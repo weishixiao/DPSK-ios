@@ -23,7 +23,7 @@ const library = join(resolve(values.frameworks), 'DshNodeHost.framework/DshNodeH
 const nativeDirectory = resolve(values.frameworks);
 const env = {
   ...process.env,
-  DPSK_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory, SIMCTL_CHILD_DPSK_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory,
+  DSH_GO_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory, SIMCTL_CHILD_DSH_GO_OHOS_NATIVE_LIBRARY_DIR: nativeDirectory,
   DSH_IOS_IMAGE_RUNTIME: runtime, SIMCTL_CHILD_DSH_IOS_IMAGE_RUNTIME: runtime,
   DSH_HOME: home, SIMCTL_CHILD_DSH_HOME: home,
 };

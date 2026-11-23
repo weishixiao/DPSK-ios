@@ -60,7 +60,7 @@ with patch.object(urllib.request, 'urlopen', capture):
     except CapturedRequest:
         pass
 checks.append({'case': 'Python constructs an explicit product UA',
-               'pass': len(observed) == 1 and observed[0]['userAgent'] == 'DPSK-ohos-linux/1',
+               'pass': len(observed) == 1 and observed[0]['userAgent'] == 'dsh-go-ohos-linux/1',
                'observation': observed})
 
 # Existing pinned inputs are read only: do not redownload, copy or modify them.

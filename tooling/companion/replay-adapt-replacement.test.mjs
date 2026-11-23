@@ -58,7 +58,7 @@ after(() => {
   try {
     assert.equal(sha256(readFileSync(contractPath)), contractSha256, 'Checker source changed during replay');
     if (process.env.C906_REPLAY_OUTPUT) writeFileSync(process.env.C906_REPLAY_OUTPUT,
-      JSON.stringify({ format: 'DPSK/adapter-replacement-source-replay-v1',
+      JSON.stringify({ format: 'dsh-go/adapter-replacement-source-replay-v1',
         stageSha256: stage.stageSha256, methodsSha256: stage.methodsSha256, probeSha256: stage.probeSha256,
         checkerContractSha256: contractSha256, nodeVersion: process.version,
         scope: 'Native call arguments before Core; no rendering, resource effects, API or device execution', records }, null, 2) + '\n',

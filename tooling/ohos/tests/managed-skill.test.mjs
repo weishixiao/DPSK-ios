@@ -15,7 +15,7 @@ const { OhosManagedSkillStorage } = await import(modules.installerUrl);
 const { ManagedSkillService } = await import(modules.serviceUrl);
 after(async () => { await fs.rm(temp, { recursive:true, force:true }); });
 afterEach(() => { assert.equal(managedSkillIo.opened.size, 0, 'all actual descriptors closed'); managedSkillIo.reset(); });
-const SKILL = '---\n# DPSK:managed\nname: dsh-go-ui\n---\n中文 🐳\n';
+const SKILL = '---\n# dsh-go:managed\nname: dsh-go-ui\n---\n中文 🐳\n';
 const TOKEN = 'fixture-only';
 const payload = (value='value', skill=SKILL) => new Map([['SKILL.md', skill], ['nested/data.txt', value]]);
 const wire = (root, id='one', files=payload(), generation=1, name='dsh-go-ui') => new Map([
@@ -35,7 +35,7 @@ async function noTemps(directory) {
   let entries;
   try { entries=await fs.readdir(directory,{withFileTypes:true}); } catch(error) { if(error.code==='ENOENT')return;throw error; }
   for(const entry of entries){
-    assert(!entry.name.startsWith('.DPSK-tmp-'), entry.name);
+    assert(!entry.name.startsWith('.dsh-go-tmp-'), entry.name);
     if(entry.isDirectory())await noTemps(path.join(directory,entry.name));
   }
 }
@@ -101,7 +101,7 @@ test('UTF-8 byte budgets and malformed UTF-16 fail without a managed file',async
 test('removed marker, marker outside frontmatter and malformed existing UTF-8 remain user-owned',async()=>{
   const c=await fixture();await fs.mkdir(c.directory,{recursive:true});
   const file=path.join(c.directory,'SKILL.md');
-  for(const data of [Buffer.from(SKILL.replace('# DPSK:managed','# mine')),Buffer.from('---\nname: mine\n---\n# DPSK:managed\n'),Buffer.from([0xc3,0x28])]){
+  for(const data of [Buffer.from(SKILL.replace('# dsh-go:managed','# mine')),Buffer.from('---\nname: mine\n---\n# dsh-go:managed\n'),Buffer.from([0xc3,0x28])]){
     await fs.writeFile(file,data);
     assert.equal((await core.installManagedSkill(c.storage,parsed(c.root),()=>true)).result,'userOwned');
     assert.deepEqual(await fs.readFile(file),data);
@@ -122,7 +122,7 @@ test('wrong root is stale, canonical dot alias works, absent home creates nothin
 test('static final and staging links cannot redirect managed data',async()=>{
   const c=await fixture(), outside=path.join(temp,'outside-'+serial);
   await fs.writeFile(outside,'sentinel');await fs.mkdir(path.join(c.directory,'nested'),{recursive:true});
-  for(const filename of ['data.txt','.DPSK-tmp-data.txt']){
+  for(const filename of ['data.txt','.dsh-go-tmp-data.txt']){
     const p=path.join(c.directory,'nested',filename);await fs.symlink(outside,p);
     assert.equal((await core.installManagedSkill(c.storage,parsed(c.root),()=>true)).result,'userOwned');
     assert.equal(await fs.readFile(outside,'utf8'),'sentinel');await fs.unlink(p);
@@ -132,7 +132,7 @@ test('static final and staging links cannot redirect managed data',async()=>{
 
 test('cancel after actual fsync stops rename, closes fd and removes temporary',async()=>{
   const c=await fixture();let current=true;
-  managedSkillIo.after=async item=>{if(item.operation==='fsync'&&item.path.includes('.DPSK-tmp-'))current=false;};
+  managedSkillIo.after=async item=>{if(item.operation==='fsync'&&item.path.includes('.dsh-go-tmp-'))current=false;};
   const result=await core.installManagedSkill(c.storage,parsed(c.root),()=>current);
   assert.equal(result.reason,'cancelled');
   await assert.rejects(fs.access(path.join(c.directory,'nested/data.txt')),{code:'ENOENT'});
@@ -167,8 +167,8 @@ test('IO failure does not publish SKILL or poison the next physical writer',asyn
   assert.equal((await core.installManagedSkill(c.storage,parsed(c.root),()=>true)).result,'installed');await noTemps(c.directory);
 });
 
-test('a legal supplied *.DPSK-tmp file cannot collide with internal temporary names',async()=>{
-  const c=await fixture();const files=new Map([['SKILL.md',SKILL],['data.DPSK-tmp','keep'],['data','data']]);
+test('a legal supplied *.dsh-go-tmp file cannot collide with internal temporary names',async()=>{
+  const c=await fixture();const files=new Map([['SKILL.md',SKILL],['data.dsh-go-tmp','keep'],['data','data']]);
   assert.equal((await core.installManagedSkill(c.storage,parsed(c.root,'one',files),()=>true)).result,'installed');
   for(const [p,text]of files)assert.equal(await fs.readFile(path.join(c.directory,p),'utf8'),text);await noTemps(c.directory);
 });
@@ -280,7 +280,7 @@ test('root callers share a failed attempt and retry without losing the successfu
 test('real Service staging hardlink cannot truncate another file', async () => {
   const c = await fixture();
   const victim = path.join(temp, 'hardlink-victim-' + serial);
-  const staging = path.join(c.directory, 'nested/.DPSK-tmp-data.txt');
+  const staging = path.join(c.directory, 'nested/.dsh-go-tmp-data.txt');
   await fs.writeFile(victim, 'outside original sentinel');
   await fs.mkdir(path.dirname(staging), { recursive:true });
   await fs.link(victim, staging);
@@ -319,7 +319,7 @@ for (const errorCode of [13900005, 13900018]) {
   test(`staging unlink error ${errorCode} preserves hardlink victim and existing target`, async () => {
     const c = await fixture(), victim = path.join(temp, 'unlink-victim-' + serial);
     const target = path.join(c.directory, 'nested/data.txt');
-    const staging = path.join(c.directory, 'nested/.DPSK-tmp-data.txt');
+    const staging = path.join(c.directory, 'nested/.dsh-go-tmp-data.txt');
     await core.installManagedSkill(c.storage, parsed(c.root, 'initial', payload('old target')), () => true);
     await fs.writeFile(victim, 'untouched victim'); await fs.link(victim, staging);
     managedSkillIo.before = async item => {
@@ -336,7 +336,7 @@ for (const errorCode of [13900005, 13900018]) {
 
 for (const hadStaging of [false, true]) {
   test(`cancel after staging unlink ${hadStaging ? 'success' : 'ENOENT'} prevents opening or publishing`, async () => {
-    const c = await fixture(), staging = path.join(c.directory, 'nested/.DPSK-tmp-data.txt');
+    const c = await fixture(), staging = path.join(c.directory, 'nested/.dsh-go-tmp-data.txt');
     await fs.mkdir(path.dirname(staging), { recursive:true });
     if (hadStaging) await fs.writeFile(staging, 'leftover');
     let current = true;
@@ -356,7 +356,7 @@ for (const hadStaging of [false, true]) {
 
 
 test('a directory at the reserved staging name fails without deleting its contents', async () => {
-  const c = await fixture(), staging = path.join(c.directory, 'nested/.DPSK-tmp-data.txt');
+  const c = await fixture(), staging = path.join(c.directory, 'nested/.dsh-go-tmp-data.txt');
   await fs.mkdir(staging, { recursive:true });
   await fs.writeFile(path.join(staging, 'sentinel'), 'keep');
   const result = await core.installManagedSkill(c.storage, parsed(c.root), () => true);

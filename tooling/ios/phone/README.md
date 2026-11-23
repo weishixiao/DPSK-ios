@@ -39,7 +39,7 @@ description fails registration. `background:true` remains unsupported on iOS.
 
 The system-action subset includes calendar editing, dial confirmation, SMS
 drafts, the system share sheet, destination-based Apple Maps navigation, and
-DPSK's own system-settings page. Alarm/timer, arbitrary settings pages, an
+DSH Go's own system-settings page. Alarm/timer, arbitrary settings pages, an
 Android share target/map selection, and GCJ-02 coordinates are not supported.
 The final save/send/share remains with the user. Clipboard access is foreground
 only, with a separate restore flow for temporary CoreDevice text input.

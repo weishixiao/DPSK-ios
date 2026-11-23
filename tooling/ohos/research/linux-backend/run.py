@@ -30,7 +30,7 @@ for mode in ['normal','disconnect']:
   if key.startswith('drive') and isinstance(value,dict) and value.get('readOnly') is not True:
    target=case/(key+'.img');shutil.copyfile(value['file'],target);value['file']=str(target)
  path=case/'guest.cfg';path.write_text(json.dumps(config)+'\n')
- env={**os.environ,'DPSK_OHOS_SIM_ADDONS':json.dumps([str(a.native_library_dir.resolve()/'libdsh_linux.so')])}
+ env={**os.environ,'DSH_GO_OHOS_SIM_ADDONS':json.dumps([str(a.native_library_dir.resolve()/'libdsh_linux.so')])}
  execute([a.node,'--jitless','--import',ROOT/'runtime/ohos/sim/preload.mjs',out/'guest-test.mjs',a.native_library_dir.resolve(),path,case/'spill',mode],'guest-'+mode,env)
  facts=[json.loads(line) for line in (out/('guest-'+mode+'.stdout')).read_text().splitlines()];assert facts[-1]['pass'] and facts[-1]['state']==('closed' if mode=='normal' else 'quarantined')
 (out/'RESULT.json').write_text(json.dumps({'passed':True,'scope':'Real production LinuxRuntimeBackend via 912 Node NAPI + independent writable guest disks; no HAP/device or authorized 9P','protocolModes':['jit','strict'],'guestModes':['normal','disconnect']},indent=2)+'\n')

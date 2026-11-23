@@ -41,7 +41,7 @@ python3 - "$WORK/DshGuestBridge.framework/Info.plist" "$PLATFORM" <<'PY'
 import pathlib, plistlib, sys
 pathlib.Path(sys.argv[1]).write_bytes(plistlib.dumps(dict(
     CFBundleExecutable='DshGuestBridge',
-    CFBundleIdentifier='com.dpsk.harness.guestbridge',
+    CFBundleIdentifier='io.github.ccch1mneyyy.dshgo.guestbridge',
     CFBundleName='DshGuestBridge', CFBundlePackageType='FMWK',
     CFBundleShortVersionString='1.0', CFBundleVersion='1',
     MinimumOSVersion='15.0', CFBundleSupportedPlatforms=[sys.argv[2]])))

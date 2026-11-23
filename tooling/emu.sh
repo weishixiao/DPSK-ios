@@ -9,7 +9,7 @@
 #   tooling/emu.sh wait-boot         block until the emulator finished booting
 set -euo pipefail
 source "$(dirname "$0")/env.sh"
-PKG=com.dpsk.harness
+PKG=io.github.ccch1mneyyy.dsh_app
 SHOTS="$(dirname "$0")/shots"
 
 case "${1:-}" in

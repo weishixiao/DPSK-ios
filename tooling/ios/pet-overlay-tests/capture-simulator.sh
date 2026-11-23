@@ -39,7 +39,7 @@ from pathlib import Path
 root, app, output = map(Path, sys.argv[1:])
 plist = {
     'CFBundleExecutable': 'PetOverlayCapture',
-    'CFBundleIdentifier': 'com.dpsk.harness.pet-overlay-fixture',
+    'CFBundleIdentifier': 'io.github.ccch1mneyyy.dshgo.pet-overlay-fixture',
     'CFBundleName': 'Pet Overlay Fixture', 'CFBundlePackageType': 'APPL',
     'CFBundleVersion': '1', 'CFBundleShortVersionString': '1',
     'MinimumOSVersion': '15.0', 'LSRequiresIPhoneOS': True,
@@ -64,8 +64,8 @@ xcrun simctl bootstatus "$device" -b
 xcrun simctl install "$device" "$app"
 run_id=$(uuidgen)
 xcrun simctl launch --terminate-running-process "$device" \
-  com.dpsk.harness.pet-overlay-fixture --reset-fixture-consent --capture-run-id "$run_id"
-container=$(xcrun simctl get_app_container "$device" com.dpsk.harness.pet-overlay-fixture data)
+  io.github.ccch1mneyyy.dshgo.pet-overlay-fixture --reset-fixture-consent --capture-run-id "$run_id"
+container=$(xcrun simctl get_app_container "$device" io.github.ccch1mneyyy.dshgo.pet-overlay-fixture data)
 python3 - "$container" "$output" "$run_id" <<'PY'
 import json, shutil, sys, time
 from pathlib import Path

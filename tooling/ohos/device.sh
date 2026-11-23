@@ -74,7 +74,7 @@ cmd_keygen() {
   "$JAVA" -jar "$TOOL" generate-keypair -keyAlias "$ALIAS" -keyAlg ECC -keySize NIST-P-256 \
     -keystoreFile "$SIGN/key.p12" -keyPwd "$pass" -keystorePwd "$pass" >/dev/null
   "$JAVA" -jar "$TOOL" generate-csr -keyAlias "$ALIAS" -signAlg SHA256withECDSA \
-    -subject "CN=$ALIAS,OU=DPSK,O=DPSK,C=CN" \
+    -subject "CN=$ALIAS,OU=DSH Go,O=DSH Go,C=CN" \
     -keystoreFile "$SIGN/key.p12" -outFile "$SIGN/debug.csr" -keyPwd "$pass" -keystorePwd "$pass" >/dev/null
   chmod 600 "$SIGN/key.p12"
   echo "Upload $SIGN/debug.csr to AGC, then save the debug certificate and Profile as:"

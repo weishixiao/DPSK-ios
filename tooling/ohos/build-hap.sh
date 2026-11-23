@@ -196,7 +196,7 @@ if [[ "$SIGN" == 1 ]]; then
     UNSIGNED="$hap"
   done
   [[ -n "$UNSIGNED" ]] || { printf 'No fresh unsigned HAP was produced\n' >&2; exit 1; }
-  SIGNED="$APP/build/hap/DPSK-$DISTRIBUTION-signed.hap"
+  SIGNED="$APP/build/hap/dsh-go-$DISTRIBUTION-signed.hap"
   signing_python sign --input "$UNSIGNED" --output "$SIGNED"
   printf 'Signed and verified HAP: %s\n' "$SIGNED"
 fi

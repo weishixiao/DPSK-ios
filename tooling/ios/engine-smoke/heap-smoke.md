@@ -15,7 +15,7 @@ node tooling/ios/engine-smoke/heap-drive.mjs \
 Use a new work directory and the frameworks already prepared for the ordinary
 engine smoke: DshNodeHost.framework, matching NodeMobile.framework and the actual
 DshNodeHost.framework/worker-preload.cjs. The driver sets both
-DPSK_OHOS_NATIVE_LIBRARY_DIR and its SIMCTL_CHILD_ form to --frameworks, exactly
+DSH_GO_OHOS_NATIVE_LIBRARY_DIR and its SIMCTL_CHILD_ form to --frameworks, exactly
 as fd-drive.mjs does. It does not fabricate a missing resource or rebuild NodeMobile.
 The simulator shares the Mac filesystem, so absolute JS and empty-preload paths
 are deliberate. No model, network server, credential, guest profile or App is needed.

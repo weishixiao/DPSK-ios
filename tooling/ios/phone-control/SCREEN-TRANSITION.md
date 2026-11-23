@@ -1,6 +1,6 @@
 # 切回目标后的短等待与画面复核
 
-`IOSPhoneTaskConsent.waitForTarget` 在用户切出 DPSK、实际 PiP 保活成立后，
+`IOSPhoneTaskConsent.waitForTarget` 在用户切出 DSH Go、实际 PiP 保活成立后，
 等待至少 750 ms，再把控制交给现有 CoreDevice/XCTest 的新帧复核。
 这是 ADDENDUM-07 #5 允许的“有上限的短等待”方案；没有声称连续两帧相同，
 也没有把经过 750 ms 当作画面、焦点或输入安全性的证明。

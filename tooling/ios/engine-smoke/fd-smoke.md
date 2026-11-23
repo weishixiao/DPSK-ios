@@ -20,7 +20,7 @@ node tooling/ios/engine-smoke/fd-drive.mjs \
 
 Use a new work directory. --runs defaults to 5 (range 1..20). The framework directory
 must also contain the matching NodeMobile.framework, as in the existing smoke job.
-The driver sets DPSK_OHOS_NATIVE_LIBRARY_DIR to --frameworks, including the
+The driver sets DSH_GO_OHOS_NATIVE_LIBRARY_DIR to --frameworks, including the
 SIMCTL_CHILD_ form for simctl. This is the same native-directory contract as the
 real host and supports the follow-up synchronous Worker preload fix: that build
 must contain DshNodeHost.framework/worker-preload.cjs. Linux verification can pass

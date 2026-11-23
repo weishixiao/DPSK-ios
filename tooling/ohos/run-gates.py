@@ -141,7 +141,7 @@ def verify_flutter_packages(root):
     root = root.resolve()
     config = root / 'app/.dart_tool/package_config.json'
     packages = json.loads(config.read_text())['packages']
-    expected = {'dpsk_app': root / 'app', 'dsh_client': root / 'packages/dsh_client',
+    expected = {'dsh_app': root / 'app', 'dsh_client': root / 'packages/dsh_client',
                 'dsh_remote': root / 'packages/dsh_remote'}
     selected = {}
     for name, wanted in expected.items():
@@ -457,7 +457,7 @@ class Gates:
         def env():
             value = self.common()
             if mode in ('strict', 'sim'):
-                value.update(DPSK_OHOS_SIM_PLATFORM='openharmony', DPSK_OHOS_SIM_ADDONS='[]')
+                value.update(DSH_GO_OHOS_SIM_PLATFORM='openharmony', DSH_GO_OHOS_SIM_ADDONS='[]')
             value.update(extra() if callable(extra) else (extra or {}))
             if host_links and mode in ('strict', 'sim') and 'LD_PRELOAD' in value:
                 value['OHOS_TEST_LINK_LD_PRELOAD'] = value.pop('LD_PRELOAD')
@@ -769,7 +769,7 @@ def main():
     def gitfile_env(mode):
         return {**g.common(), 'M6_GITFILE_MODE': mode, 'M6_GITFILE_ORACLE': str(o / 'gitfile-oracle/native.json'),
                 'M6_GITFILE_FIXTURE_PARENT': str(o / 'gitfile-oracle'), 'OHOS_NATIVE_RG': str(rg()),
-                'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DPSK_OHOS_SIM_ADDONS': '[]'}
+                'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_GO_OHOS_SIM_ADDONS': '[]'}
     g.run('rg-gitfile-record', lambda: g.node(s / (rt + 'process-rg-gitfile-differential.mjs')),
           env=lambda: gitfile_env('record'), needs=('rg-inputs',), timeout=120,
           scope='New private native oracle and actual worktree/submodule; not recovered historical evidence')
@@ -1304,7 +1304,7 @@ def main():
     for driver in ['plugin-install-refusal', 'plugin-registry-refusal']:
         script = s / (rt + driver + '.mjs')
         g.run(driver + '-ohos', lambda script=script, driver=driver: g.node('--jitless', '--import', s / 'runtime/ohos/sim/preload.mjs', script, prefix(), o / (driver + '-ohos.json'), 'ohos'),
-              env={'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DPSK_OHOS_SIM_ADDONS': '[]'}, needs=('android-targets',))
+              env={'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_GO_OHOS_SIM_ADDONS': '[]'}, needs=('android-targets',))
         g.run(driver + '-control', lambda script=script, driver=driver: g.node(script, prefix(), o / (driver + '-control.json'), 'native'), needs=('android-targets',))
     def plugin_contract_env():
         return {'DSH_PREFIX': str(prefix()),
@@ -1326,7 +1326,7 @@ def main():
                      mode=mode, needs=('prepared-inputs', 'android-targets'),
                      extra=lambda: {'DSH_DISCOVERY_PREFIX': str(prefix())})
     for mode in ['marker', 'strict']:
-        g.node_tests('net-body-types-' + mode, [rt + 'net-body-types.test.mjs'], mode=mode, needs=('prepared-inputs',), extra={'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DPSK_OHOS_SIM_ADDONS': '[]'})
+        g.node_tests('net-body-types-' + mode, [rt + 'net-body-types.test.mjs'], mode=mode, needs=('prepared-inputs',), extra={'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_GO_OHOS_SIM_ADDONS': '[]'})
     g.node_tests('host-link-fixture', [rt + 'host-link-fixture.test.mjs'], mode='strict', host_links=True)
     for filename in ['test.sh', 'test-roots.sh']:
         g.run('process-' + filename[:-3], lambda f=filename: ['bash', s / 'runtime/ohos/process' / f], needs=('build-bash', 'build-regex'), env=g.common, timeout=360)
@@ -1337,16 +1337,16 @@ def main():
         for suite in ['core', 'rpc', 'share']:
             g.run('owned-' + suite + '-' + mode, lambda su=suite, m=mode: g.py(rt + 'run-owned-tests.py', '--node', node(), '--native', native() / 'publication.node', '--linked', native() / 'libpublication-test-linked.so', '--sim-preload', s / 'runtime/ohos/sim/preload.mjs', '--marker-preload', s / 'runtime/ohos/sim/marker.mjs', '--suite', su, '--mode', 'jit' if m == 'marker' else m, '--output', o / ('owned-' + su + '-' + m)), needs=('native-publication-build',), timeout=90)
     for mode in ['marker', 'strict']:
-        g.run('rg-oracle-' + mode, lambda m=mode: g.node(*(['--jitless', '--import', s / 'runtime/ohos/sim/preload.mjs'] if m == 'strict' else ['--import', s / 'runtime/ohos/sim/marker.mjs']), s / (rt + 'process-rg-m4-differential.mjs')), needs=('build-bash', 'build-regex'), env=lambda: {**g.common(), 'M4_RG_MODE': 'replay', 'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DPSK_OHOS_SIM_ADDONS': '[]'}, timeout=300, tests=[rt + 'process-rg-m4-differential.mjs'])
-        g.node_tests('publication-installed-' + mode, [rt + 'publication-integration.test.mjs', rt + 'publication-locks.test.mjs', rt + 'lock-node-contract.test.mjs'], mode='sim' if mode == 'marker' else mode, imports=['runtime/ohos/publication/preload.mjs'], needs=('native-publication-build', 'prepared-inputs'), extra=lambda: {**linked_env(), 'DSH_HOME': str(o / ('publication-installed-' + mode + '-home')), 'DPSK_OHOS_SIM_PLATFORM': 'openharmony'}, timeout=240, host_links=True)
+        g.run('rg-oracle-' + mode, lambda m=mode: g.node(*(['--jitless', '--import', s / 'runtime/ohos/sim/preload.mjs'] if m == 'strict' else ['--import', s / 'runtime/ohos/sim/marker.mjs']), s / (rt + 'process-rg-m4-differential.mjs')), needs=('build-bash', 'build-regex'), env=lambda: {**g.common(), 'M4_RG_MODE': 'replay', 'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_GO_OHOS_SIM_ADDONS': '[]'}, timeout=300, tests=[rt + 'process-rg-m4-differential.mjs'])
+        g.node_tests('publication-installed-' + mode, [rt + 'publication-integration.test.mjs', rt + 'publication-locks.test.mjs', rt + 'lock-node-contract.test.mjs'], mode='sim' if mode == 'marker' else mode, imports=['runtime/ohos/publication/preload.mjs'], needs=('native-publication-build', 'prepared-inputs'), extra=lambda: {**linked_env(), 'DSH_HOME': str(o / ('publication-installed-' + mode + '-home')), 'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony'}, timeout=240, host_links=True)
     def native_boundary_env():
         return {'M3_PUBLICATION_ADDON': str(native() / 'publication.node'), 'M3_PUBLICATION_SHA256': sha(native() / 'publication.node'), 'M3_PUBLICATION_MODULE': str(s / 'runtime/ohos/publication/atomic.mjs'), 'M3_NATIVE_REPORT': str(o / 'native-boundaries.json'), 'M3_PUBLISHER_ERROR_REPORT': str(o / 'native-errno.json')}
     g.node_tests('publication-native-boundaries', [rt + 'publication-native-boundaries.test.mjs', rt + 'publication-errno-boundaries.test.mjs'], needs=('native-publication-build', 'permission-tools'), extra=native_boundary_env, timeout=240)
     g.run('hap-native-paths', lambda: g.py(rt + 'hap-native-paths.py', '--prefix', o / 'targets/ohos-prefix', '--node', node(), '--headers', headers(), '--loader-addon', p('native_library_dir') / 'libdsh_require_builtin.so', '--compiler', p('cc'), '--out', o / 'hap-native-paths'), needs=('android-targets',), timeout=180)
-    g.node_tests('native-loader', [rt + 'native-loader-probe.test.mjs'], needs=('android-targets',), extra=lambda: {'DSH_TEST_NODE': str(node()), 'DSH_TEST_O0_PRELOAD': str(s / 'runtime/ohos/sim/preload.mjs'), 'DSH_TEST_NATIVE_PREFIX': str(o / 'targets/ohos-prefix'), 'DSH_TEST_NATIVE_ADDON': str(p('native_library_dir') / 'libdsh_require_builtin.so'), 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(p('native_library_dir'))})
+    g.node_tests('native-loader', [rt + 'native-loader-probe.test.mjs'], needs=('android-targets',), extra=lambda: {'DSH_TEST_NODE': str(node()), 'DSH_TEST_O0_PRELOAD': str(s / 'runtime/ohos/sim/preload.mjs'), 'DSH_TEST_NATIVE_PREFIX': str(o / 'targets/ohos-prefix'), 'DSH_TEST_NATIVE_ADDON': str(p('native_library_dir') / 'libdsh_require_builtin.so'), 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(p('native_library_dir'))})
     def plugin_hmr_env():
-        return {**plugin_contract_env(), 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(p('native_library_dir')),
-                'DPSK_OHOS_SIM_ADDONS': json.dumps([str(p('native_library_dir') / name)
+        return {**plugin_contract_env(), 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(p('native_library_dir')),
+                'DSH_GO_OHOS_SIM_ADDONS': json.dumps([str(p('native_library_dir') / name)
                     for name in ['libdsh_flock.so', 'libdsh_require_builtin.so']]),
                 'NARB_DISABLE_NATIVE_CACHE': '1'}
     for mode in ['sim', 'strict']:
@@ -1390,7 +1390,7 @@ def main():
         for activity in ['lifecycle-independent-activity', 'lifecycle-jobs-retirement', 'linux-activity']:
             g.node_tests(activity + '-' + mode, [rt + activity + '.test.mjs'], mode=mode,
                          needs=('prepared-inputs', 'native-publication-build', 'round-native-libraries'),
-                         extra=lambda: {**linked_env(), 'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(o / 'round-native')}, timeout=30)
+                         extra=lambda: {**linked_env(), 'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(o / 'round-native')}, timeout=30)
     for mode in ['plain', 'jitless']:
         g.node_tests('lifecycle-idle-' + mode, [rt + 'lifecycle-idle.test.mjs'],
                      mode=mode, needs=('android-targets',), timeout=30)
@@ -1398,7 +1398,7 @@ def main():
                      mode=mode, imports=[rt + 'lifecycle-native-reader-instrument.mjs'],
                      needs=('prepared-inputs', 'native-publication-build', 'round-native-libraries'),
                      extra=lambda: {'LD_PRELOAD': str(native() / 'libpublication-test-linked.so') + ':' + str(o / 'round-native/libdsh_host.so'),
-                                    'DPSK_OHOS_NATIVE_LIBRARY_DIR': str(o / 'round-native')}, timeout=30)
+                                    'DSH_GO_OHOS_NATIVE_LIBRARY_DIR': str(o / 'round-native')}, timeout=30)
     for mode in ['marker', 'strict']:
         g.node_tests('publication-' + mode, [rt + n + '.test.mjs' for n in publication], mode=mode, needs=('native-publication-build', 'prepared-inputs'), extra=linked_env, timeout=240, host_links=True)
         g.node_tests('publication-lock-' + mode, [rt + 'publication-lock.test.mjs'],
@@ -1448,7 +1448,7 @@ def main():
     g.node_tests('deletion-core', ['runtime/tests/session-deletion-core.test.mjs', 'runtime/tests/session-deletion-route.test.mjs'], needs=('compose',), extra=lambda: {'DSH_SESSION_DELETION_CORE': str(o / 'composed/generated/ohos-deletion/core.mjs'), 'DSH_SESSION_DELETION_ROUTE': str(payload() / 'runtime/bridge/dsh-go-bridge/lib/session-deletion.js')})
     g.run('session-resource-cleanup', lambda: g.py(rt + 'session-resource-cleanup.py', '--source', s, '--prefix', prefix(), '--node', node(), '--out', o / 'session-resource-cleanup'), needs=('android-targets',), timeout=60, tests=[rt + 'session-resource-cleanup.py', rt + 'session-resource-cleanup.test.mjs'], scope='Actual authenticated permanent deletion, public SDK cleanup and loopback pooled WebSocket; existing Linux flock host target, no device or close-time guarantee')
     g.node_tests('deletion-publication', [rt + 'session-deletion-publication.test.mjs'], mode='strict', needs=('compose', 'native-publication-build'), extra=lambda: {**linked_env(), 'DSH_SESSION_DELETION_CORE': str(o / 'composed/generated/ohos-deletion/core.mjs')})
-    g.run('deletion-directory-sync', lambda: g.node('--jitless', '--import', s / 'runtime/ohos/sim/preload.mjs', '--import', s / 'runtime/ohos/publication/preload.mjs', '--test', '--test-isolation=none', s / (rt + 'session-deletion-sync/directory-sync.test.mjs')), needs=('compose', 'native-publication-build'), env=lambda: {**g.common(), **linked_env(), 'DPSK_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_HOME': str(o / 'groups/deletion-directory-sync/home'), 'DSH_DELETION_SYNC_SOURCE': str(o / 'composed/generated/ohos-deletion/core.mjs'), 'DSH_DELETION_SYNC_TRACE': str(o / 'directory-sync-trace.json')}, tests=[rt + 'session-deletion-sync/directory-sync.test.mjs'])
+    g.run('deletion-directory-sync', lambda: g.node('--jitless', '--import', s / 'runtime/ohos/sim/preload.mjs', '--import', s / 'runtime/ohos/publication/preload.mjs', '--test', '--test-isolation=none', s / (rt + 'session-deletion-sync/directory-sync.test.mjs')), needs=('compose', 'native-publication-build'), env=lambda: {**g.common(), **linked_env(), 'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony', 'DSH_HOME': str(o / 'groups/deletion-directory-sync/home'), 'DSH_DELETION_SYNC_SOURCE': str(o / 'composed/generated/ohos-deletion/core.mjs'), 'DSH_DELETION_SYNC_TRACE': str(o / 'directory-sync-trace.json')}, tests=[rt + 'session-deletion-sync/directory-sync.test.mjs'])
     for name in ['native-files', 'voice']:
         g.run(name, lambda n=name: g.py(rt + n + '-linux.py', '--node', node(), '--typescript-prefix', p('typescript_prefix'), '--out', o / n), needs=('tools',), timeout=240)
     for mode in ['plain', 'jitless']:
@@ -1592,7 +1592,7 @@ def main():
                  'app/test/speech/speech_out_test.dart', 'app/test/speech/voice_call_test.dart',
                  'app/test/settings/voice_settings_test.dart'],
           scope='Actual Flutter ordinary OH companion external preflight, preserved per-id system fallback and preview cancellation; finite loopback/RPC to actual ETS with explicit HMS/audio boundaries; Android/default data controls; no SDK/device or paid API claim')
-    # Only the app's own files: from app/ the analyzer can't resolve package:dpsk_app in
+    # Only the app's own files: from app/ the analyzer can't resolve package:dsh_app in
     # runtime/tests; `flutter test` above compiles those tests against the app.
     g.run('companion-tts-preview-dart-analyze', lambda: g.flutter('analyze', '--no-pub', 'lib/companion/companion_voice.dart'),
           cwd=g.flutter_source / 'app', env=g.flutter_env, needs=('flutter-input-identity',), timeout=180,
@@ -1738,7 +1738,7 @@ def main():
     g.node_tests('node-fetch-build', [rt + 'node-fetch-build.test.mjs'], needs=('node-fetch-source',), extra=lambda: {'OHOS_NODE_SOURCE': str(p('node_source')), 'OHOS_NODE_BUILD_TOOLS': str(p('esbuild_prefix'))}, timeout=240)
     g.run('node-fetch-prepare', lambda: g.node(s / 'tooling/ohos/prepare-node-fetch.mjs', '--target', 'ohos', '--build-tools', p('esbuild_prefix'), o / 'node-fetch-source'), needs=('node-fetch-source',), timeout=180)
     for mode in ('plain', 'jitless'):
-        g.node_tests('node-fetch-' + mode, [rt + 'node-fetch-abort.test.mjs', rt + 'node-formdata.test.mjs'], mode=mode, needs=('node-fetch-prepare',), extra=lambda: {'DPSK_UNDICI_BUNDLE': str(o / 'node-fetch-source/deps/undici/undici.js'), 'DPSK_UNDICI_SOURCE': str(o / 'node-fetch-source/deps/undici/src'), 'DPSK_HTTP_DISPATCHER': str(s / 'runtime/ohos/net/dispatcher.mjs')}, timeout=180)
+        g.node_tests('node-fetch-' + mode, [rt + 'node-fetch-abort.test.mjs', rt + 'node-formdata.test.mjs'], mode=mode, needs=('node-fetch-prepare',), extra=lambda: {'DSH_GO_UNDICI_BUNDLE': str(o / 'node-fetch-source/deps/undici/undici.js'), 'DSH_GO_UNDICI_SOURCE': str(o / 'node-fetch-source/deps/undici/src'), 'DSH_GO_HTTP_DISPATCHER': str(s / 'runtime/ohos/net/dispatcher.mjs')}, timeout=180)
     for mode in ('full', 'optional-profile'):
         g.run('mcp-linux-r7-' + mode, lambda m=mode: g.py('runtime/tests/plugin-config-r7-live.py', '--prefix', o / 'targets/ohos-prefix', '--bridge', s / 'runtime/bridge/dsh-go-bridge', '--media', s / 'runtime/media/dsh-media', '--image-size', p('image_size'), '--out', o / ('mcp-linux-r7-' + m), '--port', free_port(), '--mode', m), needs=('android-targets',), timeout=240, tests=['runtime/tests/plugin-config-r7-live.py'], scope='Original Linux r7 full/optional profile contracts on current OH-selected full-optional prefix; no OH platform spoof')
     # The SDK checker keeps its own authoritative input/build identity. It uses a

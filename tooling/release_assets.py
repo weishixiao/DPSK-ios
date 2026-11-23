@@ -9,7 +9,7 @@ with `tooling/build-apk.sh` first. Explicit multiple inputs must share a build n
 
 It also makes delta patches (tooling/apk_delta.py, docs/design/delta-update.md)
 from the arm64 APKs of the last --delta-from releases on GitHub (fetched with
-`gh`, kept in ~/.cache/dpsk-release/apk/, checked against their SHA256SUMS),
+`gh`, kept in ~/.cache/dshgo-release/apk/, checked against their SHA256SUMS),
 and keeps those under 60 % of the new APK: in dist/, SHA256SUMS and update.json's
 `patches`.
 
@@ -40,10 +40,10 @@ from build_number import MAX_VERSION_CODE, decode
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FLAVORS = ("arm64", "x64")
 FLAVOR_ABI = {"arm64": "arm64-v8a", "x64": "x86_64"}
-REPO = "weishixiao/DPSK-ios"
+REPO = "ccch1mneyyy/dsh-go"
 VERSION_RE = re.compile(r"^(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)(?:\+(\d+))?$")
 BADGING_RE = re.compile(r"^package: .*?\bversionCode='(\d*)' versionName='([^']*)'", re.MULTILINE)
-CACHE = pathlib.Path.home() / ".cache" / "dpsk-release" / "apk"
+CACHE = pathlib.Path.home() / ".cache" / "dshgo-release" / "apk"
 # A patch this big saves too little to be worth a second download path.
 PATCH_LIMIT = 0.6
 
@@ -156,7 +156,7 @@ def listed(sums: pathlib.Path, name: str) -> str | None:
 def published_apk(tag: str, cache: pathlib.Path) -> pathlib.Path:
     """[tag]'s arm64 APK from its GitHub release, kept in [cache], as the
     release's SHA256SUMS says it is."""
-    name = f"DPSK-{tag.removeprefix('v')}-arm64.apk"
+    name = f"dsh-go-{tag.removeprefix('v')}-arm64.apk"
     apk, sums = cache / tag / name, cache / tag / "SHA256SUMS"
     if not (apk.is_file() and listed(sums, name) == sha256(apk)):
         gh("release", "download", tag, "--pattern", name, "--pattern", "SHA256SUMS", "--dir", str(cache / tag), "--clobber")
@@ -190,7 +190,7 @@ def patch_from(old: pathlib.Path, old_version: str, new: pathlib.Path, name: str
         new_base = base_layer_sha256(new)
         if new_base is not None and old_base != new_base:
             print(f"WARNING: base layer SHA-256 changed from {old_version}: {old_base} -> {new_base}; delta savings may be reduced")
-    patch = out / f"DPSK-{name}-from-{old_version.partition('+')[0]}-arm64.dshdelta"
+    patch = out / f"dsh-go-{name}-from-{old_version.partition('+')[0]}-arm64.dshdelta"
     apk_delta.make(old, new, patch)
     size = patch.stat().st_size
     share = size / new.stat().st_size
@@ -262,7 +262,7 @@ def main() -> None:
     assets = {}
     sums = []
     for flavor, path in sources.items():
-        asset = f"DPSK-{name}-{flavor}.apk"
+        asset = f"dsh-go-{name}-{flavor}.apk"
         target = args.out / asset
         shutil.copyfile(path, target)
         digest = sha256(target)
@@ -293,7 +293,7 @@ def main() -> None:
         "schema": 1,
         "version": f"{name}+{build}",
         "tag": tag,
-        "title": f"DPSK {name}",
+        "title": f"DSH Go {name}",
         "publishedAt": datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
         "notes": args.notes.read_text(encoding="utf-8").strip() if args.notes else "",
         "page": f"https://github.com/{REPO}/releases/tag/{tag}",
@@ -307,13 +307,13 @@ def main() -> None:
         built = f"{decode(build):%Y-%m-%d %H:%M} UTC+8"
     except ValueError:
         built = "custom build number"
-    print(f"DPSK {name}+{build} ({built})")
+    print(f"DSH Go {name}+{build} ({built})")
     print(f"{args.out}:")
     for line in sums:
         print("  " + line)
     print("  update.json")
     notes = f" --notes-file {args.notes}" if args.notes else ""
-    print(f"\ngh release create {tag} {args.out}/* --repo {REPO} --title 'DPSK {name}'{notes}")
+    print(f"\ngh release create {tag} {args.out}/* --repo {REPO} --title 'DSH Go {name}'{notes}")
 
 
 if __name__ == "__main__":

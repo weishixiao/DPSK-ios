@@ -31,7 +31,7 @@ for variant in ['baseline','candidate']:
   check(variant+' oversized '+kind,(r.returncode==0 and b'"hostSurvived":true' in r.stdout) if variant=='candidate' else (r.returncode!=0 and b'hostSurvived' not in r.stdout),exitCode=r.returncode)
  for label in ['plain','strict'] if variant=='candidate' else []:
   for mode in ['normal','unread-output','construct-failure']:
-   env={**os.environ,'UV_THREADPOOL_SIZE':'1','DPSK_OHOS_SIM_ADDONS':json.dumps([str(binary)])}
+   env={**os.environ,'UV_THREADPOOL_SIZE':'1','DSH_GO_OHOS_SIM_ADDONS':json.dumps([str(binary)])}
    argv=[a.node,*(['--jitless','--import',ROOT/'runtime/ohos/sim/preload.mjs'] if label=='strict' else []),HERE/'node-case.mjs',binary.parent,out/'normal.json',mode]
    r=run(argv,label+'-'+mode,env,mode=='construct-failure');check(label+' '+mode,r.returncode==0,**json.loads(r.stdout or b'{}'))
  objs=[f for f in (out/variant).glob('*.o') if f.name!='binding.o'];wrap=[] if variant=='baseline' else ['-Wl,--wrap=exit','-Wl,--wrap=abort','-Wl,--wrap=__assert_fail']
@@ -66,6 +66,6 @@ r=run(['readelf','-d',out/'candidate/libdsh_linux.so'],'elf-dynamic');check('NOD
 r=run(['nm','-D',out/'candidate/libdsh_linux.so'],'elf-symbols');imports=[line.split()[-1].split('@')[0] for line in r.stdout.decode().splitlines() if len(line.split())==2 and line.split()[0]=='U'];check('explicit fatal imports locally wrapped',not set(imports)&{'exit','abort','__assert_fail'})
 r=run([sys.executable,'-I','-B',HERE/'hap-stage.py','--source',ROOT,'--expect-linux'],'hap-stage');check('actual Linux library HAP staging and cleanup',r.returncode==0)
 if a.guest_config:
- lib=out/'candidate';env={**os.environ,'DPSK_OHOS_SIM_ADDONS':json.dumps([str(lib/'libdsh_linux.so')])}
+ lib=out/'candidate';env={**os.environ,'DSH_GO_OHOS_SIM_ADDONS':json.dumps([str(lib/'libdsh_linux.so')])}
  r=run([a.node,'--jitless','--import',ROOT/'runtime/ohos/sim/preload.mjs',HERE/'guest-case.mjs',lib,a.guest_config.resolve()],'node-guest',env);check('real Node addon Linux guest tools',r.returncode==0)
 (out/'RESULT.json').write_text(json.dumps({'checks':len(checks),'passed':all(c['pass'] for c in checks),'scope':'Actual Linux host Node NAPI + TinyEMU; renamed object compile; no SDK or HAP/device'},indent=2)+'\n')

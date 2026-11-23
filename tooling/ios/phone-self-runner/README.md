@@ -391,7 +391,7 @@ The sole protocol-library source is
 `3854a5df4a5a6dee71ffce4d8befc2ea356a8065` (0.1.68), archive SHA256
 `bb3c171161476dac94c190a4867bf4a670663643d5dfa5b8b38086948fbc3042`.
 [source-pins.json](source-pins.json) and [Cargo.lock](Cargo.lock) are checked in.
-Generated upstream source and build outputs are ignored. No external DPSK PR
+Generated upstream source and build outputs are ignored. No external dsh-Go PR
 was merged or copied.
 
 The existing [upstream source patch](idevice-rsd-xctest.patch) retains its RSD

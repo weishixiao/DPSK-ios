@@ -29,7 +29,7 @@ vm.runInNewContext(fs.readFileSync(0, 'utf8'), {
   require, module: loader,
   process: {
     platform: 'openharmony',
-    env: { DPSK_OHOS_NATIVE_LIBRARY_DIR: root },
+    env: { DSH_GO_OHOS_NATIVE_LIBRARY_DIR: root },
     dlopen(module, filename) { opened.push(filename); module.exports = { from: filename }; },
   },
 });

@@ -231,12 +231,12 @@ class RunnerContract(unittest.TestCase):
     def test_flutter_resolver_cannot_redirect_shared_package_to_an_old_tree(self):
         root = self.g.flutter_source
         config = root / 'app/.dart_tool/package_config.json'; config.parent.mkdir()
-        packages = [{'name': 'dpsk_app', 'rootUri': '../'},
+        packages = [{'name': 'dsh_app', 'rootUri': '../'},
                     {'name': 'dsh_client', 'rootUri': (root / 'packages/dsh_client').as_uri()},
                     {'name': 'dsh_remote', 'rootUri': (root / 'packages/dsh_remote').as_uri()}]
         for entry in packages: entry['packageUri'] = 'lib/'
         config.write_text(json.dumps({'packages': packages}))
-        self.assertEqual(set(gates.verify_flutter_packages(root)), {'dpsk_app', 'dsh_client', 'dsh_remote'})
+        self.assertEqual(set(gates.verify_flutter_packages(root)), {'dsh_app', 'dsh_client', 'dsh_remote'})
         packages[1]['rootUri'] = (gates.REPOSITORY / 'packages/dsh_client').as_uri()
         config.write_text(json.dumps({'packages': packages}))
         with self.assertRaisesRegex(ValueError, 'escaped Flutter copy: dsh_client'):
@@ -246,7 +246,7 @@ class RunnerContract(unittest.TestCase):
         root = self.g.flutter_source
         config = root / 'app/.dart_tool/package_config.json'; config.parent.mkdir()
         packages = [{'name': name, 'rootUri': (root / directory).as_uri(), 'packageUri': 'lib/'}
-                    for name, directory in [('dpsk_app', 'app'), ('dsh_client', 'packages/dsh_client'),
+                    for name, directory in [('dsh_app', 'app'), ('dsh_client', 'packages/dsh_client'),
                                             ('dsh_remote', 'packages/dsh_remote')]]
         for entry in packages:
             for bad in ('test/old-good/', '../old-good/', 'lib/?redirect=1', ''):

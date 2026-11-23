@@ -79,8 +79,8 @@ for directory in [child_home, child_tmp]:
 environment = {
     'PATH': str(node.parent) + ':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
     'HOME': str(child_home), 'TMPDIR': str(child_tmp), 'LANG': 'C.UTF-8',
-    'LD_PRELOAD': str(publication), 'DPSK_OHOS_SIM_PLATFORM': 'openharmony',
-    'DPSK_OHOS_SIM_ADDONS': json.dumps([str(native)]),
+    'LD_PRELOAD': str(publication), 'DSH_GO_OHOS_SIM_PLATFORM': 'openharmony',
+    'DSH_GO_OHOS_SIM_ADDONS': json.dumps([str(native)]),
 }
 environment_sha256 = hashlib.sha256(json.dumps(environment, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
 inputs = {

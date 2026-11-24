@@ -980,6 +980,11 @@
     }
   },
   "activityToolListSeparator": "、",
+  "agentTargetPick": "选择目标应用",
+  "agentTargetSearch": "搜索应用",
+  "agentTargetEmpty": "没有可选取的应用",
+  "agentTargetLabel": "目标",
+  "agentTargetUnavailable": "未检测到特权服务",
   "androidShellTitle": "Android Shell",
   "androidShellEntryHint": "独立的系统命令通道，默认关闭",
   "androidShellSubtitle": "通过 Shizuku 或自连 ADB 在这台手机上执行 Android 系统命令，不是 Ubuntu 里的 bash。",

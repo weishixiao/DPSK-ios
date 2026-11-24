@@ -3080,6 +3080,36 @@ abstract class L10n {
   /// **'、'**
   String get activityToolListSeparator;
 
+  /// No description provided for @agentTargetUnavailable.
+  ///
+  /// In zh, this message translates to:
+  /// **'未检测到特权服务'**
+  String get agentTargetUnavailable;
+
+  /// No description provided for @agentTargetLabel.
+  ///
+  /// In zh, this message translates to:
+  /// **'目标'**
+  String get agentTargetLabel;
+
+  /// No description provided for @agentTargetEmpty.
+  ///
+  /// In zh, this message translates to:
+  /// **'没有可选取的应用'**
+  String get agentTargetEmpty;
+
+  /// No description provided for @agentTargetSearch.
+  ///
+  /// In zh, this message translates to:
+  /// **'搜索应用'**
+  String get agentTargetSearch;
+
+  /// No description provided for @agentTargetPick.
+  ///
+  /// In zh, this message translates to:
+  /// **'选择目标应用'**
+  String get agentTargetPick;
+
   /// No description provided for @androidShellTitle.
   ///
   /// In zh, this message translates to:

@@ -1628,6 +1628,21 @@ class L10nZh extends L10n {
   String get activityToolListSeparator => '、';
 
   @override
+  String get agentTargetUnavailable => '未检测到特权服务';
+
+  @override
+  String get agentTargetLabel => '目标';
+
+  @override
+  String get agentTargetEmpty => '没有可选取的应用';
+
+  @override
+  String get agentTargetSearch => '搜索应用';
+
+  @override
+  String get agentTargetPick => '选择目标应用';
+
+  @override
   String get androidShellTitle => 'Android Shell';
 
   @override

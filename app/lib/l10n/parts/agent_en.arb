@@ -1,0 +1,7 @@
+{
+  "agentTargetPick": "Pick a target app",
+  "agentTargetSearch": "Search apps",
+  "agentTargetEmpty": "No apps to pick from",
+  "agentTargetLabel": "Target",
+  "agentTargetUnavailable": "Privileged service not found"
+}

@@ -1,0 +1,59 @@
+# Builds the privileged half of the workbench — `dsh-go-agentd` — into a
+# .deb with Theos on a macOS runner, and keeps the unsigned product as an
+# artifact. Nothing here needs a device: the daemon is a plain arm64 binary.
+name: Agent service
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'agent/**'
+      - '.github/workflows/agent.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: macos-26
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install Theos
+        run: |
+          set -euo pipefail
+          export THEOS="$RUNNER_TEMP/theos"
+          git clone --recursive --depth 1 https://github.com/theos/theos.git "$THEOS"
+          # The iOS SDK comes from the Xcode already on the runner.
+          echo "THEOS=$THEOS" >> "$GITHUB_ENV"
+          "$THEOS/bin/theos-toolchain" 2>/dev/null || true
+
+      - name: Build the daemon
+        working-directory: agent/service
+        run: |
+          set -euo pipefail
+          make -j"$(sysctl -n hw.ncpu)" 2>&1 | tail -40
+          ls -l .theos/obj/arm64/dsh-go-agentd || true
+
+      - name: Package
+        working-directory: agent/service
+        run: |
+          set -euo pipefail
+          make package FINALPACKAGE=1 NO_STRIP=1 2>&1 | tail -20
+          ls -l packages/ || true
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: agent-deb
+          path: |
+            agent/service/packages/*.deb
+            agent/service/.theos/obj/arm64/dsh-go-agentd
+          if-no-files-found: error

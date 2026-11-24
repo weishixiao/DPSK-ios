@@ -17,7 +17,12 @@
 /// keeps a wrong assumption a link error instead. The symbol is in
 /// libsystem_kernel and the numbers below are the kernel's own, not guesses:
 /// CS_OPS_STATUS is 0 and CS_OPS_ENTITLEMENTS_BLOB is 7.
-extern int csops(pid_t pid, unsigned int ops, void *useraddr, size_t usersize);
+///
+/// `extern "C"` is not decoration: this file is Objective-C++, so a plain
+/// declaration would be mangled and the link would fail with
+/// `csops(int, unsigned int, void*, unsigned long)` undefined while
+/// libsystem_kernel exports `_csops`.
+extern "C" int csops(pid_t pid, unsigned int ops, void *useraddr, size_t usersize);
 
 enum {
     DshGoCSOpsStatus = 0,

@@ -4,6 +4,7 @@
 #import "DshGoAgentSafety.h"
 
 #include <mach/mach.h>
+#include <mach/mach_vm.h>
 #include <string.h>
 #include <sys/sysctl.h>
 #include <sys/types.h>
@@ -16,7 +17,7 @@ static NSString *DshGoAgentExecutablePath(pid_t pid) {
     int mib[3] = {CTL_KERN, KERN_PROCARGS2, pid};
     size_t size = 0;
     if (sysctl(mib, 3, NULL, &size, NULL, 0) != 0 || size == 0) return nil;
-    char *buffer = malloc(size);
+    char *buffer = (char *)malloc(size);
     if (buffer == NULL) return nil;
     if (sysctl(mib, 3, buffer, &size, NULL, 0) != 0) {
         free(buffer);
@@ -61,7 +62,7 @@ NSArray<NSDictionary *> *DshGoAgentListProcesses(void) {
     if (sysctl(mib, 4, NULL, &size, NULL, 0) != 0 || size == 0) return @[];
     // Ask again with a little headroom: the table grows between the two calls.
     size += size / 8;
-    struct kinfo_proc *table = malloc(size);
+    struct kinfo_proc *table = (struct kinfo_proc *)malloc(size);
     if (table == NULL) return @[];
     if (sysctl(mib, 4, table, &size, NULL, 0) != 0) {
         free(table);
@@ -144,7 +145,7 @@ BOOL DshGoAgentWriteMemory(pid_t pid, uint64_t address, NSData *data, NSError **
 
     // `mach_vm_write` takes a byte count, not a page count, and fails on the
     // first unmapped byte: a short write is a refused write, not a partial edit.
-    kr = mach_vm_write(task, (mach_vm_address_t)address, (vm_offset_t)data.bytes,
+    kr = mach_vm_write(task, (mach_vm_address_t)address, (vm_offset_t)(uintptr_t)data.bytes,
                        (mach_msg_type_number_t)data.length);
     mach_port_deallocate(mach_task_self(), task);
 

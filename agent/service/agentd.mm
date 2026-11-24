@@ -416,7 +416,7 @@ static NSDictionary *DshGoHandleRequest(NSDictionary *request) {
             NSError *attachError = nil;
             BOOL attachable = DshGoAgentAttachable(target, &attachError);
             if (attachError != nil) {
-                if (error) *error = attachError;
+                error = attachError;
             } else {
                 result = @{@"pid": @(target), @"attachable": @(attachable)};
             }

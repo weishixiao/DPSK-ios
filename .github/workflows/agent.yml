@@ -37,6 +37,19 @@ jobs:
           echo "THEOS=$THEOS" >> "$GITHUB_ENV"
           "$THEOS/bin/theos-toolchain" 2>/dev/null || true
 
+      - name: Install the signing tool
+        run: |
+          set -euo pipefail
+          # Theos signs the product with ldid, and the macOS image does not ship
+          # one: without it the build stops at "Signing dsh-go-agentd" with
+          # `ldid: command not found`, which is a host gap rather than a fault in
+          # the daemon. Ad-hoc codesign is not a substitute - it cannot write the
+          # entitlement blob the check below reads back.
+          if ! command -v ldid >/dev/null 2>&1; then
+            brew install ldid
+          fi
+          ldid -v 2>&1 | head -2 || true
+
       - name: Check the entitlement checker
         run: python3 -m unittest discover -s tooling/ios -p 'test_agent_entitlements.py' -v
 

@@ -3,6 +3,7 @@ import 'package:dsh_app/agent/reverse_prompt.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
+import '../ui/theme/app_icons.dart';
 
 /// The app picker: the front door of the reverse flow.
 ///
@@ -73,8 +74,7 @@ class _AgentAppPickerState extends State<AgentAppPicker> {
     final String needle = _query.text.trim().toLowerCase();
     if (needle.isEmpty) return _apps;
     return _apps
-        .where((AgentTarget app) =>
-            app.label.toLowerCase().contains(needle) || (app.name.toLowerCase().contains(needle)))
+        .where((AgentTarget app) => app.label.toLowerCase().contains(needle) || app.name.toLowerCase().contains(needle))
         .toList();
   }
 
@@ -90,7 +90,6 @@ class _AgentAppPickerState extends State<AgentAppPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations l10n = AppLocalizations.of(context)!;
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -100,17 +99,17 @@ class _AgentAppPickerState extends State<AgentAppPicker> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                child: Text(l10n.agentTargetPick, style: Theme.of(context).textTheme.titleMedium),
+                child: Text(context.l10n.agentTargetPick, style: Theme.of(context).textTheme.titleMedium),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
                   controller: _query,
-                  onChanged: (_) => setState(() {}),
-                  decoration: InputDecoration(hintText: l10n.agentTargetSearch, isDense: true),
+                  onChanged: (String _) => setState(() {}),
+                  decoration: InputDecoration(hintText: context.l10n.agentTargetSearch, isDense: true),
                 ),
               ),
-              Expanded(child: _body(l10n)),
+              Expanded(child: _body(context)),
             ],
           ),
         ),
@@ -118,7 +117,7 @@ class _AgentAppPickerState extends State<AgentAppPicker> {
     );
   }
 
-  Widget _body(AppLocalizations l10n) {
+  Widget _body(BuildContext context) {
     if (_loading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -127,7 +126,7 @@ class _AgentAppPickerState extends State<AgentAppPicker> {
         padding: const EdgeInsets.all(24),
         child: Center(
           child: Text(
-            l10n.agentTargetUnavailable,
+            context.l10n.agentTargetUnavailable,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall,
           ),
@@ -136,14 +135,14 @@ class _AgentAppPickerState extends State<AgentAppPicker> {
     }
     final List<AgentTarget> apps = _filtered;
     if (apps.isEmpty) {
-      return Center(child: Text(l10n.agentTargetEmpty, style: Theme.of(context).textTheme.bodySmall));
+      return Center(child: Text(context.l10n.agentTargetEmpty, style: Theme.of(context).textTheme.bodySmall));
     }
     return ListView.builder(
       itemCount: apps.length,
       itemBuilder: (BuildContext context, int index) {
         final AgentTarget app = apps[index];
         return ListTile(
-          leading: const Icon(Icons.apps_outlined),
+          leading: const Icon(AppIcons.apps),
           title: Text(app.name, maxLines: 1, overflow: TextOverflow.ellipsis),
           subtitle: app.bundleId == null
               ? null

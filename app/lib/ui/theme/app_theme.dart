@@ -39,13 +39,14 @@ ThemeData buildLightTheme({
   Locale? glyphLocale,
   bool instantPages = false,
   bool fluid = false,
+  ThemePack? themePack,
   Map<String, String> loadedFonts = const {},
 }) => _build(
-  applyThemePackScheme(DshPalette.lightScheme(accent), null),
-  applyThemePackColors(DshColors.forAccent(Brightness.light, accent), null, Brightness.light),
+  applyThemePackScheme(DshPalette.lightScheme(accent), themePack),
+  applyThemePackColors(DshColors.forAccent(Brightness.light, accent), themePack, Brightness.light),
   applyThemePackSurfaces(
     DshSurfaces.light(accent, blurEnabled: glassBlur),
-    null,
+    themePack,
     Brightness.light,
     blurEnabled: glassBlur,
   ),
@@ -53,7 +54,7 @@ ThemeData buildLightTheme({
   glyphLocale,
   instantPages,
   fluid,
-  null,
+  themePack,
   loadedFonts,
 );
 
@@ -64,13 +65,14 @@ ThemeData buildDarkTheme({
   Locale? glyphLocale,
   bool instantPages = false,
   bool fluid = false,
+  ThemePack? themePack,
   Map<String, String> loadedFonts = const {},
 }) => _build(
-  applyThemePackScheme(DshPalette.darkScheme(accent), null),
-  applyThemePackColors(DshColors.forAccent(Brightness.dark, accent), null, Brightness.dark),
+  applyThemePackScheme(DshPalette.darkScheme(accent), themePack),
+  applyThemePackColors(DshColors.forAccent(Brightness.dark, accent), themePack, Brightness.dark),
   applyThemePackSurfaces(
     DshSurfaces.dark(accent, blurEnabled: glassBlur),
-    null,
+    themePack,
     Brightness.dark,
     blurEnabled: glassBlur,
   ),
@@ -78,7 +80,7 @@ ThemeData buildDarkTheme({
   glyphLocale,
   instantPages,
   fluid,
-  null,
+  themePack,
   loadedFonts,
 );
 

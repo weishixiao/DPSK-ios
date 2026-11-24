@@ -417,17 +417,36 @@ final class IOSPhoneControl: NSObject, FlutterStreamHandler {
 
   /// Installed applications, as name + bundle identifier pairs.
   ///
-  /// Resolved through the ObjC runtime: the Runner target's bridging header does
-  /// not import PhoneRunnerSupport, and a build-time reference would couple the
-  /// two targets for one list.
+  /// Asks LSApplicationWorkspace directly: PhoneRunnerSupport is compiled into
+  /// the UI-test target, not this one, so referencing it here resolves to nil in
+  /// the shipping app. The selectors are private, so every step tolerates a
+  /// different shape instead of assuming one.
   static func installedApps() -> [[String: String]] {
-    guard let type = NSClassFromString("PhoneRunnerSupport") as? NSObject.Type else { return [] }
-    let selector = NSSelectorFromString("installedApps")
-    guard let method = class_getClassMethod(type, selector) else { return [] }
-    typealias Call = @convention(c) (AnyObject, Selector) -> NSArray
-    let implementation = unsafeBitCast(method_getImplementation(method), to: Call.self)
-    let raw = implementation(type, selector) as? [[String: String]]
-    return raw ?? []
+    guard let spaceClass = NSClassFromString("LSApplicationWorkspace") as? NSObject.Type,
+          let space = spaceClass.perform(NSSelectorFromString("defaultWorkspace"))?.takeUnretainedValue() as? NSObject
+    else { return [] }
+
+    func array(_ name: String) -> [NSObject]? {
+      guard space.responds(to: NSSelectorFromString(name)),
+            let value = space.perform(NSSelectorFromString(name))?.takeUnretainedValue() as? [NSObject]
+      else { return nil }
+      return value
+    }
+    func text(_ object: NSObject, _ name: String) -> String? {
+      guard object.responds(to: NSSelectorFromString(name)),
+            let value = object.perform(NSSelectorFromString(name))?.takeUnretainedValue() as? String,
+            !value.isEmpty
+      else { return nil }
+      return value
+    }
+
+    let proxies = array("allApplications") ?? array("allInstalledApplications") ?? []
+    var apps: [[String: String]] = []
+    for proxy in proxies {
+      guard let bundleID = text(proxy, "applicationIdentifier") ?? text(proxy, "bundleIdentifier") else { continue }
+      apps.append(["name": text(proxy, "localizedName") ?? bundleID, "id": bundleID])
+    }
+    return apps.sorted { $0["name", default: ""].localizedCaseInsensitiveCompare($1["name", default: ""]) == .orderedAscending }
   }
 
   func bind(_ bridge: IOSPhoneBridge) { self.bridge = bridge; emit() }

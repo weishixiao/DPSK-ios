@@ -1708,21 +1708,20 @@ class L10nEn extends L10n {
   String get activityToolListSeparator => ', ';
 
   @override
-  String get agentTargetUnavailable => 'Privileged service not found';
-
-  @override
-  String get agentTargetLabel => 'Target';
-
-  @override
-  String get agentTargetEmpty => 'No apps to pick from';
+  String get agentTargetPick => 'Pick a target app';
 
   @override
   String get agentTargetSearch => 'Search apps';
 
   @override
-  String get agentTargetPick => 'Pick a target app';
+  String get agentTargetEmpty => 'No apps to pick from';
 
   @override
+  String get agentTargetLabel => 'Target';
+
+  @override
+  String get agentTargetUnavailable => 'Privileged service not found';
+
   String get androidShellTitle => 'Android Shell';
 
   @override

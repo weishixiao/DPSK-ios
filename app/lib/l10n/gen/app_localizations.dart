@@ -3080,23 +3080,11 @@ abstract class L10n {
   /// **'、'**
   String get activityToolListSeparator;
 
-  /// No description provided for @agentTargetUnavailable.
+  /// No description provided for @agentTargetPick.
   ///
   /// In zh, this message translates to:
-  /// **'未检测到特权服务'**
-  String get agentTargetUnavailable;
-
-  /// No description provided for @agentTargetLabel.
-  ///
-  /// In zh, this message translates to:
-  /// **'目标'**
-  String get agentTargetLabel;
-
-  /// No description provided for @agentTargetEmpty.
-  ///
-  /// In zh, this message translates to:
-  /// **'没有可选取的应用'**
-  String get agentTargetEmpty;
+  /// **'选择目标应用'**
+  String get agentTargetPick;
 
   /// No description provided for @agentTargetSearch.
   ///
@@ -3104,16 +3092,24 @@ abstract class L10n {
   /// **'搜索应用'**
   String get agentTargetSearch;
 
-  /// No description provided for @agentTargetPick.
+  /// No description provided for @agentTargetEmpty.
   ///
   /// In zh, this message translates to:
-  /// **'选择目标应用'**
-  String get agentTargetPick;
+  /// **'没有可选取的应用'**
+  String get agentTargetEmpty;
 
-  /// No description provided for @androidShellTitle.
+  /// No description provided for @agentTargetLabel.
   ///
   /// In zh, this message translates to:
-  /// **'Android Shell'**
+  /// **'目标'**
+  String get agentTargetLabel;
+
+  /// No description provided for @agentTargetUnavailable.
+  ///
+  /// In zh, this message translates to:
+  /// **'未检测到特权服务'**
+  String get agentTargetUnavailable;
+
   String get androidShellTitle;
 
   /// No description provided for @androidShellEntryHint.

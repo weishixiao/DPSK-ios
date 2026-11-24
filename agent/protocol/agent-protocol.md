@@ -58,7 +58,9 @@ Every method that names a process takes `pid`. Every method that names one of
 | `frida.start` | `port?` (default 27042) | `{pid, port, address}` | **high** — needs `confirmed` |
 | `frida.stop` | — | `{stopped}` | low — only stops its own child |
 | `frida.inject` | `pid, script, timeout?` | `{pid, exit, output, truncated}` | **high** — needs `confirmed` |
-| `tweak.compile` | `project, args?` | `{artifact, log}` | low — builds only |
+| `tweak.write` | `project, files` | `{project, directory, files:[name]}` | low — confined to the projects directory |
+| `tweak.compile` / `build.package` | `project, args?` | `{project, artifact, exit, output, truncated}` | low — builds only |
+| `pkg.install` | `project` | `{project, package, exit, output, truncated}` | **high** — needs `confirmed` |
 | `tweak.inject` | `pid, dylib` | — | **reserved** |
 
 `proc.info` is the answer to "can this target be worked on at all": `attachable`
@@ -89,6 +91,26 @@ over should start the server and speak its protocol on loopback instead.
 path exists, so a caller cannot mistake silence for success. It is not the same
 thing as `frida.inject`: one loads a compiled dylib into a process for good, the
 other runs a script for a while.
+
+`tweak.write` writes a Theos project as flat files under
+`/var/mobile/Library/DshGoAgent/projects/<name>/`: a source file, a `Makefile`, a
+`control`, a `Filter.plist`. Names are plain - no separators, no `..` - because the
+project name is what confines the write, and a slash in it would be the write
+leaving. A failed write does not leave half a project behind: every name is
+validated before the first one is written.
+
+`build.package` runs the toolchain's own `make package` in the project, through
+the same executable directories as everything else, so the `make` it uses is the
+one under the root that actually exists on this device. A non-zero exit is **not**
+an error reply: the compiler's log is the useful part of a failed build, so the
+reply carries `exit` and `output` and the caller reads them.
+
+`pkg.install` installs the newest `.deb` in that project's `packages/` and nothing
+else - "install what I just built" is deliberately narrower than "install any file
+on this device", because `dpkg -i` runs maintainer scripts as root. On RootHide a
+dylib `dpkg` placed is not necessarily trusted yet; `jbctl trustcache add` on the
+installed dylib is the caller's next step, via `exec.run`, because the path
+depends on the package layout rather than on anything the daemon knows.
 
 ### Rules the service enforces itself
 

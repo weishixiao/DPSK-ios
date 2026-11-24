@@ -15,6 +15,7 @@
 #import "DshGoAgentLog.h"
 #import "DshGoAgentProbe.h"
 #import "DshGoAgentProcess.h"
+#import "DshGoAgentProject.h"
 #import "DshGoAgentSafety.h"
 
 #include <signal.h>
@@ -275,91 +276,128 @@ static id DshGoHandleFridaInject(NSDictionary *params, BOOL confirmed, NSError *
     return DshGoAgentFridaInject(pid, script, (NSTimeInterval)timeoutSeconds, error);
 }
 
-/// Run `make package` in one of the owner's projects.
+/// Build one of the owner's projects with the toolchain on this device.
 ///
-/// The argv array is fixed: the request names a project, never a command. `make`
-/// itself is the Theos toolchain's entry point, so the compile happens with the
-/// same rules the person would get in a terminal.
-static id DshGoHandleCompile(NSDictionary *params, NSError **error) {
+/// `make` is resolved the way every other program is - through the executable
+/// directories, which on RootHide live under the root the daemon was launched
+/// from - because `/usr/bin/make` is where it *isn't* on a rootless install.
+/// The argv is fixed: a request names a project, never a command. `-C` is how the
+/// build runs inside the project rather than in the daemon's own directory, which
+/// is where a bare `make package` used to run.
+///
+/// A non-zero exit is not an error reply: the log is the useful part of a failed
+/// build, and turning it into a one-line error would throw away the compiler's
+/// own answer to what went wrong. The caller reads `exit` and `output`.
+static id DshGoHandleBuild(NSDictionary *params, NSError **error) {
     NSString *project = DshGoAgentStringParam(params, @"project", error);
     if (project == nil) return nil;
 
-    // A project name is a directory name, nothing more: no separators, no `..`.
-    NSCharacterSet *illegal = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-"] invertedSet];
-    if ([project rangeOfCharacterFromSet:illegal].location != NSNotFound) {
-        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`project` must be a plain directory name");
+    NSString *directory = DshGoAgentProjectDirectory(project, NO, error);
+    if (directory == nil) return nil;
+
+    NSString *make = [DshGoAgentExec resolveBinary:@"make"];
+    if (make == nil) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorNotImplemented,
+                [NSString stringWithFormat:@"make is not in any of the executable directories under \"%@\"; install the toolchain for this root",
+                                           DshGoJailbreakRoot()]);
+        }
         return nil;
     }
 
-    NSString *root = [DshGoAgentStateDirectory() stringByAppendingPathComponent:@"projects"];
-    NSString *directory = [root stringByAppendingPathComponent:project];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:directory]) {
-        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
-                                              [NSString stringWithFormat:@"no project at %@", directory]);
-        return nil;
-    }
-
-    int output[2] = {-1, -1};
-    if (pipe(output) != 0) {
-        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal, @"pipe() failed");
-        return nil;
-    }
-
-    posix_spawn_file_actions_t actions;
-    posix_spawn_file_actions_init(&actions);
-    posix_spawn_file_actions_adddup2(&actions, output[1], STDOUT_FILENO);
-    posix_spawn_file_actions_adddup2(&actions, output[1], STDERR_FILENO);
-    posix_spawn_file_actions_addclose(&actions, output[0]);
-
-    const char *argv[] = {"make", "package", NULL};
-    pid_t child = 0;
-    int spawned = posix_spawn(&child, "/usr/bin/make", &actions, NULL, (char *const *)argv, environ);
-    posix_spawn_file_actions_destroy(&actions);
-    close(output[1]);
-
-    if (spawned != 0) {
-        close(output[0]);
-        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal,
-                                              [NSString stringWithFormat:@"posix_spawn: %s", strerror(spawned)]);
-        return nil;
-    }
-
-    NSMutableData *log = [NSMutableData data];
-    char buffer[4096];
-    ssize_t read_bytes;
-    // The toolchain is slow but not unbounded; a build that has produced nothing
-    // for this long is stuck, and leaving it running would hold the service.
-    while ((read_bytes = read(output[0], buffer, sizeof(buffer))) > 0) {
-        [log appendBytes:buffer length:(NSUInteger)read_bytes];
-    }
-    close(output[0]);
-
-    int status = 0;
-    waitpid(child, &status, 0);
-    NSString *text = [[NSString alloc] initWithData:log encoding:NSUTF8StringEncoding] ?: @"";
-
-    if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
-        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal,
-                                              [NSString stringWithFormat:@"make package exited %d", WEXITSTATUS(status)]);
-        return @{@"log": text};
-    }
-
-    // The newest package is this build's: Theos writes into `packages/`.
-    NSString *packages = [directory stringByAppendingPathComponent:@"packages"];
-    NSArray<NSString *> *entries = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:packages error:NULL];
-    NSString *newest = nil;
-    NSDate *newestDate = nil;
-    for (NSString *entry in entries) {
-        if (![entry.pathExtension isEqualToString:@"deb"]) continue;
-        NSString *path = [packages stringByAppendingPathComponent:entry];
-        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:NULL];
-        NSDate *modified = attributes[NSFileModificationDate];
-        if (newestDate == nil || [modified compare:newestDate] == NSOrderedDescending) {
-            newest = path;
-            newestDate = modified;
+    NSMutableArray<NSString *> *arguments = [NSMutableArray arrayWithObjects:
+        @"-C", directory, @"package", @"FINALPACKAGE=1", nil];
+    id extra = params[@"args"];
+    if (extra != nil) {
+        if (![extra isKindOfClass:[NSArray class]]) {
+            if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`args` must be an array of strings");
+            return nil;
+        }
+        for (id item in extra) {
+            if (![item isKindOfClass:[NSString class]]) {
+                if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`args` must be an array of strings");
+                return nil;
+            }
+            [arguments addObject:item];
         }
     }
-    return @{@"log": text, @"artifact": newest ?: @""};
+
+    NSDictionary *run = [DshGoAgentExec runPath:make arguments:arguments timeout:600 error:error];
+    if (run == nil) return nil;
+
+    NSString *deb = DshGoAgentProjectNewestDeb(directory);
+    NSMutableDictionary *reply = [run mutableCopy];
+    reply[@"project"] = project;
+    reply[@"artifact"] = deb ?: @"";
+    return reply;
+}
+
+/// Write the files of one of the owner's projects.
+///
+/// The source is the agent's, the directory is the daemon's: `tweak.write` is how
+/// generated code becomes something `build.package` can compile, and it is
+/// confined to `projects/` so that it stays that and nothing more.
+static id DshGoHandleProjectWrite(NSDictionary *params, NSError **error) {
+    NSString *project = DshGoAgentStringParam(params, @"project", error);
+    if (project == nil) return nil;
+    id files = params[@"files"];
+    if (![files isKindOfClass:[NSDictionary class]]) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`files` must be an object of name -> contents");
+        return nil;
+    }
+    return DshGoAgentProjectWrite(project, files, error);
+}
+
+/// Install the .deb a build produced.
+///
+/// Needs `confirmed`: `dpkg -i` runs maintainer scripts as root, and the daemon is
+/// root. It only ever installs the newest package inside one of the owner's own
+/// projects, so "install what I just built" cannot be widened into "install any
+/// file on this device" by a single field.
+///
+/// RootHide keeps its own trust cache: a dylib that `dpkg` placed is not
+/// necessarily executable until `jbctl trustcache add` has seen it, which the
+/// caller does with `exec.run` because the path depends on the package layout
+/// rather than on anything the daemon knows.
+static id DshGoHandleInstall(NSDictionary *params, BOOL confirmed, NSError **error) {
+    if (!confirmed) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorConfirmationRequired,
+                @"installing a package runs its scripts as root; send it with confirmed:true");
+        }
+        return nil;
+    }
+    NSString *project = DshGoAgentStringParam(params, @"project", error);
+    if (project == nil) return nil;
+
+    NSString *directory = DshGoAgentProjectDirectory(project, NO, error);
+    if (directory == nil) return nil;
+
+    NSString *deb = DshGoAgentProjectNewestDeb(directory);
+    if (deb == nil) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+                [NSString stringWithFormat:@"no .deb under %@/packages; run build.package first", directory]);
+        }
+        return nil;
+    }
+
+    NSString *dpkg = [DshGoAgentExec resolveBinary:@"dpkg"];
+    if (dpkg == nil) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorNotImplemented,
+                [NSString stringWithFormat:@"dpkg is not in any of the executable directories under \"%@\"", DshGoJailbreakRoot()]);
+        }
+        return nil;
+    }
+
+    NSDictionary *run = [DshGoAgentExec runPath:dpkg arguments:@[@"-i", deb] timeout:180 error:error];
+    if (run == nil) return nil;
+
+    NSMutableDictionary *reply = [run mutableCopy];
+    reply[@"project"] = project;
+    reply[@"package"] = deb;
+    return reply;
 }
 
 /// Run a binary from the approved directories. Needs `confirmed`: executing a
@@ -483,8 +521,15 @@ static NSDictionary *DshGoHandleRequest(NSDictionary *request) {
         result = DshGoAgentHandleExec(params, confirmed, &error);
     } else if ([method isEqualToString:@"fs.read"]) {
         result = DshGoAgentHandleReadFile(params, &error);
-    } else if ([method isEqualToString:@"tweak.compile"]) {
-        result = DshGoHandleCompile(params, &error);
+    } else if ([method isEqualToString:@"tweak.write"]) {
+        result = DshGoHandleProjectWrite(params, &error);
+    } else if ([method isEqualToString:@"tweak.compile"] || [method isEqualToString:@"build.package"]) {
+        // `tweak.compile` is the name the protocol had before there was a deb to
+        // name; `build.package` is the same work with the artifact it produces.
+        // Both answer the same reply, so a caller that learned one keeps working.
+        result = DshGoHandleBuild(params, &error);
+    } else if ([method isEqualToString:@"pkg.install"]) {
+        result = DshGoHandleInstall(params, confirmed, &error);
     } else if ([method isEqualToString:@"tweak.inject"]) {
         // Reserved: answering "not implemented" is how a caller learns the
         // difference between "did nothing" and "cannot do this yet".

@@ -3,7 +3,6 @@ import 'package:dsh_app/agent/reverse_prompt.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
-import '../ui/theme/app_icons.dart';
 
 /// The app picker: the front door of the reverse flow.
 ///
@@ -142,7 +141,9 @@ class _AgentAppPickerState extends State<AgentAppPicker> {
       itemBuilder: (BuildContext context, int index) {
         final AgentTarget app = apps[index];
         return ListTile(
-          leading: const Icon(AppIcons.apps),
+          // No leading icon: the shapes live in ui/theme, and nothing outside
+          // ui/ imports ui/ - the architecture test holds that list to zero new
+          // entries. The name and the bundle id carry the row.
           title: Text(app.name, maxLines: 1, overflow: TextOverflow.ellipsis),
           subtitle: app.bundleId == null
               ? null

@@ -17,20 +17,27 @@ final class IOSAgentClient {
 
   private func connected() -> NSXPCConnection? {
     if let existing = connection { return existing }
-    // `NSXPCConnection(machServiceName:options:)` is unavailable in the iOS
-    // SDK, but the selector ships in the Foundation runtime. Reach it through
-    // the ObjC runtime - the same pattern IOSPhoneControl uses to resolve
-    // PhoneRunnerSupport - so a host with the daemon installed connects, and
-    // a build without the daemon degrades to "unavailable".
-    let selector = NSSelectorFromString("initWithMachServiceName:options:")
-    guard let type = NSClassFromString("NSXPCConnection") as? NSObject.Type,
-          let method = class_getInstanceMethod(type, selector) else {
+    // Both `alloc` and `NSXPCConnection(machServiceName:options:)` are hidden
+    // from Swift and the iOS SDK, but the selectors ship in the Foundation
+    // runtime. Reach them through the ObjC runtime - the same pattern
+    // IOSPhoneControl uses to resolve PhoneRunnerSupport - so a host with the
+    // daemon installed connects, and a build without it degrades to
+    // "unavailable" instead of failing to compile.
+    guard let type = NSClassFromString("NSXPCConnection") as? NSObject.Type else { return nil }
+    let initSelector = NSSelectorFromString("initWithMachServiceName:options:")
+    let allocSelector = NSSelectorFromString("alloc")
+    guard let initMethod = class_getInstanceMethod(type, initSelector),
+          let allocMethod = class_getClassMethod(type, allocSelector) else {
       return nil
     }
+    typealias Alloc = @convention(c) (AnyObject, Selector) -> Unmanaged<NSObject>
     typealias MachServiceInit = @convention(c) (AnyObject, Selector, NSString, UInt) -> Unmanaged<NSXPCConnection>?
-    let initialize = unsafeBitCast(method_getImplementation(method), to: MachServiceInit.self)
-    let allocated = type.alloc() as AnyObject
-    guard let unmanaged = initialize(allocated, selector, Self.serviceName as NSString, 0) else {
+    let alloc = unsafeBitCast(method_getImplementation(allocMethod), to: Alloc.self)
+    let initialize = unsafeBitCast(method_getImplementation(initMethod), to: MachServiceInit.self)
+    // `alloc` hands back a +1 reference that the initializer consumes; the
+    // initializer returns a new +1 reference, released with the connection.
+    let allocated = alloc(type, allocSelector).takeUnretainedValue()
+    guard let unmanaged = initialize(allocated, initSelector, Self.serviceName as NSString, 0) else {
       return nil
     }
     let fresh = unmanaged.takeRetainedValue()

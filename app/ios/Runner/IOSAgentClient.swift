@@ -1,4 +1,5 @@
 import Foundation
+import Flutter
 
 /// The app half of the privileged service.
 ///
@@ -101,4 +102,53 @@ final class IOSAgentClient {
 /// private-selector change never reshapes the connection.
 @objc protocol AgentXPCProtocol {
   func call(_ payload: Data, reply: @escaping (Data) -> Void)
+}
+
+/// The Flutter edge of the client: `dsh/agent`.
+///
+/// One method, `call`, because the daemon already speaks a request envelope and a
+/// second, Flutter-shaped schema would be a second thing to keep in step with it.
+/// The reply travels back verbatim - `ok` with a `result`, or `ok:false` with an
+/// `error` - so the app can tell "the daemon refused this" from "the daemon is not
+/// there", and it never holds a task port: only what the daemon chose to report.
+final class AgentChannel {
+  private let channel: FlutterMethodChannel
+  private let client = IOSAgentClient()
+
+  init(messenger: any FlutterBinaryMessenger) {
+    channel = FlutterMethodChannel(name: "dsh/agent", binaryMessenger: messenger)
+    channel.setMethodCallHandler { [client] call, result in
+      switch call.method {
+      case "call":
+        Self.dispatch(call, client: client, result: result)
+      case "available":
+        result(client.isAvailable)
+      default:
+        result(FlutterMethodNotImplemented)
+      }
+    }
+  }
+
+  /// `{method, params, confirmed?, timeout?}` in, the daemon's own reply out.
+  ///
+  /// `confirmed` is the human's answer travelling with the request, not a default
+  /// the app may set for itself: a method that needs it answers
+  /// `ERR_CONFIRMATION_REQUIRED` when it is missing, which is what the UI turns
+  /// into a prompt.
+  private static func dispatch(_ call: FlutterMethodCall, client: IOSAgentClient, result: @escaping FlutterResult) {
+    guard let arguments = call.arguments as? [String: Any],
+          let method = arguments["method"] as? String,
+          !method.isEmpty
+    else {
+      result(FlutterError(code: "bad-arguments", message: "`method` is required", details: nil))
+      return
+    }
+    let params = arguments["params"] as? [String: Any] ?? [:]
+    let confirmed = arguments["confirmed"] as? Bool == true
+    let timeout = arguments["timeout"] as? Double ?? 30
+    Task {
+      let reply = await client.call(method, params: params, confirmed: confirmed, timeout: timeout)
+      DispatchQueue.main.async { result(reply) }
+    }
+  }
 }

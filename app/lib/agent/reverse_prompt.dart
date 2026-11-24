@@ -68,18 +68,21 @@ class AgentTarget {
   /// What the picker and the chip show.
   String get label => bundleId ?? name;
 
-  Map<String, Object?> toJson() => <String, Object?>{
-        'pid': pid,
-        'name': name,
-        if (bundleId != null) 'bundleId': bundleId,
-        if (path != null) 'path': path,
-        if (arch != null) 'arch': arch,
-        if (archs.isNotEmpty) 'archs': archs,
-        'attachable': attachable,
-        if (entitlements.isNotEmpty) 'entitlements': entitlements,
-        if (hardened != null) 'hardened': hardened,
-        if (platformBinary != null) 'platformBinary': platformBinary,
-      };
+  Map<String, Object?> toJson() {
+    final Map<String, Object?> json = <String, Object?>{
+      'pid': pid,
+      'name': name,
+      'attachable': attachable,
+    };
+    if (bundleId != null) json['bundleId'] = bundleId;
+    if (path != null) json['path'] = path;
+    if (arch != null) json['arch'] = arch;
+    if (archs.isNotEmpty) json['archs'] = archs;
+    if (entitlements.isNotEmpty) json['entitlements'] = entitlements;
+    if (hardened != null) json['hardened'] = hardened;
+    if (platformBinary != null) json['platformBinary'] = platformBinary;
+    return json;
+  }
 
   static int? _int(Object? value) {
     if (value is int) return value;

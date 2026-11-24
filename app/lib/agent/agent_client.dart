@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform, kIsWeb;
-import 'package:flutter/services.dart' show MethodChannel, PlatformException;
+import 'package:flutter/services.dart' show MethodChannel, MissingPluginException, PlatformException;
 
 /// The app's half of the privileged service, as a typed client.
 ///
@@ -67,20 +67,24 @@ class AgentClient {
   Future<AgentReply> processInfo(int pid) =>
       call('proc.info', params: <String, Object?>{'pid': pid});
 
+  /// Searches one of the owner's processes for a byte pattern.
+  ///
+  /// The map is built by assignment rather than with collection-`if`, because a
+  /// key whose value is `null` and a key that is absent mean different things to
+  /// the daemon: absent uses its default, `null` is a rejected parameter.
   Future<AgentReply> scan(
     int pid, {
     required String pattern,
     String? start,
     String? end,
     int? limit,
-  }) =>
-      call('mem.scan', params: <String, Object?>{
-        'pid': pid,
-        'pattern': pattern,
-        if (start != null) 'start': start,
-        if (end != null) 'end': end,
-        if (limit != null) 'limit': limit,
-      });
+  }) {
+    final Map<String, Object?> params = <String, Object?>{'pid': pid, 'pattern': pattern};
+    if (start != null) params['start'] = start;
+    if (end != null) params['end'] = end;
+    if (limit != null) params['limit'] = limit;
+    return call('mem.scan', params: params);
+  }
 
   Future<AgentReply> readMemory(int pid, {required String address, required int length}) =>
       call('probe.readMemory', params: <String, Object?>{

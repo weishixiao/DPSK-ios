@@ -5,6 +5,11 @@ name: Version
 # job so that all of them read one number, and it is committed rather than
 # computed per run so the sequence survives a re-run of anything.
 #
+# The guide states the same number in three files, and `guide_sync.py --check`
+# fails any build where they disagree with the pubspec. So the bump moves them and
+# then runs the sync, rather than leaving the disagreement for a later job whose
+# name says nothing about versions.
+#
 # The push uses the default token, which by design does not start workflows, so
 # the bump commit cannot cause a bump; `[skip ci]` says the same thing to a human
 # reading the log.
@@ -39,13 +44,16 @@ jobs:
           test -n "$after"
           printf 'after=%s\n' "$after" >> "$GITHUB_OUTPUT"
 
+      - name: Regenerate the bundled guide
+        run: python3 app/tool/guide_sync.py
+
       - name: Commit the new version
         run: |
           set -euo pipefail
           git config user.name "weishixiao"
           git config user.email "weishixiao@users.noreply.github.com"
-          git add app/pubspec.yaml
-          # Nothing to commit means the pubspec did not change, which would be a
+          git add app/pubspec.yaml docs/guide app/assets/skills/dsh-go-guide
+          # Nothing to commit means the version did not change, which would be a
           # bug in the bump rather than a reason to fail the build.
           if git diff --cached --quiet; then
             printf 'the version did not change; not committing\n'

@@ -10,7 +10,13 @@ The version lives in one place, `app/pubspec.yaml`, as `version: X.Y.Z+B`. The
 trailing `+B` is the build number the stores and `CFBundleVersion` consume; it
 increments with every bump too, because two builds must never share one.
 
-    python3 tool/bump_version.py          # bump and rewrite pubspec.yaml
+The guide states the same number in a line of its own - `> dsh-go 1.0.0` in
+`docs/guide/README.md` and `docs/guide/harmony/README.md`, mirrored into the
+bundled skill - and `guide_sync.py --check` fails when the three disagree. That
+check is why this script moves them together: a bump that leaves them behind
+breaks the build one step later, in a job whose name says nothing about versions.
+
+    python3 tool/bump_version.py          # bump and rewrite the files
     python3 tool/bump_version.py --print  # only show what the next version is
 """
 from __future__ import annotations
@@ -20,10 +26,23 @@ import pathlib
 import re
 import sys
 
-PUBSPEC = pathlib.Path(__file__).resolve().parents[1] / "pubspec.yaml"
+HERE = pathlib.Path(__file__).resolve()
+PUBSPEC = HERE.parents[1] / "pubspec.yaml"
+REPO = HERE.parents[2]
+
 VERSION_LINE = re.compile(
     r"^version:[ \t]*(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)\+(?P<build>\d+)[ \t]*$",
     re.MULTILINE,
+)
+GUIDE_LINE = re.compile(r"^> dsh-go \S+$", re.MULTILINE)
+
+# The guide's own READMEs first, then the copy the app ships. `guide_sync.py`
+# regenerates the last one from the first; it is listed so a bump that never runs
+# the sync still leaves the tree consistent.
+GUIDES = (
+    "docs/guide/README.md",
+    "docs/guide/harmony/README.md",
+    "app/assets/skills/dsh-go-guide/README.md",
 )
 
 
@@ -48,16 +67,28 @@ def next_version(version: str) -> str:
     return f"{major}.{minor}.{patch}"
 
 
-def bump(path: pathlib.Path) -> tuple[str, str]:
-    """Rewrite the version line in `path`; returns `(before, after)` including the build number."""
-    text = path.read_text(encoding="utf-8")
+def bump(pubspec: pathlib.Path, repo: pathlib.Path | None = None) -> tuple[str, str]:
+    """Rewrites the version everywhere it is stated; returns `(before, after)` with the build number."""
+    text = pubspec.read_text(encoding="utf-8")
     match = VERSION_LINE.search(text)
     if match is None or len(VERSION_LINE.findall(text)) != 1:
-        raise SystemExit(f"{path} must contain exactly one `version: X.Y.Z+B` line")
+        raise SystemExit(f"{pubspec} must contain exactly one `version: X.Y.Z+B` line")
     before = f"{match.group('major')}.{match.group('minor')}.{match.group('patch')}+{match.group('build')}"
-    after = f"{next_version(before.split('+')[0])}+{int(match.group('build')) + 1}"
-    new_text = VERSION_LINE.sub(f"version: {after}", text, count=1)
-    path.write_text(new_text, encoding="utf-8", newline="\n")
+    plain = next_version(before.split("+")[0])
+    after = f"{plain}+{int(match.group('build')) + 1}"
+    pubspec.write_text(VERSION_LINE.sub(f"version: {after}", text, count=1), encoding="utf-8", newline="\n")
+
+    root = repo if repo is not None else pubspec.parents[1]
+    for relative in GUIDES:
+        guide = root / relative
+        if not guide.is_file():
+            continue
+        guide_text = guide.read_text(encoding="utf-8")
+        if not GUIDE_LINE.search(guide_text):
+            raise SystemExit(f"{guide} has no `> dsh-go X.Y.Z` line to keep in step")
+        guide.write_text(
+            GUIDE_LINE.sub(f"> dsh-go {plain}", guide_text), encoding="utf-8", newline="\n"
+        )
     return before, after
 
 
@@ -65,6 +96,7 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--print", dest="show", action="store_true", help="print the next version and exit")
     parser.add_argument("--pubspec", type=pathlib.Path, default=PUBSPEC, help="the pubspec to bump")
+    parser.add_argument("--repo", type=pathlib.Path, default=None, help="the repo the guide paths are relative to")
     args = parser.parse_args(argv)
 
     if args.show:
@@ -75,7 +107,7 @@ def main(argv: list[str]) -> int:
         print(next_version(f"{match.group('major')}.{match.group('minor')}.{match.group('patch')}"))
         return 0
 
-    before, after = bump(args.pubspec)
+    before, after = bump(args.pubspec, args.repo)
     print(f"{args.pubspec}: {before} -> {after}")
     return 0
 

@@ -68,6 +68,16 @@ final class AppChoice extends PlusChoice {
   const AppChoice();
 }
 
+/// 「逆向目标」: pick an app the privileged daemon may attach to.
+///
+/// Not a variant of [AppChoice], which only names an app: this one asks the
+/// daemon for the process behind the name, so the conversation starts with a pid,
+/// an architecture and whether a task port can be had at all. Kept apart because
+/// the two promises differ - naming an app is harmless, attaching to one is not.
+final class TargetChoice extends PlusChoice {
+  const TargetChoice();
+}
+
 /// A plugin's tool: the caller runs it, in front of the composer.
 final class NativeToolChoice extends PlusChoice {
   const NativeToolChoice(this.action);
@@ -87,13 +97,15 @@ abstract final class PlusPanelMetrics {
 }
 
 /// The ＋ panel. [files] false (DSH Remote stages no files) leaves 文件 out;
-/// [generate] adds 生成; [apps] adds 应用; [sessionId] adds 本对话 (a new
-/// chat has no conversation to set yet).
+/// [generate] adds 生成; [apps] adds 应用; [targets] adds 逆向目标 (only where the
+/// privileged daemon exists); [sessionId] adds 本对话 (a new chat has no
+/// conversation to set yet).
 Future<PlusChoice?> showPlusPanel(
   BuildContext context, {
   bool files = true,
   bool generate = false,
   bool apps = false,
+  bool targets = false,
   String? sessionId,
 }) {
   return showAppSheet<PlusChoice>(
@@ -103,7 +115,13 @@ Future<PlusChoice?> showPlusPanel(
       top: false,
       child: SingleChildScrollView(
         child: SheetNavigator(
-          root: (_) => _PlusRoot(files: files, generate: generate, apps: apps, sessionId: sessionId),
+          root: (_) => _PlusRoot(
+            files: files,
+            generate: generate,
+            apps: apps,
+            targets: targets,
+            sessionId: sessionId,
+          ),
         ),
       ),
     ),
@@ -125,11 +143,18 @@ Future<void> showPermissionSheet(BuildContext context, String sessionId) {
 }
 
 class _PlusRoot extends ConsumerWidget {
-  const _PlusRoot({required this.files, required this.generate, required this.apps, required this.sessionId});
+  const _PlusRoot({
+    required this.files,
+    required this.generate,
+    required this.apps,
+    required this.targets,
+    required this.sessionId,
+  });
 
   final bool files;
   final bool generate;
   final bool apps;
+  final bool targets;
   final String? sessionId;
 
   @override
@@ -143,6 +168,7 @@ class _PlusRoot extends ConsumerWidget {
       if (files) (AttachChoice(AttachSource.files), AppIcons.files, l10n.chatFile, 4),
       if (generate) (const GenerateChoice(), AppIcons.generateMedia, l10n.mediaGenerateTile, 6),
       if (apps) (const AppChoice(), AppIcons.apps, l10n.chatAppsTile, 1),
+      if (targets) (const TargetChoice(), AppIcons.bug, l10n.agentTargetPick, 3),
     ];
     return Column(
       mainAxisSize: MainAxisSize.min,

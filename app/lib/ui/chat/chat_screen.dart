@@ -14,6 +14,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n/l10n.dart';
+import '../../agent/agent_client.dart';
+import '../../agent/app_picker.dart';
+import '../../agent/reverse_prompt.dart';
 import '../../notify/chat_alerts.dart' show approvalText, questionText;
 import '../../runtime/local_footprint.dart' show RuntimeMissing;
 import '../../runtime/runtime_bridge.dart' show RuntimePhase;
@@ -1072,9 +1075,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
         sessionId: ref.read(currentSessionProvider),
         generate: ref.read(mediaPluginProvider) != MediaPluginState.absent,
         apps: true,
+        // The daemon is an iOS-only LaunchDaemon; elsewhere there is nothing to
+        // attach to, and a tile would promise what cannot happen.
+        targets: AgentClient.instance.isSupported,
       );
       if (choice is AppChoice) {
         if (ownsDraft() && mounted) await _pickAppAndSend(ownsDraft);
+        return;
+      }
+      if (choice is TargetChoice) {
+        if (ownsDraft() && mounted) await _pickTargetAndSend(ownsDraft);
         return;
       }
       if (choice is GenerateChoice) {
@@ -1500,6 +1510,29 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
     if (sessionId == null) return;
     final text = '${app.name} (${app.bundleId})';
     await ref.read(chatProvider(sessionId).notifier).send(text);
+  }
+
+  /// 「逆向目标」: pick an app, ask the daemon for its process, and open the
+  /// conversation on that instead of on a name.
+  ///
+  /// The two pickers are deliberately different. [_pickAppAndSend] names an app
+  /// and nothing else. This one goes through the daemon first: `proc.info` says
+  /// whether the process exists, its pid, its executable path, its architecture
+  /// and whether a task port may be taken at all. What gets sent is the block the
+  /// reverse prompt opens with, so the model sees the same facts the daemon just
+  /// measured rather than a name it would have to guess about.
+  ///
+  /// Failing to reach the daemon is not sent as a message: the conversation stays
+  /// as it was and the reason is said inline, because a turn that begins by
+  /// apologising is a turn the person did not ask for.
+  Future<void> _pickTargetAndSend(bool Function() ownsDraft) async {
+    final host = ref.read(activeHostProvider);
+    final target = await showAgentAppPicker(context);
+    if (!mounted || !ownsDraft() || ref.read(activeHostProvider) != host) return;
+    if (target == null) return;
+    final sessionId = ref.read(currentSessionProvider);
+    if (sessionId == null) return;
+    await ref.read(chatProvider(sessionId).notifier).send(reverseContextBlock(target));
   }
 
 

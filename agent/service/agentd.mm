@@ -32,7 +32,7 @@ static const NSUInteger kMaxWriteLength = 4 * 1024;
 
 #pragma mark - Handlers
 
-static NSDictionary *DshGoing(void) {
+static NSDictionary *DshGoPing(void) {
     return @{
         @"version": @"0.1.0",
         @"pid": @(getpid()),
@@ -42,7 +42,7 @@ static NSDictionary *DshGoing(void) {
 }
 
 /// Resolve `pid`, check the allowlist, and answer the refusal as an error.
-static BOOL DshGoesolveTarget(NSDictionary *params, pid_t *pid, NSError **error) {
+static BOOL DshGoResolveTarget(NSDictionary *params, pid_t *pid, NSError **error) {
     NSInteger value = 0;
     if (!DshGoAgentIntegerParam(params, @"pid", 1, 99999, &value, error)) return NO;
     NSString *reason = nil;
@@ -54,9 +54,9 @@ static BOOL DshGoesolveTarget(NSDictionary *params, pid_t *pid, NSError **error)
     return YES;
 }
 
-static id DshGoandleRead(NSDictionary *params, NSError **error) {
+static id DshGoHandleRead(NSDictionary *params, NSError **error) {
     pid_t pid = 0;
-    if (!DshGoesolveTarget(params, &pid, error)) return nil;
+    if (!DshGoResolveTarget(params, &pid, error)) return nil;
 
     uint64_t address = 0;
     if (!DshGoAgentAddressParam(params, @"address", &address, error)) return nil;
@@ -75,9 +75,9 @@ static id DshGoandleRead(NSDictionary *params, NSError **error) {
     return @{@"hex": hex, @"base": [NSString stringWithFormat:@"%llx", address], @"length": @(data.length)};
 }
 
-static id DshGoandleWrite(NSDictionary *params, BOOL confirmed, NSError **error) {
+static id DshGoHandleWrite(NSDictionary *params, BOOL confirmed, NSError **error) {
     pid_t pid = 0;
-    if (!DshGoesolveTarget(params, &pid, error)) return nil;
+    if (!DshGoResolveTarget(params, &pid, error)) return nil;
 
     uint64_t address = 0;
     if (!DshGoAgentAddressParam(params, @"address", &address, error)) return nil;
@@ -106,7 +106,7 @@ static id DshGoandleWrite(NSDictionary *params, BOOL confirmed, NSError **error)
 /// The argv array is fixed: the request names a project, never a command. `make`
 /// itself is the Theos toolchain's entry point, so the compile happens with the
 /// same rules the person would get in a terminal.
-static id DshGoandleCompile(NSDictionary *params, NSError **error) {
+static id DshGoHandleCompile(NSDictionary *params, NSError **error) {
     NSString *project = DshGoAgentStringParam(params, @"project", error);
     if (project == nil) return nil;
 
@@ -138,7 +138,7 @@ static id DshGoandleCompile(NSDictionary *params, NSError **error) {
     posix_spawn_file_actions_adddup2(&actions, output[1], STDERR_FILENO);
     posix_spawn_file_actions_addclose(&actions, output[0]);
 
-    char *argv[] = {"make", "package", NULL};
+    const char *argv[] = {"make", "package", NULL};
     pid_t child = 0;
     int spawned = posix_spawn(&child, "/usr/bin/make", &actions, NULL, argv, environ);
     posix_spawn_file_actions_destroy(&actions);
@@ -189,7 +189,64 @@ static id DshGoandleCompile(NSDictionary *params, NSError **error) {
     return @{@"log": text, @"artifact": newest ?: @""};
 }
 
-static NSDictionary *DshGoandleRequest(NSDictionary *request) {
+/// Run a binary from the approved directories. Needs `confirmed`: executing a
+/// program the human did not ask for is the one thing this service will not do
+/// on its own.
+static id DshGoAgentHandleExec(NSDictionary *params, BOOL confirmed, NSError **error) {
+    if (!confirmed) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorConfirmationRequired,
+            @"running a program needs a confirmed request");
+        return nil;
+    }
+    NSString *path = DshGoAgentStringParam(params, @"path", error);
+    if (path == nil) return nil;
+    NSString *resolved = path.length ? path : [DshGoAgentExec resolveBinary:(DshGoAgentStringParam(params, @"binary", error) ?: @"")];
+    if (resolved == nil) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+            @"`path` or `binary` must name a program");
+        return nil;
+    }
+    NSArray *arguments = params[@"args"];
+    if (arguments && ![arguments isKindOfClass:[NSArray class]]) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`args` must be an array");
+        return nil;
+    }
+    NSMutableArray<NSString *> *words = [NSMutableArray array];
+    for (id item in (arguments ?: @[])) {
+        if (![item isKindOfClass:[NSString class]]) {
+            if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`args` must be strings");
+            return nil;
+        }
+        [words addObject:item];
+    }
+    NSInteger seconds = 30;
+    if (!DshGoAgentIntegerParam(params, @"timeout", 1, 300, &seconds, error)) return nil;
+    return [DshGoAgentExec runPath:resolved arguments:words timeout:(NSTimeInterval)seconds error:error];
+}
+
+/// Read a file the daemon can reach. Read-only: writing from this service is
+/// reserved for the confirmed memory path, where the target is explicit.
+static id DshGoAgentHandleReadFile(NSDictionary *params, NSError **error) {
+    NSString *path = DshGoAgentStringParam(params, @"path", error);
+    if (path == nil) return nil;
+    if (![path hasPrefix:@"/"]) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams, @"`path` must be absolute");
+        return nil;
+    }
+    NSInteger length = 0;
+    if (!DshGoAgentIntegerParam(params, @"length", 1, 1024 * 1024, &length, error)) return nil;
+    NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:path];
+    if (handle == nil) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+            [NSString stringWithFormat:@"cannot read %@", path]);
+        return nil;
+    }
+    NSData *data = [handle readDataOfLength:(NSUInteger)length];
+    [handle closeFile];
+    return @{@"path": path, @"bytes": @(data.length)};
+}
+
+static NSDictionary *DshGoHandleRequest(NSDictionary *request) {
     NSString *identifier = request[@"id"];
     NSString *method = request[@"method"];
     NSDictionary *params = request[@"params"];
@@ -211,23 +268,23 @@ static NSDictionary *DshGoandleRequest(NSDictionary *request) {
     pid_t target = 0;
 
     if ([method isEqualToString:@"probe.ping"]) {
-        result = DshGoing();
+        result = DshGoPing();
     } else if ([method isEqualToString:@"probe.listProcesses"]) {
         result = @{@"processes": DshGoAgentListProcesses()};
     } else if ([method isEqualToString:@"probe.modules"]) {
-        if (DshGoesolveTarget(params, &target, &error)) {
+        if (DshGoResolveTarget(params, &target, &error)) {
             result = @{@"pid": @(target), @"modules": DshGoAgentModulesForPID(target)};
         }
     } else if ([method isEqualToString:@"probe.readMemory"]) {
-        result = DshGoandleRead(params, &error);
+        result = DshGoHandleRead(params, &error);
     } else if ([method isEqualToString:@"mem.write"]) {
-        result = DshGoandleWrite(params, confirmed, &error);
+        result = DshGoHandleWrite(params, confirmed, &error);
     } else if ([method isEqualToString:@"exec.run"]) {
         result = DshGoAgentHandleExec(params, confirmed, &error);
     } else if ([method isEqualToString:@"fs.read"]) {
         result = DshGoAgentHandleReadFile(params, &error);
     } else if ([method isEqualToString:@"tweak.compile"]) {
-        result = DshGoandleCompile(params, &error);
+        result = DshGoHandleCompile(params, &error);
     } else if ([method isEqualToString:@"tweak.inject"]) {
         // Reserved: answering "not implemented" is how a caller learns the
         // difference between "did nothing" and "cannot do this yet".
@@ -277,7 +334,7 @@ static NSDictionary *DshGoandleRequest(NSDictionary *request) {
         if (![request isKindOfClass:[NSDictionary class]]) {
             answer = @{@"id": @"", @"ok": @NO, @"error": @{@"code": @"ERR_BAD_PARAMS", @"message": @"payload must be a JSON object"}};
         } else {
-            answer = DshGoandleRequest(request);
+            answer = DshGoHandleRequest(request);
         }
     } @catch (NSException *exception) {
         // A malformed request must not take the service down: the phone's other

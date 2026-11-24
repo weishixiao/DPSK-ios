@@ -107,7 +107,7 @@ NSArray<NSDictionary *> *DshGoAgentModulesForPID(pid_t pid) {
     return modules;
 }
 
-static kern_return_t DSH GoTaskForPID(pid_t pid, mach_port_t *task) {
+static kern_return_t DshGoaskForPID(pid_t pid, mach_port_t *task) {
     // Never `mach_task_self()`: writing to our own task by accident is not a
     // failure mode worth leaving open.
     return task_for_pid(mach_task_self(), pid, task);
@@ -115,7 +115,7 @@ static kern_return_t DSH GoTaskForPID(pid_t pid, mach_port_t *task) {
 
 NSData *DshGoAgentReadMemory(pid_t pid, uint64_t address, NSUInteger length, NSError **error) {
     mach_port_t task = MACH_PORT_NULL;
-    kern_return_t kr = DSH GoTaskForPID(pid, &task);
+    kern_return_t kr = DshGoaskForPID(pid, &task);
     if (kr != KERN_SUCCESS) {
         if (error) *error = DshGoAgentMakeError(DshGoAgentErrorAttachFailed,
                                               [NSString stringWithFormat:@"task_for_pid(%d) failed: %s", pid, mach_error_string(kr)]);
@@ -139,7 +139,7 @@ NSData *DshGoAgentReadMemory(pid_t pid, uint64_t address, NSUInteger length, NSE
 
 BOOL DshGoAgentWriteMemory(pid_t pid, uint64_t address, NSData *data, NSError **error) {
     mach_port_t task = MACH_PORT_NULL;
-    kern_return_t kr = DSH GoTaskForPID(pid, &task);
+    kern_return_t kr = DshGoaskForPID(pid, &task);
     if (kr != KERN_SUCCESS) {
         if (error) *error = DshGoAgentMakeError(DshGoAgentErrorAttachFailed,
                                               [NSString stringWithFormat:@"task_for_pid(%d) failed: %s", pid, mach_error_string(kr)]);

@@ -32,7 +32,7 @@ static const NSUInteger kMaxWriteLength = 4 * 1024;
 
 #pragma mark - Handlers
 
-static NSDictionary *DSH GoPing(void) {
+static NSDictionary *DshGoing(void) {
     return @{
         @"version": @"0.1.0",
         @"pid": @(getpid()),
@@ -42,7 +42,7 @@ static NSDictionary *DSH GoPing(void) {
 }
 
 /// Resolve `pid`, check the allowlist, and answer the refusal as an error.
-static BOOL DSH GoResolveTarget(NSDictionary *params, pid_t *pid, NSError **error) {
+static BOOL DshGoesolveTarget(NSDictionary *params, pid_t *pid, NSError **error) {
     NSInteger value = 0;
     if (!DshGoAgentIntegerParam(params, @"pid", 1, 99999, &value, error)) return NO;
     NSString *reason = nil;
@@ -54,9 +54,9 @@ static BOOL DSH GoResolveTarget(NSDictionary *params, pid_t *pid, NSError **erro
     return YES;
 }
 
-static id DSH GoHandleRead(NSDictionary *params, NSError **error) {
+static id DshGoandleRead(NSDictionary *params, NSError **error) {
     pid_t pid = 0;
-    if (!DSH GoResolveTarget(params, &pid, error)) return nil;
+    if (!DshGoesolveTarget(params, &pid, error)) return nil;
 
     uint64_t address = 0;
     if (!DshGoAgentAddressParam(params, @"address", &address, error)) return nil;
@@ -75,9 +75,9 @@ static id DSH GoHandleRead(NSDictionary *params, NSError **error) {
     return @{@"hex": hex, @"base": [NSString stringWithFormat:@"%llx", address], @"length": @(data.length)};
 }
 
-static id DSH GoHandleWrite(NSDictionary *params, BOOL confirmed, NSError **error) {
+static id DshGoandleWrite(NSDictionary *params, BOOL confirmed, NSError **error) {
     pid_t pid = 0;
-    if (!DSH GoResolveTarget(params, &pid, error)) return nil;
+    if (!DshGoesolveTarget(params, &pid, error)) return nil;
 
     uint64_t address = 0;
     if (!DshGoAgentAddressParam(params, @"address", &address, error)) return nil;
@@ -106,7 +106,7 @@ static id DSH GoHandleWrite(NSDictionary *params, BOOL confirmed, NSError **erro
 /// The argv array is fixed: the request names a project, never a command. `make`
 /// itself is the Theos toolchain's entry point, so the compile happens with the
 /// same rules the person would get in a terminal.
-static id DSH GoHandleCompile(NSDictionary *params, NSError **error) {
+static id DshGoandleCompile(NSDictionary *params, NSError **error) {
     NSString *project = DshGoAgentStringParam(params, @"project", error);
     if (project == nil) return nil;
 
@@ -189,7 +189,7 @@ static id DSH GoHandleCompile(NSDictionary *params, NSError **error) {
     return @{@"log": text, @"artifact": newest ?: @""};
 }
 
-static NSDictionary *DSH GoHandleRequest(NSDictionary *request) {
+static NSDictionary *DshGoandleRequest(NSDictionary *request) {
     NSString *identifier = request[@"id"];
     NSString *method = request[@"method"];
     NSDictionary *params = request[@"params"];
@@ -211,23 +211,23 @@ static NSDictionary *DSH GoHandleRequest(NSDictionary *request) {
     pid_t target = 0;
 
     if ([method isEqualToString:@"probe.ping"]) {
-        result = DSH GoPing();
+        result = DshGoing();
     } else if ([method isEqualToString:@"probe.listProcesses"]) {
         result = @{@"processes": DshGoAgentListProcesses()};
     } else if ([method isEqualToString:@"probe.modules"]) {
-        if (DSH GoResolveTarget(params, &target, &error)) {
+        if (DshGoesolveTarget(params, &target, &error)) {
             result = @{@"pid": @(target), @"modules": DshGoAgentModulesForPID(target)};
         }
     } else if ([method isEqualToString:@"probe.readMemory"]) {
-        result = DSH GoHandleRead(params, &error);
+        result = DshGoandleRead(params, &error);
     } else if ([method isEqualToString:@"mem.write"]) {
-        result = DSH GoHandleWrite(params, confirmed, &error);
+        result = DshGoandleWrite(params, confirmed, &error);
     } else if ([method isEqualToString:@"exec.run"]) {
         result = DshGoAgentHandleExec(params, confirmed, &error);
     } else if ([method isEqualToString:@"fs.read"]) {
         result = DshGoAgentHandleReadFile(params, &error);
     } else if ([method isEqualToString:@"tweak.compile"]) {
-        result = DSH GoHandleCompile(params, &error);
+        result = DshGoandleCompile(params, &error);
     } else if ([method isEqualToString:@"tweak.inject"]) {
         // Reserved: answering "not implemented" is how a caller learns the
         // difference between "did nothing" and "cannot do this yet".
@@ -277,7 +277,7 @@ static NSDictionary *DSH GoHandleRequest(NSDictionary *request) {
         if (![request isKindOfClass:[NSDictionary class]]) {
             answer = @{@"id": @"", @"ok": @NO, @"error": @{@"code": @"ERR_BAD_PARAMS", @"message": @"payload must be a JSON object"}};
         } else {
-            answer = DSH GoHandleRequest(request);
+            answer = DshGoandleRequest(request);
         }
     } @catch (NSException *exception) {
         // A malformed request must not take the service down: the phone's other

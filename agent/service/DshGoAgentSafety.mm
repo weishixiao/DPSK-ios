@@ -26,7 +26,7 @@ NSError *DshGoAgentMakeError(DshGoAgentErrorCode code, NSString *message) {
 /// Accept only hex digits. A string with a `0x` prefix, a decimal number, or a
 /// stray character is rejected rather than guessed at: an address that is one
 /// byte off is a daemon writing into the wrong page.
-static BOOL DSH GoParseHex(NSString *text, uint64_t *out) {
+static BOOL DshGoarseHex(NSString *text, uint64_t *out) {
     if (text.length == 0 || text.length > 16) return NO;
     uint64_t value = 0;
     for (NSUInteger index = 0; index < text.length; index++) {
@@ -66,7 +66,7 @@ BOOL DshGoAgentIntegerParam(NSDictionary *params, NSString *key, NSInteger min, 
 
 BOOL DshGoAgentAddressParam(NSDictionary *params, NSString *key, uint64_t *out, NSError **error) {
     id value = params[key];
-    if (![value isKindOfClass:[NSString class]] || !DSH GoParseHex(value, out) || *out == 0) {
+    if (![value isKindOfClass:[NSString class]] || !DshGoarseHex(value, out) || *out == 0) {
         if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
                                               [NSString stringWithFormat:@"`%@` must be a hex address", key]);
         return NO;
@@ -97,7 +97,7 @@ NSData *DshGoAgentHexParam(NSDictionary *params, NSString *key, NSUInteger maxBy
     for (NSUInteger index = 0; index < bytes; index++) {
         uint64_t byte = 0;
         NSString *pair = [text substringWithRange:NSMakeRange(index * 2, 2)];
-        if (!DSH GoParseHex(pair, &byte)) {
+        if (!DshGoarseHex(pair, &byte)) {
             if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
                                                   [NSString stringWithFormat:@"`%@` is not hexadecimal", key]);
             return nil;

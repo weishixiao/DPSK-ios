@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "DshGoAgentExec.h"
 #import "DshGoAgentLog.h"
 #import "DshGoAgentProbe.h"
 #import "DshGoAgentSafety.h"
@@ -221,6 +222,10 @@ static NSDictionary *DSH GoHandleRequest(NSDictionary *request) {
         result = DSH GoHandleRead(params, &error);
     } else if ([method isEqualToString:@"mem.write"]) {
         result = DSH GoHandleWrite(params, confirmed, &error);
+    } else if ([method isEqualToString:@"exec.run"]) {
+        result = DshGoAgentHandleExec(params, confirmed, &error);
+    } else if ([method isEqualToString:@"fs.read"]) {
+        result = DshGoAgentHandleReadFile(params, &error);
     } else if ([method isEqualToString:@"tweak.compile"]) {
         result = DSH GoHandleCompile(params, &error);
     } else if ([method isEqualToString:@"tweak.inject"]) {

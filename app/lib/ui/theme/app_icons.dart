@@ -383,7 +383,7 @@ abstract final class AppIcons {
 
   /// 语音通话: start a call with the conversation (speech/call/).
   static const call = DshGlyphs.phone;
-  static const apps = DshGlyphs.phone;
+  static const apps = DshGlyphs.squaresFour;
 
   /// 语音通话: hang up.
   static const hangUp = DshGlyphs.phoneDisconnect;

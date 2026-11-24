@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "note": "Written by the DPSK installer. Edit and the next request re-reads it.",
+  "executableDirectories": [
+    "/usr/bin",
+    "/usr/sbin",
+    "/bin",
+    "/sbin",
+    "/usr/local/bin",
+    "/var/jb/usr/bin",
+    "/var/jb/bin"
+  ],
+  "allowlist": []
+}

@@ -1722,6 +1722,7 @@ class L10nEn extends L10n {
   @override
   String get agentTargetUnavailable => 'Privileged service not found';
 
+  @override
   String get androidShellTitle => 'Android Shell';
 
   @override

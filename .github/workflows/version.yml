@@ -52,7 +52,7 @@ jobs:
           set -euo pipefail
           git config user.name "weishixiao"
           git config user.email "weishixiao@users.noreply.github.com"
-          git add app/pubspec.yaml docs/guide app/assets/skills/dsh-go-guide
+          git add app/pubspec.yaml app/lib/state/app_info.dart docs/guide app/assets/skills/dsh-go-guide
           # Nothing to commit means the version did not change, which would be a
           # bug in the bump rather than a reason to fail the build.
           if git diff --cached --quiet; then

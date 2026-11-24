@@ -12,9 +12,12 @@ increments with every bump too, because two builds must never share one.
 
 The guide states the same number in a line of its own - `> dsh-go 1.0.0` in
 `docs/guide/README.md` and `docs/guide/harmony/README.md`, mirrored into the
-bundled skill - and `guide_sync.py --check` fails when the three disagree. That
-check is why this script moves them together: a bump that leaves them behind
-breaks the build one step later, in a job whose name says nothing about versions.
+bundled skill - and `guide_sync.py --check` fails when the three disagree. The app
+states it a fourth time, as the fallback of `DSH_APP_VERSION` in
+`lib/state/app_info.dart`, because there is no package_info plugin to ask; a test
+holds that fallback to the pubspec. So this script moves all of them: a bump that
+leaves one behind breaks a build two jobs later, in a job whose name says nothing
+about versions.
 
     python3 tool/bump_version.py          # bump and rewrite the files
     python3 tool/bump_version.py --print  # only show what the next version is
@@ -35,6 +38,7 @@ VERSION_LINE = re.compile(
     re.MULTILINE,
 )
 GUIDE_LINE = re.compile(r"^> dsh-go \S+$", re.MULTILINE)
+INFO_LINE = re.compile(r"(String\.fromEnvironment\('DSH_APP_VERSION', defaultValue: ')[^']+('\))")
 
 # The guide's own READMEs first, then the copy the app ships. `guide_sync.py`
 # regenerates the last one from the first; it is listed so a bump that never runs
@@ -44,6 +48,9 @@ GUIDES = (
     "docs/guide/harmony/README.md",
     "app/assets/skills/dsh-go-guide/README.md",
 )
+
+# The app's own fallback for the version, which carries the build number too.
+APP_INFO = "app/lib/state/app_info.dart"
 
 
 def next_version(version: str) -> str:
@@ -88,6 +95,19 @@ def bump(pubspec: pathlib.Path, repo: pathlib.Path | None = None) -> tuple[str, 
             raise SystemExit(f"{guide} has no `> dsh-go X.Y.Z` line to keep in step")
         guide.write_text(
             GUIDE_LINE.sub(f"> dsh-go {plain}", guide_text), encoding="utf-8", newline="\n"
+        )
+
+    # The app's fallback keeps the build number, because the test that guards it
+    # compares the whole `X.Y.Z+B` against the pubspec.
+    info = root / APP_INFO
+    if info.is_file():
+        info_text = info.read_text(encoding="utf-8")
+        if not INFO_LINE.search(info_text):
+            raise SystemExit(f"{info} has no DSH_APP_VERSION fallback to keep in step")
+        info.write_text(
+            INFO_LINE.sub(lambda match: f"{match.group(1)}{after}{match.group(2)}", info_text),
+            encoding="utf-8",
+            newline="\n",
         )
     return before, after
 

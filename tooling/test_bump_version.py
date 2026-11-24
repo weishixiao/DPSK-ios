@@ -143,6 +143,37 @@ class GuideTest(unittest.TestCase):
         with self.assertRaises(SystemExit):
             bump_version.bump(self.pubspec, repo=self.root)
 
+    def info(self, version: str) -> pathlib.Path:
+        path = self.root / bump_version.APP_INFO
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            "static const version = String.fromEnvironment('DSH_APP_VERSION', "
+            f"defaultValue: '{version}');\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+        return path
+
+    def test_the_app_fallback_moves_with_the_build_number(self) -> None:
+        info = self.info("1.0.8+8")
+        self.guide(bump_version.GUIDES[0], "1.0.8")
+        bump_version.bump(self.pubspec, repo=self.root)
+        # The test that guards this file compares the whole X.Y.Z+B, so the
+        # fallback must carry the build number, not just the dotted part.
+        self.assertIn("defaultValue: '1.0.9+9'", info.read_text(encoding="utf-8"))
+
+    def test_an_app_fallback_without_the_line_is_refused(self) -> None:
+        self.guide(bump_version.GUIDES[0], "1.0.8")
+        path = self.root / bump_version.APP_INFO
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("static const version = '1.0.8+8';\n", encoding="utf-8", newline="\n")
+        with self.assertRaises(SystemExit):
+            bump_version.bump(self.pubspec, repo=self.root)
+
+    def test_the_real_app_info_parses(self) -> None:
+        text = (bump_version.REPO / bump_version.APP_INFO).read_text(encoding="utf-8")
+        self.assertIsNotNone(bump_version.INFO_LINE.search(text), "app_info.dart has no version fallback")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1642,6 +1642,7 @@ class L10nZh extends L10n {
   @override
   String get agentTargetUnavailable => '未检测到特权服务';
 
+  @override
   String get androidShellTitle => 'Android Shell';
 
   @override

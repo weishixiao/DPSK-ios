@@ -3110,6 +3110,10 @@ abstract class L10n {
   /// **'未检测到特权服务'**
   String get agentTargetUnavailable;
 
+  /// No description provided for @androidShellTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'Android Shell'**
   String get androidShellTitle;
 
   /// No description provided for @androidShellEntryHint.

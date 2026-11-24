@@ -21341,6 +21341,9 @@ class L10nEn extends L10n {
   String get speechCallTile => 'Voice call';
 
   @override
+  String get chatAppsTile => 'Apps';
+
+  @override
   String get speechCallSection => 'Voice calls';
 
   @override

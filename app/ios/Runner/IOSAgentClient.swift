@@ -15,9 +15,25 @@ final class IOSAgentClient {
     connection != nil
   }
 
-  private func connected() -> NSXPCConnection {
+  private func connected() -> NSXPCConnection? {
     if let existing = connection { return existing }
-    let fresh = NSXPCConnection(machServiceName: Self.serviceName, options: [])
+    // `NSXPCConnection(machServiceName:options:)` is unavailable in the iOS
+    // SDK, but the selector ships in the Foundation runtime. Reach it through
+    // the ObjC runtime - the same pattern IOSPhoneControl uses to resolve
+    // PhoneRunnerSupport - so a host with the daemon installed connects, and
+    // a build without the daemon degrades to "unavailable".
+    let selector = NSSelectorFromString("initWithMachServiceName:options:")
+    guard let type = NSClassFromString("NSXPCConnection") as? NSObject.Type,
+          let method = class_getInstanceMethod(type, selector) else {
+      return nil
+    }
+    typealias MachServiceInit = @convention(c) (AnyObject, Selector, NSString, UInt) -> Unmanaged<NSXPCConnection>?
+    let initialize = unsafeBitCast(method_getImplementation(method), to: MachServiceInit.self)
+    let allocated = type.alloc() as AnyObject
+    guard let unmanaged = initialize(allocated, selector, Self.serviceName as NSString, 0) else {
+      return nil
+    }
+    let fresh = unmanaged.takeRetainedValue()
     fresh.remoteObjectInterface = NSXPCInterface(with: AgentXPCProtocol.self)
     fresh.invalidationHandler = { [weak self] in self?.connection = nil }
     fresh.interruptionHandler = { [weak self] in self?.connection = nil }
@@ -48,7 +64,11 @@ final class IOSAgentClient {
         finished = true
         continuation.resume(returning: answer)
       }
-      let proxy = connected().remoteObjectProxyWithErrorHandler { error in
+      guard let active = connected() else {
+        finish(["ok": false, "error": ["code": "ERR_AGENT_UNAVAILABLE", "message": "the service is not installed on this host"]])
+        return
+      }
+      let proxy = active.remoteObjectProxyWithErrorHandler { error in
         finish(["ok": false, "error": ["code": "ERR_INTERNAL", "message": error.localizedDescription]])
       } as? AgentXPCProtocol
       guard let proxy else {
@@ -56,7 +76,7 @@ final class IOSAgentClient {
         return
       }
       proxy.call(payload) { data in
-        guard let data, let decoded = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+        guard let decoded = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
           finish(["ok": false, "error": ["code": "ERR_INTERNAL", "message": "reply was not JSON"]])
           return
         }

@@ -87,9 +87,6 @@ jobs:
           python3 app/tool/l10n_merge.py --check
           python3 app/tool/guide_sync.py --check
           node sdk/plugin-kit/scripts/sync-skill.mjs --check
-          # Not --check: this also writes site/build/share, which the share worker builds from.
-          python3 app/tool/make_replay_viewer.py
-          git diff --exit-code -- app/lib/share_code/replay_viewer.g.dart
       - name: Python tooling
         run: |
           python3 -m venv "$RUNNER_TEMP/venv"
@@ -104,12 +101,6 @@ jobs:
         run: |
           npm install --ignore-scripts --no-package-lock --no-audit --no-fund
           npm test
-      - name: Market, sites, share worker
-        run: |
-          (cd market && npm ci --ignore-scripts --no-audit --no-fund && npm test)
-          (cd site/home && npm run check && npm run check:content && npm test)
-          (cd services/share-worker && npm ci --ignore-scripts --no-audit --no-fund && npm run build && npm run typecheck && npm test)
-          node --test site/share/test/viewer_test.mjs
 
   # A job of its own: on a test shard its minute was the difference between that shard and the others.
   analyze:

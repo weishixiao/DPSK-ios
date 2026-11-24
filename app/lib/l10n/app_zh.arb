@@ -12033,6 +12033,7 @@
   "speechCloudNotice": "语音会发给 DeepSeek 识别。想在手机上识别，可以换成语音模型。",
   "speechCloudNotSetUp": "还没设置云端识别服务",
   "speechCallTile": "语音通话",
+  "chatAppsTile": "应用",
   "speechCallSection": "语音通话",
   "speechCallFooter": "通话时说完一句停一下，就会发出去；回答边写边读。",
   "speechCallBargeIn": "插话打断",

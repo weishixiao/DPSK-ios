@@ -20190,6 +20190,9 @@ class L10nZh extends L10n {
   String get speechCallTile => '语音通话';
 
   @override
+  String get chatAppsTile => '应用';
+
+  @override
   String get speechCallSection => '语音通话';
 
   @override

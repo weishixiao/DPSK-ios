@@ -30,7 +30,7 @@ class _AppPicker extends StatefulWidget {
 }
 
 class _AppPickerState extends State<_AppPicker> {
-  late Future<List<InstalledApp>> _apps = widget.channel.installedApps();
+  late final Future<List<InstalledApp>> _apps = widget.channel.installedApps();
   String _query = '';
 
   @override

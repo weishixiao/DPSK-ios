@@ -11,5 +11,14 @@
 		<string>$(AppIdentifierPrefix)$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 		<string>$(AppIdentifierPrefix)io.github.ccch1mneyyy.dshgo.companion-widget</string>
 	</array>
+	<!-- The privileged half is a global Mach service registered by a launchd job.
+	     A sandboxed app cannot look one up without naming it here, so this is the
+	     one entitlement the app needs for the agent to work at all. It grants
+	     lookup of that service and nothing else: the daemon still enforces its own
+	     allowlist and the confirmation flag on every call. -->
+	<key>com.apple.security.exception.mach-lookup.global-name</key>
+	<array>
+		<string>io.github.ccch1mneyyy.dshgo.agentd</string>
+	</array>
 </dict>
 </plist>

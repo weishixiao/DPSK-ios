@@ -3815,6 +3815,9 @@ class L10nZh extends L10n {
   String get chatOpenedInNewChat => '已在新对话中打开';
 
   @override
+  String get chatAppsTile => '应用';
+
+  @override
   String chatForkQueuedLeft(String message, int left) {
     return '$message（$left 条排队消息未能带走）';
   }
@@ -20188,9 +20191,6 @@ class L10nZh extends L10n {
 
   @override
   String get speechCallTile => '语音通话';
-
-  @override
-  String get chatAppsTile => '应用';
 
   @override
   String get speechCallSection => '语音通话';

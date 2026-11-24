@@ -9,9 +9,27 @@
 	     cannot have, and the reason the privileged half is a daemon. -->
 	<key>task_for_pid-allow</key>
 	<true/>
+	<!-- The entitlement AMFI actually consults for `task_for_pid` on iOS 15 and
+	     later: `task_for_pid-allow` alone is not enough once the caller is not
+	     the target's parent, and this is what a debugger carries. -->
+	<key>com.apple.private.cs.debugger</key>
+	<true/>
 	<!-- Reads and writes outside the container: the projects and log live in
-	     /var/mobile/Library/DshGoAgent. -->
+	     /var/mobile/Library/DshGoAgent, and the tweak and package paths live
+	     under the jailbreak root, which is randomized by RootHide. -->
 	<key>com.apple.private.security.no-container</key>
+	<true/>
+	<key>com.apple.private.security.no-sandbox</key>
+	<true/>
+	<!-- The daemon loads the toolchains and helpers it runs (make, ldid,
+	     dpkg-deb, frida-inject) from the jailbreak root, which are not signed
+	     by this team; without this, dlopen and posix_spawn refuse them. -->
+	<key>run-unsigned-code</key>
+	<true/>
+	<!-- Lets a build of this daemon be attached to for debugging. It is what
+	     `csops` reports as CS_GET_TASK_ALLOW, and it is also how the caller can
+	     prove the signed product kept this file's entitlements. -->
+	<key>get-task-allow</key>
 	<true/>
 </dict>
 </plist>

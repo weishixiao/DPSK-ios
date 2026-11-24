@@ -7088,6 +7088,12 @@ abstract class L10n {
   /// **'已在新对话中打开'**
   String get chatOpenedInNewChat;
 
+  /// No description provided for @chatAppsTile.
+  ///
+  /// In zh, this message translates to:
+  /// **'应用'**
+  String get chatAppsTile;
+
   /// No description provided for @chatForkQueuedLeft.
   ///
   /// In zh, this message translates to:
@@ -37127,12 +37133,6 @@ abstract class L10n {
   /// In zh, this message translates to:
   /// **'语音通话'**
   String get speechCallTile;
-
-  /// No description provided for @chatAppsTile.
-  ///
-  /// In zh, this message translates to:
-  /// **'应用'**
-  String get chatAppsTile;
 
   /// No description provided for @speechCallSection.
   ///

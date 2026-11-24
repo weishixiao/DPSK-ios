@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - 'agent/**'
+      - 'tooling/ios/test_agent_entitlements.py'
       - '.github/workflows/agent.yml'
   workflow_dispatch:
 
@@ -36,12 +37,29 @@ jobs:
           echo "THEOS=$THEOS" >> "$GITHUB_ENV"
           "$THEOS/bin/theos-toolchain" 2>/dev/null || true
 
+      - name: Check the entitlement checker
+        run: python3 -m unittest discover -s tooling/ios -p 'test_agent_entitlements.py' -v
+
       - name: Build the daemon
         working-directory: agent/service
         run: |
           set -euo pipefail
           make -j"$(sysctl -n hw.ncpu)" 2>&1 | tail -40
           ls -l .theos/obj/arm64/dsh-go-agentd || true
+
+      # The signed product is what runs on the device, so the signed product is
+      # what the workflow checks: the entitlements have to be inside the binary,
+      # not only in agentd.entitlements next to it.
+      - name: Check the entitlements inside the binary
+        working-directory: agent/service
+        run: |
+          set -euo pipefail
+          binary=$(find .theos/obj -type f -name dsh-go-agentd | head -1)
+          if [ -z "$binary" ]; then
+            echo "the build produced no dsh-go-agentd; nothing to check" >&2
+            exit 1
+          fi
+          python3 check-entitlements.py "$binary"
 
       - name: Package
         working-directory: agent/service

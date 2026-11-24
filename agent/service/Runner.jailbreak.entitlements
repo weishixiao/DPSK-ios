@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Applied by sign-app.sh when the app is re-signed for a jailbroken device.
+	     It is deliberately not in Runner.entitlements: the Xcode build stays a
+	     normal app, and only the TrollStore/jailbreak artifact carries these. -->
+	<key>platform-application</key>
+	<true/>
+	<key>com.apple.private.security.no-sandbox</key>
+	<true/>
+	<key>com.apple.private.security.no-container</key>
+	<true/>
+	<key>get-task-allow</key>
+	<true/>
+	<key>run-unsigned-code</key>
+	<true/>
+	<!-- Kept from Runner.entitlements: the XPC lookup for the daemon, which the
+	     app needs even with no-sandbox, because the service is global. -->
+	<key>com.apple.security.exception.mach-lookup.global-name</key>
+	<array>
+		<string>io.github.ccch1mneyyy.dshgo.agentd</string>
+	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.io.github.ccch1mneyyy.dshgo</string>
+	</array>
+</dict>
+</plist>

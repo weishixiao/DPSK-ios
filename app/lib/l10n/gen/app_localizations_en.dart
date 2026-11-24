@@ -4013,6 +4013,9 @@ class L10nEn extends L10n {
   String get chatOpenedInNewChat => 'Opened in a new chat';
 
   @override
+  String get chatAppsTile => 'Apps';
+
+  @override
   String chatForkQueuedLeft(String message, int left) {
     String _temp0 = intl.Intl.pluralLogic(
       left,
@@ -21339,9 +21342,6 @@ class L10nEn extends L10n {
 
   @override
   String get speechCallTile => 'Voice call';
-
-  @override
-  String get chatAppsTile => 'Apps';
 
   @override
   String get speechCallSection => 'Voice calls';

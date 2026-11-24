@@ -3,8 +3,11 @@
 #import "DshGoAgentLog.h"
 #import "DshGoAgentSafety.h"
 
+// `mach/mach_vm.h` cannot be used from the iOS SDK: on iOS 26 the header itself
+// stops the build with "mach_vm.h unsupported". The vm_* family declared in
+// <mach/vm_map.h> (pulled in by <mach/mach.h>) is the public equivalent, and on
+// arm64 it is the same 64-bit width, so nothing here names a mach_vm_* symbol.
 #include <mach/mach.h>
-#include <mach/mach_vm.h>
 #include <string.h>
 #include <sys/sysctl.h>
 #include <sys/types.h>
@@ -120,14 +123,14 @@ NSData *DshGoAgentReadMemory(pid_t pid, uint64_t address, NSUInteger length, NSE
     }
 
     NSMutableData *buffer = [NSMutableData dataWithLength:length];
-    mach_vm_size_t read_bytes = 0;
-    kr = mach_vm_read_overwrite(task, (mach_vm_address_t)address, (mach_vm_size_t)length,
-                                (mach_vm_address_t)buffer.mutableBytes, &read_bytes);
+    vm_size_t read_bytes = 0;
+    kr = vm_read_overwrite(task, (vm_address_t)address, (vm_size_t)length,
+                           (vm_address_t)buffer.mutableBytes, &read_bytes);
     mach_port_deallocate(mach_task_self(), task);
 
     if (kr != KERN_SUCCESS) {
         if (error) *error = DshGoAgentMakeError(DshGoAgentErrorAttachFailed,
-                                              [NSString stringWithFormat:@"mach_vm_read at %llx failed: %s", address, mach_error_string(kr)]);
+                                              [NSString stringWithFormat:@"vm_read_overwrite at %llx failed: %s", address, mach_error_string(kr)]);
         return nil;
     }
     buffer.length = (NSUInteger)read_bytes;
@@ -143,15 +146,15 @@ BOOL DshGoAgentWriteMemory(pid_t pid, uint64_t address, NSData *data, NSError **
         return NO;
     }
 
-    // `mach_vm_write` takes a byte count, not a page count, and fails on the
-    // first unmapped byte: a short write is a refused write, not a partial edit.
-    kr = mach_vm_write(task, (mach_vm_address_t)address, (vm_offset_t)(uintptr_t)data.bytes,
-                       (mach_msg_type_number_t)data.length);
+    // `vm_write` takes a byte count, not a page count, and fails on the first
+    // unmapped byte: a short write is a refused write, not a partial edit.
+    kr = vm_write(task, (vm_address_t)address, (vm_offset_t)(uintptr_t)data.bytes,
+                  (mach_msg_type_number_t)data.length);
     mach_port_deallocate(mach_task_self(), task);
 
     if (kr != KERN_SUCCESS) {
         if (error) *error = DshGoAgentMakeError(DshGoAgentErrorAttachFailed,
-                                              [NSString stringWithFormat:@"mach_vm_write at %llx failed: %s", address, mach_error_string(kr)]);
+                                              [NSString stringWithFormat:@"vm_write at %llx failed: %s", address, mach_error_string(kr)]);
         return NO;
     }
     return YES;

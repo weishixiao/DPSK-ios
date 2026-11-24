@@ -50,9 +50,27 @@ Every method that names a process takes `pid`. Every method that names one of
 | `probe.listProcesses` | — | `{processes:[{pid, uid, name, path, bundleId}]}` | none |
 | `probe.modules` | `pid` | `{pid, modules:[{path, base, size}]}` | none |
 | `probe.readMemory` | `pid, address, length` | `{hex, base}` | none (read-only) |
+| `proc.info` | `pid` | `{pid, name, path, bundleId?, uid, ppid, archs?, arch?, platformBinary?, restricted?, hardened?, debuggable?, entitlements?, attachable, attachError?}` | none (read-only) |
+| `proc.attach` | `pid` | `{pid, attachable}` | none — asks for the task port and gives it straight back |
+| `mem.scan` | `pid, pattern, start?, end?, limit?` | `{pid, matches:[hex], count, start, end, bounded}` | none (read-only) |
 | `mem.write` | `pid, address, hex` | `{written}` | **high** — needs `confirmed` |
 | `tweak.compile` | `project, args?` | `{artifact, log}` | low — builds only |
 | `tweak.inject` | `pid, dylib` | — | **reserved** |
+
+`proc.info` is the answer to "can this target be worked on at all": `attachable`
+is the result of an actual `task_for_pid`, and the `csops` fields say what the
+target runs with. A field that the kernel would not answer is absent rather than
+guessed, so `hardened` missing is not `hardened: false`.
+
+`mem.scan` takes a hex pattern where `??` is a wildcard byte (`"41 ?? 43"` and
+`"41??43"` are the same request). `start` defaults to `0x100000000` and `end` to
+`0x2000000000`, the arm64 app space; the walk follows `vm_region_recurse_64`, so
+unmapped gaps cost one syscall. Matches are capped at 4096, the pattern at 256
+bytes, and the daemon reads at most 512 MiB of a target per call; `bounded` says
+whether the answer was cut short by the cap rather than being complete.
+
+`probe.ping` also names the jailbreak root the daemon resolved for itself, which
+is how a caller learns where its `/usr/bin` actually is on a RootHide device.
 
 `tweak.inject` is reserved: it answers `ERR_NOT_IMPLEMENTED` until the injection
 path exists, so a caller cannot mistake silence for success.

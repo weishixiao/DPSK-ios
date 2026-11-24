@@ -16,6 +16,11 @@ NSArray<NSDictionary *> *DshGoAgentModulesForPID(pid_t pid);
 /// The bundle id of the app at `pid`, or nil when it is not an app bundle.
 NSString *_Nullable DshGoAgentBundleIdForPID(pid_t pid);
 
+/// The executable path of `pid`, or nil. iOS has no libproc, so this comes from
+/// KERN_PROCARGS2; callers that read the file must not assume it is readable -
+/// another uid's binary is not, even for the daemon.
+NSString *_Nullable DshGoAgentExecutablePathForPID(pid_t pid);
+
 /// `length` bytes at `address` of `pid`. Requires `task_for_pid`.
 NSData *_Nullable DshGoAgentReadMemory(pid_t pid, uint64_t address, NSUInteger length, NSError *_Nullable *_Nullable error);
 

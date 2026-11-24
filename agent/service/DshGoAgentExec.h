@@ -2,6 +2,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// The jailbreak root on this device: "" when the install is rootful, otherwise
+/// the directory the daemon was launched from (`<root>/usr/libexec/<daemon>`).
+/// RootHide randomizes it per boot, so this is the only reliable way to name a
+/// path under it - `/var/jb` does not exist there at all.
+NSString *DshGoJailbreakRoot(void);
+
 /// Running a binary on behalf of the app.
 ///
 /// The daemon is the only process the system lets spawn outside the app

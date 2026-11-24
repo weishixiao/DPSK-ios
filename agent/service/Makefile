@@ -13,7 +13,7 @@ TARGET = iphone:clang:latest:15.0
 include $(THEOS)/makefiles/common.mk
 
 TOOL_NAME = dsh-go-agentd
-dsh-go-agentd_FILES = agentd.mm DshGoAgentSafety.mm DshGoAgentLog.mm DshGoAgentProbe.mm DshGoAgentExec.mm
+dsh-go-agentd_FILES = agentd.mm DshGoAgentSafety.mm DshGoAgentLog.mm DshGoAgentProbe.mm DshGoAgentProcess.mm DshGoAgentExec.mm
 dsh-go-agentd_FRAMEWORKS = Foundation
 dsh-go-agentd_PRIVATE_FRAMEWORKS =
 dsh-go-agentd_INSTALL_PATH = /usr/libexec

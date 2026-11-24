@@ -1,9 +1,9 @@
 // The privileged half of the workbench.
 //
 // It runs from launchd, outside the app's sandbox, which is the only place
-// `task_for_pid` and `mach_vm_write` work on a RootHide device. The app and the
-// harness never link any of this: they send JSON to the Mach service below, and
-// what comes back is a record of what happened, never a live handle.
+// `task_for_pid` and `vm_read_overwrite` work on a RootHide device. The app and
+// the harness never link any of this: they send JSON to the Mach service below,
+// and what comes back is a record of what happened, never a live handle.
 //
 // Everything a request can reach is in `DshGoAgentSafety` first: this file has no
 // path around the allowlist or around the confirmation flag.
@@ -13,6 +13,7 @@
 #import "DshGoAgentExec.h"
 #import "DshGoAgentLog.h"
 #import "DshGoAgentProbe.h"
+#import "DshGoAgentProcess.h"
 #import "DshGoAgentSafety.h"
 
 #include <signal.h>
@@ -25,6 +26,8 @@ extern char **environ;
 static const NSUInteger kMaxPayload = 1024 * 1024;
 static const NSUInteger kMaxReadLength = 64 * 1024;
 static const NSUInteger kMaxWriteLength = 4 * 1024;
+static const NSUInteger kMaxPatternBytes = 256;
+static const NSUInteger kMaxScanMatches = 4096;
 
 @protocol DshGoAgentXPC <NSObject>
 - (void)call:(NSData *)payload reply:(void (^)(NSData *reply))reply;
@@ -34,10 +37,14 @@ static const NSUInteger kMaxWriteLength = 4 * 1024;
 
 static NSDictionary *DshGoPing(void) {
     return @{
-        @"version": @"0.1.0",
+        @"version": @"0.2.0",
         @"pid": @(getpid()),
         @"uptime": @([[NSProcessInfo processInfo] systemUptime]),
         @"allowlist": [[DshGoAgentSafety shared] allowedBundleIds],
+        // What the daemon resolved the jailbreak root to be. On RootHide it is
+        // randomized per boot and `/var/jb` does not exist, so a caller that
+        // needs a path under it should read it here instead of assuming.
+        @"root": DshGoJailbreakRoot(),
     };
 }
 
@@ -99,6 +106,125 @@ static id DshGoHandleWrite(NSDictionary *params, BOOL confirmed, NSError **error
 
     if (!DshGoAgentWriteMemory(pid, address, data, error)) return nil;
     return @{@"written": @(data.length), @"address": [NSString stringWithFormat:@"%llx", address]};
+}
+
+/// One hex byte pair, written out here because `DshGoAgentSafety`'s parser is
+/// `static` to its own file and intra-file helpers are not a public interface.
+static BOOL DshGoBytePair(NSString *pair, uint8_t *out) {
+    int digits[2] = {-1, -1};
+    for (NSUInteger index = 0; index < 2; index++) {
+        unichar c = [pair characterAtIndex:index];
+        if (c >= '0' && c <= '9') digits[index] = c - '0';
+        else if (c >= 'a' && c <= 'f') digits[index] = c - 'a' + 10;
+        else if (c >= 'A' && c <= 'F') digits[index] = c - 'A' + 10;
+        else return NO;
+    }
+    *out = (uint8_t)((digits[0] << 4) | digits[1]);
+    return YES;
+}
+
+/// Parse a hex pattern in which `??` is a wildcard byte.
+///
+/// `mem.write` is strict hex because a write must not have holes; a search is
+/// the one caller that legitimately wants "any byte here", so it gets its own
+/// parser instead of a flag that loosens the write path.
+static NSData *DshGoPatternParam(NSDictionary *params, NSString *key, NSData **maskOut, NSError **error) {
+    id value = params[key];
+    if (![value isKindOfClass:[NSString class]]) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+                [NSString stringWithFormat:@"`%@` must be a hex string, with ?? for a wildcard byte", key]);
+        }
+        return nil;
+    }
+    NSString *text = value;
+    NSMutableString *clean = [NSMutableString stringWithCapacity:text.length];
+    for (NSUInteger index = 0; index < text.length; index++) {
+        unichar c = [text characterAtIndex:index];
+        if (c == ' ' || c == '-' || c == ',' || c == '\t' || c == '\n') continue;
+        [clean appendFormat:@"%C", c];
+    }
+    if (clean.length == 0 || clean.length % 2 != 0) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+                [NSString stringWithFormat:@"`%@` must be an even number of hex digits or ??", key]);
+        }
+        return nil;
+    }
+    NSUInteger bytes = clean.length / 2;
+    if (bytes > kMaxPatternBytes) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+                [NSString stringWithFormat:@"`%@` is limited to %lu bytes", key, (unsigned long)kMaxPatternBytes]);
+        }
+        return nil;
+    }
+
+    NSMutableData *pattern = [NSMutableData dataWithCapacity:bytes];
+    NSMutableData *mask = [NSMutableData dataWithCapacity:bytes];
+    for (NSUInteger index = 0; index < bytes; index++) {
+        NSString *pair = [clean substringWithRange:NSMakeRange(index * 2, 2)];
+        uint8_t byte = 0;
+        uint8_t maskByte = 0xFF;
+        if ([pair isEqualToString:@"??"]) {
+            byte = 0;
+            maskByte = 0;
+        } else if (!DshGoBytePair(pair, &byte)) {
+            if (error) {
+                *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+                    [NSString stringWithFormat:@"`%@` has a non-hex byte \"%@\"", key, pair]);
+            }
+            return nil;
+        }
+        [pattern appendBytes:&byte length:1];
+        [mask appendBytes:&maskByte length:1];
+    }
+    *maskOut = mask;
+    return pattern;
+}
+
+/// Search one of the owner's processes for a byte pattern.
+///
+/// Read-only, and bounded: the pattern is capped, the match count is capped, the
+/// byte budget lives in `DshGoAgentScanMemory`, and the default range is the
+/// arm64 app space rather than the whole address space.
+static id DshGoHandleScan(NSDictionary *params, NSError **error) {
+    pid_t pid = 0;
+    if (!DshGoResolveTarget(params, &pid, error)) return nil;
+
+    NSData *mask = nil;
+    NSData *pattern = DshGoPatternParam(params, @"pattern", &mask, error);
+    if (pattern == nil) return nil;
+
+    uint64_t start = 0x100000000ULL;
+    uint64_t end = 0x2000000000ULL;
+    if (params[@"start"] != nil) {
+        if (!DshGoAgentAddressParam(params, @"start", &start, error)) return nil;
+    }
+    if (params[@"end"] != nil) {
+        if (!DshGoAgentAddressParam(params, @"end", &end, error)) return nil;
+    }
+
+    NSInteger limit = 64;
+    if (params[@"limit"] != nil) {
+        if (!DshGoAgentIntegerParam(params, @"limit", 1, (NSInteger)kMaxScanMatches, &limit, error)) return nil;
+    }
+
+    NSArray<NSNumber *> *matches = DshGoAgentScanMemory(pid, pattern, mask, start, end, (NSUInteger)limit, error);
+    if (matches == nil) return nil;
+
+    NSMutableArray<NSString *> *addresses = [NSMutableArray arrayWithCapacity:matches.count];
+    for (NSNumber *address in matches) {
+        [addresses addObject:[NSString stringWithFormat:@"%llx", address.unsignedLongLongValue]];
+    }
+    return @{
+        @"pid": @(pid),
+        @"matches": addresses,
+        @"count": @(addresses.count),
+        @"start": [NSString stringWithFormat:@"%llx", start],
+        @"end": [NSString stringWithFormat:@"%llx", end],
+        @"bounded": @(addresses.count >= (NSUInteger)limit),
+    };
 }
 
 /// Run `make package` in one of the owner's projects.
@@ -278,6 +404,25 @@ static NSDictionary *DshGoHandleRequest(NSDictionary *request) {
         result = DshGoHandleRead(params, &error);
     } else if ([method isEqualToString:@"mem.write"]) {
         result = DshGoHandleWrite(params, confirmed, &error);
+    } else if ([method isEqualToString:@"proc.info"]) {
+        if (DshGoResolveTarget(params, &target, &error)) {
+            result = DshGoAgentProcessInfo(target, &error);
+        }
+    } else if ([method isEqualToString:@"proc.attach"]) {
+        // The one call that proves the entitlements are in effect: it asks for
+        // the task port and gives it back. A caller that only wants the yes/no
+        // should not pay for the Mach-O read in `proc.info`.
+        if (DshGoResolveTarget(params, &target, &error)) {
+            NSError *attachError = nil;
+            BOOL attachable = DshGoAgentAttachable(target, &attachError);
+            if (attachError != nil) {
+                if (error) *error = attachError;
+            } else {
+                result = @{@"pid": @(target), @"attachable": @(attachable)};
+            }
+        }
+    } else if ([method isEqualToString:@"mem.scan"]) {
+        result = DshGoHandleScan(params, &error);
     } else if ([method isEqualToString:@"exec.run"]) {
         result = DshGoAgentHandleExec(params, confirmed, &error);
     } else if ([method isEqualToString:@"fs.read"]) {

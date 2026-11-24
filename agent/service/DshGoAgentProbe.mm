@@ -1,4 +1,4 @@
-#import "DshGoAgentProbe.h"
+﻿#import "DshGoAgentProbe.h"
 
 #import "DshGoAgentLog.h"
 #import "DshGoAgentSafety.h"
@@ -16,7 +16,7 @@
 ///
 /// libproc is macOS-only, so on iOS the same answer comes from KERN_PROCARGS2,
 /// which starts with the argument count followed by the nul-separated argv.
-static NSString *DshGoAgentExecutablePath(pid_t pid) {
+NSString *DshGoAgentExecutablePathForPID(pid_t pid) {
     int mib[3] = {CTL_KERN, KERN_PROCARGS2, pid};
     size_t size = 0;
     if (sysctl(mib, 3, NULL, &size, NULL, 0) != 0 || size == 0) return nil;
@@ -43,7 +43,7 @@ static NSString *DshGoAgentExecutablePath(pid_t pid) {
 }
 
 NSString *DshGoAgentBundleIdForPID(pid_t pid) {
-    NSString *executable = DshGoAgentExecutablePath(pid);
+    NSString *executable = DshGoAgentExecutablePathForPID(pid);
     if (executable.length == 0) return nil;
     // An app's bundle is the .app that contains the executable. Anything else
     // (a system daemon, a dylib host) has no bundle id and cannot be named in an
@@ -82,7 +82,7 @@ NSArray<NSDictionary *> *DshGoAgentListProcesses(void) {
         entry[@"pid"] = @(pid);
         entry[@"name"] = @(table[index].kp_proc.p_comm);
         entry[@"uid"] = @(table[index].kp_eproc.e_ucred.cr_uid);
-        NSString *executable = DshGoAgentExecutablePath(pid);
+        NSString *executable = DshGoAgentExecutablePathForPID(pid);
         if (executable.length > 0) {
             entry[@"path"] = executable;
             entry[@"name"] = executable.lastPathComponent ?: entry[@"name"];

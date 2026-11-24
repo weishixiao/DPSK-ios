@@ -12,10 +12,52 @@
 
 extern char **environ;
 
+/// The jailbreak root on this device, or "" when the install is rootful.
+///
+/// RootHide randomizes the root per boot and leaves `/var/jb` nonexistent, so
+/// the hardcoded rootless paths below are only part of the answer. The reliable
+/// source is the daemon's own launch path: launchd starts it from
+/// `<root>/usr/libexec`, and the toolchain it runs (make, ldid, dpkg, frida) is
+/// in `<root>/usr/bin` beside it. Deriving it once keeps every later path -
+/// tweak install, package install - pointed at the root that is actually there.
+NSString *DshGoJailbreakRoot(void) {
+    static NSString *root;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        NSString *executable = [[NSBundle mainBundle] executablePath];
+        if (executable.length == 0) {
+            root = @"";
+            return;
+        }
+        // <root>/usr/libexec/dsh-go-agentd -> <root>/usr -> <root>
+        NSString *libexec = [executable stringByDeletingLastPathComponent];
+        NSString *usr = [libexec stringByDeletingLastPathComponent];
+        root = [usr stringByDeletingLastPathComponent] ?: @"";
+        if ([root isEqualToString:@"/"]) root = @"";
+    });
+    return root;
+}
+
 /// Where a request may execute from. These are where a jailbreak toolchain
 /// installs; anything else is refused even though the daemon could run it.
 static NSArray<NSString *> *DshGoExecutableDirectories(void) {
-    return @[@"/usr/bin", @"/usr/sbin", @"/bin", @"/sbin", @"/usr/local/bin", @"/var/jb/usr/bin", @"/var/jb/bin"];
+    static NSArray<NSString *> *directories;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        NSMutableArray<NSString *> *list = [NSMutableArray arrayWithArray:@[
+            @"/usr/bin", @"/usr/sbin", @"/bin", @"/sbin", @"/usr/local/bin",
+            @"/var/jb/usr/bin", @"/var/jb/bin",
+        ]];
+        NSString *root = DshGoJailbreakRoot();
+        if (root.length > 0) {
+            for (NSString *component in @[@"usr/bin", @"usr/sbin", @"usr/local/bin", @"bin"]) {
+                NSString *candidate = [root stringByAppendingPathComponent:component];
+                if (![list containsObject:candidate]) [list addObject:candidate];
+            }
+        }
+        directories = [list copy];
+    });
+    return directories;
 }
 
 static const NSUInteger kMaxOutputBytes = 256 * 1024;

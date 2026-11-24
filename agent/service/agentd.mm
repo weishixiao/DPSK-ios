@@ -68,7 +68,7 @@ static id DshGoHandleRead(NSDictionary *params, NSError **error) {
     if (data == nil) return nil;
 
     NSMutableString *hex = [NSMutableString stringWithCapacity:data.length * 2];
-    const uint8_t *bytes = data.bytes;
+    const uint8_t *bytes = (const uint8_t *)data.bytes;
     for (NSUInteger index = 0; index < data.length; index++) {
         [hex appendFormat:@"%02x", bytes[index]];
     }
@@ -133,14 +133,13 @@ static id DshGoHandleCompile(NSDictionary *params, NSError **error) {
 
     posix_spawn_file_actions_t actions;
     posix_spawn_file_actions_init(&actions);
-    posix_spawn_file_actions_addchdir_np(&actions, directory.fileSystemRepresentation);
     posix_spawn_file_actions_adddup2(&actions, output[1], STDOUT_FILENO);
     posix_spawn_file_actions_adddup2(&actions, output[1], STDERR_FILENO);
     posix_spawn_file_actions_addclose(&actions, output[0]);
 
     const char *argv[] = {"make", "package", NULL};
     pid_t child = 0;
-    int spawned = posix_spawn(&child, "/usr/bin/make", &actions, NULL, argv, environ);
+    int spawned = posix_spawn(&child, "/usr/bin/make", &actions, NULL, (char *const *)argv, environ);
     posix_spawn_file_actions_destroy(&actions);
     close(output[1]);
 

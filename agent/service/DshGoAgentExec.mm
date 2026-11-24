@@ -52,7 +52,7 @@ static const NSUInteger kMaxOutputBytes = 256 * 1024;
 
     NSMutableArray<NSString *> *words = [NSMutableArray arrayWithObject:path];
     for (NSString *argument in arguments) [words addObject:argument];
-    char **argv = calloc(words.count + 1, sizeof(char *));
+    char **argv = (char **)calloc(words.count + 1, sizeof(char *));
     if (argv == NULL) {
         if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal, @"out of memory");
         return nil;
@@ -78,7 +78,7 @@ static const NSUInteger kMaxOutputBytes = 256 * 1024;
     posix_spawn_file_actions_addclose(&actions, fd);
 
     pid_t child = 0;
-    int spawned = posix_spawn(&child, path.fileSystemRepresentation, &actions, NULL, argv, environ);
+    int spawned = posix_spawn(&child, path.fileSystemRepresentation, &actions, NULL, (char *const *)argv, environ);
     posix_spawn_file_actions_destroy(&actions);
     for (NSUInteger index = 0; index < words.count; index++) free(argv[index]);
     free(argv);

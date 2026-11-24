@@ -74,6 +74,52 @@ static const NSUInteger kMaxOutputBytes = 256 * 1024;
     return nil;
 }
 
++ (nullable NSNumber *)spawnDetached:(NSString *)path
+                           arguments:(NSArray<NSString *> *)arguments
+                               error:(NSError *_Nullable *_Nullable)error {
+    NSString *parent = [path stringByDeletingLastPathComponent];
+    if (![DshGoExecutableDirectories() containsObject:parent]) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorTargetNotAllowed,
+            [NSString stringWithFormat:@"%@ is outside the executable directories", path]);
+        return nil;
+    }
+    if (![[NSFileManager defaultManager] isExecutableFileAtPath:path]) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorBadParams,
+            [NSString stringWithFormat:@"%@ is not executable", path]);
+        return nil;
+    }
+
+    NSMutableArray<NSString *> *words = [NSMutableArray arrayWithObject:path];
+    for (NSString *argument in arguments) [words addObject:argument];
+    char **argv = (char **)calloc(words.count + 1, sizeof(char *));
+    if (argv == NULL) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal, @"out of memory");
+        return nil;
+    }
+    for (NSUInteger index = 0; index < words.count; index++) argv[index] = strdup(words[index].UTF8String);
+
+    // Output goes to /dev/null on purpose: a server that wrote into a pipe or a
+    // capture file nobody drains would eventually block on a full buffer, and
+    // nothing here is going to read it. Its life is tracked by its pid.
+    posix_spawn_file_actions_t actions;
+    posix_spawn_file_actions_init(&actions);
+    posix_spawn_file_actions_addopen(&actions, STDOUT_FILENO, "/dev/null", O_WRONLY, 0);
+    posix_spawn_file_actions_addopen(&actions, STDERR_FILENO, "/dev/null", O_WRONLY, 0);
+
+    pid_t child = 0;
+    int spawned = posix_spawn(&child, path.fileSystemRepresentation, &actions, NULL, (char *const *)argv, environ);
+    posix_spawn_file_actions_destroy(&actions);
+    for (NSUInteger index = 0; index < words.count; index++) free(argv[index]);
+    free(argv);
+
+    if (spawned != 0) {
+        if (error) *error = DshGoAgentMakeError(DshGoAgentErrorInternal,
+            [NSString stringWithFormat:@"cannot start %@: %s", path, strerror(spawned)]);
+        return nil;
+    }
+    return @(child);
+}
+
 + (nullable NSDictionary *)runPath:(NSString *)path
                           arguments:(NSArray<NSString *> *)arguments
                            timeout:(NSTimeInterval)timeout

@@ -21,6 +21,17 @@ NSString *DshGoJailbreakRoot(void);
 /// from, otherwise nil. `name` may not contain a slash.
 + (nullable NSString *)resolveBinary:(NSString *)name;
 
+/// Start `path` and return its pid without waiting for it.
+///
+/// `runPath:arguments:timeout:error:` blocks until the child exits, which is
+/// right for a build and wrong for a service the daemon has to keep: this is the
+/// same `posix_spawn` with no wait, so the caller gets a pid it can watch. The
+/// child's output goes to /dev/null - nobody would drain it, and a full pipe
+/// would stop the child.
++ (nullable NSNumber *)spawnDetached:(NSString *)path
+                           arguments:(NSArray<NSString *> *)arguments
+                               error:(NSError *_Nullable *_Nullable)error;
+
 /// Run `path` with `arguments`. Returns stdout+stderr and the exit status.
 ///
 /// Refuses a path outside the executable directories, so a caller cannot point

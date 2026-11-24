@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 
 #import "DshGoAgentExec.h"
+#import "DshGoAgentFrida.h"
 #import "DshGoAgentLog.h"
 #import "DshGoAgentProbe.h"
 #import "DshGoAgentProcess.h"
@@ -227,6 +228,53 @@ static id DshGoHandleScan(NSDictionary *params, NSError **error) {
     };
 }
 
+/// Start the Frida server on loopback.
+///
+/// The confirmation flag is not ceremony here: a listening Frida server hands
+/// full instrumentation of anything the daemon can attach to, to any local
+/// process that can open the port - which is a bigger surface than any single
+/// `mem.write` and outlives the request that opened it.
+static id DshGoHandleFridaStart(NSDictionary *params, BOOL confirmed, NSError **error) {
+    if (!confirmed) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorConfirmationRequired,
+                @"frida.start opens a listening socket; send it with confirmed:true");
+        }
+        return nil;
+    }
+    NSInteger port = 27042;
+    if (params[@"port"] != nil) {
+        if (!DshGoAgentIntegerParam(params, @"port", 1024, 65535, &port, error)) return nil;
+    }
+    return DshGoAgentFridaStart((uint16_t)port, error);
+}
+
+/// Run one Frida script against one of the owner's processes.
+///
+/// Also confirmed: the script runs with the daemon's identity, so it can reach
+/// exactly what `mem.write` can reach and more, and unlike a memory write its
+/// effects are not bounded by a length the caller declared up front.
+static id DshGoHandleFridaInject(NSDictionary *params, BOOL confirmed, NSError **error) {
+    if (!confirmed) {
+        if (error) {
+            *error = DshGoAgentMakeError(DshGoAgentErrorConfirmationRequired,
+                @"frida.inject runs a script with the daemon's identity; send it with confirmed:true");
+        }
+        return nil;
+    }
+    pid_t pid = 0;
+    if (!DshGoResolveTarget(params, &pid, error)) return nil;
+
+    NSString *script = DshGoAgentStringParam(params, @"script", error);
+    if (script == nil) return nil;
+
+    NSInteger timeoutSeconds = 15;
+    if (params[@"timeout"] != nil) {
+        if (!DshGoAgentIntegerParam(params, @"timeout", 1, 120, &timeoutSeconds, error)) return nil;
+    }
+    return DshGoAgentFridaInject(pid, script, (NSTimeInterval)timeoutSeconds, error);
+}
+
 /// Run `make package` in one of the owner's projects.
 ///
 /// The argv array is fixed: the request names a project, never a command. `make`
@@ -423,6 +471,14 @@ static NSDictionary *DshGoHandleRequest(NSDictionary *request) {
         }
     } else if ([method isEqualToString:@"mem.scan"]) {
         result = DshGoHandleScan(params, &error);
+    } else if ([method isEqualToString:@"frida.status"]) {
+        result = DshGoAgentFridaStatus();
+    } else if ([method isEqualToString:@"frida.start"]) {
+        result = DshGoHandleFridaStart(params, confirmed, &error);
+    } else if ([method isEqualToString:@"frida.stop"]) {
+        if (DshGoAgentFridaStop(&error)) result = @{@"stopped": @YES};
+    } else if ([method isEqualToString:@"frida.inject"]) {
+        result = DshGoHandleFridaInject(params, confirmed, &error);
     } else if ([method isEqualToString:@"exec.run"]) {
         result = DshGoAgentHandleExec(params, confirmed, &error);
     } else if ([method isEqualToString:@"fs.read"]) {

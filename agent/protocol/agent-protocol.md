@@ -54,6 +54,10 @@ Every method that names a process takes `pid`. Every method that names one of
 | `proc.attach` | `pid` | `{pid, attachable}` | none — asks for the task port and gives it straight back |
 | `mem.scan` | `pid, pattern, start?, end?, limit?` | `{pid, matches:[hex], count, start, end, bounded}` | none (read-only) |
 | `mem.write` | `pid, address, hex` | `{written}` | **high** — needs `confirmed` |
+| `frida.status` | — | `{available, server, inject, root, running, pid?, port?}` | none |
+| `frida.start` | `port?` (default 27042) | `{pid, port, address}` | **high** — needs `confirmed` |
+| `frida.stop` | — | `{stopped}` | low — only stops its own child |
+| `frida.inject` | `pid, script, timeout?` | `{pid, exit, output, truncated}` | **high** — needs `confirmed` |
 | `tweak.compile` | `project, args?` | `{artifact, log}` | low — builds only |
 | `tweak.inject` | `pid, dylib` | — | **reserved** |
 
@@ -72,8 +76,19 @@ whether the answer was cut short by the cap rather than being complete.
 `probe.ping` also names the jailbreak root the daemon resolved for itself, which
 is how a caller learns where its `/usr/bin` actually is on a RootHide device.
 
+`frida.*` is the instrumentation channel. `frida.start` needs `confirmed` because
+a listening Frida server exposes everything the daemon can attach to, to any
+local process that can open the port; it is tracked by a pid file so a later
+request - or a restarted daemon - can stop it, and `frida.stop` only ever stops a
+server it started. `frida.inject` is not a session: it writes one script, runs it
+through `frida-inject` for a bounded time, and returns what it printed, which is
+what a single question needs. A caller that wants to talk to one agent over and
+over should start the server and speak its protocol on loopback instead.
+
 `tweak.inject` is reserved: it answers `ERR_NOT_IMPLEMENTED` until the injection
-path exists, so a caller cannot mistake silence for success.
+path exists, so a caller cannot mistake silence for success. It is not the same
+thing as `frida.inject`: one loads a compiled dylib into a process for good, the
+other runs a script for a while.
 
 ### Rules the service enforces itself
 

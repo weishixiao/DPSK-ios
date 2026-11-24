@@ -1,0 +1,55 @@
+name: Version
+
+# Every push to main is a build, and every build gets the next number:
+# 1.0.0, 1.0.1, ... 1.0.9, 1.1.0. The bump lives here rather than in each build
+# job so that all of them read one number, and it is committed rather than
+# computed per run so the sequence survives a re-run of anything.
+#
+# The push uses the default token, which by design does not start workflows, so
+# the bump commit cannot cause a bump; `[skip ci]` says the same thing to a human
+# reading the log.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: version
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the branch that was just pushed to
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Advance the version
+        id: bump
+        run: |
+          set -euo pipefail
+          out=$(python3 app/tool/bump_version.py)
+          printf '%s\n' "$out"
+          after=$(printf '%s\n' "$out" | sed -n 's/.*-> //p')
+          test -n "$after"
+          printf 'after=%s\n' "$after" >> "$GITHUB_OUTPUT"
+
+      - name: Commit the new version
+        run: |
+          set -euo pipefail
+          git config user.name "weishixiao"
+          git config user.email "weishixiao@users.noreply.github.com"
+          git add app/pubspec.yaml
+          # Nothing to commit means the pubspec did not change, which would be a
+          # bug in the bump rather than a reason to fail the build.
+          if git diff --cached --quiet; then
+            printf 'the version did not change; not committing\n'
+            exit 0
+          fi
+          git commit -m "chore(release): the next build is ${{ steps.bump.outputs.after }} [skip ci]"
+          git push origin HEAD:main

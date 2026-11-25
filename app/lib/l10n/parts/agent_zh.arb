@@ -1,7 +1,0 @@
-{
-  "agentTargetPick": "选择目标应用",
-  "agentTargetSearch": "搜索应用",
-  "agentTargetEmpty": "没有可选取的应用",
-  "agentTargetLabel": "目标",
-  "agentTargetUnavailable": "未检测到特权服务"
-}

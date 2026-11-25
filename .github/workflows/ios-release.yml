@@ -1,0 +1,134 @@
+# Builds an unsigned .ipa of the app on a macOS runner, on demand.
+#
+# Nothing here is on a push trigger: `iOS compile` already checks that the app
+# compiles, and a 120 MB artifact on every commit would be weight nobody asked for.
+# This is the door for "give me a build I can install", and it stays shut until
+# somebody opens it.
+#
+# The environment is the one `iOS compile` proved - the same runner image, the same
+# Xcode, the same Flutter, pinned by the same sha256 - so a release build differs
+# from a compile check in packaging only, not in toolchain.
+#
+# The .ipa is unsigned. Signing is the installer's business: on a jailbroken device
+# that means ldid with the entitlements in agent/service/Runner.jailbreak.entitlements
+# (sign-app.sh applies them), or a signing service for a stock one. A workflow run on
+# a hosted runner has no certificate to sign with, and inventing one would produce a
+# file that installs nowhere.
+name: iOS release
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_name:
+        description: Version name for the .ipa (empty reads app/pubspec.yaml)
+        type: string
+        default: ''
+      publish:
+        description: Publish the .ipa as a GitHub release, not just an artifact
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-release
+  cancel-in-progress: false
+
+jobs:
+  ipa:
+    runs-on: macos-26
+    timeout-minutes: 90
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+      FLUTTER_VERSION: 3.47.7
+      FLUTTER_SHA256: dd9da574c3168460550117eb0e8dd0313ae934fabf64a82a6d557fff5fd1422e
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Show the toolchain
+        run: |
+          sw_vers
+          xcodebuild -version
+          xcodebuild -showsdks | grep -i iphone
+
+      - name: Install Flutter
+        run: |
+          archive="flutter_macos_arm64_${FLUTTER_VERSION}-stable.zip"
+          curl -fsSL -o "$RUNNER_TEMP/$archive" \
+            "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/$archive"
+          echo "$FLUTTER_SHA256  $RUNNER_TEMP/$archive" | shasum -a 256 -c -
+          unzip -q "$RUNNER_TEMP/$archive" -d "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+
+      - name: Resolve dependencies
+        run: |
+          flutter --version
+          python3 app/tool/l10n_merge.py --no-gen
+          cd app
+          flutter pub get --enforce-lockfile
+          flutter gen-l10n
+
+      - name: Compile for a device, unsigned
+        working-directory: app
+        run: bash ../tooling/ios/build.sh --release --no-codesign
+
+      # `flutter build ios` leaves the app bundle; the .ipa is the Payload directory
+      # zipped. This is the whole packaging step - no archive, no export options, no
+      # provisioning profile to resolve.
+      - name: Package the .ipa
+        id: package
+        working-directory: app
+        run: |
+          set -euo pipefail
+          name='${{ inputs.build_name }}'
+          if [ -z "$name" ]; then
+            name="$(sed -n 's/^version:[[:space:]]*\([^+]*\)+.*/\1/p' pubspec.yaml)"
+          fi
+          if [ -z "$name" ]; then
+            echo '::error::No version: neither the input nor app/pubspec.yaml has one.'
+            exit 1
+          fi
+          bundle="build/ios/iphoneos/Runner.app"
+          if [ ! -d "$bundle" ]; then
+            echo "::error::$bundle was not produced."
+            exit 1
+          fi
+          stage="$RUNNER_TEMP/stage"
+          mkdir -p "$stage/Payload"
+          cp -R "$bundle" "$stage/Payload/Runner.app"
+          ipa="$RUNNER_TEMP/DPSK-ios-$name-unsigned.ipa"
+          ( cd "$stage" && zip -qry "$ipa" Payload )
+          echo "ipa=$ipa" >> "$GITHUB_OUTPUT"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          ls -l "$ipa"
+          echo "::notice title=iOS release::$name, $(du -h "$ipa" | cut -f1) unsigned"
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v5.0.0
+        with:
+          name: ios-ipa
+          path: ${{ steps.package.outputs.ipa }}
+          if-no-files-found: error
+
+      # Off unless asked for: a build that publishes itself would put a binary in
+      # front of people on a branch tip that nobody chose to release.
+      - name: Publish the release
+        if: ${{ inputs.publish }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          name='${{ steps.package.outputs.name }}'
+          ipa='${{ steps.package.outputs.ipa }}'
+          tag="v$name"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$ipa" --clobber
+            echo "::notice title=iOS release::replaced the asset on $tag"
+          else
+            gh release create "$tag" "$ipa" \
+              --title "$tag build ${{ github.run_number }}" \
+              --notes "Unsigned ipa built from ${{ github.sha }}. Sign with your own certificate."
+            echo "::notice title=iOS release::created $tag"
+          fi

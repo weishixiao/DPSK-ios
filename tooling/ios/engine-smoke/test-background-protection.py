@@ -239,7 +239,9 @@ fixture = r'''
     // Resident consent keeps protection up between tasks; revoking stops it.
     UIApplication.shared.applicationState = .active
     protection.update(background: false)
-    _ = protection.set(resident: true)
+    // `set` grew the two enable flags when 「引擎常驻」 landed; nil leaves them as
+    // they are, which is what this step is about - it is only touching resident.
+    _ = protection.set(audioEnabled: nil, locationEnabled: nil, resident: true)
     precondition(protection.status()["resident"] as? Bool == true)
     UIApplication.shared.applicationState = .background
     protection.update(background: true)
@@ -247,7 +249,7 @@ fixture = r'''
     protection.update(taskRunning: false)
     UIApplication.shared.applicationState = .active
     protection.update(background: false)
-    _ = protection.set(resident: false)
+    _ = protection.set(audioEnabled: nil, locationEnabled: nil, resident: false)
     UIApplication.shared.applicationState = .background
     protection.update(background: true)
     precondition(!active("audioActive") && !active("locationActive"))

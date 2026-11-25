@@ -4,6 +4,7 @@
 // (MissingPluginException → "未就绪") or failing (PlatformException → a reason).
 
 import 'dart:async';
+import 'dart:convert' show base64Decode;
 
 import 'package:flutter/services.dart';
 
@@ -1699,10 +1700,11 @@ class PhoneChannel {
 
   /// Installed applications, for the composer's 应用 tile.
   ///
-  /// Each entry carries the display name and bundle identifier only: the
-  /// conversation needs an identity to reason about, never a handle on the
-  /// process. Returns an empty list when the native module is absent, so the
-  /// picker degrades to "未就绪" instead of failing the sheet.
+  /// Each entry carries the display name, the bundle identifier and, where the
+  /// platform supplies one, the app's icon: the conversation needs an identity to
+  /// reason about, never a handle on the process. Returns an empty list when the
+  /// native module is absent, so the picker degrades to "未就绪" instead of failing
+  /// the sheet.
   Future<List<InstalledApp>> installedApps() async {
     try {
       final raw = await _methods.invokeMethod<List<Object?>>('installedApps');
@@ -1713,6 +1715,7 @@ class PhoneChannel {
             InstalledApp(
               name: _text(item['name']) ?? _text(item['id']) ?? '',
               bundleId: _text(item['id']) ?? '',
+              iconBytes: _image(item['icon']),
             ),
       ].where((a) => a.bundleId.isNotEmpty).toList();
     } on MissingPluginException {
@@ -1721,11 +1724,27 @@ class PhoneChannel {
       return const [];
     }
   }
+
+  /// A base64 image from the native side, or null when there is none to decode.
+  ///
+  /// The decode is allowed to fail: an icon that will not decode is a picture
+  /// missing from a row, not a reason to lose the app it belongs to.
+  static Uint8List? _image(Object? value) {
+    if (value is! String || value.isEmpty) return null;
+    try {
+      return base64Decode(value);
+    } on FormatException {
+      return null;
+    }
+  }
 }
 /// One installed application, as the composer sees it.
 class InstalledApp {
-  const InstalledApp({required this.name, required this.bundleId});
+  const InstalledApp({required this.name, required this.bundleId, this.iconBytes});
 
   final String name;
   final String bundleId;
+
+  /// The app's own icon as PNG bytes, when the platform hands one over.
+  final Uint8List? iconBytes;
 }

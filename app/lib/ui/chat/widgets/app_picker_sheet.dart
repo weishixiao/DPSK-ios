@@ -5,11 +5,14 @@
 // identifier — so the model has something concrete to reason about. That is the
 // whole hand-off: the app itself is never launched, inspected or attached to.
 
+import 'dart:typed_data' show Uint8List;
+
 import 'package:flutter/material.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../../phone/phone_channel.dart';
 import '../../common/app_sheet.dart';
+import '../../theme/app_icons.dart';
 
 /// Opens the picker. Returns the chosen app, or null when dismissed.
 Future<InstalledApp?> showAppPickerSheet(BuildContext context, {required PhoneChannel channel}) {
@@ -83,6 +86,7 @@ class _AppPickerState extends State<_AppPicker> {
                     itemBuilder: (context, index) {
                       final app = shown[index];
                       return ListTile(
+                        leading: _AppIcon(bytes: app.iconBytes),
                         title: Text(app.name, maxLines: 1, overflow: TextOverflow.ellipsis),
                         subtitle: Text(app.bundleId, maxLines: 1, overflow: TextOverflow.ellipsis),
                         onTap: () => Navigator.pop(context, app),
@@ -93,6 +97,46 @@ class _AppPickerState extends State<_AppPicker> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A row's icon: the app's own when the platform gave one, the generic mark
+/// otherwise, both at the same size so the list does not shift when only some
+/// apps have a picture.
+class _AppIcon extends StatelessWidget {
+  const _AppIcon({required this.bytes});
+
+  final Uint8List? bytes;
+
+  static const _side = 28.0;
+  static const _radius = BorderRadius.all(Radius.circular(6));
+
+  @override
+  Widget build(BuildContext context) {
+    final picture = bytes;
+    if (picture == null) {
+      return const SizedBox(
+        width: _side,
+        height: _side,
+        child: Icon(AppIcons.apps, size: 22),
+      );
+    }
+    return ClipRRect(
+      borderRadius: _radius,
+      child: Image.memory(
+        picture,
+        width: _side,
+        height: _side,
+        fit: BoxFit.cover,
+        // A file that will not paint is still an app: fall back to the mark
+        // rather than letting the row throw inside the list builder.
+        errorBuilder: (_, _, _) => const SizedBox(
+          width: _side,
+          height: _side,
+          child: Icon(AppIcons.apps, size: 22),
         ),
       ),
     );

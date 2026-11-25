@@ -415,12 +415,18 @@ final class IOSPhoneControl: NSObject, FlutterStreamHandler {
     events?.setStreamHandler(self)
   }
 
-  /// Installed applications, as name + bundle identifier pairs.
+  /// Installed applications, as name + bundle identifier + icon.
   ///
   /// Asks LSApplicationWorkspace directly: PhoneRunnerSupport is compiled into
   /// the UI-test target, not this one, so referencing it here resolves to nil in
   /// the shipping app. The selectors are private, so every step tolerates a
   /// different shape instead of assuming one.
+  ///
+  /// The icon is the small rendering variant, base64 in the same string map as the
+  /// rest of the row: two hundred apps at a larger variant would be megabytes over
+  /// the method channel for pictures drawn at 40 points. A proxy that will not
+  /// produce one is still listed, without a picture - the name and the identifier
+  /// are what the row is for.
   static func installedApps() -> [[String: String]] {
     guard let spaceClass = NSClassFromString("LSApplicationWorkspace") as? NSObject.Type,
           let space = spaceClass.perform(NSSelectorFromString("defaultWorkspace"))?.takeUnretainedValue() as? NSObject
@@ -439,12 +445,29 @@ final class IOSPhoneControl: NSObject, FlutterStreamHandler {
       else { return nil }
       return value
     }
+    // `iconDataForVariant:` sits on the private proxy and answers an object; the
+    // message send is done through its IMP so a structure change turns into nil
+    // rather than a crash that would take the whole app list with it.
+    func icon(_ object: NSObject) -> String? {
+      let selector = NSSelectorFromString("iconDataForVariant:")
+      guard object.responds(to: selector), let method = class_getInstanceMethod(type(of: object), selector) else {
+        return nil
+      }
+      typealias Call = @convention(c) (AnyObject, Selector, Int32) -> Unmanaged<AnyObject>?
+      let implementation = unsafeBitCast(method_getImplementation(method), to: Call.self)
+      guard let data = implementation(object, selector, 2)?.takeUnretainedValue() as? Data, !data.isEmpty else {
+        return nil
+      }
+      return data.base64EncodedString()
+    }
 
     let proxies = array("allApplications") ?? array("allInstalledApplications") ?? []
     var apps: [[String: String]] = []
     for proxy in proxies {
       guard let bundleID = text(proxy, "applicationIdentifier") ?? text(proxy, "bundleIdentifier") else { continue }
-      apps.append(["name": text(proxy, "localizedName") ?? bundleID, "id": bundleID])
+      var row = ["name": text(proxy, "localizedName") ?? bundleID, "id": bundleID]
+      if let picture = icon(proxy) { row["icon"] = picture }
+      apps.append(row)
     }
     return apps.sorted { $0["name", default: ""].localizedCaseInsensitiveCompare($1["name", default: ""]) == .orderedAscending }
   }

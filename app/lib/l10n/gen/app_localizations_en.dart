@@ -1948,7 +1948,8 @@ class L10nEn extends L10n {
       'Background location is not active. Tap to open the app’s system settings and choose “Allow all the time” for Location under Permissions.';
 
   @override
-  String get backgroundProtectionDescription => 'Off by default. Protection is attempted only while local tasks are active or “Keep the engine running” is on, and the app is in the background; the system may still pause them.';
+  String get backgroundProtectionDescription =>
+      'Off by default. Protection is attempted only while local tasks are active or “Keep the engine running” is on, and the app is in the background; the system may still pause them.';
 
   @override
   String get backgroundProtectionAudio => 'Silent audio protection';

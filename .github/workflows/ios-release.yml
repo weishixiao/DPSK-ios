@@ -1,4 +1,4 @@
-# Builds an unsigned .ipa of the app on a macOS runner, on demand.
+# Builds an installable .ipa of the app on a macOS runner, on demand.
 #
 # Nothing here is on a push trigger: `iOS compile` already checks that the app
 # compiles, and a 120 MB artifact on every commit would be weight nobody asked for.
@@ -8,6 +8,17 @@
 # The environment is the one `iOS compile` proved - the same runner image, the same
 # Xcode, the same Flutter, pinned by the same sha256 - so a release build differs
 # from a compile check in packaging only, not in toolchain.
+#
+# The engine is prepared, not assumed. `app/ios/Engine/` is gitignored: it holds the
+# pinned NodeMobile, the runtime archive and the addon sources, and
+# `tooling/ios/prepare-engine.sh` builds it from the network. Without it the Xcode
+# build phase `embed-engine.sh` prints "this build connects to remote hosts only"
+# and exits 0 - the app still compiles, ships at half the size, and tells the person
+# holding it that the local engine is not installed. So the first version of this
+# workflow produced exactly that: 51 MB, no engine, and nothing in the UI to install
+# one with, because at that size there was never meant to be one. prepare-engine.sh
+# runs below, and `Check the engine is in the bundle` refuses to package an app that
+# came out without it.
 #
 # The .ipa is unsigned. Signing is the installer's business: on a jailbroken device
 # that means ldid with the entitlements in agent/service/Runner.jailbreak.entitlements
@@ -38,7 +49,7 @@ concurrency:
 jobs:
   ipa:
     runs-on: macos-26
-    timeout-minutes: 90
+    timeout-minutes: 150
     env:
       DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
       FLUTTER_VERSION: 3.47.7
@@ -71,9 +82,83 @@ jobs:
           flutter pub get --enforce-lockfile
           flutter gen-l10n
 
+      # `embed-engine.sh` builds the guest addon during the Xcode build, so the
+      # toolchain it needs has to be there before flutter runs: Homebrew ships
+      # ld.lld in its own formula now, and meson/ninja live in a venv rather than
+      # in the image.
+      - name: Install the guest build tools
+        run: |
+          set -euo pipefail
+          brew install llvm lld
+          python3 -m venv "$RUNNER_TEMP/ish-tools"
+          "$RUNNER_TEMP/ish-tools/bin/pip" install meson==1.7.2 ninja==1.11.1.4
+          echo "$RUNNER_TEMP/ish-tools/bin" >> "$GITHUB_PATH"
+          echo "$(brew --prefix llvm)/bin" >> "$GITHUB_PATH"
+          echo "$(brew --prefix lld)/bin" >> "$GITHUB_PATH"
+          PATH="$(brew --prefix lld)/bin:$PATH" ld.lld --version
+
+      # Same key as `iOS compile`'s engine job, so a release build reuses the iSH
+      # frameworks that job already compiled instead of rebuilding them. The key
+      # is the hash of both slices' inputs, which is how build-ish.sh pins them.
+      - name: Identify the pinned iSH build inputs
+        id: ish-inputs
+        run: |
+          set -euo pipefail
+          device="$(bash tooling/ios/build-ish.sh --cache-key iphoneos)"
+          simulator="$(bash tooling/ios/build-ish.sh --cache-key iphonesimulator)"
+          key="$(printf '%s\n%s\n' "$device" "$simulator" | shasum -a 256 | cut -d' ' -f1)"
+          echo "key=$key" >> "$GITHUB_OUTPUT"
+
+      # Must precede the cache restore: prepare-engine.sh replaces the whole
+      # directory, so a restored build/ underneath it would be thrown away.
+      - name: Prepare the engine
+        run: |
+          set -euo pipefail
+          log="$(mktemp)"
+          if ! bash tooling/ios/prepare-engine.sh 2>&1 | tee "$log"; then
+            tail -n 12 "$log" | cut -c1-600 | sed -e 's/%/%25/g' -e 's/^/::error title=prepare-engine::/'
+            exit 1
+          fi
+          test -f app/ios/Engine/.ready
+          ls -la app/ios/Engine
+
+      - name: Restore the iSH frameworks
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            app/ios/Engine/ish-cache
+            app/ios/Engine/build/iphoneos/guest
+            app/ios/Engine/build/iphonesimulator/guest
+          key: ${{ runner.os }}-ish-${{ steps.ish-inputs.outputs.key }}
+
       - name: Compile for a device, unsigned
         working-directory: app
         run: bash ../tooling/ios/build.sh --release --no-codesign
+
+      # The reason this workflow exists twice over: a bundle that builds is not a
+      # bundle that has the engine. 51 MB with no dsh-runtime is what "success"
+      # looks like when prepare-engine.sh was skipped, so the packaging step below
+      # is not allowed to run until these files are here.
+      - name: Check the engine is in the bundle
+        working-directory: app
+        run: |
+          set -euo pipefail
+          bundle="build/ios/iphoneos/Runner.app"
+          for path in \
+            "$bundle/dsh-runtime/runtime.zip" \
+            "$bundle/Frameworks/NodeMobile.framework/NodeMobile" \
+            "$bundle/Frameworks/DshNodeHost.framework/DshNodeHost" \
+            "$bundle/Frameworks/DshFlock.framework/DshFlock" \
+            "$bundle/Frameworks/DshRequireBuiltin.framework/DshRequireBuiltin" \
+            "$bundle/Frameworks/DshGuest.framework/DshGuest" \
+            "$bundle/Frameworks/DshGuestBridge.framework/DshGuestBridge" \
+            "$bundle/dsh-runtime/phone/catalog.json"; do
+            if [ ! -e "$path" ]; then
+              echo "::error title=engine missing::The app bundle has no ${path#$bundle/} - it would install without a local engine."
+              exit 1
+            fi
+          done
+          echo "::notice title=iOS release::engine embedded, bundle $(du -sh "$bundle" | cut -f1)"
 
       # `flutter build ios` leaves the app bundle; the .ipa is the Payload directory
       # zipped. This is the whole packaging step - no archive, no export options, no
@@ -104,7 +189,7 @@ jobs:
           echo "ipa=$ipa" >> "$GITHUB_OUTPUT"
           echo "name=$name" >> "$GITHUB_OUTPUT"
           ls -l "$ipa"
-          echo "::notice title=iOS release::$name, $(du -h "$ipa" | cut -f1) unsigned"
+          echo "::notice title=iOS release::$name, $(du -h "$ipa" | cut -f1) unsigned, engine included"
 
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v5.0.0
         with:
@@ -129,6 +214,6 @@ jobs:
           else
             gh release create "$tag" "$ipa" \
               --title "$tag build ${{ github.run_number }}" \
-              --notes "Unsigned ipa built from ${{ github.sha }}. Sign with your own certificate."
+              --notes "Unsigned ipa built from ${{ github.sha }}, engine included. Sign with your own certificate."
             echo "::notice title=iOS release::created $tag"
           fi

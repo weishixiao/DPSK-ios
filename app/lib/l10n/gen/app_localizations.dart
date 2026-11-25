@@ -3536,6 +3536,18 @@ abstract class L10n {
   /// **'需系统“始终允许”位置权限，会增加耗电并涉及位置隐私；不保存坐标。'**
   String get backgroundProtectionLocationHint;
 
+  /// No description provided for @backgroundProtectionResident.
+  ///
+  /// In zh, this message translates to:
+  /// **'引擎常驻'**
+  String get backgroundProtectionResident;
+
+  /// No description provided for @backgroundProtectionResidentHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'引擎运行期间即使没有本机任务也保持后台保护，回到 App 不必重新打开引擎；会增加耗电，需同时开启静音音频或后台定位。'**
+  String get backgroundProtectionResidentHint;
+
   /// No description provided for @backgroundProtectionTask.
   ///
   /// In zh, this message translates to:

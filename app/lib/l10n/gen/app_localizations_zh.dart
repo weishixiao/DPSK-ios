@@ -1861,6 +1861,13 @@ class L10nZh extends L10n {
   String get backgroundProtectionLocationHint => '需系统“始终允许”位置权限，会增加耗电并涉及位置隐私；不保存坐标。';
 
   @override
+  String get backgroundProtectionResident => '引擎常驻';
+
+  @override
+  String get backgroundProtectionResidentHint =>
+      '引擎运行期间即使没有本机任务也保持后台保护，回到 App 不必重新打开引擎；会增加耗电，需同时开启静音音频或后台定位。';
+
+  @override
   String get backgroundProtectionTask => '连续任务保护';
 
   @override

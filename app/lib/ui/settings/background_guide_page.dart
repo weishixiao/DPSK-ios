@@ -215,7 +215,7 @@ class _KeepRunningGuideState extends _ProtectionPageState<_KeepRunningGuide> {
 abstract class _ProtectionPageState<T extends ConsumerStatefulWidget> extends ConsumerState<T> {
   bool _updating = false;
 
-  Future<void> _setProtection({bool? audioEnabled, bool? locationEnabled, bool? taskEnabled}) async {
+  Future<void> _setProtection({bool? audioEnabled, bool? locationEnabled, bool? taskEnabled, bool? resident}) async {
     if (_updating) return;
     setState(() => _updating = true);
     var failed = false;
@@ -226,6 +226,7 @@ abstract class _ProtectionPageState<T extends ConsumerStatefulWidget> extends Co
             audioEnabled: audioEnabled,
             locationEnabled: locationEnabled,
             taskEnabled: taskEnabled,
+            resident: resident,
           );
       failed = result == null || !result.supported;
     } catch (_) {
@@ -241,7 +242,8 @@ abstract class _ProtectionPageState<T extends ConsumerStatefulWidget> extends Co
           !actual.supported ||
           (audioEnabled != null && actual.audioEnabled != audioEnabled) ||
           (locationEnabled != null && actual.locationEnabled != locationEnabled) ||
-          (taskEnabled != null && actual.taskEnabled != taskEnabled);
+          (taskEnabled != null && actual.taskEnabled != taskEnabled) ||
+          (resident != null && actual.resident != resident);
     } catch (_) {
       failed = true;
     }
@@ -289,6 +291,15 @@ abstract class _ProtectionPageState<T extends ConsumerStatefulWidget> extends Co
         value: protection.locationEnabled,
         onChanged: _updating ? null : (value) => unawaited(_setProtection(locationEnabled: value)),
       ),
+      // Android keeps its foreground service up already; only iOS has to choose.
+      if (!android)
+        SettingsSwitchTile(
+          key: const ValueKey('background-protection-resident'),
+          title: l10n.backgroundProtectionResident,
+          subtitle: l10n.backgroundProtectionResidentHint,
+          value: protection.resident,
+          onChanged: _updating ? null : (value) => unawaited(_setProtection(resident: value)),
+        ),
     ];
   }
 }

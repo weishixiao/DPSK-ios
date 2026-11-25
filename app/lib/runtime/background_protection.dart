@@ -9,6 +9,7 @@ class BackgroundProtection {
     this.locationAuthorization,
     this.taskEnabled = false,
     this.taskActive = false,
+    this.resident = false,
     this.permissionStatus,
     this.error,
     this.actionRequired,
@@ -26,6 +27,7 @@ class BackgroundProtection {
           locationAuthorization: map['locationAuthorization'] as String?,
           taskEnabled: map['taskEnabled'] == true,
           taskActive: map['taskActive'] == true,
+          resident: map['resident'] == true,
           permissionStatus: map['permissionStatus'] as String?,
           error: map['error'] as String?,
           actionRequired: map['actionRequired'] as String?,
@@ -40,6 +42,8 @@ class BackgroundProtection {
   final String? locationAuthorization;
   final bool taskEnabled;
   final bool taskActive;
+  /// iOS: keep the local engine alive in the background between turns.
+  final bool resident;
   final String? permissionStatus;
   final String? error;
   final String? actionRequired;

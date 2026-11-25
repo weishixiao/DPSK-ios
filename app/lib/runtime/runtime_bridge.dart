@@ -724,11 +724,13 @@ class RuntimeBridge {
     bool? audioEnabled,
     bool? locationEnabled,
     bool? taskEnabled,
+    bool? resident,
   }) async => BackgroundProtection.fromMap(
     await _methods.invokeMapMethod<Object?, Object?>('setBackgroundProtection', {
       'audioEnabled': ?audioEnabled,
       'locationEnabled': ?locationEnabled,
       'taskEnabled': ?taskEnabled,
+      'resident': ?resident,
     }),
   );
 

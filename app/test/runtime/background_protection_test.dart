@@ -30,6 +30,7 @@ void main() {
     expect(protection.locationActive, isFalse);
     expect(protection.locationAuthorization, 'denied');
     expect(protection.hasError, isTrue);
+    expect(protection.resident, isFalse);
   });
 
   test('continuous task status preserves actual eligibility and cleanup', () async {

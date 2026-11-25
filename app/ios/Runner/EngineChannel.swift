@@ -729,13 +729,14 @@ final class EngineChannel: NSObject, FlutterStreamHandler {
     }
     if call.method == "backgroundProtection" { return result(backgroundProtection.status()) }
     if call.method == "setBackgroundProtection" {
-      for key in ["audioEnabled", "locationEnabled"] where arguments[key] != nil {
+      for key in ["audioEnabled", "locationEnabled", "resident"] where arguments[key] != nil {
         guard arguments[key] is Bool else {
           return result(FlutterError(code: "ios_background_invalid_arguments", message: "Expected boolean settings.", details: nil))
         }
       }
       return result(backgroundProtection.set(
-        audioEnabled: arguments["audioEnabled"] as? Bool, locationEnabled: arguments["locationEnabled"] as? Bool))
+        audioEnabled: arguments["audioEnabled"] as? Bool, locationEnabled: arguments["locationEnabled"] as? Bool,
+        resident: arguments["resident"] as? Bool))
     }
     if call.method == "openBackgroundProtectionSettings" {
       guard UIApplication.shared.applicationState == .active,

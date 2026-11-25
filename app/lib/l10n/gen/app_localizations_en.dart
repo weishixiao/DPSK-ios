@@ -1966,6 +1966,13 @@ class L10nEn extends L10n {
       'Requires “Always” location access, uses more battery, and involves location privacy. Coordinates are not saved.';
 
   @override
+  String get backgroundProtectionResident => 'Keep the engine running';
+
+  @override
+  String get backgroundProtectionResidentHint =>
+      'Keeps background protection on whenever the engine runs, even with no local task, so returning to the app does not need a new start. Uses more battery; needs silent audio or background location on too.';
+
+  @override
   String get backgroundProtectionTask => 'Continuous task protection';
 
   @override

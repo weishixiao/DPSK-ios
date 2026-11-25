@@ -9,9 +9,11 @@ struct IOSBackgroundProtectionPolicy {
   var locationEnabled = false
   var engineRunning = false
   var taskRunning = false
+  /// The user asked for the engine to stay up in the background between tasks too.
+  var resident = false
   var background = false
 
-  var wanted: Bool { engineRunning && taskRunning && background }
+  var wanted: Bool { engineRunning && background && (taskRunning || resident) }
   var wantsAudio: Bool { wanted && audioEnabled }
   var wantsLocation: Bool { wanted && locationEnabled }
 }
@@ -35,6 +37,7 @@ final class IOSBackgroundProtection: NSObject, CLLocationManagerDelegate, AVAudi
   private var lastStatus: NSDictionary?
   private static let audioKey = "dsh.backgroundProtection.audioEnabled"
   private static let locationKey = "dsh.backgroundProtection.locationEnabled"
+  private static let residentKey = "dsh.backgroundProtection.resident"
 
   init(defaults: UserDefaults = .standard) {
     precondition(Thread.isMainThread)
@@ -42,6 +45,7 @@ final class IOSBackgroundProtection: NSObject, CLLocationManagerDelegate, AVAudi
     super.init()
     policy.audioEnabled = defaults.bool(forKey: Self.audioKey)
     policy.locationEnabled = defaults.bool(forKey: Self.locationKey)
+    policy.resident = defaults.bool(forKey: Self.residentKey)
     policy.background = UIApplication.shared.applicationState == .background
     location.delegate = self
     location.desiredAccuracy = kCLLocationAccuracyThreeKilometers
@@ -60,7 +64,7 @@ final class IOSBackgroundProtection: NSObject, CLLocationManagerDelegate, AVAudi
   }
 
   /// Only the foreground settings action calls this; callbacks never request permission.
-  func set(audioEnabled: Bool?, locationEnabled: Bool?) -> [String: Any] {
+  func set(audioEnabled: Bool?, locationEnabled: Bool?, resident: Bool? = nil) -> [String: Any] {
     precondition(Thread.isMainThread)
     guard UIApplication.shared.applicationState == .active else {
       var value = status()
@@ -82,6 +86,10 @@ final class IOSBackgroundProtection: NSObject, CLLocationManagerDelegate, AVAudi
         location.requestAlwaysAuthorization()
       }
     }
+    if let resident {
+      policy.resident = resident
+      defaults.set(resident, forKey: Self.residentKey)
+    }
     reconcile()
     return status()
   }
@@ -98,6 +106,7 @@ final class IOSBackgroundProtection: NSObject, CLLocationManagerDelegate, AVAudi
     precondition(Thread.isMainThread)
     var value: [String: Any] = [
       "supported": true, "audioEnabled": policy.audioEnabled, "locationEnabled": policy.locationEnabled,
+      "resident": policy.resident,
       "audioActive": policy.wantsAudio && player?.isPlaying == true && audio.isValid,
       "locationActive": policy.wantsLocation && locationRequested && locationActive && locationAllowed,
       "locationAuthorization": authorization,

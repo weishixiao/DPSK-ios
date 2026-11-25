@@ -121,14 +121,15 @@ fixture = r'''
   static func main() throws {
     precondition(Thread.isMainThread)
     // Execute all combinations of production consent/demand policy.
-    for bits in 0..<32 {
+    for bits in 0..<64 {
       var policy = IOSBackgroundProtectionPolicy()
       policy.audioEnabled = bits & 1 != 0
       policy.locationEnabled = bits & 2 != 0
       policy.engineRunning = bits & 4 != 0
       policy.taskRunning = bits & 8 != 0
       policy.background = bits & 16 != 0
-      let demand = bits & 28 == 28
+      policy.resident = bits & 32 != 0
+      let demand = bits & 4 != 0 && bits & 16 != 0 && (bits & 8 != 0 || bits & 32 != 0)
       precondition(policy.wantsAudio == (demand && bits & 1 != 0))
       precondition(policy.wantsLocation == (demand && bits & 2 != 0))
     }
@@ -235,6 +236,21 @@ fixture = r'''
     precondition(protection.status()["error"] as? String == "ios_background_audio_play_failed")
     protection.update(taskRunning: false)
     AVAudioPlayer.canPlay = true
+    // Resident consent keeps protection up between tasks; revoking stops it.
+    UIApplication.shared.applicationState = .active
+    protection.update(background: false)
+    _ = protection.set(resident: true)
+    precondition(protection.status()["resident"] as? Bool == true)
+    UIApplication.shared.applicationState = .background
+    protection.update(background: true)
+    precondition(active("audioActive"), "resident protection keeps silence up between tasks")
+    protection.update(taskRunning: false)
+    UIApplication.shared.applicationState = .active
+    protection.update(background: false)
+    _ = protection.set(resident: false)
+    UIApplication.shared.applicationState = .background
+    protection.update(background: true)
+    precondition(!active("audioActive") && !active("locationActive"))
     // Restoring settings does not request permission or start idle protection.
     let restored = IOSBackgroundProtection(defaults: defaults)
     precondition(restored.status()["audioEnabled"] as? Bool == true)

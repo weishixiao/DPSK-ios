@@ -26,6 +26,7 @@ void main() {
   const audio = ValueKey('background-protection-audio');
   const location = ValueKey('background-protection-location');
   const task = ValueKey('background-protection-task');
+  const resident = ValueKey('background-protection-resident');
   const status = ValueKey('background-protection-status');
   late Map<String, Object?>? actual;
   late List<MethodCall> calls;
@@ -81,9 +82,10 @@ void main() {
 
   testWidgets('iOS starts with just two off switches and one actual status', (tester) async {
     await pump(tester);
-    expect(find.byType(SettingsSwitchTile), findsNWidgets(2));
+    expect(find.byType(SettingsSwitchTile), findsNWidgets(3));
     expect(toggle(tester, audio).value, isFalse);
     expect(toggle(tester, location).value, isFalse);
+    expect(toggle(tester, resident).value, isFalse);
     expect(find.byKey(task), findsNothing);
     expect(find.byKey(status), findsOneWidget);
     expect(find.text(l10n.backgroundProtectionOff), findsOneWidget);
@@ -122,6 +124,28 @@ void main() {
     final change = calls.indexWhere((call) => call.method == 'setBackgroundProtection');
     expect(calls[change].arguments, {'audioEnabled': true});
     expect(calls.skip(change + 1).any((call) => call.method == 'backgroundProtection'), isTrue);
+  });
+
+  testWidgets('resident persists as its own consent and stays off without it', (tester) async {
+    await pump(tester);
+    var persisted = false;
+    update = (call) {
+      if (call.method == 'setBackgroundProtection') {
+        persisted = call.arguments['resident'] as bool? ?? persisted;
+      }
+      actual = {'supported': true, 'audioEnabled': true, 'resident': persisted, 'audioActive': false};
+      return actual;
+    };
+    await tester.tap(find.text(l10n.backgroundProtectionResident));
+    await tester.pumpAndSettle();
+    final change = calls.indexWhere((call) => call.method == 'setBackgroundProtection');
+    expect(calls[change].arguments, {'resident': true});
+    expect(toggle(tester, resident).value, isTrue);
+    await tester.tap(find.text(l10n.backgroundProtectionResident));
+    await tester.pumpAndSettle();
+    final revoke = calls.lastIndexWhere((call) => call.method == 'setBackgroundProtection');
+    expect(calls[revoke].arguments, {'resident': false});
+    expect(toggle(tester, resident).value, isFalse);
   });
 
   testWidgets('permission denial stays inactive and offers app settings', (tester) async {

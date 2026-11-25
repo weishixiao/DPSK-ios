@@ -3509,7 +3509,7 @@ abstract class L10n {
   /// No description provided for @backgroundProtectionDescription.
   ///
   /// In zh, this message translates to:
-  /// **'默认关闭，仅在有本机任务且 App 退到后台时尝试保护；系统仍可能暂停任务。'**
+  /// **'默认关闭，仅在有本机任务或开启“引擎常驻”且 App 退到后台时尝试保护；系统仍可能暂停任务。'**
   String get backgroundProtectionDescription;
 
   /// No description provided for @backgroundProtectionAudio.

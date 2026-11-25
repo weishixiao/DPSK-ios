@@ -1846,7 +1846,7 @@ class L10nZh extends L10n {
   String get androidBackgroundProtectionNeedsAlways => '后台定位尚未生效。点此打开 App 的系统设置，在「权限」中将位置设为“始终允许”。';
 
   @override
-  String get backgroundProtectionDescription => '默认关闭，仅在有本机任务且 App 退到后台时尝试保护；系统仍可能暂停任务。';
+  String get backgroundProtectionDescription => '默认关闭，仅在有本机任务或开启“引擎常驻”且 App 退到后台时尝试保护；系统仍可能暂停任务。';
 
   @override
   String get backgroundProtectionAudio => '静音音频保护';
@@ -1864,8 +1864,7 @@ class L10nZh extends L10n {
   String get backgroundProtectionResident => '引擎常驻';
 
   @override
-  String get backgroundProtectionResidentHint =>
-      '引擎运行期间即使没有本机任务也保持后台保护，回到 App 不必重新打开引擎；会增加耗电，需同时开启静音音频或后台定位。';
+  String get backgroundProtectionResidentHint => '引擎运行期间即使没有本机任务也保持后台保护，回到 App 不必重新打开引擎；会增加耗电，需同时开启静音音频或后台定位。';
 
   @override
   String get backgroundProtectionTask => '连续任务保护';

@@ -1,6 +1,6 @@
 # dsh-go 使用说明（鸿蒙版） · User guide (HarmonyOS)
 
-> dsh-go 1.1.1
+> dsh-go 1.1.2
 
 ## 中文
 

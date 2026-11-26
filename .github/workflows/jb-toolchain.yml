@@ -118,7 +118,9 @@ jobs:
             find . -maxdepth 3 -type d | sort
             exit 1
           fi
-          echo "DEB_DIR=$(cd "$(dirname "$deb")" && pwd)" >> "$GITHUB_ENV"
+          # 绝对路径：下面 ar 那步会 cd 到临时目录，相对的 $deb 到那里就找不到了。
+          deb="$(cd "$(dirname "$deb")" && pwd)/$(basename "$deb")"
+          echo "DEB_DIR=$(dirname "$deb")" >> "$GITHUB_ENV"
           ls -l "$deb"
           # rootless 包的文件必须装在 /var/jb 下，装到 RootHide 上才生效。
           # dpkg-deb 不在 runner 上，所以直接看 deb 里的 data.tar。

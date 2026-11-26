@@ -1,0 +1,8 @@
+// HoleNoAds.plist —— 只注入到「黑洞入侵」，别的 App 不受影响
+{
+    Filter = {
+        Bundles = (
+            "com.hole.io.attack.battle"
+        );
+    };
+}

@@ -1,0 +1,127 @@
+name: jb toolchain
+
+# 构建越狱注入工具箱的二进制产物（不是 DSH Go App 本体）
+#
+# 触发：push 到 main / feat/** / jb/** 且改动命中 jb/**；或手动 workflow_dispatch
+# 不会和 ci.yml、ios-compile.yml 抢：那些 workflow 的 paths 不包含 jb/**
+
+on:
+  push:
+    branches: [main, 'feat/**', 'jb/**']
+    paths:
+      - 'jb/**'
+      - '.github/workflows/jb-toolchain.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'jb/**'
+      - '.github/workflows/jb-toolchain.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: jb-toolchain-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-helper:
+    name: Build jbhelper (iOS arm64)
+    runs-on: macos-14
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 环境信息
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+          xcrun --sdk iphoneos --show-sdk-path
+
+      - name: 交叉编译 jbhelper.m
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          xcrun --sdk iphoneos clang \
+            -target arm64-apple-ios15.0 \
+            -fobjc-arc -O2 -Wall -Wextra \
+            -framework Foundation \
+            -o out/jbhelper \
+            jb/helper/jbhelper.m
+          file out/jbhelper
+          otool -L out/jbhelper
+
+      - name: 校验 Mach-O 只依赖系统库
+        run: |
+          set -euo pipefail
+          # 只允许 Foundation 与 libSystem 之类；出现其他三方依赖说明链错了
+          otool -L out/jbhelper | tail -n +2 | awk '{print $1}' | grep -v '^/System/Library' \
+            && { echo "发现非系统依赖，检查编译参数"; exit 1; } || true
+
+      - name: 伪签名（可选，越狱设备 amfi 已 patch 时可省）
+        run: |
+          set -euo pipefail
+          if command -v ldid >/dev/null 2>&1; then
+            ldid -S out/jbhelper
+            ldid -e out/jbhelper | head -20 || true
+          else
+            echo "未安装 ldid，跳过；rootless 越狱下不签也能跑"
+          fi
+
+      - name: 上传产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: jbhelper-iphoneos-arm64
+          path: out/jbhelper
+          if-no-files-found: error
+          retention-days: 30
+
+  build-tweak:
+    name: Build tweak (Theos, rootless)
+    runs-on: macos-14
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 准备 Theos
+        run: |
+          set -euo pipefail
+          brew install ldid xz
+          export THEOS="$RUNNER_TEMP/theos"
+          git clone --depth 1 --recursive https://github.com/theos/theos.git "$THEOS"
+          echo "THEOS=$THEOS" >> "$GITHUB_ENV"
+          ls "$THEOS/sdks" || echo "sdks 目录为空，下一步安装 SDK"
+
+      - name: 安装 iOS SDK（首次需要，约 1-2 GB）
+        run: |
+          set -euo pipefail
+          if [ -z "$(ls -A "$THEOS/sdks" 2>/dev/null)" ]; then
+            "$THEOS/bin/install-sdk.sh" || echo "install-sdk 失败，检查网络或改用 Xcode SDK"
+          fi
+          ls "$THEOS/sdks"
+
+      - name: make package
+        run: |
+          set -euo pipefail
+          cd jb/tweak-template
+          make package THEOS="$THEOS" FINALPACKAGE=1
+          ls -l .theos/_/debs/
+
+      - name: 上传 deb
+        uses: actions/upload-artifact@v4
+        with:
+          name: tweak-deb
+          path: jb/tweak-template/.theos/_/debs/*.deb
+          if-no-files-found: error
+          retention-days: 30
+
+  summary:
+    name: jb toolchain OK
+    if: always()
+    needs: [build-helper, build-tweak]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: exit 1

@@ -1,0 +1,9 @@
+Package: com.dsh.holenoads
+Name: HoleNoAds
+Version: 0.0.1
+Architecture: iphoneos-arm64
+Description: 黑洞入侵 广告拦截（练习用模板）
+Maintainer: local
+Author: local
+Section: Tweaks
+Depends: ellekit

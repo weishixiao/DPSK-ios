@@ -23,6 +23,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <limits.h>
 #include <mach-o/loader.h>
 #include <mach-o/fat.h>
 
@@ -82,13 +83,21 @@ static NSDictionary *RunArgv(NSArray<NSString *> *argv, NSString *cwd, NSTimeInt
     posix_spawn_file_actions_adddup2(&fa, fd, STDOUT_FILENO);
     posix_spawn_file_actions_adddup2(&fa, fd, STDERR_FILENO);
     posix_spawn_file_actions_addopen(&fa, STDIN_FILENO, "/dev/null", O_RDONLY, 0);
-    if (cwd.length) posix_spawn_file_actions_addchdir_np(&fa, cwd.fileSystemRepresentation);
+
+    // iOS SDK 没有 posix_spawn_file_actions_addchdir_np，改在父进程 chdir 再还原；
+    // helper 是单线程 accept 循环，不存在并发 cwd 竞争。
+    char prevCwd[PATH_MAX] = {0};
+    BOOL movedCwd = NO;
+    if (cwd.length > 0 && getcwd(prevCwd, sizeof prevCwd) != NULL) {
+        movedCwd = (chdir(cwd.fileSystemRepresentation) == 0);
+    }
 
     char **cargv = calloc(argv.count + 1, sizeof(char *));
     for (NSUInteger i = 0; i < argv.count; i++) cargv[i] = strdup(argv[i].UTF8String);
 
     pid_t pid = 0;
     int rc = posix_spawn(&pid, cargv[0], &fa, NULL, cargv, environ);
+    if (movedCwd) chdir(prevCwd);
 
     for (NSUInteger i = 0; i < argv.count; i++) free(cargv[i]);
     free(cargv);
@@ -366,7 +375,7 @@ static NSDictionary *InspectApp(NSString *bundleID, NSString *explicitPath) {
 
 #pragma mark - HTTP 极简实现
 
-static NSDictionary *Handle(NSString *method, NSString *path, NSDictionary *body) {
+static NSDictionary *DispatchRequest(NSString *method, NSString *path, NSDictionary *body) {
     NSString *p = path.length ? path : @"/";
 
     if ([p isEqualToString:@"/health"]) {
@@ -502,7 +511,7 @@ static void ServeOne(int cfd) {
         }
 
         @try {
-            reply = Handle(method, path, body ?: @{});
+            reply = DispatchRequest(method, path, body ?: @{});
         } @catch (NSException *e) {
             reply = @{@"ok": @NO, @"error": e.reason ?: @"内部异常"};
         }
@@ -513,6 +522,7 @@ static void ServeOne(int cfd) {
 }
 
 int main(int argc, char *argv[]) {
+    (void)argc; (void)argv;
     @autoreleasepool {
         gToken = EnsureToken();
         signal(SIGPIPE, SIG_IGN);

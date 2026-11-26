@@ -126,15 +126,26 @@ jobs:
           # dpkg-deb 不在 runner 上，所以直接看 deb 里的 data.tar。
           work="$(mktemp -d)"
           ( cd "$work" && ar x "$deb" )
-          payload="$(ls "$work"/data.tar.* 2>/dev/null | head -n 1)"
+          # dm.pl 可能写未压缩的 data.tar，也可能写 data.tar.gz/xz/zst —— 逐个试，
+          # 不要只认带后缀的：匹配不上时 listing 是空的，检查会被静默跳过。
           listing=""
-          case "$payload" in
-            *.gz)  listing="$(tar -tzf "$payload")" ;;
-            *.xz)  listing="$(tar -tJf "$payload")" ;;
-            *.zst) listing="$(tar --zstd -tf "$payload")" ;;
-          esac
+          for member in "$work"/data.tar*; do
+            [ -e "$member" ] || continue
+            case "$member" in
+              *.gz)  listing="$(tar -tzf "$member" 2>/dev/null)" ;;
+              *.xz)  listing="$(tar -tJf "$member" 2>/dev/null)" ;;
+              *.zst) listing="$(tar --zstd -tf "$member" 2>/dev/null)" ;;
+              *)     listing="$(tar -tf "$member" 2>/dev/null)" ;;
+            esac
+            [ -n "$listing" ] && break
+          done
           printf '%s\n' "$listing" | head -20
-          if [ -n "$listing" ] && ! printf '%s\n' "$listing" | grep -q 'var/jb/'; then
+          if [ -z "$listing" ]; then
+            echo "== 读不出 deb 里的 data.tar，无法确认是不是 rootless 包 =="
+            ls -l "$work"
+            exit 1
+          fi
+          if ! printf '%s\n' "$listing" | grep -q 'var/jb/'; then
             echo "== 包里没有 /var/jb 前缀：不是 rootless 包，RootHide 上不会生效 =="
             exit 1
           fi

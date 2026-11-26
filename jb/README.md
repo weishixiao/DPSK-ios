@@ -365,4 +365,4 @@ fetch(`https://api.github.com/repos/${owner}/${repo}/actions/workflows/${wf}/dis
 
 - **token**：fine-grained PAT 至少需要目标仓库的 `Contents: Read/Write` + `Actions: Write`。之前贴出来那个必须吊销，别复用。
 - **Theos 首次装 SDK**：`install-sdk.sh` 要拉 1–2 GB，`build-tweak` 的 30 分钟超时可能不够，必要时提到 `60`。
-- **runner 架构**：`macos-14` 是 arm64 runner，编出来的 `jbhelper` 是 `arm64-apple-ios15.0`；如果你要在 Intel Mac 上手动复现，记得加 `-arch arm64`，否则会出 x86_64 废二进制。
+- **runner 架构**：`macos-15` 是 arm64 runner，编出来的 `jbhelper` 是 `arm64-apple-ios15.0`；如果你要在 Intel Mac 上手动复现，记得加 `-arch arm64`，否则会出 x86_64 废二进制。

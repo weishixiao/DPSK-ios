@@ -110,13 +110,38 @@ jobs:
           set -euo pipefail
           cd jb/tweak-template
           make package THEOS="$THEOS" FINALPACKAGE=1 TARGET=iphone:clang:latest:15.0
-          ls -l .theos/_/debs/
+          # 一个 scheme 包的 .deb 落在 ./packages；.theos/_/debs 只有 rootful 才有。
+          # 把目录写死，rootless 下就必然 not found —— 于是 find 出来，交给下一步。
+          deb="$(find . -name '*.deb' -type f -print -quit)"
+          if [ -z "$deb" ]; then
+            echo "== make package 没有产出 .deb，列出建出来的目录 =="
+            find . -maxdepth 3 -type d | sort
+            exit 1
+          fi
+          echo "DEB_DIR=$(cd "$(dirname "$deb")" && pwd)" >> "$GITHUB_ENV"
+          ls -l "$deb"
+          # rootless 包的文件必须装在 /var/jb 下，装到 RootHide 上才生效。
+          # dpkg-deb 不在 runner 上，所以直接看 deb 里的 data.tar。
+          work="$(mktemp -d)"
+          ( cd "$work" && ar x "$deb" )
+          payload="$(ls "$work"/data.tar.* 2>/dev/null | head -n 1)"
+          listing=""
+          case "$payload" in
+            *.gz)  listing="$(tar -tzf "$payload")" ;;
+            *.xz)  listing="$(tar -tJf "$payload")" ;;
+            *.zst) listing="$(tar --zstd -tf "$payload")" ;;
+          esac
+          printf '%s\n' "$listing" | head -20
+          if [ -n "$listing" ] && ! printf '%s\n' "$listing" | grep -q 'var/jb/'; then
+            echo "== 包里没有 /var/jb 前缀：不是 rootless 包，RootHide 上不会生效 =="
+            exit 1
+          fi
 
       - name: 上传 deb
         uses: actions/upload-artifact@v4
         with:
           name: tweak-deb
-          path: jb/tweak-template/.theos/_/debs/*.deb
+          path: ${{ env.DEB_DIR }}/*.deb
           if-no-files-found: error
           retention-days: 30
 
